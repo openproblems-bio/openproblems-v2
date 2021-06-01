@@ -1,0 +1,16 @@
+# repo specific ignores
+output_bash
+
+# R specific ignores
+.Rhistory
+.Rproj.user
+*.Rproj
+
+# viash specific ignores
+check_results/
+log.txt
+
+# nextflow specific ignores
+.nextflow*
+work
+output
