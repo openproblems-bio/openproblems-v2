@@ -7,7 +7,6 @@ output_bash
 *.Rproj
 
 # viash specific ignores
-check_results/
 log.txt
 
 # nextflow specific ignores
