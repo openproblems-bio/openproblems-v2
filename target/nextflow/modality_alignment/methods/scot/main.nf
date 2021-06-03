@@ -3,6 +3,17 @@ nextflow.enable.dsl=2
 params.test = false
 params.debug = false
 
+def checkParams(_params) {
+  _params.arguments.collect{
+    if (it.value == "viash_no_value") {
+      println("[ERROR] option --${it.name} not specified in component scot")
+      println("exiting now...")
+        exit 1
+    }
+  }
+}
+
+
 def renderCLI(command, arguments) {
 
   def argumentsList = arguments.collect{ it ->
@@ -188,6 +199,8 @@ workflow scot {
       outputs = output.collectEntries{ [(it.name): it.value] }
 
       def finalParams = overrideIO(newParams, inputs, outputs)
+
+      checkParams(finalParams)
 
       new Tuple6(
         id,

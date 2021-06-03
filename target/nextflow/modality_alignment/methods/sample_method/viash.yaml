@@ -328,7 +328,7 @@ functionality:
             name = "sample_method"
             container = "modality_alignment/methods_sample_method"
             containerTag = "latest"
-            containerRegistry = ""
+            containerRegistry = "openpipeline"
             command = "sample_method"
             tests {
               isDefined = true
@@ -371,6 +371,17 @@ functionality:
       
       params.test = false
       params.debug = false
+      
+      def checkParams(_params) {
+        _params.arguments.collect{
+          if (it.value == "viash_no_value") {
+            println("[ERROR] option --${it.name} not specified in component sample_method")
+            println("exiting now...")
+              exit 1
+          }
+        }
+      }
+      
       
       def renderCLI(command, arguments) {
       
@@ -558,6 +569,8 @@ functionality:
       
             def finalParams = overrideIO(newParams, inputs, outputs)
       
+            checkParams(finalParams)
+      
             new Tuple6(
               id,
               inputsForProcess,
@@ -648,7 +661,7 @@ functionality:
 platform:
   type: "nextflow"
   id: "nextflow"
-  registry: ""
+  registry: "openpipeline"
   namespace_separator: "_"
   labels: []
 platforms: []
@@ -658,5 +671,5 @@ info:
   output: "target/nextflow/modality_alignment/methods/sample_method"
   executable: "target/nextflow/modality_alignment/methods/sample_method/sample_method"
   viash_version: "0.5.0-rc2"
-  git_commit: "ea8d592674b5892144ad549ab14fa99d7d16e866"
+  git_commit: "638a2978a85de971476dcf120f657a2d5c7353c3"
   git_remote: "https://github.com/openproblems-bio/opsca-viash"
