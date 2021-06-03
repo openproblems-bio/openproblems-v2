@@ -786,5 +786,5 @@ info:
   output: "target/nextflow/modality_alignment/methods/scot"
   executable: "target/nextflow/modality_alignment/methods/scot/scot"
   viash_version: "0.5.0-rc2"
-  git_commit: "638a2978a85de971476dcf120f657a2d5c7353c3"
+  git_commit: "44a277e80a8f53cb50541c53064322e9cbb2b72c"
   git_remote: "https://github.com/openproblems-bio/opsca-viash"
