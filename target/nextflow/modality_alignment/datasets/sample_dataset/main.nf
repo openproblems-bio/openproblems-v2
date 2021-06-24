@@ -2,7 +2,9 @@ nextflow.enable.dsl=2
 
 params.test = false
 params.debug = false
+params.publishDir = "./"
 
+// A function to verify (at runtime) if all required arguments are effectively provided.
 def checkParams(_params) {
   _params.arguments.collect{
     if (it.value == "viash_no_value") {
@@ -58,14 +60,25 @@ def outFromIn(_params) {
     .arguments
     .findAll{ it -> it.type == "file" && it.direction == "Output" }
     .collect{ it ->
-      // If a default (dflt) attribute is present, strip the extension from the filename,
-      // otherwise just use the option name as an extension.
-      def extOrName = (it.dflt != null) ? it.dflt.split(/\./).last() : it.name
+      // If an 'example' attribute is present, strip the extension from the filename,
+      // If a 'dflt' attribute is present, strip the extension from the filename,
+      // Otherwise just use the option name as an extension.
+      def extOrName =
+        (it.example != null)
+          ? it.example.split(/\./).last()
+          : (it.dflt != null)
+            ? it.dflt.split(/\./).last()
+            : it.name
       // The output filename is <sample> . <modulename> . <extension>
+      // Unless the output argument is explicitly specified on the CLI
+      def newValue =
+        (it.value == "viash_no_value")
+          ? "sample_dataset" + "." + extOrName
+          : it.value
       def newName =
         (id != "")
-          ? id + "." + "sample_dataset" + "." + extOrName
-          : "sample_dataset" + "." + extOrName
+          ? id + "." + newValue
+          : newValue
       it + [ value : newName ]
     }
 
@@ -139,6 +152,12 @@ process sample_dataset_process {
     tuple val(id), path(input), val(output), val(container), val(cli), val(_params)
   output:
     tuple val("${id}"), path(output), val(_params)
+  stub:
+    """
+    # Adding NXF's `$moduleDir` to the path in order to resolve our own wrappers
+    export PATH="${moduleDir}:\$PATH"
+    STUB=1 $cli
+    """
   script:
     if (params.test)
       """
@@ -241,15 +260,25 @@ workflow sample_dataset {
 }
 
 workflow {
-
   def id = params.id
-  def _params = argumentsAsList(params.sample_dataset) + [ "id" : id ]
-  def p = _params
-    .arguments
-    .findAll{ it.type == "file" && it.direction == "Input" }
-    .collectEntries{ [(it.name): file(params[it.name]) ] }
+  def fname = "sample_dataset"
 
-  def ch_ = Channel.from("").map{ s -> new Tuple3(id, p, params)}
+  def _params = params
+
+  // could be refactored to be FP
+  for (entry in params[fname].arguments) {
+    def name = entry.value.name
+    if (params[name] != null) {
+      params[fname].arguments[name].value = params[name]
+    }
+  }
+
+  def inputFiles = params.sample_dataset
+    .arguments
+    .findAll{ key, par -> par.type == "file" && par.direction == "Input" }
+    .collectEntries{ key, par -> [(par.name): file(params[fname].arguments[par.name].value) ] }
+
+  def ch_ = Channel.from("").map{ s -> new Tuple3(id, inputFiles, params)}
 
   result = sample_dataset(ch_)
   result.view{ it[1] }

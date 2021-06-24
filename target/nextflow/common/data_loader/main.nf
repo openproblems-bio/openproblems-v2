@@ -2,11 +2,13 @@ nextflow.enable.dsl=2
 
 params.test = false
 params.debug = false
+params.publishDir = "./"
 
+// A function to verify (at runtime) if all required arguments are effectively provided.
 def checkParams(_params) {
   _params.arguments.collect{
     if (it.value == "viash_no_value") {
-      println("[ERROR] option --${it.name} not specified in component extract_scores")
+      println("[ERROR] option --${it.name} not specified in component data_loader")
       println("exiting now...")
         exit 1
     }
@@ -58,14 +60,25 @@ def outFromIn(_params) {
     .arguments
     .findAll{ it -> it.type == "file" && it.direction == "Output" }
     .collect{ it ->
-      // If a default (dflt) attribute is present, strip the extension from the filename,
-      // otherwise just use the option name as an extension.
-      def extOrName = (it.dflt != null) ? it.dflt.split(/\./).last() : it.name
+      // If an 'example' attribute is present, strip the extension from the filename,
+      // If a 'dflt' attribute is present, strip the extension from the filename,
+      // Otherwise just use the option name as an extension.
+      def extOrName =
+        (it.example != null)
+          ? it.example.split(/\./).last()
+          : (it.dflt != null)
+            ? it.dflt.split(/\./).last()
+            : it.name
       // The output filename is <sample> . <modulename> . <extension>
+      // Unless the output argument is explicitly specified on the CLI
+      def newValue =
+        (it.value == "viash_no_value")
+          ? "data_loader" + "." + extOrName
+          : it.value
       def newName =
         (id != "")
-          ? id + "." + "extract_scores" + "." + extOrName
-          : "extract_scores" + "." + extOrName
+          ? id + "." + newValue
+          : newValue
       it + [ value : newName ]
     }
 
@@ -126,7 +139,7 @@ def overrideIO(_params, inputs, outputs) {
 
 }
 
-process extract_scores_process {
+process data_loader_process {
 
 
   tag "${id}"
@@ -134,11 +147,17 @@ process extract_scores_process {
   cache 'deep'
   stageInMode "symlink"
   container "${container}"
-  publishDir "${params.output}/", mode: 'copy', overwrite: true, enabled: !params.test
+
   input:
     tuple val(id), path(input), val(output), val(container), val(cli), val(_params)
   output:
     tuple val("${id}"), path(output), val(_params)
+  stub:
+    """
+    # Adding NXF's `$moduleDir` to the path in order to resolve our own wrappers
+    export PATH="${moduleDir}:\$PATH"
+    STUB=1 $cli
+    """
   script:
     if (params.test)
       """
@@ -147,7 +166,7 @@ process extract_scores_process {
       # Running the pre-hook when necessary
       # Adding NXF's `$moduleDir` to the path in order to resolve our own wrappers
       export PATH="./:${moduleDir}:\$PATH"
-      ./${params.extract_scores.tests.testScript} | tee $output
+      ./${params.data_loader.tests.testScript} | tee $output
       """
     else
       """
@@ -160,14 +179,14 @@ process extract_scores_process {
       """
 }
 
-workflow extract_scores {
+workflow data_loader {
 
   take:
   id_input_params_
 
   main:
 
-  def key = "extract_scores"
+  def key = "data_loader"
 
   def id_input_output_function_cli_params_ =
     id_input_params_.map{ id, input, _params ->
@@ -212,7 +231,7 @@ workflow extract_scores {
         )
     }
 
-  result_ = extract_scores_process(id_input_output_function_cli_params_) \
+  result_ = data_loader_process(id_input_output_function_cli_params_) \
     | join(id_input_params_) \
     | map{ id, output, _params, input, original_params ->
         def parsedOutput = _params.arguments
@@ -241,17 +260,27 @@ workflow extract_scores {
 }
 
 workflow {
-
   def id = params.id
-  def _params = argumentsAsList(params.extract_scores) + [ "id" : id ]
-  def p = _params
+  def fname = "data_loader"
+
+  def _params = params
+
+  // could be refactored to be FP
+  for (entry in params[fname].arguments) {
+    def name = entry.value.name
+    if (params[name] != null) {
+      params[fname].arguments[name].value = params[name]
+    }
+  }
+
+  def inputFiles = params.data_loader
     .arguments
-    .findAll{ it.type == "file" && it.direction == "Input" }
-    .collectEntries{ [(it.name): file(params[it.name]) ] }
+    .findAll{ key, par -> par.type == "file" && par.direction == "Input" }
+    .collectEntries{ key, par -> [(par.name): file(params[fname].arguments[par.name].value) ] }
 
-  def ch_ = Channel.from("").map{ s -> new Tuple3(id, p, params)}
+  def ch_ = Channel.from("").map{ s -> new Tuple3(id, inputFiles, params)}
 
-  result = extract_scores(ch_)
+  result = data_loader(ch_)
   result.view{ it[1] }
 }
 
@@ -264,17 +293,17 @@ workflow test {
 
   main:
   params.test = true
-  params.extract_scores.output = "extract_scores.log"
+  params.data_loader.output = "data_loader.log"
 
   Channel.from(rootDir) \
-    | filter { params.extract_scores.tests.isDefined } \
+    | filter { params.data_loader.tests.isDefined } \
     | map{ p -> new Tuple3(
         "tests",
-        params.extract_scores.tests.testResources.collect{ file( p + it ) },
+        params.data_loader.tests.testResources.collect{ file( p + it ) },
         params
     )} \
-    | extract_scores
+    | data_loader
 
   emit:
-  extract_scores.out
+  data_loader.out
 }
