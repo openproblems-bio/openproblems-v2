@@ -1,0 +1,34 @@
+Exporting download_datasets (trajectory_inference/datasets) =docker=> target/docker/trajectory_inference/datasets/download_datasets
+Exporting scot (modality_alignment/methods) =nextflow=> target/nextflow/modality_alignment/methods/scot
+Exporting mnn (modality_alignment/methods) =docker=> target/docker/modality_alignment/methods/mnn
+[notice] Building container 'openpipeline/trajectory_inference/datasets_download_datasets:main_build' with Dockerfile
+[notice] Building container 'openpipeline/modality_alignment/methods_mnn:main_build' with Dockerfile
+Exporting mnn (modality_alignment/methods) =nextflow=> target/nextflow/modality_alignment/methods/mnn
+Exporting scprep_csv (modality_alignment/datasets) =docker=> target/docker/modality_alignment/datasets/scprep_csv
+[notice] Building container 'openpipeline/modality_alignment/datasets_scprep_csv:main_build' with Dockerfile
+Exporting scprep_csv (modality_alignment/datasets) =nextflow=> target/nextflow/modality_alignment/datasets/scprep_csv
+Exporting sample_dataset (modality_alignment/datasets) =docker=> target/docker/modality_alignment/datasets/sample_dataset
+[notice] Building container 'openpipeline/modality_alignment/datasets_sample_dataset:main_build' with Dockerfile
+Exporting sample_dataset (modality_alignment/datasets) =nextflow=> target/nextflow/modality_alignment/datasets/sample_dataset
+Exporting data_loader (common) =docker=> target/docker/common/data_loader
+[notice] Building container 'openpipeline/common_data_loader:main_build' with Dockerfile
+Exporting data_loader (common) =native=> target/native/common/data_loader
+Exporting data_loader (common) =nextflow=> target/nextflow/common/data_loader
+Exporting extract_scores (common) =docker=> target/docker/common/extract_scores
+[notice] Building container 'openpipeline/common_extract_scores:main_build' with Dockerfile
+Exporting extract_scores (common) =nextflow=> target/nextflow/common/extract_scores
+Exporting knn_auc (modality_alignment/metrics) =nextflow=> target/nextflow/modality_alignment/metrics/knn_auc
+Exporting harmonic_alignment (modality_alignment/methods) =docker=> target/docker/modality_alignment/methods/harmonic_alignment
+[notice] Building container 'openpipeline/modality_alignment/methods_harmonic_alignment:main_build' with Dockerfile
+Exporting harmonic_alignment (modality_alignment/methods) =nextflow=> target/nextflow/modality_alignment/methods/harmonic_alignment
+Exporting sample_method (modality_alignment/methods) =docker=> target/docker/modality_alignment/methods/sample_method
+[notice] Building container 'openpipeline/modality_alignment/methods_sample_method:main_build' with Dockerfile
+Exporting download_datasets (trajectory_inference/datasets) =nextflow=> target/nextflow/trajectory_inference/datasets/download_datasets
+Exporting mse (modality_alignment/metrics) =docker=> target/docker/modality_alignment/metrics/mse
+[notice] Building container 'openpipeline/modality_alignment/metrics_mse:main_build' with Dockerfile
+Exporting mse (modality_alignment/metrics) =nextflow=> target/nextflow/modality_alignment/metrics/mse
+Exporting sample_method (modality_alignment/methods) =nextflow=> target/nextflow/modality_alignment/methods/sample_method
+Exporting knn_auc (modality_alignment/metrics) =docker=> target/docker/modality_alignment/metrics/knn_auc
+Exporting scot (modality_alignment/methods) =docker=> target/docker/modality_alignment/methods/scot
+[notice] Building container 'openpipeline/modality_alignment/metrics_knn_auc:main_build' with Dockerfile
+[notice] Building container 'openpipeline/modality_alignment/methods_scot:main_build' with Dockerfile
