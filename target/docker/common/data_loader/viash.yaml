@@ -801,5 +801,5 @@ info:
   output: "target/docker/common/data_loader"
   executable: "target/docker/common/data_loader/data_loader"
   viash_version: "0.5.12"
-  git_commit: "7856d6228a515d0557901dc4cfd152e58990658f"
+  git_commit: "716d5c33020198f901637f8d4198e465ae4d3e3f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

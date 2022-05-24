@@ -901,5 +901,5 @@ info:
   output: "target/docker/modality_alignment/methods/harmonic_alignment"
   executable: "target/docker/modality_alignment/methods/harmonic_alignment/harmonic_alignment"
   viash_version: "0.5.12"
-  git_commit: "7856d6228a515d0557901dc4cfd152e58990658f"
+  git_commit: "716d5c33020198f901637f8d4198e465ae4d3e3f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
