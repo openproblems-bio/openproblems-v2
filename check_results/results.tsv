@@ -1,4 +1,4 @@
-The working directory for the namespace tests is /tmp/viash_ns_test9208811706753176845
+The working directory for the namespace tests is /tmp/viash_ns_test1335762308368745405
            namespace        functionality             platform            test_name exit_code duration               result[0m
 trajectory_inference/datasets    download_datasets               docker                start                                        [0m
 modality_alignment/methods                 scot               docker                start                                        [0m
@@ -24,7 +24,7 @@ modality_alignment/datasets           scprep_csv               docker           
 [32mmodality_alignment/methods        sample_method               docker              test.py         0        7              SUCCESS[0m
 modality_alignment/datasets       sample_dataset               docker                start                                        [0m
 [32mmodality_alignment/datasets           scprep_csv               docker     build_executable         0        2              SUCCESS[0m
-[32mmodality_alignment/datasets           scprep_csv               docker              test.py         0        7              SUCCESS[0m
+[32mmodality_alignment/datasets           scprep_csv               docker              test.py         0        6              SUCCESS[0m
               common          data_loader               docker                start                                        [0m
 [32m              common          data_loader               docker     build_executable         0        0              SUCCESS[0m
 [32m              common          data_loader               docker              test.py         0       10              SUCCESS[0m

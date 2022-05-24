@@ -15,7 +15,6 @@ output_bash
 # viash specific ignores
 docker_output/
 log.txt
-.viash*
 
 # nextflow specific ignores
 .nextflow*
