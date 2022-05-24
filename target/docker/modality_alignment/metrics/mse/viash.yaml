@@ -560,6 +560,7 @@ functionality:
                   ;;
               --input)
                   VIASH_PAR_INPUT="$2"
+                  [ $# -lt 2 ] && ViashError Not enough arguments passed to --input. Use "--help" to get more information on the parameters. && exit 1
                   shift 2
                   ;;
               --input=*)
@@ -568,10 +569,12 @@ functionality:
                   ;;
               -i)
                   VIASH_PAR_INPUT="$2"
+                  [ $# -lt 2 ] && ViashError Not enough arguments passed to -i. Use "--help" to get more information on the parameters. && exit 1
                   shift 2
                   ;;
               --output)
                   VIASH_PAR_OUTPUT="$2"
+                  [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
                   shift 2
                   ;;
               --output=*)
@@ -580,6 +583,7 @@ functionality:
                   ;;
               -o)
                   VIASH_PAR_OUTPUT="$2"
+                  [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
                   shift 2
                   ;;
               ---setup)
@@ -641,6 +645,14 @@ functionality:
       if [ -z "$VIASH_PAR_OUTPUT" ]; then
         VIASH_PAR_OUTPUT="output.h5ad"
       fi
+      
+      
+      # check whether parameters values are of the right type
+      
+      
+      
+      # check whether parameters values are of the right type
+      
       
       
       # detect volumes from file arguments
@@ -791,5 +803,5 @@ info:
   output: "target/docker/modality_alignment/metrics/mse"
   executable: "target/docker/modality_alignment/metrics/mse/mse"
   viash_version: "0.5.12"
-  git_commit: "cdc07b042581f4a8b816867af18285471c6ced6d"
+  git_commit: "85a4ca230be15713bf5622bc9f8c9fed89fb810e"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

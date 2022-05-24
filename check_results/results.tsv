@@ -1,35 +1,35 @@
-The working directory for the namespace tests is /tmp/viash_ns_test1335762308368745405
+The working directory for the namespace tests is /tmp/viash_ns_test10918901028408682296
            namespace        functionality             platform            test_name exit_code duration               result[0m
-trajectory_inference/datasets    download_datasets               docker                start                                        [0m
 modality_alignment/methods                 scot               docker                start                                        [0m
+trajectory_inference/datasets    download_datasets               docker                start                                        [0m
 [32mtrajectory_inference/datasets    download_datasets               docker     build_executable         0        0              SUCCESS[0m
 [33mtrajectory_inference/datasets    download_datasets               docker                tests        -1        0              MISSING[0m
 modality_alignment/metrics                  mse               docker                start                                        [0m
 [32mmodality_alignment/metrics                  mse               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/metrics                  mse               docker              test.py         0        4              SUCCESS[0m
+[32mmodality_alignment/metrics                  mse               docker              test.py         0        7              SUCCESS[0m
 modality_alignment/metrics              knn_auc               docker                start                                        [0m
 [32mmodality_alignment/methods                 scot               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/methods                 scot               docker              test.py         0        7              SUCCESS[0m
+[32mmodality_alignment/methods                 scot               docker              test.py         0       10              SUCCESS[0m
 modality_alignment/methods                  mnn               docker                start                                        [0m
 [32mmodality_alignment/metrics              knn_auc               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/metrics              knn_auc               docker              test.py         0        4              SUCCESS[0m
+[32mmodality_alignment/metrics              knn_auc               docker              test.py         0        5              SUCCESS[0m
 modality_alignment/methods   harmonic_alignment               docker                start                                        [0m
 [32mmodality_alignment/methods   harmonic_alignment               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/methods   harmonic_alignment               docker              test.py         0        7              SUCCESS[0m
+[32mmodality_alignment/methods   harmonic_alignment               docker              test.py         0        9              SUCCESS[0m
 modality_alignment/methods        sample_method               docker                start                                        [0m
 [32mmodality_alignment/methods                  mnn               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/methods                  mnn               docker              test.py         0       17              SUCCESS[0m
+[32mmodality_alignment/methods                  mnn               docker              test.py         0       21              SUCCESS[0m
 modality_alignment/datasets           scprep_csv               docker                start                                        [0m
 [32mmodality_alignment/methods        sample_method               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/methods        sample_method               docker              test.py         0        7              SUCCESS[0m
+[32mmodality_alignment/methods        sample_method               docker              test.py         0        8              SUCCESS[0m
 modality_alignment/datasets       sample_dataset               docker                start                                        [0m
 [32mmodality_alignment/datasets           scprep_csv               docker     build_executable         0        2              SUCCESS[0m
-[32mmodality_alignment/datasets           scprep_csv               docker              test.py         0        6              SUCCESS[0m
+[32mmodality_alignment/datasets           scprep_csv               docker              test.py         0        9              SUCCESS[0m
               common          data_loader               docker                start                                        [0m
 [32m              common          data_loader               docker     build_executable         0        0              SUCCESS[0m
-[32m              common          data_loader               docker              test.py         0       10              SUCCESS[0m
+[32m              common          data_loader               docker              test.py         0       12              SUCCESS[0m
               common       extract_scores               docker                start                                        [0m
 [32m              common       extract_scores               docker     build_executable         0        0              SUCCESS[0m
 [33m              common       extract_scores               docker                tests        -1        0              MISSING[0m
 [32mmodality_alignment/datasets       sample_dataset               docker     build_executable         0        0              SUCCESS[0m
-[32mmodality_alignment/datasets       sample_dataset               docker              test.py         0       20              SUCCESS[0m
+[32mmodality_alignment/datasets       sample_dataset               docker              test.py         0       27              SUCCESS[0m

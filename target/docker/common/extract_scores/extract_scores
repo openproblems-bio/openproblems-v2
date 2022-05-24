@@ -519,6 +519,7 @@ while [[ $# -gt 0 ]]; do
             else
               VIASH_PAR_INPUT="$VIASH_PAR_INPUT:""$2"
             fi
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --input=*)
@@ -535,10 +536,12 @@ while [[ $# -gt 0 ]]; do
             else
               VIASH_PAR_INPUT="$VIASH_PAR_INPUT:""$2"
             fi
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -i. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output=*)
@@ -547,6 +550,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -o)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         ---setup)
@@ -608,6 +612,14 @@ fi
 if [ -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_PAR_OUTPUT="output.tsv"
 fi
+
+
+# check whether parameters values are of the right type
+
+
+
+# check whether parameters values are of the right type
+
 
 
 # detect volumes from file arguments

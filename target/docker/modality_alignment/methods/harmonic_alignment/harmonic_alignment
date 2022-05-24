@@ -533,6 +533,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --input)
             VIASH_PAR_INPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --input=*)
@@ -541,10 +542,12 @@ while [[ $# -gt 0 ]]; do
             ;;
         -i)
             VIASH_PAR_INPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -i. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output=*)
@@ -553,10 +556,12 @@ while [[ $# -gt 0 ]]; do
             ;;
         -o)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_svd)
             VIASH_PAR_N_SVD="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_svd. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_svd=*)
@@ -565,6 +570,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --n_pca_XY)
             VIASH_PAR_N_PCA_XY="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_pca_XY. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_pca_XY=*)
@@ -573,6 +579,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --n_eigenvectors)
             VIASH_PAR_N_EIGENVECTORS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_eigenvectors. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_eigenvectors=*)
@@ -647,6 +654,38 @@ fi
 if [ -z "$VIASH_PAR_N_EIGENVECTORS" ]; then
   VIASH_PAR_N_EIGENVECTORS="100"
 fi
+
+
+# check whether parameters values are of the right type
+
+
+if [[ -n "$VIASH_PAR_N_SVD" ]]; then
+  if ! [[ "$VIASH_PAR_N_SVD" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_svd' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+
+if [[ -n "$VIASH_PAR_N_PCA_XY" ]]; then
+  if ! [[ "$VIASH_PAR_N_PCA_XY" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_pca_XY' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+
+if [[ -n "$VIASH_PAR_N_EIGENVECTORS" ]]; then
+  if ! [[ "$VIASH_PAR_N_EIGENVECTORS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_eigenvectors' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+
+
+# check whether parameters values are of the right type
+
+
+
+
 
 
 # detect volumes from file arguments

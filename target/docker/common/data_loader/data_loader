@@ -518,6 +518,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --output)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output=*)
@@ -526,10 +527,12 @@ while [[ $# -gt 0 ]]; do
             ;;
         -o)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --url)
             VIASH_PAR_URL="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --url. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --url=*)
@@ -538,6 +541,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --name)
             VIASH_PAR_NAME="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --name. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --name=*)
@@ -610,6 +614,16 @@ if [ -z "$VIASH_PAR_NAME" ]; then
   ViashError '--name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
+
+
+
+# check whether parameters values are of the right type
+
+
+
+
+# check whether parameters values are of the right type
+
 
 
 

@@ -541,6 +541,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --id)
             VIASH_PAR_ID="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --id. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --id=*)
@@ -549,6 +550,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --input1)
             VIASH_PAR_INPUT1="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input1. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --input1=*)
@@ -557,6 +559,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --input2)
             VIASH_PAR_INPUT2="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input2. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --input2=*)
@@ -565,6 +568,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --compression)
             VIASH_PAR_COMPRESSION="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --compression. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --compression=*)
@@ -577,6 +581,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --output)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output=*)
@@ -585,6 +590,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -o)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         ---setup)
@@ -660,6 +666,28 @@ fi
 if [ -z "$VIASH_PAR_TEST" ]; then
   VIASH_PAR_TEST="false"
 fi
+
+
+# check whether parameters values are of the right type
+
+
+
+
+if [[ -n "$VIASH_PAR_TEST" ]]; then
+  if ! [[ "$VIASH_PAR_TEST" =~ ^(true|True|TRUE|false|False|FALSE|yes|Yes|YES|no|No|NO)$ ]]; then
+    ViashError '--test' has to be a boolean_true. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+
+
+
+# check whether parameters values are of the right type
+
+
+
+
+
 
 
 # detect volumes from file arguments

@@ -521,6 +521,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --output)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --output=*)
@@ -529,10 +530,12 @@ while [[ $# -gt 0 ]]; do
             ;;
         -o)
             VIASH_PAR_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_cells)
             VIASH_PAR_N_CELLS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_cells. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_cells=*)
@@ -541,6 +544,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         --n_genes)
             VIASH_PAR_N_GENES="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_genes. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
         --n_genes=*)
@@ -611,6 +615,28 @@ fi
 if [ -z "$VIASH_PAR_N_GENES" ]; then
   VIASH_PAR_N_GENES="1500"
 fi
+
+
+# check whether parameters values are of the right type
+
+if [[ -n "$VIASH_PAR_N_CELLS" ]]; then
+  if ! [[ "$VIASH_PAR_N_CELLS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_cells' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+
+if [[ -n "$VIASH_PAR_N_GENES" ]]; then
+  if ! [[ "$VIASH_PAR_N_GENES" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_genes' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+
+
+# check whether parameters values are of the right type
+
+
 
 
 # detect volumes from file arguments
