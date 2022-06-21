@@ -444,9 +444,9 @@ functionality:
       
       LABEL org.opencontainers.image.authors="Louise Deconinck (maintainer, author) {github: LouiseDck}"
       LABEL org.opencontainers.image.description="Companion container for running component trajectory_inference/datasets download_datasets"
-      LABEL org.opencontainers.image.created="2022-06-13T10:32:52Z"
+      LABEL org.opencontainers.image.created="2022-06-21T12:55:10Z"
       LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-      LABEL org.opencontainers.image.revision="cb357daf3a312ea4bcfd35b61a400cad0cba7b1a"
+      LABEL org.opencontainers.image.revision="8b071a69ab5884e11ccd7af2c0fc868419eece35"
       LABEL org.opencontainers.image.version="fatal: No names found, cannot describe anything."
       VIASHDOCKER
       }
@@ -878,6 +878,6 @@ info:
   output: "target/docker/trajectory_inference/datasets/download_datasets"
   executable: "target/docker/trajectory_inference/datasets/download_datasets/download_datasets"
   viash_version: "0.5.13"
-  git_commit: "cb357daf3a312ea4bcfd35b61a400cad0cba7b1a"
+  git_commit: "8b071a69ab5884e11ccd7af2c0fc868419eece35"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
   git_tag: "fatal: No names found, cannot describe anything."
