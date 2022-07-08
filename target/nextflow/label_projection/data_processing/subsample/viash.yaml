@@ -1284,6 +1284,6 @@ info:
   platform: "nextflow"
   output: "target/nextflow/label_projection/data_processing/subsample"
   viash_version: "0.5.13"
-  git_commit: "8b071a69ab5884e11ccd7af2c0fc868419eece35"
+  git_commit: "db2a6f896e1ab44c3d0dd79672c0071ab3360356"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
   git_tag: "fatal: No names found, cannot describe anything."
