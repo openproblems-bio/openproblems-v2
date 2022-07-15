@@ -527,6 +527,6 @@ info:
   output: "target/native/common/dataset_loader/download"
   executable: "target/native/common/dataset_loader/download/download"
   viash_version: "0.5.13"
-  git_commit: "db2a6f896e1ab44c3d0dd79672c0071ab3360356"
+  git_commit: "cb680ea41d63a536267c9a5013f50be86f218ee1"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
   git_tag: "fatal: No names found, cannot describe anything."

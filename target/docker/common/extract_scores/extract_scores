@@ -375,9 +375,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata"
 
 LABEL org.opencontainers.image.description="Companion container for running component common extract_scores"
-LABEL org.opencontainers.image.created="2022-07-08T07:45:16Z"
+LABEL org.opencontainers.image.created="2022-07-15T12:33:53Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="db2a6f896e1ab44c3d0dd79672c0071ab3360356"
+LABEL org.opencontainers.image.revision="cb680ea41d63a536267c9a5013f50be86f218ee1"
 LABEL org.opencontainers.image.version="fatal: No names found, cannot describe anything."
 VIASHDOCKER
 }
