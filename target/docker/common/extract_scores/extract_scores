@@ -167,6 +167,11 @@ function ViashHelp {
   echo "        default: input.h5ad"
   echo "        Input h5ad files containing metadata and metrics in adata.uns"
   echo ""
+  echo "    --column_names"
+  echo "        type: string, multiple values allowed"
+  echo "        default: dataset_id:method_id:metric_id:metric_value"
+  echo "        Which fields from adata.uns to extract and store as a data frame."
+  echo ""
   echo "    -o, --output"
   echo "        type: file, output"
   echo "        default: output.tsv"
@@ -376,9 +381,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata"
 
 LABEL org.opencontainers.image.description="Companion container for running component common extract_scores"
-LABEL org.opencontainers.image.created="2022-07-15T12:37:42Z"
+LABEL org.opencontainers.image.created="2022-07-18T12:07:40Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="5c33071d427deb01c34313ab035d2ef3f729f863"
+LABEL org.opencontainers.image.revision="44d080555303dc10817b0cd2f1f9c48e81a1b53b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -551,6 +556,23 @@ while [[ $# -gt 0 ]]; do
             [ $# -lt 2 ] && ViashError Not enough arguments passed to -i. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
+        --column_names)
+            if [ -z "$VIASH_PAR_COLUMN_NAMES" ]; then
+              VIASH_PAR_COLUMN_NAMES="$2"
+            else
+              VIASH_PAR_COLUMN_NAMES="$VIASH_PAR_COLUMN_NAMES:""$2"
+            fi
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --column_names. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --column_names=*)
+            if [ -z "$VIASH_PAR_COLUMN_NAMES" ]; then
+              VIASH_PAR_COLUMN_NAMES=$(ViashRemoveFlags "$1")
+            else
+              VIASH_PAR_COLUMN_NAMES="$VIASH_PAR_COLUMN_NAMES:"$(ViashRemoveFlags "$1")
+            fi
+            shift 1
+            ;;
         --output)
             VIASH_PAR_OUTPUT="$2"
             [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
@@ -621,6 +643,9 @@ fi
 if [ -z "$VIASH_PAR_INPUT" ]; then
   VIASH_PAR_INPUT="input.h5ad"
 fi
+if [ -z "$VIASH_PAR_COLUMN_NAMES" ]; then
+  VIASH_PAR_COLUMN_NAMES="dataset_id:method_id:metric_id:metric_value"
+fi
 if [ -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_PAR_OUTPUT="output.tsv"
 fi
@@ -630,7 +655,9 @@ fi
 
 
 
+
 # check whether parameters values are of the right type
+
 
 
 
@@ -693,6 +720,7 @@ viash_orig_warn_ <- options(warn = 2)
 # get parameters from cli
 par <- list(
   "input" = $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "strsplit('${VIASH_PAR_INPUT//\'/\\\'}', split = ':')[[1]]"; else echo NULL; fi ),
+  "column_names" = $( if [ ! -z ${VIASH_PAR_COLUMN_NAMES+x} ]; then echo "strsplit('${VIASH_PAR_COLUMN_NAMES//\'/\\\'}', split = ':')[[1]]"; else echo NULL; fi ),
   "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "'${VIASH_PAR_OUTPUT//\'/\\\'}'"; else echo NULL; fi )
 )
 
@@ -724,14 +752,14 @@ scores <- map_df(par\$input, function(inp) {
   cat("Reading '", inp, "'\\n", sep = "")
   ad <- read_h5ad(inp)
 
-  for (uns_name in c("dataset_id", "method_id", "metric_id", "metric_value")) {
+  for (uns_name in par\$column_names) {
     assert_that(
       uns_name %in% names(ad\$uns),
       msg = paste0("File ", inp, " must contain \`uns['", uns_name, "']\`")
     )
   }
 
-  as_tibble(ad\$uns[c("dataset_id", "method_id", "metric_id", "metric_value")])
+  as_tibble(ad\$uns[par\$column_names])
 })
 
 write_tsv(scores, par\$output)

@@ -179,7 +179,7 @@ functionality:
           },
           {
             "type" : "file",
-            "path" : "../../resources/pancreas",
+            "path" : "../../../../resources_test/label_projection/pancreas",
             "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/data_processing/randomize/config.vsh.yaml"
           }
         ],
@@ -237,7 +237,7 @@ functionality:
           adata.obs["is_train"] = np.random.choice(
               [True, False], adata.shape[0], replace=True, p=[0.8, 0.2]
           )
-          adata = noise.add_label_noise(adata, noise_prob=0.2)
+          adata = noise.add_celltype_noise(adata, noise_prob=0.2)
       
       print(">> Writing data")
       adata.write(par['output'])
@@ -1901,7 +1901,7 @@ functionality:
     path: "test_script.py"
     is_executable: true
   - type: "file"
-    path: "../../resources/pancreas"
+    path: "../../../../resources_test/label_projection/pancreas"
   info: {}
   dummy_arguments: []
   set_wd_to_resources_dir: false
@@ -1932,5 +1932,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/label_projection/data_processing/randomize"
   viash_version: "0.5.15"
-  git_commit: "5c33071d427deb01c34313ab035d2ef3f729f863"
+  git_commit: "44d080555303dc10817b0cd2f1f9c48e81a1b53b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

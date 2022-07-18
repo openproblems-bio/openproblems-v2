@@ -1,0 +1,6 @@
+2022-07-18 11:36:56  140552184 label_projection/pancreas/raw_data.h5ad
+2022-07-18 11:36:56     363369 label_projection/pancreas/toy_baseline_pred_data.h5ad
+2022-07-18 11:36:56    1006236 label_projection/pancreas/toy_data.h5ad
+2022-07-18 11:36:56     358033 label_projection/pancreas/toy_normalized_log_cpm_data.h5ad
+2022-07-18 11:36:56     358157 label_projection/pancreas/toy_normalized_log_scran_pooling_data.h5ad
+2022-07-18 11:36:56    1006736 label_projection/pancreas/toy_preprocessed_data.h5ad

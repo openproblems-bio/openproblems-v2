@@ -43,6 +43,21 @@ thisConfig = processConfig([
       "multiple_sep" : ":"
     },
     {
+      "type" : "string",
+      "name" : "--column_names",
+      "description" : "Which fields from adata.uns to extract and store as a data frame.",
+      "default" : [
+        "dataset_id",
+        "method_id",
+        "metric_id",
+        "metric_value"
+      ],
+      "required" : false,
+      "direction" : "input",
+      "multiple" : true,
+      "multiple_sep" : ":"
+    },
+    {
       "type" : "file",
       "name" : "--output",
       "alternatives" : [
@@ -85,6 +100,7 @@ viash_orig_warn_ <- options(warn = 2)
 # get parameters from cli
 par <- list(
   "input" = $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "strsplit('${VIASH_PAR_INPUT//\\'/\\\\\\'}', split = ':')[[1]]"; else echo NULL; fi ),
+  "column_names" = $( if [ ! -z ${VIASH_PAR_COLUMN_NAMES+x} ]; then echo "strsplit('${VIASH_PAR_COLUMN_NAMES//\\'/\\\\\\'}', split = ':')[[1]]"; else echo NULL; fi ),
   "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "'${VIASH_PAR_OUTPUT//\\'/\\\\\\'}'"; else echo NULL; fi )
 )
 
@@ -116,14 +132,14 @@ scores <- map_df(par\\$input, function(inp) {
   cat("Reading '", inp, "'\\\\n", sep = "")
   ad <- read_h5ad(inp)
 
-  for (uns_name in c("dataset_id", "method_id", "metric_id", "metric_value")) {
+  for (uns_name in par\\$column_names) {
     assert_that(
       uns_name %in% names(ad\\$uns),
       msg = paste0("File ", inp, " must contain \\`uns['", uns_name, "']\\`")
     )
   }
 
-  as_tibble(ad\\$uns[c("dataset_id", "method_id", "metric_id", "metric_value")])
+  as_tibble(ad\\$uns[par\\$column_names])
 })
 
 write_tsv(scores, par\\$output)
