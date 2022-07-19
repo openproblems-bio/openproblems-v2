@@ -1,0 +1,31 @@
+functionality:
+  name: generate_toy_dataset
+  namespace: "label_projection/data_processing"
+  version: dev
+  description: A description for your component.
+  authors:
+    - name: "chagasVinicius"
+      roles: [ author, maintainer ]
+      props: { github: chagasVinicius }
+  arguments:
+    - name: "--output"
+      type: "file"
+      direction: "output"
+      example: "toy_data.h5ad"
+      description: Resulting toy data.
+      required: true
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: "python:3.8"
+    setup:
+      - type: python
+        packages:
+          - numpy
+          - pandas
+          - anndata
+          - scipy
+  - type: nextflow
+  - type: native
