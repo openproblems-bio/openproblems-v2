@@ -1,6 +1,6 @@
 functionality:
-  name: generate_toy_dataset
-  namespace: "label_projection/data_processing"
+  name: "generate_toy_dataset"
+  namespace: "common"
   version: dev
   description: A description for your component.
   authors:

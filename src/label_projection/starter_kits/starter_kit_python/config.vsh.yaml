@@ -47,8 +47,8 @@ functionality:
   # resources for unit testing your component
   tests:
     - type: python_script
-      path: test.py
-    - path: sample_data
+      path: test_script.py
+    - path: ../resources/toy_data.h5ad
 
 # target platforms
 platforms:
@@ -64,7 +64,6 @@ platforms:
     setup:
       - type: python
         packages:
-          - scikit-learn
           - anndata
           - scanpy
 
