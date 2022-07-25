@@ -3,3 +3,5 @@ anndata_loader	pancreas	https://ndownloader.figshare.com/files/24539828	celltype
 anndata_loader	immune_cells	https://ndownloader.figshare.com/files/25717328	final_annotation	batch	tissue
 anndata_loader	pbmc	https://ndownloader.figshare.com/files/24974582	NA	NA	NA
 anndata_loader	tenx_5k_pbmc	https://ndownloader.figshare.com/files/25555739	NA	NA	NA
+anndata_loader	human_blood_nestorowa2016	https://ndownloader.figshare.com/files/25555751	NA	NA	NA
+anndata_loader	mouse_blood_olsoon2016	https://ndownloader.figshare.com/files/27346712	NA	NA	NA

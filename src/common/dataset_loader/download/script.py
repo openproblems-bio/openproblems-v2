@@ -8,7 +8,7 @@ _FAKE_HEADERS = [("User-Agent", "Mozilla/5.0")]
 
 ## VIASH START
 par = {
-    "url": "https://ndownloader.figshare.com/files/24539828",
+    "url": "https://ndownloader.figshare.com/files/25555739",
     "name": "pancreas",
     "obs_celltype": "celltype",
     "obs_batch": "tech",
@@ -58,6 +58,10 @@ if par["obs_tissue"]:
         adata.obs["tissue"] = adata.obs[par["obs_tissue"]]
     else:
         print(f"Warning: key '{par['obs_tissue']}' could not be found in adata.obs.")
+
+if par['name'] == "tenx_5k_pbmc":
+    print("Making var_names unique")
+    adata.var_names_make_unique()
 
 print("Remove cells or genes with 0 counts")
 sc.pp.filter_genes(adata, min_cells=1)
