@@ -38,6 +38,10 @@ if "counts" in adata.layers:
 print("Setting .uns['dataset_id']")
 adata.uns["dataset_id"] = par["name"]
 
+if par['name'] == "tenx_5k_pbmc":
+    print("Making var_names unique")
+    adata.var_names_make_unique()
+
 print("Setting .obs['celltype']")
 if par["obs_celltype"]:
     if par["obs_celltype"] in adata.obs:
@@ -58,10 +62,6 @@ if par["obs_tissue"]:
         adata.obs["tissue"] = adata.obs[par["obs_tissue"]]
     else:
         print(f"Warning: key '{par['obs_tissue']}' could not be found in adata.obs.")
-
-if par['name'] == "tenx_5k_pbmc":
-    print("Making var_names unique")
-    adata.var_names_make_unique()
 
 print("Remove cells or genes with 0 counts")
 sc.pp.filter_genes(adata, min_cells=1)
