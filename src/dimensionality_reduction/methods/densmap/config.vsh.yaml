@@ -1,0 +1,49 @@
+functionality:
+  name: "densmap"
+  namespace: "dimensionality_reduction/methods"
+  version: "dev"
+  description: "Assessing single-cell transcriptomic variability through"
+  authors:
+    - name: "Scott Gigante"
+      roles: [ author ]
+      props: { github: scottgigante }
+    - name: "Vinicius Chagas"
+      roles: [ maintainer ]
+      props: { github: chagasVinicius }
+  arguments:
+    - name: "--input"
+      alternatives: ["-i"]
+      type: "file"
+      example: "input.h5ad"
+      description: "Input file that will be used to generate predictions"
+      required: true
+    - name: "--pca"
+      type: "boolean_true"
+    - name: "--output"
+      alternatives: ["-o"]
+      type: "file"
+      direction: "output"
+      example: "output.h5ad"
+      description: "Output data labeled"
+      required: true
+  resources:
+    - type: python_script
+      path: script.py
+    - type: python_script
+      path: ../../utils.py
+  test_resources:
+    - type: python_script
+      path: test_script.py
+    - type: file
+      path: "../../../../resources_test/dimensionality_reduction/tenx_5k_pbmc/toy_log_cpm_hvg.h5ad"
+platforms:
+  - type: docker
+    image: "python:3.8"
+    setup:
+      - type: python
+        packages:
+          - scanpy
+          - umap
+          - "anndata<0.8"
+  - type: nextflow
+  - type: native
