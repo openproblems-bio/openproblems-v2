@@ -18,6 +18,10 @@ target/docker/common/dataset_loader/download/download\
     --name "tenx_5k_pbmc"\
     --output $DATASET_DIR/raw_data.h5ad
 
-target/docker/label_projection/data_processing/subsample/subsample\
+target/docker/common/data_processing/subsample/subsample\
     --input $DATASET_DIR/raw_data.h5ad\
     --output $DATASET_DIR/toy_data.h5ad
+
+target/docker/dimensionality_reduction/data_processing/normalize/log_cpm_hvg/log_cpm_hvg \
+    --input $DATASET_DIR/toy_data.h5ad \
+    --output $DATASET_DIR/toy_log_cpm_hvg.h5ad
