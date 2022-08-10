@@ -168,7 +168,7 @@ thisConfig = processConfig([
     }
   ],
   "info" : {
-    "type" : "baseline",
+    "type" : "method",
     "label" : "Scarches_scanvi_ALL_GENES"
   },
   "set_wd_to_resources_dir" : false,

@@ -4,7 +4,7 @@ functionality:
   version: "dev"
   description: "Nearest neighbor pattern classification"
   info:
-    type: baseline
+    type: method
     label: KNN
   authors:
     - name: "Scott Gigante"

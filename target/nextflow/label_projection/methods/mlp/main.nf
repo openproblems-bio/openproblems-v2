@@ -137,7 +137,7 @@ thisConfig = processConfig([
     }
   ],
   "info" : {
-    "type" : "baseline",
+    "type" : "method",
     "label" : "Multilayer perceptron"
   },
   "set_wd_to_resources_dir" : false,

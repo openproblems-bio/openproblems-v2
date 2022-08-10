@@ -453,9 +453,9 @@ functionality:
       
       LABEL org.opencontainers.image.authors="Alex Tong (maintainer, author) {github: atong01}"
       LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/methods scot"
-      LABEL org.opencontainers.image.created="2022-07-18T12:07:41Z"
+      LABEL org.opencontainers.image.created="2022-08-10T13:57:47Z"
       LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-      LABEL org.opencontainers.image.revision="44d080555303dc10817b0cd2f1f9c48e81a1b53b"
+      LABEL org.opencontainers.image.revision="cee896351c82236747fc474a8d551fd73065a615"
       LABEL org.opencontainers.image.version="main_build"
       VIASHDOCKER
       }
@@ -912,5 +912,5 @@ info:
   output: "target/docker/modality_alignment/methods/scot"
   executable: "target/docker/modality_alignment/methods/scot/scot"
   viash_version: "0.5.15"
-  git_commit: "44d080555303dc10817b0cd2f1f9c48e81a1b53b"
+  git_commit: "cee896351c82236747fc474a8d551fd73065a615"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

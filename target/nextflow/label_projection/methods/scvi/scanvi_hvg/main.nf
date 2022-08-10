@@ -187,7 +187,7 @@ thisConfig = processConfig([
     }
   ],
   "info" : {
-    "type" : "baseline",
+    "type" : "method",
     "label" : "Scanvi_HVG"
   },
   "set_wd_to_resources_dir" : false,

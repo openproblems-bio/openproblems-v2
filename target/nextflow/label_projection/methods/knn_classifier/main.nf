@@ -116,7 +116,7 @@ thisConfig = processConfig([
     }
   ],
   "info" : {
-    "type" : "baseline",
+    "type" : "method",
     "label" : "KNN"
   },
   "set_wd_to_resources_dir" : false,

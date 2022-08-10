@@ -434,9 +434,9 @@ functionality:
         pip install --upgrade --no-cache-dir "anndata"
       
       LABEL org.opencontainers.image.description="Companion container for running component common extract_scores"
-      LABEL org.opencontainers.image.created="2022-07-18T12:07:40Z"
+      LABEL org.opencontainers.image.created="2022-08-10T13:57:46Z"
       LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-      LABEL org.opencontainers.image.revision="44d080555303dc10817b0cd2f1f9c48e81a1b53b"
+      LABEL org.opencontainers.image.revision="cee896351c82236747fc474a8d551fd73065a615"
       LABEL org.opencontainers.image.version="main_build"
       VIASHDOCKER
       }
@@ -883,5 +883,5 @@ info:
   output: "target/docker/common/extract_scores"
   executable: "target/docker/common/extract_scores/extract_scores"
   viash_version: "0.5.15"
-  git_commit: "44d080555303dc10817b0cd2f1f9c48e81a1b53b"
+  git_commit: "cee896351c82236747fc474a8d551fd73065a615"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

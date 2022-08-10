@@ -128,7 +128,7 @@ thisConfig = processConfig([
     }
   ],
   "info" : {
-    "type" : "baseline",
+    "type" : "method",
     "label" : "Logistic Regression"
   },
   "set_wd_to_resources_dir" : false,
