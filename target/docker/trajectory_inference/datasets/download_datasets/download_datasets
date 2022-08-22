@@ -390,9 +390,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Louise Deconinck (maintainer, author) {github: LouiseDck}"
 LABEL org.opencontainers.image.description="Companion container for running component trajectory_inference/datasets download_datasets"
-LABEL org.opencontainers.image.created="2022-08-10T13:57:47Z"
+LABEL org.opencontainers.image.created="2022-08-22T03:05:18Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cee896351c82236747fc474a8d551fd73065a615"
+LABEL org.opencontainers.image.revision="2770b1bfb69869660836b0a69bee7723b48c676e"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
