@@ -376,9 +376,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante (author) {github: scottgigante}, Vinicius Chagas  (maintainer) {github: chagasVinicius}"
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/data_processing dataset_concatenate"
-LABEL org.opencontainers.image.created="2022-08-22T03:05:16Z"
+LABEL org.opencontainers.image.created="2022-10-25T04:50:24Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2770b1bfb69869660836b0a69bee7723b48c676e"
+LABEL org.opencontainers.image.revision="323e3a368ec300672237dcea1c6975e9de307eb2"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

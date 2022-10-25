@@ -13,13 +13,12 @@ functionality:
   outputs: []
   arguments:
   - type: "file"
-    name: "--input"
-    alternatives:
-    - "-i"
+    name: "--input_mod1"
+    alternatives: []
     description: "Input h5ad file containing at least `ad.X` and `ad.obsm['mode2']`."
     example: []
     default:
-    - "input.h5ad"
+    - "dataset_mod1_censored.h5ad"
     must_exist: false
     required: false
     direction: "input"
@@ -27,8 +26,7 @@ functionality:
     multiple_sep: ":"
   - type: "file"
     name: "--output"
-    alternatives:
-    - "-o"
+    alternatives: []
     description: "Output h5ad file containing both RNA and ADT data"
     example: []
     default:
@@ -247,12 +245,12 @@ functionality:
         echo "Run Harmonic Alignment"
         echo ""
         echo "Arguments:"
-        echo "    -i, --input"
+        echo "    --input_mod1"
         echo "        type: file"
-        echo "        default: input.h5ad"
+        echo "        default: dataset_mod1_censored.h5ad"
         echo "        Input h5ad file containing at least \`ad.X\` and \`ad.obsm['mode2']\`."
         echo ""
-        echo "    -o, --output"
+        echo "    --output"
         echo "        type: file, output"
         echo "        default: output.h5ad"
         echo "        Output h5ad file containing both RNA and ADT data"
@@ -476,9 +474,9 @@ functionality:
       
       LABEL org.opencontainers.image.authors="Scott Gigante (maintainer, author) {github: scottgigante}"
       LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/methods harmonic_alignment"
-      LABEL org.opencontainers.image.created="2022-08-22T03:05:17Z"
+      LABEL org.opencontainers.image.created="2022-10-25T04:50:22Z"
       LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-      LABEL org.opencontainers.image.revision="2770b1bfb69869660836b0a69bee7723b48c676e"
+      LABEL org.opencontainers.image.revision="323e3a368ec300672237dcea1c6975e9de307eb2"
       LABEL org.opencontainers.image.version="main_build"
       VIASHDOCKER
       }
@@ -625,19 +623,14 @@ functionality:
                   echo "harmonic_alignment main_build"
                   exit
                   ;;
-              --input)
-                  VIASH_PAR_INPUT="$2"
-                  [ $# -lt 2 ] && ViashError Not enough arguments passed to --input. Use "--help" to get more information on the parameters. && exit 1
+              --input_mod1)
+                  VIASH_PAR_INPUT_MOD1="$2"
+                  [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_mod1. Use "--help" to get more information on the parameters. && exit 1
                   shift 2
                   ;;
-              --input=*)
-                  VIASH_PAR_INPUT=$(ViashRemoveFlags "$1")
+              --input_mod1=*)
+                  VIASH_PAR_INPUT_MOD1=$(ViashRemoveFlags "$1")
                   shift 1
-                  ;;
-              -i)
-                  VIASH_PAR_INPUT="$2"
-                  [ $# -lt 2 ] && ViashError Not enough arguments passed to -i. Use "--help" to get more information on the parameters. && exit 1
-                  shift 2
                   ;;
               --output)
                   VIASH_PAR_OUTPUT="$2"
@@ -647,11 +640,6 @@ functionality:
               --output=*)
                   VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
                   shift 1
-                  ;;
-              -o)
-                  VIASH_PAR_OUTPUT="$2"
-                  [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
-                  shift 2
                   ;;
               --n_svd)
                   VIASH_PAR_N_SVD="$2"
@@ -733,8 +721,8 @@ functionality:
       
       
       
-      if [ -z "$VIASH_PAR_INPUT" ]; then
-        VIASH_PAR_INPUT="input.h5ad"
+      if [ -z "$VIASH_PAR_INPUT_MOD1" ]; then
+        VIASH_PAR_INPUT_MOD1="dataset_mod1_censored.h5ad"
       fi
       if [ -z "$VIASH_PAR_OUTPUT" ]; then
         VIASH_PAR_OUTPUT="output.h5ad"
@@ -783,9 +771,9 @@ functionality:
       
       
       # detect volumes from file arguments
-      if [ ! -z "$VIASH_PAR_INPUT" ]; then
-        VIASH_EXTRA_MOUNTS="$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg "$VIASH_PAR_INPUT")"
-        VIASH_PAR_INPUT=$(ViashAutodetectMount "$VIASH_PAR_INPUT")
+      if [ ! -z "$VIASH_PAR_INPUT_MOD1" ]; then
+        VIASH_EXTRA_MOUNTS="$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg "$VIASH_PAR_INPUT_MOD1")"
+        VIASH_PAR_INPUT_MOD1=$(ViashAutodetectMount "$VIASH_PAR_INPUT_MOD1")
       fi
       if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
         VIASH_EXTRA_MOUNTS="$VIASH_EXTRA_MOUNTS $(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT")"
@@ -824,10 +812,15 @@ functionality:
       trap interrupt INT SIGINT
       cat > "\$tempscript" << 'VIASHMAIN'
       
+      print("Loading dependencies")
+      import scanpy as sc
+      import harmonicalignment
+      import sklearn.decomposition
+      
       ## VIASH START
       # The following code has been auto-generated by Viash.
       par = {
-        'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "'${VIASH_PAR_INPUT//\'/\\\'}'"; else echo None; fi ),
+        'input_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo "'${VIASH_PAR_INPUT_MOD1//\'/\\\'}'"; else echo None; fi ),
         'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "'${VIASH_PAR_OUTPUT//\'/\\\'}'"; else echo None; fi ),
         'n_svd': $( if [ ! -z ${VIASH_PAR_N_SVD+x} ]; then echo "int('${VIASH_PAR_N_SVD//\'/\\\'}')"; else echo None; fi ),
         'n_pca_XY': $( if [ ! -z ${VIASH_PAR_N_PCA_XY+x} ]; then echo "int('${VIASH_PAR_N_PCA_XY//\'/\\\'}')"; else echo None; fi ),
@@ -843,11 +836,6 @@ functionality:
       resources_dir = '$VIASH_META_RESOURCES_DIR'
       
       ## VIASH END
-      
-      print("Loading dependencies")
-      import scanpy as sc
-      import harmonicalignment
-      import sklearn.decomposition
       
       # importing helper functions from common preprocessing.py file in resources dir
       import sys
@@ -913,7 +901,6 @@ functionality:
     path: "../../resources/sample_dataset.h5ad"
   info:
     paper_doi: "10.1137/1.9781611976236.36"
-    code_version: "0.0"
     code_url: "https://github.com/KrishnaswamyLab/harmonic-alignment"
     paper_year: "2020"
     method_name: "Harmonic Alignment"
@@ -964,5 +951,5 @@ info:
   output: "target/docker/modality_alignment/methods/harmonic_alignment"
   executable: "target/docker/modality_alignment/methods/harmonic_alignment/harmonic_alignment"
   viash_version: "0.5.15"
-  git_commit: "2770b1bfb69869660836b0a69bee7723b48c676e"
+  git_commit: "323e3a368ec300672237dcea1c6975e9de307eb2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

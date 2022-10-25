@@ -1907,5 +1907,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/label_projection/methods/knn_classifier"
   viash_version: "0.5.15"
-  git_commit: "2770b1bfb69869660836b0a69bee7723b48c676e"
+  git_commit: "323e3a368ec300672237dcea1c6975e9de307eb2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
