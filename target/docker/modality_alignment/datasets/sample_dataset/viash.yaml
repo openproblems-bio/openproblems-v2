@@ -75,5 +75,5 @@ info:
   output: "target/docker/modality_alignment/datasets/sample_dataset"
   executable: "target/docker/modality_alignment/datasets/sample_dataset/sample_dataset"
   viash_version: "0.6.3"
-  git_commit: "762a01f229309e6bb68ac63f529babfdf21e261f"
+  git_commit: "8268cf55172fc8191e127849be7eb2caa07b2edf"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
