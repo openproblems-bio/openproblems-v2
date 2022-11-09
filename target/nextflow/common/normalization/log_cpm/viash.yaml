@@ -109,6 +109,6 @@ info:
   config: "src/common/normalization/log_cpm/config.vsh.yaml"
   platform: "nextflow"
   output: "target/nextflow/common/normalization/log_cpm"
-  viash_version: "0.6.2"
-  git_commit: "3716bf44bed9b3d87f233e9562998784e623dfaf"
+  viash_version: "0.6.3"
+  git_commit: "762a01f229309e6bb68ac63f529babfdf21e261f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
