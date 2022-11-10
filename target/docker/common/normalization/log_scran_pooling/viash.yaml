@@ -17,17 +17,25 @@ functionality:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         obs:
         - type: "string"
-          name: "label"
-          description: "Ground truth cell type labels"
+          name: "celltype"
+          description: "Cell type information"
+          required: false
         - type: "string"
           name: "batch"
           description: "Batch information"
+          required: false
+        - type: "string"
+          name: "tissue"
+          description: "Tissue information"
+          required: false
         uns:
         - type: "string"
           name: "dataset_id"
-          description: "A unique identifier for the original dataset (before preprocessing)"
+          description: "A unique identifier for the dataset"
+          required: true
     example:
     - "raw_dataset.h5ad"
     default: []
@@ -48,23 +56,28 @@ functionality:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         - type: "double"
-          name: "lognorm"
+          name: "$par_layer_output"
           description: "Log-transformed normalised counts"
         obs:
-        - type: "double"
-          name: "label"
-          description: "Ground truth cell type labels"
-        - type: "double"
+        - type: "string"
+          name: "celltype"
+          description: "Cell type information"
+          required: false
+        - type: "string"
           name: "batch"
           description: "Batch information"
+          required: false
+        - type: "string"
+          name: "tissue"
+          description: "Tissue information"
+          required: false
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
-        - type: "string"
-          name: "raw_dataset_id"
-          description: "A unique identifier for the original dataset (before preprocessing)"
+          required: true
     example:
     - "preprocessed.h5ad"
     default: []
@@ -74,28 +87,53 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
+  - type: "string"
+    name: "--layer_output"
+    alternatives: []
+    description: "The name of the layer in which to store the log normalized data."
+    example: []
+    default:
+    - "log_scran_pooling"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--obs_size_factors"
+    alternatives: []
+    description: "In which .obs slot to store the size factors."
+    example: []
+    default:
+    - "size_factors_log_scran_pooling"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
   argument_groups: []
   resources:
   - type: "r_script"
     path: "script.R"
     is_executable: true
-  description: "Normalize data"
+  description: "Normalize data using scran pooling"
   test_resources:
   - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/dataset.h5ad\"\noutput_path = \"output.h5ad\"\
-      \n\ncmd = [\n  meta['executable'],\n  \"--input\", input_path,\n  \"--output\"\
-      , output_path\n]\n\nprint(\">> Running script as test\")\nout = subprocess.check_output(cmd).decode(\"\
+      \noutput_layer = \"norm_layer\"\n\ncmd = [\n  meta['executable'],\n  \"--input\"\
+      , input_path,\n  \"--output\", output_path,\n  \"--layer_output\", output_layer\n\
+      ]\n\nprint(\">> Running script as test\")\nout = subprocess.check_output(cmd).decode(\"\
       utf-8\")\n\nprint(\">> Checking whether output file exists\")\nassert path.exists(output_path)\n\
       \nprint(\">> Reading h5ad files\")\ninput = ad.read_h5ad(input_path)\noutput\
       \ = ad.read_h5ad(output_path)\nprint(\"input:\", input)\nprint(\"output:\",\
       \ output)\n\nprint(\">> Checking whether output data structures were added\"\
-      )\nassert \"lognorm\" in output.layers\nassert output.uns[\"normalization_method\"\
-      ] == meta['functionality_name'].removeprefix(\"normalize_\")\n\nprint(\"Checking\
-      \ whether data from input was copied properly to output\")\nassert input.n_obs\
-      \ == output.n_obs\nassert input.uns[\"dataset_id\"] == output.uns[\"dataset_id\"\
-      ]\nassert input.uns[\"raw_dataset_id\"] == output.uns[\"raw_dataset_id\"]\n\n\
-      print(\"All checks succeeded!\")\n"
+      )\nassert output_layer in output.layers\n\nprint(\"Checking whether data from\
+      \ input was copied properly to output\")\nassert input.n_obs == output.n_obs\n\
+      assert input.uns[\"dataset_id\"] == output.uns[\"dataset_id\"]\n\nprint(\"All\
+      \ checks succeeded!\")\n"
     dest: "generic_test.py"
     is_executable: true
   - type: "file"
@@ -111,5 +149,5 @@ info:
   output: "target/docker/common/normalization/log_scran_pooling"
   executable: "target/docker/common/normalization/log_scran_pooling/log_scran_pooling"
   viash_version: "0.6.3"
-  git_commit: "8268cf55172fc8191e127849be7eb2caa07b2edf"
+  git_commit: "a261eb2462fd02a06069c1e84ea24b109180ca0a"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

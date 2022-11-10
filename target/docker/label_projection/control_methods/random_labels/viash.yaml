@@ -18,8 +18,11 @@ functionality:
           name: "counts"
           description: "Raw counts"
         - type: "double"
-          name: "lognorm"
-          description: "Log-transformed normalised counts"
+          name: "log_cpm"
+          description: "CPM normalized counts, log transformed"
+        - type: "double"
+          name: "log_scran_pooling"
+          description: "Scran pooling normalized counts, log transformed"
         obs:
         - type: "string"
           name: "label"
@@ -31,9 +34,6 @@ functionality:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
-        - type: "string"
-          name: "raw_dataset_id"
-          description: "A unique identifier for the original dataset (before preprocessing)"
     example:
     - "training.h5ad"
     default: []
@@ -55,8 +55,11 @@ functionality:
           name: "counts"
           description: "Raw counts"
         - type: "double"
-          name: "lognorm"
-          description: "Log-transformed normalised counts"
+          name: "log_cpm"
+          description: "CPM normalized counts, log transformed"
+        - type: "double"
+          name: "log_scran_pooling"
+          description: "Scran pooling normalized counts, log transformed"
         obs:
         - type: "string"
           name: "batch"
@@ -65,9 +68,6 @@ functionality:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
-        - type: "string"
-          name: "raw_dataset_id"
-          description: "A unique identifier for the original dataset (before preprocessing)"
     example:
     - "test.h5ad"
     default: []
@@ -93,9 +93,6 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
         - type: "string"
-          name: "raw_dataset_id"
-          description: "A unique identifier for the original dataset (before preprocessing)"
-        - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
     example:
@@ -104,6 +101,19 @@ functionality:
     must_exist: false
     required: false
     direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--layer_input"
+    alternatives: []
+    description: "Which layer to use as input."
+    example: []
+    default:
+    - "counts"
+    required: false
+    choices: []
+    direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
@@ -118,24 +128,24 @@ functionality:
     path: "../../../../resources_test/label_projection/pancreas"
   - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/dataset_cpm_train.h5ad\"\ninput_test_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/dataset_cpm_test.h5ad\"\ninput_solution_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/dataset_cpm_solution.h5ad\"\noutput_path\
-      \ = \"output.h5ad\"\n\ncmd = [\n  meta['executable'],\n  \"--input_train\",\
-      \ input_train_path,\n  \"--input_test\", input_test_path,\n  \"--output\", output_path\n\
-      ]\n\n# todo: if we could access the viash config, we could check whether\n#\
-      \ .functionality.info.type == \"positive_control\"\nif meta['functionality_name']\
-      \ == 'true_labels':\n  cmd = cmd + [\"--input_solution\", input_solution_path]\n\
-      \nprint(\">> Running script as test\")\nout = subprocess.check_output(cmd).decode(\"\
-      utf-8\")\n\nprint(\">> Checking whether output file exists\")\nassert path.exists(output_path)\n\
+      \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\ninput_test_path = meta[\"\
+      resources_dir\"] + \"/pancreas/test.h5ad\"\ninput_solution_path = meta[\"resources_dir\"\
+      ] + \"/pancreas/solution.h5ad\"\noutput_path = \"output.h5ad\"\n\ncmd = [\n\
+      \  meta['executable'],\n  \"--input_train\", input_train_path,\n  \"--input_test\"\
+      , input_test_path,\n  \"--output\", output_path\n]\n\n# todo: if we could access\
+      \ the viash config, we could check whether\n# .functionality.info.type == \"\
+      positive_control\"\nif meta['functionality_name'] == 'true_labels':\n  cmd =\
+      \ cmd + [\"--input_solution\", input_solution_path]\n\nprint(\">> Running script\
+      \ as test\")\nout = subprocess.check_output(cmd).decode(\"utf-8\")\n\nprint(\"\
+      >> Checking whether output file exists\")\nassert path.exists(output_path)\n\
       \nprint(\">> Reading h5ad files\")\ninput_test = ad.read_h5ad(input_test_path)\n\
       output = ad.read_h5ad(output_path)\nprint(\"input_test:\", input_test)\nprint(\"\
       output:\", output)\n\nprint(\">> Checking whether predictions were added\")\n\
       assert \"label_pred\" in output.obs\nassert meta['functionality_name'] == output.uns[\"\
       method_id\"]\n\nprint(\"Checking whether data from input was copied properly\
       \ to output\")\nassert input_test.n_obs == output.n_obs\nassert input_test.uns[\"\
-      dataset_id\"] == output.uns[\"dataset_id\"]\nassert input_test.uns[\"raw_dataset_id\"\
-      ] == output.uns[\"raw_dataset_id\"]\n\nprint(\"All checks succeeded!\")"
+      dataset_id\"] == output.uns[\"dataset_id\"]\n\nprint(\"All checks succeeded!\"\
+      )"
     dest: "generic_test.py"
     is_executable: true
   info:
@@ -154,5 +164,5 @@ info:
   output: "target/docker/label_projection/control_methods/random_labels"
   executable: "target/docker/label_projection/control_methods/random_labels/random_labels"
   viash_version: "0.6.3"
-  git_commit: "8268cf55172fc8191e127849be7eb2caa07b2edf"
+  git_commit: "a261eb2462fd02a06069c1e84ea24b109180ca0a"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

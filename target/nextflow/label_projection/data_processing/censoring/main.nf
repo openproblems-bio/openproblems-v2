@@ -27,6 +27,221 @@ thisConfig = processConfig([
   "version" : "main_build",
   "arguments" : [
     {
+      "type" : "file",
+      "name" : "--input",
+      "description" : "A preprocessed dataset",
+      "info" : {
+        "short_description" : "Preprocessed dataset",
+        "slots" : {
+          "layers" : [
+            {
+              "type" : "integer",
+              "name" : "counts",
+              "description" : "Raw counts"
+            },
+            {
+              "type" : "double",
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
+            }
+          ],
+          "obs" : [
+            {
+              "type" : "double",
+              "name" : "label",
+              "description" : "Ground truth cell type labels"
+            },
+            {
+              "type" : "double",
+              "name" : "batch",
+              "description" : "Batch information"
+            }
+          ],
+          "uns" : [
+            {
+              "type" : "string",
+              "name" : "dataset_id",
+              "description" : "A unique identifier for the dataset"
+            }
+          ]
+        }
+      },
+      "example" : [
+        "preprocessed.h5ad"
+      ],
+      "must_exist" : false,
+      "required" : false,
+      "direction" : "input",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "file",
+      "name" : "--output_train",
+      "description" : "The training data",
+      "info" : {
+        "short_description" : "Training data",
+        "slots" : {
+          "layers" : [
+            {
+              "type" : "integer",
+              "name" : "counts",
+              "description" : "Raw counts"
+            },
+            {
+              "type" : "double",
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
+            }
+          ],
+          "obs" : [
+            {
+              "type" : "string",
+              "name" : "label",
+              "description" : "Ground truth cell type labels"
+            },
+            {
+              "type" : "string",
+              "name" : "batch",
+              "description" : "Batch information"
+            }
+          ],
+          "uns" : [
+            {
+              "type" : "string",
+              "name" : "dataset_id",
+              "description" : "A unique identifier for the dataset"
+            }
+          ]
+        }
+      },
+      "example" : [
+        "training.h5ad"
+      ],
+      "must_exist" : false,
+      "required" : false,
+      "direction" : "output",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "file",
+      "name" : "--output_test",
+      "description" : "The censored test data",
+      "info" : {
+        "short_description" : "Test data",
+        "slots" : {
+          "layers" : [
+            {
+              "type" : "integer",
+              "name" : "counts",
+              "description" : "Raw counts"
+            },
+            {
+              "type" : "double",
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
+            }
+          ],
+          "obs" : [
+            {
+              "type" : "string",
+              "name" : "batch",
+              "description" : "Batch information"
+            }
+          ],
+          "uns" : [
+            {
+              "type" : "string",
+              "name" : "dataset_id",
+              "description" : "A unique identifier for the dataset"
+            }
+          ]
+        }
+      },
+      "example" : [
+        "test.h5ad"
+      ],
+      "must_exist" : false,
+      "required" : false,
+      "direction" : "output",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "file",
+      "name" : "--output_solution",
+      "description" : "The solution for the test data",
+      "info" : {
+        "short_description" : "Solution",
+        "slots" : {
+          "layers" : [
+            {
+              "type" : "integer",
+              "name" : "counts",
+              "description" : "Raw counts"
+            },
+            {
+              "type" : "double",
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
+            }
+          ],
+          "obs" : [
+            {
+              "type" : "string",
+              "name" : "label",
+              "description" : "Ground truth cell type labels"
+            },
+            {
+              "type" : "string",
+              "name" : "batch",
+              "description" : "Batch information"
+            }
+          ],
+          "uns" : [
+            {
+              "type" : "string",
+              "name" : "dataset_id",
+              "description" : "A unique identifier for the dataset"
+            }
+          ]
+        }
+      },
+      "example" : [
+        "solution.h5ad"
+      ],
+      "must_exist" : false,
+      "required" : false,
+      "direction" : "output",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
       "type" : "string",
       "name" : "--method",
       "description" : "The process method to assign train/test.",
@@ -81,221 +296,6 @@ thisConfig = processConfig([
       "multiple" : false,
       "multiple_sep" : ":",
       "dest" : "par"
-    },
-    {
-      "type" : "file",
-      "name" : "--input",
-      "description" : "A preprocessed dataset",
-      "info" : {
-        "short_description" : "Preprocessed dataset",
-        "slots" : {
-          "layers" : [
-            {
-              "type" : "integer",
-              "name" : "counts",
-              "description" : "Raw counts"
-            },
-            {
-              "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
-            }
-          ],
-          "obs" : [
-            {
-              "type" : "double",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
-            },
-            {
-              "type" : "double",
-              "name" : "batch",
-              "description" : "Batch information"
-            }
-          ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            }
-          ]
-        }
-      },
-      "example" : [
-        "preprocessed.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "file",
-      "name" : "--output_train",
-      "description" : "The training data",
-      "info" : {
-        "short_description" : "Training data",
-        "slots" : {
-          "layers" : [
-            {
-              "type" : "integer",
-              "name" : "counts",
-              "description" : "Raw counts"
-            },
-            {
-              "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
-            }
-          ],
-          "obs" : [
-            {
-              "type" : "string",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
-            },
-            {
-              "type" : "string",
-              "name" : "batch",
-              "description" : "Batch information"
-            }
-          ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            }
-          ]
-        }
-      },
-      "example" : [
-        "training.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : false,
-      "direction" : "output",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "file",
-      "name" : "--output_test",
-      "description" : "The censored test data",
-      "info" : {
-        "short_description" : "Test data",
-        "slots" : {
-          "layers" : [
-            {
-              "type" : "integer",
-              "name" : "counts",
-              "description" : "Raw counts"
-            },
-            {
-              "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
-            }
-          ],
-          "obs" : [
-            {
-              "type" : "string",
-              "name" : "batch",
-              "description" : "Batch information"
-            }
-          ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            }
-          ]
-        }
-      },
-      "example" : [
-        "test.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : false,
-      "direction" : "output",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "file",
-      "name" : "--output_solution",
-      "description" : "The solution for the test data",
-      "info" : {
-        "short_description" : "Solution",
-        "slots" : {
-          "layers" : [
-            {
-              "type" : "integer",
-              "name" : "counts",
-              "description" : "Raw counts"
-            },
-            {
-              "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
-            }
-          ],
-          "obs" : [
-            {
-              "type" : "string",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
-            },
-            {
-              "type" : "string",
-              "name" : "batch",
-              "description" : "Batch information"
-            }
-          ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            }
-          ]
-        }
-      },
-      "example" : [
-        "solution.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : false,
-      "direction" : "output",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
     }
   ],
   "resources" : [
@@ -309,7 +309,7 @@ thisConfig = processConfig([
   "test_resources" : [
     {
       "type" : "python_script",
-      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset_cpm.h5ad\\"\noutput_train_path = \\"output_train.h5ad\\"\noutput_test_path = \\"output_test.h5ad\\"\noutput_solution_path = \\"output_solution.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output_train\\", output_train_path,\n  \\"--output_test\\", output_test_path,\n  \\"--output_solution\\", output_solution_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_train_path)\nassert path.exists(output_test_path)\nassert path.exists(output_solution_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\noutput_solution = ad.read_h5ad(output_solution_path)\n\nprint(\\"input:\\", input)\nprint(\\"output_train:\\", output_train)\nprint(\\"output_test:\\", output_test)\nprint(\\"output_solution:\\", output_solution)\n\nprint(\\">> Checking dimensions, make sure no cells were dropped\\")\nassert input.n_obs == output_train.n_obs + output_test.n_obs\nassert output_test.n_obs == output_solution.n_obs\nassert input.n_vars == output_train.n_vars\nassert input.n_vars == output_test.n_vars\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert output_train.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_train.uns[\\"raw_dataset_id\\"] == input.uns[\\"raw_dataset_id\\"]\nassert output_test.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_test.uns[\\"raw_dataset_id\\"] == input.uns[\\"raw_dataset_id\\"]\nassert output_solution.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_solution.uns[\\"raw_dataset_id\\"] == input.uns[\\"raw_dataset_id\\"]\n\nprint(\\">> Check whether certain slots exist\\")\nassert \\"counts\\" in output_train.layers\nassert \\"lognorm\\" in output_train.layers\nassert \\"label\\" in output_train.obs\nassert \\"batch\\" in output_train.obs\nassert \\"counts\\" in output_test.layers\nassert \\"lognorm\\" in output_test.layers\nassert \\"label\\" not in output_test.obs # make sure label is /not/ here\nassert \\"batch\\" in output_test.obs\nassert \\"counts\\" in output_solution.layers\nassert \\"lognorm\\" in output_solution.layers\nassert \\"label\\" in output_solution.obs\nassert \\"batch\\" in output_solution.obs\n\nprint(\\">> All checks succeeded!\\")\n",
+      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_train_path = \\"output_train.h5ad\\"\noutput_test_path = \\"output_test.h5ad\\"\noutput_solution_path = \\"output_solution.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output_train\\", output_train_path,\n  \\"--output_test\\", output_test_path,\n  \\"--output_solution\\", output_solution_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_train_path)\nassert path.exists(output_test_path)\nassert path.exists(output_solution_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\noutput_solution = ad.read_h5ad(output_solution_path)\n\nprint(\\"input:\\", input)\nprint(\\"output_train:\\", output_train)\nprint(\\"output_test:\\", output_test)\nprint(\\"output_solution:\\", output_solution)\n\nprint(\\">> Checking dimensions, make sure no cells were dropped\\")\nassert input.n_obs == output_train.n_obs + output_test.n_obs\nassert output_test.n_obs == output_solution.n_obs\nassert input.n_vars == output_train.n_vars\nassert input.n_vars == output_test.n_vars\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert output_train.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_test.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_solution.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\n\nprint(\\">> Check whether certain slots exist\\")\nassert \\"counts\\" in output_train.layers\nassert \\"log_cpm\\" in output_train.layers\nassert \\"log_scran_pooling\\" in output_train.layers\nassert \\"label\\" in output_train.obs\nassert \\"batch\\" in output_train.obs\nassert \\"counts\\" in output_test.layers\nassert \\"log_cpm\\" in output_test.layers\nassert \\"log_scran_pooling\\" in output_test.layers\nassert \\"label\\" not in output_test.obs # make sure label is /not/ here\nassert \\"batch\\" in output_test.obs\nassert \\"counts\\" in output_solution.layers\nassert \\"log_cpm\\" in output_solution.layers\nassert \\"log_scran_pooling\\" in output_solution.layers\nassert \\"label\\" in output_solution.obs\nassert \\"batch\\" in output_solution.obs\n\nprint(\\">> All checks succeeded!\\")\n",
       "dest" : "generic_test.py",
       "is_executable" : true
     },
@@ -335,14 +335,14 @@ import random
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'method': $( if [ ! -z ${VIASH_PAR_METHOD+x} ]; then echo "r'${VIASH_PAR_METHOD//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'obs_label': $( if [ ! -z ${VIASH_PAR_OBS_LABEL+x} ]; then echo "r'${VIASH_PAR_OBS_LABEL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output_train': $( if [ ! -z ${VIASH_PAR_OUTPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_OUTPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output_test': $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST+x} ]; then echo "r'${VIASH_PAR_OUTPUT_TEST//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output_solution': $( if [ ! -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_OUTPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output_solution': $( if [ ! -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_OUTPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'method': $( if [ ! -z ${VIASH_PAR_METHOD+x} ]; then echo "r'${VIASH_PAR_METHOD//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'obs_label': $( if [ ! -z ${VIASH_PAR_OBS_LABEL+x} ]; then echo "r'${VIASH_PAR_OBS_LABEL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -391,21 +391,21 @@ def subset_anndata(adata_sub, layers, obs, uns):
     )
 output_train = subset_anndata(
     adata_sub = adata[[not x for x in is_test]], 
-    layers=["counts", "lognorm"], 
+    layers=["counts", "log_cpm", "log_scran_pooling"], 
     obs={"label": par["obs_label"], "batch": par["obs_batch"]}, 
-    uns=["raw_dataset_id", "dataset_id"]
+    uns=["dataset_id"]
 )
 output_test = subset_anndata(
     adata[is_test], 
-    layers=["counts", "lognorm"], 
+    layers=["counts", "log_cpm", "log_scran_pooling"], 
     obs={"batch": par["obs_batch"]}, # do NOT copy label to test obs!
-    uns=["raw_dataset_id", "dataset_id"]
+    uns=["dataset_id"]
 )
 output_solution = subset_anndata(
     adata[is_test], 
-    layers=["counts", "lognorm"],
+    layers=["counts", "log_cpm", "log_scran_pooling"],
     obs={"label": par["obs_label"], "batch": par["obs_batch"]},
-    uns=["raw_dataset_id", "dataset_id"]
+    uns=["dataset_id"]
 )
 
 print(">> Writing data")

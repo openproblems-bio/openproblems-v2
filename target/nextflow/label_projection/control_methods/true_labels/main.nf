@@ -28,61 +28,6 @@ thisConfig = processConfig([
   "arguments" : [
     {
       "type" : "file",
-      "name" : "--input_solution",
-      "description" : "The solution for the test data",
-      "info" : {
-        "short_description" : "Solution",
-        "slots" : {
-          "layers" : [
-            {
-              "type" : "integer",
-              "name" : "counts",
-              "description" : "Raw counts"
-            },
-            {
-              "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
-            }
-          ],
-          "obs" : [
-            {
-              "type" : "string",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
-            },
-            {
-              "type" : "string",
-              "name" : "batch",
-              "description" : "Batch information"
-            }
-          ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            }
-          ]
-        }
-      },
-      "example" : [
-        "solution.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "file",
       "name" : "--input_train",
       "description" : "The training data",
       "info" : {
@@ -96,8 +41,13 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
             }
           ],
           "obs" : [
@@ -117,11 +67,6 @@ thisConfig = processConfig([
               "type" : "string",
               "name" : "dataset_id",
               "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
             }
           ]
         }
@@ -151,8 +96,13 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
             }
           ],
           "obs" : [
@@ -167,11 +117,6 @@ thisConfig = processConfig([
               "type" : "string",
               "name" : "dataset_id",
               "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
             }
           ]
         }
@@ -208,11 +153,6 @@ thisConfig = processConfig([
             },
             {
               "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            },
-            {
-              "type" : "string",
               "name" : "method_id",
               "description" : "A unique identifier for the method"
             }
@@ -225,6 +165,74 @@ thisConfig = processConfig([
       "must_exist" : false,
       "required" : false,
       "direction" : "output",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "file",
+      "name" : "--input_solution",
+      "description" : "The solution for the test data",
+      "info" : {
+        "short_description" : "Solution",
+        "slots" : {
+          "layers" : [
+            {
+              "type" : "integer",
+              "name" : "counts",
+              "description" : "Raw counts"
+            },
+            {
+              "type" : "double",
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
+            }
+          ],
+          "obs" : [
+            {
+              "type" : "string",
+              "name" : "label",
+              "description" : "Ground truth cell type labels"
+            },
+            {
+              "type" : "string",
+              "name" : "batch",
+              "description" : "Batch information"
+            }
+          ],
+          "uns" : [
+            {
+              "type" : "string",
+              "name" : "dataset_id",
+              "description" : "A unique identifier for the dataset"
+            }
+          ]
+        }
+      },
+      "example" : [
+        "solution.h5ad"
+      ],
+      "must_exist" : false,
+      "required" : false,
+      "direction" : "input",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "string",
+      "name" : "--layer_input",
+      "description" : "Which layer to use as input.",
+      "default" : [
+        "counts"
+      ],
+      "required" : false,
+      "direction" : "input",
       "multiple" : false,
       "multiple_sep" : ":",
       "dest" : "par"
@@ -247,7 +255,7 @@ thisConfig = processConfig([
     },
     {
       "type" : "python_script",
-      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset_cpm_train.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset_cpm_test.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset_cpm_solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_train\\", input_train_path,\n  \\"--input_test\\", input_test_path,\n  \\"--output\\", output_path\n]\n\n# todo: if we could access the viash config, we could check whether\n# .functionality.info.type == \\"positive_control\\"\nif meta['functionality_name'] == 'true_labels':\n  cmd = cmd + [\\"--input_solution\\", input_solution_path]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input_test:\\", input_test)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"label_pred\\" in output.obs\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input_test.n_obs == output.n_obs\nassert input_test.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input_test.uns[\\"raw_dataset_id\\"] == output.uns[\\"raw_dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
+      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/test.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_train\\", input_train_path,\n  \\"--input_test\\", input_test_path,\n  \\"--output\\", output_path\n]\n\n# todo: if we could access the viash config, we could check whether\n# .functionality.info.type == \\"positive_control\\"\nif meta['functionality_name'] == 'true_labels':\n  cmd = cmd + [\\"--input_solution\\", input_solution_path]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input_test:\\", input_test)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"label_pred\\" in output.obs\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input_test.n_obs == output.n_obs\nassert input_test.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
       "dest" : "generic_test.py",
       "is_executable" : true
     }
@@ -272,10 +280,11 @@ import anndata as ad
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_test': $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo "r'${VIASH_PAR_INPUT_TEST//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'layer_input': $( if [ ! -z ${VIASH_PAR_LAYER_INPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),

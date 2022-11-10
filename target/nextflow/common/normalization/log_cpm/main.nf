@@ -37,26 +37,36 @@ thisConfig = processConfig([
             {
               "type" : "integer",
               "name" : "counts",
-              "description" : "Raw counts"
+              "description" : "Raw counts",
+              "required" : true
             }
           ],
           "obs" : [
             {
               "type" : "string",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
+              "name" : "celltype",
+              "description" : "Cell type information",
+              "required" : false
             },
             {
               "type" : "string",
               "name" : "batch",
-              "description" : "Batch information"
+              "description" : "Batch information",
+              "required" : false
+            },
+            {
+              "type" : "string",
+              "name" : "tissue",
+              "description" : "Tissue information",
+              "required" : false
             }
           ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
             }
           ]
         }
@@ -82,36 +92,41 @@ thisConfig = processConfig([
             {
               "type" : "integer",
               "name" : "counts",
-              "description" : "Raw counts"
+              "description" : "Raw counts",
+              "required" : true
             },
             {
               "type" : "double",
-              "name" : "lognorm",
+              "name" : "$par_layer_output",
               "description" : "Log-transformed normalised counts"
             }
           ],
           "obs" : [
             {
-              "type" : "double",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
+              "type" : "string",
+              "name" : "celltype",
+              "description" : "Cell type information",
+              "required" : false
             },
             {
-              "type" : "double",
+              "type" : "string",
               "name" : "batch",
-              "description" : "Batch information"
+              "description" : "Batch information",
+              "required" : false
+            },
+            {
+              "type" : "string",
+              "name" : "tissue",
+              "description" : "Tissue information",
+              "required" : false
             }
           ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
             }
           ]
         }
@@ -122,6 +137,32 @@ thisConfig = processConfig([
       "must_exist" : false,
       "required" : false,
       "direction" : "output",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "string",
+      "name" : "--layer_output",
+      "description" : "The name of the layer in which to store the log normalized data.",
+      "default" : [
+        "log_cpm"
+      ],
+      "required" : false,
+      "direction" : "input",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "string",
+      "name" : "--obs_size_factors",
+      "description" : "In which .obs slot to store the size factors.",
+      "default" : [
+        "size_factors_log_cpm"
+      ],
+      "required" : false,
+      "direction" : "input",
       "multiple" : false,
       "multiple_sep" : ":",
       "dest" : "par"
@@ -139,7 +180,7 @@ thisConfig = processConfig([
   "test_resources" : [
     {
       "type" : "python_script",
-      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output\\", output_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input:\\", input)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether output data structures were added\\")\nassert \\"lognorm\\" in output.layers\nassert output.uns[\\"normalization_method\\"] == meta['functionality_name'].removeprefix(\\"normalize_\\")\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input.uns[\\"raw_dataset_id\\"] == output.uns[\\"raw_dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")\n",
+      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_path = \\"output.h5ad\\"\noutput_layer = \\"norm_layer\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output\\", output_path,\n  \\"--layer_output\\", output_layer\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input:\\", input)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether output data structures were added\\")\nassert output_layer in output.layers\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")\n",
       "dest" : "generic_test.py",
       "is_executable" : true
     },
@@ -164,7 +205,9 @@ import scanpy as sc
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'layer_output': $( if [ ! -z ${VIASH_PAR_LAYER_OUTPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'obs_size_factors': $( if [ ! -z ${VIASH_PAR_OBS_SIZE_FACTORS+x} ]; then echo "r'${VIASH_PAR_OBS_SIZE_FACTORS//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -186,13 +229,17 @@ print(">> Load data")
 adata = sc.read_h5ad(par['input'])
 
 print(">> Normalize data")
-norm = sc.pp.normalize_total(adata, target_sum=1e6, key_added="size_factors", layer="counts", inplace=False)
+norm = sc.pp.normalize_total(
+    adata, 
+    target_sum=1e6, 
+    layer="counts", 
+    inplace=False
+)
 lognorm = sc.pp.log1p(norm["X"])
 
 print(">> Store output in adata")
-adata.layers["lognorm"] = lognorm
-adata.obs["norm_factor"] = norm["norm_factor"]
-adata.uns["normalization_method"] = meta["functionality_name"].removeprefix("normalize_")
+adata.layers[par["layer_output"]] = lognorm
+adata.obs[par["obs_size_factors"]] = norm["norm_factor"]
 
 print(">> Write data")
 adata.write_h5ad(par['output'], compression="gzip")

@@ -162,7 +162,7 @@ function ViashHelp {
   echo ""
   echo "Download a dataset."
   echo ""
-  echo "Arguments:"
+  echo "Inputs:"
   echo "    --url"
   echo "        type: string, required parameter"
   echo "        URL of dataset"
@@ -187,13 +187,19 @@ function ViashHelp {
   echo "    --layer_counts"
   echo "        type: string"
   echo "        example: counts"
-  echo "        Location of where to store the counts data. Leave undefined to store in"
-  echo "        \`.X\`, else it will be stored in \`.layers[par['layer_counts']]\`."
+  echo "        In which layer to find the counts matrix. Leave undefined to use \`.X\`."
   echo ""
+  echo "Outputs:"
   echo "    -o, --output"
   echo "        type: file, required parameter, output"
   echo "        example: output.h5ad"
   echo "        Output h5ad file of the cleaned dataset"
+  echo ""
+  echo "    --layer_counts_output"
+  echo "        type: string"
+  echo "        example: counts"
+  echo "        Location of where to store the counts data. Leave undefined to store in"
+  echo "        \`.X\`, else it will be stored in \`.layers[par['layer_counts_output']]\`."
 }
 ######## Helper functions for setting up Docker images for viash ########
 # expects: ViashDockerBuild
@@ -417,9 +423,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Michaela Mueller"
 LABEL org.opencontainers.image.description="Companion container for running component common/dataset_loader download"
-LABEL org.opencontainers.image.created="2022-11-09T15:32:21Z"
+LABEL org.opencontainers.image.created="2022-11-10T12:30:23Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8268cf55172fc8191e127849be7eb2caa07b2edf"
+LABEL org.opencontainers.image.revision="a261eb2462fd02a06069c1e84ea24b109180ca0a"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -649,6 +655,17 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT="$2"
             [ $# -lt 2 ] && ViashError Not enough arguments passed to -o. Use "--help" to get more information on the parameters. && exit 1
             shift 2
+            ;;
+        --layer_counts_output)
+            [ -n "$VIASH_PAR_LAYER_COUNTS_OUTPUT" ] && ViashError Bad arguments for option \'--layer_counts_output\': \'$VIASH_PAR_LAYER_COUNTS_OUTPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_LAYER_COUNTS_OUTPUT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --layer_counts_output. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --layer_counts_output=*)
+            [ -n "$VIASH_PAR_LAYER_COUNTS_OUTPUT" ] && ViashError Bad arguments for option \'--layer_counts_output=*\': \'$VIASH_PAR_LAYER_COUNTS_OUTPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_LAYER_COUNTS_OUTPUT=$(ViashRemoveFlags "$1")
+            shift 1
             ;;
         ---setup)
             VIASH_MODE='docker_setup'
@@ -911,6 +928,7 @@ fi
 
 
 
+
 # detect volumes from file arguments
 if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT") )
@@ -982,7 +1000,8 @@ par = {
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'layer_counts_output': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS_OUTPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -1014,16 +1033,8 @@ with tempfile.TemporaryDirectory() as tempdir:
     print("Reading file")
     adata = sc.read_h5ad(filepath)
 
-if "counts" in adata.layers:
-    print("Copying .layers['counts'] to .X")
-    adata.X = adata.layers["counts"]
-    del adata.layers["counts"]
-
 print("Setting .uns['dataset_id']")
 adata.uns["dataset_id"] = par["name"]
-
-print("Setting .uns['raw_dataset_id']")
-adata.uns["raw_dataset_id"] = par["name"]
 
 print("Setting .obs['celltype']")
 if par["obs_celltype"]:
@@ -1047,12 +1058,19 @@ if par["obs_tissue"]:
         print(f"Warning: key '{par['obs_tissue']}' could not be found in adata.obs.")
 
 print("Remove cells or genes with 0 counts")
+if par["layer_counts"] and par["layer_counts"] in adata.layers:
+    print(f"  Temporarily copying .layers['{par['layer_counts']}'] to .X")
+    adata.X = adata.layers[par["layer_counts"]]
+    del adata.layers[par["layer_counts"]]
+
+print("  Removing empty genes")
 sc.pp.filter_genes(adata, min_cells=1)
+print("  Removing empty cells")
 sc.pp.filter_cells(adata, min_counts=2)
 
-if par["layer_counts"]:
-    print(f"Copying .X back to .layers['{par['layer_counts']}']")
-    adata.layers[par["layer_counts"]] = adata.X
+if par["layer_counts_output"]:
+    print(f"  Copying .X back to .layers['{par['layer_counts_output']}']")
+    adata.layers[par["layer_counts_output"]] = adata.X
     del adata.X
 
 print("Writing adata to file")

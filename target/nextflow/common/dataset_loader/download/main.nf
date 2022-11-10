@@ -40,133 +40,152 @@ thisConfig = processConfig([
       }
     }
   ],
-  "arguments" : [
+  "argument_groups" : [
     {
-      "type" : "string",
-      "name" : "--url",
-      "description" : "URL of dataset",
-      "required" : true,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "string",
-      "name" : "--name",
-      "description" : "Name of dataset",
-      "example" : [
-        "pbmc"
-      ],
-      "required" : true,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "string",
-      "name" : "--obs_celltype",
-      "description" : "Location of where to find the observation cell types.",
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "string",
-      "name" : "--obs_batch",
-      "description" : "Location of where to find the observation batch IDs.",
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "string",
-      "name" : "--obs_tissue",
-      "description" : "Location of where to find the observation tissue information.",
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "string",
-      "name" : "--layer_counts",
-      "description" : "Location of where to store the counts data. Leave undefined to store in `.X`, else it will be stored in `.layers[par['layer_counts']]`.",
-      "example" : [
-        "counts"
-      ],
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "file",
-      "name" : "--output",
-      "alternatives" : [
-        "-o"
-      ],
-      "description" : "Output h5ad file of the cleaned dataset",
-      "info" : {
-        "slots" : {
-          "X" : {
-            "type" : "integer",
-            "name" : "counts",
-            "description" : "Raw counts",
-            "required" : false
-          },
-          "obs" : [
-            {
-              "type" : "string",
-              "name" : "celltype",
-              "description" : "Cell type labels",
-              "required" : false
-            },
-            {
-              "type" : "string",
-              "name" : "batch",
-              "description" : "Batch information",
-              "required" : false
-            },
-            {
-              "type" : "string",
-              "name" : "tissue",
-              "description" : "Tissue information",
-              "required" : false
-            }
+      "name" : "Inputs",
+      "arguments" : [
+        {
+          "type" : "string",
+          "name" : "--url",
+          "description" : "URL of dataset",
+          "required" : true,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        },
+        {
+          "type" : "string",
+          "name" : "--name",
+          "description" : "Name of dataset",
+          "example" : [
+            "pbmc"
           ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset",
-              "required" : false
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)",
-              "required" : false
-            }
-          ]
+          "required" : true,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        },
+        {
+          "type" : "string",
+          "name" : "--obs_celltype",
+          "description" : "Location of where to find the observation cell types.",
+          "required" : false,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        },
+        {
+          "type" : "string",
+          "name" : "--obs_batch",
+          "description" : "Location of where to find the observation batch IDs.",
+          "required" : false,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        },
+        {
+          "type" : "string",
+          "name" : "--obs_tissue",
+          "description" : "Location of where to find the observation tissue information.",
+          "required" : false,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        },
+        {
+          "type" : "string",
+          "name" : "--layer_counts",
+          "description" : "In which layer to find the counts matrix. Leave undefined to use `.X`.",
+          "example" : [
+            "counts"
+          ],
+          "required" : false,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
         }
-      },
-      "example" : [
-        "output.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : true,
-      "direction" : "output",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
+      ]
+    },
+    {
+      "name" : "Outputs",
+      "arguments" : [
+        {
+          "type" : "file",
+          "name" : "--output",
+          "alternatives" : [
+            "-o"
+          ],
+          "description" : "Output h5ad file of the cleaned dataset",
+          "info" : {
+            "slots" : {
+              "layers" : [
+                {
+                  "type" : "integer",
+                  "name" : "$par_layer_counts_output",
+                  "description" : "Raw counts",
+                  "required" : false
+                }
+              ],
+              "obs" : [
+                {
+                  "type" : "string",
+                  "name" : "celltype",
+                  "description" : "Cell type labels",
+                  "required" : false
+                },
+                {
+                  "type" : "string",
+                  "name" : "batch",
+                  "description" : "Batch information",
+                  "required" : false
+                },
+                {
+                  "type" : "string",
+                  "name" : "tissue",
+                  "description" : "Tissue information",
+                  "required" : false
+                }
+              ],
+              "uns" : [
+                {
+                  "type" : "string",
+                  "name" : "dataset_id",
+                  "description" : "A unique identifier for the dataset",
+                  "required" : false
+                }
+              ]
+            }
+          },
+          "example" : [
+            "output.h5ad"
+          ],
+          "must_exist" : false,
+          "required" : true,
+          "direction" : "output",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        },
+        {
+          "type" : "string",
+          "name" : "--layer_counts_output",
+          "description" : "Location of where to store the counts data. Leave undefined to store in `.X`, else it will be stored in `.layers[par['layer_counts_output']]`.",
+          "example" : [
+            "counts"
+          ],
+          "required" : false,
+          "direction" : "input",
+          "multiple" : false,
+          "multiple_sep" : ":",
+          "dest" : "par"
+        }
+      ]
     }
   ],
   "resources" : [
@@ -212,7 +231,8 @@ par = {
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'layer_counts_output': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS_OUTPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -244,16 +264,8 @@ with tempfile.TemporaryDirectory() as tempdir:
     print("Reading file")
     adata = sc.read_h5ad(filepath)
 
-if "counts" in adata.layers:
-    print("Copying .layers['counts'] to .X")
-    adata.X = adata.layers["counts"]
-    del adata.layers["counts"]
-
 print("Setting .uns['dataset_id']")
 adata.uns["dataset_id"] = par["name"]
-
-print("Setting .uns['raw_dataset_id']")
-adata.uns["raw_dataset_id"] = par["name"]
 
 print("Setting .obs['celltype']")
 if par["obs_celltype"]:
@@ -277,12 +289,19 @@ if par["obs_tissue"]:
         print(f"Warning: key '{par['obs_tissue']}' could not be found in adata.obs.")
 
 print("Remove cells or genes with 0 counts")
+if par["layer_counts"] and par["layer_counts"] in adata.layers:
+    print(f"  Temporarily copying .layers['{par['layer_counts']}'] to .X")
+    adata.X = adata.layers[par["layer_counts"]]
+    del adata.layers[par["layer_counts"]]
+
+print("  Removing empty genes")
 sc.pp.filter_genes(adata, min_cells=1)
+print("  Removing empty cells")
 sc.pp.filter_cells(adata, min_counts=2)
 
-if par["layer_counts"]:
-    print(f"Copying .X back to .layers['{par['layer_counts']}']")
-    adata.layers[par["layer_counts"]] = adata.X
+if par["layer_counts_output"]:
+    print(f"  Copying .X back to .layers['{par['layer_counts_output']}']")
+    adata.layers[par["layer_counts_output"]] = adata.X
     del adata.X
 
 print("Writing adata to file")

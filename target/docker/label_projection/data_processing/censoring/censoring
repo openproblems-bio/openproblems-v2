@@ -158,6 +158,26 @@ function ViashHelp {
   echo "censoring main_build"
   echo ""
   echo "Arguments:"
+  echo "    --input"
+  echo "        type: file"
+  echo "        example: preprocessed.h5ad"
+  echo "        A preprocessed dataset"
+  echo ""
+  echo "    --output_train"
+  echo "        type: file, output"
+  echo "        example: training.h5ad"
+  echo "        The training data"
+  echo ""
+  echo "    --output_test"
+  echo "        type: file, output"
+  echo "        example: test.h5ad"
+  echo "        The censored test data"
+  echo ""
+  echo "    --output_solution"
+  echo "        type: file, output"
+  echo "        example: solution.h5ad"
+  echo "        The solution for the test data"
+  echo ""
   echo "    --method"
   echo "        type: string"
   echo "        default: batch"
@@ -178,26 +198,6 @@ function ViashHelp {
   echo "        type: integer"
   echo "        example: 123"
   echo "        A seed for the subsampling."
-  echo ""
-  echo "    --input"
-  echo "        type: file"
-  echo "        example: preprocessed.h5ad"
-  echo "        A preprocessed dataset"
-  echo ""
-  echo "    --output_train"
-  echo "        type: file, output"
-  echo "        example: training.h5ad"
-  echo "        The training data"
-  echo ""
-  echo "    --output_test"
-  echo "        type: file, output"
-  echo "        example: test.h5ad"
-  echo "        The censored test data"
-  echo ""
-  echo "    --output_solution"
-  echo "        type: file, output"
-  echo "        example: solution.h5ad"
-  echo "        The solution for the test data"
 }
 ######## Helper functions for setting up Docker images for viash ########
 # expects: ViashDockerBuild
@@ -420,9 +420,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata<0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/data_processing censoring"
-LABEL org.opencontainers.image.created="2022-11-09T15:32:22Z"
+LABEL org.opencontainers.image.created="2022-11-10T12:30:24Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8268cf55172fc8191e127849be7eb2caa07b2edf"
+LABEL org.opencontainers.image.revision="a261eb2462fd02a06069c1e84ea24b109180ca0a"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -570,50 +570,6 @@ while [[ $# -gt 0 ]]; do
             echo "censoring main_build"
             exit
             ;;
-        --method)
-            [ -n "$VIASH_PAR_METHOD" ] && ViashError Bad arguments for option \'--method\': \'$VIASH_PAR_METHOD\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_METHOD="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --method. Use "--help" to get more information on the parameters. && exit 1
-            shift 2
-            ;;
-        --method=*)
-            [ -n "$VIASH_PAR_METHOD" ] && ViashError Bad arguments for option \'--method=*\': \'$VIASH_PAR_METHOD\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_METHOD=$(ViashRemoveFlags "$1")
-            shift 1
-            ;;
-        --obs_label)
-            [ -n "$VIASH_PAR_OBS_LABEL" ] && ViashError Bad arguments for option \'--obs_label\': \'$VIASH_PAR_OBS_LABEL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OBS_LABEL="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --obs_label. Use "--help" to get more information on the parameters. && exit 1
-            shift 2
-            ;;
-        --obs_label=*)
-            [ -n "$VIASH_PAR_OBS_LABEL" ] && ViashError Bad arguments for option \'--obs_label=*\': \'$VIASH_PAR_OBS_LABEL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OBS_LABEL=$(ViashRemoveFlags "$1")
-            shift 1
-            ;;
-        --obs_batch)
-            [ -n "$VIASH_PAR_OBS_BATCH" ] && ViashError Bad arguments for option \'--obs_batch\': \'$VIASH_PAR_OBS_BATCH\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OBS_BATCH="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --obs_batch. Use "--help" to get more information on the parameters. && exit 1
-            shift 2
-            ;;
-        --obs_batch=*)
-            [ -n "$VIASH_PAR_OBS_BATCH" ] && ViashError Bad arguments for option \'--obs_batch=*\': \'$VIASH_PAR_OBS_BATCH\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OBS_BATCH=$(ViashRemoveFlags "$1")
-            shift 1
-            ;;
-        --seed)
-            [ -n "$VIASH_PAR_SEED" ] && ViashError Bad arguments for option \'--seed\': \'$VIASH_PAR_SEED\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_SEED="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --seed. Use "--help" to get more information on the parameters. && exit 1
-            shift 2
-            ;;
-        --seed=*)
-            [ -n "$VIASH_PAR_SEED" ] && ViashError Bad arguments for option \'--seed=*\': \'$VIASH_PAR_SEED\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_SEED=$(ViashRemoveFlags "$1")
-            shift 1
-            ;;
         --input)
             [ -n "$VIASH_PAR_INPUT" ] && ViashError Bad arguments for option \'--input\': \'$VIASH_PAR_INPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_INPUT="$2"
@@ -656,6 +612,50 @@ while [[ $# -gt 0 ]]; do
         --output_solution=*)
             [ -n "$VIASH_PAR_OUTPUT_SOLUTION" ] && ViashError Bad arguments for option \'--output_solution=*\': \'$VIASH_PAR_OUTPUT_SOLUTION\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_OUTPUT_SOLUTION=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --method)
+            [ -n "$VIASH_PAR_METHOD" ] && ViashError Bad arguments for option \'--method\': \'$VIASH_PAR_METHOD\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_METHOD="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --method. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --method=*)
+            [ -n "$VIASH_PAR_METHOD" ] && ViashError Bad arguments for option \'--method=*\': \'$VIASH_PAR_METHOD\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_METHOD=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --obs_label)
+            [ -n "$VIASH_PAR_OBS_LABEL" ] && ViashError Bad arguments for option \'--obs_label\': \'$VIASH_PAR_OBS_LABEL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OBS_LABEL="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --obs_label. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --obs_label=*)
+            [ -n "$VIASH_PAR_OBS_LABEL" ] && ViashError Bad arguments for option \'--obs_label=*\': \'$VIASH_PAR_OBS_LABEL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OBS_LABEL=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --obs_batch)
+            [ -n "$VIASH_PAR_OBS_BATCH" ] && ViashError Bad arguments for option \'--obs_batch\': \'$VIASH_PAR_OBS_BATCH\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OBS_BATCH="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --obs_batch. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --obs_batch=*)
+            [ -n "$VIASH_PAR_OBS_BATCH" ] && ViashError Bad arguments for option \'--obs_batch=*\': \'$VIASH_PAR_OBS_BATCH\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OBS_BATCH=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --seed)
+            [ -n "$VIASH_PAR_SEED" ] && ViashError Bad arguments for option \'--seed\': \'$VIASH_PAR_SEED\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_SEED="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --seed. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --seed=*)
+            [ -n "$VIASH_PAR_SEED" ] && ViashError Bad arguments for option \'--seed=*\': \'$VIASH_PAR_SEED\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_SEED=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         ---setup)
@@ -903,6 +903,10 @@ fi
 
 
 # check whether parameters values are of the right type
+
+
+
+
 if [ ! -z "$VIASH_PAR_METHOD" ]; then
   VIASH_PAR_METHOD_CHOICES=("batch:random")
   IFS=':'
@@ -914,10 +918,6 @@ if [ ! -z "$VIASH_PAR_METHOD" ]; then
   set +f
   unset IFS
 fi
-
-
-
-
 
 
 
@@ -1013,14 +1013,14 @@ import random
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'method': $( if [ ! -z ${VIASH_PAR_METHOD+x} ]; then echo "r'${VIASH_PAR_METHOD//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'obs_label': $( if [ ! -z ${VIASH_PAR_OBS_LABEL+x} ]; then echo "r'${VIASH_PAR_OBS_LABEL//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\'/\'\"\'\"r\'}')"; else echo None; fi ),
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output_train': $( if [ ! -z ${VIASH_PAR_OUTPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_OUTPUT_TRAIN//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output_test': $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST+x} ]; then echo "r'${VIASH_PAR_OUTPUT_TEST//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'output_solution': $( if [ ! -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_OUTPUT_SOLUTION//\'/\'\"\'\"r\'}'"; else echo None; fi )
+  'output_solution': $( if [ ! -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_OUTPUT_SOLUTION//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'method': $( if [ ! -z ${VIASH_PAR_METHOD+x} ]; then echo "r'${VIASH_PAR_METHOD//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'obs_label': $( if [ ! -z ${VIASH_PAR_OBS_LABEL+x} ]; then echo "r'${VIASH_PAR_OBS_LABEL//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\'/\'\"\'\"r\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -1069,21 +1069,21 @@ def subset_anndata(adata_sub, layers, obs, uns):
     )
 output_train = subset_anndata(
     adata_sub = adata[[not x for x in is_test]], 
-    layers=["counts", "lognorm"], 
+    layers=["counts", "log_cpm", "log_scran_pooling"], 
     obs={"label": par["obs_label"], "batch": par["obs_batch"]}, 
-    uns=["raw_dataset_id", "dataset_id"]
+    uns=["dataset_id"]
 )
 output_test = subset_anndata(
     adata[is_test], 
-    layers=["counts", "lognorm"], 
+    layers=["counts", "log_cpm", "log_scran_pooling"], 
     obs={"batch": par["obs_batch"]}, # do NOT copy label to test obs!
-    uns=["raw_dataset_id", "dataset_id"]
+    uns=["dataset_id"]
 )
 output_solution = subset_anndata(
     adata[is_test], 
-    layers=["counts", "lognorm"],
+    layers=["counts", "log_cpm", "log_scran_pooling"],
     obs={"label": par["obs_label"], "batch": par["obs_batch"]},
-    uns=["raw_dataset_id", "dataset_id"]
+    uns=["dataset_id"]
 )
 
 print(">> Writing data")

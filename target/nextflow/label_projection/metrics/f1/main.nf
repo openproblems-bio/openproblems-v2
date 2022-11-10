@@ -41,8 +41,13 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "lognorm",
-              "description" : "Log-transformed normalised counts"
+              "name" : "log_cpm",
+              "description" : "CPM normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "log_scran_pooling",
+              "description" : "Scran pooling normalized counts, log transformed"
             }
           ],
           "obs" : [
@@ -62,11 +67,6 @@ thisConfig = processConfig([
               "type" : "string",
               "name" : "dataset_id",
               "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
             }
           ]
         }
@@ -103,11 +103,6 @@ thisConfig = processConfig([
             },
             {
               "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
-            },
-            {
-              "type" : "string",
               "name" : "method_id",
               "description" : "A unique identifier for the method"
             }
@@ -136,11 +131,6 @@ thisConfig = processConfig([
               "type" : "string",
               "name" : "dataset_id",
               "description" : "A unique identifier for the dataset"
-            },
-            {
-              "type" : "string",
-              "name" : "raw_dataset_id",
-              "description" : "A unique identifier for the original dataset (before preprocessing)"
             },
             {
               "type" : "string",
@@ -190,7 +180,7 @@ thisConfig = processConfig([
     },
     {
       "type" : "python_script",
-      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_prediction_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset_cpm_knn.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset_cpm_solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_prediction\\", input_prediction_path,\n  \\"--input_solution\\", input_solution_path,\n  \\"--output\\", output_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\ninput_solution = ad.read_h5ad(input_solution_path)\ninput_prediction = ad.read_h5ad(input_prediction_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert output.uns[\\"dataset_id\\"] == input_prediction.uns[\\"dataset_id\\"]\nassert output.uns[\\"raw_dataset_id\\"] == input_prediction.uns[\\"raw_dataset_id\\"]\nassert output.uns[\\"method_id\\"] == input_prediction.uns[\\"method_id\\"]\nassert output.uns[\\"metric_ids\\"] is not None\nassert output.uns[\\"metric_values\\"] is not None\n\n# TODO: check whether the metric ids are all in .functionality.info\n\nprint(\\"All checks succeeded!\\")",
+      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_prediction_path = meta[\\"resources_dir\\"] + \\"/pancreas/knn.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_prediction\\", input_prediction_path,\n  \\"--input_solution\\", input_solution_path,\n  \\"--output\\", output_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\ninput_solution = ad.read_h5ad(input_solution_path)\ninput_prediction = ad.read_h5ad(input_prediction_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert output.uns[\\"dataset_id\\"] == input_prediction.uns[\\"dataset_id\\"]\nassert output.uns[\\"method_id\\"] == input_prediction.uns[\\"method_id\\"]\nassert output.uns[\\"metric_ids\\"] is not None\nassert output.uns[\\"metric_values\\"] is not None\n\n# TODO: check whether the metric ids are all in .functionality.info\n\nprint(\\"All checks succeeded!\\")",
       "dest" : "format_check.py",
       "is_executable" : true
     }
