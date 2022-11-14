@@ -84,7 +84,7 @@ thisConfig = processConfig([
     {
       "type" : "file",
       "name" : "--input_test",
-      "description" : "The censored test data",
+      "description" : "The test data (without labels)",
       "info" : {
         "short_description" : "Test data",
         "slots" : {

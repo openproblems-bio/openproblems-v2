@@ -168,7 +168,7 @@ function ViashHelp {
   echo "    --input_test"
   echo "        type: file"
   echo "        example: test.h5ad"
-  echo "        The censored test data"
+  echo "        The test data (without labels)"
   echo ""
   echo "    --output"
   echo "        type: file, output"
@@ -400,10 +400,10 @@ FROM python:3.10
 RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "anndata<0.8"
 
-LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods knn_classifier"
-LABEL org.opencontainers.image.created="2022-11-10T12:30:23Z"
+LABEL org.opencontainers.image.description="Companion container for running component knn_classifier"
+LABEL org.opencontainers.image.created="2022-11-14T15:46:14Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a261eb2462fd02a06069c1e84ea24b109180ca0a"
+LABEL org.opencontainers.image.revision="11c62765b69bb96ccff3c1558c0c651d07c348a2"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -658,13 +658,13 @@ eval set -- $VIASH_POSITIONAL_ARGS
 
 ViashDockerInstallationCheck
 if [ $VIASH_MODE == "docker_setup" ]; then
-  ViashDockerSetup 'ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build' "$VIASH_DOCKER_SETUP_STRATEGY"
+  ViashDockerSetup 'ghcr.io/openproblems-bio/knn_classifier:main_build' "$VIASH_DOCKER_SETUP_STRATEGY"
   exit 0
 fi
-ViashDockerSetup 'ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build' ifneedbepullelsecachedbuild
+ViashDockerSetup 'ghcr.io/openproblems-bio/knn_classifier:main_build' ifneedbepullelsecachedbuild
 if [ $VIASH_MODE == "docker_debug" ]; then
-  ViashNotice "+ docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build'"
-  docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build'
+  ViashNotice "+ docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/knn_classifier:main_build'"
+  docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/knn_classifier:main_build'
   exit 0
 fi
 
@@ -876,7 +876,7 @@ VIASH_UNIQUE_MOUNTS=($(for val in "${VIASH_EXTRA_MOUNTS[@]}"; do echo "$val"; do
 function ViashPerformChown {
   
   if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
-    eval docker run --entrypoint=chown -i --rm ${VIASH_UNIQUE_MOUNTS[@]} ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build "$(id -u):$(id -g)" --silent --recursive "$VIASH_PAR_OUTPUT"
+    eval docker run --entrypoint=chown -i --rm ${VIASH_UNIQUE_MOUNTS[@]} ghcr.io/openproblems-bio/knn_classifier:main_build "$(id -u):$(id -g)" --silent --recursive "$VIASH_PAR_OUTPUT"
   fi
 }
 trap ViashPerformChown EXIT
@@ -890,8 +890,8 @@ if [ ! -z "$VIASH_META_CPUS" ]; then
   VIASH_EXTRA_DOCKER_ARGS="$VIASH_EXTRA_DOCKER_ARGS --cpus=${VIASH_META_CPUS}"
 fi
 
-ViashDebug "Running command: $(echo docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build)"
-cat << VIASHEOF | eval docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/label_projection/methods_knn_classifier:main_build
+ViashDebug "Running command: $(echo docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/knn_classifier:main_build)"
+cat << VIASHEOF | eval docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/knn_classifier:main_build
 set -e
 tempscript=\$(mktemp "$VIASH_META_TEMP_DIR/viash-run-knn_classifier-XXXXXX")
 function clean_up {

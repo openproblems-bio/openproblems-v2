@@ -71,5 +71,5 @@ info:
   output: "target/docker/trajectory_inference/datasets/download_datasets"
   executable: "target/docker/trajectory_inference/datasets/download_datasets/download_datasets"
   viash_version: "0.6.3"
-  git_commit: "a261eb2462fd02a06069c1e84ea24b109180ca0a"
+  git_commit: "11c62765b69bb96ccff3c1558c0c651d07c348a2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
