@@ -413,10 +413,10 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata<0.8" && \
   pip install --upgrade --no-cache-dir "git+https://github.com/openproblems-bio/openproblems"
 
-LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders/dataset_loader openproblems_v1"
-LABEL org.opencontainers.image.created="2022-11-15T15:13:13Z"
+LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1"
+LABEL org.opencontainers.image.created="2022-11-15T15:26:10Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="17cebeb8a794ed691a743f5c5df0e0e696131be6"
+LABEL org.opencontainers.image.revision="c8dff200ff8988595ccc2b6b441d30b23639aedf"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -704,13 +704,13 @@ eval set -- $VIASH_POSITIONAL_ARGS
 
 ViashDockerInstallationCheck
 if [ $VIASH_MODE == "docker_setup" ]; then
-  ViashDockerSetup 'ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build' "$VIASH_DOCKER_SETUP_STRATEGY"
+  ViashDockerSetup 'ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build' "$VIASH_DOCKER_SETUP_STRATEGY"
   exit 0
 fi
-ViashDockerSetup 'ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build' ifneedbepullelsecachedbuild
+ViashDockerSetup 'ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build' ifneedbepullelsecachedbuild
 if [ $VIASH_MODE == "docker_debug" ]; then
-  ViashNotice "+ docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build'"
-  docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build'
+  ViashNotice "+ docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build'"
+  docker run --entrypoint=bash -i --rm -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build'
   exit 0
 fi
 
@@ -928,7 +928,7 @@ VIASH_UNIQUE_MOUNTS=($(for val in "${VIASH_EXTRA_MOUNTS[@]}"; do echo "$val"; do
 function ViashPerformChown {
   
   if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
-    eval docker run --entrypoint=chown -i --rm ${VIASH_UNIQUE_MOUNTS[@]} ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build "$(id -u):$(id -g)" --silent --recursive "$VIASH_PAR_OUTPUT"
+    eval docker run --entrypoint=chown -i --rm ${VIASH_UNIQUE_MOUNTS[@]} ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build "$(id -u):$(id -g)" --silent --recursive "$VIASH_PAR_OUTPUT"
   fi
 }
 trap ViashPerformChown EXIT
@@ -942,8 +942,8 @@ if [ ! -z "$VIASH_META_CPUS" ]; then
   VIASH_EXTRA_DOCKER_ARGS="$VIASH_EXTRA_DOCKER_ARGS --cpus=${VIASH_META_CPUS}"
 fi
 
-ViashDebug "Running command: $(echo docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build)"
-cat << VIASHEOF | eval docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/datasets/loaders/dataset_loader_openproblems_v1:main_build
+ViashDebug "Running command: $(echo docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build)"
+cat << VIASHEOF | eval docker run --entrypoint=bash -i --rm ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/datasets/loaders_openproblems_v1:main_build
 set -e
 tempscript=\$(mktemp "$VIASH_META_TEMP_DIR/viash-run-openproblems_v1-XXXXXX")
 function clean_up {
@@ -997,7 +997,7 @@ dataset_funs = {
     'mouse_hspc_nestorowa2016': op.data.mouse_hspc_nestorowa2016.load_mouse_hspc_nestorowa2016,
     'pancreas': op.data.pancreas.load_pancreas,
     'tabula_muris_senis': op.data.tabula_muris_senis.load_tabula_muris_senis,
-    'tenx_5k_pbmc': op.data.tenx.load_tenx_1k_pbmc,
+    'tenx_1k_pbmc': op.data.tenx.load_tenx_1k_pbmc,
     'tenx_5k_pbmc': op.data.tenx.load_tenx_5k_pbmc,
     'tnbc_wu2021': op.data.tnbc_wu2021.load_tnbc_data,
     # 'Wagner_2018_zebrafish_embryo_CRISPR': op.data.Wagner_2018_zebrafish_embryo_CRISPR.load_zebrafish_chd_tyr,

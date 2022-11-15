@@ -66,5 +66,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/modality_alignment/metrics/mse"
   viash_version: "0.6.3"
-  git_commit: "17cebeb8a794ed691a743f5c5df0e0e696131be6"
+  git_commit: "c8dff200ff8988595ccc2b6b441d30b23639aedf"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
