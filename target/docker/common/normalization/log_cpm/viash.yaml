@@ -144,10 +144,10 @@ functionality:
   set_wd_to_resources_dir: false
 platforms: []
 info:
-  config: "src/common/normalization/log_cpm/config.vsh.yaml"
+  config: "src/datasets/normalization/log_cpm/config.vsh.yaml"
   platform: "docker"
   output: "target/docker/common/normalization/log_cpm"
   executable: "target/docker/common/normalization/log_cpm/log_cpm"
   viash_version: "0.6.3"
-  git_commit: "11c62765b69bb96ccff3c1558c0c651d07c348a2"
+  git_commit: "656f62c5d8c0b5cb6fa7f6b36f2aee54677db457"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

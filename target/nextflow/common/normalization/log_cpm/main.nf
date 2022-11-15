@@ -173,7 +173,7 @@ thisConfig = processConfig([
       "type" : "python_script",
       "path" : "script.py",
       "is_executable" : true,
-      "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/normalization/log_cpm/config.vsh.yaml"
+      "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_cpm/config.vsh.yaml"
     }
   ],
   "description" : "Normalize data using Log CPM",
@@ -187,7 +187,7 @@ thisConfig = processConfig([
     {
       "type" : "file",
       "path" : "../../../../resources_test/common/pancreas",
-      "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/normalization/log_cpm/config.vsh.yaml"
+      "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_cpm/config.vsh.yaml"
     }
   ],
   "status" : "enabled",
