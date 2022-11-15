@@ -205,7 +205,7 @@ thisConfig = processConfig([
       "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/dataset_loader/download/config.vsh.yaml"
     }
   ],
-  "status" : "enabled",
+  "status" : "deprecated",
   "set_wd_to_resources_dir" : false
 }''')
 ])

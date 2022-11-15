@@ -1,5 +1,6 @@
 functionality:
   name: "download"
+  status: deprecated
   namespace: "common/dataset_loader"
   version: "dev"
   description: "Download a dataset."
@@ -83,5 +84,5 @@ platforms:
       - type: python
         packages:
           - scanpy
-          - "anndata<0.8"
+          - "anndata>=0.8"
   - type: nextflow
