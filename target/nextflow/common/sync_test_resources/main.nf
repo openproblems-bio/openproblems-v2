@@ -51,7 +51,7 @@ thisConfig = processConfig([
       ],
       "description" : "Path to the S3 bucket to sync from.",
       "default" : [
-        "s3://openproblems-data"
+        "s3://openproblems-data/resources_test"
       ],
       "required" : false,
       "direction" : "input",
@@ -117,7 +117,7 @@ thisConfig = processConfig([
     }
   ],
   "description" : "Synchronise the test resources from s3 to resources_test",
-  "usage" : "sync_test_resources\nsync_test_resources --input s3://openproblems-data --output resources_test\n",
+  "usage" : "sync_test_resources\nsync_test_resources --input s3://openproblems-data/resources_test --output resources_test\n",
   "test_resources" : [
     {
       "type" : "bash_script",

@@ -408,9 +408,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization log_scran_pooling"
-LABEL org.opencontainers.image.created="2022-11-15T20:44:34Z"
+LABEL org.opencontainers.image.created="2022-11-16T09:12:47Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="dac7bca5635b5bfb8e6fe3ac8d5cdbde82ceb3d4"
+LABEL org.opencontainers.image.revision="87a6d699e013b9f4370c1bafdb9481709df87f2f"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -951,10 +951,14 @@ rm(.viash_orig_warn)
 
 cat(">> Load data\\n")
 adata <- anndata::read_h5ad(par\$input)
-counts <- as.matrix(t(adata\$layers[["counts"]]))
+counts <- as(t(adata\$layers[["counts"]]), "CsparseMatrix")
 
 cat(">> Normalizing data\\n")
-size_factors <- scran::calculateSumFactors(counts, min.mean=0.1, BPPARAM=BiocParallel::MulticoreParam())
+size_factors <- scran::calculateSumFactors(
+  counts,
+  min.mean = 0.1,
+  BPPARAM = BiocParallel::MulticoreParam()
+)
 lognorm <- log1p(sweep(adata\$layers[["counts"]], 1, size_factors, "*"))
 
 cat(">> Storing in anndata\\n")

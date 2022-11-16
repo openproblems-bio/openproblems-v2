@@ -54,5 +54,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/common/data_processing/dataset_concatenate"
   viash_version: "0.6.3"
-  git_commit: "dac7bca5635b5bfb8e6fe3ac8d5cdbde82ceb3d4"
+  git_commit: "87a6d699e013b9f4370c1bafdb9481709df87f2f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -165,12 +165,13 @@ function ViashHelp {
   echo ""
   echo "Usage:"
   echo "sync_test_resources"
-  echo "sync_test_resources --input s3://openproblems-data --output resources_test"
+  echo "sync_test_resources --input s3://openproblems-data/resources_test --output"
+  echo "resources_test"
   echo ""
   echo "Arguments:"
   echo "    -i, --input"
   echo "        type: string"
-  echo "        default: s3://openproblems-data"
+  echo "        default: s3://openproblems-data/resources_test"
   echo "        Path to the S3 bucket to sync from."
   echo ""
   echo "    -o, --output"
@@ -417,9 +418,9 @@ FROM amazon/aws-cli:2.7.12
 RUN :
 LABEL org.opencontainers.image.authors="Robrecht Cannoodt"
 LABEL org.opencontainers.image.description="Companion container for running component common sync_test_resources"
-LABEL org.opencontainers.image.created="2022-11-15T20:44:32Z"
+LABEL org.opencontainers.image.created="2022-11-16T09:12:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="dac7bca5635b5bfb8e6fe3ac8d5cdbde82ceb3d4"
+LABEL org.opencontainers.image.revision="87a6d699e013b9f4370c1bafdb9481709df87f2f"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -809,7 +810,7 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
   exit 1
 fi
 if [ -z ${VIASH_PAR_INPUT+x} ]; then
-  VIASH_PAR_INPUT="s3://openproblems-data"
+  VIASH_PAR_INPUT="s3://openproblems-data/resources_test"
 fi
 if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
   VIASH_PAR_OUTPUT="resources_test"

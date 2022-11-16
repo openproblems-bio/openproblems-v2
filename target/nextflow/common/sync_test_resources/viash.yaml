@@ -20,7 +20,7 @@ functionality:
     description: "Path to the S3 bucket to sync from."
     example: []
     default:
-    - "s3://openproblems-data"
+    - "s3://openproblems-data/resources_test"
     required: false
     choices: []
     direction: "input"
@@ -80,7 +80,7 @@ functionality:
     path: "script.sh"
     is_executable: true
   description: "Synchronise the test resources from s3 to resources_test"
-  usage: "sync_test_resources\nsync_test_resources --input s3://openproblems-data\
+  usage: "sync_test_resources\nsync_test_resources --input s3://openproblems-data/resources_test\
     \ --output resources_test\n"
   test_resources:
   - type: "bash_script"
@@ -96,5 +96,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/common/sync_test_resources"
   viash_version: "0.6.3"
-  git_commit: "dac7bca5635b5bfb8e6fe3ac8d5cdbde82ceb3d4"
+  git_commit: "87a6d699e013b9f4370c1bafdb9481709df87f2f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
