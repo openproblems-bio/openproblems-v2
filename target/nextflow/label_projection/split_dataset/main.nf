@@ -315,7 +315,7 @@ thisConfig = processConfig([
     },
     {
       "type" : "file",
-      "path" : "../../../../resources_test/common/pancreas",
+      "path" : "../../../resources_test/common/pancreas",
       "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/split_dataset/config.vsh.yaml"
     }
   ],
@@ -372,11 +372,10 @@ print("adata:", adata)
 print(f">> Process data using {par['method']} method")
 
 if par["method"] == "batch":
-    test_batches = adata.obs[par["obs_batch"]].dtype.categories[[-3, -1]]
-    is_test = [
-        True if adata.obs[par["obs_batch"]][idx] in test_batches else False
-        for idx in adata.obs_names
-    ]
+    batch_info = adata.obs[par["obs_batch"]]
+    batch_categories = batch_info.dtype.categories
+    test_batches = random.sample(list(batch_categories), 1)
+    is_test = [ x in test_batches for x in batch_info ]
 elif par["method"] == "random":
     train_ix = np.random.choice(adata.n_obs, round(adata.n_obs * 0.8), replace=False)
     is_test = [ not x in train_ix for x in range(0, adata.n_obs) ]

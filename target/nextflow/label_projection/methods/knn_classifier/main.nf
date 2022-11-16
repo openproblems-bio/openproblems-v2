@@ -23,6 +23,7 @@ def jsonSlurper = new JsonSlurper()
 thisConfig = processConfig([
   functionality: jsonSlurper.parseText('''{
   "name" : "knn_classifier",
+  "namespace" : "label_projection/methods",
   "version" : "main_build",
   "arguments" : [
     {
@@ -306,7 +307,7 @@ thisDefaultProcessArgs = [
   directives: jsonSlurper.parseText('''{
   "container" : {
     "registry" : "ghcr.io",
-    "image" : "openproblems-bio/knn_classifier",
+    "image" : "openproblems-bio/label_projection/methods_knn_classifier",
     "tag" : "main_build"
   }
 }'''),

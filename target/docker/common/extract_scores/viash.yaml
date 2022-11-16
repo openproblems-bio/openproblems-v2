@@ -28,8 +28,8 @@ functionality:
     default:
     - "dataset_id"
     - "method_id"
-    - "metric_id"
-    - "metric_value"
+    - "metric_ids"
+    - "metric_values"
     required: false
     choices: []
     direction: "input"
@@ -68,5 +68,5 @@ info:
   output: "target/docker/common/extract_scores"
   executable: "target/docker/common/extract_scores/extract_scores"
   viash_version: "0.6.3"
-  git_commit: "87a6d699e013b9f4370c1bafdb9481709df87f2f"
+  git_commit: "a186905e6d311b417bdd5febfc1837300e910436"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

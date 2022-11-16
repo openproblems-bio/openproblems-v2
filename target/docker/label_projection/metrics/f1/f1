@@ -396,9 +396,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/metrics f1"
-LABEL org.opencontainers.image.created="2022-11-16T09:12:47Z"
+LABEL org.opencontainers.image.created="2022-11-16T11:59:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="87a6d699e013b9f4370c1bafdb9481709df87f2f"
+LABEL org.opencontainers.image.revision="a186905e6d311b417bdd5febfc1837300e910436"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -920,7 +920,8 @@ input_solution = ad.read_h5ad(par['input_solution'])
 assert (input_prediction.obs_names == input_solution.obs_names).all()
 
 print("Encode labels")
-encoder = sklearn.preprocessing.LabelEncoder().fit(input_solution.obs["label"])
+cats = list(input_solution.obs["label"].dtype.categories) + list(input_prediction.obs["label_pred"].dtype.categories)
+encoder = sklearn.preprocessing.LabelEncoder().fit(cats)
 input_solution.obs["label"] = encoder.transform(input_solution.obs["label"])
 input_prediction.obs["label_pred"] = encoder.transform(input_prediction.obs["label_pred"])
 
