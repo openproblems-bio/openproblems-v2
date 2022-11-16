@@ -48,6 +48,11 @@ thisConfig = processConfig([
               "type" : "double",
               "name" : "log_scran_pooling",
               "description" : "Scran pooling normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "sqrt_cpm",
+              "description" : "CPM normalized counts, sqrt transformed"
             }
           ],
           "obs" : [
@@ -103,6 +108,11 @@ thisConfig = processConfig([
               "type" : "double",
               "name" : "log_scran_pooling",
               "description" : "Scran pooling normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "sqrt_cpm",
+              "description" : "CPM normalized counts, sqrt transformed"
             }
           ],
           "obs" : [
@@ -158,6 +168,11 @@ thisConfig = processConfig([
               "type" : "double",
               "name" : "log_scran_pooling",
               "description" : "Scran pooling normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "sqrt_cpm",
+              "description" : "CPM normalized counts, sqrt transformed"
             }
           ],
           "obs" : [
@@ -208,6 +223,11 @@ thisConfig = processConfig([
               "type" : "double",
               "name" : "log_scran_pooling",
               "description" : "Scran pooling normalized counts, log transformed"
+            },
+            {
+              "type" : "double",
+              "name" : "sqrt_cpm",
+              "description" : "CPM normalized counts, sqrt transformed"
             }
           ],
           "obs" : [

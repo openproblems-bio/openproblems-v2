@@ -23,6 +23,9 @@ functionality:
         - type: "double"
           name: "log_scran_pooling"
           description: "Scran pooling normalized counts, log transformed"
+        - type: "double"
+          name: "sqrt_cpm"
+          description: "CPM normalized counts, sqrt transformed"
         obs:
         - type: "string"
           name: "label"
@@ -165,5 +168,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/label_projection/metrics/f1"
   viash_version: "0.6.3"
-  git_commit: "f9e2cc0f4df7ff0733a6486bfa205084fed0c75f"
+  git_commit: "183eeb8c4d893fd6a14b24bda3f9e70ea2681687"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
