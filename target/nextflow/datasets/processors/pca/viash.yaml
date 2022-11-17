@@ -203,5 +203,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/datasets/processors/pca"
   viash_version: "0.6.4"
-  git_commit: "d3b8232e9b7a29b3eb8e13a5865a209c8badeea1"
+  git_commit: "7299235904ce7b8b0a5d0f9802457e7b496ac208"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
