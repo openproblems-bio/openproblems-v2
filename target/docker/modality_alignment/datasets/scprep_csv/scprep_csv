@@ -420,9 +420,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante"
 LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/datasets scprep_csv"
-LABEL org.opencontainers.image.created="2022-11-17T21:12:20Z"
+LABEL org.opencontainers.image.created="2022-11-17T21:13:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1610ebceb0493faef3eac3ca72e6f9dad073955f"
+LABEL org.opencontainers.image.revision="d3b8232e9b7a29b3eb8e13a5865a209c8badeea1"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
