@@ -152,5 +152,5 @@ info:
   output: "target/docker/label_projection/metrics/accuracy"
   executable: "target/docker/label_projection/metrics/accuracy/accuracy"
   viash_version: "0.6.4"
-  git_commit: "6eec81323079cee8d65a96429e38fa108ddcb4ef"
+  git_commit: "bf991797929b05a7d199846ffe241a296a418d77"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
