@@ -29,9 +29,9 @@ thisConfig = processConfig([
     {
       "type" : "file",
       "name" : "--input",
-      "description" : "A raw dataset",
+      "description" : "An unprocessed dataset as output by a dataset loader.",
       "info" : {
-        "short_description" : "Raw dataset",
+        "label" : "Raw dataset",
         "slots" : {
           "layers" : [
             {
@@ -84,9 +84,9 @@ thisConfig = processConfig([
     {
       "type" : "file",
       "name" : "--output",
-      "description" : "A preprocessed dataset",
+      "description" : "A normalized dataset",
       "info" : {
-        "short_description" : "Preprocessed dataset",
+        "label" : "Normalized dataset",
         "slots" : {
           "layers" : [
             {
@@ -97,8 +97,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "$par_layer_output",
-              "description" : "Log-transformed normalised counts"
+              "name" : "normalized",
+              "description" : "Normalised expression values"
             }
           ],
           "obs" : [
@@ -119,6 +119,12 @@ thisConfig = processConfig([
               "name" : "tissue",
               "description" : "Tissue information",
               "required" : false
+            },
+            {
+              "type" : "double",
+              "name" : "size_factors",
+              "description" : "The size factors created by the normalisation method, if any.",
+              "required" : false
             }
           ],
           "uns" : [
@@ -127,12 +133,18 @@ thisConfig = processConfig([
               "name" : "dataset_id",
               "description" : "A unique identifier for the dataset",
               "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
       },
       "example" : [
-        "preprocessed.h5ad"
+        "dataset.h5ad"
       ],
       "must_exist" : false,
       "required" : false,
@@ -144,9 +156,9 @@ thisConfig = processConfig([
     {
       "type" : "string",
       "name" : "--layer_output",
-      "description" : "The name of the layer in which to store the log normalized data.",
+      "description" : "The name of the layer in which to store the normalized data.",
       "default" : [
-        "log_cpm"
+        "normalized"
       ],
       "required" : false,
       "direction" : "input",
@@ -157,9 +169,9 @@ thisConfig = processConfig([
     {
       "type" : "string",
       "name" : "--obs_size_factors",
-      "description" : "In which .obs slot to store the size factors.",
+      "description" : "In which .obs slot to store the size factors (if any).",
       "default" : [
-        "size_factors_log_cpm"
+        "size_factors"
       ],
       "required" : false,
       "direction" : "input",

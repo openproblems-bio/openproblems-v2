@@ -103,9 +103,9 @@ thisConfig = processConfig([
         {
           "type" : "file",
           "name" : "--output",
-          "description" : "A raw dataset",
+          "description" : "An unprocessed dataset as output by a dataset loader.",
           "info" : {
-            "short_description" : "Raw dataset",
+            "label" : "Raw dataset",
             "slots" : {
               "layers" : [
                 {
