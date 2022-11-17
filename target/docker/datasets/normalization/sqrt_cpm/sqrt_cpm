@@ -401,9 +401,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization sqrt_cpm"
-LABEL org.opencontainers.image.created="2022-11-17T18:36:33Z"
+LABEL org.opencontainers.image.created="2022-11-17T21:12:22Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b2e1ec6873f94636bcc2f528b2dcb54affc9e7fb"
+LABEL org.opencontainers.image.revision="1610ebceb0493faef3eac3ca72e6f9dad073955f"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -946,6 +946,7 @@ lognorm = np.sqrt(norm["X"])
 print(">> Store output in adata")
 adata.layers[par["layer_output"]] = lognorm
 adata.obs[par["obs_size_factors"]] = norm["norm_factor"]
+adata.uns["normalization_id"] = meta["functionality_name"]
 
 print(">> Write data")
 adata.write_h5ad(par['output'], compression="gzip")

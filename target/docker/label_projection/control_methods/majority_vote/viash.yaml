@@ -170,5 +170,5 @@ info:
   output: "target/docker/label_projection/control_methods/majority_vote"
   executable: "target/docker/label_projection/control_methods/majority_vote/majority_vote"
   viash_version: "0.6.4"
-  git_commit: "b2e1ec6873f94636bcc2f528b2dcb54affc9e7fb"
+  git_commit: "1610ebceb0493faef3eac3ca72e6f9dad073955f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
