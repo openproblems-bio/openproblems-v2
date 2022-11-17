@@ -9,7 +9,7 @@ include { majority_vote } from "$targetDir/label_projection/control_methods/majo
 include { random_labels } from "$targetDir/label_projection/control_methods/random_labels/main.nf"
 
 // import methods
-include { knn_classifier } from "$targetDir/label_projection/methods/knn_classifier/main.nf"
+include { knn } from "$targetDir/label_projection/methods/knn/main.nf"
 include { mlp } from "$targetDir/label_projection/methods/mlp/main.nf"
 include { logistic_regression } from "$targetDir/label_projection/methods/logistic_regression/main.nf"
 // include { scanvi_hvg } from "$targetDir/label_projection/methods/scvi/scanvi_hvg/main.nf"
@@ -50,22 +50,23 @@ workflow run_wf {
   }
 
   output_ch = input_ch
+    | filter{it[1].normalization_id == "log_cpm"}
     
     // split params for downstream components
     | setWorkflowArguments(
-      method: ["input_train", "input_test"],
+      method: ["input_train", "input_test", "normalization_id", "dataset_id"],
       metric: [ "input_solution" ]
     )
 
     // run methods
     | getWorkflowArguments(key: "method")
     | (
-      true_labels.run(map: addSolution) & 
-      random_labels & 
-      majority_vote & 
-      knn_classifier & 
-      logistic_regression &
-      mlp
+      true_labels.run(map: addSolution, filter: {it[1].normalization_id == "log_cpm"}) & 
+      random_labels.run(filter: {it[1].normalization_id == "log_cpm"}) & 
+      majority_vote.run(filter: {it[1].normalization_id == "log_cpm"}) & 
+      knn.run(filter: {it[1].normalization_id == "log_cpm"}) & 
+      logistic_regression.run(filter: {it[1].normalization_id == "log_cpm"}) &
+      mlp.run(filter: {it[1].normalization_id == "log_cpm"})
     )
     | mix
 

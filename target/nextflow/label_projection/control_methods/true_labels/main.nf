@@ -41,18 +41,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -101,18 +91,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -133,6 +113,56 @@ thisConfig = processConfig([
       },
       "example" : [
         "test.h5ad"
+      ],
+      "must_exist" : false,
+      "required" : false,
+      "direction" : "input",
+      "multiple" : false,
+      "multiple_sep" : ":",
+      "dest" : "par"
+    },
+    {
+      "type" : "file",
+      "name" : "--input_solution",
+      "description" : "The solution for the test data",
+      "info" : {
+        "short_description" : "Solution",
+        "slots" : {
+          "layers" : [
+            {
+              "type" : "integer",
+              "name" : "counts",
+              "description" : "Raw counts"
+            },
+            {
+              "type" : "double",
+              "name" : "normalized",
+              "description" : "Normalized counts"
+            }
+          ],
+          "obs" : [
+            {
+              "type" : "string",
+              "name" : "label",
+              "description" : "Ground truth cell type labels"
+            },
+            {
+              "type" : "string",
+              "name" : "batch",
+              "description" : "Batch information"
+            }
+          ],
+          "uns" : [
+            {
+              "type" : "string",
+              "name" : "dataset_id",
+              "description" : "A unique identifier for the dataset"
+            }
+          ]
+        }
+      },
+      "example" : [
+        "solution.h5ad"
       ],
       "must_exist" : false,
       "required" : false,
@@ -178,79 +208,6 @@ thisConfig = processConfig([
       "multiple" : false,
       "multiple_sep" : ":",
       "dest" : "par"
-    },
-    {
-      "type" : "file",
-      "name" : "--input_solution",
-      "description" : "The solution for the test data",
-      "info" : {
-        "short_description" : "Solution",
-        "slots" : {
-          "layers" : [
-            {
-              "type" : "integer",
-              "name" : "counts",
-              "description" : "Raw counts"
-            },
-            {
-              "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
-            }
-          ],
-          "obs" : [
-            {
-              "type" : "string",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
-            },
-            {
-              "type" : "string",
-              "name" : "batch",
-              "description" : "Batch information"
-            }
-          ],
-          "uns" : [
-            {
-              "type" : "string",
-              "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
-            }
-          ]
-        }
-      },
-      "example" : [
-        "solution.h5ad"
-      ],
-      "must_exist" : false,
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
-      "type" : "string",
-      "name" : "--layer_input",
-      "description" : "Which layer to use as input.",
-      "default" : [
-        "counts"
-      ],
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
     }
   ],
   "resources" : [
@@ -279,7 +236,8 @@ thisConfig = processConfig([
     "type" : "positive_control",
     "label" : "True labels",
     "v1_url" : "openproblems/tasks/label_projection/methods/baseline.py",
-    "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c"
+    "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
+    "preferred_normalization" : "counts"
   },
   "status" : "enabled",
   "set_wd_to_resources_dir" : false
@@ -297,9 +255,8 @@ import anndata as ad
 par = {
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_test': $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo "r'${VIASH_PAR_INPUT_TEST//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'layer_input': $( if [ ! -z ${VIASH_PAR_LAYER_INPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),

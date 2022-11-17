@@ -420,9 +420,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection split_dataset"
-LABEL org.opencontainers.image.created="2022-11-17T22:04:04Z"
+LABEL org.opencontainers.image.created="2022-11-17T22:13:35Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="7299235904ce7b8b0a5d0f9802457e7b496ac208"
+LABEL org.opencontainers.image.revision="603a8f8ed5a6961be2fc8f9630c9fd3e88856785"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -1068,22 +1068,23 @@ def subset_anndata(adata_sub, layers, obs, uns):
     )
 output_train = subset_anndata(
     adata_sub = adata[[not x for x in is_test]], 
-    layers=["counts", "log_cpm", "log_scran_pooling"], 
+    layers=["counts", "normalized"], 
     obs={"label": par["obs_label"], "batch": par["obs_batch"]}, 
     uns=["dataset_id"]
 )
 output_test = subset_anndata(
     adata[is_test], 
-    layers=["counts", "log_cpm", "log_scran_pooling"], 
+    layers=["counts", "normalized"], 
     obs={"batch": par["obs_batch"]}, # do NOT copy label to test obs!
     uns=["dataset_id"]
 )
 output_solution = subset_anndata(
     adata[is_test], 
-    layers=["counts", "log_cpm", "log_scran_pooling"],
+    layers=["counts", "normalized"],
     obs={"label": par["obs_label"], "batch": par["obs_batch"]},
     uns=["dataset_id"]
 )
+# TODO: use .viash_config.yaml to define these subsets
 
 print(">> Writing data")
 output_train.write_h5ad(par["output_train"])

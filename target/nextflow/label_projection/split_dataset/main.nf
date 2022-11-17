@@ -41,18 +41,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -101,18 +91,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -161,18 +141,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -216,18 +186,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -329,7 +289,7 @@ thisConfig = processConfig([
   "test_resources" : [
     {
       "type" : "python_script",
-      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_train_path = \\"output_train.h5ad\\"\noutput_test_path = \\"output_test.h5ad\\"\noutput_solution_path = \\"output_solution.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output_train\\", output_train_path,\n  \\"--output_test\\", output_test_path,\n  \\"--output_solution\\", output_solution_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_train_path)\nassert path.exists(output_test_path)\nassert path.exists(output_solution_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\noutput_solution = ad.read_h5ad(output_solution_path)\n\nprint(\\"input:\\", input)\nprint(\\"output_train:\\", output_train)\nprint(\\"output_test:\\", output_test)\nprint(\\"output_solution:\\", output_solution)\n\nprint(\\">> Checking dimensions, make sure no cells were dropped\\")\nassert input.n_obs == output_train.n_obs + output_test.n_obs\nassert output_test.n_obs == output_solution.n_obs\nassert input.n_vars == output_train.n_vars\nassert input.n_vars == output_test.n_vars\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert output_train.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_test.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_solution.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\n\nprint(\\">> Check whether certain slots exist\\")\nassert \\"counts\\" in output_train.layers\nassert \\"log_cpm\\" in output_train.layers\nassert \\"log_scran_pooling\\" in output_train.layers\nassert \\"label\\" in output_train.obs\nassert \\"batch\\" in output_train.obs\nassert \\"counts\\" in output_test.layers\nassert \\"log_cpm\\" in output_test.layers\nassert \\"log_scran_pooling\\" in output_test.layers\nassert \\"label\\" not in output_test.obs # make sure label is /not/ here\nassert \\"batch\\" in output_test.obs\nassert \\"counts\\" in output_solution.layers\nassert \\"log_cpm\\" in output_solution.layers\nassert \\"log_scran_pooling\\" in output_solution.layers\nassert \\"label\\" in output_solution.obs\nassert \\"batch\\" in output_solution.obs\n\nprint(\\">> All checks succeeded!\\")\n",
+      "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_train_path = \\"output_train.h5ad\\"\noutput_test_path = \\"output_test.h5ad\\"\noutput_solution_path = \\"output_solution.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output_train\\", output_train_path,\n  \\"--output_test\\", output_test_path,\n  \\"--output_solution\\", output_solution_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_train_path)\nassert path.exists(output_test_path)\nassert path.exists(output_solution_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\noutput_solution = ad.read_h5ad(output_solution_path)\n\nprint(\\"input:\\", input)\nprint(\\"output_train:\\", output_train)\nprint(\\"output_test:\\", output_test)\nprint(\\"output_solution:\\", output_solution)\n\nprint(\\">> Checking dimensions, make sure no cells were dropped\\")\nassert input.n_obs == output_train.n_obs + output_test.n_obs\nassert output_test.n_obs == output_solution.n_obs\nassert input.n_vars == output_train.n_vars\nassert input.n_vars == output_test.n_vars\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert output_train.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_test.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\nassert output_solution.uns[\\"dataset_id\\"] == input.uns[\\"dataset_id\\"]\n\nprint(\\">> Check whether certain slots exist\\")\nassert \\"counts\\" in output_train.layers\nassert \\"normalized\\" in output_train.layers\nassert \\"label\\" in output_train.obs\nassert \\"batch\\" in output_train.obs\nassert \\"counts\\" in output_test.layers\nassert \\"normalized\\" in output_test.layers\nassert \\"label\\" not in output_test.obs # make sure label is /not/ here\nassert \\"batch\\" in output_test.obs\nassert \\"counts\\" in output_solution.layers\nassert \\"normalized\\" in output_solution.layers\nassert \\"label\\" in output_solution.obs\nassert \\"batch\\" in output_solution.obs\n\nprint(\\">> All checks succeeded!\\")\n",
       "dest" : "generic_test.py",
       "is_executable" : true
     },
@@ -410,22 +370,23 @@ def subset_anndata(adata_sub, layers, obs, uns):
     )
 output_train = subset_anndata(
     adata_sub = adata[[not x for x in is_test]], 
-    layers=["counts", "log_cpm", "log_scran_pooling"], 
+    layers=["counts", "normalized"], 
     obs={"label": par["obs_label"], "batch": par["obs_batch"]}, 
     uns=["dataset_id"]
 )
 output_test = subset_anndata(
     adata[is_test], 
-    layers=["counts", "log_cpm", "log_scran_pooling"], 
+    layers=["counts", "normalized"], 
     obs={"batch": par["obs_batch"]}, # do NOT copy label to test obs!
     uns=["dataset_id"]
 )
 output_solution = subset_anndata(
     adata[is_test], 
-    layers=["counts", "log_cpm", "log_scran_pooling"],
+    layers=["counts", "normalized"],
     obs={"label": par["obs_label"], "batch": par["obs_batch"]},
     uns=["dataset_id"]
 )
+# TODO: use .viash_config.yaml to define these subsets
 
 print(">> Writing data")
 output_train.write_h5ad(par["output_train"])

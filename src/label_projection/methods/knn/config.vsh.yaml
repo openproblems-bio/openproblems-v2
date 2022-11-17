@@ -1,6 +1,6 @@
 __inherits__: ../../api/comp_method.yaml
 functionality:
-  name: "knn_classifier"
+  name: "knn"
   namespace: "label_projection/methods"
   description: "K-Nearest Neighbors classifier"
   info:
@@ -13,11 +13,7 @@ functionality:
     code_url: "https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"
     v1_url: openproblems/tasks/label_projection/methods/knn_classifier.py
     v1_commit: 2097bbb3e996f66e98128c9ac95bc9640a496e0d
-  arguments:
-    - name: "--layer_input"
-      type: string
-      default: "log_cpm"
-      description: Which layer to use as input.
+    preferred_normalization: log_cpm
   resources:
     - type: python_script
       path: script.py

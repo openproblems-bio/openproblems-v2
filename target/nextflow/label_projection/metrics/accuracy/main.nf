@@ -41,18 +41,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [

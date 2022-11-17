@@ -41,18 +41,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -101,18 +91,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -180,19 +160,6 @@ thisConfig = processConfig([
       "dest" : "par"
     },
     {
-      "type" : "string",
-      "name" : "--layer_input",
-      "description" : "Which layer to use as input.",
-      "default" : [
-        "log_cpm"
-      ],
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
       "type" : "integer",
       "name" : "--max_iter",
       "description" : "Maximum number of iterations",
@@ -233,7 +200,8 @@ thisConfig = processConfig([
     "label" : "Logistic Regression",
     "code_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
     "v1_url" : "openproblems/tasks/label_projection/methods/logistic_regression.py",
-    "v1_commit" : "2097bbb3e996f66e98128c9ac95bc9640a496e0d"
+    "v1_commit" : "2097bbb3e996f66e98128c9ac95bc9640a496e0d",
+    "preferred_normalization" : "log_cpm"
   },
   "status" : "enabled",
   "set_wd_to_resources_dir" : false
@@ -257,7 +225,6 @@ par = {
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_test': $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo "r'${VIASH_PAR_INPUT_TEST//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'layer_input': $( if [ ! -z ${VIASH_PAR_LAYER_INPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'max_iter': $( if [ ! -z ${VIASH_PAR_MAX_ITER+x} ]; then echo "int(r'${VIASH_PAR_MAX_ITER//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
@@ -279,7 +246,7 @@ meta = {
 print("Load input data")
 input_train = ad.read_h5ad(par['input_train'])
 input_test = ad.read_h5ad(par['input_test'])
-input_layer = par["layer_input"]
+input_layer = "normalized"
 
 print("Set up classifier pipeline")
 def pca_op(adata_train, adata_test, n_components=100):

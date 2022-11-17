@@ -18,14 +18,8 @@ functionality:
           name: "counts"
           description: "Raw counts"
         - type: "double"
-          name: "log_cpm"
-          description: "CPM normalized counts, log transformed"
-        - type: "double"
-          name: "log_scran_pooling"
-          description: "Scran pooling normalized counts, log transformed"
-        - type: "double"
-          name: "sqrt_cpm"
-          description: "CPM normalized counts, sqrt transformed"
+          name: "normalized"
+          description: "Normalized counts"
         obs:
         - type: "double"
           name: "label"
@@ -58,14 +52,8 @@ functionality:
           name: "counts"
           description: "Raw counts"
         - type: "double"
-          name: "log_cpm"
-          description: "CPM normalized counts, log transformed"
-        - type: "double"
-          name: "log_scran_pooling"
-          description: "Scran pooling normalized counts, log transformed"
-        - type: "double"
-          name: "sqrt_cpm"
-          description: "CPM normalized counts, sqrt transformed"
+          name: "normalized"
+          description: "Normalized counts"
         obs:
         - type: "string"
           name: "label"
@@ -98,14 +86,8 @@ functionality:
           name: "counts"
           description: "Raw counts"
         - type: "double"
-          name: "log_cpm"
-          description: "CPM normalized counts, log transformed"
-        - type: "double"
-          name: "log_scran_pooling"
-          description: "Scran pooling normalized counts, log transformed"
-        - type: "double"
-          name: "sqrt_cpm"
-          description: "CPM normalized counts, sqrt transformed"
+          name: "normalized"
+          description: "Normalized counts"
         obs:
         - type: "string"
           name: "batch"
@@ -135,14 +117,8 @@ functionality:
           name: "counts"
           description: "Raw counts"
         - type: "double"
-          name: "log_cpm"
-          description: "CPM normalized counts, log transformed"
-        - type: "double"
-          name: "log_scran_pooling"
-          description: "Scran pooling normalized counts, log transformed"
-        - type: "double"
-          name: "sqrt_cpm"
-          description: "CPM normalized counts, sqrt transformed"
+          name: "normalized"
+          description: "Normalized counts"
         obs:
         - type: "string"
           name: "label"
@@ -245,16 +221,14 @@ functionality:
       )\nassert output_train.uns[\"dataset_id\"] == input.uns[\"dataset_id\"]\nassert\
       \ output_test.uns[\"dataset_id\"] == input.uns[\"dataset_id\"]\nassert output_solution.uns[\"\
       dataset_id\"] == input.uns[\"dataset_id\"]\n\nprint(\">> Check whether certain\
-      \ slots exist\")\nassert \"counts\" in output_train.layers\nassert \"log_cpm\"\
-      \ in output_train.layers\nassert \"log_scran_pooling\" in output_train.layers\n\
-      assert \"label\" in output_train.obs\nassert \"batch\" in output_train.obs\n\
-      assert \"counts\" in output_test.layers\nassert \"log_cpm\" in output_test.layers\n\
-      assert \"log_scran_pooling\" in output_test.layers\nassert \"label\" not in\
-      \ output_test.obs # make sure label is /not/ here\nassert \"batch\" in output_test.obs\n\
-      assert \"counts\" in output_solution.layers\nassert \"log_cpm\" in output_solution.layers\n\
-      assert \"log_scran_pooling\" in output_solution.layers\nassert \"label\" in\
-      \ output_solution.obs\nassert \"batch\" in output_solution.obs\n\nprint(\">>\
-      \ All checks succeeded!\")\n"
+      \ slots exist\")\nassert \"counts\" in output_train.layers\nassert \"normalized\"\
+      \ in output_train.layers\nassert \"label\" in output_train.obs\nassert \"batch\"\
+      \ in output_train.obs\nassert \"counts\" in output_test.layers\nassert \"normalized\"\
+      \ in output_test.layers\nassert \"label\" not in output_test.obs # make sure\
+      \ label is /not/ here\nassert \"batch\" in output_test.obs\nassert \"counts\"\
+      \ in output_solution.layers\nassert \"normalized\" in output_solution.layers\n\
+      assert \"label\" in output_solution.obs\nassert \"batch\" in output_solution.obs\n\
+      \nprint(\">> All checks succeeded!\")\n"
     dest: "generic_test.py"
     is_executable: true
   - type: "file"
@@ -269,5 +243,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/label_projection/split_dataset"
   viash_version: "0.6.4"
-  git_commit: "7299235904ce7b8b0a5d0f9802457e7b496ac208"
+  git_commit: "603a8f8ed5a6961be2fc8f9630c9fd3e88856785"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

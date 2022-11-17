@@ -41,18 +41,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -101,18 +91,8 @@ thisConfig = processConfig([
             },
             {
               "type" : "double",
-              "name" : "log_cpm",
-              "description" : "CPM normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "log_scran_pooling",
-              "description" : "Scran pooling normalized counts, log transformed"
-            },
-            {
-              "type" : "double",
-              "name" : "sqrt_cpm",
-              "description" : "CPM normalized counts, sqrt transformed"
+              "name" : "normalized",
+              "description" : "Normalized counts"
             }
           ],
           "obs" : [
@@ -180,19 +160,6 @@ thisConfig = processConfig([
       "dest" : "par"
     },
     {
-      "type" : "string",
-      "name" : "--layer_input",
-      "description" : "Which layer to use as input.",
-      "default" : [
-        "log_cpm"
-      ],
-      "required" : false,
-      "direction" : "input",
-      "multiple" : false,
-      "multiple_sep" : ":",
-      "dest" : "par"
-    },
-    {
       "type" : "integer",
       "name" : "--hidden_layer_sizes",
       "description" : "The ith element represents the number of neurons in the ith hidden layer.",
@@ -246,7 +213,10 @@ thisConfig = processConfig([
     "type" : "method",
     "label" : "Multilayer perceptron",
     "paper_doi" : "10.1016/0004-3702(89)90049-0",
-    "code_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html"
+    "code_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html",
+    "v1_url" : "openproblems/tasks/label_projection/methods/mlp.py",
+    "v1_commit" : "c2470ce02e6f196267cec1c554ba7ae389c0956a",
+    "preferred_normalization" : "log_cpm"
   },
   "status" : "enabled",
   "set_wd_to_resources_dir" : false
@@ -270,7 +240,6 @@ par = {
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_test': $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo "r'${VIASH_PAR_INPUT_TEST//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'layer_input': $( if [ ! -z ${VIASH_PAR_LAYER_INPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'hidden_layer_sizes': $( if [ ! -z ${VIASH_PAR_HIDDEN_LAYER_SIZES+x} ]; then echo "list(map(int, r'${VIASH_PAR_HIDDEN_LAYER_SIZES//\\'/\\'\\"\\'\\"r\\'}'.split(':')))"; else echo None; fi ),
   'max_iter': $( if [ ! -z ${VIASH_PAR_MAX_ITER+x} ]; then echo "int(r'${VIASH_PAR_MAX_ITER//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
@@ -293,7 +262,7 @@ meta = {
 print("Load input data")
 input_train = ad.read_h5ad(par['input_train'])
 input_test = ad.read_h5ad(par['input_test'])
-input_layer = par["layer_input"]
+input_layer = "normalized"
 
 print("Set up classifier pipeline")
 def pca_op(adata_train, adata_test, n_components=100):

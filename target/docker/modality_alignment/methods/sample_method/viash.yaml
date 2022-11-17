@@ -65,5 +65,5 @@ info:
   output: "target/docker/modality_alignment/methods/sample_method"
   executable: "target/docker/modality_alignment/methods/sample_method/sample_method"
   viash_version: "0.6.4"
-  git_commit: "7299235904ce7b8b0a5d0f9802457e7b496ac208"
+  git_commit: "603a8f8ed5a6961be2fc8f9630c9fd3e88856785"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

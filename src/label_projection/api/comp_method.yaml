@@ -7,11 +7,6 @@ functionality:
     - name: "--output"
       __inherits__: anndata_prediction.yaml
       direction: output
-    # TODO: currently needs to be manually specified since the default value needs to be overrideable
-    # - name: "--layer_input"
-    #   type: string
-    #   default: "log_cpm"
-    #   description: Which layer to use as input.
   test_resources:
     - path: ../../../../resources_test/label_projection/pancreas
     - type: python_script
