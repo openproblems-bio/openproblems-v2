@@ -406,9 +406,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante"
 LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/metrics knn_auc"
-LABEL org.opencontainers.image.created="2022-11-16T13:51:20Z"
+LABEL org.opencontainers.image.created="2022-11-17T07:02:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8923077ef8b8eb3be53fabdada7fcc4d58636743"
+LABEL org.opencontainers.image.revision="50f70269b73fab092728228221a13784f0ba857a"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
