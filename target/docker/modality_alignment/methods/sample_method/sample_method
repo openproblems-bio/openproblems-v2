@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante"
 LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/methods sample_method"
-LABEL org.opencontainers.image.created="2022-11-17T22:13:33Z"
+LABEL org.opencontainers.image.created="2022-11-18T12:19:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="603a8f8ed5a6961be2fc8f9630c9fd3e88856785"
+LABEL org.opencontainers.image.revision="336e63e0aec1c4a734fd7d97958af2cae084fa52"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
