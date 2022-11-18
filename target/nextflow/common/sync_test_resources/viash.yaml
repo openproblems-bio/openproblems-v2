@@ -96,5 +96,5 @@ info:
   platform: "nextflow"
   output: "target/nextflow/common/sync_test_resources"
   viash_version: "0.6.4"
-  git_commit: "336e63e0aec1c4a734fd7d97958af2cae084fa52"
+  git_commit: "050305fd4c3abf40d2f0743011d54f8a38e4f879"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
