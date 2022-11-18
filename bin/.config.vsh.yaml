@@ -1,0 +1,242 @@
+functionality:
+  name: "viash_push"
+  namespace: "viash"
+  version: "develop"
+  authors: []
+  inputs: []
+  outputs: []
+  arguments:
+  - type: "file"
+    name: "--src"
+    alternatives:
+    - "-s"
+    description: "Directory for sources if different from src/"
+    example: []
+    default:
+    - "src"
+    must_exist: false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--mode"
+    alternatives:
+    - "-m"
+    description: "The mode to run in. Possible values are: 'development', 'integration',\
+      \ 'release'."
+    example: []
+    default:
+    - "development"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--query"
+    alternatives:
+    - "-q"
+    description: "Filter which components get selected by component and namespace\
+      \ name. Can be a regex."
+    example:
+    - "^mynamespace/component1$"
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--query_namespace"
+    alternatives:
+    - "-n"
+    description: "Filter which namespaces get selected by namespace name. Can be a\
+      \ regex."
+    example:
+    - "^mynamespace$"
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--query_name"
+    alternatives: []
+    description: "Filter which components get selected by component name. Can be a\
+      \ regex."
+    example:
+    - "^component1$"
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--tag"
+    alternatives:
+    - "-t"
+    description: "The tag/version to be used."
+    example:
+    - "0.1.0"
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--registry"
+    alternatives:
+    - "-r"
+    description: "Which Docker registry to use in the Docker image name."
+    example:
+    - "ghcr.io"
+    default:
+    - "ghcr.io"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--organization"
+    alternatives:
+    - "-o"
+    - "--organisation"
+    description: "Which organisation name to use in the Docker image name."
+    example:
+    - "myorganisation"
+    default:
+    - "openproblems-bio"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--target_image_source"
+    alternatives:
+    - "-tis"
+    description: "Which image source to specify in the component builds."
+    example:
+    - "https://github.com/myorganisation/myrepository"
+    default:
+    - "https://github.com/openproblems-bio/openproblems-v2"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--namespace_separator"
+    alternatives: []
+    description: "The separator to use between the component name and namespace as\
+      \ the image name of a Docker container."
+    example:
+    - "_"
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--max_threads"
+    alternatives: []
+    description: "The maximum number of threads viash will use when `--parallel` during\
+      \ parallel tasks."
+    example:
+    - 8
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "boolean_true"
+    name: "--force"
+    alternatives: []
+    description: "Overwrite existing container."
+    direction: "input"
+    dest: "par"
+  - type: "string"
+    name: "--config_mod"
+    alternatives:
+    - "-c"
+    description: "Modify a viash config at runtime using a custom DSL."
+    example: []
+    default: []
+    required: false
+    choices: []
+    direction: "input"
+    multiple: true
+    multiple_sep: ";"
+    dest: "par"
+  - type: "file"
+    name: "--log"
+    alternatives:
+    - "-l"
+    description: "Log file"
+    example:
+    - ".viash_push_log.txt"
+    default: []
+    must_exist: false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--viash"
+    alternatives: []
+    description: "A path to the viash executable. If not specified, this component\
+      \ will look for 'viash' on the $PATH."
+    example: []
+    default:
+    - "bin/viash"
+    must_exist: false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "boolean_true"
+    name: "--verbose"
+    alternatives: []
+    description: "Increase verbosity."
+    direction: "input"
+    dest: "par"
+  argument_groups: []
+  resources:
+  - type: "bash_script"
+    path: "script.sh"
+    is_executable: true
+  description: "Push a project, usually in the context of a pipeline.\n"
+  test_resources: []
+  status: "enabled"
+  requirements:
+    commands: []
+  set_wd_to_resources_dir: false
+platforms:
+- type: "native"
+  id: "native"
+info:
+  config: "/tmp/tmp.fHbbpFLfap/viash-develop/src/viash/viash_push/config.vsh.yaml"
+  platform: "native"
+  output: "bin"
+  executable: "bin/viash_push"
+  viash_version: "0.6.4"

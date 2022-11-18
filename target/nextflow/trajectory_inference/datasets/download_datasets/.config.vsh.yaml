@@ -1,0 +1,143 @@
+functionality:
+  name: "download_datasets"
+  namespace: "trajectory_inference/datasets"
+  version: "main_build"
+  authors:
+  - name: "Louise Deconinck"
+    roles:
+    - "maintainer"
+    - "author"
+    props:
+      github: "LouiseDck"
+  inputs: []
+  outputs: []
+  arguments:
+  - type: "string"
+    name: "--id"
+    alternatives: []
+    description: "The id of the output dataset id"
+    example: []
+    default:
+    - "ti_dataset"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--input"
+    alternatives:
+    - "-i"
+    description: "Input download link for the dataset"
+    example: []
+    default:
+    - ""
+    must_exist: false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    alternatives:
+    - "-o"
+    description: "Output h5ad file containing input matrices data"
+    example: []
+    default:
+    - "output.h5ad"
+    must_exist: false
+    required: true
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  argument_groups: []
+  resources:
+  - type: "r_script"
+    path: "script.R"
+    is_executable: true
+  description: "Download datasets to use for TI, mix of real and synthetic"
+  test_resources: []
+  status: "enabled"
+  requirements:
+    commands: []
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "rocker/tidyverse:4.0.4"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "_"
+  resolve_volume: "Automatic"
+  chown: true
+  port: []
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  run_args: []
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "r"
+    packages:
+    - "httr"
+    - "anndata"
+    cran: []
+    bioc: []
+    git: []
+    github:
+    - "dynverse/dynio"
+    gitlab: []
+    bitbucket: []
+    svn: []
+    url: []
+    script: []
+    bioc_force_install: false
+  - type: "apt"
+    packages:
+    - "python3"
+    - "pip"
+    interactive: false
+  - type: "python"
+    user: false
+    packages:
+    - "anndata"
+    pip: []
+    pypi: []
+    git: []
+    github: []
+    gitlab: []
+    mercurial: []
+    svn: []
+    bazaar: []
+    url: []
+    script: []
+    upgrade: true
+  test_setup: []
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    accelerator: {}
+    conda: []
+    containerOptions: []
+    label: []
+    module: []
+    pod: []
+    publishDir: []
+    queue: []
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "src/trajectory_inference/datasets/download_datasets/config.vsh.yml"
+  platform: "nextflow"
+  output: "target/nextflow/trajectory_inference/datasets/download_datasets"
+  executable: "target/nextflow/trajectory_inference/datasets/download_datasets/download_datasets"
+  viash_version: "0.6.4"
+  git_commit: "6adc8bba7da0140ac8d4aff3be6f72fdc76d4392"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -148,6 +148,7 @@ $( if [ ! -z ${VIASH_PAR_EXCLUDE+x} ]; then echo "${VIASH_PAR_EXCLUDE}" | sed "s
 $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "${VIASH_META_FUNCTIONALITY_NAME}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_functionality_name='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_RESOURCES_DIR+x} ]; then echo "${VIASH_META_RESOURCES_DIR}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_resources_dir='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_EXECUTABLE+x} ]; then echo "${VIASH_META_EXECUTABLE}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_executable='&'#" ; fi )
+$( if [ ! -z ${VIASH_META_CONFIG+x} ]; then echo "${VIASH_META_CONFIG}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_config='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_TEMP_DIR+x} ]; then echo "${VIASH_META_TEMP_DIR}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_temp_dir='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_CPUS+x} ]; then echo "${VIASH_META_CPUS}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_cpus='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_MEMORY_B+x} ]; then echo "${VIASH_META_MEMORY_B}" | sed "s#'#'\\"'\\"'#g;s#.*#meta_memory_b='&'#" ; fi )
@@ -1479,6 +1480,7 @@ def processFactory(Map processArgs) {
   |export VIASH_META_TEMP_DIR="${['docker', 'podman', 'charliecloud'].any{ it == workflow.containerEngine } ? '/tmp' : tmpDir}"
   |export VIASH_META_FUNCTIONALITY_NAME="${thisConfig.functionality.name}"
   |export VIASH_META_EXECUTABLE="\\\$VIASH_META_RESOURCES_DIR/\\\$VIASH_META_FUNCTIONALITY_NAME"
+  |export VIASH_META_CONFIG="\\\$VIASH_META_RESOURCES_DIR/.config.vsh.yaml"
   |\${task.cpus ? "export VIASH_META_CPUS=\$task.cpus" : "" }
   |\${task.memory?.bytes != null ? "export VIASH_META_MEMORY_B=\$task.memory.bytes" : "" }
   |if [ ! -z \\\${VIASH_META_MEMORY_B+x} ]; then

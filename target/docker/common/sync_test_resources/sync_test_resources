@@ -154,6 +154,7 @@ VIASH_META_RESOURCES_DIR=`ViashSourceDir ${BASH_SOURCE[0]}`
 # define meta fields
 VIASH_META_FUNCTIONALITY_NAME="sync_test_resources"
 VIASH_META_EXECUTABLE="$VIASH_META_RESOURCES_DIR/$VIASH_META_FUNCTIONALITY_NAME"
+VIASH_META_CONFIG="$VIASH_META_RESOURCES_DIR/.config.vsh.yaml"
 VIASH_META_TEMP_DIR="$VIASH_TEMP"
 
 
@@ -418,9 +419,9 @@ FROM amazon/aws-cli:2.7.12
 RUN :
 LABEL org.opencontainers.image.authors="Robrecht Cannoodt"
 LABEL org.opencontainers.image.description="Companion container for running component common sync_test_resources"
-LABEL org.opencontainers.image.created="2022-11-18T14:33:12Z"
+LABEL org.opencontainers.image.created="2022-11-18T21:46:10Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="050305fd4c3abf40d2f0743011d54f8a38e4f879"
+LABEL org.opencontainers.image.revision="6adc8bba7da0140ac8d4aff3be6f72fdc76d4392"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -760,6 +761,10 @@ if [[ $# -gt 0 ]]; then
   shift 1
 fi
 if [[ $# -gt 0 ]]; then
+  VIASH_META_CONFIG="$1"
+  shift 1
+fi
+if [[ $# -gt 0 ]]; then
   VIASH_META_TEMP_DIR="$1"
   shift 1
 fi
@@ -803,6 +808,10 @@ if [ -z ${VIASH_META_RESOURCES_DIR+x} ]; then
 fi
 if [ -z ${VIASH_META_EXECUTABLE+x} ]; then
   ViashError 'executable' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_META_CONFIG+x} ]; then
+  ViashError 'config' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
 if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
@@ -917,6 +926,7 @@ fi
 
 
 
+
 # detect volumes from file arguments
 if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT") )
@@ -929,6 +939,10 @@ fi
 if [ ! -z "$VIASH_META_EXECUTABLE" ]; then
   VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_META_EXECUTABLE") )
   VIASH_META_EXECUTABLE=$(ViashAutodetectMount "$VIASH_META_EXECUTABLE")
+fi
+if [ ! -z "$VIASH_META_CONFIG" ]; then
+  VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_META_CONFIG") )
+  VIASH_META_CONFIG=$(ViashAutodetectMount "$VIASH_META_CONFIG")
 fi
 if [ ! -z "$VIASH_META_TEMP_DIR" ]; then
   VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_META_TEMP_DIR") )
@@ -984,6 +998,7 @@ $( if [ ! -z ${VIASH_PAR_EXCLUDE+x} ]; then echo "${VIASH_PAR_EXCLUDE}" | sed "s
 $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "${VIASH_META_FUNCTIONALITY_NAME}" | sed "s#'#'\"'\"'#g;s#.*#meta_functionality_name='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_RESOURCES_DIR+x} ]; then echo "${VIASH_META_RESOURCES_DIR}" | sed "s#'#'\"'\"'#g;s#.*#meta_resources_dir='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_EXECUTABLE+x} ]; then echo "${VIASH_META_EXECUTABLE}" | sed "s#'#'\"'\"'#g;s#.*#meta_executable='&'#" ; fi )
+$( if [ ! -z ${VIASH_META_CONFIG+x} ]; then echo "${VIASH_META_CONFIG}" | sed "s#'#'\"'\"'#g;s#.*#meta_config='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_TEMP_DIR+x} ]; then echo "${VIASH_META_TEMP_DIR}" | sed "s#'#'\"'\"'#g;s#.*#meta_temp_dir='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_CPUS+x} ]; then echo "${VIASH_META_CPUS}" | sed "s#'#'\"'\"'#g;s#.*#meta_cpus='&'#" ; fi )
 $( if [ ! -z ${VIASH_META_MEMORY_B+x} ]; then echo "${VIASH_META_MEMORY_B}" | sed "s#'#'\"'\"'#g;s#.*#meta_memory_b='&'#" ; fi )
