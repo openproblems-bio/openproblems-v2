@@ -139,5 +139,5 @@ info:
   output: "target/docker/common/extract_scores"
   executable: "target/docker/common/extract_scores/extract_scores"
   viash_version: "0.6.4"
-  git_commit: "6adc8bba7da0140ac8d4aff3be6f72fdc76d4392"
+  git_commit: "ff07db46b16c60263fb4977a586bd24936fdb120"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
