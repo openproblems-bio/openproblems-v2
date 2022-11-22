@@ -235,7 +235,7 @@ platforms:
 - type: "native"
   id: "native"
 info:
-  config: "/tmp/tmp.4FiamnW0Wj/viash-develop/src/viash/viash_push/config.vsh.yaml"
+  config: "/tmp/tmp.4j2rnUu8TC/viash-develop/src/viash/viash_push/config.vsh.yaml"
   platform: "native"
   output: "bin"
   executable: "bin/viash_push"

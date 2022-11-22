@@ -245,5 +245,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn/knn"
   viash_version: "0.6.4"
-  git_commit: "0e888fad38cee5098ef9b9b899a4a08bdc9b50eb"
+  git_commit: "ef5e69f5cd1896e592eb03b30ee5eef059cd5850"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
