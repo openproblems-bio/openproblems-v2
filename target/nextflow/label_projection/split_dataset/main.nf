@@ -29,45 +29,103 @@ thisConfig = processConfig([
     {
       "type" : "file",
       "name" : "--input",
-      "description" : "A preprocessed dataset",
+      "description" : "A normalised data with a PCA embedding and HVG selection",
       "info" : {
-        "short_description" : "Preprocessed dataset",
+        "label" : "Dataset+PCA+HVG",
         "slots" : {
           "layers" : [
             {
               "type" : "integer",
               "name" : "counts",
-              "description" : "Raw counts"
+              "description" : "Raw counts",
+              "required" : true
             },
             {
               "type" : "double",
               "name" : "normalized",
-              "description" : "Normalized counts"
+              "description" : "Normalised expression values"
             }
           ],
           "obs" : [
             {
-              "type" : "double",
-              "name" : "label",
-              "description" : "Ground truth cell type labels"
+              "type" : "string",
+              "name" : "celltype",
+              "description" : "Cell type information",
+              "required" : false
+            },
+            {
+              "type" : "string",
+              "name" : "batch",
+              "description" : "Batch information",
+              "required" : false
+            },
+            {
+              "type" : "string",
+              "name" : "tissue",
+              "description" : "Tissue information",
+              "required" : false
             },
             {
               "type" : "double",
-              "name" : "batch",
-              "description" : "Batch information"
+              "name" : "size_factors",
+              "description" : "The size factors created by the normalisation method, if any.",
+              "required" : false
+            }
+          ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
+          "varm" : [
+            {
+              "type" : "double",
+              "name" : "pca_loadings",
+              "description" : "The PCA loadings matrix.",
+              "required" : true
             }
           ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
+            },
+            {
+              "type" : "double",
+              "name" : "pca_variance",
+              "description" : "The PCA variance objects.",
+              "required" : true
             }
           ]
         }
       },
       "example" : [
-        "preprocessed.h5ad"
+        "dataset.h5ad"
       ],
       "must_exist" : false,
       "required" : false,
@@ -107,11 +165,40 @@ thisConfig = processConfig([
               "description" : "Batch information"
             }
           ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
@@ -152,11 +239,40 @@ thisConfig = processConfig([
               "description" : "Batch information"
             }
           ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
@@ -202,11 +318,40 @@ thisConfig = processConfig([
               "description" : "Batch information"
             }
           ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
@@ -308,9 +453,13 @@ thisScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 
+import re
+import yaml
+import random
+import pandas as pd
 import numpy as np
 import anndata as ad
-import random
+# Todo: throw error when not all slots are available?
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
@@ -341,17 +490,64 @@ meta = {
 
 ## VIASH END
 
+# read the .config.vsh.yaml to find out which output slots need to be copied to which output file
+def read_slots(par, meta):
+    # read output spec from yaml
+    with open(meta["config"], "r") as file:
+        config = yaml.safe_load(file)
+
+    output_struct_slots = {}
+
+    # fetch info on which slots should be copied to which file
+    for arg in config["functionality"]["arguments"]:
+        if re.match("--output_", arg["name"]):
+            file = re.sub("--output_", "", arg["name"])
+            
+            struct_slots = arg['info']['slots']
+            out = {}
+            for (struct, slots) in struct_slots.items():
+                out[struct] = { slot['name'] : slot['name'] for slot in slots }
+            
+            # rename source keys
+            if 'obs' in out:
+                if 'label' in out['obs']:
+                    out['obs']['label'] = par['obs_label']
+                if 'batch' in out['obs']:
+                    out['obs']['batch'] = par['obs_batch']
+
+            output_struct_slots[file] = out
+
+    return output_struct_slots
+
+# create new anndata objects according to api spec
+def subset_anndata(adata_sub, slot_info):
+    structs = ["layers", "obs", "var", "uns", "obsp", "obsm", "varp", "varm"]
+    kwargs = {}
+
+    for struct in structs:
+        slot_mapping = slot_info.get(struct, {})
+        data = {dest : getattr(adata_sub, struct)[src] for (dest, src) in slot_mapping.items()}
+        if len(data) > 0:
+            if struct in ['obs', 'var']:
+                data = pd.concat(data, axis=1)
+            kwargs[struct] = data
+        elif struct in ['obs', 'var']:
+            # if no columns need to be copied, we still need an 'obs' and a 'var' 
+            # to help determine the shape of the adata
+            kwargs[struct] = getattr(adata_sub, struct).iloc[:,[]]
+
+    return ad.AnnData(**kwargs)
+
+# set seed if need be
 if par["seed"]:
     print(f">> Setting seed to {par['seed']}")
     random.seed(par["seed"])
 
 print(">> Load data")
 adata = ad.read_h5ad(par["input"])
-
 print("adata:", adata)
 
 print(f">> Process data using {par['method']} method")
-
 if par["method"] == "batch":
     batch_info = adata.obs[par["obs_batch"]]
     batch_categories = batch_info.dtype.categories
@@ -361,33 +557,27 @@ elif par["method"] == "random":
     train_ix = np.random.choice(adata.n_obs, round(adata.n_obs * 0.8), replace=False)
     is_test = [ not x in train_ix for x in range(0, adata.n_obs) ]
 
-# create new anndata objects according to api spec
-def subset_anndata(adata_sub, layers, obs, uns):
-    return ad.AnnData(
-        layers={key: adata_sub.layers[key] for key in layers},
-        obs=adata_sub.obs[obs.values()].rename({v:n for n,v in obs.items()}, axis=1),
-        var=adata.var.drop(adata.var.columns, axis=1),
-        uns={key: adata_sub.uns[key] for key in uns}
-    )
+# subset the different adatas
+print(">> Figuring which data needs to be copied to which output file")
+slot_info_per_output = read_slots(par, meta)
+
+print(">> Creating train data")
 output_train = subset_anndata(
-    adata_sub = adata[[not x for x in is_test]], 
-    layers=["counts", "normalized"], 
-    obs={"label": par["obs_label"], "batch": par["obs_batch"]}, 
-    uns=["dataset_id"]
+    adata_sub=adata[[not x for x in is_test]], 
+    slot_info=slot_info_per_output['train']
 )
+
+print(">> Creating test data")
 output_test = subset_anndata(
-    adata[is_test], 
-    layers=["counts", "normalized"], 
-    obs={"batch": par["obs_batch"]}, # do NOT copy label to test obs!
-    uns=["dataset_id"]
+    adata_sub=adata[is_test],
+    slot_info=slot_info_per_output['test']
 )
+
+print(">> Creating solution data")
 output_solution = subset_anndata(
-    adata[is_test], 
-    layers=["counts", "normalized"],
-    obs={"label": par["obs_label"], "batch": par["obs_batch"]},
-    uns=["dataset_id"]
+    adata_sub=adata[is_test],
+    slot_info=slot_info_per_output['solution']
 )
-# TODO: use .viash_config.yaml to define these subsets
 
 print(">> Writing data")
 output_train.write_h5ad(par["output_train"])

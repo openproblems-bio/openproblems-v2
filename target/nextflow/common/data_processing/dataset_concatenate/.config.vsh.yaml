@@ -98,10 +98,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "src/common/dataset_concatenate/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/dataset_concatenate/config.vsh.yaml"
   platform: "nextflow"
-  output: "target/nextflow/common/data_processing/dataset_concatenate"
-  executable: "target/nextflow/common/data_processing/dataset_concatenate/dataset_concatenate"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/data_processing/dataset_concatenate"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/data_processing/dataset_concatenate/dataset_concatenate"
   viash_version: "0.6.4"
-  git_commit: "ff07db46b16c60263fb4977a586bd24936fdb120"
+  git_commit: "0e888fad38cee5098ef9b9b899a4a08bdc9b50eb"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

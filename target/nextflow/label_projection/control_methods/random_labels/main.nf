@@ -57,11 +57,40 @@ thisConfig = processConfig([
               "description" : "Batch information"
             }
           ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
@@ -102,11 +131,40 @@ thisConfig = processConfig([
               "description" : "Batch information"
             }
           ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
@@ -152,11 +210,40 @@ thisConfig = processConfig([
               "description" : "Batch information"
             }
           ],
+          "var" : [
+            {
+              "type" : "boolean",
+              "name" : "hvg",
+              "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+              "required" : true
+            },
+            {
+              "type" : "integer",
+              "name" : "hvg_score",
+              "description" : "A ranking of the features by hvg.",
+              "required" : true
+            }
+          ],
+          "obsm" : [
+            {
+              "type" : "double",
+              "name" : "X_pca",
+              "description" : "The resulting PCA embedding.",
+              "required" : true
+            }
+          ],
           "uns" : [
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             }
           ]
         }
@@ -189,7 +276,14 @@ thisConfig = processConfig([
             {
               "type" : "string",
               "name" : "dataset_id",
-              "description" : "A unique identifier for the dataset"
+              "description" : "A unique identifier for the dataset",
+              "required" : true
+            },
+            {
+              "type" : "string",
+              "name" : "normalization_id",
+              "description" : "Which normalization was used",
+              "required" : true
             },
             {
               "type" : "string",
@@ -311,7 +405,11 @@ thisDefaultProcessArgs = [
     "registry" : "ghcr.io",
     "image" : "openproblems-bio/label_projection/control_methods_random_labels",
     "tag" : "main_build"
-  }
+  },
+  "label" : [
+    "lowmem",
+    "lowcpu"
+  ]
 }'''),
   // auto settings
   auto: jsonSlurper.parseText('''{

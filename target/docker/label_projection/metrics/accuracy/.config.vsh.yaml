@@ -27,10 +27,30 @@ functionality:
         - type: "string"
           name: "batch"
           description: "Batch information"
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "solution.h5ad"
     default: []
@@ -55,6 +75,11 @@ functionality:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
@@ -78,18 +103,26 @@ functionality:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
+          required: true
         - type: "string"
           name: "metric_ids"
           description: "One or more unique metric identifiers"
           multiple: true
+          required: true
         - type: "double"
           name: "metric_values"
           description: "The metric values obtained for the given prediction. Must\
             \ be of same length as 'metric_ids'."
           multiple: true
+          required: true
     example:
     - "output.h5ad"
     default: []
@@ -190,10 +223,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "src/label_projection/metrics/accuracy/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/accuracy/config.vsh.yaml"
   platform: "docker"
-  output: "target/docker/label_projection/metrics/accuracy"
-  executable: "target/docker/label_projection/metrics/accuracy/accuracy"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/metrics/accuracy"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/metrics/accuracy/accuracy"
   viash_version: "0.6.4"
-  git_commit: "ff07db46b16c60263fb4977a586bd24936fdb120"
+  git_commit: "0e888fad38cee5098ef9b9b899a4a08bdc9b50eb"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -27,10 +27,30 @@ functionality:
         - type: "string"
           name: "batch"
           description: "Batch information"
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "training.h5ad"
     default: []
@@ -58,10 +78,30 @@ functionality:
         - type: "string"
           name: "batch"
           description: "Batch information"
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "test.h5ad"
     default: []
@@ -92,10 +132,30 @@ functionality:
         - type: "string"
           name: "batch"
           description: "Batch information"
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "solution.h5ad"
     default: []
@@ -120,6 +180,11 @@ functionality:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
@@ -210,7 +275,9 @@ platforms:
     accelerator: {}
     conda: []
     containerOptions: []
-    label: []
+    label:
+    - "lowmem"
+    - "lowcpu"
     module: []
     pod: []
     publishDir: []
@@ -223,10 +290,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "src/label_projection/control_methods/majority_vote/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/control_methods/majority_vote/config.vsh.yaml"
   platform: "nextflow"
-  output: "target/nextflow/label_projection/control_methods/majority_vote"
-  executable: "target/nextflow/label_projection/control_methods/majority_vote/majority_vote"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote/majority_vote"
   viash_version: "0.6.4"
-  git_commit: "ff07db46b16c60263fb4977a586bd24936fdb120"
+  git_commit: "0e888fad38cee5098ef9b9b899a4a08bdc9b50eb"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

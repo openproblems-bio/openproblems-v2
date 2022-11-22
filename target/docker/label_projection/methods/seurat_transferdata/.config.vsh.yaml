@@ -1,0 +1,275 @@
+functionality:
+  name: "seurat_transferdata"
+  namespace: "label_projection/methods"
+  version: "main_build"
+  authors: []
+  inputs: []
+  outputs: []
+  arguments:
+  - type: "file"
+    name: "--input_train"
+    alternatives: []
+    description: "The training data"
+    info:
+      short_description: "Training data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+        - type: "double"
+          name: "normalized"
+          description: "Normalized counts"
+        obs:
+        - type: "string"
+          name: "label"
+          description: "Ground truth cell type labels"
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+    example:
+    - "training.h5ad"
+    default: []
+    must_exist: false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--input_test"
+    alternatives: []
+    description: "The test data (without labels)"
+    info:
+      short_description: "Test data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+        - type: "double"
+          name: "normalized"
+          description: "Normalized counts"
+        obs:
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+    example:
+    - "test.h5ad"
+    default: []
+    must_exist: false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    alternatives: []
+    description: "The prediction file"
+    info:
+      short_description: "Prediction"
+      slots:
+        obs:
+        - type: "string"
+          name: "label_pred"
+          description: "Predicted labels for the test cells."
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+    example:
+    - "prediction.h5ad"
+    default: []
+    must_exist: false
+    required: false
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  argument_groups: []
+  resources:
+  - type: "r_script"
+    path: "script.R"
+    is_executable: true
+  description: "The Seurat v3 anchoring procedure is designed to integrate\ndiverse\
+    \ single-cell datasets across technologies and modalities. \n"
+  test_resources:
+  - type: "file"
+    path: "../../../../resources_test/label_projection/pancreas"
+  - type: "python_script"
+    text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path\
+      \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\ninput_test_path = meta[\"\
+      resources_dir\"] + \"/pancreas/test.h5ad\"\ninput_solution_path = meta[\"resources_dir\"\
+      ] + \"/pancreas/solution.h5ad\"\noutput_path = \"output.h5ad\"\n\ncmd = [\n\
+      \  meta['executable'],\n  \"--input_train\", input_train_path,\n  \"--input_test\"\
+      , input_test_path,\n  \"--output\", output_path\n]\n\n# todo: if we could access\
+      \ the viash config, we could check whether\n# .functionality.info.type == \"\
+      positive_control\"\nif meta['functionality_name'] == 'true_labels':\n  cmd =\
+      \ cmd + [\"--input_solution\", input_solution_path]\n\nprint(\">> Running script\
+      \ as test\")\nout = subprocess.check_output(cmd).decode(\"utf-8\")\n\nprint(\"\
+      >> Checking whether output file exists\")\nassert path.exists(output_path)\n\
+      \nprint(\">> Reading h5ad files\")\ninput_test = ad.read_h5ad(input_test_path)\n\
+      output = ad.read_h5ad(output_path)\nprint(\"input_test:\", input_test)\nprint(\"\
+      output:\", output)\n\nprint(\">> Checking whether predictions were added\")\n\
+      assert \"label_pred\" in output.obs\nassert meta['functionality_name'] == output.uns[\"\
+      method_id\"]\n\nprint(\"Checking whether data from input was copied properly\
+      \ to output\")\nassert input_test.n_obs == output.n_obs\nassert input_test.uns[\"\
+      dataset_id\"] == output.uns[\"dataset_id\"]\n\nprint(\"All checks succeeded!\"\
+      )"
+    dest: "generic_test.py"
+    is_executable: true
+  info:
+    type: "method"
+    label: "Seurat TransferData"
+    paper_doi: "10.1101/460147"
+    code_url: "https://github.com/satijalab/seurat"
+    doc_url: "https://satijalab.org/seurat/articles/integration_mapping.html"
+    v1_url: "openproblems/tasks/label_projection/methods/seurat.py"
+    v1_commit: "3f19f0e87a8bc8b59c7521ba01917580aff81bc8"
+    preferred_normalization: "log_cpm"
+  status: "enabled"
+  requirements:
+    commands: []
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "eddelbuettel/r2u:22.04"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "_"
+  resolve_volume: "Automatic"
+  chown: true
+  port: []
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  run_args: []
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "r"
+    packages: []
+    cran:
+    - "Matrix"
+    - "Seurat"
+    - "rlang"
+    - "anndata"
+    - "bit64"
+    bioc: []
+    git: []
+    github: []
+    gitlab: []
+    bitbucket: []
+    svn: []
+    url: []
+    script: []
+    bioc_force_install: false
+  - type: "apt"
+    packages:
+    - "libhdf5-dev"
+    - "libgeos-dev"
+    - "python3"
+    - "python3-pip"
+    - "python3-dev"
+    - "python-is-python3"
+    interactive: false
+  - type: "python"
+    user: false
+    packages: []
+    pip:
+    - "anndata>=0.8"
+    pypi: []
+    git: []
+    github: []
+    gitlab: []
+    mercurial: []
+    svn: []
+    bazaar: []
+    url: []
+    script: []
+    upgrade: true
+  test_setup: []
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    accelerator: {}
+    conda: []
+    containerOptions: []
+    label:
+    - "highmem"
+    - "highcpu"
+    module: []
+    pod: []
+    publishDir: []
+    queue: []
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/seurat_transferdata/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/methods/seurat_transferdata"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/methods/seurat_transferdata/seurat_transferdata"
+  viash_version: "0.6.4"
+  git_commit: "0e888fad38cee5098ef9b9b899a4a08bdc9b50eb"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

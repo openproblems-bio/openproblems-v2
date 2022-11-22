@@ -404,9 +404,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component common extract_scores"
-LABEL org.opencontainers.image.created="2022-11-18T22:46:27Z"
+LABEL org.opencontainers.image.created="2022-11-22T09:43:14Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ff07db46b16c60263fb4977a586bd24936fdb120"
+LABEL org.opencontainers.image.revision="0e888fad38cee5098ef9b9b899a4a08bdc9b50eb"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
