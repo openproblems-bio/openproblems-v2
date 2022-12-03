@@ -79,7 +79,7 @@ metric_info_view <-
   metric_info %>%
     transmute(
       Name = paste0("[", label, "](", comp_yaml, ")"),
-      Description = paste0(description, " ", ifelse(maximise, "Higher is better.", "Lower is better.")),
+      Description = paste0(description, " ", ifelse(maximize, "Higher is better.", "Lower is better.")),
       Range = paste0("[", min, ", ", max, "]")
     )
 
@@ -101,7 +101,7 @@ comp_file <- map_df(comp_yamls, function(yaml_file) {
       comp_name = basename(yaml_file) %>% gsub("\\.yaml", "", .),
       arg_name = str_replace_all(arg$name, "^-*", ""),
       direction = arg$direction %||% "input",
-      file_name = basename(arg$`__inherits__`) %>% gsub("\\.yaml", "", .)
+      file_name = basename(arg$`__merge__`) %>% gsub("\\.yaml", "", .)
     )
   })
 })

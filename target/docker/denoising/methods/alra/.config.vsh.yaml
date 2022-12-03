@@ -1,0 +1,238 @@
+functionality:
+  name: "alra"
+  namespace: "denoising/methods"
+  version: "main_build"
+  authors: []
+  inputs: []
+  outputs: []
+  arguments:
+  - type: "file"
+    name: "--input_train"
+    alternatives: []
+    description: "The training data"
+    info:
+      short_description: "Training data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+        obs:
+        - type: "string"
+          name: "n_counts"
+          description: "Raw counts"
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+    example:
+    - "training.h5ad"
+    default: []
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    alternatives: []
+    description: "The denoised data"
+    info:
+      short_description: "Denoised data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+        - type: "integer"
+          name: "denoised"
+          description: "denoised data"
+        obs:
+        - type: "string"
+          name: "n_counts"
+          description: "Raw counts"
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+    example:
+    - "denoised.h5ad"
+    default: []
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--layer_input"
+    alternatives: []
+    description: "Which layer to use as input."
+    example: []
+    default:
+    - "counts"
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--epochs"
+    alternatives: []
+    description: "Number of total epochs in training"
+    example: []
+    default:
+    - 300
+    required: false
+    choices: []
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  argument_groups: []
+  resources:
+  - type: "r_script"
+    path: "script.R"
+    is_executable: true
+  description: "Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is\
+    \ a method for imputation of missing values in single cell RNA-sequencing data,\
+    \ \ndescribed in the preprint, \"Zero-preserving imputation of scRNA-seq data\
+    \ using low-rank approximation\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588).\
+    \ Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation\
+    \ using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude\
+    \ of the most negative value of that gene. \nFinally, the matrix is rescaled.\n"
+  test_resources:
+  - type: "file"
+    path: "../../../../resources_test/denoising/pancreas"
+  - type: "python_script"
+    text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path\
+      \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\noutput_path = \"output.h5ad\"\
+      \n\ncmd = [\n    meta['executable'],\n    \"--input_train\", input_train_path,\n\
+      \    \"--output\", output_path\n]\n\nprint(\">> Running script as test\")\n\
+      out = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\"\
+      >> Checking whether output file exists\")\nassert path.exists(output_path)\n\
+      \nprint(\">> Reading h5ad files\")\ninput_train = ad.read_h5ad(input_train_path)\n\
+      output = ad.read_h5ad(output_path)\nprint(\"input_train:\", input_train)\nprint(\"\
+      output:\", output)\n\nprint(\">> Checking whether predictions were added\")\n\
+      assert \"denoised\" in output.layers\nassert meta['functionality_name'] == output.uns[\"\
+      method_id\"]\n\nprint(\"Checking whether data from input was copied properly\
+      \ to output\")\nassert input_train.n_obs == output.n_obs\nassert input_train.uns[\"\
+      dataset_id\"] == output.uns[\"dataset_id\"]\n\nprint(\"All checks succeeded!\"\
+      )"
+    dest: "generic_test.py"
+    is_executable: true
+  info:
+    type: "method"
+    label: "ALRA"
+    paper_doi: "10.1101/397588"
+    code_url: "https://github.com/KlugerLab/ALRA"
+    doc_url: "https://github.com/KlugerLab/ALRA/blob/master/README.md"
+    v1_url: "/openproblems/tasks/denoising/methods/alra.py"
+    v1_commit: "411a416150ecabce25e1f59bde422a029d0a8baa"
+    preferred_normalization: "counts"
+  status: "enabled"
+  requirements:
+    commands: []
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "eddelbuettel/r2u:22.04"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "_"
+  resolve_volume: "Automatic"
+  chown: true
+  port: []
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  run_args: []
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "apt"
+    packages:
+    - "libhdf5-dev"
+    - "libgeos-dev"
+    - "python3"
+    - "python3-pip"
+    - "python3-dev"
+    - "python-is-python3"
+    - "git"
+    interactive: false
+  - type: "python"
+    user: false
+    packages: []
+    pip:
+    - "anndata>=0.8"
+    pypi: []
+    git: []
+    github: []
+    gitlab: []
+    mercurial: []
+    svn: []
+    bazaar: []
+    url: []
+    script: []
+    upgrade: true
+  - type: "r"
+    packages: []
+    cran:
+    - "Matrix"
+    - "anndata"
+    - "bit64"
+    - "rsvd"
+    bioc: []
+    git: []
+    github: []
+    gitlab: []
+    bitbucket: []
+    svn: []
+    url: []
+    script: []
+    bioc_force_install: false
+  - type: "docker"
+    resources: []
+    label: []
+    add: []
+    copy: []
+    run:
+    - "git clone https://github.com/KlugerLab/ALRA.git /ALRA"
+    build_args: []
+    env: []
+  test_setup: []
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    accelerator: {}
+    conda: []
+    containerOptions: []
+    label:
+    - "highmem"
+    - "highcpu"
+    module: []
+    pod: []
+    publishDir: []
+    queue: []
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/alra/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/methods/alra"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/methods/alra/alra"
+  viash_version: "0.6.5"
+  git_commit: "4bbfd69a7e665473dcbbb12e43850541fbe49dfa"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"
