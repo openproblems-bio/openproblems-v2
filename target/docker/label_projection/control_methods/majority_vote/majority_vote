@@ -402,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/control_methods majority_vote"
-LABEL org.opencontainers.image.created="2022-12-04T20:16:35Z"
+LABEL org.opencontainers.image.created="2022-12-04T20:25:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ac8a1c6aa5e8c254d7ab3b4cc15e7f77feaa0f0e"
+LABEL org.opencontainers.image.revision="ae826ea14f7495d25548bd2f39ca0f0ba2546560"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

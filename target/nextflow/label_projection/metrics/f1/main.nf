@@ -307,7 +307,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/f1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.5",
-    "git_commit" : "ac8a1c6aa5e8c254d7ab3b4cc15e7f77feaa0f0e",
+    "git_commit" : "ae826ea14f7495d25548bd2f39ca0f0ba2546560",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

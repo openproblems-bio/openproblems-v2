@@ -125,8 +125,11 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
-  description: "Splits molecules into two (potentially overlapping) groups using a\
-    \ fraction ratio."
+  - type: "file"
+    path: "helper.py"
+  description: "Split data using molecular cross-validation.\n\nSplits molecules into\
+    \ two (potentially overlapping) groups using a fraction ratio.\nThise are output\
+    \ as two separate AnnData objects.\n"
   test_resources:
   - type: "file"
     path: "../../../resources_test/common/pancreas"
@@ -176,8 +179,7 @@ platforms:
     pip: []
     pypi: []
     git: []
-    github:
-    - "czbiohub/molecular-cross-validation"
+    github: []
     gitlab: []
     mercurial: []
     svn: []
@@ -212,5 +214,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/split_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/split_dataset/split_dataset"
   viash_version: "0.6.5"
-  git_commit: "ac8a1c6aa5e8c254d7ab3b4cc15e7f77feaa0f0e"
+  git_commit: "ae826ea14f7495d25548bd2f39ca0f0ba2546560"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
