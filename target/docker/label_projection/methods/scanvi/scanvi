@@ -404,9 +404,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8" "scarches"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods scanvi"
-LABEL org.opencontainers.image.created="2022-12-04T21:35:17Z"
+LABEL org.opencontainers.image.created="2022-12-06T08:15:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e2fb790182885d64b48619690bc95c4d80f86e66"
+LABEL org.opencontainers.image.revision="21c1a63b421450ca247ffb8384c61d2d6ddebfae"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
