@@ -211,5 +211,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/normalization/sqrt_cpm"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/normalization/sqrt_cpm/sqrt_cpm"
   viash_version: "0.6.5"
-  git_commit: "fbfea6f1db12915eae025e6c46f2b2b63b60fb4f"
+  git_commit: "4bc3c100553803df3e14278029e8b348dcd9ac22"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
