@@ -397,9 +397,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "anndata>=0.8" "scanpy" "scprep"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/metrics mse"
-LABEL org.opencontainers.image.created="2022-12-07T07:53:58Z"
+LABEL org.opencontainers.image.created="2022-12-07T08:50:12Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3f545ccb1b59aca94574c0998e73b67eba0b5dcb"
+LABEL org.opencontainers.image.revision="fbfea6f1db12915eae025e6c46f2b2b63b60fb4f"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -906,12 +906,22 @@ error = sklearn.metrics.mean_squared_error(
     scprep.utils.toarray(test_data.X), denoised_data.X
 )
 
-print("Store metric value")
-input_denoised.uns["metric_ids"] = meta['functionality_name']
-input_denoised.uns["metric_values"] = error
+print("Store mse value")
+output_metric = ad.AnnData(
+    layers={},
+    obs=input_denoised.obs[[]],
+    var=input_denoised.var[[]],
+    uns={}
+)
+
+for key in input_denoised.uns_keys():
+    output_metric.uns[key] = input_denoised.uns[key]
+
+output_metric.uns["metric_ids"] = meta['functionality_name']
+output_metric.uns["metric_values"] = error
 
 print("Write adata to file")
-input_denoised.write_h5ad(par['output'], compression="gzip")
+output_metric.write_h5ad(par['output'], compression="gzip")
 
 VIASHMAIN
 python "\$tempscript" &

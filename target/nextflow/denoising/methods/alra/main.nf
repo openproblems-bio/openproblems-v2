@@ -243,7 +243,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/alra/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.5",
-    "git_commit" : "3f545ccb1b59aca94574c0998e73b67eba0b5dcb",
+    "git_commit" : "fbfea6f1db12915eae025e6c46f2b2b63b60fb4f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

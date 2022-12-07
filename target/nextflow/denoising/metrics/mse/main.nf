@@ -239,7 +239,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/mse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.5",
-    "git_commit" : "3f545ccb1b59aca94574c0998e73b67eba0b5dcb",
+    "git_commit" : "fbfea6f1db12915eae025e6c46f2b2b63b60fb4f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -302,12 +302,22 @@ error = sklearn.metrics.mean_squared_error(
     scprep.utils.toarray(test_data.X), denoised_data.X
 )
 
-print("Store metric value")
-input_denoised.uns["metric_ids"] = meta['functionality_name']
-input_denoised.uns["metric_values"] = error
+print("Store mse value")
+output_metric = ad.AnnData(
+    layers={},
+    obs=input_denoised.obs[[]],
+    var=input_denoised.var[[]],
+    uns={}
+)
+
+for key in input_denoised.uns_keys():
+    output_metric.uns[key] = input_denoised.uns[key]
+
+output_metric.uns["metric_ids"] = meta['functionality_name']
+output_metric.uns["metric_values"] = error
 
 print("Write adata to file")
-input_denoised.write_h5ad(par['output'], compression="gzip")
+output_metric.write_h5ad(par['output'], compression="gzip")
 
 VIASHMAIN
 python "$tempscript"
