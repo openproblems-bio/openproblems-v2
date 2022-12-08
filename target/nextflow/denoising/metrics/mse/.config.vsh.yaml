@@ -198,5 +198,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse/mse"
   viash_version: "0.6.6"
-  git_commit: "3795ac1cfec908230ed0fbe33486682a92648a81"
+  git_commit: "bf3c3dfcda5a6daf89043eded4c59d7ad61013dc"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
