@@ -9,7 +9,7 @@ par <- list(
   output_solution = "solution.h5ad"
 )
 
-cat("> Running censor component\n")
+cat("> Running mask component\n")
 out <- processx::run(
   command = paste0("./", meta["functionality_name"]),
   args = c(

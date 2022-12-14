@@ -15,10 +15,9 @@ functionality:
   tests:
     - type: r_script
       path: test.R
-    - path: ../../../../resources_test
+    - path: ../../../resources_test
 platforms:
   - type: docker
     image: dataintuitive/randpy:r4.0_py3.8_bioc3.12
   - type: nextflow
-    publish: true
-    labels: [ midmem, lowtime, lowcpu ]
+    directives: [ midmem, lowtime, lowcpu ]
