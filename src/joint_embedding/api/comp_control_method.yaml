@@ -1,0 +1,47 @@
+functionality:
+  arguments:
+    - name: "--input_mod1"
+      __merge__: anndata_masked_mod1.yaml
+    - name: "--output"
+      __merge__: anndata_prediction.yaml
+      direction: output
+  test_resources:
+    - path: ../../../../resources_test   
+    - type: python_script
+      path: generic_test.py
+      text: |
+        from os import path
+        import subprocess
+        import anndata as ad
+        import scipy
+
+        input_mod1_path = "resources_test/common/joint_embedding/openproblems_bmmc_multiome_starter.mod1.h5ad"
+        output_path = "output.h5ad"
+
+        cmd = [
+            meta['executable'],
+            "--input_mod1", input_mod1_path,
+            "--output", output_path
+        ]
+
+        print(">> Running script as test")
+        out = subprocess.run(cmd, check=True, capture_output=True, text=True)
+
+        print("> Checking whether output files were created")
+        assert path.exists(output_path)
+
+        print("> Reading h5ad files")
+        input_mod1 = ad.read_h5ad(input_mod1_path)
+        output = ad.read_h5ad(output_path)
+
+        print("> Checking contents of output.h5ad")
+        assert output.uns['dataset_id'] == input_mod1.uns['dataset_id']
+        assert output.uns['method_id'] == meta['functionality_name']
+        assert output.n_obs == input_mod1.n_obs
+        print(output.n_vars)
+        assert output.n_vars >= 1
+        assert output.n_vars <= 100
+        assert all(output.obs_names == input_mod1.obs_names)
+        assert not scipy.sparse.issparse(output.obsm[X_emb])
+
+        print("> Test succeeded!")

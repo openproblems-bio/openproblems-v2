@@ -12,7 +12,7 @@ functionality:
   resources:
     - type: r_script
       path: script.R
-  tests:
+  test_resources:
     - type: r_script
       path: test.R
     - path: ../../../resources_test

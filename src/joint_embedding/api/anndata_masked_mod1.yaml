@@ -12,7 +12,7 @@ info:
       - type: string
         name: batch
         description: Batch information
-        required: false
+        required: true
       - type: double
         name: size_factors
         description:

@@ -6,7 +6,7 @@ library(assertthat, quietly = TRUE, warn.conflicts = FALSE)
 library(Matrix, quietly = TRUE, warn.conflicts = FALSE)
 
 ## VIASH START
-input_path <- "output/datasets_2021-11-08/common/openproblems_bmmc_multiome_phase1v2/openproblems_bmmc_multiome_phase1v2.manual_formatting."
+input_path <- "resources_test/common/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter."
 output_path <- ""
 
 par <- list(
