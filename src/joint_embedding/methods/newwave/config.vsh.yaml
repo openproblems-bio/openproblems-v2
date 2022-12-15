@@ -1,0 +1,33 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: newwave
+  namespace: joint_embedding/methods
+  description: Concatenated NewWave.
+  info:
+    type: method
+    label: "NewWave"
+    doi: "10.1101/2021.08.02.453487"
+  arguments:
+    - name: "--maxiter"
+      type: "integer"
+      default: 100
+      description: Maximum number of NewWave iterations.
+    - name: "--k"
+      type: "integer"
+      default: 10
+      description: NewWave K parameter.
+    - name: "--hvg_sel"
+      type: "integer"
+      default: 1000
+      description: Number of features per modality to use.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: dataintuitive/randpy:r4.0_py3.8_bioc3.12
+    setup:
+      - type: r
+        bioc: [ SingleCellExperiment, NewWave, proxyC ]
+  - type: nextflow
+    directives: [ highmem, hightime, highcpu ]
