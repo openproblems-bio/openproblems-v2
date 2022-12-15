@@ -1,0 +1,24 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: mnn
+  namespace: joint_embedding/methods
+  description: Mutual nearest neighbors correction followed by PCA.
+  info:
+    type: method
+    label: "MNN"
+  arguments:
+    - name: "--hvg_sel"
+      type: "integer"
+      default: 1000
+      description: Number of features per modality to use.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: dataintuitive/randpy:r4.0_py3.8_bioc3.12
+    setup:
+      - type: r
+        bioc: [ SingleCellExperiment, batchelor, proxyC ]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]
