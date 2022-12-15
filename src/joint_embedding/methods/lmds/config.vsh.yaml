@@ -1,0 +1,28 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: lmds
+  namespace: joint_embedding/methods
+  description: Landmark MDS dimensionality reduction on the Spearman distance.
+  info:
+    type: method
+    label: "LMDS"
+  arguments:
+    - name: "--distance_method"
+      type: "string"
+      default: "spearman"
+      description: The distance method to use. Possible values are euclidean, pearson, spearman and others.
+    - name: "--n_dims"
+      type: integer
+      default: 10
+      description: Number of dimensions to output.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: dataintuitive/randpy:r4.0_py3.8_bioc3.12
+    setup:
+      - type: r
+        packages: [ lmds ]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]
