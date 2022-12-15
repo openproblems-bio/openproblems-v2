@@ -1,0 +1,24 @@
+__merge__: ../../api/comp_control_method.yaml
+functionality:
+  name: zeros_embed
+  namespace: joint_embedding/control_methods
+  description: Generate an embedding containing only zero values.
+  info:
+    type: negative_control
+    label: zeros_embed
+  arguments:
+    - name: "--n_dims"
+      type: "integer"
+      default: 1
+      description: Number of dimensions to output.
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: "python:3.10"
+    setup:
+      - type: python
+        pip: [ anndata, numpy, scipy ]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]
