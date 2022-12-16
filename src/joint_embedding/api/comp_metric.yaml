@@ -10,79 +10,79 @@ functionality:
     - name: --debug
       type: boolean_true
       description: Verbose output for debugging.
-  test_resources:
-    - path: ../../../../resources_test
-    - type: python_script
-      path: generic_test.py
-      text: |
-        from os import path
-        import subprocess
-        import anndata as ad
-        import pandas as pd
+  # test_resources:
+  #   - path: ../../../../resources_test
+  #   - type: python_script
+  #     path: generic_test.py
+      # text: |
+      #   from os import path
+      #   import subprocess
+      #   import anndata as ad
+      #   import pandas as pd
 
-        # define some filenames
+      #   # define some filenames
        
-        input_prediction_path =  "resources_test/joint_embedding/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.prediction.h5ad",
-        input_solution_path = "resources_test/joint_embedding/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.solution.h5ad",
-        output_path = "output.h5ad"
-        meta_path = resources_dir + '/metric_meta.tsv'
+      #   input_prediction_path =  "resources_test/common/joint_embedding/prediction.h5ad",
+      #   input_solution_path = "resources_test/common/joint_embedding/openproblems_bmmc_multiome_starter.solution.h5ad",
+      #   output_path = "output.h5ad"
+      #   meta_path = resources_dir + '/metric_meta.tsv'
 
-        cmd = [
-            meta['executable'],
-            "--input_prediction", input_prediction_path,
-            "--input_solution", input_solution_path,
-            "--output", output_path
-        ]
+      #   cmd = [
+      #       meta['executable'],
+      #       "--input_prediction", input_prediction_path,
+      #       "--input_solution", input_solution_path,
+      #       "--output", output_path
+      #   ]
 
-        print(">> Running script as test")
-        out = subprocess.run(cmd, check=True, capture_output=True, text=True)
+      #   print(">> Running script as test")
+      #   out = subprocess.run(cmd, check=True, capture_output=True, text=True)
 
-        print("> Checking whether output files were created")
-        assert path.exists(testpar['output'])
+      #   print("> Checking whether output files were created")
+      #   assert path.exists(testpar['output'])
 
-        print("> Reading h5ad files")
-        input_prediction = ad.read_h5ad(testpar['input_prediction'])
-        input_solution = ad.read_h5ad(testpar['input_solution'])
-        output = ad.read_h5ad(testpar['output'])
+      #   print("> Reading h5ad files")
+      #   input_prediction = ad.read_h5ad(testpar['input_prediction'])
+      #   input_solution = ad.read_h5ad(testpar['input_solution'])
+      #   output = ad.read_h5ad(testpar['output'])
 
-        metric_meta = pd.read_csv(
-          meta_path, 
-          delimiter="\t",
-          header=0,
-          dtype={ 'metric_id': str, 'metric_min': float, 'metric_max': float, 'metric_higherisbetter': bool }
-        )
+      #   metric_meta = pd.read_csv(
+      #     meta_path, 
+      #     delimiter="\t",
+      #     header=0,
+      #     dtype={ 'metric_id': str, 'metric_min': float, 'metric_max': float, 'metric_higherisbetter': bool }
+      #   )
 
-        print("> Checking contents of metric_meta.tsv")
-        assert 'metric_id' in metric_meta
-        assert 'metric_min' in metric_meta
-        assert 'metric_max' in metric_meta
-        assert 'metric_higherisbetter' in metric_meta
+      #   print("> Checking contents of metric_meta.tsv")
+      #   assert 'metric_id' in metric_meta
+      #   assert 'metric_min' in metric_meta
+      #   assert 'metric_max' in metric_meta
+      #   assert 'metric_higherisbetter' in metric_meta
 
-        print("> Checking .uns['dataset_id']")
-        assert 'dataset_id' in output.uns
-        assert output.uns['dataset_id'] == input_prediction.uns['dataset_id']
+      #   print("> Checking .uns['dataset_id']")
+      #   assert 'dataset_id' in output.uns
+      #   assert output.uns['dataset_id'] == input_prediction.uns['dataset_id']
 
-        print("> Checking .uns['method_id']")
-        assert 'method_id' in output.uns
-        assert output.uns['method_id'] == input_prediction.uns['method_id']
+      #   print("> Checking .uns['method_id']")
+      #   assert 'method_id' in output.uns
+      #   assert output.uns['method_id'] == input_prediction.uns['method_id']
 
-        print("> Checking .uns['metric_ids']")
-        assert 'metric_ids' in output.uns
-        assert set(output.uns['metric_ids']) == set(metric_meta.metric_id)
+      #   print("> Checking .uns['metric_ids']")
+      #   assert 'metric_ids' in output.uns
+      #   assert set(output.uns['metric_ids']) == set(metric_meta.metric_id)
 
-        print("> Checking .uns['metric_values']")
-        assert 'metric_values' in output.uns
-        assert output.uns['metric_ids'].size == output.uns['metric_values'].size
+      #   print("> Checking .uns['metric_values']")
+      #   assert 'metric_values' in output.uns
+      #   assert output.uns['metric_ids'].size == output.uns['metric_values'].size
 
-        # merge with metric_meta to see if metric_value lies within the expected range
-        output_uns = pd.DataFrame({
-          'metric_id': output.uns['metric_ids'], 
-          'metric_value': output.uns['metric_values']
-        })
+      #   # merge with metric_meta to see if metric_value lies within the expected range
+      #   output_uns = pd.DataFrame({
+      #     'metric_id': output.uns['metric_ids'], 
+      #     'metric_value': output.uns['metric_values']
+      #   })
 
-        scores = metric_meta.merge(output_uns, on="metric_id")
+      #   scores = metric_meta.merge(output_uns, on="metric_id")
 
-        assert all(scores.metric_value >= scores.metric_min)
-        assert all(scores.metric_value <= scores.metric_max)
+      #   assert all(scores.metric_value >= scores.metric_min)
+      #   assert all(scores.metric_value <= scores.metric_max)
 
-        print("> Test succeeded!")
+      #   print("> Test succeeded!")
