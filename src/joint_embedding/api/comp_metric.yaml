@@ -7,6 +7,9 @@ functionality:
     - name: --output
       __merge__: anndata_score.yaml
       direction: output
+    - name: --debug
+      type: boolean_true
+      description: Verbose output for debugging.
   test_resources:
     - path: ../../../../resources_test
     - type: python_script
@@ -17,30 +20,22 @@ functionality:
         import anndata as ad
         import pandas as pd
 
-        ## VIASH START
-        # This code block will be replaced by viash at runtime.
-        meta = { 'functionality_name': 'foo' }
-        meta_path = "src/joint_embedding/metrics/check_format/metric_meta_check_format.tsv"
-        ## VIASH END
-
-        method_id = meta['functionality_name']
-        command = "./" + method_id
-
         # define some filenames
-        testpar = {
-          "input_prediction": "resources_test/joint_embedding/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.prediction.h5ad",
-          "input_solution": "resources_test/joint_embedding/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.solution.h5ad",
-          "output": "output.h5ad"
-        }
+       
+        input_prediction_path =  "resources_test/joint_embedding/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.prediction.h5ad",
+        input_solution_path = "resources_test/joint_embedding/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.solution.h5ad",
+        output_path = "output.h5ad"
         meta_path = resources_dir + '/metric_meta.tsv'
 
-        print("> Running method")
-        out = subprocess.check_output([
-          "./" + meta['functionality_name'],
-          "--input_prediction", testpar['input_prediction'],
-          "--input_solution", testpar['input_solution'],
-          "--output", testpar['output']
-        ]).decode("utf-8")
+        cmd = [
+            meta['executable'],
+            "--input_prediction", input_prediction_path,
+            "--input_solution", input_solution_path,
+            "--output", output_path
+        ]
+
+        print(">> Running script as test")
+        out = subprocess.run(cmd, check=True, capture_output=True, text=True)
 
         print("> Checking whether output files were created")
         assert path.exists(testpar['output'])
