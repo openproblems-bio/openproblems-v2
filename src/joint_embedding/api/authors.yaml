@@ -10,3 +10,7 @@ functionality:
       email: alexandertongdev@gmail.com
       roles: [ author, maintainer ]
       props: { github: atong01 }
+    - name: Christopher Lance
+      email: clance.connect@gmail.com
+      roles: [ author, maintainer ]
+      props: { github: xlancelottx }

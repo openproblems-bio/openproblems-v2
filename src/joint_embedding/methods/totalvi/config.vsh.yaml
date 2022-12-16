@@ -1,0 +1,33 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: totalvi
+  namespace: joint_embedding/methods
+  version: dev
+  description: "totalVI: joint probabilistic modeling with Total Variational Inference"
+  info:
+    type: method
+    label: totalVI
+    doi: 10.1038/s41592-020-01050-x    
+  arguments:
+    - name: --hvg_number
+      type: integer
+      default: 4000
+      description: Number of HVG to include in totalVI
+    - name: --max_epochs
+      type: integer
+      default: 400
+      description: Number of max epochs to run totalVI
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: "python:3.10"
+    setup:
+      - type: python
+        pip: [ anndata>=0.8, scanpy, scikit-misc, scipy, scikit-learn, scvi-tools]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]
+
+
+
