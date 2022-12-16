@@ -1,0 +1,41 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: umam
+  namespace: joint_embedding/methods
+  version: dev
+  description: UMAP dimensionality reduction on the Euclidean distance.
+  info:
+    type: method
+    label: UMAP
+  arguments:
+    - name: "--n_dims"
+      type: "integer"
+      default: 10
+      description: Number of dimensions to output.
+    - name: "--metric"
+      type: "string"
+      default: "euclidean"
+      description: The metric to use. Possible values are euclidean, cosine, manhattan.
+    - name: "--n_neighbors"
+      type: "integer"
+      default: 15
+      description: Number of neighbor to use int he KNN.
+    - name: "--n_pcs"
+      type: "integer"
+      default: 50
+      description: Number of principal components to use in the PCA step.
+    - name: "--hvg_sel"
+      type: "integer"
+      default: 1000
+      description: Number of features per modality to use.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: dataintuitive/randpy:r4.0_py3.8_bioc3.12
+    setup:
+      - type: r
+        packages: [ uwot, irlba, proxyC ]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]
