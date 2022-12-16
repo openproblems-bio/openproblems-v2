@@ -183,8 +183,8 @@ function ViashHelp {
   echo "    --var_hvg_score"
   echo "        type: string"
   echo "        default: hvg_score"
-  echo "        In which .var slot to store whether a ranking of the features by"
-  echo "        variance."
+  echo "        In which .var slot to store the gene variance score (normalized"
+  echo "        dispersion)."
   echo ""
   echo "    --num_features"
   echo "        type: integer"
@@ -410,12 +410,12 @@ function ViashDockerfile {
 FROM python:3.8
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8"
+  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors hvg"
-LABEL org.opencontainers.image.created="2022-12-16T06:18:13Z"
+LABEL org.opencontainers.image.created="2022-12-16T06:27:57Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ad72f5bfbdedc231bdb0f05f0d189da6b1362294"
+LABEL org.opencontainers.image.revision="84a2a70a5998449fbe180d48122bd38c249fed8e"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -960,7 +960,7 @@ out = sc.pp.highly_variable_genes(
 
 print(">> Storing output")
 adata.var[par["var_hvg"]] = out['highly_variable'].values
-adata.var[par["var_hvg_score"]] = out['dispersions'].values
+adata.var[par["var_hvg_score"]] = out['dispersions_norm'].values
 
 print(">> Writing data")
 adata.write_h5ad(par['output'])

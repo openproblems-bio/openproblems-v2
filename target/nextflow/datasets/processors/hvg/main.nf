@@ -259,7 +259,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "string",
         "name" : "--var_hvg_score",
-        "description" : "In which .var slot to store whether a ranking of the features by variance.",
+        "description" : "In which .var slot to store the gene variance score (normalized dispersion).",
         "default" : [
           "hvg_score"
         ],
@@ -292,6 +292,19 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "description" : "Compute HVG",
+    "test_resources" : [
+      {
+        "type" : "file",
+        "path" : "../../../../resources_test/common/pancreas",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/hvg/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
+        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\nimport yaml\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input\\", input_path,\n  \\"--output\\", output_path,\n]\n\nwith open(meta[\\"config\\"], \\"r\\") as file:\n    config = yaml.safe_load(file)\n\nfor arg in config[\\"functionality\\"][\\"arguments\\"]:\n  if arg['name'] == '--layer_input':\n    layer_input = arg['default'][0]\n    cmd += ['--layer_input', layer_input]\n  elif arg['name'] == '--var_hvg':\n    var_hvg = arg['default'][0]\n    cmd += ['--var_hvg', var_hvg]\n  elif arg['name'] == '--var_hvg_score':\n    var_hvg_score = arg['default'][0]\n    cmd += ['--var_hvg_score', var_hvg_score]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd)\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input:\\", input)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether output data structures were added\\")\nassert layer_input in output.layers\nassert var_hvg in output.var\nassert var_hvg_score in output.var\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
+        "dest" : "generic_test.py",
+        "is_executable" : true
+      }
+    ],
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
   },
@@ -313,7 +326,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "user" : false,
           "packages" : [
             "scanpy",
-            "anndata>=0.8"
+            "anndata>=0.8",
+            "pyyaml"
           ],
           "upgrade" : true
         }
@@ -340,7 +354,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/hvg/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "ad72f5bfbdedc231bdb0f05f0d189da6b1362294",
+    "git_commit" : "84a2a70a5998449fbe180d48122bd38c249fed8e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -396,7 +410,7 @@ out = sc.pp.highly_variable_genes(
 
 print(">> Storing output")
 adata.var[par["var_hvg"]] = out['highly_variable'].values
-adata.var[par["var_hvg_score"]] = out['dispersions'].values
+adata.var[par["var_hvg_score"]] = out['dispersions_norm'].values
 
 print(">> Writing data")
 adata.write_h5ad(par['output'])
