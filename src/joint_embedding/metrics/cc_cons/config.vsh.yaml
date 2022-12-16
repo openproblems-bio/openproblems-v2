@@ -1,13 +1,13 @@
 __merge__: ../../api/comp_metric.yaml
 functionality:
-  name: asw_label
+  name: cc_cons
   namespace: joint_embedding/metrics
-  description: Average silhouette width (ASW) of labels
+  description: Cell cycle conservation score
   info:
     metrics:
-      - id: asw_label
-        label: asw_label
-        description: Average silhouette width (ASW) of labels
+      - id: cc_cons
+        label: cc_cons
+        description: Cell cycle conservation score
         min: 0
         max: 1
         maximize: True
@@ -21,4 +21,4 @@ platforms:
       - type: python
         pip: [anndata>=0.8, scib]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: [ vhighmem, midtime, midcpu ]
