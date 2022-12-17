@@ -417,9 +417,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8" "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising split_dataset"
-LABEL org.opencontainers.image.created="2022-12-17T07:28:03Z"
+LABEL org.opencontainers.image.created="2022-12-17T07:50:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="aab36e7ab0dd9c5d649e1324500264bb9d4321a3"
+LABEL org.opencontainers.image.revision="929465574bd1ab2aa306994e98cf566c8f0a9791"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
