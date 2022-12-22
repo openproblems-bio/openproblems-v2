@@ -157,6 +157,8 @@ VIASH_META_TEMP_DIR="$VIASH_TEMP"
 function ViashHelp {
   echo "list_git_shas main_build"
   echo ""
+  echo "Extract git file info from a git repo"
+  echo ""
   echo "Arguments:"
   echo "    --input"
   echo "        type: file, required parameter, file must exist"
@@ -399,9 +401,9 @@ FROM python:3.10
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common list_git_shas"
-LABEL org.opencontainers.image.created="2022-12-22T09:06:28Z"
+LABEL org.opencontainers.image.created="2022-12-22T11:18:31Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cf69a8b1e88170475ef206eacb9c7c044ab2450b"
+LABEL org.opencontainers.image.revision="1275849118d2e8b17dd4dc7c4052fddd75479833"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -860,7 +862,6 @@ trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
 
 import subprocess
-import os
 import json
 
 ## VIASH START
@@ -887,7 +888,7 @@ meta = {
 
 ## VIASH END
 
-# to do: what to do with untracked files?
+#? to do: what to do with untracked files?
 
 output = []
 
@@ -930,7 +931,7 @@ for relative_path in git_ls_files(par['input']):
     output.append(out)
 
 with open(par['output'], 'w') as f:
-    json.dump(output, f, indent=4)
+    json.dump(output, f, indent=2)
 
 VIASHMAIN
 python "\$tempscript" &

@@ -166,8 +166,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "label" : "magic",
       "paper_doi" : "10.1016/j.cell.2018.05.061",
       "code_url" : "https://github.com/KrishnaswamyLab/MAGIC",
-      "v1_url" : "/openproblems/tasks/denoising/methods/magic.py",
+      "v1_url" : "openproblems/tasks/denoising/methods/magic.py",
       "v1_commit" : "2fbc2d4c8d3ff955ea948fc082635cf779b1927e",
+      "v1_comp_id" : "magic",
       "preferred_normalization" : "counts"
     },
     "status" : "enabled",
@@ -189,11 +190,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "type" : "python",
           "user" : false,
-          "packages" : [
+          "pip" : [
             "anndata>=0.8",
             "scprep",
             "magic-impute",
-            "scipy"
+            "scipy",
+            "scikit-learn<1.2"
           ],
           "upgrade" : true
         }
@@ -224,7 +226,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/magic/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "cf69a8b1e88170475ef206eacb9c7c044ab2450b",
+    "git_commit" : "1275849118d2e8b17dd4dc7c4052fddd75479833",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

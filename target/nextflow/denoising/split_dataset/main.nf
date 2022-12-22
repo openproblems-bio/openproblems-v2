@@ -184,7 +184,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/split_dataset/config.vsh.yaml"
       }
     ],
-    "description" : "Split data using molecular cross-validation.\n\nSplits molecules into two (potentially overlapping) groups using a fraction ratio.\nThise are output as two separate AnnData objects.\n",
+    "description" : "Split data using molecular cross-validation.\n\nSplits molecules into two (potentially overlapping) groups using a fraction ratio.\nThese are output as two separate AnnData objects.\n",
     "test_resources" : [
       {
         "type" : "file",
@@ -247,7 +247,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/split_dataset/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "cf69a8b1e88170475ef206eacb9c7c044ab2450b",
+    "git_commit" : "1275849118d2e8b17dd4dc7c4052fddd75479833",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -338,7 +338,7 @@ is_missing = np.array(X_train.sum(axis=0) == 0)
 output_train = output_train[:, ~is_missing.flatten()]
 output_test = output_test[:, ~is_missing.flatten()]
 
-print(">> Writ to file")
+print(">> Write to file")
 output_train.write_h5ad(par["output_train"])
 output_test.write_h5ad(par["output_test"])
 

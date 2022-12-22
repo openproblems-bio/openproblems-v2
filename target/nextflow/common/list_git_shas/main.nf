@@ -72,6 +72,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/list_git_shas/config.vsh.yaml"
       }
     ],
+    "description" : "Extract git file info from a git repo",
     "test_resources" : [
       {
         "type" : "python_script",
@@ -119,13 +120,17 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "debug" : false,
       "container" : "docker"
+    },
+    {
+      "type" : "native",
+      "id" : "native"
     }
   ],
   "info" : {
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/list_git_shas/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "cf69a8b1e88170475ef206eacb9c7c044ab2450b",
+    "git_commit" : "1275849118d2e8b17dd4dc7c4052fddd75479833",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -135,7 +140,6 @@ tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 
 import subprocess
-import os
 import json
 
 ## VIASH START
@@ -162,7 +166,7 @@ meta = {
 
 ## VIASH END
 
-# to do: what to do with untracked files?
+#? to do: what to do with untracked files?
 
 output = []
 
@@ -205,7 +209,7 @@ for relative_path in git_ls_files(par['input']):
     output.append(out)
 
 with open(par['output'], 'w') as f:
-    json.dump(output, f, indent=4)
+    json.dump(output, f, indent=2)
 
 VIASHMAIN
 python "$tempscript"

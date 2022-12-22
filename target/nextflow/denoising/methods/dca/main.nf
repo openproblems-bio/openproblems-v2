@@ -145,8 +145,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "label" : "DCA",
       "paper_doi" : "10.1038/s41467-018-07931-2",
       "code_url" : "https://github.com/theislab/dca",
-      "v1_url" : "/openproblems/tasks/denoising/methods/dca.py",
+      "v1_url" : "openproblems/tasks/denoising/methods/dca.py",
       "v1_commit" : "c2470ce02e6f196267cec1c554ba7ae389c0956a",
+      "v1_comp_id" : "dca",
       "preferred_normalization" : "counts"
     },
     "status" : "enabled",
@@ -201,7 +202,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/dca/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "cf69a8b1e88170475ef206eacb9c7c044ab2450b",
+    "git_commit" : "1275849118d2e8b17dd4dc7c4052fddd75479833",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
