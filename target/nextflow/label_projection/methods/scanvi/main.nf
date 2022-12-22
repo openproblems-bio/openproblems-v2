@@ -228,12 +228,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "boolean",
-        "name" : "--hvg",
-        "description" : "Whether or not to reduce the input matrix to the set of HVG genes before training the model.",
-        "default" : [
-          true
-        ],
+        "type" : "integer",
+        "name" : "--num_hvg",
+        "description" : "The number of HVG genes to subset to.",
         "required" : false,
         "direction" : "input",
         "multiple" : false,
@@ -270,9 +267,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "code_url" : "https://github.com/YosefLab/scvi-tools",
       "doc_url" : "https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html",
       "v1_url" : "openproblems/tasks/label_projection/methods/scvi_tools.py",
-      "v1_commit" : "411a416150ecabce25e1f59bde422a029d0a8baa",
+      "v1_commit" : "4bb8a7e04545a06c336d3d9364a1dd84fa2af1a4",
       "v1_comp_id" : "scarches_scanvi_hvg",
-      "preferred_normalization" : "log_cpm"
+      "preferred_normalization" : "log_cpm",
+      "variants" : {
+        "scanvi_hvg" : {
+          "num_hvg" : 2000
+        }
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -327,7 +329,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/scanvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "1275849118d2e8b17dd4dc7c4052fddd75479833",
+    "git_commit" : "11b33668094cf893d96056d0c58575ae01fe3d81",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -348,7 +350,7 @@ par = {
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_test': $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo "r'${VIASH_PAR_INPUT_TEST//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'hvg': $( if [ ! -z ${VIASH_PAR_HVG+x} ]; then echo "r'${VIASH_PAR_HVG//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi )
+  'num_hvg': $( if [ ! -z ${VIASH_PAR_NUM_HVG+x} ]; then echo "int(r'${VIASH_PAR_NUM_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -371,10 +373,11 @@ print("Load input data", flush=True)
 input_train_orig = ad.read_h5ad(par['input_train'])
 input_test_orig = ad.read_h5ad(par['input_test'])
 
-if par["hvg"]:
+if par["num_hvg"]:
     print("Subsetting to HVG", flush=True)
-    input_train = input_train_orig[:,input_train_orig.var['hvg']]
-    input_test = input_test_orig[:,input_test_orig.var['hvg']]
+    hvg_idx = input_train_orig.var['hvg_score'].to_numpy().argsort()[:par["num_hvg"]]
+    input_train = input_train_orig[:,hvg_idx]
+    input_test = input_test_orig[:,hvg_idx]
 else:
     input_train = input_train_orig
     input_test = input_test_orig

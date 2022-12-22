@@ -237,8 +237,8 @@ functionality:
     label: "Random Labels"
     v1_url: "openproblems/tasks/label_projection/methods/baseline.py"
     v1_commit: "b460ecb183328c857cbbf653488f522a4034a61c"
-    v1_comp_id: "random_labels"
     preferred_normalization: "counts"
+    variants: {}
   status: "enabled"
   requirements:
     commands: []
@@ -302,5 +302,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels/random_labels"
   viash_version: "0.6.6"
-  git_commit: "1275849118d2e8b17dd4dc7c4052fddd75479833"
+  git_commit: "11b33668094cf893d96056d0c58575ae01fe3d81"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

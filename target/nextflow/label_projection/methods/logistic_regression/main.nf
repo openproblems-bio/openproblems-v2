@@ -259,9 +259,13 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "code_url" : "https://github.com/scikit-learn/scikit-learn",
       "doc_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
       "v1_url" : "openproblems/tasks/label_projection/methods/logistic_regression.py",
-      "v1_commit" : "2097bbb3e996f66e98128c9ac95bc9640a496e0d",
-      "v1_comp_id" : "logistic_regression_log_cpm",
-      "preferred_normalization" : "log_cpm"
+      "v1_commit" : "c2470ce02e6f196267cec1c554ba7ae389c0956a",
+      "preferred_normalization" : "log_cpm",
+      "variants" : {
+        "logistic_regression_scran" : {
+          "preferred_normalization" : "log_scran_pooling"
+        }
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -315,7 +319,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/logistic_regression/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "1275849118d2e8b17dd4dc7c4052fddd75479833",
+    "git_commit" : "11b33668094cf893d96056d0c58575ae01fe3d81",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
