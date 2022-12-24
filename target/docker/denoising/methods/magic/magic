@@ -181,6 +181,16 @@ function ViashHelp {
   echo "        default: sqrt"
   echo "        choices: [ sqrt, log ]"
   echo "        Normalization method"
+  echo ""
+  echo "    --decay"
+  echo "        type: integer"
+  echo "        default: 1"
+  echo "        sets decay rate of kernel tails"
+  echo ""
+  echo "    --t"
+  echo "        type: integer"
+  echo "        default: 3"
+  echo "        power to which the diffusion operator is powered"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -404,9 +414,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8" "scprep" "magic-impute" "scipy" "scikit-learn<1.2"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods magic"
-LABEL org.opencontainers.image.created="2022-12-22T17:19:17Z"
+LABEL org.opencontainers.image.created="2022-12-24T07:24:22Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="11b33668094cf893d96056d0c58575ae01fe3d81"
+LABEL org.opencontainers.image.revision="d0fa9da1769a19c084da9c24b055680671e022a1"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -603,6 +613,28 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_NORM=$(ViashRemoveFlags "$1")
             shift 1
             ;;
+        --decay)
+            [ -n "$VIASH_PAR_DECAY" ] && ViashError Bad arguments for option \'--decay\': \'$VIASH_PAR_DECAY\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DECAY="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --decay. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --decay=*)
+            [ -n "$VIASH_PAR_DECAY" ] && ViashError Bad arguments for option \'--decay=*\': \'$VIASH_PAR_DECAY\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DECAY=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --t)
+            [ -n "$VIASH_PAR_T" ] && ViashError Bad arguments for option \'--t\': \'$VIASH_PAR_T\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_T="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --t. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --t=*)
+            [ -n "$VIASH_PAR_T" ] && ViashError Bad arguments for option \'--t=*\': \'$VIASH_PAR_T\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_T=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
         ---setup)
             VIASH_MODE='docker_setup'
             VIASH_DOCKER_SETUP_STRATEGY="$2"
@@ -749,6 +781,12 @@ fi
 if [ -z ${VIASH_PAR_NORM+x} ]; then
   VIASH_PAR_NORM="sqrt"
 fi
+if [ -z ${VIASH_PAR_DECAY+x} ]; then
+  VIASH_PAR_DECAY="1"
+fi
+if [ -z ${VIASH_PAR_T+x} ]; then
+  VIASH_PAR_T="3"
+fi
 
 # check whether required files exist
 if [ ! -z "$VIASH_PAR_INPUT_TRAIN" ] && [ ! -e "$VIASH_PAR_INPUT_TRAIN" ]; then
@@ -757,6 +795,18 @@ if [ ! -z "$VIASH_PAR_INPUT_TRAIN" ] && [ ! -e "$VIASH_PAR_INPUT_TRAIN" ]; then
 fi
 
 # check whether parameters values are of the right type
+if [[ -n "$VIASH_PAR_DECAY" ]]; then
+  if ! [[ "$VIASH_PAR_DECAY" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--decay' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_T" ]]; then
+  if ! [[ "$VIASH_PAR_T" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--t' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
 if [[ -n "$VIASH_META_CPUS" ]]; then
   if ! [[ "$VIASH_META_CPUS" =~ ^[-+]?[0-9]+$ ]]; then
     ViashError 'cpus' has to be an integer. Use "--help" to get more information on the parameters.
@@ -908,7 +958,9 @@ par = {
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'solver': $( if [ ! -z ${VIASH_PAR_SOLVER+x} ]; then echo "r'${VIASH_PAR_SOLVER//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'norm': $( if [ ! -z ${VIASH_PAR_NORM+x} ]; then echo "r'${VIASH_PAR_NORM//\'/\'\"\'\"r\'}'"; else echo None; fi )
+  'norm': $( if [ ! -z ${VIASH_PAR_NORM+x} ]; then echo "r'${VIASH_PAR_NORM//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'decay': $( if [ ! -z ${VIASH_PAR_DECAY+x} ]; then echo "int(r'${VIASH_PAR_DECAY//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  't': $( if [ ! -z ${VIASH_PAR_T+x} ]; then echo "int(r'${VIASH_PAR_T//\'/\'\"\'\"r\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -947,7 +999,7 @@ X, libsize = scprep.normalize.library_size_normalize(
 )
 
 X = scprep.utils.matrix_transform(X, norm_fn)
-Y = MAGIC(solver=par['solver'], verbose=False).fit_transform(
+Y = MAGIC(solver=par['solver'], verbose=False, decay=par['decay'], t=par['t']).fit_transform(
     X, genes="all_genes"
 )
 

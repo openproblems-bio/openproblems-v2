@@ -161,7 +161,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "doc_url" : "https://github.com/KlugerLab/ALRA/blob/master/README.md",
       "v1_url" : "openproblems/tasks/denoising/methods/alra.py",
       "v1_commit" : "411a416150ecabce25e1f59bde422a029d0a8baa",
-      "v1_comp_id" : "alra",
       "preferred_normalization" : "counts"
     },
     "status" : "enabled",
@@ -244,7 +243,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/alra/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "11b33668094cf893d96056d0c58575ae01fe3d81",
+    "git_commit" : "d0fa9da1769a19c084da9c24b055680671e022a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

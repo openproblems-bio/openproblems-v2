@@ -166,7 +166,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "label" : "perfect denoising",
       "v1_url" : "openproblems/tasks/denoising/methods/baseline.py",
       "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
-      "v1_comp_id" : "perfect_denoising",
       "preferred_normalization" : "counts"
     },
     "status" : "enabled",
@@ -220,7 +219,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/control_methods/perfect_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "11b33668094cf893d96056d0c58575ae01fe3d81",
+    "git_commit" : "d0fa9da1769a19c084da9c24b055680671e022a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

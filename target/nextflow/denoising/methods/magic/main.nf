@@ -137,6 +137,32 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--decay",
+        "description" : "sets decay rate of kernel tails",
+        "default" : [
+          1
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--t",
+        "description" : "power to which the diffusion operator is powered",
+        "default" : [
+          3
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
       }
     ],
     "resources" : [
@@ -168,7 +194,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "code_url" : "https://github.com/KrishnaswamyLab/MAGIC",
       "v1_url" : "openproblems/tasks/denoising/methods/magic.py",
       "v1_commit" : "2fbc2d4c8d3ff955ea948fc082635cf779b1927e",
-      "v1_comp_id" : "magic",
+      "variants" : {
+        "magic_approx" : {
+          "solver" : "approximate"
+        },
+        "knn_naive" : {
+          "norm" : "log",
+          "decay" : "none",
+          "t" : 1
+        }
+      },
       "preferred_normalization" : "counts"
     },
     "status" : "enabled",
@@ -226,7 +261,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/magic/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "11b33668094cf893d96056d0c58575ae01fe3d81",
+    "git_commit" : "d0fa9da1769a19c084da9c24b055680671e022a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -248,7 +283,9 @@ par = {
   'input_train': $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo "r'${VIASH_PAR_INPUT_TRAIN//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'solver': $( if [ ! -z ${VIASH_PAR_SOLVER+x} ]; then echo "r'${VIASH_PAR_SOLVER//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'norm': $( if [ ! -z ${VIASH_PAR_NORM+x} ]; then echo "r'${VIASH_PAR_NORM//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'norm': $( if [ ! -z ${VIASH_PAR_NORM+x} ]; then echo "r'${VIASH_PAR_NORM//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'decay': $( if [ ! -z ${VIASH_PAR_DECAY+x} ]; then echo "int(r'${VIASH_PAR_DECAY//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  't': $( if [ ! -z ${VIASH_PAR_T+x} ]; then echo "int(r'${VIASH_PAR_T//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -287,7 +324,7 @@ X, libsize = scprep.normalize.library_size_normalize(
 )
 
 X = scprep.utils.matrix_transform(X, norm_fn)
-Y = MAGIC(solver=par['solver'], verbose=False).fit_transform(
+Y = MAGIC(solver=par['solver'], verbose=False, decay=par['decay'], t=par['t']).fit_transform(
     X, genes="all_genes"
 )
 
