@@ -1,7 +1,7 @@
 cat("Loading dependencies\n")
 options(tidyverse.quiet = TRUE)
 library(tidyverse)
-requireNamespace("anndata", quietly = TRUE)
+library(anndata, warn.conflicts = FALSE)
 library(Matrix, warn.conflicts = FALSE, quietly = TRUE)
 
 ## VIASH START

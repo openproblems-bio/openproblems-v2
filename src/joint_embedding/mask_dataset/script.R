@@ -1,7 +1,7 @@
 cat("Loading dependencies\n")
 options(tidyverse.quiet = TRUE)
 library(tidyverse)
-requireNamespace("anndata", quietly = TRUE)
+library(anndata, warn.conflicts = FALSE)
 library(assertthat, quietly = TRUE, warn.conflicts = FALSE)
 library(Matrix, quietly = TRUE, warn.conflicts = FALSE)
 

@@ -1,5 +1,5 @@
 library(testthat, quietly = TRUE, warn.conflicts = FALSE)
-requireNamespace("anndata", quietly = TRUE)
+library(anndata, warn.conflicts = FALSE)
 
 par <- list(
   input_mod1 = "resources_test/common/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.output_rna.h5ad",
