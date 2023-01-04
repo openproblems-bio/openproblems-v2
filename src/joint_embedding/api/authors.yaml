@@ -14,3 +14,7 @@ functionality:
       email: clance.connect@gmail.com
       roles: [ author, maintainer ]
       props: { github: xlancelottx }
+    - name: Michaela Mueller
+      email: mumichae@in.tum.de
+      roles: [ author, maintainer ]
+      props: { github: mumichae, orcid: "0000-0002-1401-1785" }

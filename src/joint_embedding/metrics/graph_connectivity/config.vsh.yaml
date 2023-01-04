@@ -1,0 +1,24 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: graph_connectivity
+  namespace: joint_embedding/metrics
+  description: Graph connectivity
+  info:
+    metrics:
+      - id: graph_conn
+        label: graph_conn
+        description: Graph connectivity
+        min: 0
+        max: 1
+        maximize: True
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: python:3.10
+    setup:
+      - type: python
+        pip: [anndata>=0.8, scib]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]
