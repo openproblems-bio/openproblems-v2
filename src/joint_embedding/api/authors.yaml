@@ -18,3 +18,7 @@ functionality:
       email: mumichae@in.tum.de
       roles: [ author, maintainer ]
       props: { github: mumichae, orcid: "0000-0002-1401-1785" }
+    - name: Ann Chen
+      email: ann.chen@czbiohub.org
+      roles: [ author, maintainer ]
+      props: { github: atchen}
