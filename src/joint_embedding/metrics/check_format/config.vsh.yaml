@@ -30,5 +30,8 @@ platforms:
         packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
       - type: python
         pip: [ anndata>=0.8 ]
+    test_setup:
+      - type: python
+        pip: [ pyyaml ]
   - type: nextflow
     directives: [ lowmem, lowtime, lowcpu ]
