@@ -179,43 +179,43 @@
   
 ### neurips 2021 migration
 
-* `control_methods/random_embed`: Migrated from v1. Extracted from baseline method `dummy_random`.
+* `control_methods/random_embed`: Migrated from neurips 2021. Extracted from baseline method `dummy_random`.
 
-* `control_methods/zeros_embed`: Migrated from v1. Extracted from baseline method `dummy_zeros`.
+* `control_methods/zeros_embed`: Migrated from neurips 2021. Extracted from baseline method `dummy_zeros`.
 
-* `methods/lmds`: Migrated from v1.
+* `methods/lmds`: Migrated from neurips 2021.
 
-* `methods/mnn`: Migrated and adapted from v1.
+* `methods/mnn`: Migrated and adapted from neurips 2021.
 
-* `methods/newwave`: Migrated and adapted from v1.
+* `methods/newwave`: Migrated and adapted from neurips 2021.
 
-* `methods/pca`: Migrated from v1.
+* `methods/pca`: Migrated from neurips 2021.
 
-* `methods/totalvi`: Migrated from v1.
+* `methods/totalvi`: Migrated from neurips 2021.
 
-* `methods/umap`: Migrated from v1.
+* `methods/umap`: Migrated from neurips 2021.
 
-* `metrics/ari`: Migrated from v1.
+* `metrics/ari`: Migrated from neurips 2021.
   
-* `metrics/asw_batch`: Migrated from v1.
+* `metrics/asw_batch`: Migrated from neurips 2021.
 
-* `metrics/asw_label`: Migrated from v1.
+* `metrics/asw_label`: Migrated from neurips 2021.
 
-* `metrics/cc_cons`: Migrated from v1.
+* `metrics/cc_cons`: Migrated from neurips 2021.
 
-* `metrics/check_format`: Migrated from v1.
+* `metrics/check_format`: Migrated from neurips 2021.
 
-* `metrics/graph_connectivity`: Migrated from v1.
+* `metrics/graph_connectivity`: Migrated from neurips 2021.
 
-* `metrics/latent_mixing`: Migrated from v1.
+* `metrics/latent_mixing`: Migrated from neurips 2021.
 
-* `metrics/nmi`: Migrated from v1.
+* `metrics/nmi`: Migrated from neurips 2021.
 
-* `metrics/rfoob`: Migrated from v1.
+* `metrics/rfoob`: Migrated from neurips 2021.
 
-* `metrics/ti_cons`: Migrated from v1.
+* `metrics/ti_cons`: Migrated from neurips 2021.
 
-* `metrics/ti_cons_batch`: Migrated from v1.
+* `metrics/ti_cons_batch`: Migrated from neurips 2021.
 
 ### changes from neurips 2021
 
