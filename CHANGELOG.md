@@ -163,3 +163,66 @@
 * Higher dimensional data used to obtain the metrics is calculated from test data instead of the whole dataset. So far test and train data contain the same counts values, but this may change eventually.
 
 * Test data is used instead of the whole dataset in control (baseline) methods.
+
+
+## Multi modality - Joint Embedding
+
+### New functinality
+
+* `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+
+* `api/comp_*`: Created an api definition for the mask, method and metric components.
+
+* `mask_dataset`: Added a component for masking raw datasets into task-ready dataset objects.
+
+* `resources_test/joint_embedding/pancreas` with `src/joint_embedding/resources_test_scripts/pancreas.sh`.
+  
+### neurips 2021 migration
+
+* `control_methods/random_embed`: Migrated from v1. Extracted from baseline method `dummy_random`.
+
+* `control_methods/zeros_embed`: Migrated from v1. Extracted from baseline method `dummy_zeros`.
+
+* `methods/lmds`: Migrated from v1.
+
+* `methods/mnn`: Migrated and adapted from v1.
+
+* `methods/newwave`: Migrated and adapted from v1.
+
+* `methods/pca`: Migrated from v1.
+
+* `methods/totalvi`: Migrated from v1.
+
+* `methods/umap`: Migrated from v1.
+
+* `metrics/ari`: Migrated from v1.
+  
+* `metrics/asw_batch`: Migrated from v1.
+
+* `metrics/asw_label`: Migrated from v1.
+
+* `metrics/cc_cons`: Migrated from v1.
+
+* `metrics/check_format`: Migrated from v1.
+
+* `metrics/graph_connectivity`: Migrated from v1.
+
+* `metrics/latent_mixing`: Migrated from v1.
+
+* `metrics/nmi`: Migrated from v1.
+
+* `metrics/rfoob`: Migrated from v1.
+
+* `metrics/ti_cons`: Migrated from v1.
+
+* `metrics/ti_cons_batch`: Migrated from v1.
+
+### changes from neurips 2021
+
+* Updated docker config from R script. Was using an old `anndata` package which was giving warnings
+
+* stores the output from the methods in `.obsm["X_emb"]` instead of `.X` in the `anndata`
+
+* `X_emb ` data is stored as a `Sparse Matrix`
+  
+* updated configs to latest `viash` 
