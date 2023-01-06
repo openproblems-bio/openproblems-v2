@@ -223,6 +223,6 @@
 
 * stores the output from the methods in `.obsm["X_emb"]` instead of `.X` in the `anndata`
 
-* `X_emb ` data is stored as a `Sparse Matrix`
+* `X_emb` data is stored as a `Sparse Matrix`
   
 * updated configs to latest `viash` 
