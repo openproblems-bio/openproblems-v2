@@ -167,7 +167,7 @@
 
 ## Multi modality - Joint Embedding
 
-### New functinality
+### New functionality
 
 * `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
 
