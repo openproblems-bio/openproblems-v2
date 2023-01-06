@@ -14,6 +14,8 @@ functionality:
     v1_url: openproblems/tasks/label_projection/methods/seurat.py
     v1_commit: 3f19f0e87a8bc8b59c7521ba01917580aff81bc8
     preferred_normalization: log_cpm
+    variants:
+      seurat:
   resources:
     - type: r_script
       path: script.R

@@ -9,6 +9,8 @@ functionality:
     v1_url: openproblems/tasks/label_projection/methods/baseline.py
     v1_commit: b460ecb183328c857cbbf653488f522a4034a61c
     preferred_normalization: counts
+    variants:
+      true_labels:
   resources:
     - type: python_script
       path: script.py
