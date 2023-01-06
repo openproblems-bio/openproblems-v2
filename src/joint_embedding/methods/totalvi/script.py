@@ -17,12 +17,12 @@ meta = {
 }
 ## VIASH END
 
-print("Load and prepare data")
+print("Load and prepare data", flush=True)
 adata_mod1 = anndata.read_h5ad(par['input_mod1'])
 adata_mod2 = anndata.read_h5ad(par['input_mod2'])
 adata_mod1.obsm['protein_expression'] = adata_mod2.X.toarray()
 
-print('Select highly variable genes')
+print('Select highly variable genes', flush=True)
 sc.pp.highly_variable_genes(
     adata_mod1,
     n_top_genes=par['hvg_number'],
@@ -31,18 +31,18 @@ sc.pp.highly_variable_genes(
     subset=True
 )
 
-print("Set up model")
+print("Set up model", flush=True)
 TOTALVI.setup_anndata(
     adata_mod1,
     batch_key="batch",
     protein_expression_obsm_key="protein_expression"
 )
 
-print('Train totalVI with', par['max_epochs'], 'epochs')
+print('Train totalVI with', par['max_epochs'], 'epochs', flush=True)
 vae = TOTALVI(adata_mod1, latent_distribution="normal")
 vae.train(max_epochs = par['max_epochs'])
 
-print("Postprocessing and saving output")
+print("Postprocessing and saving output", flush=True)
 adata_out = anndata.AnnData(
     X=vae.get_latent_representation(),
     obs=adata_mod1.obs[['batch']],

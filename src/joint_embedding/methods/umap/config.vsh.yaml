@@ -1,6 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
-  name: umam
+  name: umap
   namespace: joint_embedding/methods
   version: dev
   description: UMAP dimensionality reduction on the Euclidean distance.
@@ -33,9 +33,13 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: dataintuitive/randpy:r4.0_py3.8_bioc3.12
+    image: eddelbuettel/r2u:22.04
     setup:
       - type: r
-        packages: [ uwot, irlba, proxyC ]
+        cran: [ anndata, lmds, tidyverse, irlba, proxyC, uwot]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [anndata>=0.8]
   - type: nextflow
     directives: [ lowmem, lowtime, lowcpu ]
