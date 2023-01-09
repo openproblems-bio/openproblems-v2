@@ -104,20 +104,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           ],
           "bioc_force_install" : false
         }
-      ],
-      "test_setup" : [
-        {
-          "type" : "apt",
-          "packages" : [
-            "libhdf5-dev",
-            "libgeos-dev",
-            "python3",
-            "python3-pip",
-            "python3-dev",
-            "python-is-python3"
-          ],
-          "interactive" : false
-        }
       ]
     },
     {
@@ -145,7 +131,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_results/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "21b6a57a41e2e3fb1f2998fa5ff353a10bf910cb",
+    "git_commit" : "5f4b246d0af635e39361034fccd411a2703e88cb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

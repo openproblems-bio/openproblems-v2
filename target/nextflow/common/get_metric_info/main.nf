@@ -29,15 +29,28 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A task dir",
+        "description" : "the root repo",
         "example" : [
-          "src/label_projection"
+          "../openproblems-v2"
         ],
         "must_exist" : true,
         "create_parent" : true,
         "required" : false,
         "direction" : "input",
-        "multiple" : true,
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "string",
+        "name" : "--task_id",
+        "description" : "A task dir",
+        "example" : [
+          "label_projection"
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
       },
@@ -70,13 +83,20 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "path" : "../../../src",
+        "dest" : "openproblems-v2/src",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml"
+      },
+      {
+        "type" : "file",
+        "path" : "../../../_viash.yaml",
+        "dest" : "openproblems-v2/_viash.yaml",
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml"
       },
       {
         "type" : "python_script",
-        "path" : "test.py",
-        "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml"
+        "text" : "import subprocess\nfrom os import path\nimport json\n\ninput_path = meta[\\"resources_dir\\"] + \\"/openproblems-v2\\"\ntask_id = \\"denoising\\"\noutput_path = \\"output.json\\"\n\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--task_id\\", task_id,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Running script as test\\", flush=True)\nout = subprocess.run(cmd, capture_output=True, text=True)\nprint(out.stderr)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading json file\\", flush=True)\nwith open(output_path, 'r') as f:\n    out = json.load(f)\n    print(out)\n\nprint(\\"All checks succeeded!\\", flush=True)",
+        "dest" : "generic_test.py",
+        "is_executable" : true
       }
     ],
     "status" : "enabled",
@@ -121,8 +141,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "type" : "apt",
           "packages" : [
-            "libhdf5-dev",
-            "libgeos-dev",
             "python3",
             "python3-pip",
             "python3-dev",
@@ -158,7 +176,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "21b6a57a41e2e3fb1f2998fa5ff353a10bf910cb",
+    "git_commit" : "5f4b246d0af635e39361034fccd411a2703e88cb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -176,7 +194,8 @@ library(rlang)
 .viash_orig_warn <- options(warn = 2)
 
 par <- list(
-  "input" = $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo -n "strsplit('"; echo -n "$VIASH_PAR_INPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "', split = ':')[[1]]"; else echo NULL; fi ),
+  "input" = $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "task_id" = $( if [ ! -z ${VIASH_PAR_TASK_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK_ID" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
@@ -203,7 +222,7 @@ rm(.viash_orig_warn)
 
 ns_list <- processx::run(
   "viash",
-  c("ns", "list", "-q", "metrics", "--src", "."),
+  c("ns", "list", "-q", "metrics", "--src", paste("src", par\\$task_id, sep = "/")),
   wd = par\\$input
 )
 configs <- yaml::yaml.load(ns_list\\$stdout)
