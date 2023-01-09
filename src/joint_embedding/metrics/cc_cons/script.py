@@ -30,6 +30,8 @@ recompute_cc = 'S_score' not in adata_solution.obs_keys() or \
                'G2M_score' not in adata_solution.obs_keys()
 
 print('Compute score')
+adata.obsm['X_emb'] = adata.obsm['X_emb'].toarray()
+
 score = scib.me.cell_cycle(
     adata_pre=adata_solution,
     adata_post=adata,
