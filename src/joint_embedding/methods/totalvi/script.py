@@ -20,7 +20,7 @@ meta = {
 print("Load and prepare data", flush=True)
 adata_mod1 = anndata.read_h5ad(par['input_mod1'])
 adata_mod2 = anndata.read_h5ad(par['input_mod2'])
-adata_mod1.obsm['protein_expression'] = adata_mod2.X.toarray()
+adata_mod1.obsm['protein_expression'] = adata_mod2.layers["counts"].toarray()
 
 print('Select highly variable genes', flush=True)
 sc.pp.highly_variable_genes(
