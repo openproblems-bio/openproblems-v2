@@ -1,0 +1,20 @@
+type: file
+description: "The masked solution data"
+example: "masked.h5ad"
+info:
+  short_description: "masked solution data"
+  slots:
+    obs:
+      - type: string
+        name: batch
+        description: Batch information
+        required: true
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: double
+        name: pairing_ix
+        description: number of samples
+        required: true

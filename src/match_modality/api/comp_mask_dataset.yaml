@@ -1,0 +1,40 @@
+functionality:
+  arguments:
+    - name: "--input_mod1"
+      __merge__: anndata_dataset.yaml
+    - name: "--input_mod2"
+      __merge__: anndata_dataset.yaml
+    - name: "--output_train_mod1"
+      direction: "output"
+      example: "dataset_masked.h5ad"
+      description: "The masked shuffled train mod1 profiles."
+      __merge__: anndata_masked_mod.yaml
+    - name: "--output_train_mod2"
+      direction: "output"
+      example: "dataset_masked.h5ad"
+      description: "The masked shuffled train mod2 profiles."
+      __merge__: anndata_masked_mod.yaml
+    - name: "--output_train_sol"
+      direction: "output"
+      example: "dataset_solution.h5ad"
+      description: "The pairing of train mod1&mod2 profiles."
+      __merge__: anndata_masked_sol.yaml
+    - name: "--output_test_mod1"
+      direction: "output"
+      example: "dataset_masked.h5ad"
+      description: "The masked shuffled test mod1 profiles."
+      __merge__: anndata_masked_mod.yaml
+    - name: "--output_test_mod2"
+      direction: "output"
+      __merge__: anndata_masked_mod.yaml
+    - name: "--output_test_sol"
+      direction: "output"
+      __merge__: anndata_masked_sol.yaml
+    - name: "--knn"
+      type: "integer"
+      default: 20
+      description: The KNN cutoff for computing nearest neighbors on the mod1 and mod2 profiles.
+    - name: "--seed"
+      type: "integer"
+      default: 1
+      description: The seed.

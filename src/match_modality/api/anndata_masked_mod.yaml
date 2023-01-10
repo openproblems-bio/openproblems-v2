@@ -1,0 +1,46 @@
+type: file
+description: "The masked data"
+example: "masked.h5ad"
+info:
+  short_description: "masked data"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+    obs:
+      - type: string
+        name: batch
+        description: Batch information
+        required: true
+      - type: double
+        name: size_factors
+        description:
+        required: false
+    var:
+      - type: string
+        name: feature_types
+        description: 
+        required: true
+      - type: string
+        name: gene_ids
+        description:
+        required: false
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: organism
+        description: which organism
+        required: true
+      - type: string
+        name: gene_activity_var_names
+        description:
+        required: true
+    obsm:
+      - type: double
+        name: gene_activity
+        description:
+        required: true
