@@ -176,9 +176,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_commit" : "f24fb718b1115ca85130a45f2e56fddb00075d22",
       "metrics" : [
         {
-          "id" : "mse",
-          "label" : "mse",
-          "description" : "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio",
+          "metric_id" : "mse",
+          "metric_name" : "Mean-squared error",
+          "metric_description" : "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio",
           "maximize" : false,
           "min" : 0,
           "max" : "+inf"
@@ -239,7 +239,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/mse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "5f4b246d0af635e39361034fccd411a2703e88cb",
+    "git_commit" : "7ea417b4a5f0dd8ab752448e1b257eb579ad1dcb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

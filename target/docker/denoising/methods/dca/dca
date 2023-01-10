@@ -159,6 +159,11 @@ function ViashHelp {
   echo ""
   echo "Deep Count Autoencoder"
   echo ""
+  echo "Removes the dropout effect by taking the count structure, overdispersed nature"
+  echo "and sparsity of the data into account"
+  echo "using a deep autoencoder with zero-inflated negative binomial (ZINB) loss"
+  echo "function."
+  echo ""
   echo "Arguments:"
   echo "    --input_train"
   echo "        type: file, file must exist"
@@ -397,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8" "git+https://github.com/scottgigante-immunai/dca.git@patch-1"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods dca"
-LABEL org.opencontainers.image.created="2023-01-09T14:41:41Z"
+LABEL org.opencontainers.image.created="2023-01-10T12:50:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="5f4b246d0af635e39361034fccd411a2703e88cb"
+LABEL org.opencontainers.image.revision="7ea417b4a5f0dd8ab752448e1b257eb579ad1dcb"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

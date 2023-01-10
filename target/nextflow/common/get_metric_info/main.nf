@@ -176,7 +176,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "5f4b246d0af635e39361034fccd411a2703e88cb",
+    "git_commit" : "7ea417b4a5f0dd8ab752448e1b257eb579ad1dcb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -231,6 +231,7 @@ df <- map_df(configs, function(config) {
   if (length(config\\$functionality\\$status) > 0 && config\\$functionality\\$status == "disabled") return(NULL)
   info <- as_tibble(map_df(config\\$functionality\\$info\\$metrics, as.data.frame))
   info\\$config_path <- gsub(".*\\\\\\\\./", "", config\\$info\\$config)
+  info\\$task_id <- par\\$task_id
   info\\$component_id <- config\\$functionality\\$name
   info\\$namespace <- config\\$functionality\\$namespace
   info\\$component_description <- config\\$functionality\\$description
@@ -238,7 +239,7 @@ df <- map_df(configs, function(config) {
   info\\$v1_commit <- config\\$functionality\\$info\\$v1_commit
   info
 }) %>%
-  select(id, everything())
+  select(metric_id, everything())
 
 jsonlite::write_json(
   purrr::transpose(df),

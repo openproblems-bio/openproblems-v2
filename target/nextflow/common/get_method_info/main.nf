@@ -175,7 +175,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_method_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.6",
-    "git_commit" : "5f4b246d0af635e39361034fccd411a2703e88cb",
+    "git_commit" : "7ea417b4a5f0dd8ab752448e1b257eb579ad1dcb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -230,12 +230,14 @@ df <- map_df(configs, function(config) {
   if (length(config\\$functionality\\$status) > 0 && config\\$functionality\\$status == "disabled") return(NULL)
   info <- as_tibble(config\\$functionality\\$info)
   info\\$config_path <- gsub(".*\\\\\\\\./", "", config\\$info\\$config)
-  info\\$id <- config\\$functionality\\$name
+  info\\$task_id <- par\\$task_id
+  info\\$method_id <- config\\$functionality\\$name
   info\\$namespace <- config\\$functionality\\$namespace
   info\\$description <- config\\$functionality\\$description
+  info\\$is_baseline <- grepl("control", info\\$type)
   info
 }) %>%
-  select(id, type, label, everything())
+  select(method_id, type, one_of("method_name"), everything())
 
 jsonlite::write_json(
   purrr::transpose(df),
