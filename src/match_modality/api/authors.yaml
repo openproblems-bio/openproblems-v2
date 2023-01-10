@@ -18,3 +18,7 @@ functionality:
       email: alejandro.granados@czbiohub.org
       roles: [ author, maintainer ]
       props: { github: agranado }
+    - name: Alex Tong
+      email: alexandertongdev@gmail.com
+      roles: [ author, maintainer ]
+      props: { github: atong01 }

@@ -9,10 +9,6 @@ functionality:
   resources:
     - type: r_script
       path: script.R
-  # tests:
-  #   - type: r_script
-  #     path: ../../unit_tests/test_method.R
-  #   - path: ../../../../resources_test
 platforms:
   - type: docker
     image: eddelbuettel/r2u:22.04
