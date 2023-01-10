@@ -33,6 +33,7 @@ functionality:
             '--input_test_mod2', testpar['input_test_mod2'],
             '--output', testpar['output']
           ],
+          check=True,
           capture_output= True,
           text= True
         ).stderr
