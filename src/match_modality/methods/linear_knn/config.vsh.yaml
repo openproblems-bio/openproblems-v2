@@ -1,0 +1,28 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: linear_knn
+  namespace: match_modality/methods
+  description: Perform DR with Linear Regression, and match cells with kNN
+  info:
+    type: method
+    method_name: Linear Regression and KNN
+  arguments:
+    - name: "--n_svd"
+      type: "integer"
+      default: 10
+      description: Number of SVD components to compress to
+    - name: "--n_neighbors"
+      type: "integer"
+      default: 10
+      description: Number of neighbors for matching modalities
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: "python:3.10"
+    setup:
+      - type: python
+        pip: [ anndata, scipy, scikit-learn ]
+  - type: nextflow
+    directives: [ lowmem, lowtime, lowcpu ]

@@ -22,3 +22,7 @@ functionality:
       email: alexandertongdev@gmail.com
       roles: [ author, maintainer ]
       props: { github: atong01 }
+    - name: Daniel Burkhardt
+      email: daniel.b.burkhardt@gmail.com
+      roles: [ author, maintainer ]
+      props: { github: dburkhardt }
