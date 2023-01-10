@@ -4,6 +4,8 @@ functionality:
       __merge__: anndata_masked_mod.yaml
     - name: "--input_test_mod2"
       __merge__: anndata_masked_mod.yaml
+    - name: "--input_test_sol"
+      __merge__: anndata_solution.yaml
     - name: "--output"
       direction: "output"
       __merge__: anndata_prediction.yaml
@@ -31,14 +33,16 @@ functionality:
             meta['executable'],
             '--input_test_mod1', testpar['input_test_mod1'],
             '--input_test_mod2', testpar['input_test_mod2'],
+            '--input_test_sol', testpar['input_test_sol'],
             '--output', testpar['output']
           ],
           check=True,
           capture_output= True,
           text= True
-        ).stderr
+        )
 
-        print(out, flush=True)
+        # for troubleshooting: remove 'check=True' in subprocess.run above and comment out below print
+        # print(out.stderr, flush=True)
 
         print('> Checking whether output files were created', flush=True)
         assert path.exists(testpar['output'])
