@@ -1,0 +1,15 @@
+type: file
+description: "The predicted pairing of test mod1&mod2 profiles."
+example: "prediction.h5ad"
+info:
+  short_description: "Prediction"
+  slots:     
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: method_id
+        description: "A unique identifier for the method"
+        required: true
