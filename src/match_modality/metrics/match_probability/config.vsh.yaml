@@ -1,0 +1,30 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: match_probability
+  namespace: match_modality/metrics
+  description: Calculating basic metrics for task2.
+  info:
+    metrics:
+      - metric_id: match_probability
+        metric_name: Match Probability
+        metric_description: Calculating basic metrics for match modality
+        min: 0
+        max: 1
+        maximize: true
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, tidyverse, testthat]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8, pyyaml ]
+  - type: nextflow
+    directives:
+      label: [ lowmem, lowtime, lowcpu ]
+
