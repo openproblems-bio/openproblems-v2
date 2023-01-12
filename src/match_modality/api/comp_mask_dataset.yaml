@@ -5,12 +5,16 @@ functionality:
     - name: "--input_mod2"
       __merge__: anndata_dataset.yaml
     - name: "--output_train_mod1"
+      direction: "output"
       __merge__: anndata_masked_mod.yaml
     - name: "--output_train_mod2"
+      direction: "output"
       __merge__: anndata_masked_mod.yaml
     - name: "--output_train_sol"
+      direction: "output"
       __merge__: anndata_solution.yaml
     - name: "--output_test_mod1"
+      direction: "output"
       __merge__: anndata_masked_mod.yaml
     - name: "--output_test_mod2"
       direction: "output"

@@ -1,6 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
-  name: baseline_newwave_knnr_knn
+  name: newwave_knnr_knn
   namespace: match_modality/methods
   description: Perform DR with NewWave, predict embedding with KNN regression, and match cells with a KNN.
   info:
