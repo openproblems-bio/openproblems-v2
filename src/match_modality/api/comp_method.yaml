@@ -11,6 +11,7 @@ functionality:
     - name: "--input_test_mod2"
       __merge__: anndata_masked_mod.yaml
     - name: "--output"
+      direction: output
       __merge__: anndata_prediction.yaml
   test_resources:
     - path: ../../../../output   
