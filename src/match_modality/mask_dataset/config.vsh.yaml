@@ -1,4 +1,4 @@
-_merge__: ../api/comp_mask_dataset.yaml
+__merge__: ../api/comp_mask_dataset.yaml
 functionality:
   name: mask_dataset
   namespace: match_modality
@@ -19,5 +19,5 @@ platforms:
       - type: python
         pip: [ anndata>=0.8 ]
   - type: nextflow
-    publish: true
-    directives: [ highmem, midtime, highcpu ]
+    directives: 
+      label: [ highmem, midtime, highcpu ]
