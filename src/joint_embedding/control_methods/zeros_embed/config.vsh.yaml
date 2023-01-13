@@ -5,7 +5,7 @@ functionality:
   description: Generate an embedding containing only zero values.
   info:
     type: negative_control
-    label: zeros_embed
+    method_name: zeros_embed
   arguments:
     - name: "--n_dims"
       type: "integer"

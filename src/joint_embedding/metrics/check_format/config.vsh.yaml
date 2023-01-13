@@ -5,15 +5,15 @@ functionality:
   description: Checking whether the prediction of a method has the right format.
   info:
     metrics:
-      - id: finished
-        label: finished
-        description: 
+      - metric_id: finished
+        metric_name: finished
+        metric_description: check if metric finished
         min: 0
         max: 1
         maximize: true
-      - id: correct_format
-        label: correct_format
-        description: 
+      - metric_id: correct_format
+        metric_name: correct_format
+        metric_description: check if format is correct
         min: 0
         max: 1
         maximize: true

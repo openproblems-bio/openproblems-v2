@@ -5,9 +5,9 @@ functionality:
   description: Average silhouette width (ASW) of labels
   info:
     metrics:
-      - id: asw_label
-        label: asw_label
-        description: Average silhouette width (ASW) of labels
+      - metric_id: asw_label
+        metric_name: asw_label
+        metric_description: Average silhouette width (ASW) of labels
         min: 0
         max: 1
         maximize: True

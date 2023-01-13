@@ -5,9 +5,9 @@ functionality:
   description: Graph connectivity
   info:
     metrics:
-      - id: graph_conn
-        label: graph_conn
-        description: Graph connectivity
+      - metric_id: graph_conn
+        metric_name: graph_conn
+        metric_description: Graph connectivity
         min: 0
         max: 1
         maximize: True

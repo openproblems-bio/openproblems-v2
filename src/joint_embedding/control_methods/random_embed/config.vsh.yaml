@@ -5,7 +5,7 @@ functionality:
   description: Generate a random embedding from a normal distribution.
   info:
     type: negative_control
-    label: Normal Dist.
+    method_name: Normal Dist.
   arguments:
     - name: "--n_dims"
       type: "integer"

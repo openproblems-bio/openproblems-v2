@@ -5,7 +5,7 @@ functionality:
   description: Mutual nearest neighbors correction followed by PCA.
   info:
     type: method
-    label: "MNN"
+    method_name: "MNN"
   arguments:
     - name: "--hvg_sel"
       type: "integer"

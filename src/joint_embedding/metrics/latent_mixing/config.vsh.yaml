@@ -5,8 +5,9 @@ functionality:
   description: Calculate latent mixing metric for joint embedding task.
   info:
     metrics:
-      - id: latent_mixing
-        label: Latent mixing
+      - metric_id: latent_mixing
+        metric_name: Latent mixing
+        metric_description: Calculate latent mixing 
         min: -1
         max: 0
         maximize: True

@@ -5,27 +5,27 @@ functionality:
   description: Calculating basic metrics for the joint embedding task.
   info:
     metrics:
-      - id: rfoob_celltype_accuracy
-        label: rfoob_celltype_accuracy
-        description:
+      - metric_id: rfoob_celltype_accuracy
+        metric_name: Rfoob Celltype Accuray
+        metric_description: check the celltype accuracy
         min: 0
         max: 1
         maximize: True
-      - id: rfoob_pseudotimegex_rsq
-        label: rfoob_pseudotimegex_rsq
-        description:
+      - metric_metric_id: rfoob_pseudotimegex_rsq
+        metric_name: rfoob pseudotimegex rsq
+        metric_description: rfoob pseudotimegex rsq
         min: -1
         max: 1
         maximize: true
-      - id: rfoob_pseudotimeadt_rsq
-        label: rfoob_pseudotimeadt_rsq
-        description:
+      - metric_id: rfoob_pseudotimeadt_rsq
+        metric_name: rfoob pseudotimeadt rsq
+        metric_description: rfoob pseudotimeadt rsq
         min: -1
         max: 1
         maximize: True
-      - id: rfoob_batch_error
-        label: rfoob_batch_error
-        description:
+      - metric_id: rfoob_batch_error
+        metric_name: rfoob batch error
+        metric_description: rfoob batch error
         min: 0
         max: 1
         maximize: True
