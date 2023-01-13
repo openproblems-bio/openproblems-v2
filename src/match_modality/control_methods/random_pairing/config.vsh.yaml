@@ -16,4 +16,5 @@ platforms:
       - type: python
         pip: [ anndata>=0.8, numpy, scikit-learn ]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

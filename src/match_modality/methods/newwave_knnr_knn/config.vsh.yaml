@@ -33,4 +33,5 @@ platforms:
       - type: python
         pip: [ anndata>=0.8, tensorflow ]
   - type: nextflow
-    directives: [ highmem, midtime, highcpu ]
+    directives: 
+      label: [ highmem, highcpu ]
