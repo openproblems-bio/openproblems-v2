@@ -24,4 +24,5 @@ platforms:
       - type: python
         pip: [ pyyaml ]
   - type: nextflow
-    directives: [ vhighmem, midtime, midcpu ]
+    directives: 
+      label: [ vhighmem, midcpu ]

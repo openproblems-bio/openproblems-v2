@@ -27,7 +27,8 @@ platforms:
       - type: python
         pip: [ anndata>=0.8, scanpy, scikit-misc, scipy, scikit-learn, scvi-tools]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]
 
 
 

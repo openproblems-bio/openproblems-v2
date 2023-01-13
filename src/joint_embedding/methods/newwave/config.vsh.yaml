@@ -36,4 +36,5 @@ platforms:
       - type: python
         pip: [anndata>=0.8]
   - type: nextflow
-    directives: [ highmem, hightime, highcpu ]
+    directives: 
+      label: [ highmem, highcpu ]
