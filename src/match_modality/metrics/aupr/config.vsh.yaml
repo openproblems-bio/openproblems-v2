@@ -36,5 +36,5 @@ platforms:
         pip: [ anndata>=0.8, pyyaml ]
   - type: nextflow
     directives:
-      label: [ lowmem, lowtime, lowcpu ]
+      label: [ lowmem, lowcpu ]
 

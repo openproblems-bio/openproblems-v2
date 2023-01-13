@@ -38,4 +38,5 @@ platforms:
       - type: python
         pip: [ anndata>=0.8 ]
   - type: nextflow
-    directives: [ highmem, midtime, highcpu ]
+    directives: 
+      label: [ highmem, highcpu ]
