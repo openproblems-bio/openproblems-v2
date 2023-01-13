@@ -12,7 +12,7 @@ strip_margin <- function(text, symbol = "\\|") {
 }
 
 dir <- "src/joint_embedding"
-# dir <- "."
+dir <- "."
 ```
 
 # Joint Embedding
