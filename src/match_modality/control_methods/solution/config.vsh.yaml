@@ -21,4 +21,4 @@ platforms:
         pip: [ anndata>=0.8 ]
   - type: nextflow
     directives: 
-    label: [ lowmem, lowcpu ]
+      label: [ lowmem, lowcpu ]
