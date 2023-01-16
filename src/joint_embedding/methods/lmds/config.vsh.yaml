@@ -1,11 +1,11 @@
-__merge__: ../../api/comp_method.yaml
+__merge__: ../../api/comp_method.yamllowmem
 functionality:
   name: lmds
   namespace: joint_embedding/methods
   description: Landmark MDS dimensionality reduction on the Spearman distance.
   info:
     type: method
-    label: "LMDS"
+    method_name: "LMDS"
   arguments:
     - name: "--distance_method"
       type: "string"
@@ -29,4 +29,5 @@ platforms:
       - type: python
         pip: [anndata>=0.8]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

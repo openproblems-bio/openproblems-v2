@@ -5,9 +5,9 @@ functionality:
   description: Average silhouette width (ASW) of batches per label
   info:
     metrics:
-      - id: asw_batch
-        label: asw_batch
-        description: Average silhouette width (ASW) of batches per label
+      - metric_id: asw_batch
+        metric_name: asw_batch
+        metric_description: Average silhouette width (ASW) of batches per label
         min: 0
         max: 1
         maximize: True
@@ -24,4 +24,5 @@ platforms:
       - type: python
         pip: [ pyyaml ]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

@@ -5,21 +5,21 @@ functionality:
   description: Trajectory inference conservation score per batch
   info:
     metrics:
-      - id: ti_cons_batch_RNA
-        label: ti_cons_batch_RNA
-        description:
+      - metric_id: ti_cons_batch_RNA
+        metric_name: ti cons batch RNA
+        metric_description: placeholder
         min: 0
         max: 1
         maximize: True
-      - id: ti_cons_batch_ADT_ATAC
-        label: ti_cons_batch_ADT_ATAC
-        description:
+      - metric_id: ti_cons_batch_ADT_ATAC
+        metric_name: ti cons batch ADT ATAC
+        metric_description: placeholder
         min: 0
         max: 1
         maximize: True
-      - id: ti_cons_batch_mean
-        label: ti_cons_batch_mean
-        description:
+      - metric_id: ti_cons_batch_mean
+        metric_name: ti cons batch mean
+        metric_description: placeholder
         min: 0
         max: 1
         maximize: True
@@ -36,4 +36,5 @@ platforms:
       - type: python
         pip: [ pyyaml ]
   - type: nextflow
-    directives: [ midmem, lowtime, midcpu ]
+    directives: 
+      label: [ midmem, midcpu ]

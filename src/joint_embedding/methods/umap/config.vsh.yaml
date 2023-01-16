@@ -6,7 +6,7 @@ functionality:
   description: UMAP dimensionality reduction on the Euclidean distance.
   info:
     type: method
-    label: UMAP
+    method_name: UMAP
   arguments:
     - name: "--n_dims"
       type: "integer"
@@ -42,4 +42,5 @@ platforms:
       - type: python
         pip: [anndata>=0.8]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

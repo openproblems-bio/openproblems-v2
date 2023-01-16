@@ -5,7 +5,7 @@ functionality:
   description: PCA dimensionality reduction.
   info:
     type: method
-    label: "PCA"
+    method_name: "PCA"
   authors:
   arguments:
     - name: "--n_dims"
@@ -30,4 +30,5 @@ platforms:
       - type: python
         pip: [anndata>=0.8]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

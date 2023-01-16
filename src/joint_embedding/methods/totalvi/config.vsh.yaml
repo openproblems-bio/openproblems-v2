@@ -6,7 +6,7 @@ functionality:
   description: "totalVI: joint probabilistic modeling with Total Variational Inference"
   info:
     type: method
-    label: totalVI
+    method_name: totalVI
     doi: 10.1038/s41592-020-01050-x    
   arguments:
     - name: --hvg_number
@@ -27,7 +27,8 @@ platforms:
       - type: python
         pip: [ anndata>=0.8, scanpy, scikit-misc, scipy, scikit-learn, scvi-tools]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]
 
 
 

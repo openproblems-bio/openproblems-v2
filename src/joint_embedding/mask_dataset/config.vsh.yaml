@@ -27,4 +27,5 @@ platforms:
       - type: python
         pip: [ anndata>=0.8 ]
   - type: nextflow
-    directives: [ midmem, lowtime, lowcpu ]
+    directives: 
+      label: [ midmem, lowcpu ]

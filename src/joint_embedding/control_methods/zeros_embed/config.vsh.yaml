@@ -5,7 +5,7 @@ functionality:
   description: Generate an embedding containing only zero values.
   info:
     type: negative_control
-    label: zeros_embed
+    method_name: zeros_embed
   arguments:
     - name: "--n_dims"
       type: "integer"
@@ -21,4 +21,5 @@ platforms:
       - type: python
         pip: [ anndata, numpy, scipy ]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

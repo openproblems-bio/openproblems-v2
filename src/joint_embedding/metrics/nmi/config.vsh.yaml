@@ -5,9 +5,9 @@ functionality:
   description: Normalised mutual information (NMI)
   info:
     metrics:
-      - id: nmi
-        label: NMI
-        description: Normalised mutual information (NMI)
+      - metric_id: nmi
+        metric_name: NMI
+        metric_description: Normalised mutual information (NMI)
         min: 0
         max: 1
         maximize: True
@@ -24,4 +24,5 @@ platforms:
       - type: python
         pip: [ pyyaml ]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

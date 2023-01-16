@@ -5,7 +5,7 @@ functionality:
   description: Concatenated NewWave.
   info:
     type: method
-    label: "NewWave"
+    method_name: "NewWave"
     doi: "10.1101/2021.08.02.453487"
   arguments:
     - name: "--maxiter"
@@ -36,4 +36,5 @@ platforms:
       - type: python
         pip: [anndata>=0.8]
   - type: nextflow
-    directives: [ highmem, hightime, highcpu ]
+    directives: 
+      label: [ highmem, highcpu ]

@@ -5,9 +5,9 @@ functionality:
   description: Adjusted rand index (ARI)
   info:
     metrics:
-      - id: ari
-        label: ari
-        description: Adjusted rand index (ARI)
+      - metric_id: ari
+        metric_name: ari
+        metric_description: Adjusted rand index (ARI)
         min: 0
         max: 1
         maximize: true
@@ -24,4 +24,5 @@ platforms:
       - type: python
         pip: [ pyyaml ]
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

@@ -5,7 +5,7 @@ functionality:
   description: Mutual nearest neighbors correction followed by PCA.
   info:
     type: method
-    label: "MNN"
+    method_name: "MNN"
   arguments:
     - name: "--hvg_sel"
       type: "integer"
@@ -27,4 +27,5 @@ platforms:
       - type: python
         pip: [anndata>=0.8]      
   - type: nextflow
-    directives: [ lowmem, lowtime, lowcpu ]
+    directives: 
+      label: [ lowmem, lowcpu ]

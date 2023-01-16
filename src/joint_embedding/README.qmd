@@ -11,13 +11,19 @@ strip_margin <- function(text, symbol = "\\|") {
   str_replace_all(text, paste0("(\n?)[ \t]*", symbol), "\\1") 
 }
 
-dir <- "src/denoising"
+dir <- "src/joint_embedding"
 dir <- "."
 ```
 
-# Denoising
+# Joint Embedding
 
-{{< include docs/task_description.md >}}
+## Task description
+```{r task description, echo=FALSE,warning=FALSE,error=FALSE,output='asis'}
+task_info <- yaml::yaml.load_file(paste0(dir,"/docs/task_info.yaml"))
+
+cat(task_info$description)
+
+```
 
 ## Methods
 
@@ -41,11 +47,11 @@ method_info_view <-
   method_info %>%
     arrange(type, label) %>%
     transmute(
-      Name = paste0("[", label, "](", comp_yaml, ")"),
+      Name = paste0("[", method_name, "](", comp_yaml, ")"),
       Type = type,
-      Description = gsub("\\.[ \n].*", ".", description),
-      DOI = ifelse(!is.na(paper_doi), paste0("[link](https://doi.org/", paper_doi, ")"), ""),
-      URL = ifelse(!is.na(code_url), paste0("[link](", code_url, ")"), "")
+      Description = description,
+    #   DOI = ifelse(!is.na(paper_doi), paste0("[link](https://doi.org/", paper_doi, ")"), ""),
+    #   URL = ifelse(!is.na(code_url), paste0("[link](", code_url, ")"), "")
     )
 
 cat(paste(knitr::kable(method_info_view, format = 'pipe'), collapse = "\n"))
@@ -54,7 +60,7 @@ cat(paste(knitr::kable(method_info_view, format = 'pipe'), collapse = "\n"))
 
 ## Metrics
 
-Metrics for label projection aim to characterize how well each classifier correctly assigns cell type labels to cells in the test set.
+Metrics for joint embedding aim to characterize how well each ...
 
 ```{r metrics, echo=FALSE,warning=FALSE,error=FALSE,output="asis"}
 metric_ns_list <- processx::run("viash", c("ns", "list", "-q", "metrics", "--src", "."), wd = dir)
@@ -71,7 +77,7 @@ metric_info <- map_df(metric_configs, function(config) {
 metric_info_view <- 
   metric_info %>%
     transmute(
-      Name = paste0("[", label, "](", comp_yaml, ")"),
+      Name = paste0("[", metric_name, "](", comp_yaml, ")"),
       Description = paste0(description, " ", ifelse(maximize, "Higher is better.", "Lower is better.")),
       Range = paste0("[", min, ", ", max, "]")
     )
@@ -107,6 +113,7 @@ comp_info <- map_df(comp_yamls, function(yaml_file) {
     label = name %>% gsub("comp_", "", .) %>% gsub("_", " ", .)
   )
 })
+
 
 file_info <- map_df(file_yamls, function(yaml_file) {
   arg <- yaml::read_yaml(yaml_file)
