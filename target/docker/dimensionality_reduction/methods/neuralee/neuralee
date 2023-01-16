@@ -398,9 +398,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "pyyaml" "torch" "git+https://github.com/michalk8/neuralee@8946abf"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods neuralee"
-LABEL org.opencontainers.image.created="2023-01-13T12:21:14Z"
+LABEL org.opencontainers.image.created="2023-01-16T09:02:40Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1e5b094bf3de62b80cb194ed22678bbd8d2b8299"
+LABEL org.opencontainers.image.revision="98473f7dea7979e178c15aceef1ea1a54fd866c6"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
