@@ -1,0 +1,26 @@
+__merge__: ../api/comp_mask_dataset.yaml
+functionality:
+  name: mask_dataset
+  namespace: predict_modality/mask_dataset
+  description: |
+    A component for masking modality alignment datasets for the predict_modality task.
+  resources:
+    - type: r_script
+      path: script.R
+  test_resources:
+    - type: r_script
+      path: test.R
+    - path: ../../../resources_test
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, tidyverse, Seurat, proxyC, testthat]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8 ]
+  - type: nextflow
+    directives:
+      label: [ midmem, lowcpu ]
