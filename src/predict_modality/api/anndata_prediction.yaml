@@ -8,12 +8,20 @@ info:
       - type: string
         name: batch
         description: Batch information
-        required: true
-    obsm:
+        required: false
       - type: double
-        name: X_emb
+        name: size_factors
         description:
-        required: true
+        required: false
+    var:
+      - type: string
+        name: feature_types
+        description:
+        required: false
+      - type: string
+        name: gene_ids
+        description:
+        required: false
     uns:
       - type: string
         name: dataset_id
