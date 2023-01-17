@@ -1,0 +1,56 @@
+functionality:
+  arguments:
+    - name: "--input_train_mod1"
+      __merge__: anndata_masked_mod1.yaml
+    - name: "--input_train_mod2"
+      __merge__: anndata_masked_mod2.yaml
+    - name: "--input_test_mod1"
+      __merge__: anndata_masked_mod1.yaml
+    - name: "--input_solution"
+      __merge__: anndata_solution.yaml
+    - name: "--output"
+      __merge__: anndata_prediction.yaml
+      direction: output
+  test_resources:
+    - path: ../../../../resources_test   
+    - type: python_script
+      path: generic_test.py
+      text: |
+        from os import path
+        import subprocess
+        import anndata as ad
+        from scipy import sparse
+
+        input_train_mod2 = "resources_test/predict_modality/bmmc_cite/cite_train_mod2.h5ad"
+        input_test_mod1 = "resources_test/predict_modality/bmmc_cite/cite_test_mod1.h5ad"
+        input_solution = "resources_test/predict_modality/bmmc_cite/cite_test_mod2.h5ad"
+        output_path = "output.h5ad"
+
+        cmd = [
+            meta['executable'],
+            "--input_train_mod2", input_train_mod2,
+            "--input_test_mod1", input_test_mod1,
+            "--output", output_path
+        ]
+
+        print(">> Running script as test", flush=True)
+        out = subprocess.run(cmd, stderr=subprocess.STDOUT)
+
+        print(out.stdout)
+        
+        print("> Checking whether output files were created", flush=True)
+        assert path.exists(output_path)
+
+        print("> Reading h5ad files", flush=True)
+        ad_sol = ad.read_h5ad(input_solution)
+        ad_pred = ad.read_h5ad(output_path)
+
+        print("> Checking contents of output.h5ad", flush=True)
+        assert ad_pred.uns['dataset_id'] == ad_sol.uns['dataset_id']
+        assert ad_pred.uns['method_id'] == meta['functionality_name']
+        assert ad_pred.n_obs == ad_sol.n_obs
+        assert ad_pred.n_vars == ad_sol.n_vars
+        assert all(ad_pred.obs_names == ad_sol.obs_names)
+        assert all(ad_pred.var_names == ad_sol.var_names)
+
+        print("> Test succeeded!", flush=True)
