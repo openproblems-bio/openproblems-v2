@@ -23,20 +23,19 @@ functionality:
 
         input_train_mod2 = "resources_test/predict_modality/bmmc_cite/cite_train_mod2.h5ad"
         input_test_mod1 = "resources_test/predict_modality/bmmc_cite/cite_test_mod1.h5ad"
-        input_solution = "resources_test/predict_modality/bmmc_cite/cite_test_mod2.h5ad"
+        input_solution = "resources_test/predict_modality/bmmc_cite/cite_solution.h5ad"
         output_path = "output.h5ad"
 
         cmd = [
             meta['executable'],
             "--input_train_mod2", input_train_mod2,
             "--input_test_mod1", input_test_mod1,
+            "--input_solution", input_solution,
             "--output", output_path
         ]
 
         print(">> Running script as test", flush=True)
-        out = subprocess.run(cmd, stderr=subprocess.STDOUT)
-
-        print(out.stdout)
+        out = subprocess.run(cmd, check=True, stderr=subprocess.STDOUT)
         
         print("> Checking whether output files were created", flush=True)
         assert path.exists(output_path)
