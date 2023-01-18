@@ -1,0 +1,42 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: baseline_newwave_knnr
+  namespace: predict_modality/methods
+  description: Perform DR with NewWave, predict modality with KNN regression.
+  info:
+    type: method
+    method_name: NewWave+KNNR
+  arguments:
+    - name: "--newwave_maxiter"
+      type: "integer"
+      default: 40
+      description: Maximum number of NewWave iterations.
+    - name: "--newwave_ngene"
+      type: "integer"
+      default: 200
+      description: Setting of the n_gene_par NewWave parameter.
+    - name: "--newwave_ncell"
+      type: "integer"
+      default: 200
+      description: Setting of the n_cell_par NewWave parameter.
+    - name: "--n_neighbors"
+      type: "integer"
+      default: 20
+      description: Number of neighbors to use in the knn regression.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, tidyverse, lmds, dynutils, FNN, proxy, proxyC]
+        bioc: [ SingleCellExperiment, NewWave ]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8 ]
+  - type: nextflow
+    directives:
+      label: [ highmem, highcpu ]
