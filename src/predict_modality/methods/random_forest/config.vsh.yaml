@@ -1,0 +1,37 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: random_forest
+  namespace: predict_modality/methods
+  description: Random forest regression.
+  info:
+    type: method
+    method name: Random Forests
+  arguments:
+    - name: "--distance_method"
+      type: "string"
+      default: "pearson"
+      description: The distance method to use. Possible values are euclidean, pearson, spearman and others.
+    - name: "--n_pcs"
+      type: "integer"
+      default: 20
+      description: Number of principal components to use.
+    - name: "--n_trees"
+      type: "integer"
+      default: 50
+      description: Number of trees to use.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, tidyverse, lmds, ranger, pbapply]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8 ]
+  - type: nextflow
+    directives:
+      label: [ highmem, highcpu ]

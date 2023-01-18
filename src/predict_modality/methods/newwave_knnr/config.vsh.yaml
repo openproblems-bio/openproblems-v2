@@ -1,6 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
-  name: baseline_newwave_knnr
+  name: newwave_knnr
   namespace: predict_modality/methods
   description: Perform DR with NewWave, predict modality with KNN regression.
   info:
