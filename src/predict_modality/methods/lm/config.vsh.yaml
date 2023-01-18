@@ -1,0 +1,33 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: lm
+  namespace: predict_modality/methods
+  description: Linear model regression.
+  info:
+    type: method
+    methdod_name: Linear Model
+  arguments:
+    - name: "--distance_method"
+      type: "string"
+      default: "spearman"
+      description: The distance method to use. Possible values are euclidean, pearson, spearman and others.
+    - name: "--n_pcs"
+      type: "integer"
+      default: 50
+      description: Number of principal components to use.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, tidyverse, lmds, RcppArmadillo, pbapply]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8 ]
+  - type: nextflow
+    directives:
+      label: [ highmem, highcpu ]
