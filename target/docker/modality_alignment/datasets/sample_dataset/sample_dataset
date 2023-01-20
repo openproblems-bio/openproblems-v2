@@ -401,9 +401,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante"
 LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/datasets sample_dataset"
-LABEL org.opencontainers.image.created="2023-01-16T09:02:38Z"
+LABEL org.opencontainers.image.created="2023-01-20T10:22:32Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="98473f7dea7979e178c15aceef1ea1a54fd866c6"
+LABEL org.opencontainers.image.revision="da6acc2a5db908d7ad9211e3abb0f85aa0039252"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
