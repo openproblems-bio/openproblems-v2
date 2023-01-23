@@ -16,3 +16,7 @@ functionality:
       props: { github: Pseudomanifold }
     - name: Daniel Burkhardt
       email: dburkhardt@cellarity.com
+    - name: Alejandro Granados
+      email: alejandro.granados@czbiohub.org
+      roles: [ author, maintainer ]
+      props: { github: agranado }
