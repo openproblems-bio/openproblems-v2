@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #make sure the following command has been executed
-#viash ns build -q 'match_modality|common' --parallel --setup cb
+#viash ns build -q 'predict_modality|common' --parallel --setup cb
 
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -39,7 +39,7 @@ viash run src/predict_modality/methods/knnr_py/config.vsh.yaml -- \
 # run one metric
 viash run src/predict_modality/metrics/mse/config.vsh.yaml -- \
     --input_prediction $DATASET_DIR/knnr_py.h5ad \
-    --output_solution $DATASET_DIR/cite_solution.h5ad
+    --input_solution $DATASET_DIR/cite_solution.h5ad \
     --output $DATASET_DIR/mse.h5ad
 
 # run benchmark
@@ -49,13 +49,12 @@ nextflow \
   run . \
   -main-script src/predict_modality/workflows/run/main.nf \
   -profile docker \
+  -c src/wf_utils/labels_ci.config \
   --id bmmc_cite \
   --dataset_id bmmc_site \
   --input_train_mod1 $DATASET_DIR/cite_train_mod1.h5ad \
   --input_train_mod2 $DATASET_DIR/cite_train_mod2.h5ad \
-  --input_train_sol $DATASET_DIR/cite_train_sol.h5ad \
   --input_test_mod1 $DATASET_DIR/cite_test_mod1.h5ad \
-  --input_test_mod2 $DATASET_DIR/cite_test_mod2.h5ad \
-  --output_solution $DATASET_DIR/cite_solution.h5ad
+  --input_solution $DATASET_DIR/cite_solution.h5ad \
   --output scores.tsv \
   --publish_dir $DATASET_DIR/
