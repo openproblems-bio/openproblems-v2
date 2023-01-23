@@ -1,0 +1,31 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: mse
+  namespace: predict_modality/metrics
+  description: Calculating basic metrics for the predict modality task.
+  info:
+    metrics:
+      - metric_id: rmse
+        metric_name: RMSE
+        metric_description: Relative Mean Squared Error
+        min: 0
+        max: 99999
+        maximize: false
+      - metric_id: mae
+        metric_name: MAE
+        metric_description: Mean Absolute Error
+        min: 0
+        max: 99999
+        maximize: false
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: python:3.10
+    setup:
+      - type: python
+        pip: [ anndata>=0.8, pyyaml , numpy]
+  - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]
