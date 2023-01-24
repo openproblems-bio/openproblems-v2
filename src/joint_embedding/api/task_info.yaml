@@ -1,8 +1,6 @@
 task_id: joint_embedding
 task_name: Joint Embedding
-v1_url: neurips2021_multimodal_viash/src/joint_embedding/readme.md
-v1_commit: 0f8eae583444ba3f71c3083b860cc34b9ecb2fa2
-short_description: Learning of an embedded space that leverages the information of multiple modalities (e.g. for improved cell type annotation).
+summary: Learning of an embedded space that leverages the information of multiple modalities (e.g. for improved cell type annotation).
 description: |
   The functioning of organs, tissues, and whole organisms is determined by the interplay of cells. 
   Cells are characterised into broad types, which in turn can take on different states. Here, a cell 
