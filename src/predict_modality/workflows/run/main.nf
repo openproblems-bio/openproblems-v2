@@ -5,7 +5,7 @@ targetDir = params.rootDir + "/target/nextflow"
 
 // import control methods
 include { meanpergene } from "$targetDir/predict_modality/control_methods/meanpergene/main.nf"
-include { random } from "$targetDir/predict_modality/control_methods/random/main.nf"
+include { random_predict } from "$targetDir/predict_modality/control_methods/random_predict/main.nf"
 include { zeros } from "$targetDir/predict_modality/control_methods/zeros/main.nf"
 include { solution } from "$targetDir/predict_modality/control_methods/solution/main.nf"
 
@@ -33,7 +33,7 @@ include { setWorkflowArguments; getWorkflowArguments; passthroughMap as pmap } f
 config = readConfig("$projectDir/config.vsh.yaml")
 
 // construct a map of methods (id -> method_module)
-methods = [ meanpergene, random, zeros, solution, knnr_py, knnr_r, lm, newwave_knnr, random_forest]
+methods = [ meanpergene, random_predict, zeros, solution, knnr_py, knnr_r, lm, newwave_knnr, random_forest]
   .collectEntries{method ->
     [method.config.functionality.name, method]
   }
@@ -114,7 +114,7 @@ workflow controls_can_cheat {
       def method_type = method.config.functionality.info.method_type
       def new_data = data.clone()
       if (method_type != "method") {
-        new_data = new_data + [input_test_sol: passthrough.metric.input_solution]
+        new_data = new_data + [input_solution: passthrough.metric.input_solution]
       }
       [id, new_data, passthrough]
     }
