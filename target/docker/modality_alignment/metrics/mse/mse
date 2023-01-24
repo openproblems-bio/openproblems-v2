@@ -397,9 +397,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante"
 LABEL org.opencontainers.image.description="Companion container for running component modality_alignment/metrics mse"
-LABEL org.opencontainers.image.created="2023-01-24T07:57:18Z"
+LABEL org.opencontainers.image.created="2023-01-24T07:57:24Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="6321d27edc813aa6c1facb934a32139c66f5e8a1"
+LABEL org.opencontainers.image.revision="61e3816e97a4b82d8594f6a0756005bedb9d1ee2"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
