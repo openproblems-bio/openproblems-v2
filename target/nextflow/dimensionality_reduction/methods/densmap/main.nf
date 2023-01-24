@@ -61,6 +61,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -122,10 +128,23 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "boolean_true",
-        "name" : "--no_pca",
-        "description" : "Do not apply PCA with 50 dimensions before running UMAP.",
+        "type" : "integer",
+        "name" : "--n_hvg",
+        "description" : "Number of highly variable genes to subset to. If not specified, the input matrix will not be subset.",
+        "required" : false,
         "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_pca_dims",
+        "description" : "Number of PCA dimensions to use. If not specified, no PCA will be performed.",
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
         "dest" : "par"
       }
     ],
@@ -137,7 +156,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/densmap/config.vsh.yaml"
       }
     ],
-    "description" : "density-preserving based on UMAP",
+    "description" : "Density-preserving UMAP",
     "test_resources" : [
       {
         "type" : "file",
@@ -146,17 +165,31 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"reduced.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output\\", output_path\n]\n\nprint(\\">> Checking whether input file exists\\")\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input:\\", input)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"X_emb\\" in output.obsm\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\nassert 'normalization_id' in output.uns\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
+        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"reduced.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output\\", output_path\n]\n\nprint(\\">> Checking whether input file exists\\", flush=True)\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\", flush=True)\nsubprocess.run(cmd, check=True)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\", flush=True)\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input:\\", input, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether predictions were added\\", flush=True)\nassert \\"X_emb\\" in output.obsm\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\nassert 'normalization_id' in output.uns\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
       }
     ],
     "info" : {
       "type" : "method",
-      "label" : "densMAP",
-      "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/densmap.py",
-      "v1_commit" : "c2470ce02e6f196267cec1c554ba7ae389c0956a",
-      "preferred_normalization" : "log_cpm"
+      "method_name" : "densMAP",
+      "paper_reference" : "narayan2021assessing",
+      "code_url" : "https://github.com/lmcinnes/umap",
+      "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
+      "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+      "preferred_normalization" : "log_cpm",
+      "variants" : {
+        "densmap_pca_logCPM" : {
+          "n_pca_dims" : 50
+        },
+        "densmap_logCPM_1kHVG" : {
+          "n_hvg" : 1000
+        },
+        "densmap_pca_logCPM_1kHVG" : {
+          "n_pca_dims" : 50,
+          "n_hvg" : 1000
+        }
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -180,7 +213,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "packages" : [
             "scanpy",
             "anndata>=0.8",
-            "pyyaml",
             "umap-learn"
           ],
           "upgrade" : true
@@ -212,7 +244,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/densmap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "4e9de5233ccc676b32871a6641c640151d230549",
+    "git_commit" : "6321d27edc813aa6c1facb934a32139c66f5e8a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -224,14 +256,14 @@ cat > "$tempscript" << VIASHMAIN
 import anndata as ad
 from umap import UMAP
 import scanpy as sc
-import yaml
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'no_pca': $( if [ ! -z ${VIASH_PAR_NO_PCA+x} ]; then echo "r'${VIASH_PAR_NO_PCA//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi )
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_pca_dims': $( if [ ! -z ${VIASH_PAR_N_PCA_DIMS+x} ]; then echo "int(r'${VIASH_PAR_N_PCA_DIMS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -250,35 +282,44 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
-input = ad.read_h5ad(par['input'])
+print("Load input data", flush=True)
+input = ad.read_h5ad(par["input"])
+X_mat = input.layers["normalized"]
 
-print('Select top 1000 high variable genes')
-n_genes = 1000
-idx = input.var['hvg_score'].to_numpy().argsort()[::-1][:n_genes]
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    X_mat = X_mat[:, idx]
 
-print("Run UMAP...")
-if par['no_pca']:
-    print('... using logCPM data')
-    input.obsm["X_emb"] = UMAP(densmap=True, random_state=42).fit_transform(input.layers['normalized'][:, idx])
+if par["n_pca_dims"]:
+    print("Apply PCA to normalized data", flush=True)
+    umap_input = sc.tl.pca(
+        X_mat,
+        n_comps=par["n_pca_dims"],
+        svd_solver="arpack"
+    )
 else:
-    print('... after applying PCA with 50 dimensions to logCPM data')
-    input.obsm['X_pca_hvg'] = sc.tl.pca(input.layers['normalized'][:, idx], n_comps=50, svd_solver="arpack")
-    input.obsm["X_emb"] = UMAP(densmap=True, random_state=42).fit_transform(input.obsm['X_pca_hvg'])
+    print("Use normalized data as input for UMAP", flush=True)
+    umap_input = X_mat
 
-print("Delete layers and var")
-del input.layers
-del input.var
+print("Run densMAP", flush=True)
+X_emb = UMAP(densmap=True, random_state=42).fit_transform(umap_input)
 
-print('Add method and normalization ID')
-input.uns['method_id'] = meta['functionality_name']
-with open(meta['config'], 'r') as config_file:
-    config = yaml.safe_load(config_file)
+print("Create output AnnData", flush=True)
+output = ad.AnnData(
+    obs=input.obs[[]],
+    obsm={
+        "X_emb": X_emb
+    },
+    uns={
+        "dataset_id": input.uns["dataset_id"],
+        "normalization_id": input.uns["normalization_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
 
-input.uns['normalization_id'] = config['functionality']['info']['preferred_normalization']
-
-print("Write output to file")
-input.write_h5ad(par['output'], compression="gzip")
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "$tempscript"

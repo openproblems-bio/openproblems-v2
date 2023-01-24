@@ -119,7 +119,7 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
-  description: "Negative control method which generates a random embedding "
+  description: "Uses a normal distribution to generate random embeddings."
   test_resources:
   - type: "file"
     path: "../../../../resources_test/dimensionality_reduction/pancreas/"
@@ -128,25 +128,27 @@ functionality:
       \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\noutput_path = \"reduced.h5ad\"\
       \nn_pca = 50\ncmd = [\n    meta['executable'],\n    \"--input\", input_path,\n\
       \    \"--output\", output_path,\n    \"--n_pca\", str(n_pca)\n]\n\nprint(\"\
-      >> Checking whether input file exists\")\nassert path.exists(input_path)\n\n\
-      print(\">> Running script as test\")\nout = subprocess.run(cmd)\n# out = subprocess.run(cmd,\
-      \ check=True, capture_output=True, text=True)\n\nprint(\">> Checking whether\
-      \ output file exists\")\nassert path.exists(output_path)\n\nprint(\">> Reading\
-      \ h5ad files\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\
-      \nprint(\"input:\", input)\nprint(\"output:\", output)\n\nprint(\">> Checking\
-      \ whether predictions were added\")\nassert \"X_emb\" in output.obsm\nassert\
-      \ meta['functionality_name'] == output.uns[\"method_id\"]\n\nprint(\">> Checking\
-      \ whether data from input was copied properly to output\")\nassert input.n_obs\
-      \ == output.n_obs\nassert input.uns[\"dataset_id\"] == output.uns[\"dataset_id\"\
-      ]\n\nprint(\"All checks succeeded!\")"
+      >> Checking whether input file exists\", flush=True)\nassert path.exists(input_path)\n\
+      \nprint(\">> Running script as test\", flush=True)\nout = subprocess.run(cmd)\n\
+      # out = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\n\
+      print(\">> Checking whether output file exists\", flush=True)\nassert path.exists(output_path)\n\
+      \nprint(\">> Reading h5ad files\", flush=True)\ninput = ad.read_h5ad(input_path)\n\
+      output = ad.read_h5ad(output_path)\n\nprint(\"input:\", input, flush=True)\n\
+      print(\"output:\", output, flush=True)\n\nprint(\">> Checking whether predictions\
+      \ were added\", flush=True)\nassert \"X_emb\" in output.obsm\nassert meta['functionality_name']\
+      \ == output.uns[\"method_id\"]\n\nprint(\">> Checking whether data from input\
+      \ was copied properly to output\", flush=True)\nassert input.n_obs == output.n_obs\n\
+      assert input.uns[\"dataset_id\"] == output.uns[\"dataset_id\"]\n\nprint(\"All\
+      \ checks succeeded!\", flush=True)"
     dest: "generic_test.py"
     is_executable: true
   info:
     type: "negative_control"
-    label: "Random features"
+    method_name: "Random Features"
     v1_url: "openproblems/tasks/dimensionality_reduction/methods/baseline.py"
-    v1_commit: "b460ecb183328c857cbbf653488f522a4034a61c"
+    v1_commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
     preferred_normalization: "counts"
+    variants: {}
   status: "enabled"
   requirements:
     commands: []
@@ -168,9 +170,7 @@ platforms:
   - type: "python"
     user: false
     packages:
-    - "numpy"
     - "anndata>=0.8"
-    - "pyyaml"
     pip: []
     pypi: []
     git: []
@@ -211,5 +211,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/random_features"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/random_features/random_features"
   viash_version: "0.6.7"
-  git_commit: "4e9de5233ccc676b32871a6641c640151d230549"
+  git_commit: "6321d27edc813aa6c1facb934a32139c66f5e8a1"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

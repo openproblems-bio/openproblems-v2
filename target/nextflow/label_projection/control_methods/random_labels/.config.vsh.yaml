@@ -302,5 +302,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels/random_labels"
   viash_version: "0.6.7"
-  git_commit: "4e9de5233ccc676b32871a6641c640151d230549"
+  git_commit: "6321d27edc813aa6c1facb934a32139c66f5e8a1"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

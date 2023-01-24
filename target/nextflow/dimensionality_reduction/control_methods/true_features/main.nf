@@ -181,11 +181,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "integer",
-        "name" : "--n_comps",
-        "description" : "Number of principal components to use.",
+        "type" : "boolean",
+        "name" : "--use_normalized_layer",
+        "description" : "Whether to work with the raw counts or the normalized counts.",
         "default" : [
-          100
+          false
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_hvg",
+        "description" : "Number of highly variable genes to subset to. If not specified, the input matrix will not be subset.",
+        "default" : [
+          1000
         ],
         "required" : false,
         "direction" : "input",
@@ -211,7 +224,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"reduced.h5ad\\"\nn_pca = 50\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output\\", output_path,\n    \\"--n_pca\\", str(n_pca)\n]\n\nprint(\\">> Checking whether input file exists\\")\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd)\n# out = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input:\\", input)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"X_emb\\" in output.obsm\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
+        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"reduced.h5ad\\"\nn_pca = 50\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output\\", output_path,\n    \\"--n_pca\\", str(n_pca)\n]\n\nprint(\\">> Checking whether input file exists\\", flush=True)\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\", flush=True)\nout = subprocess.run(cmd)\n# out = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\", flush=True)\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input:\\", input, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether predictions were added\\", flush=True)\nassert \\"X_emb\\" in output.obsm\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
       }
@@ -220,8 +233,20 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "positive_control",
       "label" : "True Features",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/baseline.py",
+      "v1_comp_id" : "True Features",
       "v1_commit" : "4a0ee9b3731ff10d8cd2e584726a61b502aef613",
-      "preferred_normalization" : "counts"
+      "preferred_normalization" : "counts",
+      "variants" : {
+        "true_features_log_cpm" : {
+          "preferred_normalization" : "log_cpm",
+          "use_normalized_layer" : true
+        },
+        "true_features_log_cpm_hvg" : {
+          "preferred_normalization" : "log_cpm",
+          "use_normalized_layer" : true,
+          "n_hvg" : 1000
+        }
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -244,8 +269,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "user" : false,
           "packages" : [
             "scanpy",
-            "anndata>=0.8",
-            "pyyaml"
+            "anndata>=0.8"
           ],
           "upgrade" : true
         }
@@ -276,7 +300,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/control_methods/true_features/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "4e9de5233ccc676b32871a6641c640151d230549",
+    "git_commit" : "6321d27edc813aa6c1facb934a32139c66f5e8a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -286,15 +310,14 @@ tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 
 import anndata as ad
-import scanpy as sc
-import yaml
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'n_comps': $( if [ ! -z ${VIASH_PAR_N_COMPS+x} ]; then echo "int(r'${VIASH_PAR_N_COMPS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
+  'use_normalized_layer': $( if [ ! -z ${VIASH_PAR_USE_NORMALIZED_LAYER+x} ]; then echo "r'${VIASH_PAR_USE_NORMALIZED_LAYER//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -313,21 +336,35 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
-input = ad.read_h5ad(par['input'])
+print("Load input data", flush=True)
+input = ad.read_h5ad(par["input"])
 
-print('Add method and normalization ID')
-input.uns['method_id'] = meta['functionality_name']
-with open(meta['config'], 'r') as config_file:
-    config = yaml.safe_load(config_file)
+print("Create high dimensionally embedding with all features", flush=True)
+if par["use_normalized_layer"]:
+    X_emb = input.layers["counts"].toarray()
+else:
+    X_emb = input.layers["normalized"].toarray()
 
-input.uns['normalization_id'] = config['functionality']['info']['preferred_normalization']
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    X_emb = X_emb[:, idx]
 
-print('Create high dimensionally embedding with all features')
-input.obsm["X_emb"] = input.layers['counts'][:, :par['n_comps']].toarray()
+print("Create output AnnData", flush=True)
+output = ad.AnnData(
+    obs=input.obs[[]],
+    obsm={
+        "X_emb": X_emb
+    },
+    uns={
+        "dataset_id": input.uns["dataset_id"],
+        "normalization_id": input.uns["normalization_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
 
-print("Write output to file")
-input.write_h5ad(par['output'], compression="gzip")
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "$tempscript"

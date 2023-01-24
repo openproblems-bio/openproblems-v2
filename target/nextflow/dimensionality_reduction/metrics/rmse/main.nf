@@ -106,6 +106,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -200,7 +206,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_reduced_path = meta[\\"resources_dir\\"] + \\"/pancreas/reduced.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/test.h5ad\\"\noutput_path = \\"score.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input_reduced\\", input_reduced_path,\n    \\"--input_test\\", input_test_path,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Checking whether input files exist\\")\nassert path.exists(input_reduced_path)\nassert path.exists(input_test_path)\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput_reduced = ad.read_h5ad(input_reduced_path)\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input reduced:\\", input_reduced)\nprint(\\"input test:\\", input_test)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether metrics were added\\")\nassert \\"metric_ids\\" in output.uns\nassert \\"metric_values\\" in output.uns\nassert meta['functionality_name'] in output.uns[\\"metric_ids\\"]\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert input_reduced.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input_reduced.uns[\\"normalization_id\\"] == output.uns[\\"normalization_id\\"]\nassert input_reduced.uns[\\"method_id\\"] == output.uns[\\"method_id\\"]\n\nprint(\\"All checks succeeded!\\")",
+        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_reduced_path = meta[\\"resources_dir\\"] + \\"/pancreas/reduced.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/test.h5ad\\"\noutput_path = \\"score.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input_reduced\\", input_reduced_path,\n    \\"--input_test\\", input_test_path,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Checking whether input files exist\\", flush=True)\nassert path.exists(input_reduced_path)\nassert path.exists(input_test_path)\n\nprint(\\">> Running script as test\\", flush=True)\nsubprocess.run(cmd, check=True)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\", flush=True)\ninput_reduced = ad.read_h5ad(input_reduced_path)\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input reduced:\\", input_reduced, flush=True)\nprint(\\"input test:\\", input_test, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether metrics were added\\", flush=True)\nassert \\"metric_ids\\" in output.uns\nassert \\"metric_values\\" in output.uns\n# assert meta['functionality_name'] in output.uns[\\"metric_ids\\"]\n# todo: look at config to check whether all metric ids are available\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input_reduced.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input_reduced.uns[\\"normalization_id\\"] == output.uns[\\"normalization_id\\"]\nassert input_reduced.uns[\\"method_id\\"] == output.uns[\\"method_id\\"]\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
       }
@@ -208,12 +214,25 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "info" : {
       "v1_url" : "openproblems/tasks/dimensionality_reduction/metrics/root_mean_square_error.py",
       "v1_commit" : "b353a462f6ea353e0fc43d0f9fcbbe621edc3a0b",
+      "v1_note" : "This metric was ported but will probably be removed soon.",
       "metrics" : [
         {
-          "id" : "rmse",
-          "label" : "RMSE",
-          "description" : "The root mean squared error between the full (or processed) data matrix and a list of dimensionally-reduced matrices",
-          "min" : 0
+          "metric_id" : "rmse",
+          "metric_name" : "RMSE",
+          "metric_description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD.",
+          "paper_reference" : "kruskal1964mds",
+          "min" : 0,
+          "max" : "+inf",
+          "maximize" : false
+        },
+        {
+          "metric_id" : "rmse_spectral",
+          "metric_name" : "RMSE Spectral",
+          "metric_description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding.",
+          "paper_reference" : "coifman2006diffusion",
+          "min" : 0,
+          "max" : "+inf",
+          "maximize" : false
         }
       ]
     },
@@ -272,7 +291,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/rmse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "4e9de5233ccc676b32871a6641c640151d230549",
+    "git_commit" : "6321d27edc813aa6c1facb934a32139c66f5e8a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -282,11 +301,13 @@ tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 
 import anndata as ad
-from umap import UMAP, spectral
-import scipy.spatial.distance as dist
-from scipy.optimize import nnls
 import numpy as np
-from sklearn import decomposition, metrics
+import sklearn.decomposition
+import scipy.optimize
+import scipy.spatial
+from sklearn.metrics import pairwise_distances
+import umap
+import umap.spectral
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
@@ -313,40 +334,47 @@ meta = {
 
 ## VIASH END
 
-print("Load data")
-input_reduced = ad.read_h5ad(par['input_reduced'])
-input_test = ad.read_h5ad(par['input_test'])
-
-print('Reduce dimensionality of raw data')
-n_comps = 200
-if not par['spectral']:
-    input_reduced.obsm['high_dim'] = decomposition.TruncatedSVD(n_components = n_comps).fit_transform(input_test.layers['counts'])
-    print('Compute RMSE between the full (or processed) data matrix and a dimensionally-reduced matrix, invariant to scalar multiplication')
-else:
-    n_comps = min(n_comps, min(input_test.shape) - 2)
-    graph = UMAP(transform_mode="graph").fit_transform(input_test.layers['counts'])
-    input_reduced.obsm['high_dim'] = spectral.spectral_layout(
-        input_test.layers['counts'], graph, n_comps, random_state=np.random.default_rng()
+def _rmse(X, X_emb):
+    high_dimensional_distance_vector = scipy.spatial.distance.pdist(X)
+    low_dimensional_distance_vector = scipy.spatial.distance.pdist(X_emb)
+    _, rmse = scipy.optimize.nnls(
+        low_dimensional_distance_vector[:, None], high_dimensional_distance_vector
     )
-    meta['functionality_name'] += ' spectral'
-    print('Computes (RMSE) between high-dimensional Laplacian eigenmaps on the full (or processed) data matrix and the dimensionally-reduced matrix, invariant to scalar multiplication')
+    return rmse
 
-high_dim_dist = dist.pdist(input_reduced.obsm['high_dim'])
-low_dim_dist = dist.pdist(input_reduced.obsm["X_emb"])
+print("Load data", flush=True)
+input_test = ad.read_h5ad(par["input_test"])
+input_reduced = ad.read_h5ad(par["input_reduced"])
 
-scale, rmse = nnls(
-        low_dim_dist[:, None], high_dim_dist
-        )
+high_dim = input_test.layers["normalized"]
+X_emb = input_reduced.obsm["X_emb"]
 
-print("Store metric value")
-input_reduced.uns['metric_ids'] =  meta['functionality_name']
-input_reduced.uns['metric_values'] = rmse
+print("Compute NNLS residual after SVD", flush=True)
+n_svd = 200
+svd_emb = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(high_dim)
+rmse = _rmse(svd_emb, X_emb)
 
-print("Delete obs matrix")
-del input_reduced.obsm
+print("Compute NLSS residual after spectral embedding", flush=True)
+n_comps = min(200, min(input_test.shape) - 2)
+umap_graph = umap.UMAP(transform_mode="graph").fit_transform(high_dim)
+spectral_emb = umap.spectral.spectral_layout(
+    high_dim, umap_graph, n_comps, random_state=np.random.default_rng()
+)
+rmse_spectral = _rmse(spectral_emb, X_emb)
 
-print("Write data to file")
-input_reduced.write_h5ad(par['output'], compression="gzip")
+print("Create output AnnData object", flush=True)
+output = ad.AnnData(
+    uns={
+        "dataset_id": input_test.uns["dataset_id"],
+        "normalization_id": input_test.uns["normalization_id"],
+        "method_id": input_reduced.uns["method_id"],
+        "metric_ids": [ "rmse", "rmse_spectral" ],
+        "metric_values": [ rmse, rmse_spectral ]
+    }
+)
+
+print("Write data to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "$tempscript"

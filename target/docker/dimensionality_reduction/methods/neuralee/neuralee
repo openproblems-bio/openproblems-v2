@@ -171,10 +171,20 @@ function ViashHelp {
   echo "        example: reduced.h5ad"
   echo "        A dimensionally reduced dataset"
   echo ""
-  echo "    --maxit"
+  echo "    --n_iter"
   echo "        type: integer"
-  echo "        default: 100"
-  echo "        max number of iterations for NeuralEE."
+  echo "        Number of iterations."
+  echo ""
+  echo "    --n_hvg"
+  echo "        type: integer"
+  echo "        default: 1000"
+  echo "        Number of highly variable genes to subset to. If not specified, the"
+  echo "        input matrix will not be subset."
+  echo ""
+  echo "    --normalize"
+  echo "        type: boolean"
+  echo "        default: false"
+  echo "        Whether to perform own normalization"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -395,12 +405,12 @@ function ViashDockerfile {
 FROM python:3.10
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "pyyaml" "torch" "git+https://github.com/michalk8/neuralee@8946abf"
+  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "torch" "git+https://github.com/michalk8/neuralee@8946abf"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods neuralee"
-LABEL org.opencontainers.image.created="2023-01-24T07:56:56Z"
+LABEL org.opencontainers.image.created="2023-01-24T07:57:18Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4e9de5233ccc676b32871a6641c640151d230549"
+LABEL org.opencontainers.image.revision="6321d27edc813aa6c1facb934a32139c66f5e8a1"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -575,15 +585,37 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --maxit)
-            [ -n "$VIASH_PAR_MAXIT" ] && ViashError Bad arguments for option \'--maxit\': \'$VIASH_PAR_MAXIT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_MAXIT="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --maxit. Use "--help" to get more information on the parameters. && exit 1
+        --n_iter)
+            [ -n "$VIASH_PAR_N_ITER" ] && ViashError Bad arguments for option \'--n_iter\': \'$VIASH_PAR_N_ITER\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_ITER="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_iter. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --maxit=*)
-            [ -n "$VIASH_PAR_MAXIT" ] && ViashError Bad arguments for option \'--maxit=*\': \'$VIASH_PAR_MAXIT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_MAXIT=$(ViashRemoveFlags "$1")
+        --n_iter=*)
+            [ -n "$VIASH_PAR_N_ITER" ] && ViashError Bad arguments for option \'--n_iter=*\': \'$VIASH_PAR_N_ITER\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_ITER=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --n_hvg)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_hvg. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_hvg=*)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg=*\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --normalize)
+            [ -n "$VIASH_PAR_NORMALIZE" ] && ViashError Bad arguments for option \'--normalize\': \'$VIASH_PAR_NORMALIZE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_NORMALIZE="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --normalize. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --normalize=*)
+            [ -n "$VIASH_PAR_NORMALIZE" ] && ViashError Bad arguments for option \'--normalize=*\': \'$VIASH_PAR_NORMALIZE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_NORMALIZE=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         ---setup)
@@ -726,8 +758,11 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
 fi
 
 # filling in defaults
-if [ -z ${VIASH_PAR_MAXIT+x} ]; then
-  VIASH_PAR_MAXIT="100"
+if [ -z ${VIASH_PAR_N_HVG+x} ]; then
+  VIASH_PAR_N_HVG="1000"
+fi
+if [ -z ${VIASH_PAR_NORMALIZE+x} ]; then
+  VIASH_PAR_NORMALIZE="false"
 fi
 
 # check whether required files exist
@@ -737,9 +772,21 @@ if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
 fi
 
 # check whether parameters values are of the right type
-if [[ -n "$VIASH_PAR_MAXIT" ]]; then
-  if ! [[ "$VIASH_PAR_MAXIT" =~ ^[-+]?[0-9]+$ ]]; then
-    ViashError '--maxit' has to be an integer. Use "--help" to get more information on the parameters.
+if [[ -n "$VIASH_PAR_N_ITER" ]]; then
+  if ! [[ "$VIASH_PAR_N_ITER" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_iter' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_N_HVG" ]]; then
+  if ! [[ "$VIASH_PAR_N_HVG" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_hvg' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_NORMALIZE" ]]; then
+  if ! [[ "$VIASH_PAR_NORMALIZE" =~ ^(true|True|TRUE|false|False|FALSE|yes|Yes|YES|no|No|NO)$ ]]; then
+    ViashError '--normalize' has to be a boolean. Use "--help" to get more information on the parameters.
     exit 1
   fi
 fi
@@ -857,18 +904,21 @@ trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
 
 import anndata as ad
-import scanpy as sc
-import yaml
 import torch
 from neuralee.embedding import NeuralEE
 from neuralee.dataset import GeneExpressionDataset
+
+# todo: allow gpu
+device = torch.device("cpu")
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'maxit': $( if [ ! -z ${VIASH_PAR_MAXIT+x} ]; then echo "int(r'${VIASH_PAR_MAXIT//\'/\'\"\'\"r\'}')"; else echo None; fi )
+  'n_iter': $( if [ ! -z ${VIASH_PAR_N_ITER+x} ]; then echo "int(r'${VIASH_PAR_N_ITER//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'normalize': $( if [ ! -z ${VIASH_PAR_NORMALIZE+x} ]; then echo "r'${VIASH_PAR_NORMALIZE//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -887,48 +937,63 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
-input = ad.read_h5ad(par['input'])
+print("Load input data", flush=True)
+input = ad.read_h5ad(par["input"])
 
-print('Add method and normalization ID')
-with open(meta['config'], 'r') as config_file:
-    config = yaml.safe_load(config_file)
-
-input.uns['normalization_id'] = config['functionality']['info']['preferred_normalization']
-input.uns['method_id'] = meta['functionality_name']
-
-if input.uns['normalization_id'] == 'counts':
-    print('Select top 500 high variable genes')
-    # idx = input.var['hvg_score'].to_numpy().argsort()[-500:]
-    # dataset = GeneExpressionDataset(input.layers['counts'][:, idx])
-    dataset = GeneExpressionDataset(input.layers['counts'])
+if par["normalize"]:
+    print("Performing own normalization", flush=True)
+    # perform own normalization based on the "recommended" preprocessing taken from example notebooks, e.g.:
+    # https://github.com/HiBearME/NeuralEE/blob/master/tests/notebooks/retina_dataset.ipynb
+    dataset = GeneExpressionDataset(input.layers["counts"])
     dataset.log_shift()
-    dataset.subsample_genes(500)
+    if par["n_hvg"]:
+        dataset.subsample_genes(par["n_hvg"])
     dataset.standardscale()
-elif input.uns['normalization_id'] == 'log_cpm':
-    print('Select top 1000 high variable genes')
-    # idx = input.var['hvg_score'].to_numpy().argsort()[-1000:]
-    # dataset = GeneExpressionDataset(input.layers['normalized'][:, idx])
-    dataset = GeneExpressionDataset(input.layers['normalized'])
-    dataset.subsample_genes(500)
+
+else:
+    X_mat = input.layers["normalized"]
+
+    if par["n_hvg"]:
+        print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+        idx = input.var["hvg_score"].to_numpy().argsort()[-par["n_hvg"]:]
+        X_mat = X_mat[:, idx]
+    
+    print("Using pre-normalized data", flush=True)
+    dataset = GeneExpressionDataset(X_mat)
 
 
-# 1000 cells as a batch to estimate the affinity matrix
-dataset.affinity_split(N_small=min(1000, input.n_obs))
-NEE = NeuralEE(dataset, d=2, device=torch.device("cpu"))
+# estimate the affinity matrix
+batch_size = min(1000, input.n_obs)
+print(f"Use {batch_size} cells as batch to estimate the affinity matrix", flush=True)
+dataset.affinity_split(N_small=batch_size)
+
+print("Create NeuralEE object", flush=True)
+NEE = NeuralEE(dataset, d=2, device=device)
 fine_tune_kwargs = dict(verbose=False)
-fine_tune_kwargs["maxit"] = par['maxit']
-fine_tune_kwargs["maxit"] = 10
+
+if par["n_iter"]:
+    fine_tune_kwargs["maxit"] = par["n_iter"]
+
+print("Run NeuralEE", flush=True)
 res = NEE.fine_tune(**fine_tune_kwargs)
 
-input.obsm["X_emb"] = res["X"].detach().cpu().numpy()
+X_emb = res["X"].detach().cpu().numpy()
 
-print("Delete layers and var")
-del input.layers
-del input.var
+print("Create output AnnData", flush=True)
+output = ad.AnnData(
+    obs=input.obs[[]],
+    obsm={
+        "X_emb": X_emb
+    },
+    uns={
+        "dataset_id": input.uns["dataset_id"],
+        "normalization_id": input.uns["normalization_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
 
-print("Write output to file")
-input.write_h5ad(par['output'], compression="gzip")
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "\$tempscript" &

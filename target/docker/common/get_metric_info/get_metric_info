@@ -402,9 +402,9 @@ RUN apt-get update && \
 
 RUN curl -fsSL get.viash.io | bash -s -- --bin /usr/local/bin/
 LABEL org.opencontainers.image.description="Companion container for running component common get_metric_info"
-LABEL org.opencontainers.image.created="2023-01-24T07:56:50Z"
+LABEL org.opencontainers.image.created="2023-01-24T07:57:13Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4e9de5233ccc676b32871a6641c640151d230549"
+LABEL org.opencontainers.image.revision="6321d27edc813aa6c1facb934a32139c66f5e8a1"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

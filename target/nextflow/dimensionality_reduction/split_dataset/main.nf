@@ -170,6 +170,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -220,6 +226,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -252,7 +264,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_train_path = \\"train.h5ad\\"\noutput_test_path = \\"test.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output_train\\", output_train_path,\n    \\"--output_test\\", output_test_path\n]\n\nprint(\\">> Checking whether input file exists\\")\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output files exist\\")\nassert path.exists(output_train_path)\nassert path.exists(output_test_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\n\nprint(\\"input:\\", input)\nprint(\\"output_train:\\", output_train)\nprint(\\"output_test:\\", output_test)\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output_train.n_obs \nassert input.n_obs == output_test.n_obs\nassert input.uns[\\"dataset_id\\"] == output_train.uns[\\"dataset_id\\"] \nassert input.uns[\\"dataset_id\\"] == output_test.uns[\\"dataset_id\\"]\n\n\nprint(\\">> Check whether certain slots exist\\")\nassert \\"counts\\" in output_train.layers\nassert \\"normalized\\" in output_train.layers\nassert 'hvg_score' in output_train.var\nassert \\"counts\\" in output_test.layers\nassert \\"normalized\\" in output_test.layers\nassert 'hvg_score' in output_test.var\n\nprint(\\"All checks succeeded!\\")",
+        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/dataset.h5ad\\"\noutput_train_path = \\"train.h5ad\\"\noutput_test_path = \\"test.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output_train\\", output_train_path,\n    \\"--output_test\\", output_test_path\n]\n\nprint(\\">> Checking whether input file exists\\", flush=True)\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\", flush=True)\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output files exist\\", flush=True)\nassert path.exists(output_train_path)\nassert path.exists(output_test_path)\n\nprint(\\">> Reading h5ad files\\", flush=True)\ninput = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\n\nprint(\\"input:\\", input, flush=True)\nprint(\\"output_train:\\", output_train, flush=True)\nprint(\\"output_test:\\", output_test, flush=True)\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input.n_obs == output_train.n_obs \nassert input.n_obs == output_test.n_obs\nassert input.uns[\\"dataset_id\\"] == output_train.uns[\\"dataset_id\\"] \nassert input.uns[\\"dataset_id\\"] == output_test.uns[\\"dataset_id\\"]\n\n\nprint(\\">> Check whether certain slots exist\\", flush=True)\nassert \\"counts\\" in output_train.layers\nassert \\"normalized\\" in output_train.layers\nassert 'hvg_score' in output_train.var\nassert \\"counts\\" in output_test.layers\nassert \\"normalized\\" in output_test.layers\nassert 'hvg_score' in output_test.var\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
       }
@@ -309,7 +321,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/split_dataset/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "4e9de5233ccc676b32871a6641c640151d230549",
+    "git_commit" : "6321d27edc813aa6c1facb934a32139c66f5e8a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -362,10 +374,10 @@ def read_slots(par, meta):
         if re.match("--output_", arg["name"]):
             file = re.sub("--output_", "", arg["name"])
             
-            struct_slots = arg['info']['slots']
+            struct_slots = arg["info"]["slots"]
             out = {}
             for (struct, slots) in struct_slots.items():
-                out[struct] = { slot['name'] : slot['name'] for slot in slots }
+                out[struct] = { slot["name"] : slot["name"] for slot in slots }
 
             output_struct_slots[file] = out
 
@@ -380,35 +392,35 @@ def subset_anndata(adata_sub, slot_info):
         slot_mapping = slot_info.get(struct, {})
         data = {dest : getattr(adata_sub, struct)[src] for (dest, src) in slot_mapping.items()}
         if len(data) > 0:
-            if struct in ['obs', 'var']:
+            if struct in ["obs", "var"]:
                 data = pd.concat(data, axis=1)
             kwargs[struct] = data
-        elif struct in ['obs', 'var']:
-            # if no columns need to be copied, we still need an 'obs' and a 'var' 
+        elif struct in ["obs", "var"]:
+            # if no columns need to be copied, we still need an "obs" and a "var" 
             # to help determine the shape of the adata
             kwargs[struct] = getattr(adata_sub, struct).iloc[:,[]]
 
     return ad.AnnData(**kwargs)
 
-print(">> Load Data")
+print(">> Load Data", flush=True)
 adata = ad.read_h5ad(par["input"])
 
-print(">> Figuring out which data needs to be copied to which output file")
+print(">> Figuring out which data needs to be copied to which output file", flush=True)
 slot_info_per_output = read_slots(par, meta)
 
-print(">> Creating train data")
+print(">> Creating train data", flush=True)
 output_train = subset_anndata(
     adata_sub=adata, 
-    slot_info=slot_info_per_output['train']
+    slot_info=slot_info_per_output["train"]
 )
 
-print(">> Creating test data")
+print(">> Creating test data", flush=True)
 output_test = subset_anndata(
     adata_sub=adata,
-    slot_info=slot_info_per_output['test']
+    slot_info=slot_info_per_output["test"]
 )
 
-print(">> Writing")
+print(">> Writing", flush=True)
 output_train.write_h5ad(par["output_train"])
 output_test.write_h5ad(par["output_test"])
 

@@ -33,6 +33,10 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "train.h5ad"
     default: []
@@ -76,7 +80,7 @@ functionality:
     multiple_sep: ":"
     dest: "par"
   - type: "integer"
-    name: "--n_pca"
+    name: "--n_pca_dims"
     alternatives: []
     description: "Number of principal components of PCA to use."
     example: []
@@ -88,11 +92,30 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  - type: "boolean_true"
-    name: "--g0"
+  - type: "integer"
+    name: "--n_hvg"
     alternatives: []
-    description: "Set informational distance constant to 0."
+    description: "Number of highly variable genes to subset to. If not specified,\
+      \ the input matrix will not be subset."
+    example: []
+    default: []
+    required: false
+    choices: []
     direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "double"
+    name: "--gamma"
+    alternatives: []
+    description: "Gamma value"
+    example: []
+    default:
+    - 1.0
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
     dest: "par"
   argument_groups: []
   resources:
@@ -107,25 +130,36 @@ functionality:
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\noutput_path = \"reduced.h5ad\"\
       \ncmd = [\n    meta['executable'],\n    \"--input\", input_path,\n    \"--output\"\
-      , output_path\n]\n\nprint(\">> Checking whether input file exists\")\nassert\
-      \ path.exists(input_path)\n\nprint(\">> Running script as test\")\nout = subprocess.run(cmd,\
-      \ check=True, capture_output=True, text=True)\n\nprint(\">> Checking whether\
-      \ output file exists\")\nassert path.exists(output_path)\n\nprint(\">> Reading\
-      \ h5ad files\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\
-      \nprint(\"input:\", input)\nprint(\"output:\", output)\n\nprint(\">> Checking\
-      \ whether predictions were added\")\nassert \"X_emb\" in output.obsm\nassert\
-      \ meta['functionality_name'] == output.uns[\"method_id\"]\nassert 'normalization_id'\
-      \ in output.uns\n\nprint(\">> Checking whether data from input was copied properly\
-      \ to output\")\nassert input.n_obs == output.n_obs\nassert input.uns[\"dataset_id\"\
-      ] == output.uns[\"dataset_id\"]\n\nprint(\"All checks succeeded!\")"
+      , output_path\n]\n\nprint(\">> Checking whether input file exists\", flush=True)\n\
+      assert path.exists(input_path)\n\nprint(\">> Running script as test\", flush=True)\n\
+      subprocess.run(cmd, check=True)\n\nprint(\">> Checking whether output file exists\"\
+      , flush=True)\nassert path.exists(output_path)\n\nprint(\">> Reading h5ad files\"\
+      , flush=True)\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\
+      \nprint(\"input:\", input, flush=True)\nprint(\"output:\", output, flush=True)\n\
+      \nprint(\">> Checking whether predictions were added\", flush=True)\nassert\
+      \ \"X_emb\" in output.obsm\nassert meta['functionality_name'] == output.uns[\"\
+      method_id\"]\nassert 'normalization_id' in output.uns\n\nprint(\">> Checking\
+      \ whether data from input was copied properly to output\", flush=True)\nassert\
+      \ input.n_obs == output.n_obs\nassert input.uns[\"dataset_id\"] == output.uns[\"\
+      dataset_id\"]\n\nprint(\"All checks succeeded!\", flush=True)"
     dest: "generic_test.py"
     is_executable: true
   info:
     type: "method"
-    label: "PHATE"
+    method_name: "PHATE"
+    paper_reference: "moon2019visualizing"
+    code_url: "https://github.com/KrishnaswamyLab/PHATE/"
     v1_url: "openproblems/tasks/dimensionality_reduction/methods/phate.py"
-    v1_commit: "4baa8619e232fec2e3bcb3fb73d2f991d16c6f69"
+    v1_commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
     preferred_normalization: "sqrt_cpm"
+    variants:
+      phate_sqrt:
+        gamma: 0
+      phate_logCPM:
+        preferred_normalization: "log_cpm"
+      phate_logCPM_1kHVG:
+        n_hvg: 1000
+        preferred_normalization: "log_cpm"
   status: "enabled"
   requirements:
     commands: []
@@ -150,7 +184,6 @@ platforms:
     - "anndata>=0.8"
     - "phate==1.0.*"
     - "scprep"
-    - "pyyaml"
     - "scikit-learn<1.2"
     pip: []
     pypi: []
@@ -192,5 +225,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/phate"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/phate/phate"
   viash_version: "0.6.7"
-  git_commit: "4e9de5233ccc676b32871a6641c640151d230549"
+  git_commit: "6321d27edc813aa6c1facb934a32139c66f5e8a1"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

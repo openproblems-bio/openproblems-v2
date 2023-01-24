@@ -1,5 +1,5 @@
 functionality:
-  name: "density"
+  name: "density_preservation"
   namespace: "dimensionality_reduction/metrics"
   version: "main_build"
   authors: []
@@ -65,6 +65,10 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "test.h5ad"
     default: []
@@ -121,8 +125,8 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
-  description: "density preservation: correlation of local radius with the local radii\
-    \ in the original data space"
+  description: "Similarity between local densities in the high-dimensional data and\
+    \ the reduced data.\n"
   test_resources:
   - type: "file"
     path: "../../../../resources_test/dimensionality_reduction/pancreas/"
@@ -132,33 +136,36 @@ functionality:
       \ meta[\"resources_dir\"] + \"/pancreas/test.h5ad\"\noutput_path = \"score.h5ad\"\
       \ncmd = [\n    meta['executable'],\n    \"--input_reduced\", input_reduced_path,\n\
       \    \"--input_test\", input_test_path,\n    \"--output\", output_path,\n]\n\
-      \nprint(\">> Checking whether input files exist\")\nassert path.exists(input_reduced_path)\n\
-      assert path.exists(input_test_path)\n\nprint(\">> Running script as test\")\n\
-      out = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\"\
-      >> Checking whether output file exists\")\nassert path.exists(output_path)\n\
-      \nprint(\">> Reading h5ad files\")\ninput_reduced = ad.read_h5ad(input_reduced_path)\n\
+      \nprint(\">> Checking whether input files exist\", flush=True)\nassert path.exists(input_reduced_path)\n\
+      assert path.exists(input_test_path)\n\nprint(\">> Running script as test\",\
+      \ flush=True)\nsubprocess.run(cmd, check=True)\n\nprint(\">> Checking whether\
+      \ output file exists\", flush=True)\nassert path.exists(output_path)\n\nprint(\"\
+      >> Reading h5ad files\", flush=True)\ninput_reduced = ad.read_h5ad(input_reduced_path)\n\
       input_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\n\
-      \nprint(\"input reduced:\", input_reduced)\nprint(\"input test:\", input_test)\n\
-      print(\"output:\", output)\n\nprint(\">> Checking whether metrics were added\"\
-      )\nassert \"metric_ids\" in output.uns\nassert \"metric_values\" in output.uns\n\
-      assert meta['functionality_name'] in output.uns[\"metric_ids\"]\n\nprint(\"\
-      >> Checking whether data from input was copied properly to output\")\nassert\
-      \ input_reduced.uns[\"dataset_id\"] == output.uns[\"dataset_id\"]\nassert input_reduced.uns[\"\
-      normalization_id\"] == output.uns[\"normalization_id\"]\nassert input_reduced.uns[\"\
-      method_id\"] == output.uns[\"method_id\"]\n\nprint(\"All checks succeeded!\"\
-      )"
+      \nprint(\"input reduced:\", input_reduced, flush=True)\nprint(\"input test:\"\
+      , input_test, flush=True)\nprint(\"output:\", output, flush=True)\n\nprint(\"\
+      >> Checking whether metrics were added\", flush=True)\nassert \"metric_ids\"\
+      \ in output.uns\nassert \"metric_values\" in output.uns\n# assert meta['functionality_name']\
+      \ in output.uns[\"metric_ids\"]\n# todo: look at config to check whether all\
+      \ metric ids are available\n\nprint(\">> Checking whether data from input was\
+      \ copied properly to output\", flush=True)\nassert input_reduced.uns[\"dataset_id\"\
+      ] == output.uns[\"dataset_id\"]\nassert input_reduced.uns[\"normalization_id\"\
+      ] == output.uns[\"normalization_id\"]\nassert input_reduced.uns[\"method_id\"\
+      ] == output.uns[\"method_id\"]\n\nprint(\"All checks succeeded!\", flush=True)"
     dest: "generic_test.py"
     is_executable: true
   info:
     v1_url: "openproblems/tasks/dimensionality_reduction/metrics/density.py"
-    v1_commit: "c2470ce02e6f196267cec1c554ba7ae389c0956a"
+    v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
     metrics:
-    - id: "density"
-      label: "Density"
-      description: "density preservation: correlation of local radius with the local\
-        \ radii in the original data space"
-      min: 0
-      max: -1
+    - metric_id: "density_preservation"
+      metric_name: "Density preservation"
+      metric_description: "Similarity between local densities in the high-dimensional\
+        \ data and the reduced data.\n\nThis is computed as the pearson correlation\
+        \ of local radii with the local radii in the original data space.\n"
+      paper_reference: "narayan2021assessing"
+      min: -1
+      max: 1
       maximize: true
   status: "enabled"
   requirements:
@@ -184,7 +191,6 @@ platforms:
     - "scipy"
     - "numpy"
     - "anndata>=0.8"
-    - "typing"
     - "umap-learn"
     pip: []
     pypi: []
@@ -221,10 +227,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/density/config.vsh.yaml"
-  platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/density"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/density/density"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/density_preservation/config.vsh.yaml"
+  platform: "nextflow"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation/density_preservation"
   viash_version: "0.6.7"
-  git_commit: "4e9de5233ccc676b32871a6641c640151d230549"
+  git_commit: "6321d27edc813aa6c1facb934a32139c66f5e8a1"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

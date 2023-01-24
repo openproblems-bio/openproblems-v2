@@ -157,7 +157,7 @@ VIASH_META_TEMP_DIR="$VIASH_TEMP"
 function ViashHelp {
   echo "densmap main_build"
   echo ""
-  echo "density-preserving based on UMAP"
+  echo "Density-preserving UMAP"
   echo ""
   echo "Arguments:"
   echo "    --input"
@@ -170,9 +170,15 @@ function ViashHelp {
   echo "        example: reduced.h5ad"
   echo "        A dimensionally reduced dataset"
   echo ""
-  echo "    --no_pca"
-  echo "        type: boolean_true"
-  echo "        Do not apply PCA with 50 dimensions before running UMAP."
+  echo "    --n_hvg"
+  echo "        type: integer"
+  echo "        Number of highly variable genes to subset to. If not specified, the"
+  echo "        input matrix will not be subset."
+  echo ""
+  echo "    --n_pca_dims"
+  echo "        type: integer"
+  echo "        Number of PCA dimensions to use. If not specified, no PCA will be"
+  echo "        performed."
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -393,12 +399,12 @@ function ViashDockerfile {
 FROM python:3.10
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "pyyaml" "umap-learn"
+  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "umap-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods densmap"
-LABEL org.opencontainers.image.created="2023-01-24T07:56:57Z"
+LABEL org.opencontainers.image.created="2023-01-24T07:57:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4e9de5233ccc676b32871a6641c640151d230549"
+LABEL org.opencontainers.image.revision="6321d27edc813aa6c1facb934a32139c66f5e8a1"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -573,9 +579,26 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --no_pca)
-            [ -n "$VIASH_PAR_NO_PCA" ] && ViashError Bad arguments for option \'--no_pca\': \'$VIASH_PAR_NO_PCA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_NO_PCA=true
+        --n_hvg)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_hvg. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_hvg=*)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg=*\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --n_pca_dims)
+            [ -n "$VIASH_PAR_N_PCA_DIMS" ] && ViashError Bad arguments for option \'--n_pca_dims\': \'$VIASH_PAR_N_PCA_DIMS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_PCA_DIMS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_pca_dims. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_pca_dims=*)
+            [ -n "$VIASH_PAR_N_PCA_DIMS" ] && ViashError Bad arguments for option \'--n_pca_dims=*\': \'$VIASH_PAR_N_PCA_DIMS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_PCA_DIMS=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         ---setup)
@@ -717,11 +740,6 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
   exit 1
 fi
 
-# filling in defaults
-if [ -z ${VIASH_PAR_NO_PCA+x} ]; then
-  VIASH_PAR_NO_PCA="false"
-fi
-
 # check whether required files exist
 if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
   ViashError "Input file '$VIASH_PAR_INPUT' does not exist."
@@ -729,9 +747,15 @@ if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
 fi
 
 # check whether parameters values are of the right type
-if [[ -n "$VIASH_PAR_NO_PCA" ]]; then
-  if ! [[ "$VIASH_PAR_NO_PCA" =~ ^(true|True|TRUE|false|False|FALSE|yes|Yes|YES|no|No|NO)$ ]]; then
-    ViashError '--no_pca' has to be a boolean_true. Use "--help" to get more information on the parameters.
+if [[ -n "$VIASH_PAR_N_HVG" ]]; then
+  if ! [[ "$VIASH_PAR_N_HVG" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_hvg' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_N_PCA_DIMS" ]]; then
+  if ! [[ "$VIASH_PAR_N_PCA_DIMS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_pca_dims' has to be an integer. Use "--help" to get more information on the parameters.
     exit 1
   fi
 fi
@@ -851,14 +875,14 @@ cat > "\$tempscript" << 'VIASHMAIN'
 import anndata as ad
 from umap import UMAP
 import scanpy as sc
-import yaml
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'no_pca': $( if [ ! -z ${VIASH_PAR_NO_PCA+x} ]; then echo "r'${VIASH_PAR_NO_PCA//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi )
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'n_pca_dims': $( if [ ! -z ${VIASH_PAR_N_PCA_DIMS+x} ]; then echo "int(r'${VIASH_PAR_N_PCA_DIMS//\'/\'\"\'\"r\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -877,35 +901,44 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
-input = ad.read_h5ad(par['input'])
+print("Load input data", flush=True)
+input = ad.read_h5ad(par["input"])
+X_mat = input.layers["normalized"]
 
-print('Select top 1000 high variable genes')
-n_genes = 1000
-idx = input.var['hvg_score'].to_numpy().argsort()[::-1][:n_genes]
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    X_mat = X_mat[:, idx]
 
-print("Run UMAP...")
-if par['no_pca']:
-    print('... using logCPM data')
-    input.obsm["X_emb"] = UMAP(densmap=True, random_state=42).fit_transform(input.layers['normalized'][:, idx])
+if par["n_pca_dims"]:
+    print("Apply PCA to normalized data", flush=True)
+    umap_input = sc.tl.pca(
+        X_mat,
+        n_comps=par["n_pca_dims"],
+        svd_solver="arpack"
+    )
 else:
-    print('... after applying PCA with 50 dimensions to logCPM data')
-    input.obsm['X_pca_hvg'] = sc.tl.pca(input.layers['normalized'][:, idx], n_comps=50, svd_solver="arpack")
-    input.obsm["X_emb"] = UMAP(densmap=True, random_state=42).fit_transform(input.obsm['X_pca_hvg'])
+    print("Use normalized data as input for UMAP", flush=True)
+    umap_input = X_mat
 
-print("Delete layers and var")
-del input.layers
-del input.var
+print("Run densMAP", flush=True)
+X_emb = UMAP(densmap=True, random_state=42).fit_transform(umap_input)
 
-print('Add method and normalization ID')
-input.uns['method_id'] = meta['functionality_name']
-with open(meta['config'], 'r') as config_file:
-    config = yaml.safe_load(config_file)
+print("Create output AnnData", flush=True)
+output = ad.AnnData(
+    obs=input.obs[[]],
+    obsm={
+        "X_emb": X_emb
+    },
+    uns={
+        "dataset_id": input.uns["dataset_id"],
+        "normalization_id": input.uns["normalization_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
 
-input.uns['normalization_id'] = config['functionality']['info']['preferred_normalization']
-
-print("Write output to file")
-input.write_h5ad(par['output'], compression="gzip")
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "\$tempscript" &

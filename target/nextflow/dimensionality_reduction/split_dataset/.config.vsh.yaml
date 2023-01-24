@@ -109,6 +109,10 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "train.h5ad"
     default: []
@@ -146,6 +150,10 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
     example:
     - "test.h5ad"
     default: []
@@ -170,21 +178,22 @@ functionality:
       \ = \"train.h5ad\"\noutput_test_path = \"test.h5ad\"\ncmd = [\n    meta['executable'],\n\
       \    \"--input\", input_path,\n    \"--output_train\", output_train_path,\n\
       \    \"--output_test\", output_test_path\n]\n\nprint(\">> Checking whether input\
-      \ file exists\")\nassert path.exists(input_path)\n\nprint(\">> Running script\
-      \ as test\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\
-      \nprint(\">> Checking whether output files exist\")\nassert path.exists(output_train_path)\n\
-      assert path.exists(output_test_path)\n\nprint(\">> Reading h5ad files\")\ninput\
-      \ = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\n\
-      output_test = ad.read_h5ad(output_test_path)\n\nprint(\"input:\", input)\nprint(\"\
-      output_train:\", output_train)\nprint(\"output_test:\", output_test)\n\nprint(\"\
-      >> Checking whether data from input was copied properly to output\")\nassert\
-      \ input.n_obs == output_train.n_obs \nassert input.n_obs == output_test.n_obs\n\
+      \ file exists\", flush=True)\nassert path.exists(input_path)\n\nprint(\">> Running\
+      \ script as test\", flush=True)\nout = subprocess.run(cmd, check=True, capture_output=True,\
+      \ text=True)\n\nprint(\">> Checking whether output files exist\", flush=True)\n\
+      assert path.exists(output_train_path)\nassert path.exists(output_test_path)\n\
+      \nprint(\">> Reading h5ad files\", flush=True)\ninput = ad.read_h5ad(input_path)\n\
+      output_train = ad.read_h5ad(output_train_path)\noutput_test = ad.read_h5ad(output_test_path)\n\
+      \nprint(\"input:\", input, flush=True)\nprint(\"output_train:\", output_train,\
+      \ flush=True)\nprint(\"output_test:\", output_test, flush=True)\n\nprint(\"\
+      >> Checking whether data from input was copied properly to output\", flush=True)\n\
+      assert input.n_obs == output_train.n_obs \nassert input.n_obs == output_test.n_obs\n\
       assert input.uns[\"dataset_id\"] == output_train.uns[\"dataset_id\"] \nassert\
       \ input.uns[\"dataset_id\"] == output_test.uns[\"dataset_id\"]\n\n\nprint(\"\
-      >> Check whether certain slots exist\")\nassert \"counts\" in output_train.layers\n\
+      >> Check whether certain slots exist\", flush=True)\nassert \"counts\" in output_train.layers\n\
       assert \"normalized\" in output_train.layers\nassert 'hvg_score' in output_train.var\n\
       assert \"counts\" in output_test.layers\nassert \"normalized\" in output_test.layers\n\
-      assert 'hvg_score' in output_test.var\n\nprint(\"All checks succeeded!\")"
+      assert 'hvg_score' in output_test.var\n\nprint(\"All checks succeeded!\", flush=True)"
     dest: "generic_test.py"
     is_executable: true
   status: "enabled"
@@ -250,5 +259,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/split_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/split_dataset/split_dataset"
   viash_version: "0.6.7"
-  git_commit: "4e9de5233ccc676b32871a6641c640151d230549"
+  git_commit: "6321d27edc813aa6c1facb934a32139c66f5e8a1"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

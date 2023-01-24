@@ -170,14 +170,20 @@ function ViashHelp {
   echo "        example: reduced.h5ad"
   echo "        A dimensionally reduced dataset"
   echo ""
-  echo "    --n_pca"
+  echo "    --n_pca_dims"
   echo "        type: integer"
   echo "        default: 50"
   echo "        Number of principal components of PCA to use."
   echo ""
-  echo "    --g0"
-  echo "        type: boolean_true"
-  echo "        Set informational distance constant to 0."
+  echo "    --n_hvg"
+  echo "        type: integer"
+  echo "        Number of highly variable genes to subset to. If not specified, the"
+  echo "        input matrix will not be subset."
+  echo ""
+  echo "    --gamma"
+  echo "        type: double"
+  echo "        default: 1.0"
+  echo "        Gamma value"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -398,12 +404,12 @@ function ViashDockerfile {
 FROM python:3.10
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "anndata>=0.8" "phate==1.0.*" "scprep" "pyyaml" "scikit-learn<1.2"
+  pip install --upgrade --no-cache-dir "anndata>=0.8" "phate==1.0.*" "scprep" "scikit-learn<1.2"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods phate"
-LABEL org.opencontainers.image.created="2023-01-24T07:56:56Z"
+LABEL org.opencontainers.image.created="2023-01-24T07:57:19Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4e9de5233ccc676b32871a6641c640151d230549"
+LABEL org.opencontainers.image.revision="6321d27edc813aa6c1facb934a32139c66f5e8a1"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -578,20 +584,37 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --n_pca)
-            [ -n "$VIASH_PAR_N_PCA" ] && ViashError Bad arguments for option \'--n_pca\': \'$VIASH_PAR_N_PCA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_N_PCA="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_pca. Use "--help" to get more information on the parameters. && exit 1
+        --n_pca_dims)
+            [ -n "$VIASH_PAR_N_PCA_DIMS" ] && ViashError Bad arguments for option \'--n_pca_dims\': \'$VIASH_PAR_N_PCA_DIMS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_PCA_DIMS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_pca_dims. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --n_pca=*)
-            [ -n "$VIASH_PAR_N_PCA" ] && ViashError Bad arguments for option \'--n_pca=*\': \'$VIASH_PAR_N_PCA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_N_PCA=$(ViashRemoveFlags "$1")
+        --n_pca_dims=*)
+            [ -n "$VIASH_PAR_N_PCA_DIMS" ] && ViashError Bad arguments for option \'--n_pca_dims=*\': \'$VIASH_PAR_N_PCA_DIMS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_PCA_DIMS=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --g0)
-            [ -n "$VIASH_PAR_G0" ] && ViashError Bad arguments for option \'--g0\': \'$VIASH_PAR_G0\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_G0=true
+        --n_hvg)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_hvg. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_hvg=*)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg=*\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --gamma)
+            [ -n "$VIASH_PAR_GAMMA" ] && ViashError Bad arguments for option \'--gamma\': \'$VIASH_PAR_GAMMA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_GAMMA="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --gamma. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --gamma=*)
+            [ -n "$VIASH_PAR_GAMMA" ] && ViashError Bad arguments for option \'--gamma=*\': \'$VIASH_PAR_GAMMA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_GAMMA=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         ---setup)
@@ -734,11 +757,11 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
 fi
 
 # filling in defaults
-if [ -z ${VIASH_PAR_N_PCA+x} ]; then
-  VIASH_PAR_N_PCA="50"
+if [ -z ${VIASH_PAR_N_PCA_DIMS+x} ]; then
+  VIASH_PAR_N_PCA_DIMS="50"
 fi
-if [ -z ${VIASH_PAR_G0+x} ]; then
-  VIASH_PAR_G0="false"
+if [ -z ${VIASH_PAR_GAMMA+x} ]; then
+  VIASH_PAR_GAMMA="1.0"
 fi
 
 # check whether required files exist
@@ -748,15 +771,21 @@ if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
 fi
 
 # check whether parameters values are of the right type
-if [[ -n "$VIASH_PAR_N_PCA" ]]; then
-  if ! [[ "$VIASH_PAR_N_PCA" =~ ^[-+]?[0-9]+$ ]]; then
-    ViashError '--n_pca' has to be an integer. Use "--help" to get more information on the parameters.
+if [[ -n "$VIASH_PAR_N_PCA_DIMS" ]]; then
+  if ! [[ "$VIASH_PAR_N_PCA_DIMS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_pca_dims' has to be an integer. Use "--help" to get more information on the parameters.
     exit 1
   fi
 fi
-if [[ -n "$VIASH_PAR_G0" ]]; then
-  if ! [[ "$VIASH_PAR_G0" =~ ^(true|True|TRUE|false|False|FALSE|yes|Yes|YES|no|No|NO)$ ]]; then
-    ViashError '--g0' has to be a boolean_true. Use "--help" to get more information on the parameters.
+if [[ -n "$VIASH_PAR_N_HVG" ]]; then
+  if ! [[ "$VIASH_PAR_N_HVG" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_hvg' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_GAMMA" ]]; then
+  if ! [[ "$VIASH_PAR_GAMMA" =~ ^[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?$ ]]; then
+    ViashError '--gamma' has to be a double. Use "--help" to get more information on the parameters.
     exit 1
   fi
 fi
@@ -875,16 +904,15 @@ cat > "\$tempscript" << 'VIASHMAIN'
 
 import anndata as ad
 from phate import PHATE
-import scprep as sc
-import yaml
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'n_pca': $( if [ ! -z ${VIASH_PAR_N_PCA+x} ]; then echo "int(r'${VIASH_PAR_N_PCA//\'/\'\"\'\"r\'}')"; else echo None; fi ),
-  'g0': $( if [ ! -z ${VIASH_PAR_G0+x} ]; then echo "r'${VIASH_PAR_G0//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi )
+  'n_pca_dims': $( if [ ! -z ${VIASH_PAR_N_PCA_DIMS+x} ]; then echo "int(r'${VIASH_PAR_N_PCA_DIMS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'gamma': $( if [ ! -z ${VIASH_PAR_GAMMA+x} ]; then echo "float(r'${VIASH_PAR_GAMMA//\'/\'\"\'\"r\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -903,36 +931,35 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
-input = ad.read_h5ad(par['input'])
+print("Load input data", flush=True)
+input = ad.read_h5ad(par["input"])
 
-print("Run PHATE...")
-gamma = 0 if par['g0'] else 1
-print('... with gamma=' + str(gamma) + ' and...')
-phate_op = PHATE(n_pca=par['n_pca'], verbose=False, n_jobs=-1, gamma=gamma)
+X_mat = input.layers["normalized"]
 
-with open(meta['config'], 'r') as config_file:
-    config = yaml.safe_load(config_file)
-input.uns['normalization_id'] = config['functionality']['info']['preferred_normalization']
+if par["n_hvg"]:
+    print(f"Subsetting to {par['n_hvg']} HVG", flush=True)
+    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    X_mat = X_mat[:, idx]
 
-if input.uns['normalization_id'] == 'sqrt_cpm':
-    print('... using sqrt-CPM data')
-    input.obsm["X_emb"] = phate_op.fit_transform(input.layers['normalized'])
-elif input.uns['normalization_id'] == 'log_cpm':
-    print('... using logCPM data')
-    n_genes = 1000
-    idx = input.var['hvg_score'].to_numpy().argsort()[::-1][:n_genes]
-    input.obsm["X_emb"] = phate_op.fit_transform(input.layers['normalized'][:, idx])
+print("Run PHATE", flush=True)
+phate_op = PHATE(n_pca=par["n_pca_dims"], verbose=False, n_jobs=-1, gamma=par["gamma"])
+X_emb = phate_op.fit_transform(X_mat)
 
-print("Delete layers and var")
-del input.layers
-del input.var
+print("Create output AnnData", flush=True)
+output = ad.AnnData(
+    obs=input.obs[[]],
+    obsm={
+        "X_emb": X_emb
+    },
+    uns={
+        "dataset_id": input.uns["dataset_id"],
+        "normalization_id": input.uns["normalization_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
 
-print('Add method')
-input.uns['method_id'] = meta['functionality_name']
-
-print("Write output to file")
-input.write_h5ad(par['output'], compression="gzip")
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "\$tempscript" &

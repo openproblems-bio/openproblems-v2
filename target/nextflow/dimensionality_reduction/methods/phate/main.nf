@@ -61,6 +61,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -123,7 +129,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "integer",
-        "name" : "--n_pca",
+        "name" : "--n_pca_dims",
         "description" : "Number of principal components of PCA to use.",
         "default" : [
           50
@@ -135,10 +141,26 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "boolean_true",
-        "name" : "--g0",
-        "description" : "Set informational distance constant to 0.",
+        "type" : "integer",
+        "name" : "--n_hvg",
+        "description" : "Number of highly variable genes to subset to. If not specified, the input matrix will not be subset.",
+        "required" : false,
         "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "double",
+        "name" : "--gamma",
+        "description" : "Gamma value",
+        "default" : [
+          1.0
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
         "dest" : "par"
       }
     ],
@@ -159,17 +181,31 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"reduced.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output\\", output_path\n]\n\nprint(\\">> Checking whether input file exists\\")\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input:\\", input)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"X_emb\\" in output.obsm\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\nassert 'normalization_id' in output.uns\n\nprint(\\">> Checking whether data from input was copied properly to output\\")\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
+        "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"reduced.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--output\\", output_path\n]\n\nprint(\\">> Checking whether input file exists\\", flush=True)\nassert path.exists(input_path)\n\nprint(\\">> Running script as test\\", flush=True)\nsubprocess.run(cmd, check=True)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\", flush=True)\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input:\\", input, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether predictions were added\\", flush=True)\nassert \\"X_emb\\" in output.obsm\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\nassert 'normalization_id' in output.uns\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input.n_obs == output.n_obs\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
       }
     ],
     "info" : {
       "type" : "method",
-      "label" : "PHATE",
+      "method_name" : "PHATE",
+      "paper_reference" : "moon2019visualizing",
+      "code_url" : "https://github.com/KrishnaswamyLab/PHATE/",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/phate.py",
-      "v1_commit" : "4baa8619e232fec2e3bcb3fb73d2f991d16c6f69",
-      "preferred_normalization" : "sqrt_cpm"
+      "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+      "preferred_normalization" : "sqrt_cpm",
+      "variants" : {
+        "phate_sqrt" : {
+          "gamma" : 0
+        },
+        "phate_logCPM" : {
+          "preferred_normalization" : "log_cpm"
+        },
+        "phate_logCPM_1kHVG" : {
+          "n_hvg" : 1000,
+          "preferred_normalization" : "log_cpm"
+        }
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -194,7 +230,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "anndata>=0.8",
             "phate==1.0.*",
             "scprep",
-            "pyyaml",
             "scikit-learn<1.2"
           ],
           "upgrade" : true
@@ -226,7 +261,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/phate/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "4e9de5233ccc676b32871a6641c640151d230549",
+    "git_commit" : "6321d27edc813aa6c1facb934a32139c66f5e8a1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -237,16 +272,15 @@ cat > "$tempscript" << VIASHMAIN
 
 import anndata as ad
 from phate import PHATE
-import scprep as sc
-import yaml
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'n_pca': $( if [ ! -z ${VIASH_PAR_N_PCA+x} ]; then echo "int(r'${VIASH_PAR_N_PCA//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
-  'g0': $( if [ ! -z ${VIASH_PAR_G0+x} ]; then echo "r'${VIASH_PAR_G0//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi )
+  'n_pca_dims': $( if [ ! -z ${VIASH_PAR_N_PCA_DIMS+x} ]; then echo "int(r'${VIASH_PAR_N_PCA_DIMS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'gamma': $( if [ ! -z ${VIASH_PAR_GAMMA+x} ]; then echo "float(r'${VIASH_PAR_GAMMA//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -265,36 +299,35 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
-input = ad.read_h5ad(par['input'])
+print("Load input data", flush=True)
+input = ad.read_h5ad(par["input"])
 
-print("Run PHATE...")
-gamma = 0 if par['g0'] else 1
-print('... with gamma=' + str(gamma) + ' and...')
-phate_op = PHATE(n_pca=par['n_pca'], verbose=False, n_jobs=-1, gamma=gamma)
+X_mat = input.layers["normalized"]
 
-with open(meta['config'], 'r') as config_file:
-    config = yaml.safe_load(config_file)
-input.uns['normalization_id'] = config['functionality']['info']['preferred_normalization']
+if par["n_hvg"]:
+    print(f"Subsetting to {par['n_hvg']} HVG", flush=True)
+    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    X_mat = X_mat[:, idx]
 
-if input.uns['normalization_id'] == 'sqrt_cpm':
-    print('... using sqrt-CPM data')
-    input.obsm["X_emb"] = phate_op.fit_transform(input.layers['normalized'])
-elif input.uns['normalization_id'] == 'log_cpm':
-    print('... using logCPM data')
-    n_genes = 1000
-    idx = input.var['hvg_score'].to_numpy().argsort()[::-1][:n_genes]
-    input.obsm["X_emb"] = phate_op.fit_transform(input.layers['normalized'][:, idx])
+print("Run PHATE", flush=True)
+phate_op = PHATE(n_pca=par["n_pca_dims"], verbose=False, n_jobs=-1, gamma=par["gamma"])
+X_emb = phate_op.fit_transform(X_mat)
 
-print("Delete layers and var")
-del input.layers
-del input.var
+print("Create output AnnData", flush=True)
+output = ad.AnnData(
+    obs=input.obs[[]],
+    obsm={
+        "X_emb": X_emb
+    },
+    uns={
+        "dataset_id": input.uns["dataset_id"],
+        "normalization_id": input.uns["normalization_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
 
-print('Add method')
-input.uns['method_id'] = meta['functionality_name']
-
-print("Write output to file")
-input.write_h5ad(par['output'], compression="gzip")
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 
 VIASHMAIN
 python "$tempscript"
