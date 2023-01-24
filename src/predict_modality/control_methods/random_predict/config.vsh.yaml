@@ -1,11 +1,11 @@
 __merge__: ../../api/comp_control_method.yaml
 functionality:
-  name: random
+  name: random_predict
   namespace: predict_modality/control_methods
   description: Returns random training profiles.
   info:
     type: negative_control
-    method_name: Random Profiles
+    method_name: Random predictions
   resources:
     - type: r_script
       path: script.R
