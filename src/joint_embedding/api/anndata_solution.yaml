@@ -1,0 +1,57 @@
+type: file
+description: "The solution for the data"
+example: "solution.h5ad"
+info:
+  short_description: "Solution"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+    obs:
+      - type: string
+        name: batch
+        description: Batch information
+        required: false
+      - type: string
+        name: cell_type
+        description: Type of cells
+        required: false
+      - type: string
+        name: pseudotime_order_GEX
+        description:
+        required: false
+      - type: string
+        name: pseudotime_order_ATAC
+        description:
+        required: false
+      - type: string
+        name: pseudotime_order_ADT
+        description:
+        required: false
+      - type: double
+        name: S_score
+        description:
+        required: false
+      - type: double
+        name: G2M_score
+        description:
+        required: false
+    var:
+      - type: string
+        name: feature_types
+        description: 
+        required: true
+      - type: string
+        name: gene_ids
+        description:
+        required: false
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: organism
+        description: which organism
+        required: true

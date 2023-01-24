@@ -1,0 +1,40 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: newwave
+  namespace: joint_embedding/methods
+  description: Concatenated NewWave.
+  info:
+    type: method
+    method_name: "NewWave"
+    doi: "10.1101/2021.08.02.453487"
+  arguments:
+    - name: "--maxiter"
+      type: "integer"
+      default: 100
+      description: Maximum number of NewWave iterations.
+    - name: "--k"
+      type: "integer"
+      default: 10
+      description: NewWave K parameter.
+    - name: "--hvg_sel"
+      type: "integer"
+      default: 1000
+      description: Number of features per modality to use.
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, lmds, tidyverse, bioconductor]
+      - type: r
+        bioc: [ SingleCellExperiment, NewWave, proxyC ]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [anndata>=0.8]
+  - type: nextflow
+    directives: 
+      label: [ highmem, highcpu ]
