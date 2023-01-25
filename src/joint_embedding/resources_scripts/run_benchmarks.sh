@@ -10,8 +10,8 @@ set -e
 
 export TOWER_WORKSPACE_ID=53907369739130
 
-DATASETS_DIR="resources/denoising/datasets/openproblems_v1"
-OUTPUT_DIR="resources/denoising/benchmarks/openproblems_v1"
+DATASETS_DIR="resources/joint_embedding/datasets/openproblems_v1"
+OUTPUT_DIR="resources/joint_embedding/benchmarks/openproblems_v1"
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -64,7 +64,7 @@ fi
 export NXF_VER=22.04.5
 nextflow \
   run . \
-  -main-script src/denoising/workflows/run/main.nf \
+  -main-script src/joint_embedding/workflows/run/main.nf \
   -profile docker \
   -params-file "$params_file" \
   --publish_dir "$OUTPUT_DIR" \
