@@ -9,13 +9,13 @@ functionality:
         metric_name: RMSE
         metric_description: Relative Mean Squared Error
         min: 0
-        max: 99999
+        max: +inf
         maximize: false
       - metric_id: mae
         metric_name: MAE
         metric_description: Mean Absolute Error
         min: 0
-        max: 99999
+        max: +inf
         maximize: false
   resources:
     - type: python_script
