@@ -189,11 +189,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "type" : "method",
-      "label" : "magic",
-      "paper_doi" : "10.1016/j.cell.2018.05.061",
+      "method_name" : "MAGIC",
+      "paper_reference" : "https://doi.org/10.1016/j.cell.2018.05.061",
       "code_url" : "https://github.com/KrishnaswamyLab/MAGIC",
       "v1_url" : "openproblems/tasks/denoising/methods/magic.py",
-      "v1_commit" : "2fbc2d4c8d3ff955ea948fc082635cf779b1927e",
+      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "variants" : {
         "magic_approx" : {
           "solver" : "approximate"
@@ -261,7 +261,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/magic/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "d4750ee282cee0aeb40d7623bcac0de034582849",
+    "git_commit" : "3e2141817dba38d9c55f349f23a044e534c73854",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

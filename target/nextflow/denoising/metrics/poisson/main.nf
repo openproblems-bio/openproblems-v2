@@ -172,13 +172,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
+      "paper_reference" : "batson2019molecular",
       "v1_url" : "openproblems/tasks/denoising/metrics/poisson.py",
-      "v1_commit" : "4524f7bbcc4ea94cfb4acf1bd7f7c93c1ba7d0c9",
+      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "metrics" : [
         {
-          "id" : "poisson",
-          "label" : "poisson",
-          "description" : "Poisson loss: measure the mean of the inconsistencies between predicted and target",
+          "metric_id" : "poisson",
+          "metric_name" : "Poisson Loss",
+          "metric_description" : "Poisson loss: measure the mean of the inconsistencies between predicted and target",
           "maximize" : false,
           "min" : 0,
           "max" : "+inf"
@@ -204,7 +205,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "type" : "python",
           "user" : false,
-          "packages" : [
+          "pip" : [
             "anndata>=0.8",
             "scprep"
           ],
@@ -237,7 +238,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/poisson/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "d4750ee282cee0aeb40d7623bcac0de034582849",
+    "git_commit" : "3e2141817dba38d9c55f349f23a044e534c73854",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

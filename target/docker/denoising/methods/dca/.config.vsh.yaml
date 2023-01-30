@@ -107,10 +107,10 @@ functionality:
   info:
     type: "method"
     method_name: "DCA"
-    paper_doi: "10.1038/s41467-018-07931-2"
+    paper_reference: "https://www.nature.com/articles/s41467-018-07931-2"
     code_url: "https://github.com/theislab/dca"
     v1_url: "openproblems/tasks/denoising/methods/dca.py"
-    v1_commit: "c2470ce02e6f196267cec1c554ba7ae389c0956a"
+    v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
     variants: {}
     preferred_normalization: "counts"
   status: "enabled"
@@ -176,5 +176,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/methods/dca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/methods/dca/dca"
   viash_version: "0.6.7"
-  git_commit: "d4750ee282cee0aeb40d7623bcac0de034582849"
+  git_commit: "3e2141817dba38d9c55f349f23a044e534c73854"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -129,11 +129,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "type" : "method",
-      "label" : "knn_smooth",
-      "paper_doi" : "10.1101/217737",
+      "method_name" : "KNN Smoothing",
+      "paper_reference" : "wagner2018knearest",
       "code_url" : "https://github.com/yanailab/knn-smoothing",
       "v1_url" : "openproblems/tasks/denoising/methods/knn_smoothing.py",
-      "v1_commit" : "bbecf4e9ad90007c2711394e7fbd8e49cbd3e4a1",
+      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts"
     },
     "status" : "enabled",
@@ -191,7 +191,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/knn_smoothing/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "d4750ee282cee0aeb40d7623bcac0de034582849",
+    "git_commit" : "3e2141817dba38d9c55f349f23a044e534c73854",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
