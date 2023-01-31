@@ -402,7 +402,7 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/control_methods random_labels"
-LABEL org.opencontainers.image.created="2023-01-31T15:44:27Z"
+LABEL org.opencontainers.image.created="2023-01-31T16:16:56Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
 LABEL org.opencontainers.image.revision="c4dc76e150d3914345ed17f3459e0666a938ee05"
 LABEL org.opencontainers.image.version="main_build"

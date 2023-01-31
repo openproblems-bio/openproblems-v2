@@ -401,7 +401,7 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Scott Gigante"
 LABEL org.opencontainers.image.description="Companion container for running component multimodal_data_integration/datasets sample_dataset"
-LABEL org.opencontainers.image.created="2023-01-31T15:44:30Z"
+LABEL org.opencontainers.image.created="2023-01-31T16:16:59Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
 LABEL org.opencontainers.image.revision="c4dc76e150d3914345ed17f3459e0666a938ee05"
 LABEL org.opencontainers.image.version="main_build"
