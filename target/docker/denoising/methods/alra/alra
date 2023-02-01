@@ -422,9 +422,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
 
 RUN git clone https://github.com/KlugerLab/ALRA.git /ALRA
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods alra"
-LABEL org.opencontainers.image.created="2023-02-01T15:36:52Z"
+LABEL org.opencontainers.image.created="2023-02-01T15:41:09Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b4373172f200519bfc8645a69699571dec0e1177"
+LABEL org.opencontainers.image.revision="8dd582a5d36ed583b9f8bdd39c19c684d05ffe20"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
