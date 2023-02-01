@@ -225,5 +225,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic/magic"
   viash_version: "0.6.7"
-  git_commit: "1c2d20bdffc68a35d289570504b79d3378c87cc5"
+  git_commit: "e4946657092f6d9b21e4d5bed228644153c98077"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
