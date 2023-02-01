@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: viash-io/viash-actions/setup@v1.0.0
+    - uses: viash-io/viash-actions/setup@v2.0.0
     
     - name: Fetch viash tools
       uses: actions/checkout@v3
@@ -109,7 +109,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: viash-io/viash-actions/setup@v1.0.0
+    - uses: viash-io/viash-actions/setup@v2.0.0
     - name: Build container
       run: |
         SRC_DIR=`dirname ${{ matrix.component.config }}`
@@ -142,7 +142,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: viash-io/viash-actions/setup@v1.0.0
+    - uses: viash-io/viash-actions/setup@v2.0.0
 
     # build target dir
     # use containers from release branch, hopefully these are available
@@ -186,7 +186,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: viash-io/viash-actions/setup@v1.0.0
+    - uses: viash-io/viash-actions/setup@v2.0.0
 
     # use cache
     - name: Cache resources data

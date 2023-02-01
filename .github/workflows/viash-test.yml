@@ -40,7 +40,7 @@ jobs:
       with:
         fetch-depth: 0 
 
-    - uses: viash-io/viash-actions/setup@v1.0.0
+    - uses: viash-io/viash-actions/setup@v2.0.0
 
     # create cachehash key
     - name: Create hash key
@@ -120,7 +120,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: viash-io/viash-actions/setup@v1.0.0
+    - uses: viash-io/viash-actions/setup@v2.0.0
 
     # use cache
     - name: Cache resources data
