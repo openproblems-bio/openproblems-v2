@@ -1,0 +1,8 @@
+# Arguments
+hidden_layer_sizes: [100, 100]
+max_iter: 1000
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
+# param_list_format: "yaml"

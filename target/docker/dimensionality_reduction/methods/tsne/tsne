@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "MulticoreTSNE"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods tsne"
-LABEL org.opencontainers.image.created="2023-01-31T16:16:51Z"
+LABEL org.opencontainers.image.created="2023-02-01T14:41:27Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c4dc76e150d3914345ed17f3459e0666a938ee05"
+LABEL org.opencontainers.image.revision="e3a19c2d616134684a81c3fa45172c45c36759a7"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

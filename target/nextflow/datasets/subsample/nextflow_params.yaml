@@ -1,0 +1,15 @@
+# Arguments
+input: # please fill in - example: "input.h5ad"
+n_obs: 500
+n_vars: 500
+# keep_features: ["foo"]
+# keep_celltype_categories: ["foo"]
+# keep_batch_categories: ["foo"]
+even: false
+# output: "$id.$key.output.h5ad"
+# seed: 123
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
+# param_list_format: "yaml"

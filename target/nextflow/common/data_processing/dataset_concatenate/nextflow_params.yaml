@@ -1,0 +1,8 @@
+# Arguments
+inputs: # please fill in - example: ["path/to/file"]
+# output: "$id.$key.output.h5ad"
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
+# param_list_format: "yaml"

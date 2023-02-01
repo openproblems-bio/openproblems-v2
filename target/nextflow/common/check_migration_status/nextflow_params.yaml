@@ -1,0 +1,9 @@
+# Arguments
+# git_sha: "git_sha.json"
+# comp_info: "comp_info.json"
+# output: "$id.$key.output.yaml"
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
+# param_list_format: "yaml"

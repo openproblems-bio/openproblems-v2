@@ -1,0 +1,15 @@
+# Inputs
+id: # please fill in - example: "foo"
+dataset_id: # please fill in - example: "foo"
+normalization_id: # please fill in - example: "foo"
+# input_train: "path/to/file"
+# input_test: "path/to/file"
+# input_solution: "path/to/file"
+
+# Outputs
+# output: "$id.$key.output.tsv"
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
+# param_list_format: "yaml"

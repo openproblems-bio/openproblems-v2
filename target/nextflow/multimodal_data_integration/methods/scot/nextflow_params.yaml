@@ -1,0 +1,10 @@
+# Arguments
+input: "input.h5ad"
+# output: "$id.$key.output.h5ad"
+n_svd: 100
+balanced: false
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
+# param_list_format: "yaml"
