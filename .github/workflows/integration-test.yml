@@ -17,9 +17,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: viash-io/viash-actions/setup@v1
+    - uses: viash-io/viash-actions/setup@v2
 
-    - uses: viash-io/viash-actions/project/sync-and-cache-s3@restructure_and_extend
+    - uses: viash-io/viash-actions/project/sync-and-cache-s3@v2
       id: cache
       with:
         s3_bucket: $s3_bucket
@@ -87,7 +87,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: viash-io/viash-actions/setup@v1
+    - uses: viash-io/viash-actions/setup@v2
 
     - name: Build container
       uses: viash-io/viash-actions/ns-build@v2
@@ -127,7 +127,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - uses: viash-io/viash-actions/setup@v1
+    - uses: viash-io/viash-actions/setup@v2
 
     - uses: nf-core/setup-nextflow@v1.2.0
 
