@@ -211,7 +211,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "eddelbuettel/r2u:22.04",
+      "image" : "eddelbuettel/r2u@sha256:1d3a92aab5abad11787cd6b6c9479960db9f4e56dcc7f837768da2e3f3c4dfe2",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "_",
@@ -224,11 +224,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "type" : "r",
           "cran" : [
             "Matrix",
-            "scran",
-            "BiocParallel",
             "rlang",
             "anndata",
-            "bit64"
+            "bit64",
+            "scran",
+            "BiocParallel"
           ],
           "bioc_force_install" : false
         },
@@ -280,7 +280,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_scran_pooling/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "b7f6ce801b139ff93f2b712803ed9ff2c89c5786",
+    "git_commit" : "ad1b0eb785317f7d8a4f67925d78a94a7a60a3a0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
