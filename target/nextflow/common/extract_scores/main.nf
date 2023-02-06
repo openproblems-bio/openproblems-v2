@@ -155,7 +155,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "ad1b0eb785317f7d8a4f67925d78a94a7a60a3a0",
+    "git_commit" : "18fc1baf0f691e3b9ec6a9ee51a12041a7b4be63",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
