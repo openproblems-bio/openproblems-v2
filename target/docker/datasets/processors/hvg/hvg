@@ -163,17 +163,17 @@ function ViashHelp {
   echo "    --input"
   echo "        type: file, file must exist"
   echo "        example: dataset.h5ad"
-  echo "        A normalised data with a PCA embedding"
+  echo "        A normalised dataset with a PCA embedding"
   echo ""
   echo "    --layer_input"
   echo "        type: string"
   echo "        default: normalized"
-  echo "        Which layer to use as input for the PCA."
+  echo "        Which layer to use as input."
   echo ""
   echo "    --output"
   echo "        type: file, output, file must exist"
   echo "        example: dataset.h5ad"
-  echo "        A normalised data with a PCA embedding and HVG selection"
+  echo "        A normalised dataset with a PCA embedding and HVG selection"
   echo ""
   echo "    --var_hvg"
   echo "        type: string"
@@ -413,9 +413,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors hvg"
-LABEL org.opencontainers.image.created="2023-02-06T11:44:02Z"
+LABEL org.opencontainers.image.created="2023-02-08T21:16:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18fc1baf0f691e3b9ec6a9ee51a12041a7b4be63"
+LABEL org.opencontainers.image.revision="706f7081c0c1d5001f100625f140181d49197c47"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -944,7 +944,7 @@ meta = {
 ### VIASH END
 
 print(">> Load data")
-adata = sc.read(par['input'])
+adata = sc.read_h5ad(par['input'])
 
 print(">> Look for layer")
 layer = adata.X if not par['layer_input'] else adata.layers[par['layer_input']]

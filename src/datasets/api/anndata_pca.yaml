@@ -1,5 +1,5 @@
 type: file
-description: "A normalised data with a PCA embedding"
+description: "A normalised dataset with a PCA embedding"
 example: "dataset.h5ad"
 info:
   label: "Dataset+PCA"

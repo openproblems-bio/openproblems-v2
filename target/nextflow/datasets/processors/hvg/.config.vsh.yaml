@@ -9,7 +9,7 @@ functionality:
   - type: "file"
     name: "--input"
     alternatives: []
-    description: "A normalised data with a PCA embedding"
+    description: "A normalised dataset with a PCA embedding"
     info:
       label: "Dataset+PCA"
       slots:
@@ -74,7 +74,7 @@ functionality:
   - type: "string"
     name: "--layer_input"
     alternatives: []
-    description: "Which layer to use as input for the PCA."
+    description: "Which layer to use as input."
     example: []
     default:
     - "normalized"
@@ -87,7 +87,7 @@ functionality:
   - type: "file"
     name: "--output"
     alternatives: []
-    description: "A normalised data with a PCA embedding and HVG selection"
+    description: "A normalised dataset with a PCA embedding and HVG selection"
     info:
       label: "Dataset+PCA+HVG"
       slots:
@@ -293,5 +293,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg/hvg"
   viash_version: "0.6.7"
-  git_commit: "18fc1baf0f691e3b9ec6a9ee51a12041a7b4be63"
+  git_commit: "706f7081c0c1d5001f100625f140181d49197c47"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

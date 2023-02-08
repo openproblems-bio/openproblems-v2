@@ -29,7 +29,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A normalised data with a PCA embedding",
+        "description" : "A normalised dataset with a PCA embedding",
         "info" : {
           "label" : "Dataset+PCA",
           "slots" : {
@@ -124,7 +124,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "string",
         "name" : "--layer_input",
-        "description" : "Which layer to use as input for the PCA.",
+        "description" : "Which layer to use as input.",
         "default" : [
           "normalized"
         ],
@@ -137,7 +137,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A normalised data with a PCA embedding and HVG selection",
+        "description" : "A normalised dataset with a PCA embedding and HVG selection",
         "info" : {
           "label" : "Dataset+PCA+HVG",
           "slots" : {
@@ -354,7 +354,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/hvg/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "18fc1baf0f691e3b9ec6a9ee51a12041a7b4be63",
+    "git_commit" : "706f7081c0c1d5001f100625f140181d49197c47",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -394,7 +394,7 @@ meta = {
 ### VIASH END
 
 print(">> Load data")
-adata = sc.read(par['input'])
+adata = sc.read_h5ad(par['input'])
 
 print(">> Look for layer")
 layer = adata.X if not par['layer_input'] else adata.layers[par['layer_input']]

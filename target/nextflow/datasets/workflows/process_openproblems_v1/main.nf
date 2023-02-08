@@ -193,7 +193,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/workflows/process_openproblems_v1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.6.7",
-    "git_commit" : "18fc1baf0f691e3b9ec6a9ee51a12041a7b4be63",
+    "git_commit" : "706f7081c0c1d5001f100625f140181d49197c47",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -217,6 +217,7 @@ include { log_scran_pooling } from "\\$targetDir/datasets/normalization/log_scra
 include { sqrt_cpm } from "\\$targetDir/datasets/normalization/sqrt_cpm/main.nf"
 include { pca } from "\\$targetDir/datasets/processors/pca/main.nf"
 include { hvg } from "\\$targetDir/datasets/processors/hvg/main.nf"
+include { knn } from "\\$targetDir/datasets/processors/knn/main.nf"
 
 include { readConfig; viashChannel; helpMessage } from sourceDir + "/wf_utils/WorkflowHelper.nf"
 include { setWorkflowArguments; getWorkflowArguments; passthroughMap as pmap } from sourceDir + "/wf_utils/DataflowHelper.nf"
@@ -259,9 +260,10 @@ workflow run_wf {
     }
 
  pca
+ hvg
 
  getWorkflowArguments(key: "output")
- hvg.run(
+ knn.run(
       auto: [ publish: true ]
     )
 
