@@ -6,10 +6,10 @@ import pandas as pd
 
 ## VIASH START
 par = {
-    "id": "scicar_mouse_kidney",
+    "dataset_id": "scicar_mouse_kidney",
     "obs_celltype": "celltype",
-    "obs_batch": "tech",
-    "obs_tissue": "tissue",
+    "obs_batch": "replicate",
+    "obs_tissue": None,
     "layer_counts": "counts",
     "output": "test_data.h5ad",
 }
@@ -28,10 +28,12 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
 }
 
 # fetch dataset
-dataset_fun, kwargs = dataset_funs[par["id"]]
+dataset_fun, kwargs = dataset_funs[par["dataset_id"]]
 
 print("Fetch dataset", flush=True)
 adata = dataset_fun(**kwargs)
+
+print(f"source adata: {adata}", flush=True)
 
 # construct modality2 dataset
 mod2_var_data = {
@@ -57,13 +59,6 @@ mod1.obsm = { key: value for key, value in mod1.obsm.items() if not key.startswi
 mod1.obsp = { key: value for key, value in mod1.obsp.items() if not key.startswith("mode2_")}
 mod1.varm = { key: value for key, value in mod1.varm.items() if not key.startswith("mode2_")}
 mod1.varp = { key: value for key, value in mod1.varp.items() if not key.startswith("mode2_")}
-
-
-
-
-print("Setting .uns['dataset_id']", flush=True)
-mod1.uns["dataset_id"] = par["id"]
-mod2.uns["dataset_id"] = par["id"]
 
 # override values one by one because adata.uns and
 # metadata are two different classes.
@@ -115,6 +110,19 @@ if par["sparse"] and not scipy.sparse.issparse(mod2.layers["counts"]):
 
 print("Moving .X to .layers['counts']", flush=True)
 mod1.layers["counts"] = mod1_X
+
+# just in case
+del mod1.X
+del mod2.X
+
+print("Add metadata to uns", flush=True)
+metadata_fields = [
+    "dataset_id", "dataset_name", "data_url", "data_reference",
+    "dataset_summary", "dataset_description"
+]
+uns_metadata = {id: par[id] for id in metadata_fields}
+mod1.uns.update(uns_metadata)
+mod2.uns.update(uns_metadata)
 
 print("Writing adata to file", flush=True)
 mod1.write_h5ad(par["output_mod1"], compression="gzip")

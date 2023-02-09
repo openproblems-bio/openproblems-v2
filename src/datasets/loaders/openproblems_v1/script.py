@@ -5,7 +5,7 @@ import scipy
 
 ## VIASH START
 par = {
-    "id": "pancreas",
+    "dataset_id": "pancreas",
     "obs_celltype": "celltype",
     "obs_batch": "tech",
     "obs_tissue": "tissue",
@@ -39,13 +39,10 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
 }
 
 # fetch dataset
-dataset_fun, kwargs = dataset_funs[par["id"]]
+dataset_fun, kwargs = dataset_funs[par["dataset_id"]]
 
 print("Fetch dataset", flush=True)
 adata = dataset_fun(**kwargs)
-
-print("Setting .uns['dataset_id']", flush=True)
-adata.uns["dataset_id"] = par["id"]
 
 # override values one by one because adata.uns and
 # metadata are two different classes.
@@ -92,6 +89,14 @@ sc.pp.filter_cells(adata, min_counts=2)
 print("Moving .X to .layers['counts']", flush=True)
 adata.layers["counts"] = adata.X
 del adata.X
+
+print("Add metadata to uns", flush=True)
+metadata_fields = [
+    "dataset_id", "dataset_name", "data_url", "data_reference",
+    "dataset_summary", "dataset_description"
+]
+uns_metadata = {id: par[id] for id in metadata_fields}
+adata.uns.update(uns_metadata)
 
 print("Writing adata to file", flush=True)
 adata.write_h5ad(par["output"], compression="gzip")
