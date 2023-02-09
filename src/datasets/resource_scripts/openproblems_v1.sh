@@ -35,7 +35,7 @@ param_list:
     obs_tissue: tissue
     layer_counts: counts
 
-  - id: mouse_blood_olssen_labelled
+  - id: mouse_blood_olsson_labelled
     obs_celltype: celltype
     layer_counts: counts
 

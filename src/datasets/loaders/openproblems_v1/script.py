@@ -23,7 +23,7 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
     "allen_brain_atlas": (op.data.allen_brain_atlas.load_mouse_brain_atlas, {}),
     "cengen": (op.data.cengen.load_cengen, {}),
     "immune_cells": (op.data.immune_cells.load_immune, {}),
-    "mouse_blood_olssen_labelled": (op.data.mouse_blood_olssen_labelled.load_olsson_2016_mouse_blood, {}),
+    "mouse_blood_olsson_labelled": (op.data.mouse_blood_olsson_labelled.load_olsson_2016_mouse_blood, {}),
     "mouse_hspc_nestorowa2016": (op.data.mouse_hspc_nestorowa2016.load_mouse_hspc_nestorowa2016, {}),
     "pancreas": (op.data.pancreas.load_pancreas, {}),
     # "tabula_muris_senis": op.data.tabula_muris_senis.load_tabula_muris_senis,
