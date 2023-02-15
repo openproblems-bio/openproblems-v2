@@ -34,7 +34,6 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
     "tenx_1k_pbmc": (op.data.tenx.load_tenx_1k_pbmc, {}),
     "tenx_5k_pbmc": (op.data.tenx.load_tenx_5k_pbmc, {}),
     "tnbc_wu2021": (op.data.tnbc_wu2021.load_tnbc_data, {}),
-    # "Wagner_2018_zebrafish_embryo_CRISPR": op.data.Wagner_2018_zebrafish_embryo_CRISPR.load_zebrafish_chd_tyr,
     "zebrafish": (op.data.zebrafish.load_zebrafish, {})
 }
 

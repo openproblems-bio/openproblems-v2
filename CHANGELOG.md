@@ -25,6 +25,28 @@
 
 * `get_task_info`: extract task info
 
+## datasets
+
+### NEW FUNCTIONALITY
+
+* `workflows/process_openproblems_v1`: Fetch and process legacy OpenProblems v1 datasets, whilst adding extra information to the `.uns`.
+
+* `normalization/log_cpm`: A log CPM normalization method.
+
+* `normalization/log_scran_pooling`: A log scran pooling normalization method.
+
+* `normalization/sqrt_cpm`: A sqrt CPM normalization method.
+
+* `normalization/l1_sqrt`: A scaled L1 sqrt normalization. extracted from Alra method in the denoising task from v1
+
+* `subsample`: Subsample an h5ad file. Allows keeping observations from specific batches and celltypes, 
+  also allows keeping certain features.
+
+### V1 MIGRATION
+
+* `loaders/openproblems_v1`: Fetch a dataset from OpenProblems v1, whilst adding extra information to the `.uns`.
+
+
 
 ## label_projection
 
@@ -61,27 +83,6 @@
 * `metric/accuracy`: Migrated from v1.
 
 * `metric/f1`: Migrated from v1.
-
-## datasets
-
-### NEW FUNCTIONALITY
-
-* `workflows/process_openproblems_v1`: Fetch and process legacy OpenProblems v1 datasets
-
-* `normalization/log_cpm`: A log CPM normalization method.
-
-* `normalization/log_scran_pooling`: A log scran pooling normalization method.
-
-* `normalization/sqrt_cpm`: A sqrt CPM normalization method.
-
-* `normalization/l1_sqrt`: A scaled L1 sqrt normalization. extracted from Alra method in the denoising task from v1
-
-* `subsample`: Subsample an h5ad file. Allows keeping observations from specific batches and celltypes, 
-  also allows keeping certain features.
-
-### V1 MIGRATION
-
-* `loaders/openproblems_v1`: Fetch a dataset from OpenProblems v1
 
 ## denoising
 
