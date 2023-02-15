@@ -65,13 +65,13 @@ functionality:
       path: test.py
 platforms:
   - type: docker
-    image: python:3.8
+    image: python:3.9
     setup:
       - type: apt
         packages: git
       - type: docker
         run: |
           git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems && \
-            pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt && \
+            pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt "matplotlib<3.7" && \
             pip install --no-cache-dir --editable /opt/openproblems
   - type: nextflow
