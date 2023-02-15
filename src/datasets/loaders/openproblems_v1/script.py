@@ -93,9 +93,13 @@ del adata.X
 print("Add metadata to uns", flush=True)
 metadata_fields = [
     "dataset_id", "dataset_name", "data_url", "data_reference",
-    "dataset_summary", "dataset_description"
+    "dataset_summary", "dataset_description", "dataset_organism"
 ]
-uns_metadata = {id: par[id] for id in metadata_fields}
+uns_metadata = {
+    id: par[id]
+    for id in metadata_fields
+    if id in par
+}
 adata.uns.update(uns_metadata)
 
 print("Writing adata to file", flush=True)

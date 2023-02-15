@@ -118,9 +118,13 @@ del mod2.X
 print("Add metadata to uns", flush=True)
 metadata_fields = [
     "dataset_id", "dataset_name", "data_url", "data_reference",
-    "dataset_summary", "dataset_description"
+    "dataset_summary", "dataset_description" "dataset_organism"
 ]
-uns_metadata = {id: par[id] for id in metadata_fields}
+uns_metadata = {
+    id: par[id]
+    for id in metadata_fields
+    if id in par
+}
 mod1.uns.update(uns_metadata)
 mod2.uns.update(uns_metadata)
 

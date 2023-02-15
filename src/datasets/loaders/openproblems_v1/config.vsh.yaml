@@ -48,6 +48,10 @@ functionality:
           type: string
           description: Long description of the dataset.
           required: true
+        - name: "--dataset_organism"
+          type: string
+          description: The organism of the dataset.
+          required: false
     - name: Outputs
       arguments:
         - name: "--output"
