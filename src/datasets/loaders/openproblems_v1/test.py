@@ -20,7 +20,8 @@ out = subprocess.run(
         "--data_url", "http://foo.org",
         "--data_reference", "foo2000bar",
         "--dataset_summary", "A short summary.",
-        "--dataset_description", "A couple of paragraphs worth of text."
+        "--dataset_description", "A couple of paragraphs worth of text.",
+        "--dataset_organism", "homo_sapiens",
     ],
     check=True
 )
