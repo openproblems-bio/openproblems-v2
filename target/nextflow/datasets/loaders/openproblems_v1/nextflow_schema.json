@@ -8,74 +8,69 @@
         "title": "Inputs",
         "type": "object",
         "description": "No description",
-        "default": "",
-        "properties": {"id": {
-            "type":"string",
+        "properties": {
+          "id": {
+            "type": "string",
             "description": "The ID of the dataset",
-            
             "default": ""
-          },"obs_celltype": {
-            "type":"string",
+          },
+          "obs_celltype": {
+            "type": "string",
             "description": "Location of where to find the observation cell types.",
-            
             "default": ""
-          },"obs_batch": {
-            "type":"string",
+          },
+          "obs_batch": {
+            "type": "string",
             "description": "Location of where to find the observation batch IDs.",
-            
             "default": ""
-          },"obs_tissue": {
-            "type":"string",
+          },
+          "obs_tissue": {
+            "type": "string",
             "description": "Location of where to find the observation tissue information.",
-            
             "default": ""
-          },"layer_counts": {
-            "type":"string",
+          },
+          "layer_counts": {
+            "type": "string",
             "description": "In which layer to find the counts matrix. Leave undefined to use `.X`.",
-            
             "default": ""
-          },"sparse": {
-            "type":"boolean",
+          },
+          "sparse": {
+            "type": "boolean",
             "description": "Convert layers to a sparse CSR format.",
-            
             "default": "True"
           }
+          
         }
       },
       "outputs" : {
         "title": "Outputs",
         "type": "object",
         "description": "No description",
-        "default": "",
-        "properties": {"output": {
-            "type":"string",
+        "properties": {
+          "output": {
+            "type": "string",
             "description": "No description",
-            
             "default": ""
           }
+          
         }
       },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
         "description": "Input/output parameters for Nextflow itself. Please note that both publishDir and publish_dir are supported but at least one has to be configured.",
-        "default": "",
-        "properties": {"publish_dir": {
-            "type":"string",
+        "properties": {
+          "publish_dir": {
+            "type": "string",
             "description": "Path to an output directory.",
-            
             "default": ""
-          },"param_list": {
-            "type":"string",
-            "description": "Allows inputting multiple parameter sets to initialise a Nextflow channel. Possible formats are csv, json, yaml, or simply a yaml_blob.","help_text": "Allows inputting multiple parameter sets to initialise a Nextflow channel. Possible formats are csv, json, yaml, or simply a yaml_blob.\nA csv should have column names which correspond to the different arguments of this pipeline.\nA json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline.\nA yaml blob can also be passed directly as a parameter.\nInside the Nextflow pipeline code, params.params_list can also be used to directly a list of parameter sets.\nWhen passing a csv, json or yaml, relative path names are relativized to the location of the parameter file.","hidden": true,
-            
-            "default": ""
-          },"param_list_format": {
-            "type":"string",
-            "description": "Manually specify the param_list_format. Must be one of \u0027csv\u0027, \u0027json\u0027, \u0027yaml\u0027, \u0027yaml_blob\u0027, \u0027asis\u0027 or \u0027none\u0027.","hidden": true,
-            "enum": ["csv", "json", "yaml", "yaml_blob", "asis", "none"],
+          },
+          "param_list": {
+            "type": "string",
+            "description": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.","help_text": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
             "default": ""
           }
+          
         }
       }
     },
@@ -89,6 +84,5 @@
       {
         "$ref": "#/definitions/nextflow input-output arguments"
       }
-      
-    ]
+      ]
 }
