@@ -46,6 +46,8 @@
 
 * `loaders/openproblems_v1`: Fetch a dataset from OpenProblems v1, whilst adding extra information to the `.uns`.
 
+* `loaders/openproblems_v1_multimodal`: Fetch a multimodal dataset from OpenProblems v1, whilst adding extra information to the `.uns`.
+
 
 
 ## label_projection
