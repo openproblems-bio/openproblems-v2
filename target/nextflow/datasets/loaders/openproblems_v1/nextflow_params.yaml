@@ -1,5 +1,5 @@
 # Inputs
-id: # please fill in - example: "foo"
+dataset_id: # please fill in - example: "foo"
 # obs_celltype: "foo"
 # obs_batch: "foo"
 # obs_tissue: "foo"
@@ -8,6 +8,14 @@ sparse: true
 
 # Outputs
 # output: 
+
+# Metadata
+dataset_name: # please fill in - example: "foo"
+# data_url: "foo"
+# data_reference: "foo"
+dataset_summary: # please fill in - example: "foo"
+dataset_description: # please fill in - example: "foo"
+# dataset_organism: "foo"
 
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"

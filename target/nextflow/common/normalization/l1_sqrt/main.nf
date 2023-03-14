@@ -67,6 +67,42 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "name" : "dataset_name",
+                "type" : "string",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "data_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "data_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the dataset.",
+                "required" : false
               }
             ]
           }
@@ -136,10 +172,40 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : true
               },
               {
+                "name" : "dataset_name",
                 "type" : "string",
-                "name" : "normalization_id",
-                "description" : "Which normalization was used",
+                "description" : "Nicely formatted name.",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "data_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "data_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the dataset.",
+                "required" : false
               }
             ]
           }
@@ -257,7 +323,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/l1_sqrt/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "647be522b5c707308be9343a8d352cd203c23245",
+    "git_commit" : "ee16578ccf1a1e7b001cebeccb74bed84bc5bd0b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

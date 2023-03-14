@@ -1,0 +1,357 @@
+functionality:
+  name: "openproblems_v1_multimodal"
+  namespace: "datasets/loaders"
+  version: "main_build"
+  authors: []
+  arguments: []
+  argument_groups:
+  - name: "Inputs"
+    arguments:
+    - type: "string"
+      name: "--dataset_id"
+      alternatives: []
+      description: "The ID of the dataset"
+      example: []
+      default: []
+      required: true
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--obs_celltype"
+      alternatives: []
+      description: "Location of where to find the observation cell types."
+      example: []
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--obs_batch"
+      alternatives: []
+      description: "Location of where to find the observation batch IDs."
+      example: []
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--obs_tissue"
+      alternatives: []
+      description: "Location of where to find the observation tissue information."
+      example: []
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--layer_counts"
+      alternatives: []
+      description: "In which layer to find the counts matrix. Leave undefined to use\
+        \ `.X`."
+      example:
+      - "counts"
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "boolean"
+      name: "--sparse"
+      alternatives: []
+      description: "Convert layers to a sparse CSR format."
+      example: []
+      default:
+      - true
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  - name: "Metadata"
+    arguments:
+    - type: "string"
+      name: "--dataset_name"
+      alternatives: []
+      description: "Nicely formatted name."
+      example: []
+      default: []
+      required: true
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--data_url"
+      alternatives: []
+      description: "Link to the original source of the dataset."
+      example: []
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--data_reference"
+      alternatives: []
+      description: "Bibtex reference of the paper in which the dataset was published."
+      example: []
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_summary"
+      alternatives: []
+      description: "Short description of the dataset."
+      example: []
+      default: []
+      required: true
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_description"
+      alternatives: []
+      description: "Long description of the dataset."
+      example: []
+      default: []
+      required: true
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_organism"
+      alternatives: []
+      description: "The organism of the dataset."
+      example: []
+      default: []
+      required: false
+      choices: []
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  - name: "Outputs"
+    arguments:
+    - type: "file"
+      name: "--output_mod1"
+      alternatives: []
+      description: "An unprocessed dataset as output by a dataset loader."
+      info:
+        label: "Raw dataset"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the dataset."
+            required: false
+      example:
+      - "raw_dataset.h5ad"
+      default: []
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_mod2"
+      alternatives: []
+      description: "An unprocessed dataset as output by a dataset loader."
+      info:
+        label: "Raw dataset"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the dataset."
+            required: false
+      example:
+      - "raw_dataset.h5ad"
+      default: []
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  resources:
+  - type: "python_script"
+    path: "script.py"
+    is_executable: true
+  description: "Fetch a dataset from OpenProblems v1"
+  test_resources:
+  - type: "python_script"
+    path: "test.py"
+    is_executable: true
+  status: "enabled"
+  requirements:
+    commands: []
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "python:3.8"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  port: []
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  run_args: []
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "apt"
+    packages:
+    - "git"
+    interactive: false
+  - type: "docker"
+    label: []
+    add: []
+    copy: []
+    run:
+    - "git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems\
+      \ && \\\n  pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt\
+      \ && \\\n  pip install --no-cache-dir --editable /opt/openproblems\n"
+    build_args: []
+    env: []
+  test_setup: []
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    accelerator: {}
+    conda: []
+    containerOptions: []
+    label: []
+    module: []
+    pod: []
+    publishDir: []
+    queue: []
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/loaders/openproblems_v1_multimodal/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1_multimodal"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1_multimodal/openproblems_v1_multimodal"
+  viash_version: "0.7.0"
+  git_commit: "ee16578ccf1a1e7b001cebeccb74bed84bc5bd0b"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

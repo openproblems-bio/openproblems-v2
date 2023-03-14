@@ -419,9 +419,9 @@ FROM amazon/aws-cli:2.7.12
 RUN :
 LABEL org.opencontainers.image.authors="Robrecht Cannoodt"
 LABEL org.opencontainers.image.description="Companion container for running component common sync_test_resources"
-LABEL org.opencontainers.image.created="2023-02-28T11:49:29Z"
+LABEL org.opencontainers.image.created="2023-03-14T11:00:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="647be522b5c707308be9343a8d352cd203c23245"
+LABEL org.opencontainers.image.revision="ee16578ccf1a1e7b001cebeccb74bed84bc5bd0b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

@@ -31,7 +31,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "arguments" : [
           {
             "type" : "string",
-            "name" : "--id",
+            "name" : "--dataset_id",
             "description" : "The ID of the dataset",
             "required" : true,
             "direction" : "input",
@@ -98,6 +98,71 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ]
       },
       {
+        "name" : "Metadata",
+        "arguments" : [
+          {
+            "type" : "string",
+            "name" : "--dataset_name",
+            "description" : "Nicely formatted name.",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--data_url",
+            "description" : "Link to the original source of the dataset.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--data_reference",
+            "description" : "Bibtex reference of the paper in which the dataset was published.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--dataset_summary",
+            "description" : "Short description of the dataset.",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--dataset_description",
+            "description" : "Long description of the dataset.",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--dataset_organism",
+            "description" : "The organism of the dataset.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
+      },
+      {
         "name" : "Outputs",
         "arguments" : [
           {
@@ -141,6 +206,42 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                     "name" : "dataset_id",
                     "description" : "A unique identifier for the dataset",
                     "required" : true
+                  },
+                  {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "data_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "data_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the dataset.",
+                    "required" : false
                   }
                 ]
               }
@@ -183,7 +284,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "singlecellopenproblems/openproblems",
+      "image" : "python:3.8",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -193,13 +294,17 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
       "setup" : [
         {
-          "type" : "python",
-          "user" : false,
+          "type" : "apt",
           "packages" : [
-            "scanpy",
-            "anndata>=0.8"
+            "git"
           ],
-          "upgrade" : true
+          "interactive" : false
+        },
+        {
+          "type" : "docker",
+          "run" : [
+            "git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems && \\\\\n  pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt && \\\\\n  pip install --no-cache-dir --editable /opt/openproblems\n"
+          ]
         }
       ]
     },
@@ -224,7 +329,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/loaders/openproblems_v1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "647be522b5c707308be9343a8d352cd203c23245",
+    "git_commit" : "ee16578ccf1a1e7b001cebeccb74bed84bc5bd0b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -241,12 +346,18 @@ import scipy
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'id': $( if [ ! -z ${VIASH_PAR_ID+x} ]; then echo "r'${VIASH_PAR_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_celltype': $( if [ ! -z ${VIASH_PAR_OBS_CELLTYPE+x} ]; then echo "r'${VIASH_PAR_OBS_CELLTYPE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'sparse': $( if [ ! -z ${VIASH_PAR_SPARSE+x} ]; then echo "r'${VIASH_PAR_SPARSE//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
+  'dataset_name': $( if [ ! -z ${VIASH_PAR_DATASET_NAME+x} ]; then echo "r'${VIASH_PAR_DATASET_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'data_url': $( if [ ! -z ${VIASH_PAR_DATA_URL+x} ]; then echo "r'${VIASH_PAR_DATA_URL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'data_reference': $( if [ ! -z ${VIASH_PAR_DATA_REFERENCE+x} ]; then echo "r'${VIASH_PAR_DATA_REFERENCE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'dataset_summary': $( if [ ! -z ${VIASH_PAR_DATASET_SUMMARY+x} ]; then echo "r'${VIASH_PAR_DATASET_SUMMARY//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'dataset_description': $( if [ ! -z ${VIASH_PAR_DATASET_DESCRIPTION+x} ]; then echo "r'${VIASH_PAR_DATASET_DESCRIPTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'dataset_organism': $( if [ ! -z ${VIASH_PAR_DATASET_ORGANISM+x} ]; then echo "r'${VIASH_PAR_DATASET_ORGANISM//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
@@ -272,7 +383,7 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
     "allen_brain_atlas": (op.data.allen_brain_atlas.load_mouse_brain_atlas, {}),
     "cengen": (op.data.cengen.load_cengen, {}),
     "immune_cells": (op.data.immune_cells.load_immune, {}),
-    "mouse_blood_olssen_labelled": (op.data.mouse_blood_olssen_labelled.load_olsson_2016_mouse_blood, {}),
+    "mouse_blood_olsson_labelled": (op.data.mouse_blood_olsson_labelled.load_olsson_2016_mouse_blood, {}),
     "mouse_hspc_nestorowa2016": (op.data.mouse_hspc_nestorowa2016.load_mouse_hspc_nestorowa2016, {}),
     "pancreas": (op.data.pancreas.load_pancreas, {}),
     # "tabula_muris_senis": op.data.tabula_muris_senis.load_tabula_muris_senis,
@@ -283,18 +394,14 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
     "tenx_1k_pbmc": (op.data.tenx.load_tenx_1k_pbmc, {}),
     "tenx_5k_pbmc": (op.data.tenx.load_tenx_5k_pbmc, {}),
     "tnbc_wu2021": (op.data.tnbc_wu2021.load_tnbc_data, {}),
-    # "Wagner_2018_zebrafish_embryo_CRISPR": op.data.Wagner_2018_zebrafish_embryo_CRISPR.load_zebrafish_chd_tyr,
     "zebrafish": (op.data.zebrafish.load_zebrafish, {})
 }
 
 # fetch dataset
-dataset_fun, kwargs = dataset_funs[par["id"]]
+dataset_fun, kwargs = dataset_funs[par["dataset_id"]]
 
 print("Fetch dataset", flush=True)
 adata = dataset_fun(**kwargs)
-
-print("Setting .uns['dataset_id']", flush=True)
-adata.uns["dataset_id"] = par["id"]
 
 # override values one by one because adata.uns and
 # metadata are two different classes.
@@ -341,6 +448,18 @@ sc.pp.filter_cells(adata, min_counts=2)
 print("Moving .X to .layers['counts']", flush=True)
 adata.layers["counts"] = adata.X
 del adata.X
+
+print("Add metadata to uns", flush=True)
+metadata_fields = [
+    "dataset_id", "dataset_name", "data_url", "data_reference",
+    "dataset_summary", "dataset_description", "dataset_organism"
+]
+uns_metadata = {
+    id: par[id]
+    for id in metadata_fields
+    if id in par
+}
+adata.uns.update(uns_metadata)
 
 print("Writing adata to file", flush=True)
 adata.write_h5ad(par["output"], compression="gzip")

@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8" "ivis[cpu]"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods ivis"
-LABEL org.opencontainers.image.created="2023-02-28T11:49:26Z"
+LABEL org.opencontainers.image.created="2023-03-14T11:00:29Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="647be522b5c707308be9343a8d352cd203c23245"
+LABEL org.opencontainers.image.revision="ee16578ccf1a1e7b001cebeccb74bed84bc5bd0b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

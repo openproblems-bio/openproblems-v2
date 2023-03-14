@@ -41,6 +41,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           },
           {
             "type" : "string",
+            "name" : "--dataset_id",
+            "description" : "The ID of the dataset",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
             "name" : "--obs_celltype",
             "description" : "Location of where to find the observation cell types.",
             "required" : false,
@@ -89,6 +99,71 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "default" : [
               true
             ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
+      },
+      {
+        "name" : "Metadata",
+        "arguments" : [
+          {
+            "type" : "string",
+            "name" : "--dataset_name",
+            "description" : "Nicely formatted name.",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--data_url",
+            "description" : "Link to the original source of the dataset.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--data_reference",
+            "description" : "Bibtex reference of the paper in which the dataset was published.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--dataset_summary",
+            "description" : "Short description of the dataset.",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--dataset_description",
+            "description" : "Long description of the dataset.",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--dataset_organism",
+            "description" : "The organism of the dataset.",
             "required" : false,
             "direction" : "input",
             "multiple" : false,
@@ -193,7 +268,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/workflows/process_openproblems_v1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "647be522b5c707308be9343a8d352cd203c23245",
+    "git_commit" : "ee16578ccf1a1e7b001cebeccb74bed84bc5bd0b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -240,7 +315,10 @@ workflow run_wf {
 
     // split params for downstream components
  setWorkflowArguments(
-      loader: ["id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts", "sparse"],
+      loader: [
+        "dataset_id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts", "sparse",
+        "dataset_name", "data_url", "data_reference", "dataset_summary", "dataset_description", "dataset_organism"
+      ],
       output: [ "output" ]
     )
 

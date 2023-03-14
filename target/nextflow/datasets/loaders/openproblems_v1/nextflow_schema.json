@@ -9,7 +9,7 @@
         "type": "object",
         "description": "No description",
         "properties": {
-          "id": {
+          "dataset_id": {
             "type": "string",
             "description": "The ID of the dataset",
             "default": ""
@@ -55,6 +55,44 @@
           
         }
       },
+      "metadata" : {
+        "title": "Metadata",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "dataset_name": {
+            "type": "string",
+            "description": "Nicely formatted name.",
+            "default": ""
+          },
+          "data_url": {
+            "type": "string",
+            "description": "Link to the original source of the dataset.",
+            "default": ""
+          },
+          "data_reference": {
+            "type": "string",
+            "description": "Bibtex reference of the paper in which the dataset was published.",
+            "default": ""
+          },
+          "dataset_summary": {
+            "type": "string",
+            "description": "Short description of the dataset.",
+            "default": ""
+          },
+          "dataset_description": {
+            "type": "string",
+            "description": "Long description of the dataset.",
+            "default": ""
+          },
+          "dataset_organism": {
+            "type": "string",
+            "description": "The organism of the dataset.",
+            "default": ""
+          }
+          
+        }
+      },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
@@ -80,6 +118,9 @@
       },
       {
         "$ref": "#/definitions/outputs"
+      },
+      {
+        "$ref": "#/definitions/metadata"
       },
       {
         "$ref": "#/definitions/nextflow input-output arguments"
