@@ -251,14 +251,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "type" : "method",
       "label" : "Seurat TransferData",
       "paper_doi" : "10.1101/460147",
       "code_url" : "https://github.com/satijalab/seurat",
       "doc_url" : "https://satijalab.org/seurat/articles/integration_mapping.html",
       "v1_url" : "openproblems/tasks/label_projection/methods/seurat.py",
       "v1_commit" : "3f19f0e87a8bc8b59c7521ba01917580aff81bc8",
-      "preferred_normalization" : "log_cpm"
+      "preferred_normalization" : "log_cpm",
+      "type" : "method"
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -334,7 +334,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/seurat_transferdata/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "fe46cec94377b99a3c0f311cbbe0f47fa828471a",
+    "git_commit" : "fb1f7bd323469931003d6e4a807733f717486322",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

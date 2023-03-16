@@ -331,11 +331,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "type" : "negative_control",
+      "subtype" : "negative_control",
       "label" : "Majority Vote",
       "v1_url" : "openproblems/tasks/label_projection/methods/baseline.py",
       "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
-      "preferred_normalization" : "counts"
+      "preferred_normalization" : "counts",
+      "type" : "control_method"
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -388,7 +389,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/control_methods/majority_vote/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "fe46cec94377b99a3c0f311cbbe0f47fa828471a",
+    "git_commit" : "fb1f7bd323469931003d6e4a807733f717486322",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

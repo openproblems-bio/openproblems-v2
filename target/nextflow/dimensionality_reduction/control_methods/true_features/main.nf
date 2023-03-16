@@ -230,7 +230,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "type" : "positive_control",
+      "subtype" : "positive_control",
       "label" : "True Features",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/baseline.py",
       "v1_comp_id" : "True Features",
@@ -246,7 +246,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "use_normalized_layer" : true,
           "n_hvg" : 1000
         }
-      }
+      },
+      "type" : "control_method"
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -300,7 +301,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/control_methods/true_features/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "fe46cec94377b99a3c0f311cbbe0f47fa828471a",
+    "git_commit" : "fb1f7bd323469931003d6e4a807733f717486322",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

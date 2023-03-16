@@ -251,7 +251,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "type" : "method",
       "label" : "KNN",
       "paper_doi" : "10.1109/TIT.1967.1053964",
       "code_url" : "https://github.com/scikit-learn/scikit-learn",
@@ -263,7 +262,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "knn_classifier_scran" : {
           "preferred_normalization" : "log_scran_pooling"
         }
-      }
+      },
+      "type" : "method"
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -317,7 +317,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/knn/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "fe46cec94377b99a3c0f311cbbe0f47fa828471a",
+    "git_commit" : "fb1f7bd323469931003d6e4a807733f717486322",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

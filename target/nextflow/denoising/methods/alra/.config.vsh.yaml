@@ -119,7 +119,6 @@ functionality:
     dest: "generic_test.py"
     is_executable: true
   info:
-    type: "method"
     method_name: "ALRA"
     paper_reference: "linderman2018zero"
     code_url: "https://github.com/KlugerLab/ALRA"
@@ -128,6 +127,7 @@ functionality:
     v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
     variants: {}
     preferred_normalization: "counts"
+    type: "method"
   status: "enabled"
   requirements:
     commands: []
@@ -224,5 +224,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra/alra"
   viash_version: "0.7.0"
-  git_commit: "fe46cec94377b99a3c0f311cbbe0f47fa828471a"
+  git_commit: "fb1f7bd323469931003d6e4a807733f717486322"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

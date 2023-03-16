@@ -174,7 +174,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "type" : "method",
       "label" : "UMAP",
       "paper_doi" : "10.1038/s41587-020-00801-7",
       "code_url" : "https://github.com/lmcinnes/umap",
@@ -192,7 +191,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "n_pca_dims" : 50,
           "n_hvg" : 1000
         }
-      }
+      },
+      "type" : "method"
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -247,7 +247,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/umap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "fe46cec94377b99a3c0f311cbbe0f47fa828471a",
+    "git_commit" : "fb1f7bd323469931003d6e4a807733f717486322",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
