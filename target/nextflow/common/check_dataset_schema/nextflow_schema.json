@@ -1,0 +1,89 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "check_dataset_schema",
+    "description": "Checks if the dataset has the necessary slots that are predefined in a schema.",
+    "type": "object",
+    "definitions": {
+      "inputs" : {
+        "title": "Inputs",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "A h5ad file.",
+            "default": ""
+          },
+          "schema": {
+            "type": "string",
+            "description": "A schema file for the h5ad object.",
+            "default": ""
+          }
+          
+        }
+      },
+      "arguments" : {
+        "title": "Arguments",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "stop_on_error": {
+            "type": "boolean",
+            "description": "Whether or not to stop with exit code 1 if the input file does not adhere to the schema.",
+            "default": "False"
+          }
+          
+        }
+      },
+      "output" : {
+        "title": "Output",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "checks": {
+            "type": "string",
+            "description": "If specified, this file will contain a structured log of which checks succeeded (or not).",
+            "default": "$id.$key.checks.json"
+          },
+          "output": {
+            "type": "string",
+            "description": "If specified, the output file will be a copy of the input file.",
+            "default": "$id.$key.output.h5ad"
+          }
+          
+        }
+      },
+      "nextflow input-output arguments" : {
+        "title": "Nextflow input-output arguments",
+        "type": "object",
+        "description": "Input/output parameters for Nextflow itself. Please note that both publishDir and publish_dir are supported but at least one has to be configured.",
+        "properties": {
+          "publish_dir": {
+            "type": "string",
+            "description": "Path to an output directory.",
+            "default": ""
+          },
+          "param_list": {
+            "type": "string",
+            "description": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.","help_text": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
+            "default": ""
+          }
+          
+        }
+      }
+    },
+    "allOf": [
+      {
+        "$ref": "#/definitions/inputs"
+      },
+      {
+        "$ref": "#/definitions/arguments"
+      },
+      {
+        "$ref": "#/definitions/output"
+      },
+      {
+        "$ref": "#/definitions/nextflow input-output arguments"
+      }
+      ]
+}

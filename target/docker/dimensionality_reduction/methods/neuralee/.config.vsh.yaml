@@ -227,5 +227,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/neuralee"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/neuralee/neuralee"
   viash_version: "0.7.0"
-  git_commit: "37531e706e9df71f9b9ce023e983dfda27d43908"
+  git_commit: "2d752c88006ac363d00a8de3ad247748522706ac"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
