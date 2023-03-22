@@ -289,7 +289,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "nvcr.io/nvidia/pytorch:22.09-py3",
+      "image" : "nvcr.io/nvidia/pytorch:22.12-py3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -336,7 +336,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/scanvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "2d752c88006ac363d00a8de3ad247748522706ac",
+    "git_commit" : "7476f01c927a25eea4f79fa24e0670dbc7eeb42d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
