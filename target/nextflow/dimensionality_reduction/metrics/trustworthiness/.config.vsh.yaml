@@ -129,6 +129,9 @@ functionality:
   - type: "file"
     path: "../../../../resources_test/dimensionality_reduction/pancreas/"
   - type: "python_script"
+    path: "../../../common/unit_test/check_metric_config.py"
+    is_executable: true
+  - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_reduced_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/reduced.h5ad\"\ninput_test_path =\
       \ meta[\"resources_dir\"] + \"/pancreas/test.h5ad\"\noutput_path = \"score.h5ad\"\
@@ -158,7 +161,7 @@ functionality:
     v1_note: "This metric is already included in the 'coranking' component and can\
       \ be removed."
     metrics:
-    - method_id: "trustworthiness"
+    - metric_id: "trustworthiness"
       metric_name: "Trustworthiness at k=15"
       paper_reference: "venna2006local"
       min: 0
@@ -188,6 +191,7 @@ platforms:
     packages:
     - "scikit-learn"
     - "numpy"
+    - "pyyaml"
     - "anndata>=0.8"
     pip: []
     pypi: []
@@ -229,5 +233,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness/trustworthiness"
   viash_version: "0.7.0"
-  git_commit: "1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+  git_commit: "e8dd3227be2689a2824462c043a8239bc92593e2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

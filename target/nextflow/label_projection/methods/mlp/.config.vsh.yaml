@@ -182,6 +182,9 @@ functionality:
   - type: "file"
     path: "../../../../resources_test/label_projection/pancreas"
   - type: "python_script"
+    path: "../../../common/unit_test/check_method_config.py"
+    is_executable: true
+  - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\ninput_test_path = meta[\"\
       resources_dir\"] + \"/pancreas/test.h5ad\"\ninput_solution_path = meta[\"resources_dir\"\
@@ -204,8 +207,8 @@ functionality:
     dest: "generic_test.py"
     is_executable: true
   info:
-    label: "Multilayer perceptron"
-    paper_doi: "10.1016/0004-3702(89)90049-0"
+    method_name: "Multilayer perceptron"
+    paper_reference: "hinton1989connectionist"
     code_url: "https://github.com/scikit-learn/scikit-learn"
     doc_url: "https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html"
     v1_url: "openproblems/tasks/label_projection/methods/mlp.py"
@@ -237,6 +240,7 @@ platforms:
     user: false
     packages:
     - "scikit-learn"
+    - "pyyaml"
     - "anndata>=0.8"
     pip: []
     pypi: []
@@ -278,5 +282,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp/mlp"
   viash_version: "0.7.0"
-  git_commit: "1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+  git_commit: "e8dd3227be2689a2824462c043a8239bc92593e2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

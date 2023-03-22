@@ -325,6 +325,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
+        "path" : "../../../common/unit_test/check_method_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/control_methods/true_labels/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
         "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/test.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_train\\", input_train_path,\n  \\"--input_test\\", input_test_path,\n  \\"--output\\", output_path\n]\n\n# todo: if we could access the viash config, we could check whether\n# .functionality.info.type == \\"positive_control\\"\nif meta['functionality_name'] == 'true_labels':\n  cmd = cmd + [\\"--input_solution\\", input_solution_path]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input_test:\\", input_test)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"label_pred\\" in output.obs\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input_test.n_obs == output.n_obs\nassert input_test.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
         "dest" : "generic_test.py",
         "is_executable" : true
@@ -332,7 +338,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "subtype" : "positive_control",
-      "label" : "True labels",
+      "method_name" : "True labels",
       "v1_url" : "openproblems/tasks/label_projection/methods/baseline.py",
       "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
       "preferred_normalization" : "counts",
@@ -358,6 +364,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "type" : "python",
           "user" : false,
           "packages" : [
+            "pyyaml",
             "anndata>=0.8"
           ],
           "upgrade" : true
@@ -389,7 +396,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/control_methods/true_labels/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "1061e1606c20e1c9f19086cbe4f158e88b0264eb",
+    "git_commit" : "e8dd3227be2689a2824462c043a8239bc92593e2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

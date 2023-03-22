@@ -149,6 +149,9 @@ functionality:
   - type: "file"
     path: "../../../../resources_test/dimensionality_reduction/pancreas/"
   - type: "python_script"
+    path: "../../../common/unit_test/check_method_config.py"
+    is_executable: true
+  - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\noutput_path = \"reduced.h5ad\"\
       \nn_pca = 50\ncmd = [\n    meta['executable'],\n    \"--input\", input_path,\n\
@@ -169,7 +172,7 @@ functionality:
     is_executable: true
   info:
     subtype: "positive_control"
-    label: "True Features"
+    method_name: "True Features"
     v1_url: "openproblems/tasks/dimensionality_reduction/methods/baseline.py"
     v1_comp_id: "True Features"
     v1_commit: "4a0ee9b3731ff10d8cd2e584726a61b502aef613"
@@ -205,6 +208,7 @@ platforms:
     user: false
     packages:
     - "scanpy"
+    - "pyyaml"
     - "anndata>=0.8"
     pip: []
     pypi: []
@@ -246,5 +250,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/control_methods/true_features"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/control_methods/true_features/true_features"
   viash_version: "0.7.0"
-  git_commit: "1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+  git_commit: "e8dd3227be2689a2824462c043a8239bc92593e2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

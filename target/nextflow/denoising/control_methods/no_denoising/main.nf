@@ -156,6 +156,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
+        "path" : "../../../common/unit_test/check_method_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/control_methods/no_denoising/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
         "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_train_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/train.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n    meta['executable'],\n    \\"--input_train\\", input_train_path,\n    \\"--output\\", output_path\n]\n\nif meta['functionality_name'] == 'perfect_denoising':\n  cmd = cmd + [\\"--input_test\\", input_test_path]\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\")\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\nprint(\\"input_test:\\", input_test)\nprint(\\"output:\\", output)\n\nprint(\\">> Checking whether predictions were added\\")\nassert \\"denoised\\" in output.layers\nassert meta['functionality_name'] == output.uns[\\"method_id\\"]\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert input_test.n_obs == output.n_obs\nassert input_test.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\n\nprint(\\"All checks succeeded!\\")",
         "dest" : "generic_test.py",
         "is_executable" : true
@@ -189,7 +195,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "type" : "python",
           "user" : false,
           "packages" : [
-            "anndata>=0.8"
+            "anndata>=0.8",
+            "pyyaml"
           ],
           "upgrade" : true
         }
@@ -220,7 +227,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/control_methods/no_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "1061e1606c20e1c9f19086cbe4f158e88b0264eb",
+    "git_commit" : "e8dd3227be2689a2824462c043a8239bc92593e2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

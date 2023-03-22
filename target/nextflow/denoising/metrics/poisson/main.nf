@@ -166,6 +166,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
+        "path" : "../../../common/unit_test/check_metric_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/poisson/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
         "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_denoised_path = meta[\\"resources_dir\\"] + \\"/pancreas/magic.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/test.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_denoised\\", input_denoised_path,\n  \\"--input_test\\", input_test_path,\n  \\"--output\\", output_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\ninput_denoised = ad.read_h5ad(input_denoised_path)\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert output.uns[\\"dataset_id\\"] == input_denoised.uns[\\"dataset_id\\"]\nassert output.uns[\\"method_id\\"] == input_denoised.uns[\\"method_id\\"]\nassert output.uns[\\"metric_ids\\"] is not None\nassert output.uns[\\"metric_values\\"] is not None\n\n# TODO: check whether the metric ids are all in .functionality.info\n\nprint(\\"All checks succeeded!\\")",
         "dest" : "format_check.py",
         "is_executable" : true
@@ -208,7 +214,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "user" : false,
           "pip" : [
             "anndata>=0.8",
-            "scprep"
+            "scprep",
+            "pyyaml"
           ],
           "upgrade" : true
         }
@@ -239,7 +246,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/poisson/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "1061e1606c20e1c9f19086cbe4f158e88b0264eb",
+    "git_commit" : "e8dd3227be2689a2824462c043a8239bc92593e2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -400,12 +400,12 @@ function ViashDockerfile {
 FROM python:3.10
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scanpy" "anndata>=0.8"
+  pip install --upgrade --no-cache-dir "scanpy" "pyyaml" "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/control_methods true_features"
-LABEL org.opencontainers.image.created="2023-03-17T17:10:48Z"
+LABEL org.opencontainers.image.created="2023-03-22T10:08:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+LABEL org.opencontainers.image.revision="e8dd3227be2689a2824462c043a8239bc92593e2"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

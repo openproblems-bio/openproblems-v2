@@ -103,6 +103,9 @@ functionality:
   - type: "file"
     path: "../../../../resources_test/denoising/pancreas"
   - type: "python_script"
+    path: "../../../common/unit_test/check_metric_config.py"
+    is_executable: true
+  - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_denoised_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/magic.h5ad\"\ninput_test_path = meta[\"\
       resources_dir\"] + \"/pancreas/test.h5ad\"\noutput_path = \"output.h5ad\"\n\n\
@@ -156,6 +159,7 @@ platforms:
     pip:
     - "anndata>=0.8"
     - "scprep"
+    - "pyyaml"
     pypi: []
     git: []
     github: []
@@ -195,5 +199,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson/poisson"
   viash_version: "0.7.0"
-  git_commit: "1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+  git_commit: "e8dd3227be2689a2824462c043a8239bc92593e2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

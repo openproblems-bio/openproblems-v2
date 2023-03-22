@@ -206,6 +206,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
+        "path" : "../../../common/unit_test/check_metric_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/rmse/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
         "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_reduced_path = meta[\\"resources_dir\\"] + \\"/pancreas/reduced.h5ad\\"\ninput_test_path = meta[\\"resources_dir\\"] + \\"/pancreas/test.h5ad\\"\noutput_path = \\"score.h5ad\\"\ncmd = [\n    meta['executable'],\n    \\"--input_reduced\\", input_reduced_path,\n    \\"--input_test\\", input_test_path,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Checking whether input files exist\\", flush=True)\nassert path.exists(input_reduced_path)\nassert path.exists(input_test_path)\n\nprint(\\">> Running script as test\\", flush=True)\nsubprocess.run(cmd, check=True)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading h5ad files\\", flush=True)\ninput_reduced = ad.read_h5ad(input_reduced_path)\ninput_test = ad.read_h5ad(input_test_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"input reduced:\\", input_reduced, flush=True)\nprint(\\"input test:\\", input_test, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether metrics were added\\", flush=True)\nassert \\"metric_ids\\" in output.uns\nassert \\"metric_values\\" in output.uns\n# assert meta['functionality_name'] in output.uns[\\"metric_ids\\"]\n# todo: look at config to check whether all metric ids are available\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input_reduced.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input_reduced.uns[\\"normalization_id\\"] == output.uns[\\"normalization_id\\"]\nassert input_reduced.uns[\\"method_id\\"] == output.uns[\\"method_id\\"]\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
@@ -261,6 +267,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "scikit-learn",
             "numpy",
             "scipy",
+            "pyyaml",
             "anndata>=0.8"
           ],
           "upgrade" : true
@@ -292,7 +299,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/rmse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "1061e1606c20e1c9f19086cbe4f158e88b0264eb",
+    "git_commit" : "e8dd3227be2689a2824462c043a8239bc92593e2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

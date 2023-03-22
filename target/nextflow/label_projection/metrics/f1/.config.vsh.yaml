@@ -143,6 +143,9 @@ functionality:
   - type: "file"
     path: "../../../../resources_test/label_projection/pancreas"
   - type: "python_script"
+    path: "../../../common/unit_test/check_metric_config.py"
+    is_executable: true
+  - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_prediction_path\
       \ = meta[\"resources_dir\"] + \"/pancreas/knn.h5ad\"\ninput_solution_path =\
       \ meta[\"resources_dir\"] + \"/pancreas/solution.h5ad\"\noutput_path = \"output.h5ad\"\
@@ -163,8 +166,8 @@ functionality:
     v1_url: "openproblems/tasks/label_projection/metrics/f1.py"
     v1_commit: "bb16ca05ae1ce20ce59bfa7a879641b9300df6b0"
     metrics:
-    - id: "f1_weighted"
-      label: "F1 weighted"
+    - metric_id: "f1_weighted"
+      metric_name: "F1 weighted"
       description: "Calculates the F1 score for each label, and find their average\
         \ weighted by support (the number of true instances for each label). This\
         \ alters 'macro' to account for label imbalance; it can result in an F-score\
@@ -172,15 +175,15 @@ functionality:
       min: 0
       max: 1
       maximize: true
-    - id: "f1_macro"
-      label: "F1 macro"
+    - metric_id: "f1_macro"
+      metric_name: "F1 macro"
       description: "Calculates the F1 score for each label, and find their unweighted\
         \ mean. This does not take label imbalance into account."
       min: 0
       max: 1
       maximize: true
-    - id: "f1_micro"
-      label: "F1 micro"
+    - metric_id: "f1_micro"
+      metric_name: "F1 micro"
       description: "Calculates the F1 score globally by counting the total true positives,\
         \ false negatives and false positives."
       min: 0
@@ -209,6 +212,7 @@ platforms:
     user: false
     packages:
     - "scikit-learn"
+    - "pyyaml"
     - "anndata>=0.8"
     pip: []
     pypi: []
@@ -248,5 +252,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1/f1"
   viash_version: "0.7.0"
-  git_commit: "1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+  git_commit: "e8dd3227be2689a2824462c043a8239bc92593e2"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

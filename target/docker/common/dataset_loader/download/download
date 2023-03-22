@@ -424,9 +424,9 @@ RUN pip install --upgrade pip && \
 
 LABEL org.opencontainers.image.authors="Michaela Mueller"
 LABEL org.opencontainers.image.description="Companion container for running component common/dataset_loader download"
-LABEL org.opencontainers.image.created="2023-03-17T17:10:51Z"
+LABEL org.opencontainers.image.created="2023-03-22T10:08:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1061e1606c20e1c9f19086cbe4f158e88b0264eb"
+LABEL org.opencontainers.image.revision="e8dd3227be2689a2824462c043a8239bc92593e2"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

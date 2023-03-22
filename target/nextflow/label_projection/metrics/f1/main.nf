@@ -224,6 +224,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
+        "path" : "../../../common/unit_test/check_metric_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/f1/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
         "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_prediction_path = meta[\\"resources_dir\\"] + \\"/pancreas/knn.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_prediction\\", input_prediction_path,\n  \\"--input_solution\\", input_solution_path,\n  \\"--output\\", output_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\ninput_solution = ad.read_h5ad(input_solution_path)\ninput_prediction = ad.read_h5ad(input_prediction_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert output.uns[\\"dataset_id\\"] == input_prediction.uns[\\"dataset_id\\"]\nassert output.uns[\\"method_id\\"] == input_prediction.uns[\\"method_id\\"]\nassert output.uns[\\"metric_ids\\"] is not None\nassert output.uns[\\"metric_values\\"] is not None\n\n# TODO: check whether the metric ids are all in .functionality.info\n\nprint(\\"All checks succeeded!\\")",
         "dest" : "format_check.py",
         "is_executable" : true
@@ -234,24 +240,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_commit" : "bb16ca05ae1ce20ce59bfa7a879641b9300df6b0",
       "metrics" : [
         {
-          "id" : "f1_weighted",
-          "label" : "F1 weighted",
+          "metric_id" : "f1_weighted",
+          "metric_name" : "F1 weighted",
           "description" : "Calculates the F1 score for each label, and find their average weighted by support (the number of true instances for each label). This alters 'macro' to account for label imbalance; it can result in an F-score that is not between precision and recall.",
           "min" : 0,
           "max" : 1,
           "maximize" : true
         },
         {
-          "id" : "f1_macro",
-          "label" : "F1 macro",
+          "metric_id" : "f1_macro",
+          "metric_name" : "F1 macro",
           "description" : "Calculates the F1 score for each label, and find their unweighted mean. This does not take label imbalance into account.",
           "min" : 0,
           "max" : 1,
           "maximize" : true
         },
         {
-          "id" : "f1_micro",
-          "label" : "F1 micro",
+          "metric_id" : "f1_micro",
+          "metric_name" : "F1 micro",
           "description" : "Calculates the F1 score globally by counting the total true positives, false negatives and false positives.",
           "min" : 0,
           "max" : 1,
@@ -281,6 +287,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "user" : false,
           "packages" : [
             "scikit-learn",
+            "pyyaml",
             "anndata>=0.8"
           ],
           "upgrade" : true
@@ -308,7 +315,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/f1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "1061e1606c20e1c9f19086cbe4f158e88b0264eb",
+    "git_commit" : "e8dd3227be2689a2824462c043a8239bc92593e2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

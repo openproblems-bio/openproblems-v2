@@ -224,6 +224,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
+        "path" : "../../../common/unit_test/check_metric_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/accuracy/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
         "text" : "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_prediction_path = meta[\\"resources_dir\\"] + \\"/pancreas/knn.h5ad\\"\ninput_solution_path = meta[\\"resources_dir\\"] + \\"/pancreas/solution.h5ad\\"\noutput_path = \\"output.h5ad\\"\n\ncmd = [\n  meta['executable'],\n  \\"--input_prediction\\", input_prediction_path,\n  \\"--input_solution\\", input_solution_path,\n  \\"--output\\", output_path\n]\n\nprint(\\">> Running script as test\\")\nout = subprocess.check_output(cmd).decode(\\"utf-8\\")\n\nprint(\\">> Checking whether output file exists\\")\nassert path.exists(output_path)\n\ninput_solution = ad.read_h5ad(input_solution_path)\ninput_prediction = ad.read_h5ad(input_prediction_path)\noutput = ad.read_h5ad(output_path)\n\nprint(\\"Checking whether data from input was copied properly to output\\")\nassert output.uns[\\"dataset_id\\"] == input_prediction.uns[\\"dataset_id\\"]\nassert output.uns[\\"method_id\\"] == input_prediction.uns[\\"method_id\\"]\nassert output.uns[\\"metric_ids\\"] is not None\nassert output.uns[\\"metric_values\\"] is not None\n\n# TODO: check whether the metric ids are all in .functionality.info\n\nprint(\\"All checks succeeded!\\")",
         "dest" : "format_check.py",
         "is_executable" : true
@@ -234,8 +240,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_commit" : "fcd5b876e7d0667da73a2858bc27c40224e19f65",
       "metrics" : [
         {
-          "id" : "accuracy",
-          "label" : "Accuracy",
+          "metric_id" : "accuracy",
+          "metric_name" : "Accuracy",
           "description" : "The percentage of correctly predicted labels.",
           "min" : 0,
           "max" : 1,
@@ -264,6 +270,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "type" : "python",
           "user" : false,
           "packages" : [
+            "pyyaml",
             "scikit-learn",
             "anndata>=0.8"
           ],
@@ -292,7 +299,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/accuracy/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "1061e1606c20e1c9f19086cbe4f158e88b0264eb",
+    "git_commit" : "e8dd3227be2689a2824462c043a8239bc92593e2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
