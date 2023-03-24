@@ -56,7 +56,7 @@ functionality:
           required: true
         - name: "dataset_organism"
           type: "string"
-          description: "The organism of the dataset."
+          description: "The organism of the sample in the dataset."
           required: false
     example:
     - "raw_dataset.h5ad"
@@ -127,7 +127,7 @@ functionality:
           required: true
         - name: "dataset_organism"
           type: "string"
-          description: "The organism of the dataset."
+          description: "The organism of the sample in the dataset."
           required: false
     example:
     - "dataset.h5ad"
@@ -253,5 +253,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/normalization/sqrt_cpm"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/normalization/sqrt_cpm/sqrt_cpm"
   viash_version: "0.7.0"
-  git_commit: "7476f01c927a25eea4f79fa24e0670dbc7eeb42d"
+  git_commit: "e264388b3983ef8ceab7ef976b0bcc8a14f29471"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

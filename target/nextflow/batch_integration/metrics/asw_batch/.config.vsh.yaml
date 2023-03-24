@@ -1,0 +1,247 @@
+functionality:
+  name: "asw_batch"
+  namespace: "batch_integration/metrics"
+  version: "main_build"
+  authors: []
+  arguments:
+  - type: "file"
+    name: "--input_integrated"
+    alternatives: []
+    description: "Integrated AnnData HDF5 file."
+    info:
+      prediction_type: "embedding"
+      short_description: "Integrated embedding"
+      slots:
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+        - type: "double"
+          name: "X_emb"
+          description: "integration embedding prediction"
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "dataset_organism"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+          required: true
+        - type: "boolean"
+          name: "hvg"
+          description: "If the method was done on hvg or full"
+          required: true
+        - type: "string"
+          name: "output_type"
+          description: "what kind of output has been generated"
+          required: true
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized expression values"
+          required: true
+        obs:
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+          required: true
+        - type: "string"
+          name: "label"
+          description: "label information"
+          required: true
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        obsp:
+        - type: "double"
+          name: "knn_connectivities"
+          description: "K nearest neighbors connectivities matrix."
+          required: true
+    example:
+    - "input.h5ad"
+    default: []
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    alternatives: []
+    description: "Metric score file"
+    info:
+      short_description: "Score"
+      slots:
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+          required: true
+        - type: "string"
+          name: "metric_ids"
+          description: "One or more unique metric identifiers"
+          multiple: true
+          required: true
+        - type: "double"
+          name: "metric_values"
+          description: "The metric values obtained for the given prediction. Must\
+            \ be of same length as 'metric_ids'."
+          multiple: true
+          required: true
+        - type: "boolean"
+          name: "hvg"
+          description: "If the method was done on hvg or full"
+          required: true
+        - type: "string"
+          name: "output_type"
+          description: "what kind of output has been generated"
+          required: true
+    example:
+    - "score.h5ad"
+    default: []
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  argument_groups: []
+  resources:
+  - type: "python_script"
+    path: "script.py"
+    is_executable: true
+  description: "Average silhouette of batches per label"
+  test_resources:
+  - type: "file"
+    path: "../../../../resources_test/batch_integration/pancreas"
+  - type: "python_script"
+    text: "import sys\nfrom os import path\nimport subprocess\nimport numpy as np\n\
+      import anndata as ad\nimport yaml\n\n## VIASH START\nmeta = {\n    \"resources_dir\"\
+      : \"resources_test/batch_integration/pancreas\",\n    \"config\": \"src/batch_integration/metric_graph/ari/config.vsh.yaml\"\
+      \n}\n## VIASH END\n\nnp.random.seed(42)\n\nprint(\">> Read metric config\",\
+      \ flush=True)\nwith open(meta['config'], 'r', encoding=\"utf8\") as file:\n\
+      \    config = yaml.safe_load(file)\n\ninput_file = f\"{meta['resources_dir']}/pancreas/scvi.h5ad\"\
+      \noutput_file = \"output.h5ad\"\n\ncmd_args = [\n    meta[\"executable\"],\n\
+      \    \"--input_integrated\", input_file,\n    \"--output\", output_file\n]\n\
+      \nprint(\">> Running script\", flush=True)\nsubprocess.run(cmd_args, check=True)\n\
+      \nprint(\">> Checking whether file exists\", flush=True)\nassert path.exists(output_file)\n\
+      input = ad.read_h5ad(input_file)\noutput = ad.read_h5ad(output_file)\n\nprint(\"\
+      >> Print AnnData contents\", flush=True)\nprint(\"input:\", input, flush=True)\n\
+      print(\"output:\", output, flush=True)\n\nprint(\">> Checking whether metrics\
+      \ were added\", flush=True)\nassert \"metric_ids\" in output.uns\nassert \"\
+      metric_values\" in output.uns\nassert len(output.uns[\"metric_ids\"]) == len(output.uns[\"\
+      metric_values\"])\n\nprint(\">> Checking whether data from input was copied\
+      \ properly to output\", flush=True)\nassert input.uns[\"dataset_id\"] == output.uns[\"\
+      dataset_id\"]\nassert input.uns[\"method_id\"] == output.uns[\"method_id\"]\n\
+      \nprint(\">> Check that score makes sense\", flush=True)\nmetrics_info = {\n\
+      \    metric[\"metric_id\"]: metric\n    for metric in config[\"functionality\"\
+      ][\"info\"][\"metrics\"]\n}\n\nfor metric_id, metric_value in zip(output.uns[\"\
+      metric_ids\"], output.uns[\"metric_values\"]):\n    assert metric_id in metrics_info,\
+      \ f\"Metric id {metric_id} not found in .functionality.info.metrics\"\n    info\
+      \ = metrics_info[metric_id]\n\n    assert info[\"min\"] <= metric_value\n  \
+      \  assert metric_value <= info[\"max\"]\n\nprint(\">> All tests passed successfully\"\
+      )"
+    dest: "test.py"
+    is_executable: true
+  info:
+    v1_url: "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/sil_batch.py"
+    v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+    paper_reference: "luecken2022benchmarking"
+    metrics:
+    - metric_id: "asw_batch"
+      metric_name: "ASW batch"
+      min: 0
+      max: 1
+      maximize: true
+    type: "metric"
+  status: "enabled"
+  requirements:
+    commands: []
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "mumichae/scib-base:1.1.3"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  port: []
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  run_args: []
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "python"
+    user: false
+    packages: []
+    pip: []
+    pypi:
+    - "pyyaml"
+    git: []
+    github: []
+    gitlab: []
+    mercurial: []
+    svn: []
+    bazaar: []
+    url: []
+    script: []
+    upgrade: true
+  test_setup: []
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    accelerator: {}
+    conda: []
+    containerOptions: []
+    label: []
+    module: []
+    pod: []
+    publishDir: []
+    queue: []
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/metrics/asw_batch/config.vsh.yaml"
+  platform: "nextflow"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_batch"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_batch/asw_batch"
+  viash_version: "0.7.0"
+  git_commit: "e264388b3983ef8ceab7ef976b0bcc8a14f29471"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"
