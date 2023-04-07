@@ -1,0 +1,31 @@
+# use method api spec
+__merge__: ../../api/comp_control_method_embedding.yaml
+functionality:
+  name: random_embed_cell_jitter
+  info:
+    sub_type: negative_control
+    pretty_name: Random Embedding by Celltype with jitter
+    summary: "Cells are embedded as a one-hot encoding of celltype labels"
+    description: "Cells are embedded as a one-hot encoding of celltype labels"
+    v1_url: openproblems/tasks/_batch_integration/batch_integration_embed/methods/baseline.py
+    v1_commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
+    preferred_normalization: log_cpm
+  arguments:
+    - name: "--jitter"
+      type: double
+      default: 0.01
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: python:3.10
+    setup:
+      - type: python
+        pypi:
+          - scikit-learn
+          - anndata~=0.8
+          - numpy
+          - pyyaml
+          - scipy
+  - type: nextflow
