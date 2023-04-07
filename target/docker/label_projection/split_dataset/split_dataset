@@ -421,9 +421,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pyyaml" "anndata>=0.8"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection split_dataset"
-LABEL org.opencontainers.image.created="2023-03-24T13:05:05Z"
+LABEL org.opencontainers.image.created="2023-04-07T13:41:01Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ebad2c98ddf3f05cd0cf9d272db1e00722625106"
+LABEL org.opencontainers.image.revision="cdc530151bc232a986f9cf2389997b6b2d8c9318"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
