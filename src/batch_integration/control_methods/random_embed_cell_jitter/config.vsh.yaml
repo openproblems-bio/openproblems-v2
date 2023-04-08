@@ -5,8 +5,8 @@ functionality:
   info:
     sub_type: negative_control
     pretty_name: Random Embedding by Celltype with jitter
-    summary: "Cells are embedded as a one-hot encoding of celltype labels"
-    description: "Cells are embedded as a one-hot encoding of celltype labels"
+    summary: "Cells are embedded as a one-hot encoding of celltype labels, with a small amount of random noise added to the embedding"
+    description: "Cells are embedded as a one-hot encoding of celltype labels, with a small amount of random noise added to the embedding"
     v1_url: openproblems/tasks/_batch_integration/batch_integration_embed/methods/baseline.py
     v1_commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
     preferred_normalization: log_cpm

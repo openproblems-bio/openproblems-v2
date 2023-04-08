@@ -8,7 +8,6 @@ import yaml
 par = {
     'input': 'resources_test/batch_integration/pancreas/unintegrated.h5ad',
     'output': 'output.h5ad',
-    'jitter': None
 }
 
 meta = { 
