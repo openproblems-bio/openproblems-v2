@@ -176,7 +176,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -238,8 +238,14 @@ df <- map_df(configs, function(config) {
   info\\$v1_url <- config\\$functionality\\$info\\$v1_url
   info\\$v1_commit <- config\\$functionality\\$info\\$v1_commit
   info
+  info
 }) %>%
-  select(metric_id, everything())
+rename(
+  metric_id = name,
+  metric_name = pretty_name,
+  metric_summary = description,
+  paper_reference = reference,
+)
 
 jsonlite::write_json(
   purrr::transpose(df),

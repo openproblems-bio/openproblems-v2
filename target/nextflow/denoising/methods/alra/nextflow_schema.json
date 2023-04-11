@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "alra",
-    "description": "Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is a method for imputation of missing values in single cell RNA-sequencing data, \ndescribed in the preprint, \"Zero-preserving imputation of scRNA-seq data using low-rank approximation\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588). Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude of the most negative value of that gene. \nFinally, the matrix is rescaled.\n",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {
@@ -9,11 +9,6 @@
         "type": "object",
         "description": "No description",
         "properties": {
-          "layer_input": {
-            "type": "string",
-            "description": "Which layer to use as input.",
-            "default": "counts"
-          },
           "epochs": {
             "type": "integer",
             "description": "Number of total epochs in training",

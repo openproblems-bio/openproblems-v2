@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "neuralee",
-    "description": "A neural network implementation of elastic embedding implemented in the [NeuralEE package](https://neuralee.readthedocs.io/en/latest/).",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

@@ -113,7 +113,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/knn_smoothing/config.vsh.yaml"
       }
     ],
-    "description" : "iterative K-nearest neighbor smoothing",
     "test_resources" : [
       {
         "type" : "file",
@@ -134,9 +133,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "KNN Smoothing",
-      "paper_reference" : "wagner2018knearest",
-      "code_url" : "https://github.com/yanailab/knn-smoothing",
+      "pretty_name" : "KNN Smoothing",
+      "summary" : "Iterative kNN-smoothing denoises scRNA-seq data by iteratively increasing the size of neighbourhoods for smoothing until a maximum k value is reached.",
+      "description" : "Iterative kNN-smoothing is a method to repair or denoise noisy scRNA-seq expression matrices. Given a scRNA-seq expression matrix, KNN-smoothing first applies initial normalisation and smoothing. Then, a chosen number of principal components is used to calculate Euclidean distances between cells. Minimally sized neighbourhoods are initially determined from these Euclidean distances, and expression profiles are shared between neighbouring cells. Then, the resultant smoothed matrix is used as input to the next step of smoothing, where the size (k) of the considered neighbourhoods is increased, leading to greater smoothing. This process continues until a chosen maximum k value has been reached, at which point the iteratively smoothed object is then optionally scaled to yield a final result.",
+      "reference" : "wagner2018knearest",
+      "documentation_url" : "https://github.com/yanailab/knn-smoothing#readme",
+      "repository_url" : "https://github.com/yanailab/knn-smoothing",
       "v1_url" : "openproblems/tasks/denoising/methods/knn_smoothing.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
@@ -198,7 +200,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/knn_smoothing/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

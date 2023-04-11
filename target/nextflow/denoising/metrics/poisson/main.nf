@@ -157,7 +157,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/poisson/config.vsh.yaml"
       }
     ],
-    "description" : "Poisson loss",
     "test_resources" : [
       {
         "type" : "file",
@@ -178,14 +177,18 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "paper_reference" : "batson2019molecular",
-      "v1_url" : "openproblems/tasks/denoising/metrics/poisson.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
+      "reference" : "batson2019molecular",
       "metrics" : [
         {
-          "metric_id" : "poisson",
-          "metric_name" : "Poisson Loss",
-          "metric_description" : "Poisson loss: measure the mean of the inconsistencies between predicted and target",
+          "name" : "poisson",
+          "pretty_name" : "Poisson Loss",
+          "summary" : "The Poisson log lieklihood of the true counts observed in the distribution of denoised counts",
+          "description" : "The Poisson log likelihood of observing the true counts of the test dataset given the distribution given in the denoised dataset.",
+          "reference" : "batson2019molecular",
+          "documentation_url" : "",
+          "repository_url" : "",
+          "v1_url" : "openproblems/tasks/denoising/metrics/poisson.py",
+          "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
           "maximize" : false,
           "min" : 0,
           "max" : "+inf"
@@ -246,7 +249,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/poisson/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

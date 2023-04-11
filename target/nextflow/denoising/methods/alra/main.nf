@@ -105,19 +105,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "string",
-        "name" : "--layer_input",
-        "description" : "Which layer to use as input.",
-        "default" : [
-          "counts"
-        ],
-        "required" : false,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
         "type" : "integer",
         "name" : "--epochs",
         "description" : "Number of total epochs in training",
@@ -139,7 +126,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/alra/config.vsh.yaml"
       }
     ],
-    "description" : "Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is a method for imputation of missing values in single cell RNA-sequencing data, \ndescribed in the preprint, \\"Zero-preserving imputation of scRNA-seq data using low-rank approximation\\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588). Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude of the most negative value of that gene. \nFinally, the matrix is rescaled.\n",
     "test_resources" : [
       {
         "type" : "file",
@@ -160,10 +146,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "ALRA",
-      "paper_reference" : "linderman2018zero",
-      "code_url" : "https://github.com/KlugerLab/ALRA",
-      "doc_url" : "https://github.com/KlugerLab/ALRA/blob/master/README.md",
+      "pretty_name" : "ALRA",
+      "summary" : "ALRA imputes missing values in scRNA-seq data by computing rank-k approximation, thresholding by gene, and rescaling the matrix.",
+      "description" : "\\"Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is a method for imputation of missing values in single cell RNA-sequencing data, \ndescribed in the preprint, \\"Zero-preserving imputation of scRNA-seq data using low-rank approximation\\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588). Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude of the most negative value of that gene. \nFinally, the matrix is rescaled.\\"\n",
+      "reference" : "linderman2018zero",
+      "repository_url" : "https://github.com/KlugerLab/ALRA",
+      "documentation_url" : "https://github.com/KlugerLab/ALRA/blob/master/README.md",
       "v1_url" : "openproblems/tasks/denoising/methods/alra.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
@@ -250,7 +238,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/alra/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -275,7 +263,6 @@ source("/ALRA/alra.R")
 par <- list(
   "input_train" = $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_TRAIN" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "layer_input" = $( if [ ! -z ${VIASH_PAR_LAYER_INPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_LAYER_INPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "epochs" = $( if [ ! -z ${VIASH_PAR_EPOCHS+x} ]; then echo -n "as.integer('"; echo -n "$VIASH_PAR_EPOCHS" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "')"; else echo NULL; fi )
 )
 meta <- list(

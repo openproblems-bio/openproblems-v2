@@ -159,7 +159,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/umap/config.vsh.yaml"
       }
     ],
-    "description" : "Uniform Manifold Approximation and Projection for Dimension Reduction",
     "test_resources" : [
       {
         "type" : "file",
@@ -180,9 +179,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "UMAP",
-      "paper_reference" : "mcinnes2018umap",
-      "code_url" : "https://github.com/lmcinnes/umap",
+      "pretty_name" : "UMAP",
+      "summary" : "A manifold learning algorithm that utilizes topological data analysis for dimension reduction.",
+      "description" : "\\"Uniform Manifold Approximation and Projection is an algorithm for\ndimension reduction based on manifold learning techniques and ideas from\ntopological data analysis. We perform UMAP on the logCPM expression matrix\nbefore and after HVG selection and with and without PCA as a pre-processing\nstep.\\"\n",
+      "reference" : "mcinnes2018umap",
+      "repository_url" : "https://github.com/lmcinnes/umap",
+      "documentation_url" : "https://github.com/lmcinnes/umap#readme",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
       "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
       "preferred_normalization" : "log_cpm",
@@ -254,7 +256,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/umap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

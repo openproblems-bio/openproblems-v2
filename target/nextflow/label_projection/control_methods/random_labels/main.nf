@@ -316,7 +316,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/control_methods/random_labels/config.vsh.yaml"
       }
     ],
-    "description" : "Negative control method which generates random labels",
     "test_resources" : [
       {
         "type" : "file",
@@ -338,7 +337,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "subtype" : "negative_control",
-      "method_name" : "Random Labels",
+      "pretty_name" : "Random Labels",
+      "summary" : "a negative control, where the labels are randomly predicted.",
+      "description" : "A negative control, where the labels are randomly predicted without training the data.",
       "v1_url" : "openproblems/tasks/label_projection/methods/baseline.py",
       "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
       "preferred_normalization" : "counts",
@@ -397,7 +398,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/control_methods/random_labels/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

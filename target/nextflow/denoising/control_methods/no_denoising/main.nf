@@ -147,7 +147,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/control_methods/no_denoising/config.vsh.yaml"
       }
     ],
-    "description" : "negative control by copying train counts",
     "test_resources" : [
       {
         "type" : "file",
@@ -169,7 +168,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "subtype" : "negative_control",
-      "method_name" : "No Denoising",
+      "pretty_name" : "No Denoising",
+      "summary" : "negative control by copying train counts",
+      "description" : "This baseline method serves as a negative control, where the denoised data is a copy of the unaltered training data. This represents the scoring threshold if denoising was not performed on the data.",
       "v1_url" : "openproblems/tasks/denoising/methods/baseline.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
@@ -227,7 +228,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/control_methods/no_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

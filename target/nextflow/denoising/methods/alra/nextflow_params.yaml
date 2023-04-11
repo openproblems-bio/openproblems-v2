@@ -1,5 +1,4 @@
 # Arguments
-layer_input: "counts"
 epochs: 300
 
 # Nextflow input-output arguments

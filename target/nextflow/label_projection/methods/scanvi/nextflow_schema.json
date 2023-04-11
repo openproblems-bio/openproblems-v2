@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "scanvi",
-    "description": "Probabilistic harmonization and annotation of single-cell \ntranscriptomics data with deep generative models.\n",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

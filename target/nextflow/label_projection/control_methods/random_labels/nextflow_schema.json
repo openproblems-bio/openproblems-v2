@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "random_labels",
-    "description": "Negative control method which generates random labels",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

@@ -172,7 +172,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/neuralee/config.vsh.yaml"
       }
     ],
-    "description" : "A neural network implementation of elastic embedding implemented in the [NeuralEE package](https://neuralee.readthedocs.io/en/latest/).",
     "test_resources" : [
       {
         "type" : "file",
@@ -193,9 +192,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "NeuralEE",
-      "paper_reference" : "xiong2020neuralee",
-      "code_url" : "https://github.com/HiBearME/NeuralEE",
+      "pretty_name" : "NeuralEE",
+      "summary" : "Non-linear method that uses a neural network to preserve pairwise distances between data points in a high-dimensional space.",
+      "description" : "\\"A neural network implementation of elastic embedding. It is a\nnon-linear method that preserves pairwise distances between data points.\nNeuralEE uses a neural network to optimize an objective function that\nmeasures the difference between pairwise distances in the original\nhigh-dimensional space and the two-dimensional space. It is computed on both\nthe recommended input from the package authors of 500 HVGs selected from a\nlogged expression matrix (without sequencing depth scaling) and the default\nlogCPM matrix with 1000 HVGs.\\"\n",
+      "reference" : "xiong2020neuralee",
+      "repository_url" : "https://github.com/HiBearME/NeuralEE",
+      "documentation_url" : "https://github.com/HiBearME/NeuralEE#readme",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/neuralee.py",
       "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
       "preferred_normalization" : "log_cpm",
@@ -266,7 +268,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/neuralee/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

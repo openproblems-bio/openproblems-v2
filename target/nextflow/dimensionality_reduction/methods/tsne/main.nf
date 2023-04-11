@@ -159,7 +159,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/tsne/config.vsh.yaml"
       }
     ],
-    "description" : "t-Distributed Stochastic Neighbor Embedding (t-SNE)",
     "test_resources" : [
       {
         "type" : "file",
@@ -180,9 +179,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "t-SNE",
-      "paper_reference" : "vandermaaten2008visualizing",
-      "code_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html#sklearn.manifold.TSNE",
+      "pretty_name" : "t-SNE",
+      "summary" : "Minimizing Kullback-Leibler divergence by converting similarities into joint probabilities between data points and the low/high dimensional embedding.",
+      "description" : "\\"t-distributed Stochastic Neighbor Embedding converts similarities\nbetween data points to joint probabilities and tries to minimize the\nKullback-Leibler divergence between the joint probabilities of the\nlow-dimensional embedding and the high-dimensional data. We use the\nimplementation in the scanpy package with the result of PCA on the logCPM\nexpression matrix (with and without HVG selection).\\"\n",
+      "reference" : "vandermaaten2008visualizing",
+      "repository_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html#sklearn.manifold.TSNE",
+      "documentation_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html#sklearn.manifold.TSNE",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/tsne.py",
       "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
       "preferred_normalization" : "log_cpm",
@@ -255,7 +257,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/tsne/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

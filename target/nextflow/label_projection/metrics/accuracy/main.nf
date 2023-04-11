@@ -215,7 +215,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/accuracy/config.vsh.yaml"
       }
     ],
-    "description" : "The percentage of correctly predicted labels.",
     "test_resources" : [
       {
         "type" : "file",
@@ -240,9 +239,13 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_commit" : "fcd5b876e7d0667da73a2858bc27c40224e19f65",
       "metrics" : [
         {
-          "metric_id" : "accuracy",
-          "metric_name" : "Accuracy",
+          "name" : "accuracy",
+          "pretty_name" : "Accuracy",
+          "summary" : "The percentage of correctly predicted labels.",
           "description" : "The percentage of correctly predicted labels.",
+          "reference" : "",
+          "repository_url" : "",
+          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
           "maximize" : true
@@ -299,7 +302,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/accuracy/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

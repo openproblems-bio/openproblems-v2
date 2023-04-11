@@ -246,7 +246,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/scanvi/config.vsh.yaml"
       }
     ],
-    "description" : "Probabilistic harmonization and annotation of single-cell \ntranscriptomics data with deep generative models.\n",
     "test_resources" : [
       {
         "type" : "file",
@@ -267,13 +266,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "SCANVI",
-      "paper_reference" : "lotfollahi2020query",
-      "code_url" : "https://github.com/YosefLab/scvi-tools",
-      "doc_url" : "https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html",
+      "pretty_name" : "SCANVI",
+      "summary" : "ScANVI predicts cell type labels for unlabelled test data by leveraging cell type labels, modelling uncertainty and using deep neural networks with stochastic optimization.",
+      "description" : "\\"single-cell ANnotation using Variational Inference is a\nsemi-supervised variant of the scVI(Lopez et al. 2018) algorithm. Like scVI,\nscANVI uses deep neural networks and stochastic optimization to model\nuncertainty caused by technical noise and bias in single - cell\ntranscriptomics measurements. However, scANVI also leverages cell type labels\nin the generative modelling. In this approach, scANVI is used to predict the\ncell type labels of the unlabelled test data.\\"\n",
+      "reference" : "lotfollahi2020query",
+      "repository_url" : "https://github.com/YosefLab/scvi-tools",
+      "documentation_url" : "https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html",
       "v1_url" : "openproblems/tasks/label_projection/methods/scvi_tools.py",
       "v1_commit" : "4bb8a7e04545a06c336d3d9364a1dd84fa2af1a4",
-      "v1_comp_id" : "scarches_scanvi_hvg",
       "preferred_normalization" : "log_cpm",
       "variants" : {
         "scanvi_hvg" : {
@@ -336,7 +336,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/scanvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

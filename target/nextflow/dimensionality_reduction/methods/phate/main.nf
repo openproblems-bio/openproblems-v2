@@ -172,7 +172,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/phate/config.vsh.yaml"
       }
     ],
-    "description" : "Potential of heat-diffusion for affinity-based transition embedding",
     "test_resources" : [
       {
         "type" : "file",
@@ -193,9 +192,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "PHATE",
-      "paper_reference" : "moon2019visualizing",
-      "code_url" : "https://github.com/KrishnaswamyLab/PHATE/",
+      "pretty_name" : "PHATE",
+      "summary" : "Preservating trajectories in a dataset by using heat diffusion potential via an affinity-based method that creates an embedding from dominant eigenvalues of a Markov transition matrix.",
+      "description" : "\\"PHATE or “Potential of Heat - diffusion for Affinity - based Transition\nEmbedding” uses the potential of heat diffusion to preserve trajectories in a\ndataset via a diffusion process. It is an affinity - based method that\ncreates an embedding by finding the dominant eigenvalues of a Markov\ntransition matrix. We evaluate several variants including using the\nrecommended square - root transformed CPM matrix as input, this input with\nthe gamma parameter set to zero and the normal logCPM transformed matrix with\nand without HVG selection.\\"\n",
+      "reference" : "moon2019visualizing",
+      "repository_url" : "https://github.com/KrishnaswamyLab/PHATE",
+      "documentation_url" : "https://github.com/KrishnaswamyLab/PHATE#readme",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/phate.py",
       "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
       "preferred_normalization" : "sqrt_cpm",
@@ -268,7 +270,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/phate/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -190,7 +190,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/density_preservation/config.vsh.yaml"
       }
     ],
-    "description" : "Similarity between local densities in the high-dimensional data and the reduced data.\n",
     "test_resources" : [
       {
         "type" : "file",
@@ -215,10 +214,13 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "metrics" : [
         {
-          "metric_id" : "density_preservation",
-          "metric_name" : "Density preservation",
-          "metric_description" : "Similarity between local densities in the high-dimensional data and the reduced data.\n\nThis is computed as the pearson correlation of local radii with the local radii in the original data space.\n",
-          "paper_reference" : "narayan2021assessing",
+          "name" : "density_preservation",
+          "pretty_name" : "Density preservation",
+          "summary" : "Similarity between local densities in the high-dimensional data and the reduced data.",
+          "description" : "\\"Similarity between local densities in the high-dimensional data and the reduced data.\nThis is computed as the pearson correlation of local radii with the local radii in the original data space.\\"\n",
+          "repository_url" : "",
+          "documentation_url" : "",
+          "reference" : "narayan2021assessing",
           "min" : -1,
           "max" : 1,
           "maximize" : true
@@ -281,7 +283,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/density_preservation/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

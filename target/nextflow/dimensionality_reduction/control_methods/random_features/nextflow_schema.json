@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "random_features",
-    "description": "Uses a normal distribution to generate random embeddings.",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

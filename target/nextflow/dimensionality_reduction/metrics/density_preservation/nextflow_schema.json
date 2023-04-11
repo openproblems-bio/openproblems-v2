@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "density_preservation",
-    "description": "Similarity between local densities in the high-dimensional data and the reduced data.\n",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

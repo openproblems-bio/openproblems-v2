@@ -135,7 +135,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/workflows/run/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -164,7 +164,7 @@ include { phate } from "\\$targetDir/dimensionality_reduction/methods/phate/main
 include { tsne } from "\\$targetDir/dimensionality_reduction/methods/tsne/main.nf"
 include { pca } from "\\$targetDir/dimensionality_reduction/methods/pca/main.nf"
 include { neuralee } from "\\$targetDir/dimensionality_reduction/methods/neuralee/main.nf"
-include { ivis } from "\\$targetDir/dimensionality_reduction/methods/ivis/main.nf"
+// include { ivis } from "\\$targetDir/dimensionality_reduction/methods/ivis/main.nf"
 
 // import metrics
 include { density_preservation } from "\\$targetDir/dimensionality_reduction/metrics/density_preservation/main.nf"
@@ -182,7 +182,7 @@ include { setWorkflowArguments; getWorkflowArguments; passthroughMap as pmap; pa
 config = readConfig("\\$projectDir/config.vsh.yaml")
 
 // construct a map of methods (id -> method_module)
-methods = [ random_features, true_features, umap, densmap, phate, tsne, pca, neuralee, ivis ]
+methods = [ random_features, true_features, umap, densmap, phate, tsne, pca, neuralee ]
   .collectEntries{method ->
     [method.config.functionality.name, method]
   }

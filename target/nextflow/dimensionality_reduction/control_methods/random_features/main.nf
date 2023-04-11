@@ -189,7 +189,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/control_methods/random_features/config.vsh.yaml"
       }
     ],
-    "description" : "Uses a normal distribution to generate random embeddings.",
     "test_resources" : [
       {
         "type" : "file",
@@ -211,7 +210,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "subtype" : "negative_control",
-      "method_name" : "Random Features",
+      "pretty_name" : "Random Features",
+      "summary" : "Negative control by randomly embedding into a 2D space.",
+      "description" : "This method serves as a negative control, where the data is randomly embedded into a two-dimensional space, with no attempt to preserve the original structure.",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/baseline.py",
       "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
       "preferred_normalization" : "counts",
@@ -269,7 +270,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/control_methods/random_features/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

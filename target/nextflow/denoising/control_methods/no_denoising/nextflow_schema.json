@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "no_denoising",
-    "description": "negative control by copying train counts",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

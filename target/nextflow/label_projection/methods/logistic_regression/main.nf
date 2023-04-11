@@ -236,7 +236,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/logistic_regression/config.vsh.yaml"
       }
     ],
-    "description" : "Logistic regression method",
     "test_resources" : [
       {
         "type" : "file",
@@ -257,10 +256,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "Logistic Regression",
-      "paper_reference" : "hosmer2013applied",
-      "code_url" : "https://github.com/scikit-learn/scikit-learn",
-      "doc_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
+      "pretty_name" : "Logistic Regression",
+      "summary" : "Logistic Regression with 100-dimensional PCA coordinates estimates parameters for multivariate classification by minimizing cross entropy loss over cell type classes.",
+      "description" : "\\"Logistic Regression estimates parameters of a logistic function for\nmultivariate classification tasks. Here, we use 100-dimensional whitened PCA\ncoordinates as independent variables, and the model minimises the cross\nentropy loss over all cell type classes.\\"\n",
+      "reference" : "hosmer2013applied",
+      "repository_url" : "https://github.com/scikit-learn/scikit-learn",
+      "documentation_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html",
       "v1_url" : "openproblems/tasks/label_projection/methods/logistic_regression.py",
       "v1_commit" : "c2470ce02e6f196267cec1c554ba7ae389c0956a",
       "preferred_normalization" : "log_cpm",
@@ -324,7 +325,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/logistic_regression/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

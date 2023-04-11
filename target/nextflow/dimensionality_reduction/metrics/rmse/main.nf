@@ -223,19 +223,25 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_note" : "This metric was ported but will probably be removed soon.",
       "metrics" : [
         {
-          "metric_id" : "rmse",
-          "metric_name" : "RMSE",
-          "metric_description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD.",
-          "paper_reference" : "kruskal1964mds",
+          "name" : "rmse",
+          "pretty_name" : "RMSE",
+          "summary" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD.",
+          "description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD.",
+          "reference" : "kruskal1964mds",
+          "repository_url" : "",
+          "documentation_url" : "",
           "min" : 0,
           "max" : "+inf",
           "maximize" : false
         },
         {
-          "metric_id" : "rmse_spectral",
-          "metric_name" : "RMSE Spectral",
-          "metric_description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding.",
-          "paper_reference" : "coifman2006diffusion",
+          "name" : "rmse_spectral",
+          "pretty_name" : "RMSE Spectral",
+          "summary" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding.",
+          "description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding.",
+          "reference" : "coifman2006diffusion",
+          "repository_url" : "",
+          "documentation_url" : "",
           "min" : 0,
           "max" : "+inf",
           "maximize" : false
@@ -299,7 +305,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/rmse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

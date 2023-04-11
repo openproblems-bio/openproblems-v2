@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "umap",
-    "description": "Uniform Manifold Approximation and Projection for Dimension Reduction",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

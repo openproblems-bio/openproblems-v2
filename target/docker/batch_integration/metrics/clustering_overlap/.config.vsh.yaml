@@ -144,6 +144,9 @@ functionality:
   - type: "file"
     path: "../../../../resources_test/batch_integration/pancreas"
   - type: "python_script"
+    path: "../../../common/unit_test/check_metric_config.py"
+    is_executable: true
+  - type: "python_script"
     text: "import sys\nfrom os import path\nimport subprocess\nimport numpy as np\n\
       import anndata as ad\nimport yaml\n\n## VIASH START\nmeta = {\n    \"resources_dir\"\
       : \"resources_test/batch_integration/pancreas/graph/methods\",\n    \"config\"\
@@ -164,9 +167,9 @@ functionality:
       \ whether data from input was copied properly to output\", flush=True)\nassert\
       \ input.uns[\"dataset_id\"] == output.uns[\"dataset_id\"]\nassert input.uns[\"\
       method_id\"] == output.uns[\"method_id\"]\n\nprint(\">> Check that score makes\
-      \ sense\", flush=True)\nmetrics_info = {\n    metric[\"metric_id\"]: metric\n\
-      \    for metric in config[\"functionality\"][\"info\"][\"metrics\"]\n}\n\nfor\
-      \ metric_id, metric_value in zip(output.uns[\"metric_ids\"], output.uns[\"metric_values\"\
+      \ sense\", flush=True)\nmetrics_info = {\n    metric[\"name\"]: metric\n   \
+      \ for metric in config[\"functionality\"][\"info\"][\"metrics\"]\n}\n\nfor metric_id,\
+      \ metric_value in zip(output.uns[\"metric_ids\"], output.uns[\"metric_values\"\
       ]):\n    assert metric_id in metrics_info, f\"Metric id {metric_id} not found\
       \ in .functionality.info.metrics\"\n    info = metrics_info[metric_id]\n\n \
       \   assert info[\"min\"] <= metric_value\n    assert metric_value <= info[\"\
@@ -175,34 +178,42 @@ functionality:
     is_executable: true
   info:
     metrics:
-    - metric_id: "ari"
-      metric_name: "ARI"
-      metric_description: "The Adjusted Rand Index (ARI) compares the overlap of two\
-        \ clusterings;\nit considers both correct clustering overlaps while also counting\
-        \ correct\ndisagreements between two clusterings.\nWe compared the cell-type\
-        \ labels with the NMI-optimized\nLouvain clustering computed on the integrated\
-        \ dataset.\nThe adjustment of the Rand index corrects for randomly correct\
-        \ labels.\nAn ARI of 0 or 1 corresponds to random labeling or a perfect match,\n\
-        respectively.\nWe used the scikit-learn implementation of the ARI.\n"
-      paper_reference: "hubert1985comparing"
+    - name: "ari"
+      pretty_name: "ARI"
+      summary: "Adjusted Rand Index compares clustering overlap, correcting for random\
+        \ labels and considering correct overlaps and disagreements."
+      description: "The Adjusted Rand Index (ARI) compares the overlap of two clusterings;\n\
+        it considers both correct clustering overlaps while also counting correct\n\
+        disagreements between two clusterings.\nWe compared the cell-type labels with\
+        \ the NMI-optimized\nLouvain clustering computed on the integrated dataset.\n\
+        The adjustment of the Rand index corrects for randomly correct labels.\nAn\
+        \ ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\n\
+        We used the scikit-learn implementation of the ARI.\n"
+      reference: "hubert1985comparing"
+      repository_url: ""
+      documentation_url: ""
       min: 0
       max: 1
       maximize: true
       v1_url: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py"
       v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
-    - metric_id: "nmi"
-      metric_name: "NMI"
-      metric_description: "Normalized Mutual Information (NMI) compares the overlap\
-        \ of two clusterings.\nWe used NMI to compare the cell-type labels with Louvain\
-        \ clusters computed on\nthe integrated dataset. The overlap was scaled using\
-        \ the mean of the entropy terms\nfor cell-type and cluster labels. Thus, NMI\
-        \ scores of 0 or 1 correspond to uncorrelated\nclustering or a perfect match,\
-        \ respectively. We performed optimized Louvain clustering\nfor this metric\
-        \ to obtain the best match between clusters and labels.\nLouvain clustering\
-        \ was performed at a resolution range of 0.1 to 2 in steps of 0.1,\nand the\
-        \ clustering output with the highest NMI with the label set was used. We\n\
-        the scikit-learn implementation of NMI.\n"
-      paper_reference: "amelio2015normalized"
+    - name: "nmi"
+      pretty_name: "NMI"
+      summary: "NMI compares overlap by scaling using mean entropy terms and optimizing\
+        \ Louvain clustering to obtain the best match between clusters and labels."
+      description: "Normalized Mutual Information (NMI) compares the overlap of two\
+        \ clusterings.\nWe used NMI to compare the cell-type labels with Louvain clusters\
+        \ computed on\nthe integrated dataset. The overlap was scaled using the mean\
+        \ of the entropy terms\nfor cell-type and cluster labels. Thus, NMI scores\
+        \ of 0 or 1 correspond to uncorrelated\nclustering or a perfect match, respectively.\
+        \ We performed optimized Louvain clustering\nfor this metric to obtain the\
+        \ best match between clusters and labels.\nLouvain clustering was performed\
+        \ at a resolution range of 0.1 to 2 in steps of 0.1,\nand the clustering output\
+        \ with the highest NMI with the label set was used. We\nthe scikit-learn implementation\
+        \ of NMI.\n"
+      reference: "amelio2015normalized"
+      documentation_url: ""
+      repository_url: ""
       min: 0
       max: 1
       maximize: true
@@ -269,5 +280,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/metrics/clustering_overlap"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/metrics/clustering_overlap/clustering_overlap"
   viash_version: "0.7.0"
-  git_commit: "cdc530151bc232a986f9cf2389997b6b2d8c9318"
+  git_commit: "3d1be74e2e23819bf52950198d2bad7c6fe31b83"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

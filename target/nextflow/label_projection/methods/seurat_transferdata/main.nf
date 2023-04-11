@@ -257,10 +257,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "Seurat TransferData",
-      "paper_reference" : "hao2021integrated",
-      "code_url" : "https://github.com/satijalab/seurat",
-      "doc_url" : "https://satijalab.org/seurat/articles/integration_mapping.html",
+      "pretty_name" : "Seurat TransferData",
+      "summary" : "Seurat reference mapping predicts cell types for unlabelled cells using PCA distances, labelled anchors, and transfer anchors from Seurat, with SCTransform normalization.",
+      "description" : "\\"Seurat reference mapping is a cell type label transfer method provided by the\nSeurat package. Gene expression counts are first normalised by SCTransform\nbefore computing PCA. Then it finds mutual nearest neighbours, known as\ntransfer anchors, between the labelled and unlabelled part of the data in PCA\nspace, and computes each cell’s distance to each of the anchor pairs.\nFinally, it uses the labelled anchors to predict cell types for unlabelled\ncells based on these distances.\\"\n",
+      "reference" : "hao2021integrated",
+      "repository_url" : "https://github.com/satijalab/seurat",
+      "documentation_url" : "https://satijalab.org/seurat/articles/integration_mapping.html",
       "v1_url" : "openproblems/tasks/label_projection/methods/seurat.py",
       "v1_commit" : "3f19f0e87a8bc8b59c7521ba01917580aff81bc8",
       "preferred_normalization" : "log_cpm",
@@ -341,7 +343,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/methods/seurat_transferdata/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

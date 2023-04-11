@@ -257,11 +257,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/combat/config.vsh.yaml"
       }
     ],
-    "description" : "Adjusting batch effects in microarray expression data using empirical Bayes methods",
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "../../../../resources_test/batch_integration/pancreas/",
+        "path" : "../../../../resources_test/batch_integration/pancreas",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/combat/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
+        "path" : "../../../common/unit_test/check_method_config.py",
+        "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/combat/config.vsh.yaml"
       },
       {
@@ -272,9 +277,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "Combat",
-      "paper_reference" : "hansen2012removing",
-      "code_url" : "https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.combat.html",
+      "pretty_name" : "Combat",
+      "summary" : "Adjusting batch effects in microarray expression data using empirical Bayes methods",
+      "description" : "\\"An Empirical Bayes (EB) approach to correct for batch effects. It\nestimates batch-specific parameters by pooling information across genes in\neach batch and shrinks the estimates towards the overall mean of the batch\neffect estimates across all genes. These parameters are then used to adjust\nthe data for batch effects, leading to more accurate and reproducible\nresults.\\"\n",
+      "reference" : "hansen2012removing",
+      "repository_url" : "https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.combat.html",
+      "documentation_url" : "https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.combat.html",
       "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/combat.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "log_cpm",
@@ -340,7 +348,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/combat/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

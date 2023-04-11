@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "cell_cycle_conservation",
-    "description": "Cell cycle conservation score based on cell cycle gene scoring",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

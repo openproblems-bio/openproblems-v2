@@ -261,7 +261,13 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "../../../../resources_test/batch_integration/pancreas/",
+        "path" : "../../../../resources_test/batch_integration/pancreas",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scvi/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
+        "path" : "../../../common/unit_test/check_method_config.py",
+        "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scvi/config.vsh.yaml"
       },
       {
@@ -272,9 +278,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "scVI",
-      "paper_reference" : "lopez2018deep",
-      "code_url" : "https://github.com/YosefLab/scvi-tools\\"",
+      "pretty_name" : "scVI",
+      "summary" : "scVI combines a variational autoencoder with a hierarchical Bayesian model.",
+      "description" : "scVI combines a variational autoencoder with a hierarchical Bayesian model. It uses the negative binomial distribution to describe gene expression of each cell, conditioned on unobserved factors and the batch variable. ScVI is run as implemented in Luecken et al.\n",
+      "reference" : "lopez2018deep",
+      "repository_url" : "https://github.com/YosefLab/scvi-tools",
+      "documentation_url" : "https://github.com/YosefLab/scvi-tools#readme",
       "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "log_cpm",
@@ -334,7 +343,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

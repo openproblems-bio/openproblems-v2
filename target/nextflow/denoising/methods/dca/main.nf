@@ -126,7 +126,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/dca/config.vsh.yaml"
       }
     ],
-    "description" : "Deep Count Autoencoder\n\nRemoves the dropout effect by taking the count structure, overdispersed nature and sparsity of the data into account \nusing a deep autoencoder with zero-inflated negative binomial (ZINB) loss function.\n",
     "test_resources" : [
       {
         "type" : "file",
@@ -147,9 +146,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "DCA",
-      "paper_reference" : "https://www.nature.com/articles/s41467-018-07931-2",
-      "code_url" : "https://github.com/theislab/dca",
+      "pretty_name" : "DCA",
+      "summary" : "A deep autoencoder with ZINB loss function to address the dropout effect in count data",
+      "description" : "\\"Deep Count Autoencoder\n\nRemoves the dropout effect by taking the count structure, overdispersed nature and sparsity of the data into account \nusing a deep autoencoder with zero-inflated negative binomial (ZINB) loss function.\\"\n",
+      "reference" : "eraslan2019single",
+      "documentation_url" : "https://github.com/theislab/dca#readme",
+      "repository_url" : "https://github.com/theislab/dca",
       "v1_url" : "openproblems/tasks/denoising/methods/dca.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
@@ -208,7 +210,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/dca/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

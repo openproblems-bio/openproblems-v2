@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "pca",
-    "description": "Principal component analysis (PCA)",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

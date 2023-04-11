@@ -156,7 +156,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/densmap/config.vsh.yaml"
       }
     ],
-    "description" : "Density-preserving UMAP",
     "test_resources" : [
       {
         "type" : "file",
@@ -177,9 +176,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "densMAP",
-      "paper_reference" : "narayan2021assessing",
-      "code_url" : "https://github.com/lmcinnes/umap",
+      "pretty_name" : "densMAP",
+      "summary" : "Modified UMAP with preservation of local density information",
+      "description" : "A modification of UMAP that adds an extra cost term in order to preserve information about the relative local density of the data. It is performed on the same inputs as UMAP.",
+      "reference" : "narayan2021assessing",
+      "repository_url" : "https://github.com/lmcinnes/umap",
+      "documentation_url" : "https://github.com/lmcinnes/umap#readme",
       "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
       "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
       "preferred_normalization" : "log_cpm",
@@ -251,7 +253,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/methods/densmap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

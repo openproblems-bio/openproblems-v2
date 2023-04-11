@@ -215,7 +215,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/f1/config.vsh.yaml"
       }
     ],
-    "description" : "balanced F-score or F-measure",
     "test_resources" : [
       {
         "type" : "file",
@@ -240,25 +239,37 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_commit" : "bb16ca05ae1ce20ce59bfa7a879641b9300df6b0",
       "metrics" : [
         {
-          "metric_id" : "f1_weighted",
-          "metric_name" : "F1 weighted",
+          "name" : "f1_weighted",
+          "pretty_name" : "F1 weighted",
+          "summary" : "Average weigthed support between each labels F1 score",
           "description" : "Calculates the F1 score for each label, and find their average weighted by support (the number of true instances for each label). This alters 'macro' to account for label imbalance; it can result in an F-score that is not between precision and recall.",
+          "reference" : "",
+          "repository_url" : "",
+          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
           "maximize" : true
         },
         {
-          "metric_id" : "f1_macro",
-          "metric_name" : "F1 macro",
+          "name" : "f1_macro",
+          "pretty_name" : "F1 macro",
+          "summary" : "Unweighted mean of each label F1-score",
           "description" : "Calculates the F1 score for each label, and find their unweighted mean. This does not take label imbalance into account.",
+          "reference" : "",
+          "repository_url" : "",
+          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
           "maximize" : true
         },
         {
-          "metric_id" : "f1_micro",
-          "metric_name" : "F1 micro",
+          "name" : "f1_micro",
+          "pretty_name" : "F1 micro",
+          "summary" : "Calculation of TP, FN and FP.",
           "description" : "Calculates the F1 score globally by counting the total true positives, false negatives and false positives.",
+          "reference" : "",
+          "repository_url" : "",
+          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
           "maximize" : true
@@ -315,7 +326,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/label_projection/metrics/f1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

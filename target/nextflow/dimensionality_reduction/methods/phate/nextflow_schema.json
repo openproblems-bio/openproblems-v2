@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "phate",
-    "description": "Potential of heat-diffusion for affinity-based transition embedding",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

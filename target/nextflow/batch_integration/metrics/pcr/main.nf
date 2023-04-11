@@ -227,19 +227,29 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import sys\nfrom os import path\nimport subprocess\nimport numpy as np\nimport anndata as ad\nimport yaml\n\n## VIASH START\nmeta = {\n    \\"resources_dir\\": \\"resources_test/batch_integration/pancreas\\",\n    \\"config\\": \\"src/batch_integration/metric_graph/ari/config.vsh.yaml\\"\n}\n## VIASH END\n\nnp.random.seed(42)\n\nprint(\\">> Read metric config\\", flush=True)\nwith open(meta['config'], 'r', encoding=\\"utf8\\") as file:\n    config = yaml.safe_load(file)\n\ninput_file = f\\"{meta['resources_dir']}/pancreas/scvi.h5ad\\"\noutput_file = \\"output.h5ad\\"\n\ncmd_args = [\n    meta[\\"executable\\"],\n    \\"--input_integrated\\", input_file,\n    \\"--output\\", output_file\n]\n\nprint(\\">> Running script\\", flush=True)\nsubprocess.run(cmd_args, check=True)\n\nprint(\\">> Checking whether file exists\\", flush=True)\nassert path.exists(output_file)\ninput = ad.read_h5ad(input_file)\noutput = ad.read_h5ad(output_file)\n\nprint(\\">> Print AnnData contents\\", flush=True)\nprint(\\"input:\\", input, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether metrics were added\\", flush=True)\nassert \\"metric_ids\\" in output.uns\nassert \\"metric_values\\" in output.uns\nassert len(output.uns[\\"metric_ids\\"]) == len(output.uns[\\"metric_values\\"])\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input.uns[\\"method_id\\"] == output.uns[\\"method_id\\"]\n\nprint(\\">> Check that score makes sense\\", flush=True)\nmetrics_info = {\n    metric[\\"metric_id\\"]: metric\n    for metric in config[\\"functionality\\"][\\"info\\"][\\"metrics\\"]\n}\n\nfor metric_id, metric_value in zip(output.uns[\\"metric_ids\\"], output.uns[\\"metric_values\\"]):\n    assert metric_id in metrics_info, f\\"Metric id {metric_id} not found in .functionality.info.metrics\\"\n    info = metrics_info[metric_id]\n\n    assert info[\\"min\\"] <= metric_value\n    assert metric_value <= info[\\"max\\"]\n\nprint(\\">> All tests passed successfully\\")",
+        "path" : "../../../common/unit_test/check_metric_config.py",
+        "is_executable" : true,
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/metrics/pcr/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
+        "text" : "import sys\nfrom os import path\nimport subprocess\nimport numpy as np\nimport anndata as ad\nimport yaml\n\n## VIASH START\nmeta = {\n    \\"resources_dir\\": \\"resources_test/batch_integration/pancreas\\",\n    \\"config\\": \\"src/batch_integration/metric_graph/ari/config.vsh.yaml\\"\n}\n## VIASH END\n\nnp.random.seed(42)\n\nprint(\\">> Read metric config\\", flush=True)\nwith open(meta['config'], 'r', encoding=\\"utf8\\") as file:\n    config = yaml.safe_load(file)\n\ninput_file = f\\"{meta['resources_dir']}/pancreas/scvi.h5ad\\"\noutput_file = \\"output.h5ad\\"\n\ncmd_args = [\n    meta[\\"executable\\"],\n    \\"--input_integrated\\", input_file,\n    \\"--output\\", output_file\n]\n\nprint(\\">> Running script\\", flush=True)\nsubprocess.run(cmd_args, check=True)\n\nprint(\\">> Checking whether file exists\\", flush=True)\nassert path.exists(output_file)\ninput = ad.read_h5ad(input_file)\noutput = ad.read_h5ad(output_file)\n\nprint(\\">> Print AnnData contents\\", flush=True)\nprint(\\"input:\\", input, flush=True)\nprint(\\"output:\\", output, flush=True)\n\nprint(\\">> Checking whether metrics were added\\", flush=True)\nassert \\"metric_ids\\" in output.uns\nassert \\"metric_values\\" in output.uns\nassert len(output.uns[\\"metric_ids\\"]) == len(output.uns[\\"metric_values\\"])\n\nprint(\\">> Checking whether data from input was copied properly to output\\", flush=True)\nassert input.uns[\\"dataset_id\\"] == output.uns[\\"dataset_id\\"]\nassert input.uns[\\"method_id\\"] == output.uns[\\"method_id\\"]\n\nprint(\\">> Check that score makes sense\\", flush=True)\nmetrics_info = {\n    metric[\\"name\\"]: metric\n    for metric in config[\\"functionality\\"][\\"info\\"][\\"metrics\\"]\n}\n\nfor metric_id, metric_value in zip(output.uns[\\"metric_ids\\"], output.uns[\\"metric_values\\"]):\n    assert metric_id in metrics_info, f\\"Metric id {metric_id} not found in .functionality.info.metrics\\"\n    info = metrics_info[metric_id]\n\n    assert info[\\"min\\"] <= metric_value\n    assert metric_value <= info[\\"max\\"]\n\nprint(\\">> All tests passed successfully\\")",
         "dest" : "test.py",
         "is_executable" : true
       }
     ],
     "info" : {
-      "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/pcr.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
-      "paper_reference" : "luecken2022benchmarking",
       "metrics" : [
         {
-          "metric_id" : "pcr",
-          "metric_name" : "PCR",
+          "name" : "pcr",
+          "pretty_name" : "PCR",
+          "summary" : "The comparison of explained variance by batch before and after integration.",
+          "description" : "\\"This compares the explained variance by batch before and after integration. It\nreturns a score between 0 and 1 (scaled=True) with 0 if the variance\ncontribution hasn’t changed. The larger the score, the more different the\nvariance contributions are before and after integration.\\"\n",
+          "reference" : "luecken2022benchmarking",
+          "repository_url" : "",
+          "documentation_url" : "",
+          "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/pcr.py",
+          "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
           "min" : 0,
           "max" : 1,
           "maximize" : true
@@ -294,7 +304,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/metrics/pcr/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

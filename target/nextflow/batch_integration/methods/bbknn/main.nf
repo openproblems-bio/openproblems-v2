@@ -257,11 +257,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/bbknn/config.vsh.yaml"
       }
     ],
-    "description" : "BBKNN: fast batch alignment of single cell transcriptomes",
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "../../../../resources_test/batch_integration/pancreas/",
+        "path" : "../../../../resources_test/batch_integration/pancreas",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/bbknn/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
+        "path" : "../../../common/unit_test/check_method_config.py",
+        "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/bbknn/config.vsh.yaml"
       },
       {
@@ -272,9 +277,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "BBKNN",
-      "paper_reference" : "polanski2020bbknn",
-      "code_url" : "https://github.com/Teichlab/bbknn",
+      "pretty_name" : "BBKNN",
+      "summary" : "BBKNN creates k nearest neighbours graph by identifying neighbours within batches, then combining and processing them with UMAP for visualization.",
+      "description" : "\\"BBKNN or batch balanced k nearest neighbours graph is built for each cell by\nidentifying its k nearest neighbours within each defined batch separately,\ncreating independent neighbour sets for each cell in each batch. These sets\nare then combined and processed with the UMAP algorithm for visualisation.\\"\n",
+      "reference" : "polanski2020bbknn",
+      "repository_url" : "https://github.com/Teichlab/bbknn",
+      "documentation_url" : "https://github.com/Teichlab/bbknn#readme",
       "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/bbknn.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "log_cpm",
@@ -341,7 +349,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/bbknn/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

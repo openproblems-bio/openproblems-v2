@@ -157,7 +157,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/mse/config.vsh.yaml"
       }
     ],
-    "description" : "Mean Squared Error.",
     "test_resources" : [
       {
         "type" : "file",
@@ -178,14 +177,17 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "paper_reference" : "batson2019molecular",
-      "v1_url" : "openproblems/tasks/denoising/metrics/mse.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "metrics" : [
         {
-          "metric_id" : "mse",
-          "metric_name" : "Mean-squared error",
-          "metric_description" : "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio",
+          "name" : "mse",
+          "pretty_name" : "Mean-squared error",
+          "summary" : "The mean squared error between the denoised counts and the true counts.",
+          "description" : "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio",
+          "reference" : "batson2019molecular",
+          "documentation_url" : "",
+          "repository_url" : "",
+          "v1_url" : "openproblems/tasks/denoising/metrics/mse.py",
+          "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
           "maximize" : false,
           "min" : 0,
           "max" : "+inf"
@@ -248,7 +250,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/metrics/mse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

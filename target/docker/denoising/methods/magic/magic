@@ -157,8 +157,6 @@ VIASH_META_TEMP_DIR="$VIASH_TEMP"
 function ViashHelp {
   echo "magic main_build"
   echo ""
-  echo "MAGIC: Markov affinity-based graph imputation of cells"
-  echo ""
   echo "Arguments:"
   echo "    --input_train"
   echo "        type: file, file must exist"
@@ -414,9 +412,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata>=0.8" "pyyaml" "scprep" "magic-impute" "scipy" "scikit-learn<1.2"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods magic"
-LABEL org.opencontainers.image.created="2023-04-07T13:41:00Z"
+LABEL org.opencontainers.image.created="2023-04-11T11:07:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cdc530151bc232a986f9cf2389997b6b2d8c9318"
+LABEL org.opencontainers.image.revision="3d1be74e2e23819bf52950198d2bad7c6fe31b83"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

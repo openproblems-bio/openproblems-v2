@@ -60,19 +60,6 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  - type: "string"
-    name: "--layer_input"
-    alternatives: []
-    description: "Which layer to use as input."
-    example: []
-    default:
-    - "counts"
-    required: false
-    choices: []
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
   - type: "integer"
     name: "--epochs"
     alternatives: []
@@ -91,13 +78,6 @@ functionality:
   - type: "r_script"
     path: "script.R"
     is_executable: true
-  description: "Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is\
-    \ a method for imputation of missing values in single cell RNA-sequencing data,\
-    \ \ndescribed in the preprint, \"Zero-preserving imputation of scRNA-seq data\
-    \ using low-rank approximation\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588).\
-    \ Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation\
-    \ using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude\
-    \ of the most negative value of that gene. \nFinally, the matrix is rescaled.\n"
   test_resources:
   - type: "file"
     path: "../../../../resources_test/denoising/pancreas"
@@ -122,10 +102,20 @@ functionality:
     dest: "generic_test.py"
     is_executable: true
   info:
-    method_name: "ALRA"
-    paper_reference: "linderman2018zero"
-    code_url: "https://github.com/KlugerLab/ALRA"
-    doc_url: "https://github.com/KlugerLab/ALRA/blob/master/README.md"
+    pretty_name: "ALRA"
+    summary: "ALRA imputes missing values in scRNA-seq data by computing rank-k approximation,\
+      \ thresholding by gene, and rescaling the matrix."
+    description: "\"Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA\
+      \ is a method for imputation of missing values in single cell RNA-sequencing\
+      \ data, \ndescribed in the preprint, \"Zero-preserving imputation of scRNA-seq\
+      \ data using low-rank approximation\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588).\
+      \ Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation\
+      \ using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude\
+      \ of the most negative value of that gene. \nFinally, the matrix is rescaled.\"\
+      \n"
+    reference: "linderman2018zero"
+    repository_url: "https://github.com/KlugerLab/ALRA"
+    documentation_url: "https://github.com/KlugerLab/ALRA/blob/master/README.md"
     v1_url: "openproblems/tasks/denoising/methods/alra.py"
     v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
     variants: {}
@@ -228,5 +218,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/methods/alra"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/methods/alra/alra"
   viash_version: "0.7.0"
-  git_commit: "cdc530151bc232a986f9cf2389997b6b2d8c9318"
+  git_commit: "3d1be74e2e23819bf52950198d2bad7c6fe31b83"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

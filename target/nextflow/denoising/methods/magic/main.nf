@@ -173,7 +173,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/magic/config.vsh.yaml"
       }
     ],
-    "description" : "MAGIC: Markov affinity-based graph imputation of cells",
     "test_resources" : [
       {
         "type" : "file",
@@ -194,9 +193,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "MAGIC",
-      "paper_reference" : "https://doi.org/10.1016/j.cell.2018.05.061",
-      "code_url" : "https://github.com/KrishnaswamyLab/MAGIC",
+      "pretty_name" : "MAGIC",
+      "summary" : "MAGIC imputes and denoises scRNA-seq data using Euclidean distances and a Gaussian kernel to calculate the affinity matrix, followed by a Markov process and multiplication with the normalised data to obtain imputed values.",
+      "description" : "MAGIC (Markov Affinity-based Graph Imputation of Cells) is a method for imputation and denoising of noisy or dropout-prone single cell RNA-sequencing data. Given a normalised scRNA-seq expression matrix, it first calculates Euclidean distances between each pair of cells in the dataset, which is then augmented using a Gaussian kernel (function) and row-normalised to give a normalised affinity matrix. A t-step markov process is then calculated, by powering this affinity matrix t times. Finally, the powered affinity matrix is right-multiplied by the normalised data, causing the final imputed values to take the value of a per-gene average weighted by the affinities of cells. The resultant imputed matrix is then rescaled, to more closely match the magnitude of measurements in the normalised (input) matrix.",
+      "reference" : "van2018recovering",
+      "documentation_url" : "https://github.com/KrishnaswamyLab/MAGIC#readme",
+      "repository_url" : "https://github.com/KrishnaswamyLab/MAGIC",
       "v1_url" : "openproblems/tasks/denoising/methods/magic.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "variants" : {
@@ -268,7 +270,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/methods/magic/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

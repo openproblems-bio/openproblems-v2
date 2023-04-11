@@ -272,7 +272,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "description" : "Transform a feature integration to an embedded integration",
     "info" : {
       "type" : "method",
-      "method_name" : "Feature to Embed"
+      "pretty_name" : "Feature to Embed"
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -322,7 +322,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/transformers/feature_to_embed/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

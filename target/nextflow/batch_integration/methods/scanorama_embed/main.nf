@@ -257,11 +257,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scanorama_embed/config.vsh.yaml"
       }
     ],
-    "description" : "Efficient integration of heterogeneous single-cell transcriptomes using Scanorama",
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "../../../../resources_test/batch_integration/pancreas/",
+        "path" : "../../../../resources_test/batch_integration/pancreas",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scanorama_embed/config.vsh.yaml"
+      },
+      {
+        "type" : "python_script",
+        "path" : "../../../common/unit_test/check_method_config.py",
+        "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scanorama_embed/config.vsh.yaml"
       },
       {
@@ -272,9 +277,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "method_name" : "Scanorama",
-      "paper_reference" : "hie2019efficient",
-      "code_url" : "https://github.com/brianhie/scanorama",
+      "pretty_name" : "Scanorama",
+      "summary" : "Efficient integration of heterogeneous single-cell transcriptomes using Scanorama",
+      "description" : "\\"Scanorama is an extension of the MNN method. Other then MNN, it finds mutual nearest neighbours over all batches and embeds observations into a joint hyperplane.\\"\n",
+      "reference" : "hie2019efficient",
+      "repository_url" : "https://github.com/brianhie/scanorama",
+      "documentation_url" : "https://github.com/brianhie/scanorama#readme",
       "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scanorama.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "log_cpm",
@@ -341,7 +349,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/batch_integration/methods/scanorama_embed/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "cdc530151bc232a986f9cf2389997b6b2d8c9318",
+    "git_commit" : "3d1be74e2e23819bf52950198d2bad7c6fe31b83",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

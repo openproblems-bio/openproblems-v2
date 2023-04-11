@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "densmap",
-    "description": "Density-preserving UMAP",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

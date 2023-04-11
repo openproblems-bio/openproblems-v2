@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "mse",
-    "description": "Mean Squared Error.",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {
