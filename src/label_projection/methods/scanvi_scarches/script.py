@@ -25,9 +25,6 @@ input_test.X = input_test.layers["counts"]
 print("Train model", flush=True)
 unlabeled_category = "Unknown"
 
-print("THIS IS THE DATA", flush=True)
-print(input_train, flush=True)
-print("THAT WAS THE DATA", flush=True)
 scvi.model.SCVI.setup_anndata(input_train, batch_key="batch", labels_key="label")
 
 # specific scArches parameters
