@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "anndata~=0.8.0" "scanpy" "scprep" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/metrics mse"
-LABEL org.opencontainers.image.created="2023-04-21T12:16:24Z"
+LABEL org.opencontainers.image.created="2023-04-21T12:40:31Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0b2e837b258b96631a790b0128143ab1b772b7b9"
+LABEL org.opencontainers.image.revision="447e502f1a2e8285b02fa891ddac2803baffa632"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
