@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scipy" "numpy" "anndata>=0.8" "pyyaml" "umap-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics density_preservation"
-LABEL org.opencontainers.image.created="2023-04-21T08:56:41Z"
+LABEL org.opencontainers.image.created="2023-04-21T11:34:50Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="665a55b7e26877ff08f2a45e6ccea5ec63cd3c94"
+LABEL org.opencontainers.image.revision="a7a59e427278bd4d74ffbf7753540933a73e4ce0"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
