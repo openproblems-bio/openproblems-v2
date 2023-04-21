@@ -196,7 +196,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "type" : "python",
           "user" : false,
           "packages" : [
-            "anndata>=0.8",
+            "anndata~=0.8.0",
             "pyyaml"
           ],
           "upgrade" : true
@@ -228,7 +228,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/control_methods/no_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.0",
-    "git_commit" : "a7a59e427278bd4d74ffbf7753540933a73e4ce0",
+    "git_commit" : "0b2e837b258b96631a790b0128143ab1b772b7b9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

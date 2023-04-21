@@ -418,12 +418,12 @@ function ViashDockerfile {
 FROM python:3.10
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "pyyaml" "anndata>=0.8"
+  pip install --upgrade --no-cache-dir "pyyaml" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection process_dataset"
-LABEL org.opencontainers.image.created="2023-04-21T11:34:48Z"
+LABEL org.opencontainers.image.created="2023-04-21T12:16:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a7a59e427278bd4d74ffbf7753540933a73e4ce0"
+LABEL org.opencontainers.image.revision="0b2e837b258b96631a790b0128143ab1b772b7b9"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
