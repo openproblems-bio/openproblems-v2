@@ -405,9 +405,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata~=0.8.0" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods seurat_transferdata"
-LABEL org.opencontainers.image.created="2023-04-21T12:40:36Z"
+LABEL org.opencontainers.image.created="2023-04-24T19:04:24Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="447e502f1a2e8285b02fa891ddac2803baffa632"
+LABEL org.opencontainers.image.revision="1f893093aea97564faa584054dcc90fff7f9b0f9"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
