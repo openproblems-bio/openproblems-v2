@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "pyyaml" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods pca"
-LABEL org.opencontainers.image.created="2023-04-25T10:15:57Z"
+LABEL org.opencontainers.image.created="2023-04-25T10:53:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
+LABEL org.opencontainers.image.revision="b11dfdb977d512516b24910a5115ce5e37c3f615"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
