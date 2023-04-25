@@ -2,11 +2,9 @@ functionality:
   name: "f1"
   namespace: "label_projection/metrics"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input_solution"
-    alternatives: []
     description: "The solution for the test data"
     info:
       short_description: "Solution"
@@ -50,8 +48,7 @@ functionality:
           description: "Which normalization was used"
           required: true
     example:
-    - "solution.h5ad"
-    default: []
+    - "resources_test/label_projection/pancreas/solution.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -61,7 +58,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--input_prediction"
-    alternatives: []
     description: "The prediction file"
     info:
       short_description: "Prediction"
@@ -83,8 +79,7 @@ functionality:
           name: "method_id"
           description: "A unique identifier for the method"
     example:
-    - "prediction.h5ad"
-    default: []
+    - "resources_test/label_projection/pancreas/knn.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -94,7 +89,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "Metric score file"
     info:
       short_description: "Score"
@@ -124,8 +118,7 @@ functionality:
           multiple: true
           required: true
     example:
-    - "output.h5ad"
-    default: []
+    - "resources_test/label_projection/pancreas/knn_accuracy.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -133,33 +126,19 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
     is_executable: true
   test_resources:
   - type: "file"
-    path: "../../../../resources_test/label_projection/pancreas"
+    path: "resources_test/label_projection/pancreas"
+    dest: "resources_test/label_projection/pancreas"
   - type: "python_script"
-    path: "../../../common/unit_test/check_metric_config.py"
+    path: "src/common/comp_tests/check_metric_config.py"
     is_executable: true
   - type: "python_script"
-    text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_prediction_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/knn.h5ad\"\ninput_solution_path =\
-      \ meta[\"resources_dir\"] + \"/pancreas/solution.h5ad\"\noutput_path = \"output.h5ad\"\
-      \n\ncmd = [\n  meta['executable'],\n  \"--input_prediction\", input_prediction_path,\n\
-      \  \"--input_solution\", input_solution_path,\n  \"--output\", output_path\n\
-      ]\n\nprint(\">> Running script as test\")\nout = subprocess.check_output(cmd).decode(\"\
-      utf-8\")\n\nprint(\">> Checking whether output file exists\")\nassert path.exists(output_path)\n\
-      \ninput_solution = ad.read_h5ad(input_solution_path)\ninput_prediction = ad.read_h5ad(input_prediction_path)\n\
-      output = ad.read_h5ad(output_path)\n\nprint(\"Checking whether data from input\
-      \ was copied properly to output\")\nassert output.uns[\"dataset_id\"] == input_prediction.uns[\"\
-      dataset_id\"]\nassert output.uns[\"method_id\"] == input_prediction.uns[\"method_id\"\
-      ]\nassert output.uns[\"metric_ids\"] is not None\nassert output.uns[\"metric_values\"\
-      ] is not None\n\n# TODO: check whether the metric ids are all in .functionality.info\n\
-      \nprint(\"All checks succeeded!\")"
-    dest: "format_check.py"
+    path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   info:
     v1_url: "openproblems/tasks/label_projection/metrics/f1.py"
@@ -202,8 +181,6 @@ functionality:
       maximize: true
     type: "metric"
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -214,9 +191,7 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
@@ -225,30 +200,11 @@ platforms:
     - "scikit-learn"
     - "pyyaml"
     - "anndata~=0.8.0"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -262,6 +218,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1/f1"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -2,15 +2,12 @@ functionality:
   name: "get_metric_info"
   namespace: "common"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
     description: "the root repo"
     example:
     - "../openproblems-v2"
-    default: []
     must_exist: true
     create_parent: true
     required: false
@@ -20,22 +17,17 @@ functionality:
     dest: "par"
   - type: "string"
     name: "--task_id"
-    alternatives: []
     description: "A task dir"
     example:
     - "label_projection"
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "Output json"
-    example: []
     default:
     - "output.json"
     must_exist: true
@@ -45,7 +37,6 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "r_script"
     path: "script.R"
@@ -53,10 +44,10 @@ functionality:
   description: "Extract metric info"
   test_resources:
   - type: "file"
-    path: "../../../src"
+    path: "src"
     dest: "openproblems-v2/src"
   - type: "file"
-    path: "../../../_viash.yaml"
+    path: "_viash.yaml"
     dest: "openproblems-v2/_viash.yaml"
   - type: "python_script"
     text: "import subprocess\nfrom os import path\nimport json\n\ninput_path = meta[\"\
@@ -71,8 +62,6 @@ functionality:
     dest: "generic_test.py"
     is_executable: true
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -83,23 +72,12 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "r"
-    packages: []
     cran:
     - "tidyverse"
-    bioc: []
-    git: []
-    github: []
-    gitlab: []
-    bitbucket: []
-    svn: []
-    url: []
-    script: []
     bioc_force_install: false
   - type: "apt"
     packages:
@@ -107,13 +85,8 @@ platforms:
     - "default-jdk"
     interactive: false
   - type: "docker"
-    label: []
-    add: []
-    copy: []
     run:
     - "curl -fsSL get.viash.io | bash -s -- --bin /usr/local/bin/"
-    build_args: []
-    env: []
   test_setup:
   - type: "apt"
     packages:
@@ -127,14 +100,6 @@ platforms:
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -150,6 +115,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info/get_metric_info"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

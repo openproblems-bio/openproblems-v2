@@ -5,6 +5,7 @@ language: "python"
 # name: "new_comp"
 # output: "$id.$key.output.output"
 api_file: "src/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
+viash_yaml: "_viash.yaml"
 
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"

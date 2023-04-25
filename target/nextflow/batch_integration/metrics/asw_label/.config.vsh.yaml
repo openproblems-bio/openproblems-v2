@@ -2,11 +2,9 @@ functionality:
   name: "asw_label"
   namespace: "batch_integration/metrics"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input_integrated"
-    alternatives: []
     description: "Integrated AnnData HDF5 file."
     info:
       prediction_type: "embedding"
@@ -76,8 +74,7 @@ functionality:
           description: "K nearest neighbors connectivities matrix."
           required: true
     example:
-    - "input.h5ad"
-    default: []
+    - "resources_test/batch_integration/pancreas/scvi.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -87,7 +84,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "Metric score file"
     info:
       short_description: "Score"
@@ -126,7 +122,6 @@ functionality:
           required: true
     example:
     - "score.h5ad"
-    default: []
     must_exist: true
     create_parent: true
     required: false
@@ -134,7 +129,6 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
@@ -142,38 +136,13 @@ functionality:
   description: "Average silhouette of labels"
   test_resources:
   - type: "file"
-    path: "../../../../resources_test/batch_integration/pancreas"
+    path: "resources_test/batch_integration/pancreas"
+    dest: "resources_test/batch_integration/pancreas"
   - type: "python_script"
-    path: "../../../common/unit_test/check_metric_config.py"
+    path: "src/common/comp_tests/check_metric_config.py"
     is_executable: true
   - type: "python_script"
-    text: "import sys\nfrom os import path\nimport subprocess\nimport numpy as np\n\
-      import anndata as ad\nimport yaml\n\n## VIASH START\nmeta = {\n    \"resources_dir\"\
-      : \"resources_test/batch_integration/pancreas\",\n    \"config\": \"src/batch_integration/metric_graph/ari/config.vsh.yaml\"\
-      \n}\n## VIASH END\n\nnp.random.seed(42)\n\nprint(\">> Read metric config\",\
-      \ flush=True)\nwith open(meta['config'], 'r', encoding=\"utf8\") as file:\n\
-      \    config = yaml.safe_load(file)\n\ninput_file = f\"{meta['resources_dir']}/pancreas/scvi.h5ad\"\
-      \noutput_file = \"output.h5ad\"\n\ncmd_args = [\n    meta[\"executable\"],\n\
-      \    \"--input_integrated\", input_file,\n    \"--output\", output_file\n]\n\
-      \nprint(\">> Running script\", flush=True)\nsubprocess.run(cmd_args, check=True)\n\
-      \nprint(\">> Checking whether file exists\", flush=True)\nassert path.exists(output_file)\n\
-      input = ad.read_h5ad(input_file)\noutput = ad.read_h5ad(output_file)\n\nprint(\"\
-      >> Print AnnData contents\", flush=True)\nprint(\"input:\", input, flush=True)\n\
-      print(\"output:\", output, flush=True)\n\nprint(\">> Checking whether metrics\
-      \ were added\", flush=True)\nassert \"metric_ids\" in output.uns\nassert \"\
-      metric_values\" in output.uns\nassert len(output.uns[\"metric_ids\"]) == len(output.uns[\"\
-      metric_values\"])\n\nprint(\">> Checking whether data from input was copied\
-      \ properly to output\", flush=True)\nassert input.uns[\"dataset_id\"] == output.uns[\"\
-      dataset_id\"]\nassert input.uns[\"method_id\"] == output.uns[\"method_id\"]\n\
-      \nprint(\">> Check that score makes sense\", flush=True)\nmetrics_info = {\n\
-      \    metric[\"name\"]: metric\n    for metric in config[\"functionality\"][\"\
-      info\"][\"metrics\"]\n}\n\nfor metric_id, metric_value in zip(output.uns[\"\
-      metric_ids\"], output.uns[\"metric_values\"]):\n    assert metric_id in metrics_info,\
-      \ f\"Metric id {metric_id} not found in .functionality.info.metrics\"\n    info\
-      \ = metrics_info[metric_id]\n\n    assert info[\"min\"] <= metric_value\n  \
-      \  assert metric_value <= info[\"max\"]\n\nprint(\">> All tests passed successfully\"\
-      )"
-    dest: "test.py"
+    path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   info:
     v1_url: "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/silhouette.py"
@@ -192,8 +161,6 @@ functionality:
       maximize: true
     type: "metric"
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -204,39 +171,18 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
     user: false
-    packages: []
-    pip: []
     pypi:
     - "pyyaml"
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -250,6 +196,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label/asw_label"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

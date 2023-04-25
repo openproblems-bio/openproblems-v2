@@ -2,11 +2,9 @@ functionality:
   name: "pca"
   namespace: "dimensionality_reduction/methods"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
     description: "The training data"
     info:
       short_description: "Training data"
@@ -36,8 +34,7 @@ functionality:
           description: "Which normalization was used"
           required: true
     example:
-    - "train.h5ad"
-    default: []
+    - "resources_test/dimensionality_reduction/pancreas/train.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -47,7 +44,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "A dimensionally reduced dataset"
     info:
       short_description: "Training data"
@@ -68,8 +64,7 @@ functionality:
           description: "Which normalization was used"
           required: true
     example:
-    - "reduced.h5ad"
-    default: []
+    - "resources_test/dimensionality_reduction/pancreas/reduced.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -79,45 +74,26 @@ functionality:
     dest: "par"
   - type: "integer"
     name: "--n_hvg"
-    alternatives: []
     description: "Number of highly variable genes to subset to. If not specified,\
       \ the input matrix will not be subset."
-    example: []
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
     is_executable: true
   test_resources:
   - type: "file"
-    path: "../../../../resources_test/dimensionality_reduction/pancreas/"
+    path: "resources_test/dimensionality_reduction/pancreas/"
+    dest: "resources_test/dimensionality_reduction/pancreas/"
   - type: "python_script"
-    path: "../../../common/unit_test/check_method_config.py"
+    path: "src/common/comp_tests/check_method_config.py"
     is_executable: true
   - type: "python_script"
-    text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\noutput_path = \"reduced.h5ad\"\
-      \ncmd = [\n    meta['executable'],\n    \"--input\", input_path,\n    \"--output\"\
-      , output_path\n]\n\nprint(\">> Checking whether input file exists\", flush=True)\n\
-      assert path.exists(input_path)\n\nprint(\">> Running script as test\", flush=True)\n\
-      subprocess.run(cmd, check=True)\n\nprint(\">> Checking whether output file exists\"\
-      , flush=True)\nassert path.exists(output_path)\n\nprint(\">> Reading h5ad files\"\
-      , flush=True)\ninput = ad.read_h5ad(input_path)\noutput = ad.read_h5ad(output_path)\n\
-      \nprint(\"input:\", input, flush=True)\nprint(\"output:\", output, flush=True)\n\
-      \nprint(\">> Checking whether predictions were added\", flush=True)\nassert\
-      \ \"X_emb\" in output.obsm\nassert meta['functionality_name'] == output.uns[\"\
-      method_id\"]\nassert 'normalization_id' in output.uns\n\nprint(\">> Checking\
-      \ whether data from input was copied properly to output\", flush=True)\nassert\
-      \ input.n_obs == output.n_obs\nassert input.uns[\"dataset_id\"] == output.uns[\"\
-      dataset_id\"]\n\nprint(\"All checks succeeded!\", flush=True)"
-    dest: "generic_test.py"
+    path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   info:
     pretty_name: "PCA"
@@ -136,12 +112,11 @@ functionality:
     v1_commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
     preferred_normalization: "log_cpm"
     variants:
+      pca_logCPM: null
       pca_logCPM_1kHVG:
         n_hvg: 1000
     type: "method"
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -152,9 +127,7 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
@@ -163,32 +136,14 @@ platforms:
     - "scanpy"
     - "pyyaml"
     - "anndata~=0.8.0"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
     label:
     - "highmem"
     - "highcpu"
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -202,6 +157,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca/pca"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

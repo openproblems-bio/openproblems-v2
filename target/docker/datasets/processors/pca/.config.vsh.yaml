@@ -2,11 +2,9 @@ functionality:
   name: "pca"
   namespace: "datasets/processors"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
     description: "A normalized dataset"
     info:
       label: "Normalized dataset"
@@ -67,7 +65,6 @@ functionality:
           required: false
     example:
     - "dataset.h5ad"
-    default: []
     must_exist: true
     create_parent: true
     required: false
@@ -77,20 +74,16 @@ functionality:
     dest: "par"
   - type: "string"
     name: "--layer_input"
-    alternatives: []
     description: "Which layer to use as input."
-    example: []
     default:
     - "normalized"
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "A normalised dataset with a PCA embedding"
     info:
       label: "Dataset+PCA"
@@ -165,7 +158,6 @@ functionality:
           required: false
     example:
     - "dataset.h5ad"
-    default: []
     must_exist: true
     create_parent: true
     required: false
@@ -175,80 +167,62 @@ functionality:
     dest: "par"
   - type: "string"
     name: "--obsm_embedding"
-    alternatives: []
     description: "In which .obsm slot to store the resulting embedding."
-    example: []
     default:
     - "X_pca"
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "string"
     name: "--varm_loadings"
-    alternatives: []
     description: "In which .varm slot to store the resulting loadings matrix."
-    example: []
     default:
     - "pca_loadings"
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "string"
     name: "--uns_variance"
-    alternatives: []
     description: "In which .uns slot to store the resulting variance objects."
-    example: []
     default:
     - "pca_variance"
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "integer"
     name: "--num_components"
-    alternatives: []
     description: "Number of principal components to compute. Defaults to 50, or 1\
       \ - minimum dimension size of selected representation."
     example:
     - 25
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
     is_executable: true
   description: "Compute PCA"
-  test_resources: []
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
   id: "docker"
-  image: "python:3.8"
+  image: "python:3.10"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
@@ -256,30 +230,11 @@ platforms:
     packages:
     - "scanpy"
     - "anndata~=0.8.0"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -293,6 +248,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/pca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/pca/pca"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -1,16 +1,13 @@
 functionality:
   name: "subsample"
-  namespace: "datasets"
+  namespace: "datasets/processors"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
     description: "Input data to be resized"
     example:
     - "input.h5ad"
-    default: []
     must_exist: true
     create_parent: true
     required: true
@@ -20,71 +17,52 @@ functionality:
     dest: "par"
   - type: "integer"
     name: "--n_obs"
-    alternatives: []
     description: "Maximum number of observations to be kept. It might end up being\
       \ less because empty cells / genes are removed."
-    example: []
     default:
     - 500
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "integer"
     name: "--n_vars"
-    alternatives: []
     description: "Maximum number of variables to be kept. It might end up being less\
       \ because empty cells / genes are removed."
-    example: []
     default:
     - 500
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "string"
     name: "--keep_features"
-    alternatives: []
     description: "A list of genes to keep."
-    example: []
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: true
     multiple_sep: ":"
     dest: "par"
   - type: "string"
     name: "--keep_celltype_categories"
-    alternatives: []
     description: "Categories indexes to be selected"
-    example: []
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: true
     multiple_sep: ":"
     dest: "par"
   - type: "string"
     name: "--keep_batch_categories"
-    alternatives: []
     description: "Categories indexes to be selected"
-    example: []
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: true
     multiple_sep: ":"
     dest: "par"
   - type: "boolean_true"
     name: "--even"
-    alternatives: []
     description: "Subsample evenly from different batches"
     direction: "input"
     dest: "par"
@@ -95,7 +73,6 @@ functionality:
     description: "Output h5ad file"
     example:
     - "output.h5ad"
-    default: []
     must_exist: true
     create_parent: true
     required: true
@@ -105,18 +82,14 @@ functionality:
     dest: "par"
   - type: "integer"
     name: "--seed"
-    alternatives: []
     description: "A seed for the subsampling."
     example:
     - 123
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
@@ -127,10 +100,8 @@ functionality:
     path: "test_script.py"
     is_executable: true
   - type: "file"
-    path: "../../../resources_test/common/pancreas"
+    path: "resources_test/common/pancreas"
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -141,9 +112,7 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
@@ -151,45 +120,17 @@ platforms:
     packages:
     - "scanpy"
     - "anndata~=0.8.0"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
   test_setup:
   - type: "python"
     user: false
     packages:
     - "viashpy"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -199,10 +140,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/subsample/config.vsh.yaml"
-  platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/subsample"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/subsample/subsample"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/subsample/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/subsample"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/subsample/subsample"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

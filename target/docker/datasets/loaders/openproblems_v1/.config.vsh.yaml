@@ -2,78 +2,55 @@ functionality:
   name: "openproblems_v1"
   namespace: "datasets/loaders"
   version: "main_build"
-  authors: []
-  arguments: []
   argument_groups:
   - name: "Inputs"
     arguments:
     - type: "string"
       name: "--dataset_id"
-      alternatives: []
       description: "The ID of the dataset"
-      example: []
-      default: []
       required: true
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--obs_celltype"
-      alternatives: []
       description: "Location of where to find the observation cell types."
-      example: []
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--obs_batch"
-      alternatives: []
       description: "Location of where to find the observation batch IDs."
-      example: []
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--obs_tissue"
-      alternatives: []
       description: "Location of where to find the observation tissue information."
-      example: []
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--layer_counts"
-      alternatives: []
       description: "In which layer to find the counts matrix. Leave undefined to use\
         \ `.X`."
       example:
       - "counts"
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "boolean"
       name: "--sparse"
-      alternatives: []
       description: "Convert layers to a sparse CSR format."
-      example: []
       default:
       - true
       required: false
@@ -85,72 +62,48 @@ functionality:
     arguments:
     - type: "string"
       name: "--dataset_name"
-      alternatives: []
       description: "Nicely formatted name."
-      example: []
-      default: []
       required: true
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--data_url"
-      alternatives: []
       description: "Link to the original source of the dataset."
-      example: []
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--data_reference"
-      alternatives: []
       description: "Bibtex reference of the paper in which the dataset was published."
-      example: []
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--dataset_summary"
-      alternatives: []
       description: "Short description of the dataset."
-      example: []
-      default: []
       required: true
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--dataset_description"
-      alternatives: []
       description: "Long description of the dataset."
-      example: []
-      default: []
       required: true
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "string"
       name: "--dataset_organism"
-      alternatives: []
       description: "The organism of the dataset."
-      example: []
-      default: []
       required: false
-      choices: []
       direction: "input"
       multiple: false
       multiple_sep: ":"
@@ -159,7 +112,6 @@ functionality:
     arguments:
     - type: "file"
       name: "--output"
-      alternatives: []
       description: "An unprocessed dataset as output by a dataset loader."
       info:
         label: "Raw dataset"
@@ -213,7 +165,6 @@ functionality:
             required: false
       example:
       - "raw_dataset.h5ad"
-      default: []
       must_exist: true
       create_parent: true
       required: false
@@ -231,21 +182,17 @@ functionality:
     path: "test.py"
     is_executable: true
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
   id: "docker"
-  image: "python:3.8"
+  image: "python:3.10"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "apt"
@@ -253,28 +200,14 @@ platforms:
     - "git"
     interactive: false
   - type: "docker"
-    label: []
-    add: []
-    copy: []
     run:
     - "git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems\
       \ && \\\n  pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt\
       \ && \\\n  pip install --no-cache-dir --editable /opt/openproblems\n"
-    build_args: []
-    env: []
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -288,6 +221,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1/openproblems_v1"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

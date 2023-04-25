@@ -2,17 +2,12 @@ functionality:
   name: "check_dataset_schema"
   namespace: "common"
   version: "main_build"
-  authors: []
-  arguments: []
   argument_groups:
   - name: "Inputs"
     arguments:
     - type: "file"
       name: "--input"
-      alternatives: []
       description: "A h5ad file."
-      example: []
-      default: []
       must_exist: true
       create_parent: true
       required: true
@@ -22,10 +17,7 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--schema"
-      alternatives: []
       description: "A schema file for the h5ad object."
-      example: []
-      default: []
       must_exist: true
       create_parent: true
       required: true
@@ -37,10 +29,8 @@ functionality:
     arguments:
     - type: "boolean"
       name: "--stop_on_error"
-      alternatives: []
       description: "Whether or not to stop with exit code 1 if the input file does\
         \ not adhere to the schema."
-      example: []
       default:
       - false
       required: false
@@ -52,12 +42,10 @@ functionality:
     arguments:
     - type: "file"
       name: "--checks"
-      alternatives: []
       description: "If specified, this file will contain a structured log of which\
         \ checks succeeded (or not)."
       example:
       - "checks.json"
-      default: []
       must_exist: true
       create_parent: true
       required: false
@@ -67,11 +55,9 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--output"
-      alternatives: []
       description: "If specified, the output file will be a copy of the input file."
       example:
       - "output.h5ad"
-      default: []
       must_exist: true
       create_parent: true
       required: false
@@ -87,13 +73,11 @@ functionality:
     \ in a schema."
   test_resources:
   - type: "file"
-    path: "../../../resources_test/common/pancreas"
+    path: "resources_test/common/pancreas"
   - type: "python_script"
     path: "test.py"
     is_executable: true
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -104,40 +88,19 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
     user: false
-    packages: []
     pip:
     - "anndata~=0.8.0"
     - "pyyaml"
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -151,6 +114,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/check_dataset_schema"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/check_dataset_schema/check_dataset_schema"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

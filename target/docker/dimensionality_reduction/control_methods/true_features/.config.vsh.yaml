@@ -2,14 +2,12 @@ functionality:
   name: "true_features"
   namespace: "dimensionality_reduction/control_methods"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
-    description: "A normalized data with a PCA embedding and HVG selection"
+    description: "The training data"
     info:
-      short_description: "Dataset+PCA+HVG"
+      short_description: "Training data"
       slots:
         layers:
         - type: "integer"
@@ -19,43 +17,12 @@ functionality:
         - type: "double"
           name: "normalized"
           description: "Normalized expression values"
-        obs:
-        - type: "string"
-          name: "celltype"
-          description: "Cell type information"
-          required: false
-        - type: "string"
-          name: "batch"
-          description: "Batch information"
-          required: false
-        - type: "string"
-          name: "tissue"
-          description: "Tissue information"
-          required: false
-        - type: "double"
-          name: "size_factors"
-          description: "The size factors created by the normalization method, if any."
-          required: false
-        var:
-        - type: "boolean"
-          name: "hvg"
-          description: "Whether or not the feature is considered to be a 'highly variable\
-            \ gene'"
           required: true
+        var:
         - type: "double"
           name: "hvg_score"
           description: "High variability gene score (normalized dispersion). The greater,\
             \ the more variable."
-          required: true
-        obsm:
-        - type: "double"
-          name: "X_pca"
-          description: "The resulting PCA embedding."
-          required: true
-        varm:
-        - type: "double"
-          name: "pca_loadings"
-          description: "The PCA loadings matrix."
           required: true
         uns:
         - type: "string"
@@ -66,13 +33,8 @@ functionality:
           name: "normalization_id"
           description: "Which normalization was used"
           required: true
-        - type: "double"
-          name: "pca_variance"
-          description: "The PCA variance objects."
-          required: true
     example:
-    - "dataset.h5ad"
-    default: []
+    - "resources_test/dimensionality_reduction/pancreas/train.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -82,7 +44,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "A dimensionally reduced dataset"
     info:
       short_description: "Training data"
@@ -103,8 +64,7 @@ functionality:
           description: "Which normalization was used"
           required: true
     example:
-    - "reduced.h5ad"
-    default: []
+    - "resources_test/dimensionality_reduction/pancreas/reduced.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -114,9 +74,7 @@ functionality:
     dest: "par"
   - type: "boolean"
     name: "--use_normalized_layer"
-    alternatives: []
     description: "Whether to work with the raw counts or the normalized counts."
-    example: []
     default:
     - false
     required: false
@@ -126,19 +84,15 @@ functionality:
     dest: "par"
   - type: "integer"
     name: "--n_hvg"
-    alternatives: []
     description: "Number of highly variable genes to subset to. If not specified,\
       \ the input matrix will not be subset."
-    example: []
     default:
     - 1000
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
@@ -147,28 +101,13 @@ functionality:
     \ embedding"
   test_resources:
   - type: "file"
-    path: "../../../../resources_test/dimensionality_reduction/pancreas/"
+    path: "resources_test/dimensionality_reduction/pancreas/"
+    dest: "resources_test/dimensionality_reduction/pancreas/"
   - type: "python_script"
-    path: "../../../common/unit_test/check_method_config.py"
+    path: "src/common/comp_tests/check_method_config.py"
     is_executable: true
   - type: "python_script"
-    text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/train.h5ad\"\noutput_path = \"reduced.h5ad\"\
-      \nn_pca = 50\ncmd = [\n    meta['executable'],\n    \"--input\", input_path,\n\
-      \    \"--output\", output_path,\n    \"--n_pca\", str(n_pca)\n]\n\nprint(\"\
-      >> Checking whether input file exists\", flush=True)\nassert path.exists(input_path)\n\
-      \nprint(\">> Running script as test\", flush=True)\nout = subprocess.run(cmd)\n\
-      # out = subprocess.run(cmd, check=True, capture_output=True, text=True)\n\n\
-      print(\">> Checking whether output file exists\", flush=True)\nassert path.exists(output_path)\n\
-      \nprint(\">> Reading h5ad files\", flush=True)\ninput = ad.read_h5ad(input_path)\n\
-      output = ad.read_h5ad(output_path)\n\nprint(\"input:\", input, flush=True)\n\
-      print(\"output:\", output, flush=True)\n\nprint(\">> Checking whether predictions\
-      \ were added\", flush=True)\nassert \"X_emb\" in output.obsm\nassert meta['functionality_name']\
-      \ == output.uns[\"method_id\"]\n\nprint(\">> Checking whether data from input\
-      \ was copied properly to output\", flush=True)\nassert input.n_obs == output.n_obs\n\
-      assert input.uns[\"dataset_id\"] == output.uns[\"dataset_id\"]\n\nprint(\"All\
-      \ checks succeeded!\", flush=True)"
-    dest: "generic_test.py"
+    path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   info:
     subtype: "positive_control"
@@ -181,6 +120,7 @@ functionality:
     v1_commit: "4a0ee9b3731ff10d8cd2e584726a61b502aef613"
     preferred_normalization: "counts"
     variants:
+      true_features: null
       true_features_log_cpm:
         preferred_normalization: "log_cpm"
         use_normalized_layer: true
@@ -190,8 +130,6 @@ functionality:
         n_hvg: 1000
     type: "control_method"
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -202,9 +140,7 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
@@ -213,32 +149,14 @@ platforms:
     - "scanpy"
     - "pyyaml"
     - "anndata~=0.8.0"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
     label:
     - "highmem"
     - "highcpu"
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -252,6 +170,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/control_methods/true_features"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/control_methods/true_features/true_features"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -2,15 +2,12 @@ functionality:
   name: "check_migration_status"
   namespace: "migration"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--git_sha"
-    alternatives: []
     description: "a json with git sha info"
     example:
     - "git_sha.json"
-    default: []
     must_exist: true
     create_parent: true
     required: false
@@ -20,11 +17,9 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--comp_info"
-    alternatives: []
     description: "a json with component info"
     example:
     - "comp_info.json"
-    default: []
     must_exist: true
     create_parent: true
     required: false
@@ -34,9 +29,7 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "Output yaml file with migration status"
-    example: []
     default:
     - "output.yaml"
     must_exist: true
@@ -46,7 +39,6 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
@@ -54,13 +46,11 @@ functionality:
   description: "Check migration status"
   test_resources:
   - type: "file"
-    path: "../../../resources_test"
+    path: "resources_test"
   - type: "python_script"
     path: "test.py"
     is_executable: true
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -71,39 +61,18 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
     user: false
-    packages: []
     pip:
     - "pyyaml"
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -119,6 +88,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/migration/check_migration_status"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/migration/check_migration_status/check_migration_status"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -2,15 +2,12 @@ functionality:
   name: "list_git_shas"
   namespace: "migration"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
     description: "Path to a git repository"
     example:
     - "/path/to/repo"
-    default: []
     must_exist: true
     create_parent: true
     required: true
@@ -20,7 +17,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    alternatives: []
     description: "A json containing a list of entries. Each entry must have the\n\
       following values: \n\n* \"path\" `string`: Path a file in the repository\n*\
       \ \"last_modified\" `string`: Date of when the file was last modified, in `yyyy-mm-dd\
@@ -29,7 +25,6 @@ functionality:
       \ which the file was modified\n"
     example:
     - "output.json"
-    default: []
     must_exist: true
     create_parent: true
     required: true
@@ -39,11 +34,9 @@ functionality:
     dest: "par"
   - type: "boolean_true"
     name: "--show_history"
-    alternatives: []
     description: "Whether or not to include the full history of SHAs for each file."
     direction: "input"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
@@ -54,8 +47,6 @@ functionality:
     path: "test.py"
     is_executable: true
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -66,32 +57,16 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
-  setup: []
   test_setup:
   - type: "docker"
-    label: []
-    add: []
-    copy: []
     run:
     - "git clone https://github.com/openproblems-bio/openproblems-v2.git"
-    build_args: []
-    env: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -107,6 +82,6 @@ info:
   platform: "native"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/migration/list_git_shas"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/migration/list_git_shas/list_git_shas"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

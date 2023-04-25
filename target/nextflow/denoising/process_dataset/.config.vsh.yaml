@@ -2,26 +2,106 @@ functionality:
   name: "process_dataset"
   namespace: "denoising"
   version: "main_build"
-  authors: []
   arguments:
   - type: "file"
     name: "--input"
-    alternatives: []
-    description: "A preprocessed dataset"
+    description: "A normalised data with a PCA embedding, HVG selection and a kNN\
+      \ graph"
     info:
-      short_description: "Preprocessed dataset"
+      label: "Dataset+PCA+HVG+kNN"
       slots:
-        layers:
-        - type: "integer"
-          name: "counts"
-          description: "Raw counts"
+        obsp:
+        - type: "double"
+          name: "knn_distances"
+          description: "K nearest neighbors distance matrix."
+          required: true
+        - type: "double"
+          name: "knn_connectivities"
+          description: "K nearest neighbors connectivities matrix."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
+        - name: "dataset_name"
+          type: "string"
+          description: "Nicely formatted name."
+          required: true
+        - type: "string"
+          name: "data_url"
+          description: "Link to the original source of the dataset."
+          required: false
+        - name: "data_reference"
+          type: "string"
+          description: "Bibtex reference of the paper in which the dataset was published."
+          required: false
+        - name: "dataset_summary"
+          type: "string"
+          description: "Short description of the dataset."
+          required: true
+        - name: "dataset_description"
+          type: "string"
+          description: "Long description of the dataset."
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+        - type: "double"
+          name: "pca_variance"
+          description: "The PCA variance objects."
+          required: true
+        - type: "object"
+          name: "knn"
+          description: "Neighbors data."
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+        varm:
+        - type: "double"
+          name: "pca_loadings"
+          description: "The PCA loadings matrix."
+          required: true
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalised expression values"
+        obs:
+        - type: "string"
+          name: "celltype"
+          description: "Cell type information"
+          required: false
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+          required: false
+        - type: "string"
+          name: "tissue"
+          description: "Tissue information"
+          required: false
+        - type: "double"
+          name: "size_factors"
+          description: "The size factors created by the normalisation method, if any."
+          required: false
     example:
-    - "preprocessed.h5ad"
-    default: []
+    - "/resources_test/common/pancreas/dataset.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -31,7 +111,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output_train"
-    alternatives: []
     description: "The training data"
     info:
       short_description: "Training data"
@@ -45,8 +124,7 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
     example:
-    - "training.h5ad"
-    default: []
+    - "resources_test/denoising/pancreas/train.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -56,7 +134,6 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output_test"
-    alternatives: []
     description: "The test data"
     info:
       short_description: "Test data"
@@ -70,8 +147,7 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
     example:
-    - "test.h5ad"
-    default: []
+    - "resources_test/denoising/pancreas/test.h5ad"
     must_exist: true
     create_parent: true
     required: false
@@ -81,9 +157,7 @@ functionality:
     dest: "par"
   - type: "string"
     name: "--method"
-    alternatives: []
     description: "The process method to assign train/test."
-    example: []
     default:
     - "mcv"
     required: false
@@ -95,9 +169,7 @@ functionality:
     dest: "par"
   - type: "double"
     name: "--train_frac"
-    alternatives: []
     description: "The fraction the molecules need to be split to train dataset"
-    example: []
     default:
     - 0.9
     required: false
@@ -107,18 +179,14 @@ functionality:
     dest: "par"
   - type: "integer"
     name: "--seed"
-    alternatives: []
     description: "A seed for the subsampling."
     example:
     - 123
-    default: []
     required: false
-    choices: []
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  argument_groups: []
   resources:
   - type: "python_script"
     path: "script.py"
@@ -129,32 +197,15 @@ functionality:
     \ two (potentially overlapping) groups using a fraction ratio.\nThese are output\
     \ as two separate AnnData objects.\n"
   test_resources:
-  - type: "file"
-    path: "../../../resources_test/common/pancreas"
   - type: "python_script"
-    text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
-      \ = meta[\"resources_dir\"] + \"/pancreas/dataset.h5ad\"\noutput_train_path\
-      \ = \"output_train.h5ad\"\noutput_test_path = \"output_test.h5ad\"\n\ncmd =\
-      \ [\n    meta['executable'],\n    \"--input\", input_path,\n    \"--output_train\"\
-      , output_train_path,\n    \"--output_test\", output_test_path,\n]\n\nprint(\"\
-      >> Running script as test\")\nout = subprocess.run(cmd, check=True, capture_output=True,\
-      \ text=True)\n\nprint(\">> Checking whether output file exists\")\nassert path.exists(output_train_path)\n\
-      assert path.exists(output_test_path)\n\nprint(\">> Reading h5ad files\")\ninput\
-      \ = ad.read_h5ad(input_path)\noutput_train = ad.read_h5ad(output_train_path)\n\
-      output_test = ad.read_h5ad(output_test_path)\n\nprint(\"input:\", input)\nprint(\"\
-      output_train:\", output_train)\nprint(\"output_test:\", output_test)\n\nprint(\"\
-      >> Checking whether data from input was copied properly to output\")\nassert\
-      \ output_train.uns[\"dataset_id\"] == input.uns[\"dataset_id\"]\nassert output_test.uns[\"\
-      dataset_id\"] == input.uns[\"dataset_id\"]\n\nprint(\">> Check whether certain\
-      \ slots exist\")\nassert \"counts\" in output_train.layers\nassert \"counts\"\
-      \ in output_test.layers\n\nprint(\">> All checks succeeded!\")"
-    dest: "./script.py"
+    path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
+  - type: "file"
+    path: "resources_test/common/pancreas"
+    dest: "resources_test/common/pancreas"
   info:
     type: "process_dataset"
   status: "enabled"
-  requirements:
-    commands: []
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
@@ -165,9 +216,7 @@ platforms:
   namespace_separator: "/"
   resolve_volume: "Automatic"
   chown: true
-  port: []
   setup_strategy: "ifneedbepullelsecachedbuild"
-  run_args: []
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
   - type: "python"
@@ -176,30 +225,12 @@ platforms:
     - "anndata~=0.8.0"
     - "numpy"
     - "scipy"
-    pip: []
-    pypi: []
-    git: []
-    github: []
-    gitlab: []
-    mercurial: []
-    svn: []
-    bazaar: []
-    url: []
-    script: []
+    - "pyyaml"
     upgrade: true
-  test_setup: []
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
-    accelerator: {}
-    conda: []
-    containerOptions: []
-    label: []
-    module: []
-    pod: []
-    publishDir: []
-    queue: []
     tag: "$id"
   auto:
     simplifyInput: true
@@ -213,6 +244,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset/process_dataset"
-  viash_version: "0.7.0"
-  git_commit: "1f893093aea97564faa584054dcc90fff7f9b0f9"
+  viash_version: "0.7.3"
+  git_commit: "815f69faf5a1e23c36fa6a5b5ee1d0c1a59edf41"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
