@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "mlp"
-  namespace: "label_projection/methods"
   info:
     pretty_name: Multilayer perceptron
     summary: "A neural network with 100-dimensional PCA input, two hidden layers, and gradient descent weight updates to minimize cross entropy loss."
@@ -44,7 +43,7 @@ platforms:
         packages:
           - scikit-learn
           - pyyaml
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
   - type: nextflow
     directives: 
       label: [ midmem, lowcpu ]

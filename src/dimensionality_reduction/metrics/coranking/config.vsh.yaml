@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_metric.yaml
 functionality:
   name: "coranking"
-  namespace: "dimensionality_reduction/metrics"
   description: |
     This is a set of metrics which all use a co-ranking matrix as the basis of the metric.
   info:
@@ -99,7 +98,7 @@ platforms:
       - type: apt
         packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3 ]
       - type: python
-        pip: [ anndata>=0.8, pyyaml ]
+        pip: [ anndata~=0.8.0, pyyaml ]
   - type: nextflow
     directives: 
       label: [ highmem, midcpu ]

@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "seurat_transferdata"
-  namespace: "label_projection/methods"
   description: |
     The Seurat v3 anchoring procedure is designed to integrate
     diverse single-cell datasets across technologies and modalities. 
@@ -36,7 +35,7 @@ platforms:
       - type: apt
         packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3 ]
       - type: python
-        pip: [ anndata>=0.8, pyyaml ]
+        pip: [ anndata~=0.8.0, pyyaml ]
   - type: nextflow
     directives: 
       label: [ highmem, highcpu ]

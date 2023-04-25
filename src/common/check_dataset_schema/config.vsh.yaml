@@ -37,7 +37,7 @@ functionality:
     - type: python_script
       path: script.py
   test_resources:
-    - path: ../../../resources_test/common/pancreas
+    - path: /resources_test/common/pancreas
     - type: python_script
       path: test.py
 platforms:
@@ -45,6 +45,6 @@ platforms:
     image: python:3.10
     setup:
       - type: python
-        pip: [anndata>=0.8, pyyaml]
+        pip: [anndata~=0.8.0, pyyaml]
   - type: nextflow
 

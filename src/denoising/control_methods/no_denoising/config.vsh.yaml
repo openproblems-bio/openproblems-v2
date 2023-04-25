@@ -1,8 +1,6 @@
 __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: "no_denoising"
-  namespace: "denoising/control_methods"
-  
   info:
     subtype: negative_control
     pretty_name: No Denoising
@@ -22,7 +20,7 @@ platforms:
     setup:
       - type: python
         packages:
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
           - pyyaml
   - type: nextflow
     directives: 

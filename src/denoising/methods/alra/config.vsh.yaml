@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "alra"
-  namespace: "denoising/methods"
   info:
     pretty_name: ALRA
     summary: "ALRA imputes missing values in scRNA-seq data by computing rank-k approximation, thresholding by gene, and rescaling the matrix."
@@ -37,7 +36,7 @@ platforms:
       - type: apt
         packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3, git ]
       - type: python
-        pip: [ anndata>=0.8, pyyaml ]
+        pip: [ anndata~=0.8.0, pyyaml ]
       - type: r
         cran: [ Matrix, anndata, bit64, rsvd ]
       - type: docker

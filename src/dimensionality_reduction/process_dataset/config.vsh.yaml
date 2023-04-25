@@ -1,7 +1,6 @@
 __merge__: ../api/comp_process_dataset.yaml
 functionality:
   name: "process_dataset"
-  namespace: "dimensionality_reduction"
   resources:
     - type: python_script
       path: script.py
@@ -12,7 +11,7 @@ platforms:
       - type: python
         packages:
           - pyyaml
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
   - type: nextflow
     directives: 
       label: [ highmem, highcpu ]

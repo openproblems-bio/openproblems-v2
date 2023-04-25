@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "umap"
-  namespace: "dimensionality_reduction/methods"
   info:
     pretty_name: UMAP
     summary: "A manifold learning algorithm that utilizes topological data analysis for dimension reduction."
@@ -44,7 +43,7 @@ platforms:
       - type: python
         packages:
           - scanpy
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
           - pyyaml
           - umap-learn
   - type: nextflow

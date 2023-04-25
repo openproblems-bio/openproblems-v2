@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "phate"
-  namespace: "dimensionality_reduction/methods"
   info:
     pretty_name: PHATE
     summary: "Preservating trajectories in a dataset by using heat diffusion potential via an affinity-based method that creates an embedding from dominant eigenvalues of a Markov transition matrix."
@@ -50,7 +49,7 @@ platforms:
     setup:
       - type: python
         packages:
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
           - phate==1.0.*
           - scprep
           - pyyaml
