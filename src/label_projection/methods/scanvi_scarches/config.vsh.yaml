@@ -7,7 +7,6 @@ __merge__: ../../api/comp_method.yaml
 
 functionality:
   name: scanvi_scarches
-  namespace: label_projection/methods
 
   # Metadata for your component (required)
   info:
