@@ -224,7 +224,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_component/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "8f8773d0000c21cb220f10075e84bfa2def078eb",
+    "git_commit" : "832a8dacd9850452a6db43826485f12f299ef569",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -610,11 +610,17 @@ cat("Reading input files\\\\\\\\n")
   return script
 
 def read_viash_config(file):
+  file = file.absolute()
+
   # read in config
   command = ["viash", "config", "view", str(file)]
 
   # Execute the command and capture the output
-  output = subprocess.check_output(command, universal_newlines=True)
+  output = subprocess.check_output(
+    command,
+    universal_newlines=True,
+    cwd=str(file.parent)
+  )
 
   # Parse the output as YAML
   config = yaml.load(output)

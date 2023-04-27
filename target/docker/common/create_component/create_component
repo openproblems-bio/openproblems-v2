@@ -435,9 +435,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "ruamel.yaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2023-04-25T11:08:43Z"
+LABEL org.opencontainers.image.created="2023-04-27T14:28:35Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8f8773d0000c21cb220f10075e84bfa2def078eb"
+LABEL org.opencontainers.image.revision="832a8dacd9850452a6db43826485f12f299ef569"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -1350,11 +1350,17 @@ cat("Reading input files\\\\n")
   return script
 
 def read_viash_config(file):
+  file = file.absolute()
+
   # read in config
   command = ["viash", "config", "view", str(file)]
 
   # Execute the command and capture the output
-  output = subprocess.check_output(command, universal_newlines=True)
+  output = subprocess.check_output(
+    command,
+    universal_newlines=True,
+    cwd=str(file.parent)
+  )
 
   # Parse the output as YAML
   config = yaml.load(output)
