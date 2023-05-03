@@ -402,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization sqrt_cpm"
-LABEL org.opencontainers.image.created="2023-04-27T14:28:29Z"
+LABEL org.opencontainers.image.created="2023-05-03T09:38:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="832a8dacd9850452a6db43826485f12f299ef569"
+LABEL org.opencontainers.image.revision="9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
