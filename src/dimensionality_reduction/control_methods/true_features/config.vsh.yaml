@@ -1,11 +1,12 @@
 __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: "true_features"
-  namespace: "dimensionality_reduction/control_methods"
   description: "Positive control method which generates high-dimensional (full data) embedding"
   info:
     subtype: positive_control
-    method_name: True Features
+    pretty_name: True Features
+    summary: "Positive control by retaining the dimensionality without loss of information."
+    description: "This serves as a positive control since the original high-dimensional data is retained as is, without any loss of information"
     v1_url: openproblems/tasks/dimensionality_reduction/methods/baseline.py
     v1_comp_id: "True Features"
     v1_commit: 4a0ee9b3731ff10d8cd2e584726a61b502aef613
@@ -39,7 +40,7 @@ platforms:
         packages:
           - scanpy
           - pyyaml
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
   - type: nextflow
     directives: 
       label: [ highmem, highcpu ]

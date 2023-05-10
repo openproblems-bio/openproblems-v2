@@ -1,33 +1,43 @@
 
 # openproblems-v2 0.1.0
 
+
+
 ## common
 
 ### NEW FUNCTIONALITY
 
 * `extract_scores`: Summarise a metrics output tsv.
 
-* `dataset_concatenate`: Concatenate N AnnData datasets.
-
 * Created test data `resources_test/pancreas` with `src/common/resources_test_scripts/pancreas.sh`.
+
+* `get_api_info`: Extract api info from tasks.
+
+* `get_method_info`: Extract method info from config yaml.
+
+* `get_metric_info`: Extract metric info from config yaml.
+
+* `get_results`: Extract benchmark scores.
+
+* `get_task_info`: Extract task info.
+
+* `comp_tests`: Common unit tests that can be used by all tasks.
+
+* `check_dataset_schema`: Check if the dataset used has the required fields defined in the api `anndata_*.yaml` files.
+  
+* `Create_component`: Creates a template folder with a viash config and script file depending on the task api.
+
+### MINOR CHANGES
+
+* Refactor and standardize metric and method info fields (#99).
+
+## migration
+
+### NEW FUNCTIONALITY
 
 * `list_git_shas`: create list of latest commit hashes of all files in repo.
 
-* `get_api_info`: extract api info from tasks
-
-* `get_method_info`: extract method info from config yaml
-
-* `get_metric_info`: extract metric info from config yaml
-
 * `check_migration_status`: compare git shas from methods with v1
-
-* `get_results`: extract benchmark scores 
-
-* `get_task_info`: extract task info
-
-* `unit_test`: Common unit test that can be used by all tasks
-
-* `check_dataset_schema`: check if the dataset used has the required fields defined in the api `anndata_*.yaml` files
 
 ## datasets
 
@@ -52,17 +62,15 @@
 
 * `loaders/openproblems_v1_multimodal`: Fetch a multimodal dataset from OpenProblems v1, whilst adding extra information to the `.uns`.
 
-
-
 ## label_projection
 
 ### NEW FUNCTIONALITY
 
 * `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
 
-* `api/comp_*`: Created an api definition for the split, method and metric components.
+* `api/comp_*`: Created an api definition for the process, method and metric components.
 
-* `split_dataset`: Added a component for splitting raw datasets into task-ready dataset objects.
+* `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `resources_test/label_projection/pancreas` with `src/label_projection/resources_test_scripts/pancreas.sh`.
 
@@ -75,6 +83,8 @@
 * `methods/mlp`: Migrated from v1.
 
 * `methods/scanvi`: Migrated and adapted from v1.
+
+* `methods/scanvi_scarches`: Migrated and adapted from v1.
 
 * `methods/seurat_transferdata`: Migrated and adapted from v1.
 
@@ -98,7 +108,7 @@
 
 * `api/comp_*`: Created an api definition for the split, method and metric components.
 
-* `split_dataset`: Added a component for splitting raw datasets into task-ready dataset objects.
+* `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `resources_test/denoising/pancreas` with `src/denoising/resources_test_scripts/pancreas.sh`.
 
@@ -126,7 +136,7 @@
   
 * extended the use of sparse data in methods unless it was not possible
 
-* split_dataset also removes unnecessary data from train and test datasets not needed by the methods and metrics.
+* process_dataset also removes unnecessary data from train and test datasets not needed by the methods and metrics.
 
 ## Dimensionality reduction
 
@@ -135,7 +145,7 @@
 
 * `api/comp_*`: Created an api definition for the split, control method, method and metric components.
 
-* `split_dataset`: Added a component for splitting raw datasets into task-ready dataset objects.
+* `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `control_methods`: Added a component for baseline methods specifically.
 
@@ -175,7 +185,7 @@
 * Raw counts and normalized expression data is stored in `.layers["counts"]` and `.layers["normalized"]`, respectively,
   instead of in `.X`.
   
-* A `split_dataset` has been implemented to make a distinction between the data a method is allowed to see
+* A `process_dataset` has been implemented to make a distinction between the data a method is allowed to see
   (here called the train data) and what a metric is allowed to see (here called the test data).
 
 * `methods/ivis` had originally been removed from the v1 (temporarily) but has been added back to the v2.

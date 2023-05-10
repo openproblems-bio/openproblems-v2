@@ -1,12 +1,13 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "densmap"
-  namespace: "dimensionality_reduction/methods"
-  description: "Density-preserving UMAP"
   info:
-    method_name: densMAP
-    paper_reference: "narayan2021assessing"
-    code_url: https://github.com/lmcinnes/umap
+    pretty_name: densMAP
+    summary: "Modified UMAP with preservation of local density information"
+    description: "A modification of UMAP that adds an extra cost term in order to preserve information about the relative local density of the data. It is performed on the same inputs as UMAP."
+    reference: "narayan2021assessing"
+    repository_url: https://github.com/lmcinnes/umap
+    documentation_url: https://github.com/lmcinnes/umap#readme
     v1_url: openproblems/tasks/dimensionality_reduction/methods/umap.py
     v1_commit: 14d70b330cae09527a6d4c4e552db240601e31cf
     preferred_normalization: log_cpm
@@ -36,7 +37,7 @@ platforms:
       - type: python
         packages:
           - scanpy
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
           - pyyaml
           - umap-learn
   - type: nextflow
