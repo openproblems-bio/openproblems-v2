@@ -161,7 +161,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_api_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64",
+    "git_commit" : "d26827dc9c64314cc14cfe96dc1610cbc06b7e8b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -205,8 +205,8 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-comp_yamls <- list.files(paste(par\\$input, "src", par\\$task_id, "api", sep = "/"), pattern = "comp_", full.names = TRUE)
-file_yamls <- list.files(paste(par\\$input, "src", par\\$task_id, "api", sep = "/"), pattern = "anndata_", full.names = TRUE)
+comp_yamls <- list.files(paste(par\\$input, "src/tasks", par\\$task_id, "api", sep = "/"), pattern = "comp_", full.names = TRUE)
+file_yamls <- list.files(paste(par\\$input, "src/tasks", par\\$task_id, "api", sep = "/"), pattern = "anndata_", full.names = TRUE)
 
 # list component - file args links
 comp_file <- map_df(comp_yamls, function(yaml_file) {

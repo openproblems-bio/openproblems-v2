@@ -187,7 +187,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "python_script",
         "path" : "script.py",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/trustworthiness/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/metrics/trustworthiness/"
       }
     ],
     "description" : "To what extent the local structure is retained in a low-dimensional embedding in a value between 0 and 1.",
@@ -282,10 +282,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/dimensionality_reduction/metrics/trustworthiness/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/metrics/trustworthiness/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64",
+    "git_commit" : "d26827dc9c64314cc14cfe96dc1610cbc06b7e8b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

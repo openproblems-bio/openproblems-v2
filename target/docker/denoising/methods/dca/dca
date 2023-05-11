@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata~=0.8.0" "pyyaml" "git+https://github.com/scottgigante-immunai/dca.git@patch-1"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods dca"
-LABEL org.opencontainers.image.created="2023-05-03T09:38:45Z"
+LABEL org.opencontainers.image.created="2023-05-11T17:41:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64"
+LABEL org.opencontainers.image.revision="d26827dc9c64314cc14cfe96dc1610cbc06b7e8b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

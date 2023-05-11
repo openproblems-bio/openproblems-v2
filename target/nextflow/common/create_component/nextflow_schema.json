@@ -37,7 +37,7 @@
           "api_file": {
             "type": "string",
             "description": "Which API file to use. Defaults to `src/\u003cTASK\u003e/api/comp_\u003cTYPE\u003e.yaml`.","help_text": "Which API file to use. Defaults to `src/\u003cTASK\u003e/api/comp_\u003cTYPE\u003e.yaml`.\nIn tasks with different subtypes of method, this location might not exist and you might need\nto manually specify a different API file to inherit from.\n",
-            "default": "src/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
+            "default": "src/tasks/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
           },
           "viash_yaml": {
             "type": "string",

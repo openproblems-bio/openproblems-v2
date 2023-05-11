@@ -92,7 +92,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output",
         "description" : "Path to the component directory. Suggested location is `src/<TASK>/<TYPE>s/<NAME>`.",
         "default" : [
-          "src/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}"
+          "src/tasks/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -107,7 +107,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--api_file",
         "description" : "Which API file to use. Defaults to `src/<TASK>/api/comp_<TYPE>.yaml`.\nIn tasks with different subtypes of method, this location might not exist and you might need\nto manually specify a different API file to inherit from.\n",
         "default" : [
-          "src/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
+          "src/tasks/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -224,7 +224,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_component/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64",
+    "git_commit" : "d26827dc9c64314cc14cfe96dc1610cbc06b7e8b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

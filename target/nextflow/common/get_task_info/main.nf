@@ -150,7 +150,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_task_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64",
+    "git_commit" : "d26827dc9c64314cc14cfe96dc1610cbc06b7e8b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -187,7 +187,7 @@ meta = {
 
 ## VIASH END
 
-task_info_path = path.join(par["input"], "src", par["task_id"], "api", "task_info.yaml")
+task_info_path = path.join(par["input"], "src/tasks", par["task_id"], "api", "task_info.yaml")
 
 with open(task_info_path, "r") as f:
     task_info = load(f, Loader=CSafeLoader )

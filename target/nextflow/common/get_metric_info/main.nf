@@ -176,7 +176,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64",
+    "git_commit" : "d26827dc9c64314cc14cfe96dc1610cbc06b7e8b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -222,7 +222,7 @@ rm(.viash_orig_warn)
 
 ns_list <- processx::run(
   "viash",
-  c("ns", "list", "-q", "metrics", "--src", paste("src", par\\$task_id, sep = "/")),
+  c("ns", "list", "-q", "metrics", "--src", paste("src/tasks", par\\$task_id, sep = "/")),
   wd = par\\$input
 )
 configs <- yaml::yaml.load(ns_list\\$stdout)

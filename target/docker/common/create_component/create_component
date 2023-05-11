@@ -190,13 +190,14 @@ function ViashHelp {
   echo ""
   echo "    --output"
   echo "        type: file, output, file must exist"
-  echo "        default: src/\${VIASH_PAR_TASK}/\${VIASH_PAR_TYPE}s/\${VIASH_PAR_NAME}"
+  echo "        default:"
+  echo "src/tasks/\${VIASH_PAR_TASK}/\${VIASH_PAR_TYPE}s/\${VIASH_PAR_NAME}"
   echo "        Path to the component directory. Suggested location is"
   echo "        \`src/<TASK>/<TYPE>s/<NAME>\`."
   echo ""
   echo "    --api_file"
   echo "        type: file, file must exist"
-  echo "        default: src/\${VIASH_PAR_TASK}/api/comp_\${VIASH_PAR_TYPE}.yaml"
+  echo "        default: src/tasks/\${VIASH_PAR_TASK}/api/comp_\${VIASH_PAR_TYPE}.yaml"
   echo "        Which API file to use. Defaults to \`src/<TASK>/api/comp_<TYPE>.yaml\`."
   echo "        In tasks with different subtypes of method, this location might not"
   echo "        exist and you might need"
@@ -435,9 +436,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "ruamel.yaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2023-05-03T09:38:41Z"
+LABEL org.opencontainers.image.created="2023-05-11T17:41:15Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64"
+LABEL org.opencontainers.image.revision="d26827dc9c64314cc14cfe96dc1610cbc06b7e8b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -811,10 +812,10 @@ if [ -z ${VIASH_PAR_LANGUAGE+x} ]; then
   VIASH_PAR_LANGUAGE="python"
 fi
 if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
-  VIASH_PAR_OUTPUT="src/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}"
+  VIASH_PAR_OUTPUT="src/tasks/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}"
 fi
 if [ -z ${VIASH_PAR_API_FILE+x} ]; then
-  VIASH_PAR_API_FILE="src/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
+  VIASH_PAR_API_FILE="src/tasks/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
 fi
 if [ -z ${VIASH_PAR_VIASH_YAML+x} ]; then
   VIASH_PAR_VIASH_YAML="_viash.yaml"

@@ -300,12 +300,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "python_script",
         "path" : "script.py",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/process_dataset/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/process_dataset/"
       },
       {
         "type" : "file",
         "path" : "helper.py",
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/process_dataset/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/process_dataset/"
       }
     ],
     "description" : "Split data using molecular cross-validation.\n\nSplits molecules into two (potentially overlapping) groups using a fraction ratio.\nThese are output as two separate AnnData objects.\n",
@@ -373,10 +373,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/denoising/process_dataset/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/process_dataset/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9438b8ad0cdd9cd2ed3ba6a01d0b4f075c059d64",
+    "git_commit" : "d26827dc9c64314cc14cfe96dc1610cbc06b7e8b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
