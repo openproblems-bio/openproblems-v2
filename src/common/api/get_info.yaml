@@ -38,8 +38,14 @@ functionality:
         ]
 
         print(">> Running script as test", flush=True)
-        out = subprocess.run(cmd, capture_output=True, text=True)
-        print(out.stderr)
+        out = subprocess.run(cmd, stderr=subprocess.STDOUT)
+        
+        if out.stdout:
+          print(out.stdout)
+
+        if out.returncode:
+          print(f"script: '{cmd}' exited with an error.")
+          exit(out.returncode)
 
         print(">> Checking whether output file exists", flush=True)
         assert path.exists(output_path)

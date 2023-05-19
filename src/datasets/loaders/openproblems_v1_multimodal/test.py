@@ -27,8 +27,15 @@ out = subprocess.run(
         "--dataset_description", "A couple of paragraphs worth of text.",
         "--dataset_organism", "homo_sapiens",
     ],
-    check=True
+    stderr=subprocess.STDOUT
 )
+
+if out.stdout:
+    print(out.stdout)
+
+if out.returncode:
+    print(f"script: '{out.args}' exited with an error.")
+    exit(out.returncode)
 
 print(">> Checking whether files exist", flush=True)
 assert path.exists(output_mod1_file)

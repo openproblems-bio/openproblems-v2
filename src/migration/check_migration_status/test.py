@@ -14,7 +14,14 @@ cmd = [
 ]
 
 print(">> Running script as test")
-out = subprocess.run(cmd, check=True, capture_output=True, text=True)
+out = subprocess.run(cmd, stderr=subprocess.STDOUT)
+
+if out.stdout:
+    print(out.stdout)
+
+if out.returncode:
+    print(f"script: '{cmd}' exited with an error.")
+    exit(out.returncode)
 
 print(">> Checking whether output file exists")
 assert path.exists(output_path)
