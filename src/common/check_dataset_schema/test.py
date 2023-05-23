@@ -70,8 +70,8 @@ if out.returncode:
     exit(out.returncode)
 
 print(">> Checking whether output file exists", flush=True)
-assert path.exists(output_checks)
-assert path.exists(output_path)
+assert path.exists(output_checks), "Output checks file does not exist"
+assert path.exists(output_path), "Output path does not exist"
 
 print(">> Reading json file", flush=True)
 with open(output_checks, 'r') as f:
@@ -93,10 +93,10 @@ print(">> Running script as test", flush=True)
 out_error = subprocess.run(cmd_error)
 
 print(">> Checking whether output file exists", flush=True)
-assert path.exists(output_checks)
-assert path.exists(output_path)
+assert path.exists(output_checks), "Output checks file does not exist"
+assert path.exists(output_path), "Output path does not exist"
 
-assert out_error.returncode == 1
+assert out_error.returncode == 1, "Exit code should be 1"
 
 print(">> Reading json file", flush=True)
 with open(output_checks, 'r') as f:
