@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_normalization.yaml
 functionality:
   name: "l1_sqrt"
-  namespace: "common/normalization"
   description: |
     Scaled L1 sqrt normalization.
 
@@ -24,6 +23,7 @@ platforms:
           - scprep
           - "anndata~=0.8.0"
           - numpy
+          - pyyaml
   - type: nextflow
     directives: 
       label: [ lowmem, lowcpu ]

@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_processor_pca.yaml
 functionality:
   name: "pca"
-  namespace: "datasets/processors"
   description: "Compute PCA"
   resources:
     - type: python_script
@@ -18,4 +17,5 @@ platforms:
         packages:
           - scanpy
           - "anndata~=0.8.0"
+          - pyyaml
   - type: nextflow

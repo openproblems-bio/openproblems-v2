@@ -1,5 +1,9 @@
 functionality:
+  namespace: "datasets/loaders"
   arguments:
     - name: "--output"
       direction: output
       __merge__: anndata_raw.yaml
+  test_resources:
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
