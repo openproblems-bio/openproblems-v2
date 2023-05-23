@@ -33,7 +33,8 @@ if ("control" not in info["type"]):
 # assert "variants" in info,  "variants not an info field"
 # TODO: if variants is in info, check whether it's a dictionary with correct arguments
 assert "preferred_normalization" in info, "preferred_normalization not an info field"
-
+norm_methods = ["log_cpm", "counts", "log_scran_pooling", "sqrt_cpm", "l1_sqrt"]
+assert info["preferred_normalization"] in norm_methods, "info['preferred_normalization'] not one of '" + "', '".join(norm_methods) + "'."
 
 
 
