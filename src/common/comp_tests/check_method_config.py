@@ -30,7 +30,8 @@ if ("control" not in info["type"]):
     assert "reference" in info, "reference not an info field"
     assert "documentation_url" in info is not None, "documentation_url not an info field or is empty"
     assert "repository_url" in info is not None, "repository_url not an info field or is empty"
-assert "variants" in info,  "variants not an info field"
+# assert "variants" in info,  "variants not an info field"
+# TODO: if variants is in info, check whether it's a dictionary with correct arguments
 assert "preferred_normalization" in info, "preferred_normalization not an info field"
 
 
