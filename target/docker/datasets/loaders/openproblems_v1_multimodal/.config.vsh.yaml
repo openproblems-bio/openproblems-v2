@@ -284,5 +284,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1_multimodal"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1_multimodal/openproblems_v1_multimodal"
   viash_version: "0.7.3"
-  git_commit: "cfea96537d354171cab5c7b1e810eee95bbd6945"
+  git_commit: "70f2e77aa973a3952119ae89572e7b4197f13fff"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
