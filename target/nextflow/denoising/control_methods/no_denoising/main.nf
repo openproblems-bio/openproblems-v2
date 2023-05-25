@@ -171,7 +171,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "subtype" : "negative_control",
       "pretty_name" : "No Denoising",
       "summary" : "negative control by copying train counts",
-      "description" : "This baseline method serves as a negative control, where the denoised data is a copy of the unaltered training data. This represents the scoring threshold if denoising was not performed on the data.",
+      "description" : "This method serves as a negative control, where the denoised data is a copy of the unaltered training data. This represents the scoring threshold if denoising was not performed on the data.",
       "v1_url" : "openproblems/tasks/denoising/methods/baseline.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
@@ -229,7 +229,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/control_methods/no_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "d657e692f24e03ee90aab844589cbd6bee5b2814",
+    "git_commit" : "cfea96537d354171cab5c7b1e810eee95bbd6945",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

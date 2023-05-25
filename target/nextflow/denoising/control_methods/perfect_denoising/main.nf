@@ -171,7 +171,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "subtype" : "positive_control",
       "pretty_name" : "Perfect Denoising",
       "summary" : "Positive control by copying the test counts",
-      "description" : "This baseline serves as a positive control, where the test data is copied 1-to-1 to the denoised data. This makes it seem as if the data is perfectly denoised as it will be compared to the test data in the metrics.",
+      "description" : "This method serves as a positive control, where the test data is copied 1-to-1 to the denoised data. This makes it seem as if the data is perfectly denoised as it will be compared to the test data in the metrics.",
       "v1_url" : "openproblems/tasks/denoising/methods/baseline.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
@@ -229,7 +229,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/control_methods/perfect_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "d657e692f24e03ee90aab844589cbd6bee5b2814",
+    "git_commit" : "cfea96537d354171cab5c7b1e810eee95bbd6945",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

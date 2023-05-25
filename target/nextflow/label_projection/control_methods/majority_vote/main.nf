@@ -339,8 +339,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "info" : {
       "subtype" : "negative_control",
       "pretty_name" : "Majority Vote",
-      "summary" : "A baseline-type method that predicts all cells to belong to the most abundant cell type in the dataset",
-      "description" : "A baseline-type method that predicts all cells to belong to the most abundant cell type in the dataset",
+      "summary" : "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset",
+      "description" : "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset",
       "v1_url" : "openproblems/tasks/label_projection/methods/baseline.py",
       "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
       "preferred_normalization" : "counts",
@@ -398,7 +398,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/control_methods/majority_vote/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "d657e692f24e03ee90aab844589cbd6bee5b2814",
+    "git_commit" : "cfea96537d354171cab5c7b1e810eee95bbd6945",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
