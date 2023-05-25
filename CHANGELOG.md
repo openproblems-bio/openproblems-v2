@@ -7,6 +7,10 @@
 
 * Relocate task directories to new `src/tasks/` location (PR #142).
 
+### MINOR CHANGES
+
+* Update test scripts (PR #143)
+
 ## common
 
 ### NEW FUNCTIONALITY
