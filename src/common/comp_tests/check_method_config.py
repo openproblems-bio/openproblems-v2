@@ -9,6 +9,13 @@ meta = {
 
 ## VIASH END
 
+NAME_MAXLEN = 50
+
+SUMMARY_MAXLEN = 400
+
+DESCRIPTION_MAXLEN = 1000
+
+
 print("Load config data", flush=True)
 with open(meta["config"], "r") as file:
                 config = yaml.safe_load(file)
@@ -16,6 +23,7 @@ with open(meta["config"], "r") as file:
 
 print("Check general fields", flush=True)
 assert "name" in config["functionality"] is not None, "Name not a field or is empty"
+assert len(config["name"]) <= NAME_MAXLEN, "Name is too long"
 assert "namespace" in config["functionality"] is not None, "namespace not a field or is empty"
 
 print("Check info fields", flush=True)
@@ -25,7 +33,11 @@ info_types = ["method", "control_method"]
 assert info["type"] in info_types , f"got {info['type']} expected one of {info_types}"
 assert "pretty_name" in info is not None, "pretty_name not an info field or is empty"
 assert "summary" in info is not None, "summary not an info field or is empty"
+assert "FILL IN:" not in info["summary"], "Summary not filled in"
+assert len(info["summary"]) <= SUMMARY_MAXLEN, "Summary is too long"
 assert "description" in info is not None, "description not an info field or is empty"
+assert "FILL IN:" not in info["description"], "description not filled in"
+assert len(info["description"]) <= DESCRIPTION_MAXLEN, "description is too long"
 if ("control" not in info["type"]):
     assert "reference" in info, "reference not an info field"
     assert "documentation_url" in info is not None, "documentation_url not an info field or is empty"
