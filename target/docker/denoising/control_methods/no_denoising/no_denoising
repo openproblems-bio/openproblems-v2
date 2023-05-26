@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata~=0.8.0" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/control_methods no_denoising"
-LABEL org.opencontainers.image.created="2023-05-26T08:52:15Z"
+LABEL org.opencontainers.image.created="2023-05-26T08:52:05Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="87b00d79bd639cda426d1ceba6870fc767600e49"
+LABEL org.opencontainers.image.revision="4b22882de50bb852931b085b5f31791b1b240d4e"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

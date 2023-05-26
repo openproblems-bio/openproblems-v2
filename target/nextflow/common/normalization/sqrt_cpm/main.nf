@@ -23,7 +23,7 @@ def jsonSlurper = new JsonSlurper()
 thisConfig = processConfig(jsonSlurper.parseText('''{
   "functionality" : {
     "name" : "sqrt_cpm",
-    "namespace" : "datasets/normalization",
+    "namespace" : "common/normalization",
     "version" : "main_build",
     "arguments" : [
       {
@@ -322,7 +322,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/sqrt_cpm/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "87b00d79bd639cda426d1ceba6870fc767600e49",
+    "git_commit" : "4b22882de50bb852931b085b5f31791b1b240d4e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -392,7 +392,7 @@ thisDefaultProcessArgs = [
   directives: jsonSlurper.parseText('''{
   "container" : {
     "registry" : "ghcr.io",
-    "image" : "openproblems-bio/datasets/normalization/sqrt_cpm",
+    "image" : "openproblems-bio/common/normalization/sqrt_cpm",
     "tag" : "main_build"
   },
   "label" : [

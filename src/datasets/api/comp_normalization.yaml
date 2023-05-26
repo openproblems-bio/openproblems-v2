@@ -1,5 +1,5 @@
 functionality:
-  namespace: "datasets/normalization"
+  namespace: "common/normalization"
   arguments:
     - name: "--input"
       __merge__: anndata_raw.yaml

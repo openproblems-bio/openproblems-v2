@@ -1,6 +1,6 @@
 functionality:
-  name: "log_scran_pooling"
-  namespace: "datasets/normalization"
+  name: "l1_sqrt"
+  namespace: "common/normalization"
   version: "main_build"
   arguments:
   - type: "file"
@@ -155,10 +155,14 @@ functionality:
     multiple_sep: ":"
     dest: "par"
   resources:
-  - type: "r_script"
-    path: "script.R"
+  - type: "python_script"
+    path: "script.py"
     is_executable: true
-  description: "Normalize data using scran pooling"
+  description: "Scaled L1 sqrt normalization.\n\nThis normalization method causes\
+    \ all cells to have the same sum of values.\n\nSteps:\n\n* Compute the square\
+    \ root of the counts.\n* Apply L1 normalization (rescaled such that the sum of\
+    \ the values of each cell sum to 1).\n* Multiply by the median UMI count per cell,\
+    \ causing all cells to have the sum of values.\n"
   test_resources:
   - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
@@ -183,7 +187,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "eddelbuettel/r2u@sha256:1d3a92aab5abad11787cd6b6c9479960db9f4e56dcc7f837768da2e3f3c4dfe2"
+  image: "python:3.10"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -192,37 +196,20 @@ platforms:
   setup_strategy: "ifneedbepullelsecachedbuild"
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
-  - type: "r"
-    cran:
-    - "Matrix"
-    - "rlang"
-    - "anndata"
-    - "bit64"
-    - "scran"
-    - "BiocParallel"
-    bioc_force_install: false
-  - type: "apt"
-    packages:
-    - "libhdf5-dev"
-    - "libgeos-dev"
-    - "python3"
-    - "python3-pip"
-    - "python3-dev"
-    - "python-is-python3"
-    interactive: false
   - type: "python"
     user: false
-    pip:
+    packages:
+    - "scprep"
     - "anndata~=0.8.0"
-    - "scanpy"
+    - "numpy"
     upgrade: true
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
   directives:
     label:
-    - "highmem"
-    - "highcpu"
+    - "lowmem"
+    - "lowcpu"
     tag: "$id"
   auto:
     simplifyInput: true
@@ -232,10 +219,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_scran_pooling/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/l1_sqrt/config.vsh.yaml"
   platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/normalization/log_scran_pooling"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/normalization/log_scran_pooling/log_scran_pooling"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/normalization/l1_sqrt"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/normalization/l1_sqrt/l1_sqrt"
   viash_version: "0.7.3"
-  git_commit: "87b00d79bd639cda426d1ceba6870fc767600e49"
+  git_commit: "4b22882de50bb852931b085b5f31791b1b240d4e"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
