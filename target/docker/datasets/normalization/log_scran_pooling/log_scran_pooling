@@ -162,12 +162,12 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input"
   echo "        type: file, file must exist"
-  echo "        example: raw_dataset.h5ad"
+  echo "        example: resources_test/common/pancreas/raw.h5ad"
   echo "        An unprocessed dataset as output by a dataset loader."
   echo ""
   echo "    --output"
   echo "        type: file, output, file must exist"
-  echo "        example: dataset.h5ad"
+  echo "        example: resources_test/common/pancreas/normalized.h5ad"
   echo "        A normalized dataset"
   echo ""
   echo "    --layer_output"
@@ -409,9 +409,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata~=0.8.0" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization log_scran_pooling"
-LABEL org.opencontainers.image.created="2023-05-26T08:00:46Z"
+LABEL org.opencontainers.image.created="2023-05-26T08:52:13Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="798d643cb7fd5c5bcbfcf1a84fc4cd458449a197"
+LABEL org.opencontainers.image.revision="87b00d79bd639cda426d1ceba6870fc767600e49"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

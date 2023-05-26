@@ -214,12 +214,12 @@ function ViashHelp {
   echo "Outputs:"
   echo "    --output_mod1"
   echo "        type: file, output, file must exist"
-  echo "        example: raw_dataset.h5ad"
+  echo "        example: resources_test/common/pancreas/raw.h5ad"
   echo "        An unprocessed dataset as output by a dataset loader."
   echo ""
   echo "    --output_mod2"
   echo "        type: file, output, file must exist"
-  echo "        example: raw_dataset.h5ad"
+  echo "        example: resources_test/common/pancreas/raw.h5ad"
   echo "        An unprocessed dataset as output by a dataset loader."
 }
 
@@ -449,9 +449,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1_multimodal"
-LABEL org.opencontainers.image.created="2023-05-26T08:00:43Z"
+LABEL org.opencontainers.image.created="2023-05-26T08:52:11Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="798d643cb7fd5c5bcbfcf1a84fc4cd458449a197"
+LABEL org.opencontainers.image.revision="87b00d79bd639cda426d1ceba6870fc767600e49"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

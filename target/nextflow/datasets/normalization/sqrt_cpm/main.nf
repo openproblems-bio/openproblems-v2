@@ -108,7 +108,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "raw_dataset.h5ad"
+          "resources_test/common/pancreas/raw.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -211,7 +211,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "dataset.h5ad"
+          "resources_test/common/pancreas/normalized.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -322,7 +322,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/sqrt_cpm/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "798d643cb7fd5c5bcbfcf1a84fc4cd458449a197",
+    "git_commit" : "87b00d79bd639cda426d1ceba6870fc767600e49",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

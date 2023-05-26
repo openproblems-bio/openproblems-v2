@@ -1,6 +1,5 @@
 functionality:
   name: "openproblems_v1"
-  namespace: "datasets/loaders"
   version: "main_build"
   argument_groups:
   - name: "Inputs"
@@ -164,7 +163,7 @@ functionality:
             description: "The organism of the sample in the dataset."
             required: false
       example:
-      - "raw_dataset.h5ad"
+      - "resources_test/common/pancreas/raw.h5ad"
       must_exist: true
       create_parent: true
       required: false
@@ -219,8 +218,8 @@ platforms:
 info:
   config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/loaders/openproblems_v1/config.vsh.yaml"
   platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/openproblems_v1/openproblems_v1"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/openproblems_v1"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/openproblems_v1/openproblems_v1"
   viash_version: "0.7.3"
-  git_commit: "798d643cb7fd5c5bcbfcf1a84fc4cd458449a197"
+  git_commit: "87b00d79bd639cda426d1ceba6870fc767600e49"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
