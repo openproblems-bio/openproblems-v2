@@ -400,9 +400,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata~=0.8.0" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/control_methods majority_vote"
-LABEL org.opencontainers.image.created="2023-05-25T12:55:35Z"
+LABEL org.opencontainers.image.created="2023-05-26T08:00:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="70f2e77aa973a3952119ae89572e7b4197f13fff"
+LABEL org.opencontainers.image.revision="798d643cb7fd5c5bcbfcf1a84fc4cd458449a197"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

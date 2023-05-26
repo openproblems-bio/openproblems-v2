@@ -161,7 +161,9 @@ function ViashHelp {
   echo "    --input"
   echo "        type: file, file must exist"
   echo "        example: /resources_test/common/pancreas/dataset.h5ad"
-  echo "        A normalised data with a PCA embedding, HVG selection and a kNN graph"
+  echo "        A dataset processed by the common dataset processing pipeline."
+  echo "        This dataset contains both raw counts and normalized data matrices,"
+  echo "        as well as a PCA embedding, HVG selection and a kNN graph."
   echo ""
   echo "    --output_train"
   echo "        type: file, output, file must exist"
@@ -421,9 +423,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pyyaml" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection process_dataset"
-LABEL org.opencontainers.image.created="2023-05-25T12:55:35Z"
+LABEL org.opencontainers.image.created="2023-05-26T08:00:50Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="70f2e77aa973a3952119ae89572e7b4197f13fff"
+LABEL org.opencontainers.image.revision="798d643cb7fd5c5bcbfcf1a84fc4cd458449a197"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

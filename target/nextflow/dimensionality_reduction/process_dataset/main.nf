@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A normalised data with a PCA embedding, HVG selection and a kNN graph",
+        "description" : "A dataset processed by the common dataset processing pipeline. \nThis dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.\n",
         "info" : {
-          "label" : "Dataset+PCA+HVG+kNN",
+          "label" : "Common dataset",
           "slots" : {
             "obsp" : [
               {
@@ -379,7 +379,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/process_dataset/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "70f2e77aa973a3952119ae89572e7b4197f13fff",
+    "git_commit" : "798d643cb7fd5c5bcbfcf1a84fc4cd458449a197",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
