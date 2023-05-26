@@ -43,7 +43,7 @@ with open(meta["config"], "r") as file:
 
 print("check general fields", flush=True)
 assert "name" in config["functionality"] is not None, "Name not a field or is empty"
-assert len(config["name"]) <= NAME_MAXLEN, "Name is too long"
+assert len(config["functionality"]["name"]) <= NAME_MAXLEN, f"Component id (.functionality.name) should not exceed {NAME_MAXLEN} characters."
 assert "namespace" in config["functionality"] is not None, "namespace not a field or is empty"
 
 
