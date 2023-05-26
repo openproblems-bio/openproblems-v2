@@ -16,14 +16,18 @@ SUMMARY_MAXLEN = 400
 DESCRIPTION_MAXLEN = 1000
 
 
-def assert_dict(dict, args):
+def assert_dict(dict, functionality):
 
     arg_names = []
+    args = functionality["arguments"]
+
     for i in args:
         arg_names.append(i["name"].replace("--",""))
+    
+    info = functionality["info"]
     if dict:
         for key in dict:
-            assert key in arg_names, f"{key} is not a defined argument"
+            assert key in arg_names or info, f"{key} is not a defined argument or .functionality.info field"
 
 
 
@@ -55,7 +59,7 @@ if ("control" not in info["type"]):
 
 if "variants" in info:
     for key in info["variants"]:
-        assert_dict(info["variants"][key], config['functionality']["arguments"])
+        assert_dict(info["variants"][key], config['functionality'])
 
 assert "preferred_normalization" in info, "preferred_normalization not an info field"
 norm_methods = ["log_cpm", "counts", "log_scran_pooling", "sqrt_cpm", "l1_sqrt"]
