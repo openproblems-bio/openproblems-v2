@@ -38,7 +38,7 @@ def test_keep_functionality(run_component):
 
     # keep_features = list(input.var_names[:10])
     # use genes with high enough expression
-    keep_features = ["ANP32E", "HMGB2", "MAPK13", "CRADD"]
+    keep_features = ["ANP32E", "CBX5", "HMGB2", "MAPK13"]
 
     run_component([
         "--input", input_path,
