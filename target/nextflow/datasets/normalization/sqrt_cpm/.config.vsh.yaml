@@ -1,6 +1,6 @@
 functionality:
-  name: "l1_sqrt"
-  namespace: "common/normalization"
+  name: "sqrt_cpm"
+  namespace: "datasets/normalization"
   version: "main_build"
   arguments:
   - type: "file"
@@ -158,11 +158,7 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
-  description: "Scaled L1 sqrt normalization.\n\nThis normalization method causes\
-    \ all cells to have the same sum of values.\n\nSteps:\n\n* Compute the square\
-    \ root of the counts.\n* Apply L1 normalization (rescaled such that the sum of\
-    \ the values of each cell sum to 1).\n* Multiply by the median UMI count per cell,\
-    \ causing all cells to have the sum of values.\n"
+  description: "Normalize data using Log Sqrt"
   test_resources:
   - type: "python_script"
     text: "import anndata as ad\nimport subprocess\nfrom os import path\n\ninput_path\
@@ -199,9 +195,8 @@ platforms:
   - type: "python"
     user: false
     packages:
-    - "scprep"
+    - "scanpy"
     - "anndata~=0.8.0"
-    - "numpy"
     upgrade: true
 - type: "nextflow"
   id: "nextflow"
@@ -219,10 +214,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/l1_sqrt/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/sqrt_cpm/config.vsh.yaml"
   platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/normalization/l1_sqrt"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/normalization/l1_sqrt/l1_sqrt"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cpm"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cpm/sqrt_cpm"
   viash_version: "0.7.3"
-  git_commit: "4b22882de50bb852931b085b5f31791b1b240d4e"
+  git_commit: "8e4e6bac2fa43a20e4b860c2b1e0b93231a73d58"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
