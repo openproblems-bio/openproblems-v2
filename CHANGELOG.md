@@ -11,6 +11,8 @@
 
 * Update test scripts (PR #143)
 
+* Update "baseline" to "control" (PR #146)
+
 ## common
 
 ### NEW FUNCTIONALITY
