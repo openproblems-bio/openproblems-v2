@@ -21,9 +21,9 @@ def assert_dict(dict, args):
     arg_names = []
     for i in args:
         arg_names.append(i["name"].replace("--",""))
-    
-    for key in dict:
-        assert key in arg_names, f"{key} is not a defined argument"
+    if dict:
+        for key in dict:
+            assert key in arg_names, f"{key} is not a defined argument"
 
 
 
@@ -55,8 +55,8 @@ if ("control" not in info["type"]):
 
 if "variants" in info:
     for key in info["variants"]:
-        assert_dict(info["variants"][key], config["arguments"])
-        
+        assert_dict(info["variants"][key], config['functionality']["arguments"])
+
 assert "preferred_normalization" in info, "preferred_normalization not an info field"
 norm_methods = ["log_cpm", "counts", "log_scran_pooling", "sqrt_cpm", "l1_sqrt"]
 assert info["preferred_normalization"] in norm_methods, "info['preferred_normalization'] not one of '" + "', '".join(norm_methods) + "'."
