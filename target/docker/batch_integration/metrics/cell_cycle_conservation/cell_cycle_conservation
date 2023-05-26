@@ -390,9 +390,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics cell_cycle_conservation"
-LABEL org.opencontainers.image.created="2023-05-26T09:05:51Z"
+LABEL org.opencontainers.image.created="2023-05-26T23:44:56Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8e4e6bac2fa43a20e4b860c2b1e0b93231a73d58"
+LABEL org.opencontainers.image.revision="f81c8bcc2d6d434d24c14aedc86f151cd9562de4"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

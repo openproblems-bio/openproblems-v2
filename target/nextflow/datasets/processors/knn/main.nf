@@ -372,6 +372,20 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "description" : "Compute KNN",
+    "test_resources" : [
+      {
+        "type" : "file",
+        "path" : "resources_test/common/pancreas",
+        "dest" : "resources_test/common/pancreas",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/comp_tests/run_and_check_adata.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      }
+    ],
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
   },
@@ -421,7 +435,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/knn/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "8e4e6bac2fa43a20e4b860c2b1e0b93231a73d58",
+    "git_commit" : "f81c8bcc2d6d434d24c14aedc86f151cd9562de4",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

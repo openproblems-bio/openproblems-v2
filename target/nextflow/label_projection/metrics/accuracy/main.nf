@@ -303,7 +303,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/metrics/accuracy/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "8e4e6bac2fa43a20e4b860c2b1e0b93231a73d58",
+    "git_commit" : "f81c8bcc2d6d434d24c14aedc86f151cd9562de4",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -344,7 +344,7 @@ print("Load data")
 input_prediction = ad.read_h5ad(par['input_prediction'])
 input_solution = ad.read_h5ad(par['input_solution'])
 
-assert (input_prediction.obs_names == input_solution.obs_names).all()
+assert (input_prediction.obs_names == input_solution.obs_names).all(), "obs_names not the same in prediction and solution inputs"
 
 print("Encode labels")
 cats = list(input_solution.obs["label"].dtype.categories) + list(input_prediction.obs["label_pred"].dtype.categories)

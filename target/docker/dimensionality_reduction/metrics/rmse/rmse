@@ -402,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn" "scikit-learn" "numpy" "scipy" "pyyaml" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics rmse"
-LABEL org.opencontainers.image.created="2023-05-26T09:05:47Z"
+LABEL org.opencontainers.image.created="2023-05-26T23:44:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8e4e6bac2fa43a20e4b860c2b1e0b93231a73d58"
+LABEL org.opencontainers.image.revision="f81c8bcc2d6d434d24c14aedc86f151cd9562de4"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

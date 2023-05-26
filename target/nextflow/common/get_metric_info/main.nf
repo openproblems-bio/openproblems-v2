@@ -94,7 +94,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import subprocess\nfrom os import path\nimport json\n\ninput_path = meta[\\"resources_dir\\"] + \\"/openproblems-v2\\"\ntask_id = \\"denoising\\"\noutput_path = \\"output.json\\"\n\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--task_id\\", task_id,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Running script as test\\", flush=True)\nout = subprocess.run(cmd, capture_output=True, text=True)\nprint(out.stderr)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path)\n\nprint(\\">> Reading json file\\", flush=True)\nwith open(output_path, 'r') as f:\n    out = json.load(f)\n    print(out)\n\nprint(\\"All checks succeeded!\\", flush=True)",
+        "text" : "import subprocess\nfrom os import path\nimport json\n\ninput_path = meta[\\"resources_dir\\"] + \\"/openproblems-v2\\"\ntask_id = \\"denoising\\"\noutput_path = \\"output.json\\"\n\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--task_id\\", task_id,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Running script as test\\", flush=True)\nout = subprocess.run(cmd, stderr=subprocess.STDOUT)\n\nif out.stdout:\n  print(out.stdout)\n\nif out.returncode:\n  print(f\\"script: '{cmd}' exited with an error.\\")\n  exit(out.returncode)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path), \\"Output does not exist\\"\n\nprint(\\">> Reading json file\\", flush=True)\nwith open(output_path, 'r') as f:\n    out = json.load(f)\n    print(out)\n\nprint(\\"All checks succeeded!\\", flush=True)",
         "dest" : "generic_test.py",
         "is_executable" : true
       }
@@ -176,7 +176,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "8e4e6bac2fa43a20e4b860c2b1e0b93231a73d58",
+    "git_commit" : "f81c8bcc2d6d434d24c14aedc86f151cd9562de4",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
