@@ -331,7 +331,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/l1_sqrt/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "d8a75c2c37d8dc9d812241f8b8d38f62064d8deb",
+    "git_commit" : "c1defe5981643c90a6f3edd68a7870d066a47d0b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
