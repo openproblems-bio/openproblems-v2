@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanorama" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scanorama_embed"
-LABEL org.opencontainers.image.created="2023-05-26T23:44:58Z"
+LABEL org.opencontainers.image.created="2023-05-28T03:01:12Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f81c8bcc2d6d434d24c14aedc86f151cd9562de4"
+LABEL org.opencontainers.image.revision="be91470d02c3218f339ceb051b17f44540a7db53"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
