@@ -331,7 +331,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/xgboost/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "715340e8d668864d4ebb2030c5bbf4718277263d",
+    "git_commit" : "94b49b8f452d5c39ffc6f41cf43a387c3ea97976",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
