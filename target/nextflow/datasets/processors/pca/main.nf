@@ -343,6 +343,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
+    "info" : {
+      "type_info" : {
+        "label" : "PCA",
+        "description" : "Computes a PCA embedding of the normalized data.\n"
+      }
+    },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
   },
@@ -392,7 +398,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/pca/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "be91470d02c3218f339ceb051b17f44540a7db53",
+    "git_commit" : "29f35a777aff0d1ab31a4dbc3f82519c1e58df24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

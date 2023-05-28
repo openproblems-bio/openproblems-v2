@@ -294,7 +294,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         }
       },
       "type" : "method",
-      "output_type" : "embedding"
+      "output_type" : "embedding",
+      "type_info" : {
+        "label" : "Method (embedding)",
+        "description" : "A batch integration method which outputs a batch-corrected embedding.\n"
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -344,7 +348,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/scvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "be91470d02c3218f339ceb051b17f44540a7db53",
+    "git_commit" : "29f35a777aff0d1ab31a4dbc3f82519c1e58df24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

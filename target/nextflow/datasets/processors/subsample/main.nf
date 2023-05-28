@@ -23,19 +23,321 @@ def jsonSlurper = new JsonSlurper()
 thisConfig = processConfig(jsonSlurper.parseText('''{
   "functionality" : {
     "name" : "subsample",
+    "namespace" : "datasets/processors",
     "version" : "main_build",
     "arguments" : [
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "Input data to be resized",
+        "description" : "A dataset processed by the common dataset processing pipeline. \nThis dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.\n",
+        "info" : {
+          "label" : "Common dataset",
+          "slots" : {
+            "obsp" : [
+              {
+                "type" : "double",
+                "name" : "knn_distances",
+                "description" : "K nearest neighbors distance matrix.",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "knn_connectivities",
+                "description" : "K nearest neighbors connectivities matrix.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "name" : "dataset_name",
+                "type" : "string",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "data_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "data_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "pca_variance",
+                "description" : "The PCA variance objects.",
+                "required" : true
+              },
+              {
+                "type" : "object",
+                "name" : "knn",
+                "description" : "Neighbors data."
+              }
+            ],
+            "var" : [
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalised expression values"
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "string",
+                "name" : "celltype",
+                "description" : "Cell type information",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "batch",
+                "description" : "Batch information",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "tissue",
+                "description" : "Tissue information",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "size_factors",
+                "description" : "The size factors created by the normalisation method, if any.",
+                "required" : false
+              }
+            ]
+          }
+        },
         "example" : [
-          "input.h5ad"
+          "resources_test/common/pancreas/dataset.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : true,
+        "required" : false,
         "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--output",
+        "description" : "A dataset processed by the common dataset processing pipeline. \nThis dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.\n",
+        "info" : {
+          "label" : "Common dataset",
+          "slots" : {
+            "obsp" : [
+              {
+                "type" : "double",
+                "name" : "knn_distances",
+                "description" : "K nearest neighbors distance matrix.",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "knn_connectivities",
+                "description" : "K nearest neighbors connectivities matrix.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "name" : "dataset_name",
+                "type" : "string",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "data_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "data_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "pca_variance",
+                "description" : "The PCA variance objects.",
+                "required" : true
+              },
+              {
+                "type" : "object",
+                "name" : "knn",
+                "description" : "Neighbors data."
+              }
+            ],
+            "var" : [
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalised expression values"
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "string",
+                "name" : "celltype",
+                "description" : "Cell type information",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "batch",
+                "description" : "Batch information",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "tissue",
+                "description" : "Tissue information",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "size_factors",
+                "description" : "The size factors created by the normalisation method, if any.",
+                "required" : false
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/common/pancreas/dataset.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : false,
+        "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
@@ -104,24 +406,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "file",
-        "name" : "--output",
-        "alternatives" : [
-          "-o"
-        ],
-        "description" : "Output h5ad file",
-        "example" : [
-          "output.h5ad"
-        ],
-        "must_exist" : true,
-        "create_parent" : true,
-        "required" : true,
-        "direction" : "output",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
         "type" : "integer",
         "name" : "--seed",
         "description" : "A seed for the subsampling.",
@@ -146,6 +430,18 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "description" : "Subsample an h5ad file",
     "test_resources" : [
       {
+        "type" : "file",
+        "path" : "resources_test/common/pancreas",
+        "dest" : "resources_test/common/pancreas",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/comp_tests/run_and_check_adata.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
         "type" : "python_script",
         "path" : "test_script.py",
         "is_executable" : true,
@@ -157,6 +453,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
+    "info" : {
+      "type_info" : {
+        "label" : "Subset",
+        "description" : "Subset a common dataset\n"
+      }
+    },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
   },
@@ -216,7 +518,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/subsample/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "be91470d02c3218f339ceb051b17f44540a7db53",
+    "git_commit" : "29f35a777aff0d1ab31a4dbc3f82519c1e58df24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -233,13 +535,13 @@ import numpy as np
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'n_obs': $( if [ ! -z ${VIASH_PAR_N_OBS+x} ]; then echo "int(r'${VIASH_PAR_N_OBS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
   'n_vars': $( if [ ! -z ${VIASH_PAR_N_VARS+x} ]; then echo "int(r'${VIASH_PAR_N_VARS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
   'keep_features': $( if [ ! -z ${VIASH_PAR_KEEP_FEATURES+x} ]; then echo "r'${VIASH_PAR_KEEP_FEATURES//\\'/\\'\\"\\'\\"r\\'}'.split(':')"; else echo None; fi ),
   'keep_celltype_categories': $( if [ ! -z ${VIASH_PAR_KEEP_CELLTYPE_CATEGORIES+x} ]; then echo "r'${VIASH_PAR_KEEP_CELLTYPE_CATEGORIES//\\'/\\'\\"\\'\\"r\\'}'.split(':')"; else echo None; fi ),
   'keep_batch_categories': $( if [ ! -z ${VIASH_PAR_KEEP_BATCH_CATEGORIES+x} ]; then echo "r'${VIASH_PAR_KEEP_BATCH_CATEGORIES//\\'/\\'\\"\\'\\"r\\'}'.split(':')"; else echo None; fi ),
   'even': $( if [ ! -z ${VIASH_PAR_EVEN+x} ]; then echo "r'${VIASH_PAR_EVEN//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
@@ -339,7 +641,7 @@ thisDefaultProcessArgs = [
   directives: jsonSlurper.parseText('''{
   "container" : {
     "registry" : "ghcr.io",
-    "image" : "openproblems-bio/subsample",
+    "image" : "openproblems-bio/datasets/processors/subsample",
     "tag" : "main_build"
   },
   "tag" : "$id"

@@ -141,6 +141,10 @@ functionality:
         normalize: false
         n_hvg: 1000
     type: "method"
+    type_info:
+      label: "Method"
+      description: "A dimensionality reduction method to summarise the biological\
+        \ information in\na dataset in as few dimensions as possible.\n"
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
@@ -185,5 +189,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/neuralee"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/neuralee/neuralee"
   viash_version: "0.7.3"
-  git_commit: "be91470d02c3218f339ceb051b17f44540a7db53"
+  git_commit: "29f35a777aff0d1ab31a4dbc3f82519c1e58df24"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

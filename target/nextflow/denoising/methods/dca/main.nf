@@ -156,7 +156,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "v1_url" : "openproblems/tasks/denoising/methods/dca.py",
       "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "preferred_normalization" : "counts",
-      "type" : "method"
+      "type" : "method",
+      "type_info" : {
+        "label" : "Method",
+        "description" : "A denoising method to remove noise (i.e. technical artifacts) from a dataset.\n"
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -211,7 +215,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/methods/dca/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "be91470d02c3218f339ceb051b17f44540a7db53",
+    "git_commit" : "29f35a777aff0d1ab31a4dbc3f82519c1e58df24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

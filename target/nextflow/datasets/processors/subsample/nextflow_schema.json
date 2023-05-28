@@ -9,11 +9,6 @@
         "type": "object",
         "description": "No description",
         "properties": {
-          "input": {
-            "type": "string",
-            "description": "Input data to be resized",
-            "default": ""
-          },
           "n_obs": {
             "type": "integer",
             "description": "Maximum number of observations to be kept. It might end up being less because empty cells / genes are removed.",
@@ -43,11 +38,6 @@
             "type": "boolean",
             "description": "Subsample evenly from different batches",
             "default": "False"
-          },
-          "output": {
-            "type": "string",
-            "description": "Output h5ad file",
-            "default": "$id.$key.output.h5ad"
           },
           "seed": {
             "type": "integer",

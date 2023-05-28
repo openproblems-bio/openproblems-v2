@@ -281,7 +281,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "num_hvg" : 2000
         }
       },
-      "type" : "method"
+      "type" : "method",
+      "type_info" : {
+        "label" : "Method",
+        "description" : "A label projection method to predict the labels of a new \\"test\\"\ndataset based on an annotated \\"training\\" dataset.\n"
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -337,7 +341,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/scanvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "be91470d02c3218f339ceb051b17f44540a7db53",
+    "git_commit" : "29f35a777aff0d1ab31a4dbc3f82519c1e58df24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
