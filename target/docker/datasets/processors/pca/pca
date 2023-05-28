@@ -161,7 +161,7 @@ function ViashHelp {
   echo ""
   echo "Arguments:"
   echo "    --input"
-  echo "        type: file, file must exist"
+  echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/common/pancreas/normalized.h5ad"
   echo "        A normalized dataset"
   echo ""
@@ -171,7 +171,7 @@ function ViashHelp {
   echo "        Which layer to use as input."
   echo ""
   echo "    --output"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/common/pancreas/pca.h5ad"
   echo "        A normalised dataset with a PCA embedding"
   echo ""
@@ -418,9 +418,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata~=0.8.0" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors pca"
-LABEL org.opencontainers.image.created="2023-05-28T04:31:44Z"
+LABEL org.opencontainers.image.created="2023-05-28T04:34:27Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3f1b67e2273a3a2bf8206e80a604556ac7a8b43e"
+LABEL org.opencontainers.image.revision="a7f0ebb8e0e79fbd8bbfa38ccd5cc3aa8f410212"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -768,6 +768,14 @@ fi
 
 
 # check whether required parameters exist
+if [ -z ${VIASH_PAR_INPUT+x} ]; then
+  ViashError '--input' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
+  ViashError '--output' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
   ViashError 'functionality_name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
