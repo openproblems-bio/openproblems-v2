@@ -10,10 +10,6 @@
 # authors of this component should specify the license in the header of such
 # files, or include a separate license file detailing the licenses of all included
 # files.
-# 
-# Component authors:
-#  * Robrecht Cannoodt <rcannood@gmail.com> (maintainer) {github: rcannood, orcid:
-# 0000-0003-3641-729X}
 
 set -e
 

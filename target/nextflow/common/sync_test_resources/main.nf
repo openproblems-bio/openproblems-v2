@@ -8,10 +8,6 @@
 // authors of this component should specify the license in the header of such
 // files, or include a separate license file detailing the licenses of all included
 // files.
-// 
-// Component authors:
-//  * Robrecht Cannoodt <rcannood@gmail.com> (maintainer) {github: rcannood, orcid:
-// 0000-0003-3641-729X}
 
 nextflow.enable.dsl=2
 
@@ -29,19 +25,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "name" : "sync_test_resources",
     "namespace" : "common",
     "version" : "main_build",
-    "authors" : [
-      {
-        "name" : "Robrecht Cannoodt",
-        "email" : "rcannood@gmail.com",
-        "roles" : [
-          "maintainer"
-        ],
-        "props" : {
-          "github" : "rcannood",
-          "orcid" : "0000-0003-3641-729X"
-        }
-      }
-    ],
     "arguments" : [
       {
         "type" : "string",
@@ -168,7 +151,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/sync_test_resources/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "a7f0ebb8e0e79fbd8bbfa38ccd5cc3aa8f410212",
+    "git_commit" : "1c2b2b03e591b3cf136e1b64a33a7db2f294fece",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

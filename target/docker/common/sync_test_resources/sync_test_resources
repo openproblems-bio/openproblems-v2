@@ -10,10 +10,6 @@
 # authors of this component should specify the license in the header of such
 # files, or include a separate license file detailing the licenses of all included
 # files.
-# 
-# Component authors:
-#  * Robrecht Cannoodt <rcannood@gmail.com> (maintainer) {github: rcannood, orcid:
-# 0000-0003-3641-729X}
 
 set -e
 
@@ -417,11 +413,10 @@ function ViashDockerfile {
 FROM amazon/aws-cli:2.7.12
 
 RUN :
-LABEL org.opencontainers.image.authors="Robrecht Cannoodt"
 LABEL org.opencontainers.image.description="Companion container for running component common sync_test_resources"
-LABEL org.opencontainers.image.created="2023-05-28T04:34:24Z"
+LABEL org.opencontainers.image.created="2023-05-28T05:43:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a7f0ebb8e0e79fbd8bbfa38ccd5cc3aa8f410212"
+LABEL org.opencontainers.image.revision="1c2b2b03e591b3cf136e1b64a33a7db2f294fece"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

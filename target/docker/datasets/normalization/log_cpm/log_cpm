@@ -402,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata~=0.8.0" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization log_cpm"
-LABEL org.opencontainers.image.created="2023-05-28T04:34:28Z"
+LABEL org.opencontainers.image.created="2023-05-28T05:43:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a7f0ebb8e0e79fbd8bbfa38ccd5cc3aa8f410212"
+LABEL org.opencontainers.image.revision="1c2b2b03e591b3cf136e1b64a33a7db2f294fece"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
