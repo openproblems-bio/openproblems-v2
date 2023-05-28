@@ -161,18 +161,18 @@ function ViashHelp {
   echo "list of dimensionally-reduced matrices"
   echo ""
   echo "Arguments:"
-  echo "    --input_reduced"
-  echo "        type: file, file must exist"
-  echo "        example: resources_test/dimensionality_reduction/pancreas/reduced.h5ad"
-  echo "        A dimensionally reduced dataset"
+  echo "    --input_embedding"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example: resources_test/dimensionality_reduction/pancreas/output.h5ad"
+  echo "        A dataset with dimensionality reduction embedding."
   echo ""
-  echo "    --input_test"
-  echo "        type: file, file must exist"
-  echo "        example: resources_test/dimensionality_reduction/pancreas/test.h5ad"
+  echo "    --input_solution"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example: resources_test/dimensionality_reduction/pancreas/solution.h5ad"
   echo "        The test data"
   echo ""
   echo "    --output"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/dimensionality_reduction/pancreas/score.h5ad"
   echo "        Metric score file"
   echo ""
@@ -402,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn" "scikit-learn" "numpy" "scipy" "pyyaml" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics rmse"
-LABEL org.opencontainers.image.created="2023-05-28T05:43:27Z"
+LABEL org.opencontainers.image.created="2023-05-28T09:24:33Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1c2b2b03e591b3cf136e1b64a33a7db2f294fece"
+LABEL org.opencontainers.image.revision="d8a75c2c37d8dc9d812241f8b8d38f62064d8deb"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -557,26 +557,26 @@ while [[ $# -gt 0 ]]; do
             echo "rmse main_build"
             exit
             ;;
-        --input_reduced)
-            [ -n "$VIASH_PAR_INPUT_REDUCED" ] && ViashError Bad arguments for option \'--input_reduced\': \'$VIASH_PAR_INPUT_REDUCED\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_REDUCED="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_reduced. Use "--help" to get more information on the parameters. && exit 1
+        --input_embedding)
+            [ -n "$VIASH_PAR_INPUT_EMBEDDING" ] && ViashError Bad arguments for option \'--input_embedding\': \'$VIASH_PAR_INPUT_EMBEDDING\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_EMBEDDING="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_embedding. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --input_reduced=*)
-            [ -n "$VIASH_PAR_INPUT_REDUCED" ] && ViashError Bad arguments for option \'--input_reduced=*\': \'$VIASH_PAR_INPUT_REDUCED\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_REDUCED=$(ViashRemoveFlags "$1")
+        --input_embedding=*)
+            [ -n "$VIASH_PAR_INPUT_EMBEDDING" ] && ViashError Bad arguments for option \'--input_embedding=*\': \'$VIASH_PAR_INPUT_EMBEDDING\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_EMBEDDING=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --input_test)
-            [ -n "$VIASH_PAR_INPUT_TEST" ] && ViashError Bad arguments for option \'--input_test\': \'$VIASH_PAR_INPUT_TEST\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_TEST="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_test. Use "--help" to get more information on the parameters. && exit 1
+        --input_solution)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION" ] && ViashError Bad arguments for option \'--input_solution\': \'$VIASH_PAR_INPUT_SOLUTION\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_solution. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --input_test=*)
-            [ -n "$VIASH_PAR_INPUT_TEST" ] && ViashError Bad arguments for option \'--input_test=*\': \'$VIASH_PAR_INPUT_TEST\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_TEST=$(ViashRemoveFlags "$1")
+        --input_solution=*)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION" ] && ViashError Bad arguments for option \'--input_solution=*\': \'$VIASH_PAR_INPUT_SOLUTION\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --output)
@@ -713,6 +713,18 @@ fi
 
 
 # check whether required parameters exist
+if [ -z ${VIASH_PAR_INPUT_EMBEDDING+x} ]; then
+  ViashError '--input_embedding' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then
+  ViashError '--input_solution' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
+  ViashError '--output' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
   ViashError 'functionality_name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
@@ -740,12 +752,12 @@ if [ -z ${VIASH_PAR_SPECTRAL+x} ]; then
 fi
 
 # check whether required files exist
-if [ ! -z "$VIASH_PAR_INPUT_REDUCED" ] && [ ! -e "$VIASH_PAR_INPUT_REDUCED" ]; then
-  ViashError "Input file '$VIASH_PAR_INPUT_REDUCED' does not exist."
+if [ ! -z "$VIASH_PAR_INPUT_EMBEDDING" ] && [ ! -e "$VIASH_PAR_INPUT_EMBEDDING" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_EMBEDDING' does not exist."
   exit 1
 fi
-if [ ! -z "$VIASH_PAR_INPUT_TEST" ] && [ ! -e "$VIASH_PAR_INPUT_TEST" ]; then
-  ViashError "Input file '$VIASH_PAR_INPUT_TEST' does not exist."
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION" ] && [ ! -e "$VIASH_PAR_INPUT_SOLUTION" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_SOLUTION' does not exist."
   exit 1
 fi
 
@@ -806,13 +818,13 @@ fi
 
 # detect volumes from file arguments
 VIASH_CHOWN_VARS=()
-if [ ! -z "$VIASH_PAR_INPUT_REDUCED" ]; then
-  VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_INPUT_REDUCED") )
-  VIASH_PAR_INPUT_REDUCED=$(ViashAutodetectMount "$VIASH_PAR_INPUT_REDUCED")
+if [ ! -z "$VIASH_PAR_INPUT_EMBEDDING" ]; then
+  VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_INPUT_EMBEDDING") )
+  VIASH_PAR_INPUT_EMBEDDING=$(ViashAutodetectMount "$VIASH_PAR_INPUT_EMBEDDING")
 fi
-if [ ! -z "$VIASH_PAR_INPUT_TEST" ]; then
-  VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_INPUT_TEST") )
-  VIASH_PAR_INPUT_TEST=$(ViashAutodetectMount "$VIASH_PAR_INPUT_TEST")
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION" ]; then
+  VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_INPUT_SOLUTION") )
+  VIASH_PAR_INPUT_SOLUTION=$(ViashAutodetectMount "$VIASH_PAR_INPUT_SOLUTION")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_EXTRA_MOUNTS+=( $(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT") )
@@ -885,8 +897,8 @@ import umap.spectral
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'input_reduced': $( if [ ! -z ${VIASH_PAR_INPUT_REDUCED+x} ]; then echo "r'${VIASH_PAR_INPUT_REDUCED//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'input_test': $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo "r'${VIASH_PAR_INPUT_TEST//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_embedding': $( if [ ! -z ${VIASH_PAR_INPUT_EMBEDDING+x} ]; then echo "r'${VIASH_PAR_INPUT_EMBEDDING//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'spectral': $( if [ ! -z ${VIASH_PAR_SPECTRAL+x} ]; then echo "r'${VIASH_PAR_SPECTRAL//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi )
 }
@@ -916,11 +928,11 @@ def _rmse(X, X_emb):
     return rmse
 
 print("Load data", flush=True)
-input_test = ad.read_h5ad(par["input_test"])
-input_reduced = ad.read_h5ad(par["input_reduced"])
+input_solution = ad.read_h5ad(par["input_solution"])
+input_embedding = ad.read_h5ad(par["input_embedding"])
 
-high_dim = input_test.layers["normalized"]
-X_emb = input_reduced.obsm["X_emb"]
+high_dim = input_solution.layers["normalized"]
+X_emb = input_embedding.obsm["X_emb"]
 
 print("Compute NNLS residual after SVD", flush=True)
 n_svd = 200
@@ -928,7 +940,7 @@ svd_emb = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(high_dim)
 rmse = _rmse(svd_emb, X_emb)
 
 print("Compute NLSS residual after spectral embedding", flush=True)
-n_comps = min(200, min(input_test.shape) - 2)
+n_comps = min(200, min(input_solution.shape) - 2)
 umap_graph = umap.UMAP(transform_mode="graph").fit_transform(high_dim)
 spectral_emb = umap.spectral.spectral_layout(
     high_dim, umap_graph, n_comps, random_state=np.random.default_rng()
@@ -938,9 +950,9 @@ rmse_spectral = _rmse(spectral_emb, X_emb)
 print("Create output AnnData object", flush=True)
 output = ad.AnnData(
     uns={
-        "dataset_id": input_test.uns["dataset_id"],
-        "normalization_id": input_test.uns["normalization_id"],
-        "method_id": input_reduced.uns["method_id"],
+        "dataset_id": input_solution.uns["dataset_id"],
+        "normalization_id": input_solution.uns["normalization_id"],
+        "method_id": input_embedding.uns["method_id"],
         "metric_ids": [ "rmse", "rmse_spectral" ],
         "metric_values": [ rmse, rmse_spectral ]
     }
@@ -957,11 +969,11 @@ VIASHEOF
 
 
 # strip viash automount from file paths
-if [ ! -z "$VIASH_PAR_INPUT_REDUCED" ]; then
-  VIASH_PAR_INPUT_REDUCED=$(ViashStripAutomount "$VIASH_PAR_INPUT_REDUCED")
+if [ ! -z "$VIASH_PAR_INPUT_EMBEDDING" ]; then
+  VIASH_PAR_INPUT_EMBEDDING=$(ViashStripAutomount "$VIASH_PAR_INPUT_EMBEDDING")
 fi
-if [ ! -z "$VIASH_PAR_INPUT_TEST" ]; then
-  VIASH_PAR_INPUT_TEST=$(ViashStripAutomount "$VIASH_PAR_INPUT_TEST")
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION" ]; then
+  VIASH_PAR_INPUT_SOLUTION=$(ViashStripAutomount "$VIASH_PAR_INPUT_SOLUTION")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_PAR_OUTPUT=$(ViashStripAutomount "$VIASH_PAR_OUTPUT")

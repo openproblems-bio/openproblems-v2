@@ -406,9 +406,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "pyyaml" "anndata~=0.8.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods mlp"
-LABEL org.opencontainers.image.created="2023-05-28T05:43:26Z"
+LABEL org.opencontainers.image.created="2023-05-28T09:24:32Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1c2b2b03e591b3cf136e1b64a33a7db2f294fece"
+LABEL org.opencontainers.image.revision="d8a75c2c37d8dc9d812241f8b8d38f62064d8deb"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

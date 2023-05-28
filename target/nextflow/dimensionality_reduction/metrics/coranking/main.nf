@@ -28,10 +28,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "arguments" : [
       {
         "type" : "file",
-        "name" : "--input_reduced",
-        "description" : "A dimensionally reduced dataset",
+        "name" : "--input_embedding",
+        "description" : "A dataset with dimensionality reduction embedding.",
         "info" : {
-          "short_description" : "Training data",
+          "short_description" : "Embedding",
           "slots" : {
             "obsm" : [
               {
@@ -61,11 +61,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/dimensionality_reduction/pancreas/reduced.h5ad"
+          "resources_test/dimensionality_reduction/pancreas/output.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -73,7 +73,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "file",
-        "name" : "--input_test",
+        "name" : "--input_solution",
         "description" : "The test data",
         "info" : {
           "short_description" : "Test data",
@@ -117,11 +117,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/dimensionality_reduction/pancreas/test.h5ad"
+          "resources_test/dimensionality_reduction/pancreas/solution.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -175,7 +175,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -381,7 +381,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/metrics/coranking/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1c2b2b03e591b3cf136e1b64a33a7db2f294fece",
+    "git_commit" : "d8a75c2c37d8dc9d812241f8b8d38f62064d8deb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -399,8 +399,8 @@ library(coRanking)
 .viash_orig_warn <- options(warn = 2)
 
 par <- list(
-  "input_reduced" = $( if [ ! -z ${VIASH_PAR_INPUT_REDUCED+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_REDUCED" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "input_test" = $( if [ ! -z ${VIASH_PAR_INPUT_TEST+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_TEST" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_embedding" = $( if [ ! -z ${VIASH_PAR_INPUT_EMBEDDING+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_EMBEDDING" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_solution" = $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_SOLUTION" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
@@ -426,12 +426,12 @@ rm(.viash_orig_warn)
 ## VIASH END
 
 cat("Read anndata objects")
-input_test <- anndata::read_h5ad(par[["input_test"]])
-input_reduced <- anndata::read_h5ad(par[["input_reduced"]])
+input_solution <- anndata::read_h5ad(par[["input_solution"]])
+input_embedding <- anndata::read_h5ad(par[["input_embedding"]])
 
 # get datasets
-high_dim <- input_test\\$layers[["normalized"]]
-X_emb <- input_reduced\\$obsm[["X_emb"]]
+high_dim <- input_solution\\$layers[["normalized"]]
+X_emb <- input_embedding\\$obsm[["X_emb"]]
 
 if (any(is.na(X_emb))) {
   continuity_at_k30 <-
@@ -489,9 +489,9 @@ cat("construct output AnnData\\\\n")
 output <- AnnData(
   shape = c(0L, 0L),
   uns = list(
-    dataset_id = input_test\\$uns[["dataset_id"]],
-    normalization_id = input_test\\$uns[["normalization_id"]],
-    method_id = input_reduced\\$uns[["method_id"]],
+    dataset_id = input_solution\\$uns[["dataset_id"]],
+    normalization_id = input_solution\\$uns[["normalization_id"]],
+    method_id = input_embedding\\$uns[["method_id"]],
     metric_ids = c(
       "continuity_at_k30",
       "trustworthiness_at_k30",

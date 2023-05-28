@@ -24,7 +24,7 @@
             "description": "No description",
             "default": ""
           },
-          "input_test": {
+          "input_solution": {
             "type": "string",
             "description": "No description",
             "default": ""

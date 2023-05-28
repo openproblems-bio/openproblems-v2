@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "The training data",
+        "description" : "The dataset to pass to a method.",
         "info" : {
-          "short_description" : "Training data",
+          "short_description" : "Dataset",
           "slots" : {
             "layers" : [
               {
@@ -72,11 +72,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/dimensionality_reduction/pancreas/train.h5ad"
+          "resources_test/dimensionality_reduction/pancreas/dataset.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -85,9 +85,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A dimensionally reduced dataset",
+        "description" : "A dataset with dimensionality reduction embedding.",
         "info" : {
-          "short_description" : "Training data",
+          "short_description" : "Embedding",
           "slots" : {
             "obsm" : [
               {
@@ -117,11 +117,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/dimensionality_reduction/pancreas/reduced.h5ad"
+          "resources_test/dimensionality_reduction/pancreas/output.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -262,7 +262,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/tsne/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1c2b2b03e591b3cf136e1b64a33a7db2f294fece",
+    "git_commit" : "d8a75c2c37d8dc9d812241f8b8d38f62064d8deb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

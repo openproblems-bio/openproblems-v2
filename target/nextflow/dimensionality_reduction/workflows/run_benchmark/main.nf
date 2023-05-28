@@ -62,7 +62,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           },
           {
             "type" : "file",
-            "name" : "--input_test",
+            "name" : "--input_solution",
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
@@ -135,7 +135,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/workflows/run/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1c2b2b03e591b3cf136e1b64a33a7db2f294fece",
+    "git_commit" : "d8a75c2c37d8dc9d812241f8b8d38f62064d8deb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -206,7 +206,7 @@ workflow run_wf {
  setWorkflowArguments(
       preprocess: ["dataset_id", "normalization_id"],
       method: ["input"],
-      metric: ["input_test"],
+      metric: ["input_solution"],
       output: ["output"]
     )
     // multiply events by the number of method
@@ -223,7 +223,7 @@ workflow run_wf {
  run_methods
 
     // run metrics
- getWorkflowArguments(key: "metric", inputKey: "input_reduced")
+ getWorkflowArguments(key: "metric", inputKey: "input_embedding")
  run_metrics
 
     // convert to tsv  

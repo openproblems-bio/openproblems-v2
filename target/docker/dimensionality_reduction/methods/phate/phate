@@ -159,14 +159,14 @@ function ViashHelp {
   echo ""
   echo "Arguments:"
   echo "    --input"
-  echo "        type: file, file must exist"
-  echo "        example: resources_test/dimensionality_reduction/pancreas/train.h5ad"
-  echo "        The training data"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example: resources_test/dimensionality_reduction/pancreas/dataset.h5ad"
+  echo "        The dataset to pass to a method."
   echo ""
   echo "    --output"
-  echo "        type: file, output, file must exist"
-  echo "        example: resources_test/dimensionality_reduction/pancreas/reduced.h5ad"
-  echo "        A dimensionally reduced dataset"
+  echo "        type: file, required parameter, output, file must exist"
+  echo "        example: resources_test/dimensionality_reduction/pancreas/output.h5ad"
+  echo "        A dataset with dimensionality reduction embedding."
   echo ""
   echo "    --n_pca_dims"
   echo "        type: integer"
@@ -405,9 +405,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "anndata~=0.8.0" "phate==1.0.*" "scprep" "pyyaml" "scikit-learn<1.2"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods phate"
-LABEL org.opencontainers.image.created="2023-05-28T05:43:30Z"
+LABEL org.opencontainers.image.created="2023-05-28T09:24:35Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1c2b2b03e591b3cf136e1b64a33a7db2f294fece"
+LABEL org.opencontainers.image.revision="d8a75c2c37d8dc9d812241f8b8d38f62064d8deb"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -733,6 +733,14 @@ fi
 
 
 # check whether required parameters exist
+if [ -z ${VIASH_PAR_INPUT+x} ]; then
+  ViashError '--input' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
+  ViashError '--output' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
   ViashError 'functionality_name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
