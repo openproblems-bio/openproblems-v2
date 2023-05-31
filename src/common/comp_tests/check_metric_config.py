@@ -1,5 +1,6 @@
 import yaml
 from typing import Dict
+import requests
 
 
 ## VIASH START
@@ -16,6 +17,11 @@ SUMMARY_MAXLEN = 400
 
 DESCRIPTION_MAXLEN = 1000
 
+def check_url(url):
+    get = requests.get(url)
+
+    assert get.status_code is 200, f"{url} is not reachable."
+
 def check_metric(metric: Dict[str, str])  -> str:
     assert "name" in metric is not None, "name not a field or is empty"
     assert len(metric["name"]) <= NAME_MAXLEN, f"Component id (.functionality.info.metrics.metric.name) should not exceed {NAME_MAXLEN} characters."
@@ -28,7 +34,11 @@ def check_metric(metric: Dict[str, str])  -> str:
     assert "FILL IN:" not in metric["description"], "description not filled in"
     assert "reference" in metric, "reference not a field in metric"
     assert "documentation_url" in metric , "documentation_url not a field in metric"
-    assert "repository_url" in metric , "repository_url not an info field"
+    assert "repository_url" in metric , "repository_url not a metric field"
+    if metric["documentation_url"]:
+        check_url(metric["documentation_url"])
+    if metric["repository_url"]:
+        check_url(metric["repository_url"])
     assert "min" in metric is not None, f"min not a field in metric or is emtpy"
     assert "max" in metric is not None, f"max not a field in metric or is empty"
     assert "maximize" in metric is not None, f"maximize not a field in metric or is emtpy"

@@ -1,4 +1,5 @@
 import yaml
+import requests
 
 
 ## VIASH START
@@ -31,6 +32,12 @@ def assert_dict(dict, functionality):
 
 
 
+def check_url(url):
+    get = requests.get(url)
+
+    assert get.status_code is 200, f"{url} is not reachable."
+        
+
 print("Load config data", flush=True)
 with open(meta["config"], "r") as file:
     config = yaml.safe_load(file)
@@ -56,6 +63,9 @@ if ("control" not in info["type"]):
     assert "reference" in info, "reference not an info field"
     assert "documentation_url" in info is not None, "documentation_url not an info field or is empty"
     assert "repository_url" in info is not None, "repository_url not an info field or is empty"
+    check_url(info["documentation_url"])
+    check_url(info["repository_url"])
+
 
 if "variants" in info:
     for key in info["variants"]:
