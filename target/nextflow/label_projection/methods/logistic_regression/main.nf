@@ -330,7 +330,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/logistic_regression/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "c1defe5981643c90a6f3edd68a7870d066a47d0b",
+    "git_commit" : "b868cde895987e9dbaecb7ce972567c3c5d6cfce",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
