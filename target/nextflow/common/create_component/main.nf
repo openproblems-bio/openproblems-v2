@@ -109,7 +109,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "default" : [
           "src/tasks/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
         ],
-        "must_exist" : true,
+        "must_exist" : false,
         "create_parent" : true,
         "required" : false,
         "direction" : "input",
@@ -224,7 +224,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_component/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "b868cde895987e9dbaecb7ce972567c3c5d6cfce",
+    "git_commit" : "7a515d7993906ffa66fa7974f59da0d9fe28400a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -236,6 +236,7 @@ cat > "$tempscript" << VIASHMAIN
 from typing import Any
 from ruamel.yaml import YAML
 from pathlib import Path
+import sys
 import os
 import re
 import subprocess
@@ -636,6 +637,20 @@ def main(par):
   assert len(par['name']) <= 50, "Method name should be at most 50 characters."
 
   pretty_name = re.sub("_", " ", par['name']).title()
+
+  ## CHECK API FILE
+  newline = "\\\\n"
+  api_file = Path(par["api_file"])
+  viash_yaml = Path(par["viash_yaml"])
+  if not api_file.exists():
+    api_files = [str(x.relative_to(viash_yaml.parent)) for x in api_file.parent.glob("**/comp_*.y*ml")]
+    list.sort(api_files)
+    sys.exit(strip_margin(f"""\\\\
+Could not find component API file at location '{par['api_file']}'.
+You might need to manually specify a value for the '--api_file' parameter.
+
+Detected component API files:
+- {(newline + "- ").join(api_files)}"""))
 
   ####### CREATE OUTPUT DIR #######
   out_dir = Path(par["output"])
