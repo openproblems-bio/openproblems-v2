@@ -401,9 +401,9 @@ FROM python:3.10
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component migration list_git_shas"
-LABEL org.opencontainers.image.created="2023-06-01T05:49:05Z"
+LABEL org.opencontainers.image.created="2023-06-01T05:54:06Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b2461933775cab3be9ee406b878e002412391712"
+LABEL org.opencontainers.image.revision="83c4a5d2e4cee93f9eb15ba91a28d48849b4f91f"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
