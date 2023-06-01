@@ -436,9 +436,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "ruamel.yaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2023-06-01T05:54:03Z"
+LABEL org.opencontainers.image.created="2023-06-01T07:42:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="83c4a5d2e4cee93f9eb15ba91a28d48849b4f91f"
+LABEL org.opencontainers.image.revision="e0e9f1d0e38ddd39c06752f7988ab9935322ac90"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -1009,6 +1009,9 @@ meta = {
 
 ## VIASH END
 
+# Remove this after upgrading to Viash 0.7.5
+sys.dont_write_bytecode = True
+
 # import helper function
 sys.path.append(meta["resources_dir"])
 from read_and_merge_yaml import read_and_merge_yaml
@@ -1414,7 +1417,7 @@ Error: API file is incorrectly formatted.
   # TODO: this should be based on a component type spec
   if comp_type == "metric":
     add_metric_info(config_template, par, pretty_name)
-  elif comp_type == "method":
+  elif comp_type in ["method", "control_method"]:
     add_method_info(config_template, par, pretty_name)
 
   # add script to resources

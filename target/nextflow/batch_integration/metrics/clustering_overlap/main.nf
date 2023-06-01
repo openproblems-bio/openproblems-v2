@@ -323,7 +323,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/clustering_overlap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "83c4a5d2e4cee93f9eb15ba91a28d48849b4f91f",
+    "git_commit" : "e0e9f1d0e38ddd39c06752f7988ab9935322ac90",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

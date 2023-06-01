@@ -229,7 +229,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_component/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "83c4a5d2e4cee93f9eb15ba91a28d48849b4f91f",
+    "git_commit" : "e0e9f1d0e38ddd39c06752f7988ab9935322ac90",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -276,6 +276,9 @@ meta = {
 }
 
 ## VIASH END
+
+# Remove this after upgrading to Viash 0.7.5
+sys.dont_write_bytecode = True
 
 # import helper function
 sys.path.append(meta["resources_dir"])
@@ -682,7 +685,7 @@ Error: API file is incorrectly formatted.
   # TODO: this should be based on a component type spec
   if comp_type == "metric":
     add_metric_info(config_template, par, pretty_name)
-  elif comp_type == "method":
+  elif comp_type in ["method", "control_method"]:
     add_method_info(config_template, par, pretty_name)
 
   # add script to resources
