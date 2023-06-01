@@ -1,18 +1,17 @@
 __merge__: ../../api/comp_processor_hvg.yaml
 functionality:
   name: "hvg"
-  namespace: "datasets/processors"
   description: "Compute HVG"
   resources:
     - type: python_script
       path: script.py
 platforms:
   - type: docker
-    image: "python:3.8"
+    image: "python:3.10"
     setup:
       - type: python
         packages:
           - scanpy
-          - "anndata>=0.8"
+          - "anndata~=0.8.0"
           - pyyaml
   - type: nextflow

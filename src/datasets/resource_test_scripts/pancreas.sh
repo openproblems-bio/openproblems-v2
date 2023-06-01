@@ -34,32 +34,32 @@ wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722
 KEEP_FEATURES=`cat $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt $DATASET_DIR/temp_s_genes_tirosh_hm.txt | paste -sd ":" -`
 
 # subsample
-viash run src/datasets/subsample/config.vsh.yaml -- \
+viash run src/datasets/processors/subsample/config.vsh.yaml -- \
     --input $DATASET_DIR/temp_dataset_full.h5ad \
     --keep_celltype_categories "acinar:beta" \
     --keep_batch_categories "celseq:inDrop4:smarter" \
     --keep_features "$KEEP_FEATURES" \
-    --output $DATASET_DIR/temp_dataset0.h5ad \
+    --output $DATASET_DIR/raw.h5ad \
     --seed 123
 
 # run log cpm normalisation
 viash run src/datasets/normalization/log_cpm/config.vsh.yaml -- \
-    --input $DATASET_DIR/temp_dataset0.h5ad \
-    --output $DATASET_DIR/temp_dataset1.h5ad
+    --input $DATASET_DIR/raw.h5ad \
+    --output $DATASET_DIR/normalized.h5ad
 
 # run pca
 viash run src/datasets/processors/pca/config.vsh.yaml -- \
-    --input $DATASET_DIR/temp_dataset1.h5ad \
-    --output $DATASET_DIR/temp_dataset2.h5ad
+    --input $DATASET_DIR/normalized.h5ad \
+    --output $DATASET_DIR/pca.h5ad
 
 # run hvg
 viash run src/datasets/processors/hvg/config.vsh.yaml -- \
-    --input $DATASET_DIR/temp_dataset2.h5ad \
-    --output $DATASET_DIR/temp_dataset3.h5ad
+    --input $DATASET_DIR/pca.h5ad \
+    --output $DATASET_DIR/hvg.h5ad
 
 # run knn
 viash run src/datasets/processors/knn/config.vsh.yaml -- \
-    --input $DATASET_DIR/temp_dataset3.h5ad \
+    --input $DATASET_DIR/hvg.h5ad \
     --output $DATASET_DIR/dataset.h5ad
 
 rm -r $DATASET_DIR/temp_*

@@ -1,4 +1,3 @@
-# TODO: project config is no longer mounted
 functionality:
   name: create_component
   namespace: common
@@ -34,23 +33,33 @@ functionality:
       direction: output
       # required: true
       description: Path to the component directory. Suggested location is `src/<TASK>/<TYPE>s/<NAME>`.
-      default: src/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}
+      default: src/tasks/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}
     - type: file
       name: --api_file
       description: |
         Which API file to use. Defaults to `src/<TASK>/api/comp_<TYPE>.yaml`.
         In tasks with different subtypes of method, this location might not exist and you might need
         to manually specify a different API file to inherit from.
+      must_exist: false
       # required: true
-      default: src/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml
+      default: src/tasks/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml
+    - type: file
+      name: --viash_yaml
+      description: |
+        Path to the project config file. Needed for knowing the relative location of a file to the project root.
+      # required: true
+      default: "_viash.yaml"
   resources:
     - type: python_script
       path: script.py
+    - path: /src/common/helper_functions/read_and_merge_yaml.py
   test_resources:
     - type: python_script
       path: test.py
-    - path: ../../../src
+    - path: /src
       dest: openproblems-v2/src
+    - path: /_viash.yaml
+      dest: openproblems-v2/_viash.yaml
 platforms:
   - type: docker
     image: python:3.10-slim

@@ -1,7 +1,17 @@
 
 # openproblems-v2 0.1.0
 
+## general
 
+### MAJOR CHANGES
+
+* Relocate task directories to new `src/tasks/` location (PR #142).
+
+### MINOR CHANGES
+
+* Update test scripts (PR #143)
+
+* Update "baseline" to "control" (PR #146)
 
 ## common
 
@@ -11,21 +21,21 @@
 
 * Created test data `resources_test/pancreas` with `src/common/resources_test_scripts/pancreas.sh`.
 
-* `get_api_info`: extract api info from tasks
+* `get_api_info`: Extract api info from tasks.
 
-* `get_method_info`: extract method info from config yaml
+* `get_method_info`: Extract method info from config yaml.
 
-* `get_metric_info`: extract metric info from config yaml
+* `get_metric_info`: Extract metric info from config yaml.
 
-* `get_results`: extract benchmark scores 
+* `get_results`: Extract benchmark scores.
 
-* `get_task_info`: extract task info
+* `get_task_info`: Extract task info.
 
-* `unit_test`: Common unit test that can be used by all tasks
+* `comp_tests`: Common unit tests that can be used by all tasks.
 
-* `check_dataset_schema`: check if the dataset used has the required fields defined in the api `anndata_*.yaml` files
+* `check_dataset_schema`: Check if the dataset used has the required fields defined in the api `anndata_*.yaml` files.
   
-* `Create_component`: creates a template folder with a viash config and script file depending on the task api.
+* `Create_component`: Creates a template folder with a viash config and script file depending on the task api.
 
 ### MINOR CHANGES
 
@@ -72,7 +82,7 @@
 
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
-* `resources_test/label_projection/pancreas` with `src/label_projection/resources_test_scripts/pancreas.sh`.
+* `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
 
 ### V1 MIGRATION
 
@@ -83,6 +93,8 @@
 * `methods/mlp`: Migrated from v1.
 
 * `methods/scanvi`: Migrated and adapted from v1.
+
+* `methods/scanvi_scarches`: Migrated and adapted from v1.
 
 * `methods/seurat_transferdata`: Migrated and adapted from v1.
 
@@ -108,7 +120,7 @@
 
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
-* `resources_test/denoising/pancreas` with `src/denoising/resources_test_scripts/pancreas.sh`.
+* `resources_test/denoising/pancreas` with `src/tasks/denoising/resources_test_scripts/pancreas.sh`.
 
 ### V1 MIGRATION
 
@@ -147,7 +159,7 @@
 
 * `control_methods`: Added a component for baseline methods specifically.
 
-* `resources_test/dimensionality_reduction/pancreas` with `src/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
+* `resources_test/dimensionality_reduction/pancreas` with `src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
 
 * Added `variant` key to config files to store variants (different input parameters) of every component.
 

@@ -1,0 +1,24 @@
+functionality:
+  namespace: "label_projection/methods"
+  info:
+    type: method
+    type_info:
+      label: Method
+      description: |
+        A label projection method to predict the labels of a new "test"
+        dataset based on an annotated "training" dataset.
+  arguments:
+    - name: "--input_train"
+      __merge__: anndata_train.yaml
+    - name: "--input_test"
+      __merge__: anndata_test.yaml
+    - name: "--output"
+      __merge__: anndata_prediction.yaml
+      direction: output
+  test_resources:
+    - path: /resources_test/label_projection/pancreas
+      dest: resources_test/label_projection/pancreas
+    - type: python_script
+      path: /src/common/comp_tests/check_method_config.py
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py

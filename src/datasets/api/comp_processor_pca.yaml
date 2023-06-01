@@ -1,7 +1,14 @@
 functionality:
+  namespace: "datasets/processors"
+  info:
+    type_info:
+      label: PCA
+      description: |
+        Computes a PCA embedding of the normalized data.
   arguments:
     - name: "--input"
       __merge__: anndata_normalized.yaml
+      required: true
     - name: "--layer_input"
       type: string
       default: "normalized"
@@ -9,6 +16,7 @@ functionality:
     - name: "--output"
       direction: output
       __merge__: anndata_pca.yaml
+      required: true
     - name: "--obsm_embedding"
       type: string
       default: "X_pca"
@@ -25,3 +33,9 @@ functionality:
       type: integer
       example: 25
       description: Number of principal components to compute. Defaults to 50, or 1 - minimum dimension size of selected representation.
+  test_resources:
+    - path: /resources_test/common/pancreas
+      dest: resources_test/common/pancreas
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+
