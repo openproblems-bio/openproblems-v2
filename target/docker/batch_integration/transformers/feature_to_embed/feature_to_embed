@@ -392,9 +392,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pyyaml" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/transformers feature_to_embed"
-LABEL org.opencontainers.image.created="2023-06-01T12:05:05Z"
+LABEL org.opencontainers.image.created="2023-06-01T12:11:54Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ceecdad3ebe6c0f2b85597a092627c9a50eee9ee"
+LABEL org.opencontainers.image.revision="b14493a075684d771a1d663fe05f6f429adc47e3"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

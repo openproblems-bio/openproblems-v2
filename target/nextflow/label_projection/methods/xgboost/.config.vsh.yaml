@@ -217,5 +217,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost/xgboost"
   viash_version: "0.7.3"
-  git_commit: "ceecdad3ebe6c0f2b85597a092627c9a50eee9ee"
+  git_commit: "b14493a075684d771a1d663fe05f6f429adc47e3"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
