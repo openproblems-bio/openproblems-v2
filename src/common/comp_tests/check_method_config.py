@@ -1,6 +1,4 @@
 import yaml
-import requests
-
 
 ## VIASH START
 
@@ -38,6 +36,8 @@ def _load_bib():
         return file.read()
 
 def check_url(url):
+    import requests
+
     get = requests.get(url)
 
     assert get.status_code is (200 or 429), f"{url} is not reachable, {get.status_code}." # 429 rejected, too many requests
