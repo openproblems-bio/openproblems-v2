@@ -169,7 +169,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "eddelbuettel/r2u:22.04",
+      "image" : "ghcr.io/openproblems-bio/base-r:latest",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -179,32 +179,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
       "setup" : [
         {
-          "type" : "apt",
-          "packages" : [
-            "libhdf5-dev",
-            "libgeos-dev",
-            "python3",
-            "python3-pip",
-            "python3-dev",
-            "python-is-python3",
-            "git"
-          ],
-          "interactive" : false
-        },
-        {
-          "type" : "python",
-          "user" : false,
-          "pip" : [
-            "anndata~=0.8.0",
-            "pyyaml"
-          ],
-          "upgrade" : true
-        },
-        {
           "type" : "r",
           "cran" : [
             "Matrix",
-            "anndata",
             "bit64",
             "rsvd"
           ],
@@ -240,7 +217,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/methods/alra/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "ed13cb8d2d92747580223ab0d97b97a93b259a89",
+    "git_commit" : "653c537cc3b0782bda58d0c73dbe3108b8d43c5b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

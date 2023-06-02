@@ -391,22 +391,15 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM eddelbuettel/r2u:22.04
+FROM ghcr.io/openproblems-bio/base-r:latest
 
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("anndata", "tidyverse"), repos = "https://cran.rstudio.com")'
-
-RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y libhdf5-dev libgeos-dev python3 python3-pip python3-dev python-is-python3 && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "anndata~=0.8.0"
+  Rscript -e 'remotes::install_cran(c("tidyverse"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common extract_scores"
-LABEL org.opencontainers.image.created="2023-06-01T12:52:47Z"
+LABEL org.opencontainers.image.created="2023-06-02T15:18:00Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ed13cb8d2d92747580223ab0d97b97a93b259a89"
+LABEL org.opencontainers.image.revision="653c537cc3b0782bda58d0c73dbe3108b8d43c5b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

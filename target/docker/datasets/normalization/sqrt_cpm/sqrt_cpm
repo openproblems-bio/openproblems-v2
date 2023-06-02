@@ -396,15 +396,15 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM python:3.10
+FROM ghcr.io/openproblems-bio/base-python:latest
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scanpy" "anndata~=0.8.0" "pyyaml"
+  pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization sqrt_cpm"
-LABEL org.opencontainers.image.created="2023-06-01T12:52:50Z"
+LABEL org.opencontainers.image.created="2023-06-02T15:17:54Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ed13cb8d2d92747580223ab0d97b97a93b259a89"
+LABEL org.opencontainers.image.revision="653c537cc3b0782bda58d0c73dbe3108b8d43c5b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

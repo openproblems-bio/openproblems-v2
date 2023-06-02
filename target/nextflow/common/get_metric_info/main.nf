@@ -106,7 +106,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "eddelbuettel/r2u:22.04",
+      "image" : "ghcr.io/openproblems-bio/base-r:latest",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -136,19 +136,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "curl -fsSL get.viash.io | bash -s -- --bin /usr/local/bin/"
           ]
         }
-      ],
-      "test_setup" : [
-        {
-          "type" : "apt",
-          "packages" : [
-            "python3",
-            "python3-pip",
-            "python3-dev",
-            "python-is-python3",
-            "git"
-          ],
-          "interactive" : false
-        }
       ]
     },
     {
@@ -176,7 +163,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "ed13cb8d2d92747580223ab0d97b97a93b259a89",
+    "git_commit" : "653c537cc3b0782bda58d0c73dbe3108b8d43c5b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

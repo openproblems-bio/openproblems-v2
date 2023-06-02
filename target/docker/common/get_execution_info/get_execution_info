@@ -393,15 +393,15 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM eddelbuettel/r2u:22.04
+FROM ghcr.io/openproblems-bio/base-r:latest
 
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
   Rscript -e 'remotes::install_cran(c("tidyverse"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common get_execution_info"
-LABEL org.opencontainers.image.created="2023-06-01T12:52:46Z"
+LABEL org.opencontainers.image.created="2023-06-02T15:18:01Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ed13cb8d2d92747580223ab0d97b97a93b259a89"
+LABEL org.opencontainers.image.revision="653c537cc3b0782bda58d0c73dbe3108b8d43c5b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

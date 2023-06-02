@@ -247,7 +247,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "python:3.10"
+  image: "ghcr.io/openproblems-bio/base-python:latest"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -265,11 +265,6 @@ platforms:
     - "git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems\
       \ && \\\n  pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt\
       \ && \\\n  pip install --no-cache-dir --editable /opt/openproblems\n"
-  - type: "python"
-    user: false
-    pypi:
-    - "pyyaml"
-    upgrade: true
 - type: "nextflow"
   id: "nextflow"
   variant: "vdsl3"
@@ -288,5 +283,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/openproblems_v1_multimodal"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/openproblems_v1_multimodal/openproblems_v1_multimodal"
   viash_version: "0.7.3"
-  git_commit: "ed13cb8d2d92747580223ab0d97b97a93b259a89"
+  git_commit: "653c537cc3b0782bda58d0c73dbe3108b8d43c5b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

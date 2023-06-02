@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "bbknn" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods bbknn"
-LABEL org.opencontainers.image.created="2023-06-01T12:52:54Z"
+LABEL org.opencontainers.image.created="2023-06-02T15:18:02Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ed13cb8d2d92747580223ab0d97b97a93b259a89"
+LABEL org.opencontainers.image.revision="653c537cc3b0782bda58d0c73dbe3108b8d43c5b"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

@@ -272,7 +272,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "python:3.10",
+      "image" : "ghcr.io/openproblems-bio/base-python:latest",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -285,9 +285,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "type" : "python",
           "user" : false,
           "packages" : [
-            "scanpy",
-            "pyyaml",
-            "anndata~=0.8.0"
+            "scanpy"
           ],
           "upgrade" : true
         }
@@ -318,7 +316,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/control_methods/true_features/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "ed13cb8d2d92747580223ab0d97b97a93b259a89",
+    "git_commit" : "653c537cc3b0782bda58d0c73dbe3108b8d43c5b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

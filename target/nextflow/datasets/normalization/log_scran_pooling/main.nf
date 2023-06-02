@@ -284,7 +284,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "eddelbuettel/r2u@sha256:1d3a92aab5abad11787cd6b6c9479960db9f4e56dcc7f837768da2e3f3c4dfe2",
+      "image" : "ghcr.io/openproblems-bio/base-r:latest",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -298,7 +298,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "cran" : [
             "Matrix",
             "rlang",
-            "anndata",
             "bit64",
             "scran",
             "BiocParallel"
@@ -306,24 +305,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "bioc_force_install" : false
         },
         {
-          "type" : "apt",
-          "packages" : [
-            "libhdf5-dev",
-            "libgeos-dev",
-            "python3",
-            "python3-pip",
-            "python3-dev",
-            "python-is-python3"
-          ],
-          "interactive" : false
-        },
-        {
           "type" : "python",
           "user" : false,
           "pip" : [
-            "anndata~=0.8.0",
-            "scanpy",
-            "pyyaml"
+            "scanpy"
           ],
           "upgrade" : true
         }
@@ -354,7 +339,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_scran_pooling/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "ed13cb8d2d92747580223ab0d97b97a93b259a89",
+    "git_commit" : "653c537cc3b0782bda58d0c73dbe3108b8d43c5b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
