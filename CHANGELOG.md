@@ -7,13 +7,15 @@
 
 * Relocate task directories to new `src/tasks/` location (PR #142).
 
+* Update docker images to OP pyhton/R base images (PR #168)
+
+* Update batch integration docker images to OpenProblems base images (PR #171)
+
 ### MINOR CHANGES
 
 * Update test scripts (PR #143)
 
 * Update "baseline" to "control" (PR #146)
-
-* Update docker images to OP pyhton/R base images (#168)
 
 ## common
 
