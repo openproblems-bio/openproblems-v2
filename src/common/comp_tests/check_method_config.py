@@ -1,6 +1,4 @@
 import yaml
-import requests
-
 
 ## VIASH START
 
@@ -30,12 +28,12 @@ def assert_dict(dict, functionality):
         for key in dict:
             assert key in arg_names or info, f"{key} is not a defined argument or .functionality.info field"
 
-
-
 def check_url(url):
+    import requests
+
     get = requests.get(url)
 
-    assert get.status_code is 200, f"{url} is not reachable."
+    assert get.status_code is (200 or 429), f"{url} is not reachable, {get.status_code}." # 429 rejected, too many requests
         
 
 print("Load config data", flush=True)

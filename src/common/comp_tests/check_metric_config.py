@@ -1,7 +1,5 @@
 import yaml
 from typing import Dict
-import requests
-
 
 ## VIASH START
 
@@ -18,9 +16,11 @@ SUMMARY_MAXLEN = 400
 DESCRIPTION_MAXLEN = 1000
 
 def check_url(url):
+    import requests
+
     get = requests.get(url)
 
-    assert get.status_code is 200, f"{url} is not reachable."
+    assert get.status_code is (200 or 429), f"{url} is not reachable, {get.status_code}." # 429 rejected, too many requests
 
 def check_metric(metric: Dict[str, str])  -> str:
     assert "name" in metric is not None, "name not a field or is empty"
