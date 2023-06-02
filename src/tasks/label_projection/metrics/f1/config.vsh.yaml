@@ -43,8 +43,5 @@ platforms:
     image: "python:3.10"
     setup:
       - type: python
-        packages:
-          - scikit-learn
-          - pyyaml
-          - "anndata~=0.8.0"
+        packages: scikit-learn
   - type: nextflow
