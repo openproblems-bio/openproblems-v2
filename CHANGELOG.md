@@ -43,6 +43,8 @@
 
 * Add url check to method and metric unit test (#160).
 
+* Add library.bib file check to component unit test (#167)
+
 ## migration
 
 ### NEW FUNCTIONALITY
