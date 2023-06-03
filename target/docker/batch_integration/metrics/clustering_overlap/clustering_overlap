@@ -392,9 +392,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics clustering_overlap"
-LABEL org.opencontainers.image.created="2023-06-02T15:17:53Z"
+LABEL org.opencontainers.image.created="2023-06-03T00:33:34Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="653c537cc3b0782bda58d0c73dbe3108b8d43c5b"
+LABEL org.opencontainers.image.revision="ad0b3df24044308339ffd03e47b6d88d6cfdec66"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
