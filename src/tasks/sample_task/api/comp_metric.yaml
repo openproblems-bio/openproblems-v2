@@ -1,0 +1,24 @@
+functionality:
+  namespace: "<TASK_ID>/metrics"
+  info:
+    type: metric
+    type_info:
+      label: Metric
+      description: |
+        A metric for evaluating <FUNCTIONALITY OF TASK>
+  arguments:
+    - name: "--input_method"
+      __merge__: anndata_output.yaml
+    - name: "--input_solution"
+      __merge__: anndata_solution.yaml
+    - name: "--output"
+      __merge__: anndata_score.yaml
+      direction: output
+  test_resources:
+    - type: python_script
+      path: /src/common/comp_tests/check_metric_config.py
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+    - path: /resources_test/<TASK_ID>/pancreas
+      dest: resources_test/<TASK_ID>/pancreas
+        

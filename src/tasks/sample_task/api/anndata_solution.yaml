@@ -1,0 +1,17 @@
+type: file
+description: "The solution data file"
+example: "resources_test/<TASK_ID>/pancreas/anndata_solution.h5ad"
+info:
+  short_description: "Sulotion dataset"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+      - <...>
+    obs:
+      - <...>
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"

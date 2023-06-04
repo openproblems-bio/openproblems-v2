@@ -1,0 +1,17 @@
+type: file
+description: "The masked input data file"
+example: "resources_test/<TASK_ID>/pancreas/anndata_masked.h5ad"
+info:
+  short_description: "Masked input data"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+      - <...>
+    obs:
+      - <...>
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"

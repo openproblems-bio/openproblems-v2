@@ -1,0 +1,8 @@
+task_id: <TASK_ID>
+task_name: <TASK_NAME>
+summary: "<TASK_SUMMARY>"
+description: "<TASK_DESCRIPTION>"
+authors:
+  - name: "<AUTHOR_NAME>"
+    roles: [ author, maintainer ]
+    props: { github: <GITHUB_USERNAME>, orcid: "<ORCID>" }

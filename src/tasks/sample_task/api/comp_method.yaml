@@ -1,0 +1,21 @@
+functionality:
+  namespace: "<TASK_ID>/methods"
+  info:
+    type: method
+    type_info:
+      label: Method
+      description: |
+        <DESCRIPTION OF METHOD FUNCTIONALITY>
+  arguments:
+    - name: "--input"
+      __merge__: anndata_masked.yaml
+    - name: "--output"
+      __merge__: anndata_output.yaml
+      direction: output
+  test_resources:
+    - type: python_script
+      path: /src/common/comp_tests/check_method_config.py
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+    - path: /resources_test/<TASK_ID>/pancreas
+      dest: resources_test/<TASK_ID>/pancreas

@@ -1,0 +1,21 @@
+type: file
+description: "<DESCRIPTION OF OUTPUT DATA FILE>"
+example: "resources_test/<TASK_ID>/pancreas/anndata_output.h5ad"
+info:
+  short_description: "<DESCRIPTION OF OUTPUT DATA>"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+      - <...>
+    obs:
+      - <...>
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+      - type: string
+        name: method_id
+        description: "A unique identifier for the method"
+      
