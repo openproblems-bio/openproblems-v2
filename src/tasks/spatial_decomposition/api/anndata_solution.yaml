@@ -1,0 +1,24 @@
+type: file
+description: "The solution spatial data file"
+example: "resources_test/spatial_decomposition/pancreas/anndata_solution.h5ad"
+info:
+  short_description: "Solution spatial data"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+    obsm:
+      - type: float
+        name: coordinates
+        description: XY coordinates for each spot
+      - type: float
+        name: proportions
+        description: True cell type proportions for each spot
+    uns:
+      - type: string
+        name: cell_type_names
+        description: Cell type names corresponding to columns of `proportions`
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
