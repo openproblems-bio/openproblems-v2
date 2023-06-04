@@ -98,6 +98,9 @@ if ("control" not in info["type"]):
     check_url(info["documentation_url"])
     check_url(info["repository_url"])
 
+    check_url(info["documentation_url"])
+    check_url(info["repository_url"])
+
 
 if "variants" in info:
     for key in info["variants"]:

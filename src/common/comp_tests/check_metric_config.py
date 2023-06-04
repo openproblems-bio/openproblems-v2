@@ -74,6 +74,11 @@ def check_metric(metric: Dict[str, str])  -> str:
         check_url(metric["documentation_url"])
     if metric["repository_url"]:
         check_url(metric["repository_url"])
+    assert "repository_url" in metric , "repository_url not a metric field"
+    if metric["documentation_url"]:
+        check_url(metric["documentation_url"])
+    if metric["repository_url"]:
+        check_url(metric["repository_url"])
     assert "min" in metric is not None, f"min not a field in metric or is emtpy"
     assert "max" in metric is not None, f"max not a field in metric or is empty"
     assert "maximize" in metric is not None, f"maximize not a field in metric or is emtpy"
