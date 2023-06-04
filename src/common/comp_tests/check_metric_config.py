@@ -26,9 +26,12 @@ def _load_bib():
 def check_url(url):
     import requests
 
-    get = requests.get(url)
+    get = requests.head(url)
 
-    assert get.status_code is (200 or 429), f"{url} is not reachable, {get.status_code}." # 429 rejected, too many requests
+    if get.ok or get.status_code == 429: # 429 rejected, too many requests
+        return True
+    else:
+        return False
 
 def search_ref_bib(reference):
     import re
@@ -48,7 +51,8 @@ def search_ref_bib(reference):
         if not (entry_type.group(1) == "misc" or reference in _MISSING_DOIS):
             entry_doi = re.search(doi_pattern, bib_entry.group(1))
             assert entry_doi.group(1), "doi not found in bibtex reference"
-            check_url(f"https://doi.org/{entry_doi.group(1)}")
+            url = f"https://doi.org/{entry_doi.group(1)}"
+            assert check_url(url), f"{url} is not reachable, ref= {reference}."
 
         return True
 
@@ -71,14 +75,9 @@ def check_metric(metric: Dict[str, str])  -> str:
     assert "documentation_url" in metric , "documentation_url not a field in metric"
     assert "repository_url" in metric , "repository_url not a metric field"
     if metric["documentation_url"]:
-        check_url(metric["documentation_url"])
+        assert check_url(metric["documentation_url"]), f"{metric['documentation_url']} is not reachable"
     if metric["repository_url"]:
-        check_url(metric["repository_url"])
-    assert "repository_url" in metric , "repository_url not a metric field"
-    if metric["documentation_url"]:
-        check_url(metric["documentation_url"])
-    if metric["repository_url"]:
-        check_url(metric["repository_url"])
+        assert check_url(metric["repository_url"]), f"{metric['repository_url']} is not reachable"
     assert "min" in metric is not None, f"min not a field in metric or is emtpy"
     assert "max" in metric is not None, f"max not a field in metric or is empty"
     assert "maximize" in metric is not None, f"maximize not a field in metric or is emtpy"
