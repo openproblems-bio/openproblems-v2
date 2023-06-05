@@ -123,31 +123,25 @@ def add_script_resource(conf, par) -> None:
 
 def add_python_setup(conf) -> None:
   """Set up the docker platform for Python."""
-  conf['platforms'][0]["image"] = 'python:3.10'
-  conf['platforms'][0]["setup"] = [
-    {
-      "type": "python",
-      "pypi": "anndata~=0.8.0"
-    }
-  ]
+  conf['platforms'][0]["image"] = 'ghcr.io/openproblems-bio/base-python:latest'
+  conf['platforms'][0]["setup"] = []
+  # [
+  #   {
+  #     "type": "python",
+  #     "pypi": "anndata~=0.8.0"
+  #   }
+  # ]
 
 def add_r_setup(conf) -> None:
   """Set up the docker platform for R."""
-  conf['platforms'][0]["image"] = 'eddelbuettel/r2u:22.04'
-  conf['platforms'][0]["setup"] = [
-    {
-      "type": "apt",
-      "packages": ['libhdf5-dev', 'libgeos-dev', 'python3', 'python3-pip', 'python3-dev', 'python-is-python3']
-    },
-    {
-      "type": "python",
-      "pypi": "anndata~=0.8.0"
-    },
-    {
-      "type": "r",
-      "cran": "anndata"
-    }
-  ]
+  conf['platforms'][0]["image"] = 'ghcr.io/openproblems-bio/base-r:latest'
+  conf['platforms'][0]["setup"] = []
+  # [
+  #   {
+  #     "type": "r",
+  #     "cran": "anndata"
+  #   }
+  # ]
 
 def set_par_values(config) -> dict[str, Any]:
   """Adds values to each of the arguments in a config file."""
