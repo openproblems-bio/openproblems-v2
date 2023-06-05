@@ -409,9 +409,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration process_dataset"
-LABEL org.opencontainers.image.created="2023-06-03T00:33:36Z"
+LABEL org.opencontainers.image.created="2023-06-05T06:53:16Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ad0b3df24044308339ffd03e47b6d88d6cfdec66"
+LABEL org.opencontainers.image.revision="336da7a69468afaefa306fe6130ea764591d16f7"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
