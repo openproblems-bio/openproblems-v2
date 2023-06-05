@@ -255,6 +255,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "path" : "src/common/comp_tests/run_and_check_adata.py",
         "is_executable" : true,
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/library.bib",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
@@ -329,7 +334,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/xgboost/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "336da7a69468afaefa306fe6130ea764591d16f7",
+    "git_commit" : "00be82d9978a13cf61a4ade3633dbc6aec629ce3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

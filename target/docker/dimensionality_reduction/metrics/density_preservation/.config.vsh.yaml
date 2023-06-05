@@ -125,6 +125,8 @@ functionality:
   - type: "python_script"
     path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
+  - type: "file"
+    path: "src/common/library.bib"
   info:
     v1_url: "openproblems/tasks/dimensionality_reduction/metrics/density.py"
     v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
@@ -188,5 +190,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/density_preservation"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/density_preservation/density_preservation"
   viash_version: "0.7.3"
-  git_commit: "336da7a69468afaefa306fe6130ea764591d16f7"
+  git_commit: "00be82d9978a13cf61a4ade3633dbc6aec629ce3"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

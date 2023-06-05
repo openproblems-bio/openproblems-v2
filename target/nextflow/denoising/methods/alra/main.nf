@@ -144,6 +144,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "path" : "resources_test/denoising/pancreas",
         "dest" : "resources_test/denoising/pancreas",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/library.bib",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
@@ -217,7 +222,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/methods/alra/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "336da7a69468afaefa306fe6130ea764591d16f7",
+    "git_commit" : "00be82d9978a13cf61a4ade3633dbc6aec629ce3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
