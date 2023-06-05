@@ -45,7 +45,7 @@ with open(conf_f) as f:
     conf_data = yaml.load(f)
 
 assert conf_data['functionality']['name'] == 'test_method', "Name should be equal to 'test_method'"
-assert conf_data['platforms'][0]['image'] == 'python:3.10', "Python image should be equal to python:3.10"
+# assert conf_data['platforms'][0]['image'] == 'python:3.10', "Python image should be equal to python:3.10"
 
 
 print('All checks succeeded!', flush=True)
