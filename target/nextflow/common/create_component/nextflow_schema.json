@@ -16,7 +16,7 @@
           },
           "type": {
             "type": "string",
-            "description": "The type of component to create.","enum": ["metric", "method", "control_method"],
+            "description": "The type of component to create. Typically must be one of \u0027method\u0027, \u0027control_method\u0027 or \u0027metric\u0027.",
             "default": ""
           },
           "language": {

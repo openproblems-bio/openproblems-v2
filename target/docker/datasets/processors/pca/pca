@@ -418,9 +418,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors pca"
-LABEL org.opencontainers.image.created="2023-06-06T18:34:30Z"
+LABEL org.opencontainers.image.created="2023-06-06T18:40:21Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0d99329fd137598402f7440353d26c149185937e"
+LABEL org.opencontainers.image.revision="3f42ae000b04a0ed71d28e2612f343f2e765dacc"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
