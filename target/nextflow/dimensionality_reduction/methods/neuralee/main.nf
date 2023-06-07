@@ -276,7 +276,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/neuralee/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "040e2a4f4ef17a592453d7a41a93a448b6d53c5b",
+    "git_commit" : "50936248e4591c40741aa1988af86e30f13aa4f2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -405,9 +405,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "phate==1.0.*" "scprep" "scikit-learn<1.2"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods phate"
-LABEL org.opencontainers.image.created="2023-06-07T13:44:18Z"
+LABEL org.opencontainers.image.created="2023-06-07T13:46:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="040e2a4f4ef17a592453d7a41a93a448b6d53c5b"
+LABEL org.opencontainers.image.revision="50936248e4591c40741aa1988af86e30f13aa4f2"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
