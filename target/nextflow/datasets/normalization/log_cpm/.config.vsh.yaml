@@ -211,5 +211,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cpm"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cpm/log_cpm"
   viash_version: "0.7.3"
-  git_commit: "924a8f2a53b2545a8d066d3ec46c448a6c4c77bb"
+  git_commit: "a71c9e3004fae6e82ce3f639fc5ae173bb8af0c0"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

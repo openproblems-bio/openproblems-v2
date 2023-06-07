@@ -395,9 +395,9 @@ FROM ghcr.io/openproblems-bio/base-python:latest
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction process_dataset"
-LABEL org.opencontainers.image.created="2023-06-07T13:50:48Z"
+LABEL org.opencontainers.image.created="2023-06-07T13:53:05Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="924a8f2a53b2545a8d066d3ec46c448a6c4c77bb"
+LABEL org.opencontainers.image.revision="a71c9e3004fae6e82ce3f639fc5ae173bb8af0c0"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
