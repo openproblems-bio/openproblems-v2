@@ -316,7 +316,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/control_methods/true_features/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "ff31cad93d412230a25a07dc9e8558df157bca1f",
+    "git_commit" : "b818b3eef244a19e03bad46bb42f6de656b40573",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

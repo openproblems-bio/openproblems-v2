@@ -401,9 +401,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "umap-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods umap"
-LABEL org.opencontainers.image.created="2023-06-06T18:58:23Z"
+LABEL org.opencontainers.image.created="2023-06-07T13:36:03Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ff31cad93d412230a25a07dc9e8558df157bca1f"
+LABEL org.opencontainers.image.revision="b818b3eef244a19e03bad46bb42f6de656b40573"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
