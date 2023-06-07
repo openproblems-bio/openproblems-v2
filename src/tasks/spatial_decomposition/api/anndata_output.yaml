@@ -14,7 +14,7 @@ info:
         description: XY coordinates for each spot
       - type: float
         name: proportions
-        description: Esitmated cell type proportions for each spot
+        description: Estimated cell type proportions for each spot
     uns:
       - type: string
         name: cell_type_names
