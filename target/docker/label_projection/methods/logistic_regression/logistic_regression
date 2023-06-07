@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods logistic_regression"
-LABEL org.opencontainers.image.created="2023-06-07T13:46:25Z"
+LABEL org.opencontainers.image.created="2023-06-07T13:50:42Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="50936248e4591c40741aa1988af86e30f13aa4f2"
+LABEL org.opencontainers.image.revision="924a8f2a53b2545a8d066d3ec46c448a6c4c77bb"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
