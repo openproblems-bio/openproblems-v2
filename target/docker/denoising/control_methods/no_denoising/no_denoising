@@ -393,9 +393,9 @@ FROM ghcr.io/openproblems-bio/base-python:latest
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component denoising/control_methods no_denoising"
-LABEL org.opencontainers.image.created="2023-06-07T14:11:42Z"
+LABEL org.opencontainers.image.created="2023-06-07T14:44:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="24a48f4d40638e279ff747b6a2f0c5ff0f14a3f7"
+LABEL org.opencontainers.image.revision="36cf857266a859468d19c625b3571a43bde712be"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

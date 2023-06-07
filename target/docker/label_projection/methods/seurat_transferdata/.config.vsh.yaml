@@ -222,5 +222,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/methods/seurat_transferdata"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/methods/seurat_transferdata/seurat_transferdata"
   viash_version: "0.7.3"
-  git_commit: "24a48f4d40638e279ff747b6a2f0c5ff0f14a3f7"
+  git_commit: "36cf857266a859468d19c625b3571a43bde712be"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
