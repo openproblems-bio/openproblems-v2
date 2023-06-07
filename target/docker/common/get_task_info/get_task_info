@@ -395,9 +395,9 @@ FROM ghcr.io/openproblems-bio/base-python:latest
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common get_task_info"
-LABEL org.opencontainers.image.created="2023-06-07T13:53:17Z"
+LABEL org.opencontainers.image.created="2023-06-07T14:11:45Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="01d13c3019172538296291dcc11adc15bccfe782"
+LABEL org.opencontainers.image.revision="24a48f4d40638e279ff747b6a2f0c5ff0f14a3f7"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
