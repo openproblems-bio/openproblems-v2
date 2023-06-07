@@ -1,0 +1,43 @@
+functionality:
+  name: create_task_readme
+  namespace: common
+  description: |
+    Create a README for the task.
+  arguments:
+    - type: string
+      name: --task
+      description: Which task the component will be added to.
+      example: denoising
+    - type: file
+      name: --output
+      direction: output
+      # required: true
+      description: Path to the component directory. Suggested location is `src/<TASK>/README.md`.
+      default: src/tasks/${VIASH_PAR_TASK}/README.md
+    - type: file
+      name: --viash_yaml
+      description: |
+        Path to the project config file. Needed for knowing the relative location of a file to the project root.
+      # required: true
+      default: "_viash.yaml"
+  resources:
+    - type: python_script
+      path: script.py
+    - path: /src/common/helper_functions/read_and_merge_yaml.py
+  test_resources:
+    - type: python_script
+      path: test.py
+    - path: /src
+      dest: openproblems-v2/src
+    - path: /_viash.yaml
+      dest: openproblems-v2/_viash.yaml
+platforms:
+  - type: docker
+    image: python:3.10-slim
+    setup:
+      - type: python
+        pypi: ruamel.yaml
+  - type: native
+  - type: nextflow
+
+
