@@ -1,0 +1,40 @@
+functionality:
+  name: check_yaml_schema
+  namespace: common
+  description: Checks if a YAML file adheres to a custom schema file.
+  argument_groups:
+    - name:  Inputs
+      arguments:
+        - name: --input
+          type: file
+          required: true
+          description: A yaml file.
+        - name: --schema
+          type: file
+          required: true
+          description: A schema file for the yaml file.
+    - name: Arguments
+      arguments:
+        - name: --stop_on_error
+          type: boolean
+          default: false
+          description: Whether or not to stop with exit code 1 if the input file does not adhere to the schema.
+    - name: Output
+      arguments:
+        - name: --output
+          type: file
+          required: true
+          description: If specified, this file will contain any error message provided by the validator.
+          example: checks.txt
+          direction: output
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base-python:latest
+    setup:
+      - type: python
+        pypi:
+          - jsonschema
+  - type: nextflow
