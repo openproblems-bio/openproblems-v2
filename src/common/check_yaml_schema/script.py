@@ -29,13 +29,16 @@ logging.basicConfig(
     ]
 )
 
+input_yaml_file = par.get('input') or meta['config']
+schema_yaml_file = par.get('schema') or f"{meta['resources_dir']}/schema.yaml"
+
 print('Read files...', flush=True)
-with open(par['input'], 'r') as f:
+with open(input_yaml_file, 'r') as f:
   input_yaml = yaml.safe_load(f)
   print('Input YAML:')
   pprint(input_yaml)
 
-with open(par['schema'], 'r') as f:
+with open(schema_yaml_file, 'r') as f:
   schema_yaml = yaml.safe_load(f)
   print('Schema YAML:')
   pprint(input_yaml)
