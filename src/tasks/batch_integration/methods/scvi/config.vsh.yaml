@@ -4,7 +4,7 @@ functionality:
   name: scvi
   description: Run scVI on adata object
   info:
-    pretty_name: scVI
+    label: scVI
     summary: "scVI combines a variational autoencoder with a hierarchical Bayesian model."
     description: |
       scVI combines a variational autoencoder with a hierarchical Bayesian model. It uses the negative binomial distribution to describe gene expression of each cell, conditioned on unobserved factors and the batch variable. ScVI is run as implemented in Luecken et al.

@@ -3,7 +3,7 @@ __merge__: ../../api/comp_method_feature.yaml
 functionality:
   name: combat
   info:
-    pretty_name: Combat
+    label: Combat
     summary: "Adjusting batch effects in microarray expression data using
       empirical Bayes methods"
     description: |

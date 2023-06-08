@@ -6,7 +6,7 @@ functionality:
   status: disabled
   name: "ivis"
   info:
-    pretty_name: "ivis"
+    label: "ivis"
     summary: ""
     description: |
       "ivis is a machine learning library for reducing dimensionality of very large datasets using Siamese Neural Networks.

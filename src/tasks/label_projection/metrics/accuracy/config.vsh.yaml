@@ -6,7 +6,7 @@ functionality:
     v1_commit: fcd5b876e7d0667da73a2858bc27c40224e19f65
     metrics:
       - name: accuracy
-        pretty_name: Accuracy
+        label: Accuracy
         summary: "The percentage of correctly predicted labels."
         description: "The percentage of correctly predicted labels."
         reference: ""

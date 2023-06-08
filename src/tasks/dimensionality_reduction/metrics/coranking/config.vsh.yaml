@@ -17,7 +17,7 @@ functionality:
     reference: kraemer2018dimred
     metrics:
       - name: continuity_at_k30
-        pretty_name: Continuity at k=30
+        label: Continuity at k=30
         reference: venna2006local
         summary: ""
         description: ""
@@ -27,7 +27,7 @@ functionality:
         max: 1
         maximize: true
       - name: trustworthiness_at_k30
-        pretty_name: Trustworthiness at k=30
+        label: Trustworthiness at k=30
         summary: ""
         description: ""
         repository_url: ""
@@ -37,7 +37,7 @@ functionality:
         max: 1
         maximize: true
       - name: qnx_at_k30
-        pretty_name: The value for QNX at k=30
+        label: The value for QNX at k=30
         summary: ""
         description: ""
         repository_url: ""
@@ -47,7 +47,7 @@ functionality:
         max: 1
         maximize: true
       - name: lcmc_at_k30
-        pretty_name: The value for LCMC at k=30
+        label: The value for LCMC at k=30
         summary: ""
         description: ""
         repository_url: ""
@@ -57,7 +57,7 @@ functionality:
         max: 1
         maximize: true
       - name: qnx_auc
-        pretty_name: Area under the QNX curve
+        label: Area under the QNX curve
         summary: ""
         description: ""
         repository_url: ""
@@ -67,7 +67,7 @@ functionality:
         max: 1
         maximize: true
       - name: qlocal
-        pretty_name: Local quality measure
+        label: Local quality measure
         summary: ""
         description: ""
         repository_url: ""
@@ -77,7 +77,7 @@ functionality:
         max: 1
         maximize: true
       - name: qglobal
-        pretty_name: Global quality measure
+        label: Global quality measure
         summary: ""
         description: ""
         repository_url: ""

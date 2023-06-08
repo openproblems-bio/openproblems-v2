@@ -3,7 +3,7 @@ functionality:
   name: "random_labels"
   info:
     subtype: negative_control
-    pretty_name: Random Labels
+    label: Random Labels
     summary: "a negative control, where the labels are randomly predicted."
     description: "A negative control, where the labels are randomly predicted without training the data."
     v1_url: openproblems/tasks/label_projection/methods/baseline.py

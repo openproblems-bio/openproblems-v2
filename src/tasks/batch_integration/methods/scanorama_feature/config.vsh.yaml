@@ -5,7 +5,7 @@ functionality:
   description: "Efficient integration of heterogeneous single-cell
     transcriptomes using Scanorama"
   info:
-    pretty_name: Scanorama
+    label: Scanorama
     summary: "Efficient integration of heterogeneous single-cell
       transcriptomes using Scanorama"
     description: |

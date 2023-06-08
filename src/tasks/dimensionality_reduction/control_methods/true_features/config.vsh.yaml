@@ -4,7 +4,7 @@ functionality:
   description: "Positive control method which generates high-dimensional (full data) embedding"
   info:
     subtype: positive_control
-    pretty_name: True Features
+    label: True Features
     summary: "Positive control by retaining the dimensionality without loss of information."
     description: "This serves as a positive control since the original high-dimensional data is retained as is, without any loss of information"
     v1_url: openproblems/tasks/dimensionality_reduction/methods/baseline.py

@@ -2,7 +2,7 @@ __merge__: ../../api/comp_method.yaml
 functionality:
   name: "mlp"
   info:
-    pretty_name: Multilayer perceptron
+    label: Multilayer perceptron
     summary: "A neural network with 100-dimensional PCA input, two hidden layers, and gradient descent weight updates to minimize cross entropy loss."
     description: |
       "Multi-Layer Perceptron is a type of artificial neural network that

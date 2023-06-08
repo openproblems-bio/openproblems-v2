@@ -2,7 +2,7 @@ __merge__: ../../api/comp_method.yaml
 functionality:
   name: "knn"
   info:
-    pretty_name: KNN
+    label: KNN
     summary: "Assumes cells with similar gene expression belong to the same cell type, and assigns an unlabelled cell the most common cell type among its k nearest neighbors in PCA space."
     description: |
       'Using the "k-nearest neighbours" approach, which is a

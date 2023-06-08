@@ -6,7 +6,7 @@ functionality:
     v1_commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
     metrics:
       - name: f1_weighted
-        pretty_name: F1 weighted
+        label: F1 weighted
         summary: "Average weigthed support between each labels F1 score"
         description: "Calculates the F1 score for each label, and find their average weighted by support (the number of true instances for each label). This alters 'macro' to account for label imbalance; it can result in an F-score that is not between precision and recall."
         reference: ""
@@ -16,7 +16,7 @@ functionality:
         max: 1
         maximize: true
       - name: f1_macro
-        pretty_name: F1 macro
+        label: F1 macro
         summary: "Unweighted mean of each label F1-score"
         description: "Calculates the F1 score for each label, and find their unweighted mean. This does not take label imbalance into account."
         reference: ""
@@ -26,7 +26,7 @@ functionality:
         max: 1
         maximize: true
       - name: f1_micro
-        pretty_name: F1 micro
+        label: F1 micro
         summary: "Calculation of TP, FN and FP."
         description: "Calculates the F1 score globally by counting the total true positives, false negatives and false positives."
         reference: ""

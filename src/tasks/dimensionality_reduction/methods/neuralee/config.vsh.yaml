@@ -2,7 +2,7 @@ __merge__: ../../api/comp_method.yaml
 functionality:
   name: "neuralee"
   info:
-    pretty_name: NeuralEE
+    label: NeuralEE
     summary: "Non-linear method that uses a neural network to preserve pairwise distances between data points in a high-dimensional space."
     description: |
       "A neural network implementation of elastic embedding. It is a

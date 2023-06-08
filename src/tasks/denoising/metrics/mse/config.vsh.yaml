@@ -4,7 +4,7 @@ functionality:
   info:
     metrics:
       - name: mse
-        pretty_name: Mean-squared error
+        label: Mean-squared error
         summary: "The mean squared error between the denoised counts and the true counts."
         description: "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio"
         reference: batson2019molecular

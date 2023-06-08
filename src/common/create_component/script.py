@@ -74,7 +74,7 @@ def generate_info(par, component_type, pretty_name) -> str:
   if component_type in ["method", "control_method"]:
     str = strip_margin(f'''\
       |    # A relatively short label, used when rendering visualisarions (required)
-      |    pretty_name: {pretty_name}
+      |    label: {pretty_name}
       |    # A one sentence summary of how this method works (required). Used when 
       |    # rendering summary tables.
       |    summary: "FILL IN: A one sentence summary of this method."
@@ -102,7 +102,7 @@ def generate_info(par, component_type, pretty_name) -> str:
       |      # Can contain only lowercase letters or underscores.
       |      name: {par["name"]}
       |      # A relatively short label, used when rendering visualisarions (required)
-      |      pretty_name: {pretty_name}
+      |      label: {pretty_name}
       |      # A one sentence summary of how this metric works (required). Used when 
       |      # rendering summary tables.
       |      summary: "FILL IN: A one sentence summary of this metric."

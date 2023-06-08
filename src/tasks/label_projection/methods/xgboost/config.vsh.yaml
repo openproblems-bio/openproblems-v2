@@ -3,7 +3,7 @@ functionality:
   name: "xgboost"
   description: "XGBoost: A Scalable Tree Boosting System"
   info:
-    pretty_name: XGBoost
+    label: XGBoost
     summary: "XGBoost is a decision tree model that averages multiple trees with gradient boosting."
     description: |
       "XGBoost is a gradient boosting decision tree model that learns multiple tree

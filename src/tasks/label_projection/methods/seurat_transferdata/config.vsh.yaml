@@ -5,7 +5,7 @@ functionality:
     The Seurat v3 anchoring procedure is designed to integrate
     diverse single-cell datasets across technologies and modalities. 
   info:
-    pretty_name: Seurat TransferData
+    label: Seurat TransferData
     summary: "Seurat reference mapping predicts cell types for unlabelled cells using PCA distances, labelled anchors, and transfer anchors from Seurat, with SCTransform normalization."
     description: |
       "Seurat reference mapping is a cell type label transfer method provided by the

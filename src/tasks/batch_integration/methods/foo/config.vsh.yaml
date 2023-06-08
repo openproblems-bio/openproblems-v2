@@ -1,0 +1,11 @@
+functionality:
+  name: 
+  info:
+    label: 
+    summary: 
+    description: 
+    reference: 
+    documentation_url: 
+    repository_url: 
+  resources:
+    - type: r_script

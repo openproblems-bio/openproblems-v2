@@ -6,7 +6,7 @@ functionality:
   info:
     metrics:
       - name: pcr
-        pretty_name: PCR
+        label: PCR
         summary: "The comparison of explained variance by batch before and after integration."
         description: |
           "This compares the explained variance by batch before and after integration. It

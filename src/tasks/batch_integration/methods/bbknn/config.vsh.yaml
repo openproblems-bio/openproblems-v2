@@ -3,7 +3,7 @@ __merge__: ../../api/comp_method_graph.yaml
 functionality:
   name: bbknn
   info:
-    pretty_name: BBKNN
+    label: BBKNN
     summary: "BBKNN creates k nearest neighbours graph by identifying neighbours within batches, then combining and processing them with UMAP for visualization."
     description: |
       "BBKNN or batch balanced k nearest neighbours graph is built for each cell by

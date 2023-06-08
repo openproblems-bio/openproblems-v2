@@ -3,7 +3,7 @@ functionality:
   name: "random_features"
   info:
     subtype: negative_control
-    pretty_name: Random Features
+    label: Random Features
     summary: "Negative control by randomly embedding into a 2D space."
     description: "This method serves as a negative control, where the data is randomly embedded into a two-dimensional space, with no attempt to preserve the original structure."
     v1_url: openproblems/tasks/dimensionality_reduction/methods/baseline.py

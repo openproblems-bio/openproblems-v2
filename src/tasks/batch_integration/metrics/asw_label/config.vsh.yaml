@@ -9,7 +9,7 @@ functionality:
     
     metrics:
       - name: asw_label
-        pretty_name: ASW Label
+        label: ASW Label
         summary: "Average silhouette of labels"
         description: "The absolute silhouette width is computed on cell identity labels, measuring their compactness."
         reference: luecken2022benchmarking

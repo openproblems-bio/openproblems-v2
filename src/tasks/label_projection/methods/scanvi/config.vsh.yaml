@@ -2,7 +2,7 @@ __merge__: ../../api/comp_method.yaml
 functionality:
   name: "scanvi"
   info:
-    pretty_name: SCANVI
+    label: SCANVI
     summary: "ScANVI predicts cell type labels for unlabelled test data by leveraging cell type labels, modelling uncertainty and using deep neural networks with stochastic optimization."
     description: |
       "single-cell ANnotation using Variational Inference is a

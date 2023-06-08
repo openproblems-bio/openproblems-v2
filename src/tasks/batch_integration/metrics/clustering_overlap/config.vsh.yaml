@@ -6,7 +6,7 @@ functionality:
   info:
     metrics:
       - name: ari
-        pretty_name: ARI
+        label: ARI
         summary: "Adjusted Rand Index compares clustering overlap, correcting for random labels and considering correct overlaps and disagreements."
         description: |
           The Adjusted Rand Index (ARI) compares the overlap of two clusterings;
@@ -27,7 +27,7 @@ functionality:
         v1_url: openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py
         v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
       - name: nmi
-        pretty_name: NMI
+        label: NMI
         summary: "NMI compares overlap by scaling using mean entropy terms and optimizing Louvain clustering to obtain the best match between clusters and labels."
         description: |
           Normalized Mutual Information (NMI) compares the overlap of two clusterings.

@@ -2,7 +2,7 @@ __merge__: ../../api/comp_method.yaml
 functionality:
   name: "phate"
   info:
-    pretty_name: PHATE
+    label: PHATE
     summary: "Preservating trajectories in a dataset by using heat diffusion potential via an affinity-based method that creates an embedding from dominant eigenvalues of a Markov transition matrix."
     description: |
       "PHATE or “Potential of Heat - diffusion for Affinity - based Transition
