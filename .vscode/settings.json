@@ -1,0 +1,5 @@
+{
+  "yaml.schemas": {
+    "src/common/api/schema_method.yaml": "src/tasks/**/methods/*/config.vsh.yaml"
+  }
+}

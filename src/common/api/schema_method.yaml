@@ -1,8 +1,6 @@
 # v1 decorators: https://github.com/openproblems-bio/openproblems/blob/main/openproblems/tools/decorators.py
 # v1 tests: https://github.com/openproblems-bio/openproblems/blob/main/test/test_core_metadata.py
 # v2 create_component: https://github.com/openproblems-bio/openproblems-v2/blob/main/src/common/create_component/script.py#L29
-
-"$schema": "http://json-schema.org/draft-07/schema#"
 title: Method
 description: A method component.
 type: object
@@ -21,6 +19,7 @@ properties:
     type: object
     description: Information regarding the functionality of the component.
     required: [name, info, resources]
+    additionalProperties: false
     properties:
       name:
         type: string
@@ -31,8 +30,9 @@ properties:
       info:
         description: Metadata of the component.
         type: object
+        additionalProperties: false
         required: [label, summary, description, preferred_normalization, reference, documentation_url, repository_url]
-        fields:
+        properties:
           label:
             type: string
             description: |
@@ -46,39 +46,54 @@ properties:
               Used for creating an overview of the components in a task.
             minLength: 15
             maxLength: 150
-          description: # ...
-          preferred_normalization: # ...
-          reference: # ...
-          documentation_url: # ...
-          repository_url: # ...
+          description:
+            type: string
+            description: |
+              An explanation for how the component works.
+              Used for creating reference documentation of a task and supplementary information in a manuscript.
+          preferred_normalization: 
+            "$ref": "schema_definitions.yaml#/definitions/preferredNormalization"
+          reference:
+            type: string
+            description: A bibtex reference key to the paper where the component is described.
+          documentation_url:
+            type: string
+            description: The url to the documentation of the used software library.
+          repository_url:
+            type: string
+            description: The url to the repository of the used software library.
+          v1_url:
+            type: string
+            # todo: document
+          v1_commit:
+            type: string
+            # todo: document
+          variants:
+            type: object
+            properties:
+              preferred_normalization:
+                "$ref": "schema_definitions.yaml#/definitions/preferredNormalization"
+            # todo: document
       arguments:
         type: array
         description: Component-specific parameters.
+        items:
+          "$ref": "schema_definitions.yaml#/definitions/argument"
       resources:
         type: array
         description: Resources required to run the component.
+        items:
+          "$ref": "schema_definitions.yaml#/definitions/resource"
+      test_resources:
+        type: array
+        description: Resources required to run the component.
+        items:
+          "$ref": "schema_definitions.yaml#/definitions/resource"
   platforms:
     type: array
     description: A list of platforms which Viash generates target artifacts for.
-    items: false
-    prefixItems:
-      - type: object
-        description: Specifications for the Docker image for this component.
-        properties:
-          type: # docker
-          image:
-          setup:
-      - type: object
-        description: Allows running the component natively.
-        properties:
-          type: # native
-      - type: object
-        description: Allows running the component as a Nextflow module or pipeline.
-        properties:
-          type: # nextflow
-          directives:
-            type: object
-            properties:
-              label:
-                type: array
-
+    items:
+      anyOf:
+        - "$ref": "schema_definitions.yaml#/definitions/platformDocker"
+        - "$ref": "schema_definitions.yaml#/definitions/platformNative"
+        - "$ref": "schema_definitions.yaml#/definitions/platformVdsl3"
