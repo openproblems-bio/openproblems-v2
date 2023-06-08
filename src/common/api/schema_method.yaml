@@ -1,0 +1,84 @@
+# v1 decorators: https://github.com/openproblems-bio/openproblems/blob/main/openproblems/tools/decorators.py
+# v1 tests: https://github.com/openproblems-bio/openproblems/blob/main/test/test_core_metadata.py
+# v2 create_component: https://github.com/openproblems-bio/openproblems-v2/blob/main/src/common/create_component/script.py#L29
+
+"$schema": "http://json-schema.org/draft-07/schema#"
+title: Method
+description: A method component.
+type: object
+required: [__merge__, functionality, platforms]
+properties:
+  __merge__:
+    type: string
+    description: |
+      The API specifies which type of component this is.
+      It contains specifications for:
+
+        - The input/output files
+        - Common parameters
+        - A unit test
+  functionality:
+    type: object
+    description: Information regarding the functionality of the component.
+    required: [name, info, resources]
+    fields:
+      name:
+        type: string
+        description: |
+          A unique identifier for your component.
+          Can only contain lowercase letters or underscores.
+        pattern: "^[a-z_]+$"
+      info:
+        description: Metadata of the component.
+        type: object
+        required: [label, summary, description, preferred_normalization, reference, documentation_url, repository_url]
+        fields:
+          label:
+            type: string
+            description: |
+              A unique, human-readable, short label.
+              Used for creating summary tables and visualisations.
+            maxLength: 50
+          summary:
+            type: string
+            description: |
+              A one sentence summary of this components purpose and methodology.
+              Used for creating an overview of the components in a task.
+            minLength: 15
+            maxLength: 150
+          description: # ...
+          preferred_normalization: # ...
+          reference: # ...
+          documentation_url: # ...
+          repository_url: # ...
+      arguments:
+        type: array
+        description: Component-specific parameters.
+      resources:
+        type: array
+        description: Resources required to run the component.
+  platforms:
+    type: array
+    description: A list of platforms which Viash generates target artifacts for.
+    items: false
+    prefixItems:
+      - type: object
+        description: Specifications for the Docker image for this component.
+        properties:
+          type: # docker
+          image:
+          setup:
+      - type: object
+        description: Allows running the component natively.
+        properties:
+          type: # native
+      - type: object
+        description: Allows running the component as a Nextflow module or pipeline.
+        properties:
+          type: # nextflow
+          directives:
+            type: object
+            properties:
+              label:
+                type: array
+
