@@ -19,10 +19,12 @@ functionality:
       default: false
       required: false
   test_resources:
-    - path: /resources_test/batch_integration/pancreas
-      dest: resources_test/batch_integration/pancreas
+    # check method component
     - type: python_script
       path: /src/common/comp_tests/check_method_config.py
+    - path: /src/common/library.bib
+    # auto-run component
     - type: python_script
       path: /src/common/comp_tests/run_and_check_adata.py
-    - path: /src/common/library.bib
+    - path: /resources_test/batch_integration/pancreas
+      dest: resources_test/batch_integration/pancreas
