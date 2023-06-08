@@ -21,7 +21,7 @@ properties:
     type: object
     description: Information regarding the functionality of the component.
     required: [name, info, resources]
-    fields:
+    properties:
       name:
         type: string
         description: |
