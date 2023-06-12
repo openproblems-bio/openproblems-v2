@@ -104,9 +104,13 @@ definitions:
       description: A bibtex reference key to the paper where the component is described.
   DocumentationURL:
     type: string
+    format: uri
+    pattern: "^https://"
     description: The url to the documentation of the used software library.
   RepositoryURL:
     type: string
+    format: uri
+    pattern: "^https://"
     description: The url to the repository of the used software library.
   MigrationV1:
     type: object

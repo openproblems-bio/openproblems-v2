@@ -30,7 +30,7 @@ properties:
               type: object
               description: Metadata of each metric.
               additionalProperties: false
-              required: [label, summary, description, reference, documentation_url, repository_url, min, max, maximize]
+              required: [label, summary, description, reference, min, max, maximize]
               properties:
                 subtype:
                   "$ref": "schema_definitions.yaml#/definitions/ComponentSubtype"
