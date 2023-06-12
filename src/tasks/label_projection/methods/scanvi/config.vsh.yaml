@@ -5,13 +5,13 @@ functionality:
     label: SCANVI
     summary: "ScANVI predicts cell type labels for unlabelled test data by leveraging cell type labels, modelling uncertainty and using deep neural networks with stochastic optimization."
     description: |
-      "single-cell ANnotation using Variational Inference is a
+      single-cell ANnotation using Variational Inference is a
       semi-supervised variant of the scVI(Lopez et al. 2018) algorithm. Like scVI,
       scANVI uses deep neural networks and stochastic optimization to model
       uncertainty caused by technical noise and bias in single - cell
       transcriptomics measurements. However, scANVI also leverages cell type labels
       in the generative modelling. In this approach, scANVI is used to predict the
-      cell type labels of the unlabelled test data."
+      cell type labels of the unlabelled test data.
     reference: "lotfollahi2020query"
     repository_url: "https://github.com/YosefLab/scvi-tools"
     documentation_url: https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html

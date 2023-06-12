@@ -7,15 +7,14 @@ functionality:
   name: "ivis"
   info:
     label: "ivis"
-    summary: ""
+    summary: "Structure-preserving dimensionality reduction using a siamese neural network trained on triplets."
     description: |
-      "ivis is a machine learning library for reducing dimensionality of very large datasets using Siamese Neural Networks.
+      ivis is a machine learning library for reducing dimensionality of very large datasets using Siamese Neural Networks.
       ivis preserves global data structures in a low-dimensional space, adds new data points to existing embeddings using
-      a parametric mapping function, and scales linearly to millions of observations."
-      reference: szubert2019structurepreserving
+      a parametric mapping function, and scales linearly to millions of observations.
+    reference: szubert2019structurepreserving
     repository_url: "https://github.com/beringresearch/ivis"
     documentation_url: "https://github.com/beringresearch/ivis#readme"
-    reference: ""
     v1:
       path: openproblems/tasks/dimensionality_reduction/methods/ivis.py
       commit: 9ebb777b3b76337e731a3b99f4bf39462a15c4cc

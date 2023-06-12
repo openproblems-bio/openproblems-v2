@@ -5,13 +5,13 @@ functionality:
     label: KNN
     summary: "Assumes cells with similar gene expression belong to the same cell type, and assigns an unlabelled cell the most common cell type among its k nearest neighbors in PCA space."
     description: |
-      'Using the "k-nearest neighbours" approach, which is a
+      Using the "k-nearest neighbours" approach, which is a
       popular machine learning algorithm for classification and regression tasks.
       The assumption underlying KNN in this context is that cells with similar gene
       expression profiles tend to belong to the same cell type. For each unlabelled
       cell, this method computes the $k$ labelled cells (in this case, 5) with the
       smallest distance in PCA space, and assigns that cell the most common cell
-      type among its $k$ nearest neighbors.'
+      type among its $k$ nearest neighbors.
     reference : "cover1967nearest"
     repository_url: https://github.com/scikit-learn/scikit-learn
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html"

@@ -5,10 +5,10 @@ functionality:
     label: Logistic Regression
     summary: "Logistic Regression with 100-dimensional PCA coordinates estimates parameters for multivariate classification by minimizing cross entropy loss over cell type classes."
     description: |
-      "Logistic Regression estimates parameters of a logistic function for
+      Logistic Regression estimates parameters of a logistic function for
       multivariate classification tasks. Here, we use 100-dimensional whitened PCA
       coordinates as independent variables, and the model minimises the cross
-      entropy loss over all cell type classes."
+      entropy loss over all cell type classes.
     reference: "hosmer2013applied"
     repository_url: https://github.com/scikit-learn/scikit-learn
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html"

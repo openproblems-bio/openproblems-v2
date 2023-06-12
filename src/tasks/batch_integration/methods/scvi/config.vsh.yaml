@@ -2,7 +2,6 @@
 __merge__: ../../api/comp_method_embedding.yaml
 functionality:
   name: scvi
-  description: Run scVI on adata object
   info:
     label: scVI
     summary: "scVI combines a variational autoencoder with a hierarchical Bayesian model."

@@ -2,9 +2,7 @@ __merge__: ../../api/comp_metric.yaml
 functionality:
   name: "f1"
   info:
-    v1:
-      path: openproblems/tasks/label_projection/metrics/f1.py
-      commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
+    
     metrics:
       - name: f1_weighted
         label: F1 weighted
@@ -16,6 +14,9 @@ functionality:
         min: 0
         max: 1
         maximize: true
+        v1:
+          path: openproblems/tasks/label_projection/metrics/f1.py
+          commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
       - name: f1_macro
         label: F1 macro
         summary: "Unweighted mean of each label F1-score"
@@ -26,6 +27,9 @@ functionality:
         min: 0
         max: 1
         maximize: true
+        v1:
+          path: openproblems/tasks/label_projection/metrics/f1.py
+          commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
       - name: f1_micro
         label: F1 micro
         summary: "Calculation of TP, FN and FP."
@@ -36,6 +40,9 @@ functionality:
         min: 0
         max: 1
         maximize: true
+        v1:
+          path: openproblems/tasks/label_projection/metrics/f1.py
+          commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
   resources:
     - type: python_script
       path: script.py

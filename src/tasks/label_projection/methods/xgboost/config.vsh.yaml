@@ -1,15 +1,14 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: "xgboost"
-  description: "XGBoost: A Scalable Tree Boosting System"
   info:
     label: XGBoost
     summary: "XGBoost is a decision tree model that averages multiple trees with gradient boosting."
     description: |
-      "XGBoost is a gradient boosting decision tree model that learns multiple tree
+      XGBoost is a gradient boosting decision tree model that learns multiple tree
       structures in the form of a series of input features and their values,
       leading to a prediction decision, and averages predictions from all its
-      trees. Here, input features are normalised gene expression values."
+      trees. Here, input features are normalised gene expression values.
     reference: "chen2016xgboost"
     repository_url: "https://github.com/dmlc/xgboost"
     documentation_url: "https://xgboost.readthedocs.io/en/stable/index.html"

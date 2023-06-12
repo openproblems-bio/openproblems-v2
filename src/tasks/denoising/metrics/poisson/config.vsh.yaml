@@ -12,8 +12,9 @@ functionality:
         reference: batson2019molecular
         documentation_url: ""
         repository_url: ""
-        v1_path: openproblems/tasks/denoising/metrics/poisson.py
-        v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+        v1:
+          path: openproblems/tasks/denoising/metrics/poisson.py
+          commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
         maximize: false
         min: 0
         max: +inf
