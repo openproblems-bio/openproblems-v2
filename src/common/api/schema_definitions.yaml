@@ -77,7 +77,7 @@ definitions:
     description: |
       A unique identifier for your component.
       Can only contain lowercase letters or underscores.
-    pattern: "^[a-z_]+$"
+    pattern: "^[a-z_][a-z0-9_]*$"
   ComponentLabel:
     type: string
     description: |
@@ -90,13 +90,13 @@ definitions:
       A one sentence summary of this components purpose and methodology.
       Used for creating an overview of the components in a task.
     minLength: 15
-    maxLength: 150
+    maxLength: 180
   ComponentDescription:
     type: string
     description: |
       An explanation for how the component works.
       Used for creating reference documentation of a task and supplementary information in a manuscript.
-    minLength: 50
+    minLength: 30
   BibtexReference:
     type: string
     description: |

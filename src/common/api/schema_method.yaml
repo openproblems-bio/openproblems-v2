@@ -19,6 +19,8 @@ properties:
     properties:
       name:
         "$ref": "schema_definitions.yaml#/definitions/ComponentName"
+      status:
+        "$ref": "schema_viash_config.yaml#/definitions/Status"
       info:
         type: object
         description: Metadata of the component.
