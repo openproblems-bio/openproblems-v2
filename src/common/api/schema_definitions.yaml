@@ -1,1043 +1,25 @@
 definitions:
-  author:
-    title: author
-    type: object
-    properties:
-      name:
-        type: string
-        description: The name of the author
-      email:
-        type: string
-        description: The e-mail address of the author
-      roles:
-        anyOf:
-        - description: 'Suggested values for roles are: maintainer, author, contributor,
-            datacontributor, copyrightholder, funder'
-          type: string
-        - description: 'Suggested values for roles are: maintainer, author, contributor,
-            datacontributor, copyrightholder, funder'
-          type: array
-          items:
-            type: string
-      props:
-        description: Extra key/value pairs
-        type: object
-        additionalProperties:
-          type: string
-      info:
-        description: 'Structured information. Can be any shape: a string, vector,
-          map or even nested map.'
-        type: object
-    required:
-    - name
-    additionalProperties: false
-  argumentAlternatives:
-    anyOf:
-    - description: An alternative format variation for this argument.
-      type: string
-    - description: List of alternative format variations for this argument.
-      type: array
-      items:
-        type: string
-  argumentBooleanExample:
-    anyOf:
-    - type: boolean
-      description: An example value for this argument.
-    - type: array
-      items:
-        type: boolean
-      description: An example value for this argument.
-  argumentNumberExample:
-    anyOf:
-    - type: number
-      description: An example value for this argument.
-    - type: array
-      items:
-        type: number
-      description: An example value for this argument.
-  argumentIntegerExample:
-    anyOf:
-    - type: integer
-      description: An example value for this argument.
-    - type: array
-      items:
-        type: integer
-      description: An example value for this argument.
-  argumentStringExample:
-    anyOf:
-    - type: string
-      description: An example value for this argument.
-    - type: array
-      items:
-        type: string
-      description: An example value for this argument.
-  argumentBooleanDefault:
-    anyOf:
-    - type: boolean
-      description: The default value when no argument value is provided.
-    - type: array
-      items:
-        type: boolean
-      description: The default value when no argument value is provided.
-  argumentNumberDefault:
-    anyOf:
-    - type: number
-      description: The default value when no argument value is provided.
-    - type: array
-      items:
-        type: number
-      description: The default value when no argument value is provided.
-  argumentIntegerDefault:
-    anyOf:
-    - type: integer
-      description: The default value when no argument value is provided.
-    - type: array
-      items:
-        type: integer
-      description: The default value when no argument value is provided.
-  argumentStringDefault:
-    anyOf:
-    - type: string
-      description: The default value when no argument value is provided.
-    - type: array
-      items:
-        type: string
-      description: The default value when no argument value is provided.
-  argumentDirection:
-    enum:
-    - input
-    - output
-    description: Makes this argument an `input` or an `output`, as in does the file/folder
-      needs to be read or written. `input` by default.
-  argument:
-    anyOf:
-    - title: Boolean
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        example:
-          "$ref": "#/definitions/argumentBooleanExample"
-        default:
-          "$ref": "#/definitions/argumentBooleanDefault"
-        required:
-          type: boolean
-          description: Make the value for this argument required. If set to `true`,
-            an error will be produced if no value was provided. `false` by default.
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        multiple:
-          type: boolean
-          description: Treat the argument value as an array.
-        multiple_sep:
-          type: string
-          description: The delimiter character for providing multiple values. `:`
-            by default.
-        type:
-          const: boolean
-          description: 'A `boolean` type argument has two possible values: `true`
-            or `false`.'
-      required:
-      - type
-      additionalProperties: false
-    - title: Boolean True
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        type:
-          const: boolean_true
-          description: An argument of the `boolean_true` type acts like a `boolean`
-            flag with a default value of `false`. When called as an argument it sets
-            the `boolean` to `true`.
-      required:
-      - type
-      additionalProperties: false
-    - title: Boolean False
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        type:
-          const: boolean_false
-          description: An argument of the `boolean_false` type acts like an inverted
-            `boolean` flag with a default value of `true`. When called as an argument
-            it sets the `boolean` to `false`.
-      required:
-      - type
-      additionalProperties: false
-    - title: Double
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        example:
-          "$ref": "#/definitions/argumentNumberExample"
-        default:
-          "$ref": "#/definitions/argumentNumberDefault"
-        required:
-          type: boolean
-          description: Make the value for this argument required. If set to `true`,
-            an error will be produced if no value was provided. `false` by default.
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        multiple:
-          type: boolean
-          description: Treat the argument value as an array.
-        multiple_sep:
-          type: string
-          description: The delimiter character for providing multiple values. `:`
-            by default.
-        type:
-          const: double
-          description: A `double` type argument has a numeric value with decimal points
-      required:
-      - type
-      additionalProperties: false
-    - title: File
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        example:
-          "$ref": "#/definitions/argumentStringExample"
-        default:
-          "$ref": "#/definitions/argumentStringDefault"
-        must_exist:
-          type: boolean
-          description: Checks whether the file or folder exists.
-        create_parent:
-          type: boolean
-          description: 'If the output filename is a path and it does not exist, create
-            it before executing the script (only for `direction: output`).'
-        required:
-          type: boolean
-          description: Make the value for this argument required. If set to `true`,
-            an error will be produced if no value was provided. `false` by default.
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        multiple:
-          type: boolean
-          description: Treat the argument value as an array.
-        multiple_sep:
-          type: string
-          description: The delimiter character for providing multiple values. `:`
-            by default.
-        type:
-          const: file
-          description: A `file` type argument has a string value that points to a
-            file or folder path.
-      required:
-      - type
-      additionalProperties: false
-    - title: Integer
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        example:
-          "$ref": "#/definitions/argumentIntegerExample"
-        default:
-          "$ref": "#/definitions/argumentIntegerDefault"
-        required:
-          type: boolean
-          description: Make the value for this argument required. If set to `true`,
-            an error will be produced if no value was provided. `false` by default.
-        choices:
-          type: array
-          items:
-            type: integer
-          description: Limit the amount of valid values for this argument to those
-            set in this list.
-        min:
-          type: integer
-          description: Minimum allowed value for this argument. If set and the provided
-            value is lower than the minimum, an error will be produced. Can be combined
-            with [`max`](#max) to clamp values.
-        max:
-          type: integer
-          description: Maximum allowed value for this argument. If set and the provided
-            value is higher than the maximum, an error will be produced. Can be combined
-            with [`min`](#min) to clamp values.
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        multiple:
-          type: boolean
-          description: Treat the argument value as an array.
-        multiple_sep:
-          type: string
-          description: The delimiter character for providing multiple values. `:`
-            by default.
-        type:
-          const: integer
-          description: An `integer` type argument has a numeric value without decimal
-            points.
-      required:
-      - type
-      additionalProperties: false
-    - title: Long
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        example:
-          "$ref": "#/definitions/argumentIntegerExample"
-        default:
-          "$ref": "#/definitions/argumentIntegerDefault"
-        required:
-          type: boolean
-          description: Make the value for this argument required. If set to `true`,
-            an error will be produced if no value was provided. `false` by default.
-        choices:
-          type: array
-          items:
-            type: integer
-          description: Limit the amount of valid values for this argument to those
-            set in this list.
-        min:
-          type: integer
-          description: Minimum allowed value for this argument. If set and the provided
-            value is lower than the minimum, an error will be produced. Can be combined
-            with [`max`](#max) to clamp values.
-        max:
-          type: integer
-          description: Maximum allowed value for this argument. If set and the provided
-            value is higher than the maximum, an error will be produced. Can be combined
-            with [`min`](#min) to clamp values.
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        multiple:
-          type: boolean
-          description: Treat the argument value as an array.
-        multiple_sep:
-          type: string
-          description: The delimiter character for providing multiple values. `:`
-            by default.
-        type:
-          const: long
-          description: A `long` type argument has a numeric value without decimal
-            points.
-      required:
-      - type
-      additionalProperties: false
-    - title: String
-      type: object
-      properties:
-        name:
-          type: string
-          description: The name of the argument.
-        alternatives:
-          description: List of alternative format variations for this argument.
-          "$ref": "#/definitions/argumentAlternatives"
-        description:
-          type: string
-          description: A description of the argument. This will be displayed with
-            `--help`.
-        info:
-          type: object
-          description: 'Structured information. Can be any shape: a string, vector,
-            map or even nested map.'
-        example:
-          "$ref": "#/definitions/argumentStringExample"
-        default:
-          "$ref": "#/definitions/argumentStringDefault"
-        required:
-          type: boolean
-          description: Make the value for this argument required. If set to `true`,
-            an error will be produced if no value was provided. `false` by default.
-        choices:
-          type: array
-          items:
-            type: string
-          description: Limit the amount of valid values for this argument to those
-            set in this list.
-        direction:
-          "$ref": "#/definitions/argumentDirection"
-        multiple:
-          type: boolean
-          description: Treat the argument value as an array.
-        multiple_sep:
-          type: string
-          description: The delimiter character for providing multiple values. `:`
-            by default.
-        type:
-          const: string
-          description: A `string` type argument has a value made up of an ordered
-            sequences of characters, like "Hello" or "I'm a string".
-      required:
-      - type
-      additionalProperties: false
-  resource:
-    anyOf:
-    - type: object
-      properties:
-        path:
-          type: string
-        text:
-          type: string
-        dest:
-          type: string
-        is_executable:
-          type: boolean
-        parent:
-          type: string
-          "$comment": TODO, type URI
-        type:
-          enum:
-          - bash_script
-          - python_script
-          - r_script
-          - javascript_script
-          - scala_script
-          - csharp_script
-          - executable
-      required:
-      - type
-      additionalProperties: false
-    - type: object
-      properties:
-        path:
-          type: string
-        text:
-          type: string
-        dest:
-          type: string
-        is_executable:
-          type: boolean
-        parent:
-          type: string
-          "$comment": TODO, type URI
-        entrypoint:
-          type: string
-        type:
-          const: nextflow_script
-      required:
-      - type
-      additionalProperties: false
-    - type: object
-      properties:
-        path:
-          type: string
-        text:
-          type: string
-        dest:
-          type: string
-        is_executable:
-          type: boolean
-        parent:
-          type: string
-          "$comment": TODO, type URI
-        type:
-          const: file
-      additionalProperties: false
-  requirementApk:
-    title: Apk
-    type: object
-    description: Specify which apk packages should be available in order to run the
-      component.
-    properties:
-      type:
-        const: apk
-      packages:
-        type: array
-        items:
-          type: string
-    additionalProperties: false
-  requirementApt:
-    title: Apt
-    type: object
-    description: Specify which apt packages should be available in order to run the
-      component.
-    properties:
-      type:
-        const: apt
-      packages:
-        type: array
-        items:
-          type: string
-      interactive:
-        type: boolean
-        description: 'If `false`, the Debian frontend is set to non-interactive (recommended).
-          Default: false.'
-    additionalProperties: false
-  requirementDocker:
-    title: Docker
-    type: object
-    description: Specify which Docker commands should be run during setup.
-    properties:
-      resources:
-        anyOf:
-        - type: string
-          description: Specifies which `COPY` entries to add to the Dockerfile while
-            building it.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `COPY` entries to add to the Dockerfile while
-            building it.
-      label:
-        anyOf:
-        - type: string
-          description: Specifies which `LABEL` entries to add to the Dockerfile while
-            building it.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `LABEL` entries to add to the Dockerfile while
-            building it.
-      add:
-        anyOf:
-        - type: string
-          description: Specifies which `ADD` entries to add to the Dockerfile while
-            building it.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `ADD` entries to add to the Dockerfile while
-            building it.
-      copy:
-        anyOf:
-        - type: string
-          description: Specifies which `COPY` entries to add to the Dockerfile while
-            building it.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `COPY` entries to add to the Dockerfile while
-            building it.
-      run:
-        anyOf:
-        - type: string
-          description: Specifies which `RUN` entries to add to the Dockerfile while
-            building it.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `RUN` entries to add to the Dockerfile while
-            building it.
-      build_args:
-        anyOf:
-        - type: string
-          description: Specifies which `ARG` entries to add to the Dockerfile while
-            building it.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `ARG` entries to add to the Dockerfile while
-            building it.
-      env:
-        anyOf:
-        - type: string
-          description: Specifies which `ENV` entries to add to the Dockerfile while
-            building it. Unlike `ARG`, `ENV` entries are also accessible from inside
-            the container.
-        - type: array
-          items:
-            type: string
-          description: Specifies which `ENV` entries to add to the Dockerfile while
-            building it. Unlike `ARG`, `ENV` entries are also accessible from inside
-            the container.
-      type:
-        const: docker
-    additionalProperties: false
-  requirementPython:
-    title: Python
-    type: object
-    description: Specify which Python packages should be available in order to run
-      the component.
-    properties:
-      user:
-        type: boolean
-        description: 'Sets the `--user` flag when set to true. Default: false.'
-      packages:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from pip.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from pip.
-      pip:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from pip.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from pip.
-      pypi:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from PyPI using pip.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from PyPI using pip.
-      git:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using a Git URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using a Git URI.
-      github:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from GitHub.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from GitHub.
-      gitlab:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from GitLab.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from GitLab.
-      mercurial:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using a Mercurial URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using a Mercurial URI.
-      svn:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using an SVN URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using an SVN URI.
-      bazaar:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using a Bazaar URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using a Bazaar URI.
-      url:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using a generic URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using a generic URI.
-      script:
-        anyOf:
-        - type: string
-          description: Specifies a code block to run as part of the build.
-        - type: array
-          items:
-            type: string
-          description: Specifies a code block to run as part of the build.
-      upgrade:
-        type: boolean
-        description: 'Sets the `--upgrade` flag when set to true. Default: true.'
-      type:
-        const: python
-        description: 'Sets the `--upgrade` flag when set to true. Default: true.'
-    additionalProperties: false
-  requirementR:
-    title: R
-    type: object
-    description: Specify which R packages should be available in order to run the
-      component.
-    properties:
-      packages:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from CRAN.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from CRAN.
-      cran:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from CRAN.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from CRAN.
-      bioc:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from BioConductor.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from BioConductor.
-      git:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using a Git URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using a Git URI.
-      github:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from GitHub.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from GitHub.
-      gitlab:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from GitLab.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from GitLab.
-      bitbucket:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install from Bitbucket.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install from Bitbucket.
-      svn:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using an SVN URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using an SVN URI.
-      url:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install using a generic URI.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install using a generic URI.
-      script:
-        anyOf:
-        - type: string
-          description: Specifies a code block to run as part of the build.
-        - type: array
-          items:
-            type: string
-          description: Specifies a code block to run as part of the build.
-      bioc_force_install:
-        type: boolean
-        description: 'Forces packages specified in `bioc` to be reinstalled, even
-          if they are already present in the container. Default: false.'
-      type:
-        const: r
-    additionalProperties: false
-  requirementRuby:
-    title: Ruby
-    type: object
-    description: Specify which Ruby packages should be available in order to run the
-      component.
-    properties:
-      packages:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install.
-      type:
-        const: ruby
-    additionalProperties: false
-  requirementYum:
-    title: Yum
-    type: object
-    description: Specify which yum packages should be available in order to run the
-      component.
-    properties:
-      packages:
-        anyOf:
-        - type: string
-          description: Specifies which packages to install.
-        - type: array
-          items:
-            type: string
-          description: Specifies which packages to install.
-      type:
-        const: yum
-    additionalProperties: false
-  requirements:
-    allOf:
-    - anyOf:
-      - "$ref": "#/definitions/requirementApk"
-      - "$ref": "#/definitions/requirementApt"
-      - "$ref": "#/definitions/requirementDocker"
-      - "$ref": "#/definitions/requirementPython"
-      - "$ref": "#/definitions/requirementR"
-      - "$ref": "#/definitions/requirementRuby"
-      - "$ref": "#/definitions/requirementYum"
-    - required:
-      - type
-  platformVdsl3:
+  PlatformVdsl3:
     title: VDSL3
     description: Next-gen platform for generating NextFlow VDSL3 modules.
     properties:
-      id:
-        type: string
-        description: Every platform can be given a specific id that can later be referred
-          to explicitly when running or building the Viash component.
       type:
         const: nextflow
         description: Next-gen platform for generating NextFlow VDSL3 modules.
-      variant:
-        const: vdsl3
-        default: vdsl3
       directives:
-        description: Directives are optional settings that affect the execution of
-          the process.
-        type: object
-        properties:
-          accelerator:
-            type: object
-            additionalProperties:
-              type: string
-            description: https://www.nextflow.io/docs/latest/process.html#accelerator
-          afterScript:
-            type: string
-          beforeScript:
-            type: string
-          cache:
-            anyOf:
-            - type: string
-            - type: boolean
-          conda:
-            anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-          container:
-            "$comment": Option[Either[Map[String, String], String]]
-            anyOf:
-            - type: object
-              additionalProperties:
-                type: string
-            - type: string
-          containerOptions:
-            anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-          cpus:
-            anyOf:
-            - type: integer
-            - type: string
-          disk:
-            type: string
-          echo:
-            anyOf:
-            - type: boolean
-            - type: string
-          errorStrategy:
-            type: string
-          executor:
-            type: string
-          label:
-            anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-          machineType:
-            type: string
-          maxErrors:
-            anyOf:
-            - type: string
-            - type: integer
-          maxForks:
-            anyOf:
-            - type: string
-            - type: integer
-          maxRetries:
-            anyOf:
-            - type: string
-            - type: integer
-          memory:
-            type: string
-          module:
-            anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-          penv:
-            type: string
-          pod:
-            "$comment": OneOrMore[Map[String, String]]
-            anyOf:
-            - type: object
-              additionalProperties:
-                type: string
-          publishDir:
-            "$comment": OneOrMore[Either[String, Map[String, String]]]
-            anyOf:
-            - type: string
-            - type: object
-              additionalProperties:
-                type: string
-          queue:
-            anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-          scratch:
-            anyOf:
-            - type: boolean
-            - type: string
-          storeDir:
-            type: string
-          stageInMode:
-            type: string
-          stageOutMode:
-            type: string
-          tag:
-            type: string
-          time:
-            type: string
-        additionalProperties: false
-      auto:
-        type: object
-        description: Automated processing flags which can be toggled on or off
-        properties:
-          simplifyInput:
-            type: boolean
-          simplifyOutput:
-            type: boolean
-          transcript:
-            type: boolean
-          publish:
-            type: boolean
-        additionalProperties: false
-      config:
-        type: object
-        description: Allows tweaking how the Nextflow Config file is generated.
-        properties:
-          labels:
-            type: object
-            additionalProperties:
-              type: string
-          script:
-            anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-        additionalProperties: false
-      debug:
-        type: boolean
-        description: Whether or not to print debug messages.
-      container:
-        type: string
-        description: Specifies the Docker platform id to be used to run Nextflow.
-    required:
-    - type
+        $ref: 'schema_viash_config.yaml#/definitions/NextflowDirectives'
+      # auto:
+      #   $ref: 'schema_viash_config.yaml#/definitions/NextflowAuto'
+      # config:
+      #   $ref: 'schema_viash_config.yaml#/definitions/NextflowConfig'
+    required: [ type ]
     additionalProperties: false
-  platformDocker:
+  PlatformDocker:
     title: Docker platform
+    description: |
+      Run a Viash component on a Docker backend platform.
+      By specifying which dependencies your component needs, users are be able to build
+      a docker container from scratch using the setup flag, or pull it from a docker repository.
     type: object
     properties:
       type:
@@ -1047,77 +29,6 @@ definitions:
         type: string
         description: The base container to start from. You can also add the tag here
           if you wish.
-      organization:
-        type: string
-        description: Name of a container's organization.
-      registry:
-        type: string
-        description: The URL to the a custom Docker registry.
-      tag:
-        type: string
-        description: Specify a Docker image based on its tag.
-      target_image:
-        type: string
-        description: If anything is specified in the setup section, running the `---setup`
-          will result in an image with the name of `<target_image>:<version>`. If
-          nothing is specified in the `setup` section, simply `image` will be used.
-          Advanced usage only.
-      target_organization:
-        type: string
-        description: The organization set in the resulting image. Advanced usage only.
-      target_registry:
-        type: string
-        description: The URL where the resulting image will be pushed to. Advanced
-          usage only.
-      target_tag:
-        type: string
-        description: The tag the resulting image gets. Advanced usage only.
-      namespace_separator:
-        type: string
-        description: The default namespace separator is "_".
-      resolve_volume:
-        "$comment": TODO make fully case insensitive
-        enum:
-        - manual
-        - automatic
-        - auto
-        - Manual
-        - Automatic
-        - Auto
-        description: 'Enables or disables automatic volume mapping. Enabled when set
-          to `Automatic` or disabled when set to `Manual`. Default: `Automatic`'
-      chown:
-        type: boolean
-        description: 'In Linux, files created by a Docker container will be owned
-          by `root`. With `chown: true`, Viash will automatically change the ownership
-          of output files (arguments with `type: file` and `direction: output`) to
-          the user running the Viash command after execution of the component. Default
-          value: `true`.'
-      port:
-        anyOf:
-        - type: string
-          description: A list of enabled ports. This doesn't change the Dockerfile
-            but gets added as a command-line argument at runtime.
-        - type: array
-          items:
-            type: string
-          description: A list of enabled ports. This doesn't change the Dockerfile
-            but gets added as a command-line argument at runtime.
-        - type: integer
-          description: A list of enabled ports. This doesn't change the Dockerfile
-            but gets added as a command-line argument at runtime.
-        - type: array
-          items:
-            type: integer
-          description: A list of enabled ports. This doesn't change the Dockerfile
-            but gets added as a command-line argument at runtime.
-      workdir:
-        type: string
-        description: The working directory when starting the container. This doesn't
-          change the Dockerfile but gets added as a command-line argument at runtime.
-      privileged:
-        type: boolean
-        description: Adds a `privileged` flag to the docker run.
       run_args:
         anyOf:
         - type: string
@@ -1133,14 +44,14 @@ definitions:
       setup:
         type: array
         items:
-          "$ref": "#/definitions/requirements"
+          "$ref": "schema_viash_config.yaml#/definitions/Requirements"
       test_setup:
         type: array
         items:
-          "$ref": "#/definitions/requirements"
+          "$ref": "schema_viash_config.yaml#/definitions/Requirements"
     required: [type, image]
     additionalProperties: false
-  platformNative:
+  PlatformNative:
     title: Native platform
     type: object
     properties:
@@ -1151,10 +62,84 @@ definitions:
           environment.
     required: [ type ]
     additionalProperties: false
-  preferredNormalization:
-    # type: string
+  PreferredNormalization:
     enum: [l1_sqrt, log_cpm, log_scran_pooling, sqrt_cpm, counts]
     description: |
       Which normalization method a component prefers. 
       
       Each value corresponds to a normalization component in the directory `src/datasets/normalization`.
+  ComponentSubtype:
+    type: string
+    description: |
+      A component subtype, in case the task has multiple subtypes of methods and metrics.
+  ComponentName:
+    type: string
+    description: |
+      A unique identifier for your component.
+      Can only contain lowercase letters or underscores.
+    pattern: "^[a-z_]+$"
+  ComponentLabel:
+    type: string
+    description: |
+      A unique, human-readable, short label.
+      Used for creating summary tables and visualisations.
+    maxLength: 50
+  ComponentSummary:
+    type: string
+    description: |
+      A one sentence summary of this components purpose and methodology.
+      Used for creating an overview of the components in a task.
+    minLength: 15
+    maxLength: 150
+  ComponentDescription:
+    type: string
+    description: |
+      An explanation for how the component works.
+      Used for creating reference documentation of a task and supplementary information in a manuscript.
+    minLength: 50
+  BibtexReference:
+    type: string
+    description: |
+      type: string
+      description: A bibtex reference key to the paper where the component is described.
+  DocumentationURL:
+    type: string
+    description: The url to the documentation of the used software library.
+  RepositoryURL:
+    type: string
+    description: The url to the repository of the used software library.
+  MigrationV1:
+    type: object
+    properties:
+      required: [path, commit]
+      additionalProperties: false
+      path:
+        type: string
+        description: |
+          If this component was migrated from the OpenProblems v1 repository, this value 
+          represents the location of the Python file relative to the root of the repository.
+      commit:
+        type: string
+        description: |
+          If this component was migrated from the OpenProblems v1 repository, this value
+          is the Git commit SHA of the v1 repository corresponding to when this component
+          was last updated.
+      note:
+        type: string
+        description: |
+          An optional note on any changes made during the migration.
+  MethodVariants:
+    type: object
+    description: Alternative parameter sets which should be evaluated in the benchmark.
+    properties:
+      preferred_normalization:
+        "$ref": "#/definitions/PreferredNormalization"
+  Merge:
+    type: string
+    description: |
+      The API specifies which type of component this is.
+      It contains specifications for:
+
+        - The input/output files
+        - Common parameters
+        - A unit test

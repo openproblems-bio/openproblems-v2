@@ -1,0 +1,84 @@
+title: Metric
+description: |
+  A metric is a quantitative measure used to evaluate the performance of the
+  different methods in solving the specific task problem.
+type: object
+required: [__merge__, functionality, platforms]
+properties:
+  __merge__:
+    "$ref": "schema_definitions.yaml#/definitions/Merge"
+  functionality:
+    type: object
+    description: Information regarding the functionality of the component.
+    required: [name, info, resources]
+    additionalProperties: false
+    properties:
+      name:
+        "$ref": "schema_definitions.yaml#/definitions/ComponentName"
+      info:
+        type: object
+        description: Metadata of the component.
+        additionalProperties: false
+        required: [metrics]
+        properties:
+          metrics:
+            type: array
+            minItems: 1
+            items:
+              type: object
+              description: Metadata of each metric.
+              additionalProperties: false
+              required: [label, summary, description, reference, documentation_url, repository_url, min, max, maximize]
+              properties:
+                subtype:
+                  "$ref": "schema_definitions.yaml#/definitions/ComponentSubtype"
+                name:
+                  "$ref": "schema_definitions.yaml#/definitions/ComponentName"
+                label:
+                  "$ref": "schema_definitions.yaml#/definitions/ComponentLabel"
+                summary:
+                  "$ref": "schema_definitions.yaml#/definitions/ComponentSummary"
+                description:
+                  "$ref": "schema_definitions.yaml#/definitions/ComponentDescription"
+                reference:
+                  "$ref": "schema_definitions.yaml#/definitions/BibtexReference"
+                documentation_url:
+                  "$ref": "schema_definitions.yaml#/definitions/DocumentationURL"
+                repository_url:
+                  "$ref": "schema_definitions.yaml#/definitions/RepositoryURL"
+                variants:
+                  "$ref": "schema_definitions.yaml#/definitions/MethodVariants"
+                min:
+                  type: number
+                  description: The lowest possible value of the metric.
+                max:
+                  type: number
+                  description: The highest possible value of the metric.
+                maximize:
+                  type: boolean
+                  description: Whether a higher metric value is better.
+          v1:
+            "$ref": "schema_definitions.yaml#/definitions/MigrationV1"
+      arguments:
+        type: array
+        description: Component-specific parameters.
+        items:
+          "$ref": "schema_viash_config.yaml#/definitions/Argument"
+      resources:
+        type: array
+        description: Resources required to run the component.
+        items:
+          "$ref": "schema_viash_config.yaml#/definitions/Resource"
+      test_resources:
+        type: array
+        description: One or more scripts and resources used to test the component.
+        items:
+          "$ref": "schema_viash_config.yaml#/definitions/Resource"
+  platforms:
+    type: array
+    description: A list of platforms which Viash generates target artifacts for.
+    items:
+      anyOf:
+        - "$ref": "schema_definitions.yaml#/definitions/PlatformDocker"
+        - "$ref": "schema_definitions.yaml#/definitions/PlatformNative"
+        - "$ref": "schema_definitions.yaml#/definitions/PlatformVdsl3"

@@ -1,5 +1,7 @@
 {
   "yaml.schemas": {
-    "src/common/api/schema_method.yaml": "src/tasks/**/methods/*/config.vsh.yaml"
+    "src/common/api/schema_method.yaml": "src/tasks/**/methods/*/config.vsh.yaml",
+    "src/common/api/schema_control_method.yaml": "src/tasks/**/control_methods/*/config.vsh.yaml",
+    "src/common/api/schema_metric.yaml": "src/tasks/**/metrics/*/config.vsh.yaml"
   }
 }

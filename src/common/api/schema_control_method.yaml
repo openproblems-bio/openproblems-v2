@@ -1,11 +1,11 @@
-# v1 decorators: https://github.com/openproblems-bio/openproblems/blob/main/openproblems/tools/decorators.py
-# v1 tests: https://github.com/openproblems-bio/openproblems/blob/main/test/test_core_metadata.py
-# v2 create_component: https://github.com/openproblems-bio/openproblems-v2/blob/main/src/common/create_component/script.py#L29
-title: Method
+title: Control Method
 description: |
-  A method is a specific technique used to solve the task problem and is
-  compared to the control methods and other methods to determine the best
-  approach for the task depending on the type of dataset.
+  A control method is used to test the relative performance of all other methods,
+  and also as a quality control for the pipeline as a whole. A control method can
+  either be a positive control or a negative control. The positive control and
+  negative control methods set a maximum and minimum threshold for performance,
+  so any new method should perform better than the negative control methods and
+  worse than the positive control method.
 type: object
 required: [__merge__, functionality, platforms]
 properties:
@@ -23,7 +23,7 @@ properties:
         type: object
         description: Metadata of the component.
         additionalProperties: false
-        required: [label, summary, description, preferred_normalization, reference, documentation_url, repository_url]
+        required: [label, summary, description, preferred_normalization]
         properties:
           subtype:
             "$ref": "schema_definitions.yaml#/definitions/ComponentSubtype"
