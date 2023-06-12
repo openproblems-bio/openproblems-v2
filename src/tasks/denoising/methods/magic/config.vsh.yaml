@@ -18,7 +18,7 @@ functionality:
     reference: "van2018recovering"
     documentation_url: "https://github.com/KrishnaswamyLab/MAGIC#readme"
     repository_url: "https://github.com/KrishnaswamyLab/MAGIC"
-    v1_url: openproblems/tasks/denoising/methods/magic.py
+    v1_path: openproblems/tasks/denoising/methods/magic.py
     v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     variants: 
       magic:

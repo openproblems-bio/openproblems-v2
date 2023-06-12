@@ -16,7 +16,7 @@ functionality:
     reference: "hansen2012removing"
     repository_url: "https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.combat.html"
     documentation_url: "https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.combat.html"
-    v1_url: openproblems/tasks/_batch_integration/batch_integration_graph/methods/combat.py
+    v1_path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/combat.py
     v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     preferred_normalization: log_cpm
     variants:

@@ -6,7 +6,7 @@ functionality:
     label: Majority Vote
     summary: "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset"
     description: "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset"
-    v1_url: openproblems/tasks/label_projection/methods/baseline.py
+    v1_path: openproblems/tasks/label_projection/methods/baseline.py
     v1_commit: b460ecb183328c857cbbf653488f522a4034a61c
     variants:
       majority_vote:

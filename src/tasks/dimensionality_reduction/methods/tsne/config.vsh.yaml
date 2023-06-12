@@ -14,7 +14,7 @@ functionality:
     reference: vandermaaten2008visualizing
     repository_url: "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html#sklearn.manifold.TSNE"
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html#sklearn.manifold.TSNE"
-    v1_url: openproblems/tasks/dimensionality_reduction/methods/tsne.py
+    v1_path: openproblems/tasks/dimensionality_reduction/methods/tsne.py
     v1_commit: 14d70b330cae09527a6d4c4e552db240601e31cf
     preferred_normalization: log_cpm
     variants:

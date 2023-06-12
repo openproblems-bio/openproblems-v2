@@ -12,7 +12,7 @@ functionality:
     reference: "eraslan2019single"
     documentation_url: "https://github.com/theislab/dca#readme"
     repository_url: "https://github.com/theislab/dca"
-    v1_url: openproblems/tasks/denoising/methods/dca.py
+    v1_path: openproblems/tasks/denoising/methods/dca.py
     v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     variants: 
       dca:

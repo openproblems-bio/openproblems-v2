@@ -24,7 +24,7 @@ df <- map_df(configs, function(config) {
   info$component_id <- config$functionality$name
   info$namespace <- config$functionality$namespace
   info$component_description <- config$functionality$description
-  info$v1_url <- config$functionality$info$v1_url
+  info$v1_path <- config$functionality$info$v1_path
   info$v1_commit <- config$functionality$info$v1_commit
   info
   info

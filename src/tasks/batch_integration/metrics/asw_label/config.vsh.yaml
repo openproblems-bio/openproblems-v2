@@ -4,7 +4,7 @@ functionality:
   name: asw_label
   description: Average silhouette of labels
   info:
-    v1_url: openproblems/tasks/_batch_integration/batch_integration_embed/metrics/silhouette.py
+    v1_path: openproblems/tasks/_batch_integration/batch_integration_embed/metrics/silhouette.py
     v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     
     metrics:

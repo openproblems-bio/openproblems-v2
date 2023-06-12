@@ -18,7 +18,7 @@ functionality:
     reference: "wagner2018knearest"
     documentation_url: "https://github.com/yanailab/knn-smoothing#readme"
     repository_url: "https://github.com/yanailab/knn-smoothing"
-    v1_url: openproblems/tasks/denoising/methods/knn_smoothing.py
+    v1_path: openproblems/tasks/denoising/methods/knn_smoothing.py
     v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     variants: 
       knn_smoothing:
