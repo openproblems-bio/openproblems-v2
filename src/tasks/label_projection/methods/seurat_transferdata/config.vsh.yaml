@@ -18,8 +18,9 @@ functionality:
     reference: "hao2021integrated"
     repository_url: "https://github.com/satijalab/seurat"
     documentation_url: "https://satijalab.org/seurat/articles/integration_mapping.html"
-    v1_path: openproblems/tasks/label_projection/methods/seurat.py
-    v1_commit: 3f19f0e87a8bc8b59c7521ba01917580aff81bc8
+    v1:
+      path: openproblems/tasks/label_projection/methods/seurat.py
+      commit: 3f19f0e87a8bc8b59c7521ba01917580aff81bc8
     preferred_normalization: log_cpm
     variants:
       seurat:

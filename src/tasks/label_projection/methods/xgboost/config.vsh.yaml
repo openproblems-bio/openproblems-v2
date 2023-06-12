@@ -13,8 +13,9 @@ functionality:
     reference: "chen2016xgboost"
     repository_url: "https://github.com/dmlc/xgboost"
     documentation_url: "https://xgboost.readthedocs.io/en/stable/index.html"
-    v1_path: openproblems/tasks/label_projection/methods/xgboost.py
-    v1_commit: 123bb7b39c51c58e19ddf0fbbc1963c3dffde14c
+    v1:
+      path: openproblems/tasks/label_projection/methods/xgboost.py
+      commit: 123bb7b39c51c58e19ddf0fbbc1963c3dffde14c
     preferred_normalization: log_cpm
     variants:
       xgboost_log_cpm:

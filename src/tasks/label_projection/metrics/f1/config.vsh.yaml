@@ -2,8 +2,9 @@ __merge__: ../../api/comp_metric.yaml
 functionality:
   name: "f1"
   info:
-    v1_path: openproblems/tasks/label_projection/metrics/f1.py
-    v1_commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
+    v1:
+      path: openproblems/tasks/label_projection/metrics/f1.py
+      commit: bb16ca05ae1ce20ce59bfa7a879641b9300df6b0
     metrics:
       - name: f1_weighted
         label: F1 weighted

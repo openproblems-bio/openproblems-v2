@@ -3,8 +3,9 @@ __merge__: ../../api/comp_metric_embedding.yaml
 functionality:
   name: asw_batch
   info:
-    v1_path: openproblems/tasks/_batch_integration/batch_integration_embed/metrics/sil_batch.py
-    v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+    v1:
+      path: openproblems/tasks/_batch_integration/batch_integration_embed/metrics/sil_batch.py
+      commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     metrics:
       - name: asw_batch
         label: ASW batch

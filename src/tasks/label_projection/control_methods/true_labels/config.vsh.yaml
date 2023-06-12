@@ -7,8 +7,9 @@ functionality:
     label: True labels
     summary: "a positive control, solution labels are copied 1 to 1 to the predicted data."
     description: "A positive control, where the solution labels are copied 1 to 1 to the predicted data."
-    v1_path: openproblems/tasks/label_projection/methods/baseline.py
-    v1_commit: b460ecb183328c857cbbf653488f522a4034a61c
+    v1:
+      path: openproblems/tasks/label_projection/methods/baseline.py
+      commit: b460ecb183328c857cbbf653488f522a4034a61c
     preferred_normalization: counts
     variants:
       true_labels:

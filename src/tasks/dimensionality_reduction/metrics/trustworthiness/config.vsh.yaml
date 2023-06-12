@@ -3,9 +3,10 @@ functionality:
   name: "trustworthiness"
   description: "To what extent the local structure is retained in a low-dimensional embedding in a value between 0 and 1."
   info:
-    v1_path: openproblems/tasks/dimensionality_reduction/metrics/trustworthiness.py 
-    v1_commit: c2470ce02e6f196267cec1c554ba7ae389c0956a
-    v1_note: This metric is already included in the 'coranking' component and can be removed.
+    v1:
+      path: openproblems/tasks/dimensionality_reduction/metrics/trustworthiness.py 
+      commit: c2470ce02e6f196267cec1c554ba7ae389c0956a
+      note: This metric is already included in the 'coranking' component and can be removed.
     metrics:
       - name: trustworthiness
         label: Trustworthiness at k=15

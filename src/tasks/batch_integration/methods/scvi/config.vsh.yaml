@@ -11,8 +11,9 @@ functionality:
     reference: "lopez2018deep"
     repository_url: "https://github.com/YosefLab/scvi-tools"
     documentation_url: "https://github.com/YosefLab/scvi-tools#readme"
-    v1_path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py
-    v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+    v1:
+      path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py
+      commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     preferred_normalization: log_cpm
     variants:
       scvi_full_unscaled:

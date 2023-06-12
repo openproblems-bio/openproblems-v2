@@ -13,8 +13,9 @@ functionality:
     reference: "polanski2020bbknn"
     repository_url: "https://github.com/Teichlab/bbknn"
     documentation_url: "https://github.com/Teichlab/bbknn#readme"
-    v1_path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/bbknn.py
-    v1_commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+    v1:
+      path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/bbknn.py
+      commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     preferred_normalization: log_cpm
     variants:
       bbknn_full_unscaled:

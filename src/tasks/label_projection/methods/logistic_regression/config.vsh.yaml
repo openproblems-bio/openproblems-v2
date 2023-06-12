@@ -12,8 +12,9 @@ functionality:
     reference: "hosmer2013applied"
     repository_url: https://github.com/scikit-learn/scikit-learn
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html"
-    v1_path: openproblems/tasks/label_projection/methods/logistic_regression.py
-    v1_commit: c2470ce02e6f196267cec1c554ba7ae389c0956a
+    v1:
+      path: openproblems/tasks/label_projection/methods/logistic_regression.py
+      commit: c2470ce02e6f196267cec1c554ba7ae389c0956a
     preferred_normalization: log_cpm
     variants:
       logistic_regression_log_cpm:

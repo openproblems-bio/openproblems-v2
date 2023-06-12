@@ -16,8 +16,9 @@ functionality:
     repository_url: "https://github.com/beringresearch/ivis"
     documentation_url: "https://github.com/beringresearch/ivis#readme"
     reference: ""
-    v1_path: openproblems/tasks/dimensionality_reduction/methods/ivis.py
-    v1_commit: 9ebb777b3b76337e731a3b99f4bf39462a15c4cc
+    v1:
+      path: openproblems/tasks/dimensionality_reduction/methods/ivis.py
+      commit: 9ebb777b3b76337e731a3b99f4bf39462a15c4cc
     preferred_normalization: log_cpm
     variants:
       ivis_logCPM_1kHVG:
