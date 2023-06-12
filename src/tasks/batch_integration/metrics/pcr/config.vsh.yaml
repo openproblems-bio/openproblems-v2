@@ -13,8 +13,6 @@ functionality:
           contribution hasn’t changed. The larger the score, the more different the
           variance contributions are before and after integration."
         reference: luecken2022benchmarking
-        repository_url: ""
-        documentation_url: ""
         v1:
           path: openproblems/tasks/_batch_integration/batch_integration_embed/metrics/pcr.py
           commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf

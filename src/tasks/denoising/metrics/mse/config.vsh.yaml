@@ -8,8 +8,6 @@ functionality:
         summary: "The mean squared error between the denoised counts and the true counts."
         description: "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio"
         reference: batson2019molecular
-        documentation_url: ""
-        repository_url: ""
         v1:
           path: openproblems/tasks/denoising/metrics/mse.py
           commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf

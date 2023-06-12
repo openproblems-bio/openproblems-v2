@@ -9,8 +9,6 @@ functionality:
         description: |
           "Similarity between local densities in the high-dimensional data and the reduced data.
           This is computed as the pearson correlation of local radii with the local radii in the original data space."
-        repository_url: ""
-        documentation_url: ""
         reference: narayan2021assessing
         min: -1
         max: 1

@@ -8,8 +8,6 @@ functionality:
         summary: "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD."
         description: "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD."
         reference: kruskal1964mds
-        repository_url: ""
-        documentation_url: ""
         min: 0
         max: +.inf
         maximize: false
@@ -18,8 +16,6 @@ functionality:
         summary: "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding."
         description: "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding."
         reference: coifman2006diffusion
-        repository_url: ""
-        documentation_url: ""
         min: 0
         max: +.inf
         maximize: false
