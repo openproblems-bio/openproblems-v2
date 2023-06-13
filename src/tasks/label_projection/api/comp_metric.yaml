@@ -17,7 +17,7 @@ functionality:
       direction: input
       required: true
     - name: "--output"
-      __merge__: file_score.
+      __merge__: file_score.yaml
       required: true
       direction: output
   test_resources:

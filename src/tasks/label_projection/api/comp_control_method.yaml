@@ -18,7 +18,7 @@ functionality:
       direction: input
       required: true
     - name: "--input_test"
-      __merge__: file_test.
+      __merge__: file_test.yaml
       direction: input
       required: true
     - name: "--input_solution"

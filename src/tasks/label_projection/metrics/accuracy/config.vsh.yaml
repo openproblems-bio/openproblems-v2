@@ -7,10 +7,10 @@ functionality:
         label: Accuracy
         summary: "The percentage of correctly predicted labels."
         description: "The percentage of correctly predicted labels."
-        reference: ""
         min: 0
         max: 1
         maximize: true
+        reference: grandini2020metrics
         v1:
           path: openproblems/tasks/label_projection/metrics/accuracy.py
           commit: fcd5b876e7d0667da73a2858bc27c40224e19f65
