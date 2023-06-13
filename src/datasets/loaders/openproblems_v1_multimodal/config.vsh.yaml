@@ -1,3 +1,4 @@
+__merge__: ../../api/comp_dataset_loader.yaml
 functionality:
   name: "openproblems_v1_multimodal"
   description: "Fetch a dataset from OpenProblems v1"

@@ -1,14 +1,18 @@
 functionality:
   namespace: "datasets/processors"
   info:
+    type: dataset_processor
     type_info:
       label: KNN
-      description: |
+      summary: |
         Computes the k-nearest-neighbours for each cell.
+      description: |
+        The resulting AnnData will contain both the knn distances and the knn connectivities in 'obsp'.
   arguments:
     - name: "--input"
       __merge__: file_hvg.yaml
       required: true
+      direction: input
     - name: "--layer_input"
       type: string
       default: "normalized"

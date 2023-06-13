@@ -1,14 +1,18 @@
 functionality:
   namespace: "datasets/processors"
   info:
+    type: dataset_processor
     type_info:
       label: PCA
-      description: |
+      summary: |
         Computes a PCA embedding of the normalized data.
+      description:
+        The resulting AnnData will contain an embedding in obsm, as well as optional loadings in 'varm'.
   arguments:
     - name: "--input"
       __merge__: file_normalized.yaml
       required: true
+      direction: input
     - name: "--layer_input"
       type: string
       default: "normalized"
