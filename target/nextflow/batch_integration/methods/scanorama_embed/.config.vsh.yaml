@@ -236,5 +236,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_embed"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_embed/scanorama_embed"
   viash_version: "0.7.3"
-  git_commit: "36cf857266a859468d19c625b3571a43bde712be"
+  git_commit: "18bdfdfd0184487e64b805653765452dded04a6c"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
