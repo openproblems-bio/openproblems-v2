@@ -7,7 +7,7 @@ functionality:
         Computes the highly variable genes scores.
   arguments:
     - name: "--input"
-      __merge__: anndata_pca.yaml
+      __merge__: file_pca.yaml
       required: true
     - name: "--layer_input"
       type: string
@@ -15,7 +15,7 @@ functionality:
       description: Which layer to use as input.
     - name: "--output"
       direction: output
-      __merge__: anndata_hvg.yaml
+      __merge__: file_hvg.yaml
       required: true
     - name: "--var_hvg"
       type: string

@@ -10,11 +10,11 @@ functionality:
         A metric for evaluating batch corrected cell graphs.
   arguments:
     - name: --input_integrated
-      __merge__: anndata_integrated_graph.yaml
+      __merge__: file_integrated_graph.yaml
       direction: input
       required: true
     - name: --output
-      __merge__: anndata_score.yaml
+      __merge__: file_score.yaml
       direction: output
       required: true
   test_resources:

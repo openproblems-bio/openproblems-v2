@@ -7,11 +7,11 @@ functionality:
         A normalization method which processes the raw counts output by a dataset loader.
   arguments:
     - name: "--input"
-      __merge__: anndata_raw.yaml
+      __merge__: file_raw.yaml
       required: true
     - name: "--output"
       direction: output
-      __merge__: anndata_normalized.yaml
+      __merge__: file_normalized.yaml
       required: true
     - name: "--layer_output"
       type: string

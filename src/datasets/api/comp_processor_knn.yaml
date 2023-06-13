@@ -7,7 +7,7 @@ functionality:
         Computes the k-nearest-neighbours for each cell.
   arguments:
     - name: "--input"
-      __merge__: anndata_hvg.yaml
+      __merge__: file_hvg.yaml
       required: true
     - name: "--layer_input"
       type: string
@@ -15,7 +15,7 @@ functionality:
       description: Which layer to use as input.
     - name: "--output"
       direction: output
-      __merge__: anndata_knn.yaml
+      __merge__: file_knn.yaml
       required: true
     - name: "--key_added"
       type: string

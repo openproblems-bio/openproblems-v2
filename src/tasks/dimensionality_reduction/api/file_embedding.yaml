@@ -2,7 +2,7 @@ type: file
 description: "A dataset with dimensionality reduction embedding."
 example: "resources_test/dimensionality_reduction/pancreas/embedding.h5ad"
 info:
-  short_description: "Embedding"
+  label: "Embedding"
   slots:
     obsm:
       - type: double

@@ -10,11 +10,11 @@ functionality:
         A batch integration method which outputs a batch-corrected embedding.
   arguments:
     - name: --input
-      __merge__: anndata_unintegrated.yaml
+      __merge__: file_unintegrated.yaml
       direction: input
       required: true
     - name: --output
-      __merge__: anndata_integrated_embedding.yaml
+      __merge__: file_integrated_embedding.yaml
       direction: output
       required: true
     - name: --hvg

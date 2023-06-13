@@ -8,9 +8,9 @@ functionality:
         A denoising method to remove noise (i.e. technical artifacts) from a dataset.
   arguments:
     - name: "--input_train"
-      __merge__: anndata_train.yaml
+      __merge__: file_train.yaml
     - name: "--output"
-      __merge__: anndata_denoised.yaml
+      __merge__: file_denoised.yaml
       direction: output
   test_resources:
     - type: python_script

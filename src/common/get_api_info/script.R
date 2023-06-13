@@ -10,7 +10,7 @@ par <- list(
 ## VIASH END
 
 comp_yamls <- list.files(paste(par$input, "src/tasks", par$task_id, "api", sep = "/"), pattern = "comp_", full.names = TRUE)
-file_yamls <- list.files(paste(par$input, "src/tasks", par$task_id, "api", sep = "/"), pattern = "anndata_", full.names = TRUE)
+file_yamls <- list.files(paste(par$input, "src/tasks", par$task_id, "api", sep = "/"), pattern = "file_", full.names = TRUE)
 
 # list component - file args links
 comp_file <- map_df(comp_yamls, function(yaml_file) {
@@ -43,9 +43,9 @@ file_info <- map_df(file_yamls, function(yaml_file) {
   tibble(
     name = basename(yaml_file) %>% gsub("\\.yaml", "", .),
     description = arg$description,
-    short_description = arg$info$short_description,
+    label = arg$info$label,
     example = arg$example,
-    label = name %>% gsub("anndata_", "", .) %>% gsub("_", " ", .)
+    label = name %>% gsub("file_", "", .) %>% gsub("_", " ", .)
   )
 })
 

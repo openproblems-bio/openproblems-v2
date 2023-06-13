@@ -10,7 +10,7 @@ type: object
 required: [__merge__, functionality, platforms]
 properties:
   __merge__:
-    "$ref": "schema_definitions.yaml#/definitions/Merge"
+    "$ref": "schema_definitions.yaml#/definitions/CompAPIMerge"
   functionality:
     type: object
     description: Information regarding the functionality of the component.
@@ -18,7 +18,7 @@ properties:
     additionalProperties: false
     properties:
       name:
-        "$ref": "schema_definitions.yaml#/definitions/ComponentName"
+        "$ref": "schema_definitions.yaml#/definitions/Name"
       status:
         "$ref": "schema_viash_config.yaml#/definitions/Status"
       info:
@@ -28,11 +28,11 @@ properties:
         required: [label, summary, description, preferred_normalization]
         properties:
           label:
-            "$ref": "schema_definitions.yaml#/definitions/ComponentLabel"
+            "$ref": "schema_definitions.yaml#/definitions/Label"
           summary:
-            "$ref": "schema_definitions.yaml#/definitions/ComponentSummary"
+            "$ref": "schema_definitions.yaml#/definitions/Summary"
           description:
-            "$ref": "schema_definitions.yaml#/definitions/ComponentDescription"
+            "$ref": "schema_definitions.yaml#/definitions/Description"
           preferred_normalization: 
             "$ref": "schema_definitions.yaml#/definitions/PreferredNormalization"
           reference:

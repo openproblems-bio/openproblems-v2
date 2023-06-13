@@ -1,4 +1,4 @@
-__merge__: anndata_knn.yaml
+__merge__: file_knn.yaml
 type: file
 description: |
   A dataset processed by the common dataset processing pipeline. 

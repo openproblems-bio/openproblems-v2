@@ -1,4 +1,4 @@
-__merge__: anndata_raw.yaml
+__merge__: file_raw.yaml
 type: file
 description: "A normalized dataset"
 example: "resources_test/common/pancreas/normalized.h5ad"

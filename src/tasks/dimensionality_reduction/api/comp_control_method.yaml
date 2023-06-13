@@ -13,15 +13,15 @@ functionality:
         in the task.
   arguments:
     - name: "--input"
-      __merge__: anndata_dataset.yaml
+      __merge__: file_dataset.yaml
       direction: input
       required: true
     - name: "--input_solution"
-      __merge__: anndata_solution.yaml
+      __merge__: file_solution.yaml
       direction: input
       required: true
     - name: "--output"
-      __merge__: anndata_embedding.yaml
+      __merge__: file_embedding.yaml
       direction: output
       required: true
   test_resources:

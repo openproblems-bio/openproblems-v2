@@ -8,11 +8,11 @@ functionality:
         A metric for evaluating denoised datasets.
   arguments:
     - name: "--input_test"
-      __merge__: anndata_test.yaml
+      __merge__: file_test.yaml
     - name: "--input_denoised"
-      __merge__: anndata_denoised.yaml
+      __merge__: file_denoised.yaml
     - name: "--output"
-      __merge__: anndata_score.yaml
+      __merge__: file_score.yaml
       direction: output
   test_resources:
     - type: python_script

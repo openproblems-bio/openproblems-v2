@@ -15,11 +15,11 @@ functionality:
         in the task. 
   arguments:
     - name: "--input_train"
-      __merge__: anndata_train.yaml
+      __merge__: file_train.yaml
     - name: "--input_test"
-      __merge__: anndata_test.yaml
+      __merge__: file_test.yaml
     - name: "--output"
-      __merge__: anndata_denoised.yaml
+      __merge__: file_denoised.yaml
       direction: output
   test_resources:
     - type: python_script

@@ -1,8 +1,8 @@
 type: file
-description: "The test data (without labels)"
-example: "resources_test/label_projection/pancreas/test.h5ad"
+description: "The training data"
+example: "resources_test/label_projection/pancreas/train.h5ad"
 info:
-  short_description: "Test data"
+  label: "Training data"
   slots:
     layers: 
       - type: integer
@@ -12,6 +12,9 @@ info:
         name: normalized
         description: Normalized counts
     obs:
+      - type: string
+        name: label
+        description: Ground truth cell type labels
       - type: string
         name: batch
         description: Batch information

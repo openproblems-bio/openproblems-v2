@@ -10,6 +10,6 @@ functionality:
     - name: Outputs
       arguments:
         - name: "--output"
-          __merge__: anndata_raw.yaml
+          __merge__: file_raw.yaml
           direction: "output"
           required: true

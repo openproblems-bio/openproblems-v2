@@ -2,7 +2,7 @@ type: file
 description: "The training data"
 example: "resources_test/denoising/pancreas/train.h5ad"
 info:
-  short_description: "Training data"
+  label: "Training data"
   slots:
     layers: 
       - type: integer

@@ -7,9 +7,9 @@ functionality:
     label: Feature to Embed
     output_type: embedding
   arguments:
-    - __merge__: ../../api/anndata_integrated_feature.yaml
+    - __merge__: ../../api/file_integrated_feature.yaml
       name: --input
-    - __merge__: ../../api/anndata_integrated_embedding.yaml
+    - __merge__: ../../api/file_integrated_embedding.yaml
       name: --output
       direction: output
   resources:

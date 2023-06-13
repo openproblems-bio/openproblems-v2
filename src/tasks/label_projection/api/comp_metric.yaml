@@ -9,15 +9,15 @@ functionality:
         A metric for evaluating predicted labels.
   arguments:
     - name: "--input_solution"
-      __merge__: anndata_solution.yaml
+      __merge__: file_solution.yaml
       direction: input
       required: true
     - name: "--input_prediction"
-      __merge__: anndata_prediction.yaml
+      __merge__: file_prediction.yaml
       direction: input
       required: true
     - name: "--output"
-      __merge__: anndata_score.
+      __merge__: file_score.
       required: true
       direction: output
   test_resources:

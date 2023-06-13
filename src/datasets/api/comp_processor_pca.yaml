@@ -7,7 +7,7 @@ functionality:
         Computes a PCA embedding of the normalized data.
   arguments:
     - name: "--input"
-      __merge__: anndata_normalized.yaml
+      __merge__: file_normalized.yaml
       required: true
     - name: "--layer_input"
       type: string
@@ -15,7 +15,7 @@ functionality:
       description: Which layer to use as input.
     - name: "--output"
       direction: output
-      __merge__: anndata_pca.yaml
+      __merge__: file_pca.yaml
       required: true
     - name: "--obsm_embedding"
       type: string

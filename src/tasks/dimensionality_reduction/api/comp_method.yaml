@@ -10,11 +10,11 @@ functionality:
         information in a dataset in as few dimensions as possible.
   arguments:
     - name: "--input"
-      __merge__: anndata_dataset.yaml
+      __merge__: file_dataset.yaml
       direction: input
       required: true
     - name: "--output"
-      __merge__: anndata_embedding.yaml
+      __merge__: file_embedding.yaml
       direction: output
       required: true
   test_resources:

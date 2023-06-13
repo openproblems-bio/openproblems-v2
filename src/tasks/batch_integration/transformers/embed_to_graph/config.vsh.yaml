@@ -7,9 +7,9 @@ functionality:
     label: Embedding to Graph
     output_type: graph
   arguments:
-    - __merge__: ../../api/anndata_integrated_embedding.yaml
+    - __merge__: ../../api/file_integrated_embedding.yaml
       name: --input
-    - __merge__: ../../api/anndata_integrated_graph.yaml
+    - __merge__: ../../api/file_integrated_graph.yaml
       name: --output
       direction: output
   resources:

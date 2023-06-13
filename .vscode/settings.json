@@ -3,6 +3,7 @@
     "src/common/api/schema_method.yaml": "src/tasks/**/methods/**/config.vsh.yaml",
     "src/common/api/schema_control_method.yaml": "src/tasks/**/control_methods/**/config.vsh.yaml",
     "src/common/api/schema_metric.yaml": "src/tasks/**/metrics/**/config.vsh.yaml",
-    "src/common/api/schema_component_api.yaml": "src/tasks/**/api/comp_*.yaml"
+    "src/common/api/schema_component_api.yaml": "src/tasks/**/api/comp_*.yaml",
+    "src/common/api/schema_file_api.yaml": "src/tasks/**/api/file_*.yaml"
   }
 }

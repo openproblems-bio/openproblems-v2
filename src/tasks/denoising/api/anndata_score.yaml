@@ -2,7 +2,7 @@ type: file
 description: "Metric score file"
 example: "resources_test/denoising/pancreas/magic_poisson.h5ad"
 info:
-  short_description: "Score"
+  label: "Score"
   slots:
     uns:
       - type: string
