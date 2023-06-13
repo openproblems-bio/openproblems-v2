@@ -1,6 +1,3 @@
-# v1 decorators: https://github.com/openproblems-bio/openproblems/blob/main/openproblems/tools/decorators.py
-# v1 tests: https://github.com/openproblems-bio/openproblems/blob/main/test/test_core_metadata.py
-# v2 create_component: https://github.com/openproblems-bio/openproblems-v2/blob/main/src/common/create_component/script.py#L29
 title: Method
 description: |
   A method is a specific technique used to solve the task problem and is
@@ -27,8 +24,6 @@ properties:
         additionalProperties: false
         required: [label, summary, description, preferred_normalization, reference, documentation_url, repository_url]
         properties:
-          subtype:
-            "$ref": "schema_definitions.yaml#/definitions/ComponentSubtype"
           label:
             "$ref": "schema_definitions.yaml#/definitions/ComponentLabel"
           summary:

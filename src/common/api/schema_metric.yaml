@@ -32,8 +32,6 @@ properties:
               additionalProperties: false
               required: [label, summary, description, reference, min, max, maximize]
               properties:
-                subtype:
-                  "$ref": "schema_definitions.yaml#/definitions/ComponentSubtype"
                 name:
                   "$ref": "schema_definitions.yaml#/definitions/ComponentName"
                 label:
@@ -51,11 +49,15 @@ properties:
                 variants:
                   "$ref": "schema_definitions.yaml#/definitions/MethodVariants"
                 min:
-                  type: number
-                  description: The lowest possible value of the metric.
+                  oneOf:
+                    - type: number
+                      description: The lowest possible value of the metric.
+                    - const: "-.inf"
                 max:
-                  type: number
-                  description: The highest possible value of the metric.
+                  oneOf:
+                    - type: number
+                      description: The highest possible value of the metric.
+                    - const: "+.inf"
                 maximize:
                   type: boolean
                   description: Whether a higher metric value is better.

@@ -27,8 +27,6 @@ properties:
         additionalProperties: false
         required: [label, summary, description, preferred_normalization]
         properties:
-          subtype:
-            "$ref": "schema_definitions.yaml#/definitions/ComponentSubtype"
           label:
             "$ref": "schema_definitions.yaml#/definitions/ComponentLabel"
           summary:

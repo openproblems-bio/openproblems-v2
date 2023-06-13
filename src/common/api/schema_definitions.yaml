@@ -72,12 +72,21 @@ definitions:
     type: string
     description: |
       A component subtype, in case the task has multiple subtypes of methods and metrics.
+  ComponentType:
+    type: string
+    description: |
+      A component subtype, in case the task has multiple subtypes of methods and metrics.
   ComponentName:
     type: string
     description: |
       A unique identifier for your component.
       Can only contain lowercase letters or underscores.
     pattern: "^[a-z_][a-z0-9_]*$"
+  ComponentNamespace:
+    type: string
+    description: |
+      The namespace a component is part of.
+    pattern: "^[a-z_][a-z0-9_/]*$"
   ComponentLabel:
     type: string
     description: |
@@ -114,8 +123,8 @@ definitions:
     description: The url to the repository of the used software library.
   MigrationV1:
     type: object
+    required: [path, commit]
     properties:
-      required: [path, commit]
       additionalProperties: false
       path:
         type: string
@@ -147,3 +156,24 @@ definitions:
         - The input/output files
         - Common parameters
         - A unit test
+  ComponentAPIFile:
+    description: A `file` type argument has a string value that points to a file or folder path.
+    type: object
+    properties:
+      name:
+        description: "The name of the argument. Can be in the formats `--foo`, `-f` or `foo`. The number of dashes determines how values can be passed:  \n\n  - `--foo` is a long option, which can be passed with `executable_name --foo=value` or `executable_name --foo value`\n  - `-f` is a short option, which can be passed with `executable_name -f value`\n  - `foo` is an argument, which can be passed with `executable_name value`  \n"
+        type: string
+      __merge__:
+        type: string
+        description: The file format specification file.
+      direction:
+        description: Makes this argument an `input` or an `output`, as in does the file/folder needs to be read or written. `input` by default.
+        $ref: 'schema_viash_config.yaml#/definitions/Direction'
+      info:
+        description: 'Structured information. Can be any shape: a string, vector, map or even nested map.'
+        type: object
+      required:
+        description: Make the value for this argument required. If set to `true`, an error will be produced if no value was provided. `false` by default.
+        type: boolean
+    required: [name, __merge__, direction, required]
+    additionalProperties: false
