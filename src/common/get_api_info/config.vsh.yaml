@@ -11,6 +11,6 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.0
     setup:
       - type: r
-        cran: [ tidyverse ]
+        cran: [ purrr, dplyr, yaml, rlang ]
   - type: nextflow
   - type: native
