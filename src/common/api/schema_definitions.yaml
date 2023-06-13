@@ -241,3 +241,36 @@ definitions:
       required:
         type: boolean
     required: [type, name, description, required]
+  Author:
+    description: Author metadata.
+    type: object
+    additionalProperties: false
+    properties:
+      name:
+        description: Full name of the author, usually in the name of FirstName MiddleName LastName.
+        type: string
+      info:
+        description: Additional information on the author
+        type: object
+        additionalProperties: false
+        properties:
+          github:
+            type: string
+          orcid:
+            type: string
+          email:
+            type: string
+          twitter:
+            type: string
+          linkedin:
+            type: string
+      roles:
+        description: |
+            Role of the author. Possible values:
+
+            * `"author"`: Authors who have made substantial contributions to the component.
+            * `"maintainer"`: The maintainer of the component.
+            * `"contributor"`: Authors who have made smaller contributions (such as code patches etc.).
+        type: array
+        items:
+          enum: [maintainer, author, contributor]
