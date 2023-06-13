@@ -1,4 +1,5 @@
-library(tidyverse)
+library(purrr)
+library(dplyr)
 library(rlang)
 
 ## VIASH START
@@ -23,19 +24,14 @@ df <- map_df(configs, function(config) {
   info$task_id <- par$task_id
   info$component_id <- config$functionality$name
   info$namespace <- config$functionality$namespace
-  info$component_description <- config$functionality$description
-  info$v1_path <- config$functionality$info$v1$path
-  info$v1_commit <- config$functionality$info$v1$commit
-  info$v1_note <- config$functionality$info$v1$note
-  info
   info
 }) %>%
-rename(
-  metric_id = name,
-  metric_name = pretty_name,
-  metric_summary = description,
-  paper_reference = reference,
-)
+  rename(
+    metric_id = name,
+    metric_name = label,
+    metric_summary = description,
+    paper_reference = reference,
+  )
 
 jsonlite::write_json(
   purrr::transpose(df),
