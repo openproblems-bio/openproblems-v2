@@ -4,6 +4,8 @@ functionality:
     type: control_method
     type_info:
       label: Control method
+      summary: Quality control methods for verifying the pipeline.
+      summary: Quality control methods for verifying the pipeline.
       description: |
         This folder contains control components for the task. 
         These components have the same interface as the regular methods

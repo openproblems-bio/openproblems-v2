@@ -9,7 +9,7 @@ functionality:
         description: "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD."
         reference: kruskal1964mds
         min: 0
-        max: +.inf
+        max: "+.inf"
         maximize: false
       - name: rmse_spectral
         label: RMSE Spectral
@@ -17,7 +17,7 @@ functionality:
         description: "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding."
         reference: coifman2006diffusion
         min: 0
-        max: +.inf
+        max: "+.inf"
         maximize: false
         v1:
           path: openproblems/tasks/dimensionality_reduction/metrics/root_mean_square_error.py 

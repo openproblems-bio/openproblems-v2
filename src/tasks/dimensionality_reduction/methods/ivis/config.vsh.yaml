@@ -42,5 +42,5 @@ platforms:
           - scanpy
           - ivis[cpu]
   - type: nextflow
-    directives: 
+    directives:
       label: [ highmem, highcpu ]

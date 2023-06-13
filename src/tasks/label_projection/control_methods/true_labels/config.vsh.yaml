@@ -1,9 +1,7 @@
 __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: "true_labels"
-  description: "Positive control method by returning the true labels"
   info:
-    subtype: positive_control
     label: True labels
     summary: "a positive control, solution labels are copied 1 to 1 to the predicted data."
     description: "A positive control, where the solution labels are copied 1 to 1 to the predicted data."

@@ -2,7 +2,6 @@ __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: "majority_vote"
   info:
-    subtype: negative_control
     label: Majority Vote
     summary: "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset"
     description: "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset"

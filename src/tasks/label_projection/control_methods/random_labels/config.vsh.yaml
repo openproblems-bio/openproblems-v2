@@ -2,7 +2,6 @@ __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: "random_labels"
   info:
-    subtype: negative_control
     label: Random Labels
     summary: "a negative control, where the labels are randomly predicted."
     description: "A negative control, where the labels are randomly predicted without training the data."

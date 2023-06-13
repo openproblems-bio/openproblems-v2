@@ -2,7 +2,6 @@ __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: "perfect_denoising"
   info:
-    subtype: positive_control
     label: Perfect Denoising
     summary: "Positive control by copying the test counts"
     description: "This method serves as a positive control, where the test data is copied 1-to-1 to the denoised data. This makes it seem as if the data is perfectly denoised as it will be compared to the test data in the metrics."
