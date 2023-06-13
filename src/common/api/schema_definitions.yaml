@@ -212,18 +212,32 @@ definitions:
       uns:
         type: array
         items:
-          $ref: "#/definitions/AnnDataSlot"
+          oneOf:
+            - $ref: "#/definitions/AnnDataSlot"
+            - $ref: "#/definitions/AnnDataSlotObject"
   AnnDataSlot:
     properties:
       type:
         enum: [integer, double, string, boolean]
       name:
         type: string
-        description: |
-          A unique identifier.
+        description: A unique identifier.
         pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"
       description:
-        $ref: "#/definitions/Description"
+        type: string
+      required:
+        type: boolean
+    required: [type, name, description, required]
+  AnnDataSlotObject:
+    properties:
+      type:
+        enum: [object]
+      name:
+        type: string
+        description: A unique identifier.
+        pattern: "^[a-zA-Z_][a-zA-Z0-9_]*$"
+      description:
+        type: string
       required:
         type: boolean
     required: [type, name, description, required]

@@ -1,23 +1,27 @@
 type: file
-description: "The training data"
 example: "resources_test/label_projection/pancreas/train.h5ad"
 info:
   label: "Training data"
+  summary: "The training data"
   slots:
     layers: 
       - type: integer
         name: counts
         description: Raw counts
+        required: true
       - type: double
         name: normalized
         description: Normalized counts
+        required: true
     obs:
       - type: string
         name: label
         description: Ground truth cell type labels
+        required: true
       - type: string
         name: batch
         description: Batch information
+        required: true
     var:
       - type: boolean
         name: hvg

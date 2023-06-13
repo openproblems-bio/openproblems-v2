@@ -1,8 +1,8 @@
 type: file
-description: "Metric score file"
 example: "resources_test/label_projection/pancreas/knn_accuracy.h5ad"
 info:
   label: "Score"
+  summary: "Metric score file"
   slots:
     uns:
       - type: string
