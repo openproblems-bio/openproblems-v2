@@ -81,6 +81,7 @@ definitions:
     description: |
       A unique identifier. Can only contain lowercase letters, numbers or underscores.
     pattern: "^[a-z_][a-z0-9_]*$"
+    maxLength: 50
   Namespace:
     type: string
     description: |
