@@ -47,7 +47,7 @@ def _randomize_graph(adata, partition=None):
 with open(meta['config'], 'r', encoding="utf8") as file:
     config = yaml.safe_load(file)
 
-output_type = config["functionality"]["info"]["output_type"]
+output_type = config["functionality"]["info"]["subtype"]
 
 print('Read input', flush=True)
 input = ad.read_h5ad(par['input'])
