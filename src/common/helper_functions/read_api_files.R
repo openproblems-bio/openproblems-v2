@@ -273,6 +273,9 @@ read_task_api <- function(path) {
 
 
 create_task_graph <- function(file_info, comp_info, comp_args) {
+  clean_id <- function(id) {
+    gsub("graph", "graaf", id)
+  }
   nodes <-
     bind_rows(
       file_info %>%
@@ -283,7 +286,7 @@ create_task_graph <- function(file_info, comp_info, comp_args) {
       select(id, label, everything()) %>%
       mutate(str = paste0(
         "  ",
-        id,
+        clean_id(id),
         ifelse(is_comp, "[/\"", "(\""),
         label,
         ifelse(is_comp, "\"/]", "\")")
@@ -305,7 +308,7 @@ create_task_graph <- function(file_info, comp_info, comp_args) {
       )
   ) %>%
     select(from, to, everything()) %>%
-    mutate(str = paste0("  ", from, arrow, to))
+    mutate(str = paste0("  ", clean_id(from), arrow, clean_id(to)))
 
   igraph::graph_from_data_frame(
     edges,
