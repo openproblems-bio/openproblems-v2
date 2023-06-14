@@ -347,7 +347,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/seurat_transferdata/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1f8c45e1c7da12e9673cc62da87ae78e95cb833a",
+    "git_commit" : "0e19901bcc2eb41799e2b4926c876871ff87614a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
