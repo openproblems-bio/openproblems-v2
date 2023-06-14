@@ -16,6 +16,8 @@ read_anndata_info <- function(spec, path) {
     df <- dplyr::bind_cols(df, list_as_tibble(spec$info))
   }
   df$file_name <- basename(path) %>% gsub("\\.yaml", "", .)
+  df$description <- df$description %||% NA_character_ %>% as.character
+  df$summary <- df$summary %||% NA_character_ %>% as.character
   as_tibble(df)
 }
 read_anndata_slots <- function(spec, path) {
@@ -195,9 +197,13 @@ render_file <- function(spec) {
   strip_margin(glue::glue("
     §## File format: {spec$info$label}
     §
+    §{spec$info$summary %||% ''}
+    §
     §Example file: `{spec$info$example %|% '<Missing>'}`
     §
-    §{spec$info$summary}
+    §Description:
+    §
+    §{spec$info$description %||% ''}
     §
     §Format:
     §
@@ -214,18 +220,22 @@ render_file <- function(spec) {
     §"), symbol = "§")
 }
 
+# path <- "src/tasks/denoising"
 read_task_api <- function(path) {
   cli::cli_inform("Looking for project root")
   project_path <- .ram_find_project(path)
   api_dir <- paste0(path, "/api")
 
   cli::cli_inform("Reading task info")
-  task_info_yamls <- list.files(api_dir, pattern = "task_info.ya?ml", full.names = TRUE)
-  assertthat::assert_that(length(task_info_yamls) == 1)
-  if (!file.exists(task_info_yml)) {
-    task_info_yml <- paste0(path, "/api/task_info.yaml")
-  }
-  task_info <- read_and_merge_yaml(task_info_yml)
+  task_info_yaml <- list.files(api_dir, pattern = "task_info.ya?ml", full.names = TRUE)
+  assertthat::assert_that(length(task_info_yaml) == 1)
+  task_info <- read_and_merge_yaml(task_info_yaml)
+
+  cli::cli_inform("Reading task authors")
+  authors <- map_df(task_info$authors, function(aut) {
+    aut$roles <- paste(aut$roles, collapse = ", ")
+    list_as_tibble(aut)
+  })
 
   cli::cli_inform("Reading component yamls")
   comp_yamls <- list.files(api_dir, pattern = "comp_.*\\.ya?ml", full.names = TRUE)
@@ -256,7 +266,8 @@ read_task_api <- function(path) {
     comp_specs = comps,
     comp_info = comp_info,
     comp_args = comp_args,
-    task_graph = task_graph
+    task_graph = task_graph,
+    authors = authors
   )
 }
 
@@ -265,7 +276,7 @@ create_task_graph <- function(file_info, comp_info, comp_args) {
   nodes <-
     bind_rows(
       file_info %>%
-        mutate(id = file_name, label = short_description, is_comp = FALSE),
+        mutate(id = file_name, label = label, is_comp = FALSE),
       comp_info %>%
         mutate(id = file_name, label = label, is_comp = TRUE)
     ) %>%
