@@ -2,13 +2,21 @@ functionality:
   namespace: batch_integration/control_methods
   info:
     type: control_method
-    output_type: embedding
+    subtype: embedding
+    type_info:
+      label: control method (embedding)
+      summary: A batch integration embedding control method.
+      description: |
+        A batch integration control method which outputs a batch-corrected embedding.
   arguments:
     - name: --input
       __merge__: anndata_unintegrated.yaml
+      direction: input
+      required: true
     - name: --output
       direction: output
       __merge__: anndata_integrated_embedding.yaml
+      required: true
     - name: --hvg
       type: boolean
       description: Whether to subset to highly variable genes
