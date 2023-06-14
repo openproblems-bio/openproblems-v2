@@ -18,7 +18,7 @@ meta = {
 ## VIASH END
 
 def _set_uns(adata):
-    adata.uns["neighbors"] = adata.uns["uni"]
+    adata.uns["neighbors"] = adata.uns["knn"]
     adata.uns["neighbors"]["connectivities_key"] = "connectivities"
     adata.uns["neighbors"]["distances_key"] = "distances"
 
@@ -35,8 +35,8 @@ def _randomize_features(X, partition=None):
 
 def _randomize_graph(adata, partition=None):
     distances, connectivities = (
-        adata.obsp["uni_distances"],
-        adata.obsp["uni_connectivities"],
+        adata.obsp["knn_distances"],
+        adata.obsp["knn_connectivities"],
     )
     new_idx = _randomize_features(np.arange(distances.shape[0]), partition=partition)
     adata.obsp["distances"] = distances[new_idx][:, new_idx]
@@ -51,12 +51,12 @@ output_type = config["functionality"]["info"]["subtype"]
 
 print('Read input', flush=True)
 input = ad.read_h5ad(par['input'])
-
+input.X = input.layers["normalized"]
 
 input.X = _randomize_features(input.X)
-input.obsm["X_emb"] = _randomize_features(input.obsm["X_uni_pca"])
+input.obsm["X_emb"] = _randomize_features(input.obsm["X_pca"])
 input = _randomize_graph(input)
-
+del input.X
 
 print("Store outputs", flush=True)
 input.uns['output_type'] = output_type
