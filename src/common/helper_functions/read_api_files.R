@@ -11,7 +11,6 @@ read_anndata_spec <- function(path) {
 read_anndata_info <- function(spec, path) {
   # TEMP: make it readable
   spec$info$slots <- NULL
-  
   df <- list_as_tibble(spec)
   if (list_contains_tibble(spec$info)) {
     df <- dplyr::bind_cols(df, list_as_tibble(spec$info))
@@ -63,10 +62,7 @@ format_slots_as_kable <- function(spec) {
     ) %>%
     transmute(
       Slot = paste0("`", struct, "[\"", name, "\"]`"),
-      # Struct = struct,
-      # Name = name,
       Type = paste0("`", type, "`"),
-      # Required = ifelse(required, "yes", ""),
       Description = paste0(
         tag_str,
         description %>% gsub(" *\n *", " ", .) %>% gsub("\\. *$", "", .), 
@@ -151,7 +147,7 @@ format_comp_args_as_tibble <- function(spec) {
       Type = paste0("`", type, "`"),
       Description = paste0(
         tag_str,
-        description %>% gsub(" *\n *", " ", .) %>% gsub("\\. *$", "", .), 
+        (summary %|% description) %>% gsub(" *\n *", " ", .) %>% gsub("\\. *$", "", .), 
         ".",
         ifelse(!is.na(default), paste0(" Default: `", default, "`."), "")
       )
@@ -168,7 +164,7 @@ render_component <- function(path) {
     §
     §Path: [`src/{spec$info$namespace}`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{spec$info$namespace})
     §
-    §{spec$info$description}
+    §{spec$info$summary}
     §
     §Arguments:
     §
@@ -179,7 +175,7 @@ render_component <- function(path) {
     §"), symbol = "§"))
 }
 
-# path <- "src/datasets/api/anndata_pca.yaml"
+# path <- "src/datasets/api/file_pca.yaml"
 render_file <- function(path) {
   spec <- read_anndata_spec(path)
 
@@ -188,7 +184,7 @@ render_file <- function(path) {
     §
     §Example file: `{spec$info$example %|% '<Missing>'}`
     §
-    §{spec$info$description}
+    §{spec$info$summary}
     §
     §Format:
     §
