@@ -15,11 +15,10 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: python:3.10
+    image: ghcr.io/openproblems-bio/base_python:1.0.0
     setup:
       - type: python
         pypi:
           - scanpy
           - numpy
-          - pyyaml
   - type: nextflow
