@@ -246,7 +246,7 @@ read_task_api <- function(path) {
 
   cli::cli_inform("Reading file yamls")
   file_yamls <- .ram_resolve_path(
-    path = unique(comp_args$`__merge__`),
+    path = na.omit(unique(comp_args$`__merge__`)),
     project_path = project_path,
     parent_path = api_dir
   )

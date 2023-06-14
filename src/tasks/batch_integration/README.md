@@ -1,72 +1,86 @@
-# Dimensionality reduction for visualization
+# Batch Integration
 
-Reduction of high-dimensional datasets to 2D for visualization &
-interpretation
+Remove unwanted batch effects from scRNA data while retaining
+biologically meaningful variation.
 
 Path:
 [`src/tasks/batch_integration`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/src/tasks/batch_integration)
 
 ## Motivation
 
-Dimensionality reduction is one of the key challenges in single-cell
-data representation. Routine single-cell RNA sequencing (scRNA-seq)
-experiments measure cells in roughly 20,000-30,000 dimensions (i.e.,
-features - mostly gene transcripts but also other functional elements
-encoded in mRNA such as lncRNAs). Since its inception,scRNA-seq
-experiments have been growing in terms of the number of cells measured.
-Originally, cutting-edge SmartSeq experiments would yield a few hundred
-cells, at best. Now, it is not uncommon to see experiments that yield
-over [100,000 cells](https://www.nature.com/articles/s41586-018-0590-4)
-or even [\> 1 million cells](https://doi.org/10.1126/science.aba7721).
+As single-cell technologies advance, single-cell datasets are growing
+both in size and complexity. Especially in consortia such as the Human
+Cell Atlas, individual studies combine data from multiple labs, each
+sequencing multiple individuals possibly with different technologies.
+This gives rise to complex batch effects in the data that must be
+computationally removed to perform a joint analysis. These batch
+integration methods must remove the batch effect while not removing
+relevant biological information. Currently, over 200 tools exist that
+aim to remove batch effects scRNA-seq datasets \[@zappia2018exploring\].
+These methods balance the removal of batch effects with the conservation
+of nuanced biological information in different ways. This abundance of
+tools has complicated batch integration method choice, leading to
+several benchmarks on this topic \[@luecken2020benchmarking;
+@tran2020benchmark; @chazarragil2021flexible; @mereu2020benchmarking\].
+Yet, benchmarks use different metrics, method implementations and
+datasets. Here we build a living benchmarking task for batch integration
+methods with the vision of improving the consistency of method
+evaluation.
 
 ## Description
 
-Each *feature* in a dataset functions as a single dimension. While each
-of the ~30,000 dimensions measured in each cell contribute to an
-underlying data structure, the overall structure of the data is
-challenging to display in few dimensions due to data sparsity and the
-[*“curse of
-dimensionality”*](https://en.wikipedia.org/wiki/Curse_of_dimensionality)
-(distances in high dimensional data don’t distinguish data points well).
-Thus, we need to find a way to [dimensionally
-reduce](https://en.wikipedia.org/wiki/Dimensionality_reduction) the data
-for visualization and interpretation.
+In this task we evaluate batch integration methods on their ability to
+remove batch effects in the data while conserving variation attributed
+to biological effects. As input, methods require either normalised or
+unnormalised data with multiple batches and consistent cell type labels.
+The batch integrated output can be a feature matrix, a low dimensional
+embedding and/or a neighbourhood graph. The respective batch-integrated
+representation is then evaluated using sets of metrics that capture how
+well batch effects are removed and whether biological variance is
+conserved. We have based this particular task on the latest, and most
+extensive benchmark of single-cell data integration methods
+\[@luecken2022benchmarking\].
 
 ## Authors & contributors
 
-| name                   | roles              |
-|:-----------------------|:-------------------|
-| Luke Zappia            | maintainer, author |
-| Michal Klein           | author             |
-| Scott Gigante          | author             |
-| Ben DeMeo              | author             |
-| Juan A. Cordero Varela | contributor        |
-| Robrecht Cannoodt      | contributor        |
+| name              | roles              |
+|:------------------|:-------------------|
+| Michaela Mueller  | maintainer, author |
+| Kai Waldrant      | contributor        |
+| Robrecht Cannoodt | contributor        |
+| Daniel Strobl     | author             |
 
 ## API
 
 ``` mermaid
 flowchart LR
-  file_dataset(Dataset)
-  file_solution(Test data)
-  file_embedding(Embedding)
+  file_unintegrated(Unintegrated)
+  file_integrated_embedding(Integrated embedding)
+  file_integrated_feature(Integrated Feature)
+  file_integrated_graph(Integrated Graph)
   file_score(Score)
   file_common_dataset(Common dataset)
-  comp_control_method[/Control method/]
-  comp_method[/Method/]
-  comp_metric[/Metric/]
+  comp_method_embedding[/Method (embedding)/]
+  comp_method_feature[/Method (feature)/]
+  comp_method_graph[/Method (graph)/]
+  comp_metric_embedding[/Metric (embedding)/]
+  comp_metric_feature[/Metric (feature)/]
+  comp_metric_graph[/Metric (graph)/]
   comp_process_dataset[/Data processor/]
-  file_dataset---comp_control_method
-  file_solution---comp_control_method
-  file_dataset---comp_method
-  file_embedding---comp_metric
-  file_solution---comp_metric
+  file_unintegrated---comp_method_embedding
+  file_unintegrated---comp_method_feature
+  file_unintegrated---comp_method_graph
+  file_integrated_embedding---comp_metric_embedding
+  file_integrated_feature---comp_metric_feature
+  file_integrated_graph---comp_metric_graph
   file_common_dataset---comp_process_dataset
-  comp_control_method-->file_embedding
-  comp_method-->file_embedding
-  comp_metric-->file_score
-  comp_process_dataset-->file_dataset
-  comp_process_dataset-->file_solution
+  comp_method_embedding-->file_integrated_embedding
+  comp_method_feature-->file_integrated_feature
+  comp_method_graph-->file_integrated_graph
+  comp_metric_embedding-->file_score
+  comp_metric_feature-->file_score
+  comp_metric_graph-->file_score
+  comp_process_dataset-->file_unintegrated
 ```
 
 ## File format: Common dataset
@@ -128,28 +142,27 @@ Slot description:
 ## Component type: Data processor
 
 Path:
-[`src/dimensionality_reduction`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/dimensionality_reduction)
+[`src/batch_integration`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration)
 
-A dimensionality reduction dataset processor.
+A label projection dataset processor.
 
 Arguments:
 
 <div class="small">
 
-| Name                | Type   | Description                                                    |
-|:--------------------|:-------|:---------------------------------------------------------------|
-| `--input`           | `file` | A dataset processed by the common dataset processing pipeline. |
-| `--output_dataset`  | `file` | (*Output*) The dataset to pass to a method.                    |
-| `--output_solution` | `file` | (*Output*) The data for evaluating a dimensionality reduction. |
+| Name       | Type   | Description                                                    |
+|:-----------|:-------|:---------------------------------------------------------------|
+| `--input`  | `file` | A dataset processed by the common dataset processing pipeline. |
+| `--output` | `file` | (*Output*) Unintegrated AnnData HDF5 file.                     |
 
 </div>
 
-## File format: Dataset
+## File format: Unintegrated
 
-The dataset to pass to a method.
+Unintegrated AnnData HDF5 file.
 
 Example file:
-`resources_test/dimensionality_reduction/pancreas/dataset.h5ad`
+`resources_test/batch_integration/pancreas/unintegrated.h5ad`
 
 Description:
 
@@ -160,9 +173,12 @@ Format:
 <div class="small">
 
     AnnData object
-     var: 'hvg_score'
+     obs: 'batch', 'label'
+     var: 'hvg'
+     obsm: 'X_pca'
+     obsp: 'knn_connectivities'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'normalization_id'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism'
 
 </div>
 
@@ -170,22 +186,83 @@ Slot description:
 
 <div class="small">
 
-| Slot                      | Type      | Description                                                                          |
-|:--------------------------|:----------|:-------------------------------------------------------------------------------------|
-| `var["hvg_score"]`        | `double`  | High variability gene score (normalized dispersion). The greater, the more variable. |
-| `layers["counts"]`        | `integer` | Raw counts.                                                                          |
-| `layers["normalized"]`    | `double`  | Normalized expression values.                                                        |
-| `uns["dataset_id"]`       | `string`  | A unique identifier for the dataset.                                                 |
-| `uns["normalization_id"]` | `string`  | Which normalization was used.                                                        |
+| Slot                         | Type      | Description                                                              |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------|
+| `obs["batch"]`               | `string`  | Batch information.                                                       |
+| `obs["label"]`               | `string`  | label information.                                                       |
+| `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
+| `layers["counts"]`           | `integer` | Raw counts.                                                              |
+| `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
+| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
 
 </div>
 
-## File format: Test data
+## Component type: Method (embedding)
 
-The data for evaluating a dimensionality reduction.
+Path:
+[`src/batch_integration/methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/methods)
 
-Example file:
-`resources_test/dimensionality_reduction/pancreas/solution.h5ad`
+A batch integration embedding method.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type      | Description                                                                |
+|:-----------|:----------|:---------------------------------------------------------------------------|
+| `--input`  | `file`    | Unintegrated AnnData HDF5 file.                                            |
+| `--output` | `file`    | (*Output*) An integrated AnnData HDF5 file.                                |
+| `--hvg`    | `boolean` | (*Optional*) Whether to subset to highly variable genes. Default: `FALSE`. |
+
+</div>
+
+## Component type: Method (feature)
+
+Path:
+[`src/batch_integration/methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/methods)
+
+A batch integration feature method.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type      | Description                                                                |
+|:-----------|:----------|:---------------------------------------------------------------------------|
+| `--input`  | `file`    | Unintegrated AnnData HDF5 file.                                            |
+| `--output` | `file`    | (*Output*) Integrated AnnData HDF5 file.                                   |
+| `--hvg`    | `boolean` | (*Optional*) Whether to subset to highly variable genes. Default: `FALSE`. |
+
+</div>
+
+## Component type: Method (graph)
+
+Path:
+[`src/batch_integration/methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/methods)
+
+A batch integration graph method.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type      | Description                                                                |
+|:-----------|:----------|:---------------------------------------------------------------------------|
+| `--input`  | `file`    | Unintegrated AnnData HDF5 file.                                            |
+| `--output` | `file`    | (*Output*) Integrated AnnData HDF5 file.                                   |
+| `--hvg`    | `boolean` | (*Optional*) Whether to subset to highly variable genes. Default: `FALSE`. |
+
+</div>
+
+## File format: Integrated embedding
+
+An integrated AnnData HDF5 file.
+
+Example file: `resources_test/batch_integration/pancreas/scvi.h5ad`
 
 Description:
 
@@ -196,9 +273,12 @@ Format:
 <div class="small">
 
     AnnData object
-     var: 'hvg_score'
+     obs: 'batch', 'label'
+     var: 'hvg'
+     obsm: 'X_pca', 'X_emb'
+     obsp: 'knn_connectivities'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'normalization_id'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'method_id', 'hvg', 'output_type'
 
 </div>
 
@@ -206,78 +286,30 @@ Slot description:
 
 <div class="small">
 
-| Slot                      | Type      | Description                                                                          |
-|:--------------------------|:----------|:-------------------------------------------------------------------------------------|
-| `var["hvg_score"]`        | `double`  | High variability gene score (normalized dispersion). The greater, the more variable. |
-| `layers["counts"]`        | `integer` | Raw counts.                                                                          |
-| `layers["normalized"]`    | `double`  | Normalized expression values.                                                        |
-| `uns["dataset_id"]`       | `string`  | A unique identifier for the dataset.                                                 |
-| `uns["normalization_id"]` | `string`  | Which normalization was used.                                                        |
+| Slot                         | Type      | Description                                                              |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------|
+| `obs["batch"]`               | `string`  | Batch information.                                                       |
+| `obs["label"]`               | `string`  | label information.                                                       |
+| `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsm["X_emb"]`              | `double`  | integration embedding prediction.                                        |
+| `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
+| `layers["counts"]`           | `integer` | Raw counts.                                                              |
+| `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
+| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
+| `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
+| `uns["hvg"]`                 | `boolean` | If the method was done on hvg or full.                                   |
+| `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
 
 </div>
 
-## Component type: Control method
+## File format: Integrated Feature
 
-Path:
-[`src/dimensionality_reduction/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/dimensionality_reduction/control_methods)
+Integrated AnnData HDF5 file.
 
-Quality control methods for verifying the pipeline.
-
-Arguments:
-
-<div class="small">
-
-| Name               | Type   | Description                                                   |
-|:-------------------|:-------|:--------------------------------------------------------------|
-| `--input`          | `file` | The dataset to pass to a method.                              |
-| `--input_solution` | `file` | The data for evaluating a dimensionality reduction.           |
-| `--output`         | `file` | (*Output*) A dataset with dimensionality reduction embedding. |
-
-</div>
-
-## Component type: Method
-
-Path:
-[`src/dimensionality_reduction/methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/dimensionality_reduction/methods)
-
-A dimensionality reduction method.
-
-Arguments:
-
-<div class="small">
-
-| Name       | Type   | Description                                                   |
-|:-----------|:-------|:--------------------------------------------------------------|
-| `--input`  | `file` | The dataset to pass to a method.                              |
-| `--output` | `file` | (*Output*) A dataset with dimensionality reduction embedding. |
-
-</div>
-
-## Component type: Metric
-
-Path:
-[`src/dimensionality_reduction/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/dimensionality_reduction/metrics)
-
-A dimensionality reduction metric.
-
-Arguments:
-
-<div class="small">
-
-| Name                | Type   | Description                                         |
-|:--------------------|:-------|:----------------------------------------------------|
-| `--input_embedding` | `file` | A dataset with dimensionality reduction embedding.  |
-| `--input_solution`  | `file` | The data for evaluating a dimensionality reduction. |
-| `--output`          | `file` | (*Output*) Metric score file.                       |
-
-</div>
-
-## File format: Embedding
-
-A dataset with dimensionality reduction embedding.
-
-Example file:
-`resources_test/dimensionality_reduction/pancreas/embedding.h5ad`
+Example file: `resources_test/batch_integration/pancreas/combat.h5ad`
 
 Description:
 
@@ -288,8 +320,12 @@ Format:
 <div class="small">
 
     AnnData object
-     obsm: 'X_emb'
-     uns: 'dataset_id', 'method_id', 'normalization_id'
+     obs: 'batch', 'label'
+     var: 'hvg'
+     obsm: 'X_pca'
+     obsp: 'knn_connectivities'
+     layers: 'counts', 'normalized', 'corrected_counts'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'method_id', 'hvg', 'output_type'
 
 </div>
 
@@ -297,12 +333,123 @@ Slot description:
 
 <div class="small">
 
-| Slot                      | Type     | Description                          |
-|:--------------------------|:---------|:-------------------------------------|
-| `obsm["X_emb"]`           | `double` | The dimensionally reduced embedding. |
-| `uns["dataset_id"]`       | `string` | A unique identifier for the dataset. |
-| `uns["method_id"]`        | `string` | A unique identifier for the method.  |
-| `uns["normalization_id"]` | `string` | Which normalization was used.        |
+| Slot                         | Type      | Description                                                              |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------|
+| `obs["batch"]`               | `string`  | Batch information.                                                       |
+| `obs["label"]`               | `string`  | label information.                                                       |
+| `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
+| `layers["counts"]`           | `integer` | Raw counts.                                                              |
+| `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
+| `layers["corrected_counts"]` | `double`  | Corrected counts after integration.                                      |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
+| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
+| `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
+| `uns["hvg"]`                 | `boolean` | If the method was done on hvg or full.                                   |
+| `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
+
+</div>
+
+## File format: Integrated Graph
+
+Integrated AnnData HDF5 file.
+
+Example file: `resources_test/batch_integration/pancreas/bbknn.h5ad`
+
+Description:
+
+NA
+
+Format:
+
+<div class="small">
+
+    AnnData object
+     obs: 'batch', 'label'
+     var: 'hvg'
+     obsm: 'X_pca'
+     obsp: 'knn_connectivities', 'connectivities'
+     layers: 'counts', 'normalized'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'method_id', 'hvg', 'output_type'
+
+</div>
+
+Slot description:
+
+<div class="small">
+
+| Slot                         | Type      | Description                                                              |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------|
+| `obs["batch"]`               | `string`  | Batch information.                                                       |
+| `obs["label"]`               | `string`  | label information.                                                       |
+| `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
+| `obsp["connectivities"]`     | `double`  | Neighbors connectivities matrix.                                         |
+| `layers["counts"]`           | `integer` | Raw counts.                                                              |
+| `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
+| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
+| `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
+| `uns["hvg"]`                 | `boolean` | If the method was done on hvg or full.                                   |
+| `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
+
+</div>
+
+## Component type: Metric (embedding)
+
+Path:
+[`src/batch_integration/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/metrics)
+
+A batch integration embedding metric.
+
+Arguments:
+
+<div class="small">
+
+| Name                 | Type   | Description                      |
+|:---------------------|:-------|:---------------------------------|
+| `--input_integrated` | `file` | An integrated AnnData HDF5 file. |
+| `--output`           | `file` | (*Output*) Metric score file.    |
+
+</div>
+
+## Component type: Metric (feature)
+
+Path:
+[`src/batch_integration/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/metrics)
+
+A batch integration feature metric.
+
+Arguments:
+
+<div class="small">
+
+| Name                 | Type   | Description                   |
+|:---------------------|:-------|:------------------------------|
+| `--input_integrated` | `file` | Integrated AnnData HDF5 file. |
+| `--output`           | `file` | (*Output*) Metric score file. |
+
+</div>
+
+## Component type: Metric (graph)
+
+Path:
+[`src/batch_integration/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/metrics)
+
+A batch integration graph metric.
+
+Arguments:
+
+<div class="small">
+
+| Name                 | Type   | Description                   |
+|:---------------------|:-------|:------------------------------|
+| `--input_integrated` | `file` | Integrated AnnData HDF5 file. |
+| `--output`           | `file` | (*Output*) Metric score file. |
 
 </div>
 
@@ -310,8 +457,7 @@ Slot description:
 
 Metric score file
 
-Example file:
-`resources_test/dimensionality_reduction/pancreas/score.h5ad`
+Example file: `score.h5ad`
 
 Description:
 
@@ -322,7 +468,7 @@ Format:
 <div class="small">
 
     AnnData object
-     uns: 'dataset_id', 'normalization_id', 'method_id', 'metric_ids', 'metric_values'
+     uns: 'dataset_id', 'normalization_id', 'method_id', 'metric_ids', 'metric_values', 'hvg', 'output_type'
 
 </div>
 
@@ -330,12 +476,14 @@ Slot description:
 
 <div class="small">
 
-| Slot                      | Type     | Description                                                                                  |
-|:--------------------------|:---------|:---------------------------------------------------------------------------------------------|
-| `uns["dataset_id"]`       | `string` | A unique identifier for the dataset.                                                         |
-| `uns["normalization_id"]` | `string` | Which normalization was used.                                                                |
-| `uns["method_id"]`        | `string` | A unique identifier for the method.                                                          |
-| `uns["metric_ids"]`       | `string` | One or more unique metric identifiers.                                                       |
-| `uns["metric_values"]`    | `double` | The metric values obtained for the given prediction. Must be of same length as ‘metric_ids’. |
+| Slot                      | Type      | Description                                                                                  |
+|:--------------------------|:----------|:---------------------------------------------------------------------------------------------|
+| `uns["dataset_id"]`       | `string`  | A unique identifier for the dataset.                                                         |
+| `uns["normalization_id"]` | `string`  | Which normalization was used.                                                                |
+| `uns["method_id"]`        | `string`  | A unique identifier for the method.                                                          |
+| `uns["metric_ids"]`       | `string`  | One or more unique metric identifiers.                                                       |
+| `uns["metric_values"]`    | `double`  | The metric values obtained for the given prediction. Must be of same length as ‘metric_ids’. |
+| `uns["hvg"]`              | `boolean` | If the method was done on hvg or full.                                                       |
+| `uns["output_type"]`      | `string`  | what kind of output has been generated.                                                      |
 
 </div>
