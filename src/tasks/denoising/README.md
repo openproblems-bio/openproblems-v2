@@ -1,7 +1,11 @@
 # Denoising
 
+Removing noise in sparse single-cell RNA-sequencing count data
+
 Path:
 [`src/tasks/denoising`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/src/tasks/denoising)
+
+## Motivation
 
 Single-cell RNA-Seq protocols only detect a fraction of the mRNA
 molecules present in each cell. As a result, the measurements (UMI
@@ -15,6 +19,8 @@ in statistics. Similar to the use of the terms “dropout”, “missing
 data”, and “technical zeros”, this terminology can create confusion
 about the underlying measurement process ([Sarkar and Stephens,
 2020](https://www.biorxiv.org/content/10.1101/2020.04.07.030007v2)).
+
+## Description
 
 A key challenge in evaluating denoising methods is the general lack of a
 ground truth. A recent benchmark study ([Hou et al.,
@@ -36,37 +42,51 @@ in theory and in practice, the measured denoising accuracy is
 representative of the accuracy that would be obtained on a ground truth
 dataset.
 
+## Authors & contributors
+
+| name              | roles              |
+|:------------------|:-------------------|
+| Wesley Lewis      | author, maintainer |
+| Scott Gigante     | author, maintainer |
+| Robrecht Cannoodt | author             |
+| Kai Waldrant      | author             |
+
+## API
+
 ``` mermaid
 flowchart LR
-  anndata_train(Training data)
-  anndata_test(Test data)
-  anndata_denoised(Denoised data)
-  anndata_score(Score)
-  anndata_common_dataset(NA)
+  file_train(Training data)
+  file_test(Test data)
+  file_denoised(Denoised data)
+  file_score(Score)
+  file_common_dataset(Common dataset)
   comp_control_method[/Control method/]
   comp_method[/Method/]
   comp_metric[/Metric/]
   comp_process_dataset[/Data processor/]
-  anndata_train---comp_control_method
-  anndata_test---comp_control_method
-  anndata_train---comp_method
-  anndata_test---comp_metric
-  anndata_denoised---comp_metric
-  anndata_common_dataset---comp_process_dataset
-  comp_control_method-->anndata_denoised
-  comp_method-->anndata_denoised
-  comp_metric-->anndata_score
-  comp_process_dataset-->anndata_train
-  comp_process_dataset-->anndata_test
+  file_train---comp_control_method
+  file_test---comp_control_method
+  file_train---comp_method
+  file_test---comp_metric
+  file_denoised---comp_metric
+  file_common_dataset---comp_process_dataset
+  comp_control_method-->file_denoised
+  comp_method-->file_denoised
+  comp_metric-->file_score
+  comp_process_dataset-->file_train
+  comp_process_dataset-->file_test
 ```
 
 ## File format: Common dataset
 
+A dataset processed by the common dataset processing pipeline.
+
 Example file: `resources_test/common/pancreas/dataset.h5ad`
 
-A dataset processed by the common dataset processing pipeline. This
-dataset contains both raw counts and normalized data matrices, as well
-as a PCA embedding, HVG selection and a kNN graph.
+Description:
+
+This dataset contains both raw counts and normalized data matrices, as
+well as a PCA embedding, HVG selection and a kNN graph.
 
 Format:
 
@@ -109,7 +129,7 @@ Slot description:
 | `uns["dataset_description"]` | `string`  | Long description of the dataset.                                               |
 | `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
 | `uns["pca_variance"]`        | `double`  | The PCA variance objects.                                                      |
-| `uns["knn"]`                 | `object`  | Neighbors data.                                                                |
+| `uns["knn"]`                 | `object`  | Supplementary K nearest neighbors data.                                        |
 
 </div>
 
@@ -118,23 +138,27 @@ Slot description:
 Path:
 [`src/denoising`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/denoising)
 
-Prepare a common dataset for the denoising task.
+A denoising dataset processor.
 
 Arguments:
 
 <div class="small">
 
-| Name             | Type   | Description                                                                                                                                                                                                |
-|:-----------------|:-------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--input`        | `file` | (*Optional*) A dataset processed by the common dataset processing pipeline. This dataset contains both raw counts and normalized data matrices, as well as a PCA embedding, HVG selection and a kNN graph. |
-| `--output_train` | `file` | (*Optional, Output*) The training data.                                                                                                                                                                    |
-| `--output_test`  | `file` | (*Optional, Output*) The test data.                                                                                                                                                                        |
+| Name             | Type   | Description                                                    |
+|:-----------------|:-------|:---------------------------------------------------------------|
+| `--input`        | `file` | A dataset processed by the common dataset processing pipeline. |
+| `--output_train` | `file` | (*Output*) The training data.                                  |
+| `--output_test`  | `file` | (*Output*) The test data.                                      |
 
 </div>
 
-## File format: train.h5ad
+## File format: Training data
+
+NA
 
 Example file: `resources_test/denoising/pancreas/train.h5ad`
+
+Description:
 
 The training data
 
@@ -159,9 +183,13 @@ Slot description:
 
 </div>
 
-## File format: test.h5ad
+## File format: Test data
+
+NA
 
 Example file: `resources_test/denoising/pancreas/test.h5ad`
+
+Description:
 
 The test data
 
@@ -191,21 +219,17 @@ Slot description:
 Path:
 [`src/denoising/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/denoising/control_methods)
 
-This folder contains control components for the task. These components
-have the same interface as the regular methods but also receive the
-solution object as input. It serves as a starting point to test the
-relative accuracy of new methods in the task, and also as a quality
-control for the metrics defined in the task.
+Quality control methods for verifying the pipeline.
 
 Arguments:
 
 <div class="small">
 
-| Name            | Type   | Description                             |
-|:----------------|:-------|:----------------------------------------|
-| `--input_train` | `file` | (*Optional*) The training data.         |
-| `--input_test`  | `file` | (*Optional*) The test data.             |
-| `--output`      | `file` | (*Optional, Output*) The denoised data. |
+| Name            | Type   | Description                   |
+|:----------------|:-------|:------------------------------|
+| `--input_train` | `file` | The training data.            |
+| `--input_test`  | `file` | The test data.                |
+| `--output`      | `file` | (*Output*) The denoised data. |
 
 </div>
 
@@ -214,17 +238,16 @@ Arguments:
 Path:
 [`src/denoising/methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/denoising/methods)
 
-A denoising method to remove noise (i.e. technical artifacts) from a
-dataset.
+A denoising method.
 
 Arguments:
 
 <div class="small">
 
-| Name            | Type   | Description                             |
-|:----------------|:-------|:----------------------------------------|
-| `--input_train` | `file` | (*Optional*) The training data.         |
-| `--output`      | `file` | (*Optional, Output*) The denoised data. |
+| Name            | Type   | Description                   |
+|:----------------|:-------|:------------------------------|
+| `--input_train` | `file` | The training data.            |
+| `--output`      | `file` | (*Output*) The denoised data. |
 
 </div>
 
@@ -233,23 +256,27 @@ Arguments:
 Path:
 [`src/denoising/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/denoising/metrics)
 
-A metric for evaluating denoised datasets.
+A denoising metric.
 
 Arguments:
 
 <div class="small">
 
-| Name               | Type   | Description                             |
-|:-------------------|:-------|:----------------------------------------|
-| `--input_test`     | `file` | (*Optional*) The test data.             |
-| `--input_denoised` | `file` | (*Optional*) The denoised data.         |
-| `--output`         | `file` | (*Optional, Output*) Metric score file. |
+| Name               | Type   | Description                   |
+|:-------------------|:-------|:------------------------------|
+| `--input_test`     | `file` | The test data.                |
+| `--input_denoised` | `file` | The denoised data.            |
+| `--output`         | `file` | (*Output*) Metric score file. |
 
 </div>
 
-## File format: magic.h5ad
+## File format: Denoised data
+
+NA
 
 Example file: `resources_test/denoising/pancreas/magic.h5ad`
+
+Description:
 
 The denoised data
 
@@ -276,9 +303,13 @@ Slot description:
 
 </div>
 
-## File format: magic_poisson.h5ad
+## File format: Score
+
+NA
 
 Example file: `resources_test/denoising/pancreas/magic_poisson.h5ad`
+
+Description:
 
 Metric score file
 

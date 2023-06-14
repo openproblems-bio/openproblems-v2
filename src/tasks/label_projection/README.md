@@ -1,76 +1,87 @@
-# Denoising
+# Label projection
+
+Automated cell type annotation from rich, labeled reference data
 
 Path:
 [`src/tasks/label_projection`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/src/tasks/label_projection)
 
-Single-cell RNA-Seq protocols only detect a fraction of the mRNA
-molecules present in each cell. As a result, the measurements (UMI
-counts) observed for each gene and each cell are associated with
-generally high levels of technical noise ([Grün et al.,
-2014](https://www.nature.com/articles/nmeth.2930)). Denoising describes
-the task of estimating the true expression level of each gene in each
-cell. In the single-cell literature, this task is also referred to as
-*imputation*, a term which is typically used for missing data problems
-in statistics. Similar to the use of the terms “dropout”, “missing
-data”, and “technical zeros”, this terminology can create confusion
-about the underlying measurement process ([Sarkar and Stephens,
-2020](https://www.biorxiv.org/content/10.1101/2020.04.07.030007v2)).
+## Motivation
 
-A key challenge in evaluating denoising methods is the general lack of a
-ground truth. A recent benchmark study ([Hou et al.,
-2020](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02132-x))
-relied on flow-sorted datasets, mixture control experiments ([Tian et
-al., 2019](https://www.nature.com/articles/s41592-019-0425-8)), and
-comparisons with bulk RNA-Seq data. Since each of these approaches
-suffers from specific limitations, it is difficult to combine these
-different approaches into a single quantitative measure of denoising
-accuracy. Here, we instead rely on an approach termed molecular
-cross-validation (MCV), which was specifically developed to quantify
-denoising accuracy in the absence of a ground truth ([Batson et al.,
-2019](https://www.biorxiv.org/content/10.1101/786269v1)). In MCV, the
-observed molecules in a given scRNA-Seq dataset are first partitioned
-between a *training* and a *test* dataset. Next, a denoising method is
-applied to the training dataset. Finally, denoising accuracy is measured
-by comparing the result to the test dataset. The authors show that both
-in theory and in practice, the measured denoising accuracy is
-representative of the accuracy that would be obtained on a ground truth
-dataset.
+A major challenge for integrating single cell datasets is creating
+matching cell type annotations for each cell. One of the most common
+strategies for annotating cell types is referred to as
+[“cluster-then-annotate”](https://www.nature.com/articles/s41576-018-0088-9)
+whereby cells are aggregated into clusters based on feature similarity
+and then manually characterized based on differential gene expression or
+previously identified marker genes. Recently, methods have emerged to
+build on this strategy and annotate cells using [known marker
+genes](https://www.nature.com/articles/s41592-019-0535-3). However,
+these strategies pose a difficulty for integrating atlas-scale datasets
+as the particular annotations may not match.
+
+## Description
+
+To ensure that the cell type labels in newly generated datasets match
+existing reference datasets, some methods align cells to a previously
+annotated [reference
+dataset](https://academic.oup.com/bioinformatics/article/35/22/4688/54802990)
+and then *project* labels from the reference to the new dataset.
+
+Here, we compare methods for annotation based on a reference dataset.
+The datasets consist of two or more samples of single cell profiles that
+have been manually annotated with matching labels. These datasets are
+then split into training and test batches, and the task of each method
+is to train a cell type classifer on the training set and project those
+labels onto the test set.
+
+## Authors & contributors
+
+| name              | roles              |
+|:------------------|:-------------------|
+| Nikolay Markov    | author, maintainer |
+| Scott Gigante     | author             |
+| Robrecht Cannoodt | author             |
+
+## API
 
 ``` mermaid
 flowchart LR
-  anndata_train(Training data)
-  anndata_test(Test data)
-  anndata_solution(Solution)
-  anndata_prediction(Prediction)
-  anndata_score(Score)
-  anndata_common_dataset(NA)
+  file_train(Training data)
+  file_test(Test data)
+  file_solution(Solution)
+  file_prediction(Prediction)
+  file_score(Score)
+  file_common_dataset(Common dataset)
   comp_control_method[/Control method/]
   comp_method[/Method/]
   comp_metric[/Metric/]
   comp_process_dataset[/Data processor/]
-  anndata_train---comp_control_method
-  anndata_test---comp_control_method
-  anndata_solution---comp_control_method
-  anndata_train---comp_method
-  anndata_test---comp_method
-  anndata_solution---comp_metric
-  anndata_prediction---comp_metric
-  anndata_common_dataset---comp_process_dataset
-  comp_control_method-->anndata_prediction
-  comp_method-->anndata_prediction
-  comp_metric-->anndata_score
-  comp_process_dataset-->anndata_train
-  comp_process_dataset-->anndata_test
-  comp_process_dataset-->anndata_solution
+  file_train---comp_control_method
+  file_test---comp_control_method
+  file_solution---comp_control_method
+  file_train---comp_method
+  file_test---comp_method
+  file_solution---comp_metric
+  file_prediction---comp_metric
+  file_common_dataset---comp_process_dataset
+  comp_control_method-->file_prediction
+  comp_method-->file_prediction
+  comp_metric-->file_score
+  comp_process_dataset-->file_train
+  comp_process_dataset-->file_test
+  comp_process_dataset-->file_solution
 ```
 
 ## File format: Common dataset
 
+A dataset processed by the common dataset processing pipeline.
+
 Example file: `resources_test/common/pancreas/dataset.h5ad`
 
-A dataset processed by the common dataset processing pipeline. This
-dataset contains both raw counts and normalized data matrices, as well
-as a PCA embedding, HVG selection and a kNN graph.
+Description:
+
+This dataset contains both raw counts and normalized data matrices, as
+well as a PCA embedding, HVG selection and a kNN graph.
 
 Format:
 
@@ -113,7 +124,7 @@ Slot description:
 | `uns["dataset_description"]` | `string`  | Long description of the dataset.                                               |
 | `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
 | `uns["pca_variance"]`        | `double`  | The PCA variance objects.                                                      |
-| `uns["knn"]`                 | `object`  | Neighbors data.                                                                |
+| `uns["knn"]`                 | `object`  | Supplementary K nearest neighbors data.                                        |
 
 </div>
 
@@ -122,26 +133,30 @@ Slot description:
 Path:
 [`src/label_projection`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/label_projection)
 
-Prepare a common dataset for the label prediction task.
+A label projection dataset processor.
 
 Arguments:
 
 <div class="small">
 
-| Name                | Type   | Description                                                                                                                                                                                                |
-|:--------------------|:-------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--input`           | `file` | (*Optional*) A dataset processed by the common dataset processing pipeline. This dataset contains both raw counts and normalized data matrices, as well as a PCA embedding, HVG selection and a kNN graph. |
-| `--output_train`    | `file` | (*Optional, Output*) The training data.                                                                                                                                                                    |
-| `--output_test`     | `file` | (*Optional, Output*) The test data (without labels).                                                                                                                                                       |
-| `--output_solution` | `file` | (*Optional, Output*) The solution for the test data.                                                                                                                                                       |
+| Name                | Type   | Description                                                    |
+|:--------------------|:-------|:---------------------------------------------------------------|
+| `--input`           | `file` | A dataset processed by the common dataset processing pipeline. |
+| `--output_train`    | `file` | (*Output*) The training data.                                  |
+| `--output_test`     | `file` | (*Output*) The test data (without labels).                     |
+| `--output_solution` | `file` | (*Output*) The solution for the test data.                     |
 
 </div>
 
-## File format: train.h5ad
+## File format: Training data
+
+The training data
 
 Example file: `resources_test/label_projection/pancreas/train.h5ad`
 
-The training data
+Description:
+
+NA
 
 Format:
 
@@ -174,11 +189,15 @@ Slot description:
 
 </div>
 
-## File format: test.h5ad
+## File format: Test data
+
+The test data (without labels)
 
 Example file: `resources_test/label_projection/pancreas/test.h5ad`
 
-The test data (without labels)
+Description:
+
+NA
 
 Format:
 
@@ -210,11 +229,15 @@ Slot description:
 
 </div>
 
-## File format: solution.h5ad
+## File format: Solution
+
+The solution for the test data
 
 Example file: `resources_test/label_projection/pancreas/solution.h5ad`
 
-The solution for the test data
+Description:
+
+NA
 
 Format:
 
@@ -252,22 +275,18 @@ Slot description:
 Path:
 [`src/label_projection/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/label_projection/control_methods)
 
-This folder contains control components for the task. These components
-have the same interface as the regular methods but also receive the
-solution object as input. It serves as a starting point to test the
-relative accuracy of new methods in the task, and also as a quality
-control for the metrics defined in the task.
+Quality control methods for verifying the pipeline.
 
 Arguments:
 
 <div class="small">
 
-| Name               | Type   | Description                                  |
-|:-------------------|:-------|:---------------------------------------------|
-| `--input_train`    | `file` | (*Optional*) The training data.              |
-| `--input_test`     | `file` | (*Optional*) The test data (without labels). |
-| `--input_solution` | `file` | (*Optional*) The solution for the test data. |
-| `--output`         | `file` | (*Optional, Output*) The prediction file.    |
+| Name               | Type   | Description                     |
+|:-------------------|:-------|:--------------------------------|
+| `--input_train`    | `file` | The training data.              |
+| `--input_test`     | `file` | The test data (without labels). |
+| `--input_solution` | `file` | The solution for the test data. |
+| `--output`         | `file` | (*Output*) The prediction file. |
 
 </div>
 
@@ -276,18 +295,17 @@ Arguments:
 Path:
 [`src/label_projection/methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/label_projection/methods)
 
-A label projection method to predict the labels of a new “test” dataset
-based on an annotated “training” dataset.
+A label projection method.
 
 Arguments:
 
 <div class="small">
 
-| Name            | Type   | Description                                  |
-|:----------------|:-------|:---------------------------------------------|
-| `--input_train` | `file` | (*Optional*) The training data.              |
-| `--input_test`  | `file` | (*Optional*) The test data (without labels). |
-| `--output`      | `file` | (*Optional, Output*) The prediction file.    |
+| Name            | Type   | Description                     |
+|:----------------|:-------|:--------------------------------|
+| `--input_train` | `file` | The training data.              |
+| `--input_test`  | `file` | The test data (without labels). |
+| `--output`      | `file` | (*Output*) The prediction file. |
 
 </div>
 
@@ -296,25 +314,29 @@ Arguments:
 Path:
 [`src/label_projection/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/label_projection/metrics)
 
-A metric for evaluating predicted labels.
+A label projection metric.
 
 Arguments:
 
 <div class="small">
 
-| Name                 | Type   | Description                                  |
-|:---------------------|:-------|:---------------------------------------------|
-| `--input_solution`   | `file` | (*Optional*) The solution for the test data. |
-| `--input_prediction` | `file` | (*Optional*) The prediction file.            |
-| `--output`           | `file` | (*Optional, Output*) Metric score file.      |
+| Name                 | Type   | Description                     |
+|:---------------------|:-------|:--------------------------------|
+| `--input_solution`   | `file` | The solution for the test data. |
+| `--input_prediction` | `file` | The prediction file.            |
+| `--output`           | `file` | (*Output*) Metric score file.   |
 
 </div>
 
-## File format: knn.h5ad
+## File format: Prediction
+
+The prediction file
 
 Example file: `resources_test/label_projection/pancreas/knn.h5ad`
 
-The prediction file
+Description:
+
+NA
 
 Format:
 
@@ -339,12 +361,16 @@ Slot description:
 
 </div>
 
-## File format: knn_accuracy.h5ad
+## File format: Score
+
+Metric score file
 
 Example file:
 `resources_test/label_projection/pancreas/knn_accuracy.h5ad`
 
-Metric score file
+Description:
+
+NA
 
 Format:
 
