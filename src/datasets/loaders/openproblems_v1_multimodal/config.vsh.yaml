@@ -1,6 +1,6 @@
-__merge__: ../../api/comp_dataset_loader.yaml
 functionality:
   name: "openproblems_v1_multimodal"
+  namespace: "datasets/loaders"
   description: "Fetch a dataset from OpenProblems v1"
   argument_groups:
     - name: Inputs

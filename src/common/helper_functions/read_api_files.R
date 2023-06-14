@@ -46,6 +46,7 @@ format_slots <- function(spec) {
 }
 
 format_slots_as_kable <- function(spec) {
+  if (nrow(spec$slots) == 0) return("")
   spec$slots %>%
     mutate(
       tag_str = pmap_chr(lst(required), function(required) {
@@ -125,6 +126,7 @@ read_comp_args <- function(spec_yaml, path) {
 }
 
 format_comp_args_as_tibble <- function(spec) {
+  if (nrow(spec$args) == 0) return("")
   spec$args %>%
     mutate(
       tag_str = pmap_chr(lst(required, direction), function(required, direction) {
