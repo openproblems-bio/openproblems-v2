@@ -9,11 +9,11 @@ functionality:
       description: |
         A batch integration control method which outputs a batch-corrected cell graphs.
   arguments:
-    - __merge__: anndata_unintegrated.yaml
+    - __merge__: file_unintegrated.yaml
       name: --input
       direction: input
       required: true
-    - __merge__: anndata_integrated_graph.yaml
+    - __merge__: file_integrated_graph.yaml
       name: --output
       direction: output
       required: true
