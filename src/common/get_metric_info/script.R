@@ -1,4 +1,5 @@
-library(tidyverse)
+library(purrr)
+library(dplyr)
 library(rlang)
 
 ## VIASH START
@@ -11,7 +12,7 @@ par <- list(
 
 ns_list <- processx::run(
   "viash",
-  c("ns", "list", "-q", "metrics", "--src", paste("src", par$task_id, sep = "/")),
+  c("ns", "list", "-q", "metrics", "--src", paste("src/tasks", par$task_id, sep = "/")),
   wd = par$input
 )
 configs <- yaml::yaml.load(ns_list$stdout)
@@ -23,18 +24,14 @@ df <- map_df(configs, function(config) {
   info$task_id <- par$task_id
   info$component_id <- config$functionality$name
   info$namespace <- config$functionality$namespace
-  info$component_description <- config$functionality$description
-  info$v1_url <- config$functionality$info$v1_url
-  info$v1_commit <- config$functionality$info$v1_commit
-  info
   info
 }) %>%
-rename(
-  metric_id = name,
-  metric_name = pretty_name,
-  metric_summary = description,
-  paper_reference = reference,
-)
+  rename(
+    metric_id = name,
+    metric_name = label,
+    metric_summary = description,
+    paper_reference = reference,
+  )
 
 jsonlite::write_json(
   purrr::transpose(df),

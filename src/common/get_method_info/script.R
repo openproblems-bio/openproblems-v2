@@ -1,4 +1,5 @@
-library(tidyverse)
+library(purrr)
+library(dplyr)
 library(rlang)
 
 ## VIASH START
@@ -11,7 +12,7 @@ par <- list(
 
 ns_list <- processx::run(
   "viash",
-  c("ns", "list", "-q", "methods", "--src", paste("src", par$task_id, sep = "/")),
+  c("ns", "list", "-q", "methods", "--src", paste("src/tasks", par$task_id, sep = "/")),
   wd = par$input
 )
 configs <- yaml::yaml.load(ns_list$stdout)
@@ -28,9 +29,11 @@ out <- map(configs, function(config) {
   info$is_baseline <- grepl("control", info$type)
 
   # rename fields to v1 format
-  info$method_name <- info$pretty_name
-  info$pretty_name <- NULL
-  info$method_summary <- info$description
+  info$method_name <- info$label
+  info$label <- NULL
+  info$method_summary <- info$summary
+  info$summary <- NULL
+  info$method_description <- info$description
   info$description <- NULL
   info$paper_reference <- info$reference
   info$reference <- NULL

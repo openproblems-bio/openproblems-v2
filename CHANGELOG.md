@@ -1,7 +1,22 @@
 
 # openproblems-v2 0.1.0
 
+## general
 
+### MAJOR CHANGES
+
+* Relocate task directories to new `src/tasks/` location (PR #142).
+
+* Update Docker images to our base images; `ghcr.io/openproblems-bio/base-python`
+  and `ghcr.io/openproblems-bio/base-r` (PR #168).
+
+* Update batch integration docker images to OpenProblems base images (PR #171).
+
+### MINOR CHANGES
+
+* Update test scripts (PR #143).
+
+* Update "baseline" to "control" (PR #146).
 
 ## common
 
@@ -23,13 +38,17 @@
 
 * `comp_tests`: Common unit tests that can be used by all tasks.
 
-* `check_dataset_schema`: Check if the dataset used has the required fields defined in the api `anndata_*.yaml` files.
+* `check_dataset_schema`: Check if the dataset used has the required fields defined in the api `file_*.yaml` files.
   
 * `Create_component`: Creates a template folder with a viash config and script file depending on the task api.
 
 ### MINOR CHANGES
 
-* Refactor and standardize metric and method info fields (#99).
+* Refactor and standardize metric and method info fields (PR #99).
+
+* Add url check to method and metric unit test (PR #160).
+
+* Add library.bib file check to component unit test (PR #167)
 
 ## migration
 
@@ -66,13 +85,13 @@
 
 ### NEW FUNCTIONALITY
 
-* `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+* `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
 
 * `api/comp_*`: Created an api definition for the process, method and metric components.
 
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
-* `resources_test/label_projection/pancreas` with `src/label_projection/resources_test_scripts/pancreas.sh`.
+* `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
 
 ### V1 MIGRATION
 
@@ -104,13 +123,13 @@
 
 ### NEW FUNCTIONALITY
 
-* `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+* `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
 
 * `api/comp_*`: Created an api definition for the split, method and metric components.
 
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
-* `resources_test/denoising/pancreas` with `src/denoising/resources_test_scripts/pancreas.sh`.
+* `resources_test/denoising/pancreas` with `src/tasks/denoising/resources_test_scripts/pancreas.sh`.
 
 ### V1 MIGRATION
 
@@ -141,7 +160,7 @@
 ## Dimensionality reduction
 
 ### New functionality
-* `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+* `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
 
 * `api/comp_*`: Created an api definition for the split, control method, method and metric components.
 
@@ -149,7 +168,7 @@
 
 * `control_methods`: Added a component for baseline methods specifically.
 
-* `resources_test/dimensionality_reduction/pancreas` with `src/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
+* `resources_test/dimensionality_reduction/pancreas` with `src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
 
 * Added `variant` key to config files to store variants (different input parameters) of every component.
 

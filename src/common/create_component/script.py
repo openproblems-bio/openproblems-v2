@@ -1,29 +1,37 @@
 from typing import Any
-from ruamel.yaml import YAML
 from pathlib import Path
+import sys
 import os
 import re
-import subprocess
-
-yaml = YAML()
-yaml.indent(mapping=2, sequence=4, offset=2)
 
 ## VIASH START
 par = {
-  'task': 'denoising',
-  'type': 'method',
-  'language': 'python',
-  'name': 'new_comp',
-  'output': 'src/denoising/methods/new_comp',
-  'api_file': 'src/denoising/api/comp_method.yaml'
+  "task": "denoising",
+  "type": "method",
+  "language": "python",
+  "name": "new_comp",
+  "output": "src/tasks/denoising/methods/new_comp",
+  "api_file": "src/tasks/denoising/api/comp_method.yaml",
+  "viash_yaml": "_viash.yaml"
 }
 ## VIASH END
 
-def strip_margin(text: str) -> str:
-  return re.sub('(\n?)[ \t]*\|', '\\1', text)
+# Remove this after upgrading to Viash 0.7.5
+sys.dont_write_bytecode = True
 
-def create_config_template(par):
-  config_template = yaml.load(strip_margin(f'''\
+# import helper function
+sys.path.append(meta["resources_dir"])
+from read_and_merge_yaml import read_and_merge_yaml
+
+def strip_margin(text: str) -> str:
+  return re.sub("(^|\n)[ \t]*\|", "\\1", text)
+
+def create_config(par, component_type, pretty_name, script_path) -> str:
+  info_str = generate_info(par, component_type, pretty_name)
+  resources_str = generate_resources(par, script_path)
+  docker_platform = generate_docker_platform(par)
+
+  return strip_margin(f'''\
     |# The API specifies which type of component this is.
     |# It contains specifications for:
     |#   - The input/output files
@@ -32,11 +40,13 @@ def create_config_template(par):
     |__merge__: {os.path.relpath(par["api_file"], par["output"])}
     |
     |functionality:
+    |  # A unique identifier for your component (required).
+    |  # Can contain only lowercase letters or underscores.
     |  name: {par["name"]}
     |
-    |  # Metadata for your component (required)
+    |  # Metadata for your component
     |  info:
-    |
+    |{info_str}
     |  # Component-specific parameters (optional)
     |  # arguments:
     |  #   - name: "--n_neighbors"
@@ -46,101 +56,112 @@ def create_config_template(par):
     |
     |  # Resources required to run the component
     |  resources:
-    |    # The script of your component
-    |    - type: xx
-    |      path: xx
-    |    # Additional resources your script needs (optional)
-    |    # - type: file
-    |    #   path: weights.pt
-    |
-    |# Target platforms. For more information, see <link to docs>.
+    |{resources_str}
     |platforms:
-    |  - type: docker
-    |    image:
-    |    # Add custom dependencies here
-    |    setup:
+    |  # Specifications for the Docker image for this component.
+    |{docker_platform}
+    |  # This platform allows running the component natively
+    |  - type: native
+    |  # Allows turning the component into a Nextflow module / pipeline.
     |  - type: nextflow
     |    directives:
     |      label: [midmem, midcpu]
     |'''
-  ))
-  return config_template
+  )
 
-def add_method_info(conf, par, pretty_name) -> None:
-  """Set up the functionality info for a method."""
-  conf['functionality']['info'] = {
-    'pretty_name': pretty_name,
-    'summary': 'FILL IN: A one sentence summary of this method.',
-    'description': 'FILL IN: A (multiline) description of how this method works.',
-    'reference': 'bibtex_reference_key',
-    'documentation_url': 'https://url.to/the/documentation',
-    'repository_url': 'https://github.com/organisation/repository',
-    'preferred_normalization': 'log_cpm'
-  }
-  if par["type"] == "control_method":
-    del conf['functionality']['info']['reference']
-    del conf['functionality']['info']['documentation_url']
-    del conf['functionality']['info']['repository_url']
+def generate_info(par, component_type, pretty_name) -> str:
+  """Generate the functionality info for a component."""
+  if component_type in ["method", "control_method"]:
+    str = strip_margin(f'''\
+      |    # A relatively short label, used when rendering visualisarions (required)
+      |    label: {pretty_name}
+      |    # A one sentence summary of how this method works (required). Used when 
+      |    # rendering summary tables.
+      |    summary: "FILL IN: A one sentence summary of this method."
+      |    # A multi-line description of how this component works (required). Used
+      |    # when rendering reference documentation.
+      |    description: |
+      |      FILL IN: A (multi-line) description of how this method works.
+      |    # Which normalisation method this component prefers to use (required).
+      |    preferred_normalization: log_cpm
+      |''')
+    if component_type == "method":
+      str += strip_margin(f'''\
+        |    # A reference key from the bibtex library at src/common/library.bib (required).
+        |    reference: bibtex_reference_key
+        |    # URL to the documentation for this method (required).
+        |    documentation_url: https://url.to/the/documentation
+        |    # URL to the code repository for this method (required).
+        |    repository_url: https://github.com/organisation/repository
+        |''')
+    return str
+  elif component_type == "metric":
+    return strip_margin(f'''\
+      |    metrics:
+      |      # A unique identifier for your metric (required).
+      |      # Can contain only lowercase letters or underscores.
+      |      name: {par["name"]}
+      |      # A relatively short label, used when rendering visualisarions (required)
+      |      label: {pretty_name}
+      |      # A one sentence summary of how this metric works (required). Used when 
+      |      # rendering summary tables.
+      |      summary: "FILL IN: A one sentence summary of this metric."
+      |      # A multi-line description of how this component works (required). Used
+      |      # when rendering reference documentation.
+      |      description: |
+      |        FILL IN: A (multi-line) description of how this metric works.
+      |      # A reference key from the bibtex library at src/common/library.bib (required).
+      |      reference: bibtex_reference_key
+      |      # URL to the documentation for this metric (required).
+      |      documentation_url: https://url.to/the/documentation
+      |      # URL to the code repository for this metric (required).
+      |      repository_url: https://github.com/organisation/repository
+      |      # The minimum possible value for this metric (required)
+      |      min: 0
+      |      # The maximum possible value for this metric (required)
+      |      max: 1
+      |      # Whether a higher value represents a 'better' solution (required)
+      |      maximize: true
+      |''')
 
-def add_metric_info(conf, par, pretty_name) -> None:
-  """Set up the functionality info for a metric."""
-  conf['functionality']['info'] = {
-    'metrics': [{
-      'name': f'{par["name"]}',
-      'pretty_name': pretty_name,
-      'summary': 'FILL IN: A one sentence summary of this metric.',
-      'description': 'FILL IN: A (multiline) description of how this metric works.',
-      'reference': 'bibtex_reference_key',
-      'documentation_url': 'https://url.to/the/documentation',
-      'repository_url': 'https://github.com/organisation/repository',
-      'min': 0,
-      'max': 1,
-      'maximize': 'true',
-    }]
-  }
 
-def add_script_resource(conf, par) -> None:
+def generate_resources(par, script_path) -> str:
   """Add the script to the functionality resources."""
-  if par['language'] == 'python':
-    conf['functionality']['resources'] = [{
-      "type": "python_script",
-      "path": "script.py",
-    }]
-  if par['language'] == 'r':
-    conf['functionality']['resources'] = [{
-      "type": "r_script",
-      "path": "script.R",
-    }]
+  if par["language"] == "python":
+    type_str = "python_script"
+  elif par["language"] == "r":
+    type_str = "r_script"
 
-def add_python_setup(conf) -> None:
+  return strip_margin(f'''\
+    |    # The script of your component (required)
+    |    - type: {type_str}
+    |      path: {script_path}
+    |    # Additional resources your script needs (optional)
+    |    # - type: file
+    |    #   path: weights.pt
+    |''')
+
+def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
-  conf['platforms'][0]["image"] = 'python:3.10'
-  conf['platforms'][0]["setup"] = [
-    {
-      "type": "python",
-      "pypi": "anndata~=0.8.0"
-    }
-  ]
+  if par["language"] == "python":
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.0"
+    setup_type = "python"
+    package_example = "scanpy"
+  elif par["language"] == "r":
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.0"
+    setup_type = "r"
+    package_example = "tidyverse"
+  return strip_margin(f'''\
+    |  - type: docker
+    |    image: {image_str}
+    |    # Add custom dependencies here (optional). For more information, see
+    |    # https://viash.io/reference/config/platforms/docker/#setup .
+    |    # setup:
+    |    #   - type: {setup_type}
+    |    #     packages: {package_example}
+    |''')
 
-def add_r_setup(conf) -> None:
-  """Set up the docker platform for R."""
-  conf['platforms'][0]["image"] = 'eddelbuettel/r2u:22.04'
-  conf['platforms'][0]["setup"] = [
-    {
-      "type": "apt",
-      "packages": ['libhdf5-dev', 'libgeos-dev', 'python3', 'python3-pip', 'python3-dev', 'python-is-python3']
-    },
-    {
-      "type": "python",
-      "pypi": "anndata~=0.8.0"
-    },
-    {
-      "type": "r",
-      "cran": "anndata"
-    }
-  ]
-
-def set_par_values(config) -> dict[str, Any]:
+def set_par_values(config) -> None:
   """Adds values to each of the arguments in a config file."""
   args = config['functionality']['arguments']
   for argi, arg in enumerate(args):
@@ -149,7 +170,7 @@ def set_par_values(config) -> dict[str, Any]:
     # find value
     if arg["type"] != "file":
       value = arg.get("default", arg.get("example", "..."))
-    elif arg["direction"] == "input":
+    elif arg.get("direction", "input") == "input":
       key_strip = key.replace("input_", "")
       value = f'resources_test/{par["task"]}/pancreas/{key_strip}.h5ad'
     else:
@@ -238,7 +259,7 @@ def create_python_script(par, config, type):
     f"{arg['key']} = ad.read_h5ad(par['{arg['key']}'])"
     for arg in args
     if arg['type'] == "file"
-    and arg['direction'] == "input"
+    and arg.get('direction', "input") == "input"
   )
 
   # determine which adata to copy from
@@ -249,7 +270,7 @@ def create_python_script(par, config, type):
     write_output_python(arg, copy_from_adata, type == "metric")
     for arg in args
     if arg["type"] == "file"
-    and arg["direction"] == "output"
+    and arg.get("direction", "input") == "output"
   )
 
   if type == 'metric':
@@ -274,6 +295,8 @@ def create_python_script(par, config, type):
     |import anndata as ad
     |
     |## VIASH START
+    |# Note: this section is auto-generated by viash at runtime. To edit it, make changes
+    |# in config.vsh.yaml and then run `viash config inject config.vsh.yaml`.
     |par = {{
     |  {par_string}
     |}}
@@ -303,7 +326,7 @@ def create_r_script(par, api_spec, type):
     f'{arg["key"]} <- anndata::read_h5ad(par[["{arg["key"]}"]])'
     for arg in args
     if arg['type'] == "file"
-    and arg['direction'] == "input"
+    and arg.get("direction", "input") == "input"
   )
 
   # determine which adata to copy from
@@ -314,7 +337,7 @@ def create_r_script(par, api_spec, type):
     write_output_r(arg, copy_from_adata, type == "metric")
     for arg in args
     if arg["type"] == "file"
-    and arg["direction"] == "output"
+    and arg.get("direction", "input") == "output"
   )
 
   if type == 'metric':
@@ -357,23 +380,23 @@ def create_r_script(par, api_spec, type):
 
   return script
 
-def read_viash_config(file):
-  file = file.absolute()
+# def read_viash_config(file):
+#   file = file.absolute()
 
-  # read in config
-  command = ["viash", "config", "view", str(file)]
+#   # read in config
+#   command = ["viash", "config", "view", str(file)]
 
-  # Execute the command and capture the output
-  output = subprocess.check_output(
-    command,
-    universal_newlines=True,
-    cwd=str(file.parent)
-  )
+#   # Execute the command and capture the output
+#   output = subprocess.check_output(
+#     command,
+#     universal_newlines=True,
+#     cwd=str(file.parent)
+#   )
 
-  # Parse the output as YAML
-  config = yaml.load(output)
+#   # Parse the output as YAML
+#   config = yaml.load(output)
 
-  return config
+#   return config
 
 
 def main(par):
@@ -383,55 +406,62 @@ def main(par):
 
   pretty_name = re.sub("_", " ", par['name']).title()
 
+  # check language and determine script path
+  if par["language"] == "python":
+    script_path = "script.py"
+  elif par["language"] == "r":
+    script_path = "script.R"
+  else:
+    sys.exit(f"Unrecognized language parameter '{par['language']}'.")
+
+  ## CHECK API FILE
+  api_file = Path(par["api_file"])
+  viash_yaml = Path(par["viash_yaml"])
+  project_dir = viash_yaml.parent
+  if not api_file.exists():
+    comp_types = [x.with_suffix("").name.removeprefix("comp_") for x in api_file.parent.glob("**/comp_*.y*ml")]
+    list.sort(comp_types)
+    sys.exit(strip_margin(f"""\
+      |Error: Invalid --type argument.
+      |  Reason: Could not find API file at '{api_file.relative_to(project_dir)}'.
+      |  Possible values for --type: {', '.join(comp_types)}."""))
+  
+  ## READ API FILE
+  api = read_and_merge_yaml(api_file)
+  comp_type = api.get("functionality", {}).get("info", {}).get("type", {})
+  if not comp_type:
+    sys.exit(strip_margin(f"""\
+      |Error: API file is incorrectly formatted.
+      |  Reason: Could not find component type at `.functionality.info.type`.'
+      |  Please fix the formatting of the API file."""))
+
   ####### CREATE OUTPUT DIR #######
   out_dir = Path(par["output"])
   out_dir.mkdir(exist_ok=True)
 
   ####### CREATE CONFIG #######
-  config_file = out_dir / 'config.vsh.yaml'
+  config_file = out_dir / "config.vsh.yaml"
 
   # get config template
-  config_template = create_config_template(par)
-  
-  # Add component specific info
-  if par['type'] == 'metric':
-    add_metric_info(config_template, par, pretty_name)
-  else:
-    add_method_info(config_template, par, pretty_name)
+  config_str = create_config(par, comp_type, pretty_name, script_path)
 
-  # add script to resources
-  add_script_resource(config_template, par)
-
-  # add elements depending on language
-  if par['language'] == 'python':
-    add_python_setup(config_template)
-
-  if par['language'] == 'r':
-    add_r_setup(config_template)
-
-  with open(config_file, 'w') as f:
-    yaml.dump(config_template, f)
+  with open(config_file, "w") as f:
+    f.write(config_str)
 
   ####### CREATE SCRIPT #######
-  script_file = out_dir / config_template['functionality']['resources'][0]['path']
-
-  # touch file
-  script_file.touch()
-
-  # read config with viash
-  final_config = read_viash_config(config_file)
+  script_file = out_dir / script_path
 
   # set reasonable values
-  set_par_values(final_config)
+  set_par_values(api)
 
-  if par['language'] == 'python':
-    script_out = create_python_script(par, final_config, par['type'])
+  if par["language"] == "python":
+    script_out = create_python_script(par, api, comp_type)
 
-  if par['language'] == 'r':
-    script_out = create_r_script(par, final_config, par['type'])
+  if par["language"] == "r":
+    script_out = create_r_script(par, api, comp_type)
   
   # write script
-  with open(script_file, 'w') as f:
+  with open(script_file, "w") as f:
     f.write(script_out)
 
 

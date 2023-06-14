@@ -8,16 +8,13 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: eddelbuettel/r2u:22.04
+    image: ghcr.io/openproblems-bio/base_r:1.0.0
     setup:
       - type: r
-        cran: [ tidyverse ]
+        cran: [ purrr, dplyr, yaml, rlang, processx ]
       - type: apt
         packages: [ curl, default-jdk ]
       - type: docker
         run: "curl -fsSL get.viash.io | bash -s -- --bin /usr/local/bin/"
-    test_setup:
-      - type: apt
-        packages: [python3, python3-pip, python3-dev, python-is-python3]
   - type: nextflow
   - type: native

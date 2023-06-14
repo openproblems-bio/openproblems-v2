@@ -1,7 +1,6 @@
 __merge__: ../../api/comp_processor_pca.yaml
 functionality:
   name: "pca"
-  namespace: "datasets/processors"
   description: "Compute PCA"
   resources:
     - type: python_script
@@ -12,10 +11,9 @@ functionality:
   #   - path: "../../../resources_test/common/pancreas"
 platforms:
   - type: docker
-    image: "python:3.10"
+    image: ghcr.io/openproblems-bio/base_python:1.0.0
     setup:
       - type: python
         packages:
           - scanpy
-          - "anndata~=0.8.0"
   - type: nextflow
