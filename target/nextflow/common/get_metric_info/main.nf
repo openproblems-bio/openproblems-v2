@@ -106,7 +106,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-r:latest",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -118,7 +118,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "type" : "r",
           "cran" : [
-            "tidyverse"
+            "purrr",
+            "dplyr",
+            "yaml",
+            "rlang",
+            "processx"
           ],
           "bioc_force_install" : false
         },
@@ -163,7 +167,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_metric_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -172,7 +176,8 @@ thisScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 
-library(tidyverse)
+library(purrr)
+library(dplyr)
 library(rlang)
 
 ## VIASH START
@@ -221,18 +226,14 @@ df <- map_df(configs, function(config) {
   info\\$task_id <- par\\$task_id
   info\\$component_id <- config\\$functionality\\$name
   info\\$namespace <- config\\$functionality\\$namespace
-  info\\$component_description <- config\\$functionality\\$description
-  info\\$v1_url <- config\\$functionality\\$info\\$v1_url
-  info\\$v1_commit <- config\\$functionality\\$info\\$v1_commit
-  info
   info
 }) %>%
-rename(
-  metric_id = name,
-  metric_name = pretty_name,
-  metric_summary = description,
-  paper_reference = reference,
-)
+  rename(
+    metric_id = name,
+    metric_name = label,
+    metric_summary = description,
+    paper_reference = reference,
+  )
 
 jsonlite::write_json(
   purrr::transpose(df),

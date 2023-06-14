@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A normalised dataset with a PCA embedding and HVG selection.",
         "info" : {
           "label" : "Dataset+PCA+HVG",
+          "summary" : "A normalised dataset with a PCA embedding and HVG selection.",
           "slots" : {
             "var" : [
               {
@@ -123,7 +123,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -181,9 +182,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A normalised data with a PCA embedding, HVG selection and a kNN graph",
         "info" : {
           "label" : "Dataset+PCA+HVG+kNN",
+          "summary" : "A normalised data with a PCA embedding, HVG selection and a kNN graph",
           "slots" : {
             "obsp" : [
               {
@@ -251,7 +252,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "object",
                 "name" : "knn",
-                "description" : "Neighbors data."
+                "description" : "Supplementary K nearest neighbors data.",
+                "required" : true
               }
             ],
             "var" : [
@@ -294,7 +296,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -387,9 +390,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
+      "type" : "dataset_processor",
       "type_info" : {
         "label" : "KNN",
-        "description" : "Computes the k-nearest-neighbours for each cell.\n"
+        "summary" : "Computes the k-nearest-neighbours for each cell.\n",
+        "description" : "The resulting AnnData will contain both the knn distances and the knn connectivities in 'obsp'.\n"
       }
     },
     "status" : "enabled",
@@ -399,7 +404,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -439,7 +444,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/knn/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

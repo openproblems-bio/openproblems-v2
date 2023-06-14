@@ -180,7 +180,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "name" : "--output",
             "description" : "A raw dataset",
             "info" : {
-              "short_description" : "Raw dataset",
+              "label" : "Raw dataset",
               "slots" : {
                 "layers" : [
                   {
@@ -268,7 +268,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/workflows/process_openproblems_v1/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

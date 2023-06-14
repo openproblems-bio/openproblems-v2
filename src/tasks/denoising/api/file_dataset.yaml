@@ -1,0 +1,14 @@
+type: file
+description: "A preprocessed dataset"
+example: "resources_test/common/pancreas/dataset.h5ad"
+info:
+  label: "Preprocessed dataset"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"

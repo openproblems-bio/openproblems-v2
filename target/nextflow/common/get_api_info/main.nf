@@ -106,7 +106,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-r:latest",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -118,7 +118,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "type" : "r",
           "cran" : [
-            "tidyverse"
+            "purrr",
+            "dplyr",
+            "yaml",
+            "rlang",
+            "processx"
           ],
           "bioc_force_install" : false
         }
@@ -149,7 +153,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_api_info/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -158,7 +162,9 @@ thisScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 
-library(tidyverse)
+library(purrr)
+library(dplyr)
+library(yaml)
 library(rlang)
 
 ## VIASH START
@@ -194,7 +200,7 @@ rm(.viash_orig_warn)
 ## VIASH END
 
 comp_yamls <- list.files(paste(par\\$input, "src/tasks", par\\$task_id, "api", sep = "/"), pattern = "comp_", full.names = TRUE)
-file_yamls <- list.files(paste(par\\$input, "src/tasks", par\\$task_id, "api", sep = "/"), pattern = "anndata_", full.names = TRUE)
+file_yamls <- list.files(paste(par\\$input, "src/tasks", par\\$task_id, "api", sep = "/"), pattern = "file_", full.names = TRUE)
 
 # list component - file args links
 comp_file <- map_df(comp_yamls, function(yaml_file) {
@@ -203,7 +209,7 @@ comp_file <- map_df(comp_yamls, function(yaml_file) {
   map_df(conf\\$functionality\\$arguments, function(arg) {
     tibble(
       comp_name = basename(yaml_file) %>% gsub("\\\\\\\\.yaml", "", .),
-      arg_name = str_replace_all(arg\\$name, "^-*", ""),
+      arg_name = gsub("^-*", "", arg\\$name),
       direction = arg\\$direction %||% "input",
       file_name = basename(arg\\$\\`__merge__\\`) %>% gsub("\\\\\\\\.yaml", "", .)
     )
@@ -227,9 +233,9 @@ file_info <- map_df(file_yamls, function(yaml_file) {
   tibble(
     name = basename(yaml_file) %>% gsub("\\\\\\\\.yaml", "", .),
     description = arg\\$description,
-    short_description = arg\\$info\\$short_description,
+    label = arg\\$info\\$label,
     example = arg\\$example,
-    label = name %>% gsub("anndata_", "", .) %>% gsub("_", " ", .)
+    clean_label = name %>% gsub("file_", "", .) %>% gsub("_", " ", .)
   )
 })
 
@@ -243,7 +249,7 @@ file_slot <- map_df(file_yamls, function(yaml_file) {
     df\\$file_name <- basename(yaml_file) %>% gsub("\\\\\\\\.yaml", "", .)
     as_tibble(df)
   })
-}) %>% 
+}) %>%
   mutate(multiple = multiple %|% FALSE)
 
 out <- list(

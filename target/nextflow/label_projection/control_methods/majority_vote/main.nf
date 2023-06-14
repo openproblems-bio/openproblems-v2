@@ -29,32 +29,36 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_train",
-        "description" : "The training data",
         "info" : {
-          "short_description" : "Training data",
+          "label" : "Training data",
+          "summary" : "The training data",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized counts"
+                "description" : "Normalized counts",
+                "required" : true
               }
             ],
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label",
-                "description" : "Ground truth cell type labels"
+                "description" : "Ground truth cell type labels",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "batch",
-                "description" : "Batch information"
+                "description" : "Batch information",
+                "required" : true
               }
             ],
             "var" : [
@@ -100,7 +104,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -109,27 +113,30 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_test",
-        "description" : "The test data (without labels)",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
+          "summary" : "The test data (without labels)",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized counts"
+                "description" : "Normalized counts",
+                "required" : true
               }
             ],
             "obs" : [
               {
                 "type" : "string",
                 "name" : "batch",
-                "description" : "Batch information"
+                "description" : "Batch information",
+                "required" : true
               }
             ],
             "var" : [
@@ -175,7 +182,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -184,32 +191,36 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_solution",
-        "description" : "The solution for the test data",
         "info" : {
-          "short_description" : "Solution",
+          "label" : "Solution",
+          "summary" : "The solution for the test data",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized counts"
+                "description" : "Normalized counts",
+                "required" : true
               }
             ],
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label",
-                "description" : "Ground truth cell type labels"
+                "description" : "Ground truth cell type labels",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "batch",
-                "description" : "Batch information"
+                "description" : "Batch information",
+                "required" : true
               }
             ],
             "var" : [
@@ -255,7 +266,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -264,15 +275,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "The prediction file",
         "info" : {
-          "short_description" : "Prediction",
+          "label" : "Prediction",
+          "summary" : "The prediction file",
           "slots" : {
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label_pred",
-                "description" : "Predicted labels for the test cells."
+                "description" : "Predicted labels for the test cells.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -291,7 +303,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               }
             ]
           }
@@ -301,7 +314,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -337,16 +350,18 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "subtype" : "negative_control",
-      "pretty_name" : "Majority Vote",
+      "label" : "Majority Vote",
       "summary" : "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset",
       "description" : "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset",
-      "v1_url" : "openproblems/tasks/label_projection/methods/baseline.py",
-      "v1_commit" : "b460ecb183328c857cbbf653488f522a4034a61c",
+      "v1" : {
+        "path" : "openproblems/tasks/label_projection/methods/baseline.py",
+        "commit" : "b460ecb183328c857cbbf653488f522a4034a61c"
+      },
       "preferred_normalization" : "counts",
       "type" : "control_method",
       "type_info" : {
         "label" : "Control method",
+        "summary" : "Quality control methods for verifying the pipeline.",
         "description" : "This folder contains control components for the task. \nThese components have the same interface as the regular methods\nbut also receive the solution object as input. It serves as a\nstarting point to test the relative accuracy of new methods in\nthe task, and also as a quality control for the metrics defined\nin the task. \n"
       }
     },
@@ -357,7 +372,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -391,7 +406,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/control_methods/majority_vote/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

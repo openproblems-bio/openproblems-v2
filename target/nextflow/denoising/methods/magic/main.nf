@@ -31,7 +31,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--input_train",
         "description" : "The training data",
         "info" : {
-          "short_description" : "Training data",
+          "label" : "Training data",
           "slots" : {
             "layers" : [
               {
@@ -54,7 +54,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -65,7 +65,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output",
         "description" : "The denoised data",
         "info" : {
-          "short_description" : "Denoised data",
+          "label" : "Denoised data",
           "slots" : {
             "layers" : [
               {
@@ -98,7 +98,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -196,17 +196,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "path" : "src/common/library.bib",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/api",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
-      "pretty_name" : "MAGIC",
+      "label" : "MAGIC",
       "summary" : "MAGIC imputes and denoises scRNA-seq data using Euclidean distances and a Gaussian kernel to calculate the affinity matrix, followed by a Markov process and multiplication with the normalised data to obtain imputed values.",
       "description" : "MAGIC (Markov Affinity-based Graph Imputation of Cells) is a method for imputation and denoising of noisy or dropout-prone single cell RNA-sequencing data. Given a normalised scRNA-seq expression matrix, it first calculates Euclidean distances between each pair of cells in the dataset, which is then augmented using a Gaussian kernel (function) and row-normalised to give a normalised affinity matrix. A t-step markov process is then calculated, by powering this affinity matrix t times. Finally, the powered affinity matrix is right-multiplied by the normalised data, causing the final imputed values to take the value of a per-gene average weighted by the affinities of cells. The resultant imputed matrix is then rescaled, to more closely match the magnitude of measurements in the normalised (input) matrix.",
       "reference" : "van2018recovering",
       "documentation_url" : "https://github.com/KrishnaswamyLab/MAGIC#readme",
       "repository_url" : "https://github.com/KrishnaswamyLab/MAGIC",
-      "v1_url" : "openproblems/tasks/denoising/methods/magic.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
+      "v1" : {
+        "path" : "openproblems/tasks/denoising/methods/magic.py",
+        "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+      },
       "variants" : {
         "magic_approx" : {
           "solver" : "approximate"
@@ -221,6 +228,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "method",
       "type_info" : {
         "label" : "Method",
+        "summary" : "A denoising method.",
         "description" : "A denoising method to remove noise (i.e. technical artifacts) from a dataset.\n"
       }
     },
@@ -231,7 +239,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -278,7 +286,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/methods/magic/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

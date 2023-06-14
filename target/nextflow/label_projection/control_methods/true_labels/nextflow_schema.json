@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "true_labels",
-    "description": "Positive control method by returning the true labels",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

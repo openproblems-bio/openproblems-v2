@@ -29,27 +29,30 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_embedding",
-        "description" : "A dataset with dimensionality reduction embedding.",
         "info" : {
-          "short_description" : "Embedding",
+          "label" : "Embedding",
+          "summary" : "A dataset with dimensionality reduction embedding.",
           "slots" : {
             "obsm" : [
               {
                 "type" : "double",
                 "name" : "X_emb",
-                "description" : "The dimensionally reduced embedding."
+                "description" : "The dimensionally reduced embedding.",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -74,9 +77,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_solution",
-        "description" : "The test data",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
+          "summary" : "The data for evaluating a dimensionality reduction.",
           "slots" : {
             "layers" : [
               {
@@ -130,9 +133,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Metric score file",
         "info" : {
-          "short_description" : "Score",
+          "label" : "Score",
+          "summary" : "Metric score file",
           "slots" : {
             "uns" : [
               {
@@ -197,7 +200,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/metrics/rmse/"
       }
     ],
-    "description" : "The root mean squared error between the full (or processed) data matrix and a list of dimensionally-reduced matrices",
     "test_resources" : [
       {
         "type" : "file",
@@ -224,38 +226,37 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "v1_url" : "openproblems/tasks/dimensionality_reduction/metrics/root_mean_square_error.py",
-      "v1_commit" : "b353a462f6ea353e0fc43d0f9fcbbe621edc3a0b",
-      "v1_note" : "This metric was ported but will probably be removed soon.",
       "metrics" : [
         {
           "name" : "rmse",
-          "pretty_name" : "RMSE",
+          "label" : "RMSE",
           "summary" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD.",
           "description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of an SVD.",
           "reference" : "kruskal1964mds",
-          "repository_url" : "",
-          "documentation_url" : "",
           "min" : 0,
-          "max" : "+inf",
+          "max" : "+.inf",
           "maximize" : false
         },
         {
           "name" : "rmse_spectral",
-          "pretty_name" : "RMSE Spectral",
+          "label" : "RMSE Spectral",
           "summary" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding.",
           "description" : "The residual after applying the Non-Negative Least Squares solver on the pairwise distances of a spectral embedding.",
           "reference" : "coifman2006diffusion",
-          "repository_url" : "",
-          "documentation_url" : "",
           "min" : 0,
-          "max" : "+inf",
-          "maximize" : false
+          "max" : "+.inf",
+          "maximize" : false,
+          "v1" : {
+            "path" : "openproblems/tasks/dimensionality_reduction/metrics/root_mean_square_error.py",
+            "commit" : "b353a462f6ea353e0fc43d0f9fcbbe621edc3a0b",
+            "note" : "This metric was ported but will probably be removed soon."
+          }
         }
       ],
       "type" : "metric",
       "type_info" : {
         "label" : "Metric",
+        "summary" : "A dimensionality reduction metric.",
         "description" : "A metric for evaluating dimensionality reductions.\n"
       }
     },
@@ -266,7 +267,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -313,7 +314,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/metrics/rmse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

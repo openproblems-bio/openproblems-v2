@@ -29,9 +29,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A dataset processed by the common dataset processing pipeline. \nThis dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.\n",
         "info" : {
           "label" : "Common dataset",
+          "summary" : "A dataset processed by the common dataset processing pipeline.",
+          "description" : "This dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.",
           "slots" : {
             "obsp" : [
               {
@@ -99,7 +100,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "object",
                 "name" : "knn",
-                "description" : "Neighbors data."
+                "description" : "Supplementary K nearest neighbors data.",
+                "required" : true
               }
             ],
             "var" : [
@@ -142,7 +144,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -178,7 +181,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -189,7 +192,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output_train",
         "description" : "The training data",
         "info" : {
-          "short_description" : "Training data",
+          "label" : "Training data",
           "slots" : {
             "layers" : [
               {
@@ -212,7 +215,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -223,7 +226,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output_test",
         "description" : "The test data",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
           "slots" : {
             "layers" : [
               {
@@ -246,7 +249,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -327,7 +330,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "process_dataset",
       "type_info" : {
         "label" : "Data processor",
-        "description" : "Prepare a common dataset for the denoising task.\n"
+        "summary" : "A denoising dataset processor.",
+        "description" : "A component for processing a Common Dataset into a task-specific dataset.\n"
       }
     },
     "status" : "enabled",
@@ -337,7 +341,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -378,7 +382,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/process_dataset/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

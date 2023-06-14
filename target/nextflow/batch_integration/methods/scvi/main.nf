@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "Unintegrated AnnData HDF5 file.",
         "info" : {
-          "short_description" : "Unintegrated",
+          "label" : "Unintegrated",
+          "summary" : "Unintegrated AnnData HDF5 file.",
           "slots" : {
             "layers" : [
               {
@@ -112,7 +112,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -121,10 +121,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Integrated AnnData HDF5 file.",
         "info" : {
           "prediction_type" : "embedding",
-          "short_description" : "Integrated embedding",
+          "label" : "Integrated embedding",
+          "summary" : "An integrated AnnData HDF5 file.",
           "slots" : {
             "obsm" : [
               {
@@ -229,7 +229,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -257,18 +257,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/scvi/"
       }
     ],
-    "description" : "Run scVI on adata object",
     "test_resources" : [
-      {
-        "type" : "file",
-        "path" : "resources_test/batch_integration/pancreas",
-        "dest" : "resources_test/batch_integration/pancreas",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
-      },
       {
         "type" : "python_script",
         "path" : "src/common/comp_tests/check_method_config.py",
         "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/library.bib",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -279,19 +277,22 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "file",
-        "path" : "src/common/library.bib",
+        "path" : "resources_test/batch_integration/pancreas",
+        "dest" : "resources_test/batch_integration/pancreas",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
-      "pretty_name" : "scVI",
+      "label" : "scVI",
       "summary" : "scVI combines a variational autoencoder with a hierarchical Bayesian model.",
       "description" : "scVI combines a variational autoencoder with a hierarchical Bayesian model. It uses the negative binomial distribution to describe gene expression of each cell, conditioned on unobserved factors and the batch variable. ScVI is run as implemented in Luecken et al.\n",
       "reference" : "lopez2018deep",
       "repository_url" : "https://github.com/YosefLab/scvi-tools",
       "documentation_url" : "https://github.com/YosefLab/scvi-tools#readme",
-      "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
+      "v1" : {
+        "path" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py",
+        "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+      },
       "preferred_normalization" : "log_cpm",
       "variants" : {
         "scvi_hvg_unscaled" : {
@@ -299,9 +300,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         }
       },
       "type" : "method",
-      "output_type" : "embedding",
+      "subtype" : "embedding",
       "type_info" : {
         "label" : "Method (embedding)",
+        "summary" : "A batch integration embedding method.",
         "description" : "A batch integration method which outputs a batch-corrected embedding.\n"
       }
     },
@@ -312,7 +314,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-r:latest",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -354,7 +356,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/scvi/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -394,7 +396,7 @@ meta = {
 with open(meta['config'], 'r', encoding="utf8") as file:
     config = yaml.safe_load(file)
 
-output_type = config["functionality"]["info"]["output_type"]
+output_type = config["functionality"]["info"]["subtype"]
 
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])

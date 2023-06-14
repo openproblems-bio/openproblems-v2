@@ -5,10 +5,10 @@ functionality:
   arguments:
   - type: "file"
     name: "--input"
-    description: "Integrated AnnData HDF5 file."
     info:
       prediction_type: "feature"
-      short_description: "Integrated Feature"
+      label: "Integrated Feature"
+      summary: "Integrated AnnData HDF5 file."
       slots:
         layers:
         - type: "integer"
@@ -84,10 +84,10 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    description: "Integrated AnnData HDF5 file."
     info:
       prediction_type: "embedding"
-      short_description: "Integrated embedding"
+      label: "Integrated embedding"
+      summary: "An integrated AnnData HDF5 file."
       slots:
         obsm:
         - type: "double"
@@ -175,14 +175,14 @@ functionality:
     is_executable: true
   info:
     type: "transformer"
-    pretty_name: "Feature to Embed"
+    label: "Feature to Embed"
     output_type: "embedding"
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base-python:latest"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.0"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -214,5 +214,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/feature_to_embed"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/feature_to_embed/feature_to_embed"
   viash_version: "0.7.3"
-  git_commit: "18bdfdfd0184487e64b805653765452dded04a6c"
+  git_commit: "5d9f4c83fca0b1e371eb198306a59a33c16340d8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

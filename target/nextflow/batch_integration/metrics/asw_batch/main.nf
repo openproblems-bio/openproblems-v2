@@ -29,10 +29,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_integrated",
-        "description" : "Integrated AnnData HDF5 file.",
         "info" : {
           "prediction_type" : "embedding",
-          "short_description" : "Integrated embedding",
+          "label" : "Integrated embedding",
+          "summary" : "An integrated AnnData HDF5 file.",
           "slots" : {
             "obsm" : [
               {
@@ -137,7 +137,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -146,9 +146,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Metric score file",
         "info" : {
-          "short_description" : "Score",
+          "label" : "Score",
+          "summary" : "Metric score file",
           "slots" : {
             "uns" : [
               {
@@ -203,7 +203,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -244,25 +244,27 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/sil_batch.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "metrics" : [
         {
           "name" : "asw_batch",
-          "pretty_name" : "ASW batch",
+          "label" : "ASW batch",
           "summary" : "Average silhouette of batches per label",
           "description" : "\\"A batch correction metric that computes the silhouette score over all batch labels per cell type. Here, 0 indicates that batches are well mixed and any deviation from 0 indicates there remains a separation between batch labels. This is rescaled to a score between 0 and 1 by taking.\\"\n",
           "reference" : "luecken2022benchmarking",
-          "repository_url" : "",
-          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
-          "maximize" : true
+          "maximize" : true,
+          "v1" : {
+            "path" : "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/sil_batch.py",
+            "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          }
         }
       ],
       "type" : "metric",
+      "subtype" : "embedding",
       "type_info" : {
         "label" : "Metric (embedding)",
+        "summary" : "A batch integration embedding metric.",
         "description" : "A metric for evaluating batch corrected embeddings.\n"
       }
     },
@@ -273,7 +275,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-r:latest",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -314,7 +316,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/asw_batch/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

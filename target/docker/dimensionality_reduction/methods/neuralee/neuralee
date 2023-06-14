@@ -161,12 +161,10 @@ function ViashHelp {
   echo "    --input"
   echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/dimensionality_reduction/pancreas/dataset.h5ad"
-  echo "        The dataset to pass to a method."
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/dimensionality_reduction/pancreas/embedding.h5ad"
-  echo "        A dataset with dimensionality reduction embedding."
   echo ""
   echo "    --n_iter"
   echo "        type: integer"
@@ -399,15 +397,15 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base-python:latest
+FROM ghcr.io/openproblems-bio/base_python:1.0.0
 
 RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "torch" "git+https://github.com/michalk8/neuralee@8946abf"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods neuralee"
-LABEL org.opencontainers.image.created="2023-06-13T07:13:31Z"
+LABEL org.opencontainers.image.created="2023-06-14T00:54:08Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18bdfdfd0184487e64b805653765452dded04a6c"
+LABEL org.opencontainers.image.revision="5d9f4c83fca0b1e371eb198306a59a33c16340d8"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

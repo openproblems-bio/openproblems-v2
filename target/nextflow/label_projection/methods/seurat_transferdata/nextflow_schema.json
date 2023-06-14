@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "seurat_transferdata",
-    "description": "The Seurat v3 anchoring procedure is designed to integrate\ndiverse single-cell datasets across technologies and modalities. \n",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

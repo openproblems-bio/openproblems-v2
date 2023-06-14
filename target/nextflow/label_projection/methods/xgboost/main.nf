@@ -29,32 +29,36 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_train",
-        "description" : "The training data",
         "info" : {
-          "short_description" : "Training data",
+          "label" : "Training data",
+          "summary" : "The training data",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized counts"
+                "description" : "Normalized counts",
+                "required" : true
               }
             ],
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label",
-                "description" : "Ground truth cell type labels"
+                "description" : "Ground truth cell type labels",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "batch",
-                "description" : "Batch information"
+                "description" : "Batch information",
+                "required" : true
               }
             ],
             "var" : [
@@ -100,7 +104,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -109,27 +113,30 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_test",
-        "description" : "The test data (without labels)",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
+          "summary" : "The test data (without labels)",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized counts"
+                "description" : "Normalized counts",
+                "required" : true
               }
             ],
             "obs" : [
               {
                 "type" : "string",
                 "name" : "batch",
-                "description" : "Batch information"
+                "description" : "Batch information",
+                "required" : true
               }
             ],
             "var" : [
@@ -175,7 +182,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -184,15 +191,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "The prediction file",
         "info" : {
-          "short_description" : "Prediction",
+          "label" : "Prediction",
+          "summary" : "The prediction file",
           "slots" : {
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label_pred",
-                "description" : "Predicted labels for the test cells."
+                "description" : "Predicted labels for the test cells.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -211,7 +219,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               }
             ]
           }
@@ -221,7 +230,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -236,7 +245,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/xgboost/"
       }
     ],
-    "description" : "XGBoost: A Scalable Tree Boosting System",
     "test_resources" : [
       {
         "type" : "file",
@@ -260,17 +268,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "path" : "src/common/library.bib",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/api",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
-      "pretty_name" : "XGBoost",
+      "label" : "XGBoost",
       "summary" : "XGBoost is a decision tree model that averages multiple trees with gradient boosting.",
-      "description" : "\\"XGBoost is a gradient boosting decision tree model that learns multiple tree\nstructures in the form of a series of input features and their values,\nleading to a prediction decision, and averages predictions from all its\ntrees. Here, input features are normalised gene expression values.\\"\n",
+      "description" : "XGBoost is a gradient boosting decision tree model that learns multiple tree\nstructures in the form of a series of input features and their values,\nleading to a prediction decision, and averages predictions from all its\ntrees. Here, input features are normalised gene expression values.\n",
       "reference" : "chen2016xgboost",
       "repository_url" : "https://github.com/dmlc/xgboost",
       "documentation_url" : "https://xgboost.readthedocs.io/en/stable/index.html",
-      "v1_url" : "openproblems/tasks/label_projection/methods/xgboost.py",
-      "v1_commit" : "123bb7b39c51c58e19ddf0fbbc1963c3dffde14c",
+      "v1" : {
+        "path" : "openproblems/tasks/label_projection/methods/xgboost.py",
+        "commit" : "123bb7b39c51c58e19ddf0fbbc1963c3dffde14c"
+      },
       "preferred_normalization" : "log_cpm",
       "variants" : {
         "xgboost_scran" : {
@@ -280,6 +295,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "method",
       "type_info" : {
         "label" : "Method",
+        "summary" : "A label projection method.",
         "description" : "A label projection method to predict the labels of a new \\"test\\"\ndataset based on an annotated \\"training\\" dataset.\n"
       }
     },
@@ -290,7 +306,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -334,7 +350,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/methods/xgboost/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

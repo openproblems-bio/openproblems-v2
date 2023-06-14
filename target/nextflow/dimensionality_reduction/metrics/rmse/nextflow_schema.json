@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "rmse",
-    "description": "The root mean squared error between the full (or processed) data matrix and a list of dimensionally-reduced matrices",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "arguments" : {

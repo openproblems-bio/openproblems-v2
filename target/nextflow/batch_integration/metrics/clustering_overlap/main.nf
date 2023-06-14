@@ -29,10 +29,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_integrated",
-        "description" : "Integrated AnnData HDF5 file.",
         "info" : {
           "prediction_type" : "graph",
-          "short_description" : "Integrated Graph",
+          "label" : "Integrated Graph",
+          "summary" : "Integrated AnnData HDF5 file.",
           "slots" : {
             "obsp" : [
               {
@@ -137,7 +137,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -146,9 +146,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Metric score file",
         "info" : {
-          "short_description" : "Score",
+          "label" : "Score",
+          "summary" : "Metric score file",
           "slots" : {
             "uns" : [
               {
@@ -203,7 +203,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -218,7 +218,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/clustering_overlap/"
       }
     ],
-    "description" : "Metrics that are based on computing the clustering overlap.",
     "test_resources" : [
       {
         "type" : "file",
@@ -248,36 +247,38 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "metrics" : [
         {
           "name" : "ari",
-          "pretty_name" : "ARI",
+          "label" : "ARI",
           "summary" : "Adjusted Rand Index compares clustering overlap, correcting for random labels and considering correct overlaps and disagreements.",
           "description" : "The Adjusted Rand Index (ARI) compares the overlap of two clusterings;\nit considers both correct clustering overlaps while also counting correct\ndisagreements between two clusterings.\nWe compared the cell-type labels with the NMI-optimized\nLouvain clustering computed on the integrated dataset.\nThe adjustment of the Rand index corrects for randomly correct labels.\nAn ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\nWe used the scikit-learn implementation of the ARI.\n",
           "reference" : "hubert1985comparing",
-          "repository_url" : "",
-          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
           "maximize" : true,
-          "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py",
-          "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          "v1" : {
+            "path" : "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py",
+            "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          }
         },
         {
           "name" : "nmi",
-          "pretty_name" : "NMI",
+          "label" : "NMI",
           "summary" : "NMI compares overlap by scaling using mean entropy terms and optimizing Louvain clustering to obtain the best match between clusters and labels.",
           "description" : "Normalized Mutual Information (NMI) compares the overlap of two clusterings.\nWe used NMI to compare the cell-type labels with Louvain clusters computed on\nthe integrated dataset. The overlap was scaled using the mean of the entropy terms\nfor cell-type and cluster labels. Thus, NMI scores of 0 or 1 correspond to uncorrelated\nclustering or a perfect match, respectively. We performed optimized Louvain clustering\nfor this metric to obtain the best match between clusters and labels.\nLouvain clustering was performed at a resolution range of 0.1 to 2 in steps of 0.1,\nand the clustering output with the highest NMI with the label set was used. We\nthe scikit-learn implementation of NMI.\n",
           "reference" : "amelio2015normalized",
-          "documentation_url" : "",
-          "repository_url" : "",
           "min" : 0,
           "max" : 1,
           "maximize" : true,
-          "v1_url" : "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/nmi.py",
-          "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          "v1" : {
+            "path" : "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/nmi.py",
+            "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          }
         }
       ],
       "type" : "metric",
+      "subtype" : "graph",
       "type_info" : {
         "label" : "Metric (graph)",
+        "summary" : "A batch integration graph metric.",
         "description" : "A metric for evaluating batch corrected cell graphs.\n"
       }
     },
@@ -288,7 +289,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-r:latest",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -329,7 +330,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/clustering_overlap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

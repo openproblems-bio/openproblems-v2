@@ -5,9 +5,9 @@ functionality:
   arguments:
   - type: "file"
     name: "--input"
-    description: "The dataset to pass to a method."
     info:
-      short_description: "Dataset"
+      label: "Dataset"
+      summary: "The dataset to pass to a method."
       slots:
         layers:
         - type: "integer"
@@ -44,21 +44,24 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    description: "A dataset with dimensionality reduction embedding."
     info:
-      short_description: "Embedding"
+      label: "Embedding"
+      summary: "A dataset with dimensionality reduction embedding."
       slots:
         obsm:
         - type: "double"
           name: "X_emb"
           description: "The dimensionally reduced embedding."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
+          required: true
         - type: "string"
           name: "normalization_id"
           description: "Which normalization was used"
@@ -98,20 +101,20 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    pretty_name: "PCA"
+    label: "PCA"
     summary: "A linear method that finds orthogonal directions to compute the two-dimensional\
-      \ embedding, capturing maximum variance from logCPM expression matrix with/without\
-      \ selecting 1000 HVGs."
-    description: "'Principal Component Analysis is a linear method that finds orthogonal\n\
+      \ embedding."
+    description: "Principal Component Analysis is a linear method that finds orthogonal\n\
       directions in the data that capture the most variance. The first two\nprincipal\
       \ components are chosen as the two-dimensional embedding. We select\nonly the\
       \ first two principal components as the two-dimensional embedding. PCA\nis calculated\
-      \ on the logCPM expression matrix with and without selecting 1000\nHVGs.' \n"
+      \ on the logCPM expression matrix with and without selecting 1000\nHVGs.\n"
     reference: "pearson1901pca"
     repository_url: "https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"
-    v1_url: "openproblems/tasks/dimensionality_reduction/methods/pca.py"
-    v1_commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+    v1:
+      path: "openproblems/tasks/dimensionality_reduction/methods/pca.py"
+      commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
     preferred_normalization: "log_cpm"
     variants:
       pca_logCPM: null
@@ -120,14 +123,15 @@ functionality:
     type: "method"
     type_info:
       label: "Method"
-      description: "A dimensionality reduction method to summarise the biological\
-        \ information in\na dataset in as few dimensions as possible.\n"
+      summary: "A dimensionality reduction method."
+      description: "A dimensionality reduction method to summarise the biological\n\
+        information in a dataset in as few dimensions as possible.\n"
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base-python:latest"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.0"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -162,5 +166,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca/pca"
   viash_version: "0.7.3"
-  git_commit: "18bdfdfd0184487e64b805653765452dded04a6c"
+  git_commit: "5d9f4c83fca0b1e371eb198306a59a33c16340d8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

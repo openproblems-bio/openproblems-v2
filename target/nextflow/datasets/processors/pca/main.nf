@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A normalized dataset",
         "info" : {
           "label" : "Normalized dataset",
+          "summary" : "A normalized dataset",
           "slots" : {
             "layers" : [
               {
@@ -43,7 +43,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -145,9 +146,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A normalised dataset with a PCA embedding",
         "info" : {
           "label" : "Dataset+PCA",
+          "summary" : "A normalised dataset with a PCA embedding",
           "slots" : {
             "obsm" : [
               {
@@ -225,7 +226,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -344,9 +346,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
+      "type" : "dataset_processor",
       "type_info" : {
         "label" : "PCA",
-        "description" : "Computes a PCA embedding of the normalized data.\n"
+        "summary" : "Computes a PCA embedding of the normalized data.\n",
+        "description" : "The resulting AnnData will contain an embedding in obsm, as well as optional loadings in 'varm'."
       }
     },
     "status" : "enabled",
@@ -356,7 +360,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -396,7 +400,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/pca/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

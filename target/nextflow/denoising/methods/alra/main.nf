@@ -31,7 +31,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--input_train",
         "description" : "The training data",
         "info" : {
-          "short_description" : "Training data",
+          "label" : "Training data",
           "slots" : {
             "layers" : [
               {
@@ -54,7 +54,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -65,7 +65,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output",
         "description" : "The denoised data",
         "info" : {
-          "short_description" : "Denoised data",
+          "label" : "Denoised data",
           "slots" : {
             "layers" : [
               {
@@ -98,7 +98,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -149,21 +149,29 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "path" : "src/common/library.bib",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/api",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
-      "pretty_name" : "ALRA",
+      "label" : "ALRA",
       "summary" : "ALRA imputes missing values in scRNA-seq data by computing rank-k approximation, thresholding by gene, and rescaling the matrix.",
       "description" : "\\"Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is a method for imputation of missing values in single cell RNA-sequencing data, \ndescribed in the preprint, \\"Zero-preserving imputation of scRNA-seq data using low-rank approximation\\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588). Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude of the most negative value of that gene. \nFinally, the matrix is rescaled.\\"\n",
       "reference" : "linderman2018zero",
       "repository_url" : "https://github.com/KlugerLab/ALRA",
       "documentation_url" : "https://github.com/KlugerLab/ALRA/blob/master/README.md",
-      "v1_url" : "openproblems/tasks/denoising/methods/alra.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
+      "v1" : {
+        "path" : "openproblems/tasks/denoising/methods/alra.py",
+        "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+      },
       "preferred_normalization" : "counts",
       "type" : "method",
       "type_info" : {
         "label" : "Method",
+        "summary" : "A denoising method.",
         "description" : "A denoising method to remove noise (i.e. technical artifacts) from a dataset.\n"
       }
     },
@@ -174,7 +182,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-r:latest",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -222,7 +230,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/methods/alra/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -29,10 +29,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "Integrated AnnData HDF5 file.",
         "info" : {
           "prediction_type" : "embedding",
-          "short_description" : "Integrated embedding",
+          "label" : "Integrated embedding",
+          "summary" : "An integrated AnnData HDF5 file.",
           "slots" : {
             "obsm" : [
               {
@@ -146,10 +146,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Integrated AnnData HDF5 file.",
         "info" : {
           "prediction_type" : "graph",
-          "short_description" : "Integrated Graph",
+          "label" : "Integrated Graph",
+          "summary" : "Integrated AnnData HDF5 file.",
           "slots" : {
             "obsp" : [
               {
@@ -286,7 +286,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "type" : "transformer",
-      "pretty_name" : "Embedding to Graph",
+      "label" : "Embedding to Graph",
       "output_type" : "graph"
     },
     "status" : "enabled",
@@ -296,7 +296,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -336,7 +336,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/transformers/embed_to_graph/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

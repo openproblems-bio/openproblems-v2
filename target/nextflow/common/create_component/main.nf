@@ -213,7 +213,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_component/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -314,7 +314,7 @@ def generate_info(par, component_type, pretty_name) -> str:
   if component_type in ["method", "control_method"]:
     str = strip_margin(f\'\'\'\\\\
     # A relatively short label, used when rendering visualisarions (required)
-    pretty_name: {pretty_name}
+    label: {pretty_name}
     # A one sentence summary of how this method works (required). Used when 
     # rendering summary tables.
     summary: "FILL IN: A one sentence summary of this method."
@@ -342,7 +342,7 @@ def generate_info(par, component_type, pretty_name) -> str:
       # Can contain only lowercase letters or underscores.
       name: {par["name"]}
       # A relatively short label, used when rendering visualisarions (required)
-      pretty_name: {pretty_name}
+      label: {pretty_name}
       # A one sentence summary of how this metric works (required). Used when 
       # rendering summary tables.
       summary: "FILL IN: A one sentence summary of this metric."
@@ -384,11 +384,11 @@ def generate_resources(par, script_path) -> str:
 def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
-    image_str = "ghcr.io/openproblems-bio/base-python:latest"
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.0"
     setup_type = "python"
     package_example = "scanpy"
   elif par["language"] == "r":
-    image_str = "ghcr.io/openproblems-bio/base-r:latest"
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.0"
     setup_type = "r"
     package_example = "tidyverse"
   return strip_margin(f\'\'\'\\\\

@@ -29,27 +29,30 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_embedding",
-        "description" : "A dataset with dimensionality reduction embedding.",
         "info" : {
-          "short_description" : "Embedding",
+          "label" : "Embedding",
+          "summary" : "A dataset with dimensionality reduction embedding.",
           "slots" : {
             "obsm" : [
               {
                 "type" : "double",
                 "name" : "X_emb",
-                "description" : "The dimensionally reduced embedding."
+                "description" : "The dimensionally reduced embedding.",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -74,9 +77,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_solution",
-        "description" : "The test data",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
+          "summary" : "The data for evaluating a dimensionality reduction.",
           "slots" : {
             "layers" : [
               {
@@ -130,9 +133,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Metric score file",
         "info" : {
-          "short_description" : "Score",
+          "label" : "Score",
+          "summary" : "Metric score file",
           "slots" : {
             "uns" : [
               {
@@ -216,25 +219,26 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "v1_url" : "openproblems/tasks/dimensionality_reduction/metrics/density.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
       "metrics" : [
         {
           "name" : "density_preservation",
-          "pretty_name" : "Density preservation",
+          "label" : "Density preservation",
           "summary" : "Similarity between local densities in the high-dimensional data and the reduced data.",
           "description" : "\\"Similarity between local densities in the high-dimensional data and the reduced data.\nThis is computed as the pearson correlation of local radii with the local radii in the original data space.\\"\n",
-          "repository_url" : "",
-          "documentation_url" : "",
           "reference" : "narayan2021assessing",
           "min" : -1,
           "max" : 1,
-          "maximize" : true
+          "maximize" : true,
+          "v1" : {
+            "path" : "openproblems/tasks/dimensionality_reduction/metrics/density.py",
+            "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          }
         }
       ],
       "type" : "metric",
       "type_info" : {
         "label" : "Metric",
+        "summary" : "A dimensionality reduction metric.",
         "description" : "A metric for evaluating dimensionality reductions.\n"
       }
     },
@@ -245,7 +249,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -291,7 +295,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/metrics/density_preservation/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

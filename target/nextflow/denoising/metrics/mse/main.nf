@@ -31,7 +31,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--input_test",
         "description" : "The test data",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
           "slots" : {
             "layers" : [
               {
@@ -54,7 +54,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -65,7 +65,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--input_denoised",
         "description" : "The denoised data",
         "info" : {
-          "short_description" : "Denoised data",
+          "label" : "Denoised data",
           "slots" : {
             "layers" : [
               {
@@ -98,7 +98,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -109,7 +109,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output",
         "description" : "Metric score file",
         "info" : {
-          "short_description" : "Score",
+          "label" : "Score",
           "slots" : {
             "uns" : [
               {
@@ -142,7 +142,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -186,14 +186,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "metrics" : [
         {
           "name" : "mse",
-          "pretty_name" : "Mean-squared error",
+          "label" : "Mean-squared error",
           "summary" : "The mean squared error between the denoised counts and the true counts.",
           "description" : "The mean squared error between the denoised counts of the training dataset and the true counts of the test dataset after reweighing by the train/test ratio",
           "reference" : "batson2019molecular",
-          "documentation_url" : "",
-          "repository_url" : "",
-          "v1_url" : "openproblems/tasks/denoising/metrics/mse.py",
-          "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
+          "v1" : {
+            "path" : "openproblems/tasks/denoising/metrics/mse.py",
+            "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+          },
           "maximize" : false,
           "min" : 0,
           "max" : "+inf"
@@ -202,6 +202,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "metric",
       "type_info" : {
         "label" : "Metric",
+        "summary" : "A denoising metric.",
         "description" : "A metric for evaluating denoised datasets.\n"
       }
     },
@@ -212,7 +213,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -258,7 +259,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/metrics/mse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

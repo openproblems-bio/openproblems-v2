@@ -29,9 +29,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "A dataset processed by the common dataset processing pipeline. \nThis dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.\n",
         "info" : {
           "label" : "Common dataset",
+          "summary" : "A dataset processed by the common dataset processing pipeline.",
+          "description" : "This dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.",
           "slots" : {
             "obsp" : [
               {
@@ -99,7 +100,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "object",
                 "name" : "knn",
-                "description" : "Neighbors data."
+                "description" : "Supplementary K nearest neighbors data.",
+                "required" : true
               }
             ],
             "var" : [
@@ -142,7 +144,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -187,9 +190,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A dataset processed by the common dataset processing pipeline. \nThis dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.\n",
         "info" : {
           "label" : "Common dataset",
+          "summary" : "A dataset processed by the common dataset processing pipeline.",
+          "description" : "This dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.",
           "slots" : {
             "obsp" : [
               {
@@ -257,7 +261,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "object",
                 "name" : "knn",
-                "description" : "Neighbors data."
+                "description" : "Supplementary K nearest neighbors data.",
+                "required" : true
               }
             ],
             "var" : [
@@ -300,7 +305,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalised expression values"
+                "description" : "Normalised expression values",
+                "required" : true
               }
             ],
             "obs" : [
@@ -454,9 +460,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
+      "type" : "dataset_processor",
       "type_info" : {
         "label" : "Subset",
-        "description" : "Subset a common dataset\n"
+        "summary" : "Sample cells and genes randomly.",
+        "description" : "This component subsets the layers, obs and var to create smaller test datasets."
       }
     },
     "status" : "enabled",
@@ -466,7 +474,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -516,7 +524,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/subsample/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

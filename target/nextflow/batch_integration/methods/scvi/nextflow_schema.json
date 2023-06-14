@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "scvi",
-    "description": "Run scVI on adata object",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

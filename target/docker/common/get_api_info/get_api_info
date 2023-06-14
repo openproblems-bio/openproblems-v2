@@ -391,15 +391,15 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base-r:latest
+FROM ghcr.io/openproblems-bio/base_r:1.0.0
 
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("tidyverse"), repos = "https://cran.rstudio.com")'
+  Rscript -e 'remotes::install_cran(c("purrr", "dplyr", "yaml", "rlang", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common get_api_info"
-LABEL org.opencontainers.image.created="2023-06-13T07:13:31Z"
+LABEL org.opencontainers.image.created="2023-06-14T00:54:08Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18bdfdfd0184487e64b805653765452dded04a6c"
+LABEL org.opencontainers.image.revision="5d9f4c83fca0b1e371eb198306a59a33c16340d8"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -849,7 +849,9 @@ trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
 
-library(tidyverse)
+library(purrr)
+library(dplyr)
+library(yaml)
 library(rlang)
 
 ## VIASH START
@@ -885,7 +887,7 @@ rm(.viash_orig_warn)
 ## VIASH END
 
 comp_yamls <- list.files(paste(par\$input, "src/tasks", par\$task_id, "api", sep = "/"), pattern = "comp_", full.names = TRUE)
-file_yamls <- list.files(paste(par\$input, "src/tasks", par\$task_id, "api", sep = "/"), pattern = "anndata_", full.names = TRUE)
+file_yamls <- list.files(paste(par\$input, "src/tasks", par\$task_id, "api", sep = "/"), pattern = "file_", full.names = TRUE)
 
 # list component - file args links
 comp_file <- map_df(comp_yamls, function(yaml_file) {
@@ -894,7 +896,7 @@ comp_file <- map_df(comp_yamls, function(yaml_file) {
   map_df(conf\$functionality\$arguments, function(arg) {
     tibble(
       comp_name = basename(yaml_file) %>% gsub("\\\\.yaml", "", .),
-      arg_name = str_replace_all(arg\$name, "^-*", ""),
+      arg_name = gsub("^-*", "", arg\$name),
       direction = arg\$direction %||% "input",
       file_name = basename(arg\$\`__merge__\`) %>% gsub("\\\\.yaml", "", .)
     )
@@ -918,9 +920,9 @@ file_info <- map_df(file_yamls, function(yaml_file) {
   tibble(
     name = basename(yaml_file) %>% gsub("\\\\.yaml", "", .),
     description = arg\$description,
-    short_description = arg\$info\$short_description,
+    label = arg\$info\$label,
     example = arg\$example,
-    label = name %>% gsub("anndata_", "", .) %>% gsub("_", " ", .)
+    clean_label = name %>% gsub("file_", "", .) %>% gsub("_", " ", .)
   )
 })
 
@@ -934,7 +936,7 @@ file_slot <- map_df(file_yamls, function(yaml_file) {
     df\$file_name <- basename(yaml_file) %>% gsub("\\\\.yaml", "", .)
     as_tibble(df)
   })
-}) %>% 
+}) %>%
   mutate(multiple = multiple %|% FALSE)
 
 out <- list(

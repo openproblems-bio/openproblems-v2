@@ -157,24 +157,18 @@ VIASH_META_TEMP_DIR="$VIASH_TEMP"
 function ViashHelp {
   echo "rmse main_build"
   echo ""
-  echo "The root mean squared error between the full (or processed) data matrix and a"
-  echo "list of dimensionally-reduced matrices"
-  echo ""
   echo "Arguments:"
   echo "    --input_embedding"
   echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/dimensionality_reduction/pancreas/embedding.h5ad"
-  echo "        A dataset with dimensionality reduction embedding."
   echo ""
   echo "    --input_solution"
   echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/dimensionality_reduction/pancreas/solution.h5ad"
-  echo "        The test data"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/dimensionality_reduction/pancreas/score.h5ad"
-  echo "        Metric score file"
   echo ""
   echo "    --spectral"
   echo "        type: boolean_true"
@@ -396,15 +390,15 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base-python:latest
+FROM ghcr.io/openproblems-bio/base_python:1.0.0
 
 RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn" "scikit-learn" "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics rmse"
-LABEL org.opencontainers.image.created="2023-06-13T07:13:33Z"
+LABEL org.opencontainers.image.created="2023-06-14T00:54:10Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18bdfdfd0184487e64b805653765452dded04a6c"
+LABEL org.opencontainers.image.revision="5d9f4c83fca0b1e371eb198306a59a33c16340d8"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

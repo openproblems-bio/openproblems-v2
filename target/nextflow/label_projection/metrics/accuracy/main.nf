@@ -29,32 +29,36 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_solution",
-        "description" : "The solution for the test data",
         "info" : {
-          "short_description" : "Solution",
+          "label" : "Solution",
+          "summary" : "The solution for the test data",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized counts"
+                "description" : "Normalized counts",
+                "required" : true
               }
             ],
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label",
-                "description" : "Ground truth cell type labels"
+                "description" : "Ground truth cell type labels",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "batch",
-                "description" : "Batch information"
+                "description" : "Batch information",
+                "required" : true
               }
             ],
             "var" : [
@@ -100,7 +104,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -109,15 +113,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_prediction",
-        "description" : "The prediction file",
         "info" : {
-          "short_description" : "Prediction",
+          "label" : "Prediction",
+          "summary" : "The prediction file",
           "slots" : {
             "obs" : [
               {
                 "type" : "string",
                 "name" : "label_pred",
-                "description" : "Predicted labels for the test cells."
+                "description" : "Predicted labels for the test cells.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -136,7 +141,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               }
             ]
           }
@@ -146,7 +152,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -155,9 +161,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "Metric score file",
         "info" : {
-          "short_description" : "Score",
+          "label" : "Score",
+          "summary" : "Metric score file",
           "slots" : {
             "uns" : [
               {
@@ -200,7 +206,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -241,25 +247,26 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "v1_url" : "openproblems/tasks/label_projection/metrics/accuracy.py",
-      "v1_commit" : "fcd5b876e7d0667da73a2858bc27c40224e19f65",
       "metrics" : [
         {
           "name" : "accuracy",
-          "pretty_name" : "Accuracy",
+          "label" : "Accuracy",
           "summary" : "The percentage of correctly predicted labels.",
           "description" : "The percentage of correctly predicted labels.",
-          "reference" : "",
-          "repository_url" : "",
-          "documentation_url" : "",
           "min" : 0,
           "max" : 1,
-          "maximize" : true
+          "maximize" : true,
+          "reference" : "grandini2020metrics",
+          "v1" : {
+            "path" : "openproblems/tasks/label_projection/metrics/accuracy.py",
+            "commit" : "fcd5b876e7d0667da73a2858bc27c40224e19f65"
+          }
         }
       ],
       "type" : "metric",
       "type_info" : {
         "label" : "Metric",
+        "summary" : "A label projection metric.",
         "description" : "A metric for evaluating predicted labels.\n"
       }
     },
@@ -270,7 +277,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -310,7 +317,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/metrics/accuracy/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

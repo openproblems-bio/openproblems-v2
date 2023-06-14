@@ -5,10 +5,10 @@ functionality:
   arguments:
   - type: "file"
     name: "--input_integrated"
-    description: "Integrated AnnData HDF5 file."
     info:
       prediction_type: "graph"
-      short_description: "Integrated Graph"
+      label: "Integrated Graph"
+      summary: "Integrated AnnData HDF5 file."
       slots:
         obsp:
         - type: "double"
@@ -77,16 +77,16 @@ functionality:
     - "resources_test/batch_integration/pancreas/bbknn.h5ad"
     must_exist: true
     create_parent: true
-    required: false
+    required: true
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "file"
     name: "--output"
-    description: "Metric score file"
     info:
-      short_description: "Score"
+      label: "Score"
+      summary: "Metric score file"
       slots:
         uns:
         - type: "string"
@@ -124,7 +124,7 @@ functionality:
     - "score.h5ad"
     must_exist: true
     create_parent: true
-    required: false
+    required: true
     direction: "output"
     multiple: false
     multiple_sep: ":"
@@ -133,7 +133,6 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
-  description: "Metrics that are based on computing the clustering overlap."
   test_resources:
   - type: "file"
     path: "resources_test/batch_integration/pancreas"
@@ -149,7 +148,7 @@ functionality:
   info:
     metrics:
     - name: "ari"
-      pretty_name: "ARI"
+      label: "ARI"
       summary: "Adjusted Rand Index compares clustering overlap, correcting for random\
         \ labels and considering correct overlaps and disagreements."
       description: "The Adjusted Rand Index (ARI) compares the overlap of two clusterings;\n\
@@ -160,15 +159,14 @@ functionality:
         \ ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\n\
         We used the scikit-learn implementation of the ARI.\n"
       reference: "hubert1985comparing"
-      repository_url: ""
-      documentation_url: ""
       min: 0
       max: 1
       maximize: true
-      v1_url: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py"
-      v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+      v1:
+        path: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py"
+        commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
     - name: "nmi"
-      pretty_name: "NMI"
+      label: "NMI"
       summary: "NMI compares overlap by scaling using mean entropy terms and optimizing\
         \ Louvain clustering to obtain the best match between clusters and labels."
       description: "Normalized Mutual Information (NMI) compares the overlap of two\
@@ -182,23 +180,24 @@ functionality:
         \ with the highest NMI with the label set was used. We\nthe scikit-learn implementation\
         \ of NMI.\n"
       reference: "amelio2015normalized"
-      documentation_url: ""
-      repository_url: ""
       min: 0
       max: 1
       maximize: true
-      v1_url: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/nmi.py"
-      v1_commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+      v1:
+        path: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/nmi.py"
+        commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
     type: "metric"
+    subtype: "graph"
     type_info:
       label: "Metric (graph)"
+      summary: "A batch integration graph metric."
       description: "A metric for evaluating batch corrected cell graphs.\n"
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base-r:latest"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.0"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -231,5 +230,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/metrics/clustering_overlap"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/metrics/clustering_overlap/clustering_overlap"
   viash_version: "0.7.3"
-  git_commit: "18bdfdfd0184487e64b805653765452dded04a6c"
+  git_commit: "5d9f4c83fca0b1e371eb198306a59a33c16340d8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

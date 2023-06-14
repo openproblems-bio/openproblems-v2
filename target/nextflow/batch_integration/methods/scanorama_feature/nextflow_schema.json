@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "scanorama_feature",
-    "description": "Efficient integration of heterogeneous single-cell transcriptomes using Scanorama",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

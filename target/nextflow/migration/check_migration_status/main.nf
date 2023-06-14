@@ -101,7 +101,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -135,7 +135,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/migration/check_migration_status/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -173,21 +173,21 @@ meta = {
 
 def check_status(comp_item: List[Dict[str, str]], git_objects: List[Dict[str, str]]) -> str:
     """Looks for the comp_item's matching git_object 
-    based on the comp_item["v1_url"] and git_object["path"].
+    based on the comp_item["v1"]["path"] and git_object["path"].
     If found, checks whether the comp_item["v1_commit"] equals
     git_object["sha"]."""
 
-    v1_url = comp_item.get("v1_url")
-    if not v1_url:
-        return "v1_url missing"
+    v1_path = comp_item.get("v1", {}).get("path")
+    if not v1_path:
+        return "v1.path missing"
     
-    v1_commit = comp_item.get("v1_commit")
+    v1_commit = comp_item.get("v1", {}).get("commit")
     if not v1_commit:
-        return "v1_commit missing"
+        return "v1.commit missing"
     
-    git_object = [ obj for obj in git_objects if obj["path"] == v1_url ]
+    git_object = [ obj for obj in git_objects if obj["path"] == v1_path ]
     if not git_object:
-        return "v1_url does not exist in git repo"
+        return "v1.path does not exist in git repo"
 
     git_sha = git_object[0]["sha"]
     if git_sha == comp_item["v1_commit"]:

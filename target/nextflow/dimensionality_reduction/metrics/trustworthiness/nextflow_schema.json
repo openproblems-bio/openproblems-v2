@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "trustworthiness",
-    "description": "To what extent the local structure is retained in a low-dimensional embedding in a value between 0 and 1.",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

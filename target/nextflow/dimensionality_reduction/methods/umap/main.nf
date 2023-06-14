@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "The dataset to pass to a method.",
         "info" : {
-          "short_description" : "Dataset",
+          "label" : "Dataset",
+          "summary" : "The dataset to pass to a method.",
           "slots" : {
             "layers" : [
               {
@@ -85,27 +85,30 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A dataset with dimensionality reduction embedding.",
         "info" : {
-          "short_description" : "Embedding",
+          "label" : "Embedding",
+          "summary" : "A dataset with dimensionality reduction embedding.",
           "slots" : {
             "obsm" : [
               {
                 "type" : "double",
                 "name" : "X_emb",
-                "description" : "The dimensionally reduced embedding."
+                "description" : "The dimensionally reduced embedding.",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -185,14 +188,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "pretty_name" : "UMAP",
+      "label" : "UMAP",
       "summary" : "A manifold learning algorithm that utilizes topological data analysis for dimension reduction.",
-      "description" : "\\"Uniform Manifold Approximation and Projection is an algorithm for\ndimension reduction based on manifold learning techniques and ideas from\ntopological data analysis. We perform UMAP on the logCPM expression matrix\nbefore and after HVG selection and with and without PCA as a pre-processing\nstep.\\"\n",
+      "description" : "Uniform Manifold Approximation and Projection is an algorithm for\ndimension reduction based on manifold learning techniques and ideas from\ntopological data analysis. We perform UMAP on the logCPM expression matrix\nbefore and after HVG selection and with and without PCA as a pre-processing\nstep.\n",
       "reference" : "mcinnes2018umap",
       "repository_url" : "https://github.com/lmcinnes/umap",
       "documentation_url" : "https://github.com/lmcinnes/umap#readme",
-      "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
-      "v1_commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+      "v1" : {
+        "path" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
+        "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf"
+      },
       "preferred_normalization" : "log_cpm",
       "variants" : {
         "umap_pca_logCPM" : {
@@ -209,7 +214,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "method",
       "type_info" : {
         "label" : "Method",
-        "description" : "A dimensionality reduction method to summarise the biological information in\na dataset in as few dimensions as possible.\n"
+        "summary" : "A dimensionality reduction method.",
+        "description" : "A dimensionality reduction method to summarise the biological\ninformation in a dataset in as few dimensions as possible.\n"
       }
     },
     "status" : "enabled",
@@ -219,7 +225,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -264,7 +270,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/umap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

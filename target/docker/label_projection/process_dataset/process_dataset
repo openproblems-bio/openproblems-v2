@@ -159,26 +159,20 @@ function ViashHelp {
   echo ""
   echo "Arguments:"
   echo "    --input"
-  echo "        type: file, file must exist"
+  echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/common/pancreas/dataset.h5ad"
-  echo "        A dataset processed by the common dataset processing pipeline."
-  echo "        This dataset contains both raw counts and normalized data matrices,"
-  echo "        as well as a PCA embedding, HVG selection and a kNN graph."
   echo ""
   echo "    --output_train"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/label_projection/pancreas/train.h5ad"
-  echo "        The training data"
   echo ""
   echo "    --output_test"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/label_projection/pancreas/test.h5ad"
-  echo "        The test data (without labels)"
   echo ""
   echo "    --output_solution"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/label_projection/pancreas/solution.h5ad"
-  echo "        The solution for the test data"
   echo ""
   echo "    --method"
   echo "        type: string"
@@ -417,13 +411,13 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base-python:latest
+FROM ghcr.io/openproblems-bio/base_python:1.0.0
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component label_projection process_dataset"
-LABEL org.opencontainers.image.created="2023-06-13T07:13:30Z"
+LABEL org.opencontainers.image.created="2023-06-14T00:54:07Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18bdfdfd0184487e64b805653765452dded04a6c"
+LABEL org.opencontainers.image.revision="5d9f4c83fca0b1e371eb198306a59a33c16340d8"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -782,6 +776,22 @@ fi
 
 
 # check whether required parameters exist
+if [ -z ${VIASH_PAR_INPUT+x} ]; then
+  ViashError '--input' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT_TRAIN+x} ]; then
+  ViashError '--output_train' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT_TEST+x} ]; then
+  ViashError '--output_test' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then
+  ViashError '--output_solution' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
   ViashError 'functionality_name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1

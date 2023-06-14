@@ -31,7 +31,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--input_train",
         "description" : "The training data",
         "info" : {
-          "short_description" : "Training data",
+          "label" : "Training data",
           "slots" : {
             "layers" : [
               {
@@ -54,7 +54,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -65,7 +65,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--input_test",
         "description" : "The test data",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
           "slots" : {
             "layers" : [
               {
@@ -88,7 +88,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -99,7 +99,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "name" : "--output",
         "description" : "The denoised data",
         "info" : {
-          "short_description" : "Denoised data",
+          "label" : "Denoised data",
           "slots" : {
             "layers" : [
               {
@@ -132,7 +132,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -168,17 +168,19 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "subtype" : "negative_control",
-      "pretty_name" : "No Denoising",
+      "label" : "No Denoising",
       "summary" : "negative control by copying train counts",
       "description" : "This method serves as a negative control, where the denoised data is a copy of the unaltered training data. This represents the scoring threshold if denoising was not performed on the data.",
-      "v1_url" : "openproblems/tasks/denoising/methods/baseline.py",
-      "v1_commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf",
+      "v1" : {
+        "path" : "openproblems/tasks/denoising/methods/baseline.py",
+        "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+      },
       "preferred_normalization" : "counts",
       "type" : "control_method",
       "type_info" : {
         "label" : "Control method",
-        "description" : "This folder contains control components for the task. \nThese components have the same interface as the regular methods\nbut also receive the solution object as input. It serves as a\nstarting point to test the relative accuracy of new methods in\nthe task, and also as a quality control for the metrics defined\nin the task. \n"
+        "summary" : "Quality control methods for verifying the pipeline.",
+        "description" : "These components have the same interface as the regular methods\nbut also receive the solution object as input. It serves as a\nstarting point to test the relative accuracy of new methods in\nthe task, and also as a quality control for the metrics defined\nin the task. \n"
       }
     },
     "status" : "enabled",
@@ -188,7 +190,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -222,7 +224,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/control_methods/no_denoising/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

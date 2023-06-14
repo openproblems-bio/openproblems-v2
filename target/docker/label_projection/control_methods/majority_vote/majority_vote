@@ -159,24 +159,20 @@ function ViashHelp {
   echo ""
   echo "Arguments:"
   echo "    --input_train"
-  echo "        type: file, file must exist"
+  echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/label_projection/pancreas/train.h5ad"
-  echo "        The training data"
   echo ""
   echo "    --input_test"
-  echo "        type: file, file must exist"
+  echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/label_projection/pancreas/test.h5ad"
-  echo "        The test data (without labels)"
   echo ""
   echo "    --input_solution"
-  echo "        type: file, file must exist"
+  echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/label_projection/pancreas/solution.h5ad"
-  echo "        The solution for the test data"
   echo ""
   echo "    --output"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/label_projection/pancreas/knn.h5ad"
-  echo "        The prediction file"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -394,13 +390,13 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base-python:latest
+FROM ghcr.io/openproblems-bio/base_python:1.0.0
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/control_methods majority_vote"
-LABEL org.opencontainers.image.created="2023-06-13T07:13:31Z"
+LABEL org.opencontainers.image.created="2023-06-14T00:54:08Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18bdfdfd0184487e64b805653765452dded04a6c"
+LABEL org.opencontainers.image.revision="5d9f4c83fca0b1e371eb198306a59a33c16340d8"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -715,6 +711,22 @@ fi
 
 
 # check whether required parameters exist
+if [ -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then
+  ViashError '--input_train' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_INPUT_TEST+x} ]; then
+  ViashError '--input_test' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then
+  ViashError '--input_solution' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
+  ViashError '--output' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
   ViashError 'functionality_name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1

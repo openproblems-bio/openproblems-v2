@@ -5,21 +5,24 @@ functionality:
   arguments:
   - type: "file"
     name: "--input_embedding"
-    description: "A dataset with dimensionality reduction embedding."
     info:
-      short_description: "Embedding"
+      label: "Embedding"
+      summary: "A dataset with dimensionality reduction embedding."
       slots:
         obsm:
         - type: "double"
           name: "X_emb"
           description: "The dimensionally reduced embedding."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
+          required: true
         - type: "string"
           name: "normalization_id"
           description: "Which normalization was used"
@@ -35,9 +38,9 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--input_solution"
-    description: "The test data"
     info:
-      short_description: "Test data"
+      label: "Test data"
+      summary: "The data for evaluating a dimensionality reduction."
       slots:
         layers:
         - type: "integer"
@@ -74,9 +77,9 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    description: "Metric score file"
     info:
-      short_description: "Score"
+      label: "Score"
+      summary: "Metric score file"
       slots:
         uns:
         - type: "string"
@@ -115,8 +118,6 @@ functionality:
   - type: "r_script"
     path: "script.R"
     is_executable: true
-  description: "This is a set of metrics which all use a co-ranking matrix as the\
-    \ basis of the metric.\n"
   test_resources:
   - type: "file"
     path: "resources_test/dimensionality_reduction/pancreas/"
@@ -130,96 +131,165 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    v1_url: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
-    v1_commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
-    v1_note: "The original v1 implementations consisted of a lot of helper functions\
-      \ which were \nderived from the pyDRMetrics package. This version uses the coRanking\
-      \ package\nto avoid reimplementing and potentially introducing a lot of bugs\
-      \ in how\nthe various metrics are computed.\n\nIn addition, the references for\
-      \ each of the metrics were looked up to\nproperly attribute the original authors\
-      \ of each of the metrics.\n"
-    reference: "kraemer2018dimred"
     metrics:
     - name: "continuity_at_k30"
-      pretty_name: "Continuity at k=30"
+      label: "Continuity at k=30"
       reference: "venna2006local"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      summary: "The continuity metric at k=30 computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      description: "The continuity metric at k=30 computed on the co-ranking matrix\
+        \ between expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     - name: "trustworthiness_at_k30"
-      pretty_name: "Trustworthiness at k=30"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      label: "Trustworthiness at k=30"
+      summary: "The trustworthiness metric at k=30 computed on the co-ranking matrix\
+        \ between expression matrix and embedding."
+      description: "The trustworthiness metric at k=30 computed on the co-ranking\
+        \ matrix between expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       reference: "venna2006local"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     - name: "qnx_at_k30"
-      pretty_name: "The value for QNX at k=30"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      label: "The value for QNX at k=30"
+      summary: "The QNX metric at k=30 computed on the co-ranking matrix between expression\
+        \ matrix and embedding."
+      description: "The QNX metric at k=30 computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       reference: "lee2009quality"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     - name: "lcmc_at_k30"
-      pretty_name: "The value for LCMC at k=30"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      label: "The value for LCMC at k=30"
+      summary: "The LCMC metric at k=30 computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      description: "The LCMC metric at k=30 computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       reference: "chen2009local"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     - name: "qnx_auc"
-      pretty_name: "Area under the QNX curve"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      label: "Area under the QNX curve"
+      summary: "The AU-QNX metric at k=30 computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      description: "The AU-QNX metric at k=30 computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       reference: "lueks2011evaluate"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     - name: "qlocal"
-      pretty_name: "Local quality measure"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      label: "Local quality measure"
+      summary: "The local quality metric computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      description: "The local quality metric computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       reference: "lueks2011evaluate"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     - name: "qglobal"
-      pretty_name: "Global quality measure"
-      summary: ""
-      description: ""
-      repository_url: ""
-      documentation_url: ""
+      label: "Global quality measure"
+      summary: "The Global quality metric computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      description: "The Global quality metric computed on the co-ranking matrix between\
+        \ expression matrix and embedding."
+      repository_url: "https://github.com/gdkrmr/coRanking/"
+      documentation_url: "https://coranking.guido-kraemer.com/"
       reference: "lueks2011evaluate"
       min: 0
       max: 1
       maximize: true
+      v1:
+        path: "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py"
+        commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
+        note: "The original v1 implementations consisted of a lot of helper functions\
+          \ which were \nderived from the pyDRMetrics package. This version uses the\
+          \ coRanking package\nto avoid reimplementing and potentially introducing\
+          \ a lot of bugs in how\nthe various metrics are computed.\n\nIn addition,\
+          \ the references for each of the metrics were looked up to\nproperly attribute\
+          \ the original authors of each of the metrics.\n"
     type: "metric"
     type_info:
       label: "Metric"
+      summary: "A dimensionality reduction metric."
       description: "A metric for evaluating dimensionality reductions.\n"
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base-r:latest"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.0"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -254,5 +324,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/coranking"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/coranking/coranking"
   viash_version: "0.7.3"
-  git_commit: "18bdfdfd0184487e64b805653765452dded04a6c"
+  git_commit: "5d9f4c83fca0b1e371eb198306a59a33c16340d8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

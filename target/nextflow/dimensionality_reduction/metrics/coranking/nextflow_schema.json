@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "coranking",
-    "description": "This is a set of metrics which all use a co-ranking matrix as the basis of the metric.\n",
+    "description": "No description",
     "type": "object",
     "definitions": {
       "nextflow input-output arguments" : {

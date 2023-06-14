@@ -29,9 +29,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "The dataset to pass to a method.",
         "info" : {
-          "short_description" : "Dataset",
+          "label" : "Dataset",
+          "summary" : "The dataset to pass to a method.",
           "slots" : {
             "layers" : [
               {
@@ -85,9 +85,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_solution",
-        "description" : "The test data",
         "info" : {
-          "short_description" : "Test data",
+          "label" : "Test data",
+          "summary" : "The data for evaluating a dimensionality reduction.",
           "slots" : {
             "layers" : [
               {
@@ -141,27 +141,30 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "A dataset with dimensionality reduction embedding.",
         "info" : {
-          "short_description" : "Embedding",
+          "label" : "Embedding",
+          "summary" : "A dataset with dimensionality reduction embedding.",
           "slots" : {
             "obsm" : [
               {
                 "type" : "double",
                 "name" : "X_emb",
-                "description" : "The dimensionally reduced embedding."
+                "description" : "The dimensionally reduced embedding.",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -218,7 +221,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/control_methods/true_features/"
       }
     ],
-    "description" : "Positive control method which generates high-dimensional (full data) embedding",
     "test_resources" : [
       {
         "type" : "file",
@@ -240,13 +242,13 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       }
     ],
     "info" : {
-      "subtype" : "positive_control",
-      "pretty_name" : "True Features",
+      "label" : "True Features",
       "summary" : "Positive control by retaining the dimensionality without loss of information.",
       "description" : "This serves as a positive control since the original high-dimensional data is retained as is, without any loss of information",
-      "v1_url" : "openproblems/tasks/dimensionality_reduction/methods/baseline.py",
-      "v1_comp_id" : "True Features",
-      "v1_commit" : "4a0ee9b3731ff10d8cd2e584726a61b502aef613",
+      "v1" : {
+        "path" : "openproblems/tasks/dimensionality_reduction/methods/baseline.py",
+        "commit" : "4a0ee9b3731ff10d8cd2e584726a61b502aef613"
+      },
       "preferred_normalization" : "counts",
       "variants" : {
         "true_features_log_cpm" : {
@@ -262,7 +264,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "control_method",
       "type_info" : {
         "label" : "Control method",
-        "description" : "This folder contains control components for the task. \nThese components have the same interface as the regular methods\nbut also receive the solution object as input. It serves as a\nstarting point to test the relative accuracy of new methods in\nthe task, and also as a quality control for the metrics defined\nin the task. \n"
+        "summary" : "Quality control methods for verifying the pipeline.",
+        "description" : "Control methods have the same interface as the regular methods\nbut also receive the solution object as input. It serves as a\nstarting point to test the relative accuracy of new methods in\nthe task, and also as a quality control for the metrics defined\nin the task.\n"
       }
     },
     "status" : "enabled",
@@ -272,7 +275,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base-python:latest",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -316,7 +319,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/control_methods/true_features/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18bdfdfd0184487e64b805653765452dded04a6c",
+    "git_commit" : "5d9f4c83fca0b1e371eb198306a59a33c16340d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -5,24 +5,28 @@ functionality:
   arguments:
   - type: "file"
     name: "--input_train"
-    description: "The training data"
     info:
-      short_description: "Training data"
+      label: "Training data"
+      summary: "The training data"
       slots:
         layers:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         - type: "double"
           name: "normalized"
           description: "Normalized counts"
+          required: true
         obs:
         - type: "string"
           name: "label"
           description: "Ground truth cell type labels"
+          required: true
         - type: "string"
           name: "batch"
           description: "Batch information"
+          required: true
         var:
         - type: "boolean"
           name: "hvg"
@@ -51,28 +55,31 @@ functionality:
     - "resources_test/label_projection/pancreas/train.h5ad"
     must_exist: true
     create_parent: true
-    required: false
+    required: true
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "file"
     name: "--input_test"
-    description: "The test data (without labels)"
     info:
-      short_description: "Test data"
+      label: "Test data"
+      summary: "The test data (without labels)"
       slots:
         layers:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         - type: "double"
           name: "normalized"
           description: "Normalized counts"
+          required: true
         obs:
         - type: "string"
           name: "batch"
           description: "Batch information"
+          required: true
         var:
         - type: "boolean"
           name: "hvg"
@@ -101,31 +108,35 @@ functionality:
     - "resources_test/label_projection/pancreas/test.h5ad"
     must_exist: true
     create_parent: true
-    required: false
+    required: true
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "file"
     name: "--input_solution"
-    description: "The solution for the test data"
     info:
-      short_description: "Solution"
+      label: "Solution"
+      summary: "The solution for the test data"
       slots:
         layers:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         - type: "double"
           name: "normalized"
           description: "Normalized counts"
+          required: true
         obs:
         - type: "string"
           name: "label"
           description: "Ground truth cell type labels"
+          required: true
         - type: "string"
           name: "batch"
           description: "Batch information"
+          required: true
         var:
         - type: "boolean"
           name: "hvg"
@@ -154,21 +165,22 @@ functionality:
     - "resources_test/label_projection/pancreas/solution.h5ad"
     must_exist: true
     create_parent: true
-    required: false
+    required: true
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "file"
     name: "--output"
-    description: "The prediction file"
     info:
-      short_description: "Prediction"
+      label: "Prediction"
+      summary: "The prediction file"
       slots:
         obs:
         - type: "string"
           name: "label_pred"
           description: "Predicted labels for the test cells."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -181,11 +193,12 @@ functionality:
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
+          required: true
     example:
     - "resources_test/label_projection/pancreas/knn.h5ad"
     must_exist: true
     create_parent: true
-    required: false
+    required: true
     direction: "output"
     multiple: false
     multiple_sep: ":"
@@ -205,19 +218,20 @@ functionality:
     path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   info:
-    subtype: "negative_control"
-    pretty_name: "Random Labels"
+    label: "Random Labels"
     summary: "a negative control, where the labels are randomly predicted."
     description: "A negative control, where the labels are randomly predicted without\
       \ training the data."
-    v1_url: "openproblems/tasks/label_projection/methods/baseline.py"
-    v1_commit: "b460ecb183328c857cbbf653488f522a4034a61c"
+    v1:
+      path: "openproblems/tasks/label_projection/methods/baseline.py"
+      commit: "b460ecb183328c857cbbf653488f522a4034a61c"
     preferred_normalization: "counts"
     variants:
       random_labels: null
     type: "control_method"
     type_info:
       label: "Control method"
+      summary: "Quality control methods for verifying the pipeline."
       description: "This folder contains control components for the task. \nThese\
         \ components have the same interface as the regular methods\nbut also receive\
         \ the solution object as input. It serves as a\nstarting point to test the\
@@ -228,7 +242,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base-python:latest"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.0"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -263,5 +277,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/control_methods/random_labels"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/label_projection/control_methods/random_labels/random_labels"
   viash_version: "0.7.3"
-  git_commit: "18bdfdfd0184487e64b805653765452dded04a6c"
+  git_commit: "5d9f4c83fca0b1e371eb198306a59a33c16340d8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
