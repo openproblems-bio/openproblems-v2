@@ -1,21 +1,25 @@
 type: file
-description: "The masked spatial data file"
 example: "resources_test/spatial_decomposition/pancreas/anndata_spatial_masked.h5ad"
 info:
-  short_description: "Masked spatial data"
+  label: "Masked"
+  summary: "The masked spatial data file"
   slots:
     layers: 
       - type: integer
         name: counts
         description: Raw counts
+        required: true
     obsm:
-      - type: float
+      - type: double
         name: coordinates
         description: XY coordinates for each spot
+        required: true
     uns:
       - type: string
         name: cell_type_names
         description: Cell type names corresponding to columns of `proportions` in output
+        required: true
       - type: string
         name: dataset_id
         description: "A unique identifier for the dataset"
+        required: true
