@@ -60,23 +60,23 @@ qmd_content <- strip_margin(glue::glue("
   §format: gfm
   §---
   §
-  task_api$task_info$summary}
+  §{task_api$task_info$summary}
   §
   §Path: [`{task_dir}`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{task_dir})
   §
   §## Motivation
   §
-  task_api$task_info$motivation}
+  §{task_api$task_info$motivation}
   §
   §## Description
   §
-  task_api$task_info$description}
-  authors_str}
+  §{task_api$task_info$description}
+  §{authors_str}
   §## API
   §
-  r_graph}
+  §{r_graph}
   §
-  paste(r_details, collapse = '\n\n')}
+  §{paste(r_details, collapse = '\n\n')}
   §
   §"), symbol = "§")
 

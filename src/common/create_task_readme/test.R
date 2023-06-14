@@ -4,43 +4,26 @@
 ## VIASH END
 
 opv2 <- paste0(meta$resources_dir, "/openproblems-v2")
-output_path <- paste0(opv2, "/src/tasks/label_projection/README.md")
-output_path = f"{opv2}/src/tasks/label_projection/methods/test_method"
+output_path <- "output.md"
 
-cmd = [
-    meta['executable'],
-    '--task', 'label_projection',
-    '--type', 'method',
-    '--name', 'test_method',
-    '--language', 'python'
-]
+cat(">> Running the script as test\n")
+system(paste(
+    meta["executable"],
+    "--task", "label_projection",
+    "--output", output_path,
+    "--viash_yaml", paste0(opv2, "/_viash.yaml")
+))
 
-print('>> Running the script as test', flush=True)
-out = subprocess.run(cmd, stderr=subprocess.STDOUT, cwd=opv2)
+cat(">> Checking whether output files exist\n")
+assertthat::assert_that(file.exists(output_path))
 
-if out.stdout:
-    print(out.stdout)
+cat(">> Checking file contents\n")
+lines <- readLines(output_path)
+assertthat::assert_that(any(grepl("# Label projection", lines)))
+assertthat::assert_that(any(grepl("# Description", lines)))
+assertthat::assert_that(any(grepl("# Motivation", lines)))
+assertthat::assert_that(any(grepl("# Authors", lines)))
+assertthat::assert_that(any(grepl("flowchart LR", lines)))
+assertthat::assert_that(any(grepl("# File format:", lines)))
 
-if out.returncode:
-    print(f"script: '{cmd}' exited with an error.")
-    exit(out.returncode)
-
-print('>> Checking whether output files exist', flush=True)
-assert os.path.exists(output_path), "Output dir does not exist"
-
-conf_f = path.join(output_path, 'config.vsh.yaml')
-assert os.path.exists(conf_f), "Config file does not exist"
-
-script_f = path.join(output_path, "script.py")
-assert os.path.exists(script_f), "Script file does not exist"
-
-print('>> Checking file contents', flush=True)
-with open(conf_f) as f:
-    conf_data = yaml.safe_load(f)
-
-assert conf_data['functionality']['name'] == 'test_method', "Name should be equal to 'test_method'"
-# assert conf_data['platforms'][0]['image'] == 'python:3.10', "Python image should be equal to python:3.10"
-
-
-print('All checks succeeded!', flush=True)
-
+cat("All checks succeeded!\n")

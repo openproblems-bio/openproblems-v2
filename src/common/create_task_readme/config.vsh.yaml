@@ -36,7 +36,7 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.0
     setup:
       - type: r
-        packages: [dplyr, purrr, rlang, glue, yaml, fs, cli, igraph, rmarkdown]
+        packages: [dplyr, purrr, rlang, glue, yaml, fs, cli, igraph, rmarkdown, bit64]
       - type: apt
         packages: [jq, curl]
       - type: docker
@@ -47,8 +47,8 @@ platforms:
             curl -sL "$download_url" -o /opt/quarto.deb && \
             dpkg -i /opt/quarto.deb && \
             rm /opt/quarto.deb
-
   - type: native
   - type: nextflow
-
+    directives: 
+      label: [ lowmem, lowcpu ]
 
