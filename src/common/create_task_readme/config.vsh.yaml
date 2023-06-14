@@ -19,17 +19,35 @@ functionality:
         Path to the project config file. Needed for knowing the relative location of a file to the project root.
       default: "_viash.yaml"
   resources:
-    - type: python_script
+    - type: r_script
       path: script.R
     - path: /src/common/helper_functions/read_and_merge_yaml.R
     - path: /src/common/helper_functions/read_api_files.R
     - path: /src/common/helper_functions/strip_margin.R
+  test_resources:
+    - type: r_script
+      path: test.R
+    - path: /src
+      dest: openproblems-v2/src
+    - path: /_viash.yaml
+      dest: openproblems-v2/_viash.yaml
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_r:1.0.0
     setup:
       - type: r
-        packages: [dplyr, purrr, rlang, glue]
+        packages: [dplyr, purrr, rlang, glue, yaml, fs, cli, igraph, rmarkdown]
+      - type: apt
+        packages: [jq, curl]
+      - type: docker
+        # download and install quarto-*-linux-amd64.deb from latest release
+        run: |
+          release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest) && \
+            download_url=$(echo "$release_info" | jq -r '.assets[] | select(.name | test("quarto-.*-linux-amd64.deb")) | .browser_download_url') && \
+            curl -sL "$download_url" -o /opt/quarto.deb && \
+            dpkg -i /opt/quarto.deb && \
+            rm /opt/quarto.deb
+
   - type: native
   - type: nextflow
 

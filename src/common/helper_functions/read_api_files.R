@@ -118,7 +118,7 @@ read_comp_args <- function(spec_yaml, path) {
       df <- dplyr::bind_cols(df, list_as_tibble(arg$info))
     }
     df$file_name <- basename(path) %>% gsub("\\.yaml", "", .)
-    df$arg_name <- stringr::str_replace_all(arg$name, "^-*", "")
+    df$arg_name <- gsub("^-*", "", arg$name)
     df$direction <- df$direction %||% "input" %|% "input"
     df$parent <- df$`__merge__` %||% NA_character_ %>% basename() %>% gsub("\\.yaml", "", .)
     df$required <- df$required %||% FALSE %|% FALSE
@@ -229,7 +229,7 @@ read_task_api <- function(path) {
   cli::cli_inform("Reading task info")
   task_info_yaml <- list.files(api_dir, pattern = "task_info.ya?ml", full.names = TRUE)
   assertthat::assert_that(length(task_info_yaml) == 1)
-  task_info <- read_and_merge_yaml(task_info_yaml)
+  task_info <- read_and_merge_yaml(task_info_yaml, project_path)
 
   cli::cli_inform("Reading task authors")
   authors <- map_df(task_info$authors, function(aut) {

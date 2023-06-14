@@ -10,7 +10,7 @@ read_and_merge_yaml <- function(path, project_path = .ram_find_project(path)) {
   data <- tryCatch({
     suppressWarnings(yaml::read_yaml(path))
   }, error = function(e) {
-    stop("Could not read ", path)
+    stop("Could not read ", path, ". Error: ", e)
   })
   .ram_process_merge(data, path, project_path)
 }

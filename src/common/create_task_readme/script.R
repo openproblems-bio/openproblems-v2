@@ -1,15 +1,16 @@
-library(rlang)
-library(purrr)
-library(dplyr)
+library(rlang, quietly = TRUE, warn.conflicts = FALSE)
+library(purrr, quietly = TRUE, warn.conflicts = FALSE)
+library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
   "task" = "batch_integration",
-  "output" = "src/tasks/batch_integration/README.qmd",
+  "output" = "src/tasks/batch_integration/README.md",
   "viash_yaml" = "_viash.yaml"
 )
 meta <- list(
-  "resources_dir" = "src/common/helper_functions"
+  "resources_dir" = "src/common/helper_functions",
+  "temp_dir" = "temp/"
 )
 ## VIASH END
 
@@ -18,7 +19,7 @@ source(paste0(meta["resources_dir"], "/read_and_merge_yaml.R"))
 source(paste0(meta["resources_dir"], "/strip_margin.R"))
 source(paste0(meta["resources_dir"], "/read_api_files.R"))
 
-# find task dir
+cat("Read task info\n")
 task_dir <- paste0(dirname(par[["viash_yaml"]]), "/src/tasks/", par[["task"]]) %>%
   gsub("^\\./", "", .)
 task_api <- read_task_api(task_dir)
@@ -28,7 +29,7 @@ r_graph <- render_task_graph(task_api)
 # todo: fix hard coded node
 order <- names(igraph::bfs(task_api$task_graph, "file_common_dataset")$order)
 
-# render api details
+cat("Render API details\n")
 r_details <- map_chr(
   order,
   function(file_name) {
@@ -40,8 +41,8 @@ r_details <- map_chr(
   }
 )
 
-# render authors
-authors_str <- 
+cat("Render authors\n")
+authors_str <-
   if (nrow(task_api$authors) > 0) {
     paste0(
       "\n## Authors & contributors\n\n",
@@ -52,30 +53,50 @@ authors_str <-
     ""
   }
 
-output <- strip_margin(glue::glue("
+cat("Generate qmd content\n")
+qmd_content <- strip_margin(glue::glue("
   §---
   §title: \"{task_api$task_info$label}\"
   §format: gfm
   §---
   §
-  §{task_api$task_info$summary}
+  task_api$task_info$summary}
   §
   §Path: [`{task_dir}`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{task_dir})
   §
   §## Motivation
   §
-  §{task_api$task_info$motivation}
+  task_api$task_info$motivation}
   §
   §## Description
   §
-  §{task_api$task_info$description}
-  §{authors_str}
+  task_api$task_info$description}
+  authors_str}
   §## API
   §
-  §{r_graph}
+  r_graph}
   §
-  §{paste(r_details, collapse = '\n\n')}
+  paste(r_details, collapse = '\n\n')}
   §
   §"), symbol = "§")
 
-readr::write_lines(output, par$output)
+cat("Write README.qmd to file\n")
+qmd_file <- tempfile(
+  pattern = "README_",
+  fileext = ".qmd",
+  tmpdir = meta$temp_dir
+)
+
+if (!dir.exists(meta$temp_dir)) {
+  dir.create(meta$temp_dir, recursive = TRUE)
+}
+writeLines(qmd_content, qmd_file)
+
+cat("Render README.qmd to README.md\n")
+md_content <- system(
+  paste0("quarto render ", qmd_file, " --output -"),
+  ignore.stderr = TRUE,
+  intern = TRUE
+)
+
+writeLines(md_content, par$output)
