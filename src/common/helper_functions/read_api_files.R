@@ -121,6 +121,8 @@ read_comp_args <- function(spec_yaml, path) {
     df$required <- df$required %||% FALSE %|% FALSE
     df$default <- df$default %||% NA_character_ %>% as.character
     df$example <- df$example %||% NA_character_ %>% as.character
+    df$description <- df$description %||% NA_character_ %>% as.character
+    df$summary <- df$summary %||% NA_character_ %>% as.character
     df
   })
 }
