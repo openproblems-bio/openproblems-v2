@@ -409,9 +409,9 @@ RUN release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/re
   rm /opt/quarto.deb
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_task_readme"
-LABEL org.opencontainers.image.created="2023-06-14T21:12:06Z"
+LABEL org.opencontainers.image.created="2023-06-16T13:55:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8d1ea8e6d444c05888357ef5aa85bee4eb0af88d"
+LABEL org.opencontainers.image.revision="180fedc793e44ea09c4de0e7766f49cf5663b9ad"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -940,6 +940,7 @@ authors_str <-
   }
 
 cat("Generate qmd content\\n")
+task_dir_short <- gsub(".*openproblems-v2/", "", task_dir)
 qmd_content <- strip_margin(glue::glue("
   §---
   §title: \\"{task_api\$task_info\$label}\\"
@@ -948,7 +949,7 @@ qmd_content <- strip_margin(glue::glue("
   §
   §{task_api\$task_info\$summary}
   §
-  §Path: [\`{task_dir}\`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{task_dir})
+  §Path: [\`{task_dir_short}\`](https://github.com/openproblems-bio/openproblems-v2/tree/main/{task_dir_short})
   §
   §## Motivation
   §

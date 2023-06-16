@@ -191,7 +191,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_task_readme/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "8d1ea8e6d444c05888357ef5aa85bee4eb0af88d",
+    "git_commit" : "180fedc793e44ea09c4de0e7766f49cf5663b9ad",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -276,6 +276,7 @@ authors_str <-
   }
 
 cat("Generate qmd content\\\\n")
+task_dir_short <- gsub(".*openproblems-v2/", "", task_dir)
 qmd_content <- strip_margin(glue::glue("
   §---
   §title: \\\\"{task_api\\$task_info\\$label}\\\\"
@@ -284,7 +285,7 @@ qmd_content <- strip_margin(glue::glue("
   §
   §{task_api\\$task_info\\$summary}
   §
-  §Path: [\\`{task_dir}\\`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{task_dir})
+  §Path: [\\`{task_dir_short}\\`](https://github.com/openproblems-bio/openproblems-v2/tree/main/{task_dir_short})
   §
   §## Motivation
   §
