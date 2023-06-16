@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/scottgigante-immunai/dca.git@patch-1"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods dca"
-LABEL org.opencontainers.image.created="2023-06-16T13:55:59Z"
+LABEL org.opencontainers.image.created="2023-06-16T14:00:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="180fedc793e44ea09c4de0e7766f49cf5663b9ad"
+LABEL org.opencontainers.image.revision="2cba3af7210916466feeb69a164bef578580059c"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
