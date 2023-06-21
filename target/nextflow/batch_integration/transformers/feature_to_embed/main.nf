@@ -137,7 +137,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -254,7 +254,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ],
         "must_exist" : true,
         "create_parent" : true,
-        "required" : false,
+        "required" : true,
         "direction" : "output",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -269,25 +269,31 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/transformers/feature_to_embed/"
       }
     ],
-    "description" : "Transform a feature integration to an embedded integration",
     "test_resources" : [
-      {
-        "type" : "file",
-        "path" : "resources_test/batch_integration/pancreas/",
-        "dest" : "resources_test/batch_integration/pancreas/",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
-      },
       {
         "type" : "python_script",
         "path" : "src/common/comp_tests/run_and_check_adata.py",
         "is_executable" : true,
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "resources_test/batch_integration/pancreas",
+        "dest" : "resources_test/batch_integration/pancreas",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
       "type" : "transformer",
-      "label" : "Feature to Embed",
-      "output_type" : "embedding"
+      "label" : "Feature to Embedding",
+      "summary" : "Transform a feature output to an embedding.",
+      "description" : "Transform a feature output to an embedding by computing a PCA on the corrected counts.\n",
+      "subtype" : "embedding",
+      "type_info" : {
+        "label" : "Feature to Embedding",
+        "summary" : "Transform a feature output to an embedding.",
+        "description" : "Transform a feature output to an embedding by computing a PCA on the corrected counts.\n"
+      }
     },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
@@ -336,7 +342,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/transformers/feature_to_embed/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "4079e18fe8200ae19246a228c6e0ca9ab465819c",
+    "git_commit" : "541c06b309f92c23a63b982010ae009845c8f764",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -374,7 +380,7 @@ meta = {
 with open(meta['config'], 'r', encoding="utf8") as file:
     config = yaml.safe_load(file)
 
-output_type = config["functionality"]["info"]["output_type"]
+output_type = config["functionality"]["info"]["subtype"]
 
 print('Read input', flush=True)
 adata= sc.read_h5ad(par['input'])

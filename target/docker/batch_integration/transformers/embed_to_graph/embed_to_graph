@@ -157,15 +157,13 @@ VIASH_META_TEMP_DIR="$VIASH_TEMP"
 function ViashHelp {
   echo "embed_to_graph main_build"
   echo ""
-  echo "Transform an embedded integration to a graph integration"
-  echo ""
   echo "Arguments:"
   echo "    --input"
-  echo "        type: file, file must exist"
+  echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/batch_integration/pancreas/scvi.h5ad"
   echo ""
   echo "    --output"
-  echo "        type: file, output, file must exist"
+  echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/batch_integration/pancreas/bbknn.h5ad"
 }
 
@@ -390,9 +388,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/transformers embed_to_graph"
-LABEL org.opencontainers.image.created="2023-06-21T13:48:09Z"
+LABEL org.opencontainers.image.created="2023-06-21T14:37:40Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4079e18fe8200ae19246a228c6e0ca9ab465819c"
+LABEL org.opencontainers.image.revision="541c06b309f92c23a63b982010ae009845c8f764"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -685,6 +683,14 @@ fi
 
 
 # check whether required parameters exist
+if [ -z ${VIASH_PAR_INPUT+x} ]; then
+  ViashError '--input' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
+  ViashError '--output' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
   ViashError 'functionality_name' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
@@ -855,7 +861,7 @@ meta = {
 with open(meta['config'], 'r', encoding="utf8") as file:
     config = yaml.safe_load(file)
 
-output_type = config["functionality"]["info"]["output_type"]
+output_type = config["functionality"]["info"]["subtype"]
 
 print('Read input', flush=True)
 adata = sc.read_h5ad(par['input'])

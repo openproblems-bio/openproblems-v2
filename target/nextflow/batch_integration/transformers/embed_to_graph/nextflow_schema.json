@@ -1,27 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "title": "embed_to_graph",
-    "description": "Transform an embedded integration to a graph integration",
+    "description": "No description",
     "type": "object",
     "definitions": {
-      "arguments" : {
-        "title": "Arguments",
-        "type": "object",
-        "description": "No description",
-        "properties": {
-          "input": {
-            "type": "string",
-            "description": "No description",
-            "default": ""
-          },
-          "output": {
-            "type": "string",
-            "description": "No description",
-            "default": ""
-          }
-          
-        }
-      },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
@@ -42,9 +24,6 @@
       }
     },
     "allOf": [
-      {
-        "$ref": "#/definitions/arguments"
-      },
       {
         "$ref": "#/definitions/nextflow input-output arguments"
       }
