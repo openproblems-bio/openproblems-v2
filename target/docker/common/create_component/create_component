@@ -431,9 +431,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "ruamel.yaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2023-06-16T14:03:33Z"
+LABEL org.opencontainers.image.created="2023-06-21T13:47:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9ced3d3e6ec10e78b7f574feebb3bf41d568ec3e"
+LABEL org.opencontainers.image.revision="116ef177583a56d4d4b833fa95e15d098fa2ace8"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -1115,11 +1115,11 @@ def generate_resources(par, script_path) -> str:
 def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
-    image_str = "ghcr.io/openproblems-bio/base_python:1.0.0"
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.1"
     setup_type = "python"
-    package_example = "scanpy"
+    package_example = "scib==1.1.3"
   elif par["language"] == "r":
-    image_str = "ghcr.io/openproblems-bio/base_r:1.0.0"
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.1"
     setup_type = "r"
     package_example = "tidyverse"
   return strip_margin(f'''\\

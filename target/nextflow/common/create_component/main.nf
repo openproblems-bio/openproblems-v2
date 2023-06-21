@@ -213,7 +213,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_component/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9ced3d3e6ec10e78b7f574feebb3bf41d568ec3e",
+    "git_commit" : "116ef177583a56d4d4b833fa95e15d098fa2ace8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -384,11 +384,11 @@ def generate_resources(par, script_path) -> str:
 def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
-    image_str = "ghcr.io/openproblems-bio/base_python:1.0.0"
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.1"
     setup_type = "python"
-    package_example = "scanpy"
+    package_example = "scib==1.1.3"
   elif par["language"] == "r":
-    image_str = "ghcr.io/openproblems-bio/base_r:1.0.0"
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.1"
     setup_type = "r"
     package_example = "tidyverse"
   return strip_margin(f\'\'\'\\\\

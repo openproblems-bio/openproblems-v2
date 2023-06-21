@@ -121,7 +121,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.0",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.1",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -191,7 +191,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_task_readme/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "9ced3d3e6ec10e78b7f574feebb3bf41d568ec3e",
+    "git_commit" : "116ef177583a56d4d4b833fa95e15d098fa2ace8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
