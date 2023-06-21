@@ -214,5 +214,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph/embed_to_graph"
   viash_version: "0.7.3"
-  git_commit: "116ef177583a56d4d4b833fa95e15d098fa2ace8"
+  git_commit: "4079e18fe8200ae19246a228c6e0ca9ab465819c"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
