@@ -163,5 +163,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/metrics/poisson"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/metrics/poisson/poisson"
   viash_version: "0.7.3"
-  git_commit: "541c06b309f92c23a63b982010ae009845c8f764"
+  git_commit: "19a67c2cac07b74e644ffa43d20520b04a9e42dc"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

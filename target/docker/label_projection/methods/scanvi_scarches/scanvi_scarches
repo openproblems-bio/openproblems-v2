@@ -417,9 +417,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scvi-tools"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods scanvi_scarches"
-LABEL org.opencontainers.image.created="2023-06-21T14:37:44Z"
+LABEL org.opencontainers.image.created="2023-06-22T07:51:39Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="541c06b309f92c23a63b982010ae009845c8f764"
+LABEL org.opencontainers.image.revision="19a67c2cac07b74e644ffa43d20520b04a9e42dc"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }

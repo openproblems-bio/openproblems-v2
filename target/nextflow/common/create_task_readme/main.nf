@@ -191,7 +191,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_task_readme/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "541c06b309f92c23a63b982010ae009845c8f764",
+    "git_commit" : "19a67c2cac07b74e644ffa43d20520b04a9e42dc",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -246,12 +246,13 @@ task_dir <- paste0(dirname(par[["viash_yaml"]]), "/src/tasks/", par[["task"]]) %
   gsub("^\\\\\\\\./", "", .)
 task_api <- read_task_api(task_dir)
 
-r_graph <- render_task_graph(task_api)
+# determine ordering
+root <- .task_graph_get_root(task_api)
 
-# todo: fix hard coded node
-order <- names(igraph::bfs(task_api\\$task_graph, "file_common_dataset")\\$order)
+r_graph <- render_task_graph(task_api, root)
 
 cat("Render API details\\\\n")
+order <- names(igraph::bfs(task_api\\$task_graph, root)\\$order)
 r_details <- map_chr(
   order,
   function(file_name) {

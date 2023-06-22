@@ -409,9 +409,9 @@ RUN release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/re
   rm /opt/quarto.deb
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_task_readme"
-LABEL org.opencontainers.image.created="2023-06-21T14:37:40Z"
+LABEL org.opencontainers.image.created="2023-06-22T07:51:35Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="541c06b309f92c23a63b982010ae009845c8f764"
+LABEL org.opencontainers.image.revision="19a67c2cac07b74e644ffa43d20520b04a9e42dc"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -910,12 +910,13 @@ task_dir <- paste0(dirname(par[["viash_yaml"]]), "/src/tasks/", par[["task"]]) %
   gsub("^\\\\./", "", .)
 task_api <- read_task_api(task_dir)
 
-r_graph <- render_task_graph(task_api)
+# determine ordering
+root <- .task_graph_get_root(task_api)
 
-# todo: fix hard coded node
-order <- names(igraph::bfs(task_api\$task_graph, "file_common_dataset")\$order)
+r_graph <- render_task_graph(task_api, root)
 
 cat("Render API details\\n")
+order <- names(igraph::bfs(task_api\$task_graph, root)\$order)
 r_details <- map_chr(
   order,
   function(file_name) {
