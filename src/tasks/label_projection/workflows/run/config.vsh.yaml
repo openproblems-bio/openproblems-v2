@@ -17,15 +17,18 @@ functionality:
           description: "The ID of the normalization used"
           required: true
         - name: "--input_train"
-          __merge__: ../../api/file_train.yaml
+          # __merge__: ../../api/file_train.yaml
+          type: file
           direction: input
           required: true
         - name: "--input_test"
-          __merge__: ../../api/file_test.yaml
+          # __merge__: ../../api/file_test.yaml
+          type: file
           direction: input
           required: true
         - name: "--input_solution"
-          __merge__: ../../api/file_solution.yaml
+          # __merge__: ../../api/file_solution.yaml
+          type: file
           direction: input
           required: true
     - name: Outputs

@@ -1,97 +1,72 @@
-/* usage:
-| setWorkflowArguments(
-  pca: [ "input": "input", "obsm_output": "obsm_pca" ]
-  harmonypy: [ "obs_covariates": "obs_covariates", "obsm_input": "obsm_pca" ],
-  find_neighbors: [ "obsm_input": "obsm_pca" ],
-  umap: [ "output": "output" ]
-)
-*/
-
 sourceDir = params.rootDir + "/src"
-include { processConfig } from sourceDir + "/wf_utils/WorkflowHelper.nf"
+targetDir = params.rootDir + "/target/nextflow"
 
-def runMethods(Map args) {
-  if (!args.methods || !args.config) {
-    throw new RuntimeException("runMethods should be called as `runMethods(config: config, methods: methods)`.")
-  }
-  def methods_ = args.methods
-  def config_ = args.config
+include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
+include { preprocessInputs; processConfig } from sourceDir + "/wf_utils/WorkflowHelper.nf"
 
-  workflow runMethodsWf {
+def runComponents(Map args) {
+  assert args.components: "runComponents should be passed a list of components to run"
+  assert args.fetch_data: "runComponents should be passed a fetch_data function"
+  assert args.store_data: "runComponents should be passed a store_data function"
+
+  def components_ = args.components
+  def fetch_data_ = args.fetch_data
+  def store_data_ = args.store_data
+  def filter_ = args.filter ?: { id, data, comp -> true }
+
+  workflow runComponentsWf {
     take: input_ch
     main:
 
     // generate one channel per method
-    method_chs = methods_.collect { method_module ->
-      def method_config = processConfig(method_module.config)
-      def method_id = method_config.functionality.name
+    out_chs = components_.collect { comp_ ->
+      def comp_config = comp_.config
 
       input_ch
-        | flatMap{tup ->
-          // split tuple
-          def orig_id = tup[0]
-          def data = tup[1]
-          def rest = tup.drop(2)
-
-          // check preferred normalisation
-          def preferred_normalization = method_config.functionality.info.preferred_normalization
-          if (preferred_normalization == "counts") {
-            preferred_normalization = "log_cpm"
-          }
-
-          // exit function if normalization id is not what method wants
-          if (data.normalization_id != preferred_normalization) {
-            return []
-          }
-
-          // create new id
-          def new_id = orig_id + "." + method_id
-
-          // create args for method
-          def method_arg_labels = method_config.functionality.arguments.collectMany{arg ->
-            if ("label" !in arg.info) return []
-            [[arg.info.label, arg]]
-          }.collectEntries()
-
-          // create dictionary with all of the args that will be passed to a method
-          def new_args = config_.functionality.allArguments.collectMany{ wf_arg ->
-            // TODO: using the label to match the workflow arguments to the component
-            // arguments is a workaround.
-
-            // was not passed a value for this argument
-            if (wf_arg.plainName !in data) return []
-
-            // argument did not have an id
-            if ("label" !in wf_arg.info) return []
-
-            // id was not found in method argument info
-            if (wf_arg.info.label !in method_arg_labels) return []
-            
-            // fetch method argument info
-            def meth_arg = method_arg_labels[wf_arg.info.label]
-
-            // create new tup
-            def new_tup = [meth_arg.plainName, data[wf_arg.plainName]]
-            [new_tup]
-          }.collectEntries()
-
-          // store all variables in the data store
-          def data_store = data.clone() + [method_id: method_id]
-          data_store.remove("id")
-
-          // create new args map
-          def new_tup = [new_id, new_args, data_store] + rest
-
-          [new_tup]
+        | filter{tup -> 
+          filter_(tup[0], tup[1], comp_config)
         }
-        | method_module
+        | map{tup ->
+          def new_tup = fetch_data_(tup[0], tup[1], comp_config)
+          new_tup + tup.drop(1)
+        }
+        | comp_.run(
+          auto: [simplifyInput: false, simplifyOutput: false]
+        )
+        | map{tup ->
+          def new_outputs = store_data_(tup[0], tup[1], comp_config)
+          [tup[0], tup[2] + new_outputs] + tup.drop(3)
+        }
       }
 
     // mix all results
-    output_ch = method_chs[0].mix(*method_chs.drop(1))
+    output_ch = out_chs[0].mix(*out_chs.drop(1))
 
     emit: output_ch
   }
 
-  return runMethodsWf
+  return runComponentsWf
+}
+
+
+workflow aggregate_scores {
+  take: input_ch
+  main:
+
+  output_ch = input_ch
+    | toSortedList
+    | filter{ it.size() > 0 }
+    | map{ tups -> 
+      def new_id = "combined"
+      def new_data = [
+        "input": tups.collect{ it[1].scores },
+        "output": tups[0][1].output
+      ]
+      [new_id, new_data]
+    }
+    | extract_scores.run(
+        auto: [ publish: true ]
+    )
+
+  emit: output_ch
 }

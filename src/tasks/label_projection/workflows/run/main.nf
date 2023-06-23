@@ -21,17 +21,14 @@ include { xgboost } from "$targetDir/label_projection/methods/xgboost/main.nf"
 include { accuracy } from "$targetDir/label_projection/metrics/accuracy/main.nf"
 include { f1 } from "$targetDir/label_projection/metrics/f1/main.nf"
 
-// tsv generation component
-include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
-
 // import helper functions
-include { readConfig; channelFromParams; preprocessInputs; helpMessage } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { setWorkflowArguments; getWorkflowArguments; passthroughMap as pmap; passthroughFilter as pfilter } from sourceDir + "/wf_utils/DataflowHelper.nf"
-include { runMethods } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
+include { runComponents; aggregate_scores } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
-config = readConfig("$projectDir/.config.vsh.yaml")
+// read in pipeline config
+config = readConfig("$projectDir/config.vsh.yaml")
 
-// construct a map of methods (id -> method_module)
+// collect method list
 methods = [
   true_labels,
   majority_vote,
@@ -44,6 +41,8 @@ methods = [
   seurat_transferdata,
   xgboost
 ]
+
+// collect metric list
 metrics = [
   accuracy,
   f1
@@ -52,6 +51,8 @@ metrics = [
 workflow {
   helpMessage(config)
 
+  // create channel from input parameters with
+  // arguments as defined in the config
   channelFromParams(params, config)
     | run_wf
 }
@@ -62,58 +63,58 @@ workflow run_wf {
 
   main:
   output_ch = input_ch
-    | preprocessInputs("config": config)
-
-    | view{"DEBUG0: ${it}"}
-    
-    // multiply events by the number of method
-    | runMethods(config: config, methods: methods)
-
-    /*
+    | preprocessInputs(config: config)
 
     // run methods
-    | getWorkflowArguments(key: "method")
-    | run_methods
+    | runComponents(
+      components: methods,
+      filter: { id, data, config ->
+        def norm = data.normalization_id
+        def pref = config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        (norm == "log_cpm" && pref == "counts") || norm == pref
+      },
+      fetch_data: { id, data, config ->
+        def new_id = id + "." + config.functionality.name
+        def new_args = [
+          input_train: data.input_train,
+          input_test: data.input_test
+        ]
+        if (config.functionality.info.type == "control_method") {
+          new_args.input_solution = data.input_solution
+        }
+        [new_id, new_args]
+      },
+      store_data: { id, data, config ->
+        [
+          method_id: config.functionality.name,
+          prediction: data.output
+        ]
+      }
+    )
 
     // run metrics
-    | getWorkflowArguments(key: "metric", inputKey: "input_prediction")
-    | run_metrics
+    | runComponents(
+      components: metrics,
+      fetch_data: { id, data, config ->
+        def new_args = [
+          input_solution: data.input_solution,
+          input_prediction: data.prediction
+        ]
+        [id, new_args]
+      },
+      store_data: { id, data, config ->
+        [
+          metric_id: config.functionality.name,
+          scores: data.output
+        ]
+      }
+    )
+    // | view{"DEBUG2: ${it}"}
 
-    // convert to tsv  
-    | aggregate_results
-    */
+    | aggregate_scores
 
   emit:
   output_ch
-}
-
-
-
-workflow run_metrics {
-  take: input_ch
-  main:
-
-  output_ch = input_ch
-    | (accuracy & f1)
-    | mix
-
-  emit: output_ch
-}
-
-workflow aggregate_results {
-  take: input_ch
-  main:
-
-  output_ch = input_ch
-    | toSortedList
-    | filter{ it.size() > 0 }
-    | map{ it -> 
-      [ "combined", it.collect{ it[1] } ] + it[0].drop(2) 
-    }
-    | getWorkflowArguments(key: "output")
-    | extract_scores.run(
-        auto: [ publish: true ]
-    )
-
-  emit: output_ch
 }
