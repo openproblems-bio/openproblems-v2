@@ -1,6 +1,6 @@
 __merge__: "file_unintegrated.yaml"
 type: file
-example: "resources_test/batch_integration/pancreas/bbknn.h5ad"
+example: "resources_test/batch_integration/pancreas/integrated_graph.h5ad"
 info:
   prediction_type: graph
   label: "Integrated Graph"
