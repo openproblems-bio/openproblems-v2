@@ -68,15 +68,15 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : true
               },
               {
-                "type" : "string",
-                "name" : "method_id",
-                "description" : "A unique identifier for the method",
+                "type" : "object",
+                "name" : "knn",
+                "description" : "Supplementary K nearest neighbors data.",
                 "required" : true
               },
               {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "If the method was done on hvg or full",
+                "type" : "string",
+                "name" : "method_id",
+                "description" : "A unique identifier for the method",
                 "required" : true
               },
               {
@@ -125,6 +125,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "obsp" : [
               {
                 "type" : "double",
+                "name" : "knn_distances",
+                "description" : "K nearest neighbors distance matrix.",
+                "required" : true
+              },
+              {
+                "type" : "double",
                 "name" : "knn_connectivities",
                 "description" : "K nearest neighbors connectivities matrix.",
                 "required" : true
@@ -133,7 +139,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/batch_integration/pancreas/scvi.h5ad"
+          "resources_test/batch_integration/pancreas/integrated_embedding.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -315,7 +321,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/asw_batch/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1aeb36230a16344098335003ed252316093cf6f4",
+    "git_commit" : "bd2a128ccedc6749a54edda47aa5b576a0979db1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

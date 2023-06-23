@@ -241,6 +241,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "obsp" : [
               {
                 "type" : "double",
+                "name" : "knn_distances",
+                "description" : "K nearest neighbors distance matrix.",
+                "required" : true
+              },
+              {
+                "type" : "double",
                 "name" : "knn_connectivities",
                 "description" : "K nearest neighbors connectivities matrix.",
                 "required" : true
@@ -263,6 +269,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "type" : "string",
                 "name" : "dataset_organism",
                 "description" : "Which normalization was used",
+                "required" : true
+              },
+              {
+                "type" : "object",
+                "name" : "knn",
+                "description" : "Supplementary K nearest neighbors data.",
                 "required" : true
               }
             ]
@@ -402,7 +414,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/process_dataset/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1aeb36230a16344098335003ed252316093cf6f4",
+    "git_commit" : "bd2a128ccedc6749a54edda47aa5b576a0979db1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
