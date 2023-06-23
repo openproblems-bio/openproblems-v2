@@ -25,22 +25,29 @@ include { f1 } from "$targetDir/label_projection/metrics/f1/main.nf"
 include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
-include { readConfig; channelFromParams; preprocessInputs; processConfig; helpMessage } from sourceDir + "/wf_utils/WorkflowHelper.nf"
+include { readConfig; channelFromParams; preprocessInputs; helpMessage } from sourceDir + "/wf_utils/WorkflowHelper.nf"
 include { setWorkflowArguments; getWorkflowArguments; passthroughMap as pmap; passthroughFilter as pfilter } from sourceDir + "/wf_utils/DataflowHelper.nf"
 include { runMethods } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/.config.vsh.yaml")
 
-// println("config.functionality.allArguments: ${config.functionality.allArguments}")
-
 // construct a map of methods (id -> method_module)
-methods = [ true_labels, majority_vote, random_labels, knn, logistic_regression, mlp, scanvi, scanvi_scarches, seurat_transferdata, xgboost ]
-  .collectEntries{method ->
-    method.config = processConfig(method.config)
-    [method.config.functionality.name, method]
-  }
-
-println("methods: ${methods}")
+methods = [
+  true_labels,
+  majority_vote,
+  random_labels,
+  knn,
+  logistic_regression,
+  mlp,
+  scanvi,
+  scanvi_scarches,
+  seurat_transferdata,
+  xgboost
+]
+metrics = [
+  accuracy,
+  f1
+]
 
 workflow {
   helpMessage(config)
