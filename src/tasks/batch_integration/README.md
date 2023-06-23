@@ -4,7 +4,7 @@ Remove unwanted batch effects from scRNA data while retaining
 biologically meaningful variation.
 
 Path:
-[`/viash_automount/home/rcannood/workspace/openproblems/openproblems-v2/src/tasks/batch_integration`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src//viash_automount/home/rcannood/workspace/openproblems/openproblems-v2/src/tasks/batch_integration)
+[`src/tasks/batch_integration`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/tasks/batch_integration)
 
 ## Motivation
 
@@ -54,33 +54,39 @@ extensive benchmark of single-cell data integration methods
 
 ``` mermaid
 flowchart LR
-  file_unintegrated(&quot;Unintegrated&quot;)
-  file_integrated_embedding(&quot;Integrated embedding&quot;)
-  file_integrated_feature(&quot;Integrated Feature&quot;)
-  file_integrated_graaf(&quot;Integrated Graph&quot;)
-  file_score(&quot;Score&quot;)
-  file_common_dataset(&quot;Common dataset&quot;)
-  comp_method_embedding[/&quot;Method (embedding)&quot;/]
-  comp_method_feature[/&quot;Method (feature)&quot;/]
-  comp_method_graaf[/&quot;Method (graph)&quot;/]
-  comp_metric_embedding[/&quot;Metric (embedding)&quot;/]
-  comp_metric_feature[/&quot;Metric (feature)&quot;/]
-  comp_metric_graaf[/&quot;Metric (graph)&quot;/]
-  comp_process_dataset[/&quot;Data processor&quot;/]
+  file_common_dataset("Common dataset")
+  comp_process_dataset[/"Data processor"/]
+  file_unintegrated("Unintegrated")
+  comp_method_embedding[/"Method (embedding)"/]
+  comp_method_feature[/"Method (feature)"/]
+  comp_method_graaf[/"Method (graph)"/]
+  file_integrated_embedding("Integrated embedding")
+  file_integrated_feature("Integrated Feature")
+  file_integrated_graaf("Integrated Graph")
+  comp_metric_embedding[/"Metric (embedding)"/]
+  comp_transformer_embedding_to_graaf[/"Embedding to Graph"/]
+  comp_metric_feature[/"Metric (feature)"/]
+  comp_transformer_feature_to_embedding[/"Feature to Embedding"/]
+  comp_metric_graaf[/"Metric (graph)"/]
+  file_score("Score")
+  file_common_dataset---comp_process_dataset
+  comp_process_dataset-->file_unintegrated
   file_unintegrated---comp_method_embedding
   file_unintegrated---comp_method_feature
   file_unintegrated---comp_method_graaf
+  comp_method_embedding-->file_integrated_embedding
+  comp_method_feature-->file_integrated_feature
+  comp_method_graaf-->file_integrated_graaf
   file_integrated_embedding---comp_metric_embedding
+  file_integrated_embedding---comp_transformer_embedding_to_graaf
   file_integrated_feature---comp_metric_feature
+  file_integrated_feature---comp_transformer_feature_to_embedding
   file_integrated_graaf---comp_metric_graaf
-  file_common_dataset---comp_process_dataset
-  comp_method_embedding--&gt;file_integrated_embedding
-  comp_method_feature--&gt;file_integrated_feature
-  comp_method_graaf--&gt;file_integrated_graaf
-  comp_metric_embedding--&gt;file_score
-  comp_metric_feature--&gt;file_score
-  comp_metric_graaf--&gt;file_score
-  comp_process_dataset--&gt;file_unintegrated
+  comp_metric_embedding-->file_score
+  comp_transformer_embedding_to_graaf-->file_integrated_graaf
+  comp_metric_feature-->file_score
+  comp_transformer_feature_to_embedding-->file_integrated_embedding
+  comp_metric_graaf-->file_score
 ```
 
 ## File format: Common dataset
@@ -417,6 +423,24 @@ Arguments:
 
 </div>
 
+## Component type: Embedding to Graph
+
+Path:
+[`src/batch_integration/transformers`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/transformers)
+
+Transform an embedding to a graph output.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type   | Description                              |
+|:-----------|:-------|:-----------------------------------------|
+| `--input`  | `file` | An integrated AnnData HDF5 file.         |
+| `--output` | `file` | (*Output*) Integrated AnnData HDF5 file. |
+
+</div>
+
 ## Component type: Metric (feature)
 
 Path:
@@ -432,6 +456,24 @@ Arguments:
 |:---------------------|:-------|:------------------------------|
 | `--input_integrated` | `file` | Integrated AnnData HDF5 file. |
 | `--output`           | `file` | (*Output*) Metric score file. |
+
+</div>
+
+## Component type: Feature to Embedding
+
+Path:
+[`src/batch_integration/transformers`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/transformers)
+
+Transform a feature output to an embedding.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type   | Description                                 |
+|:-----------|:-------|:--------------------------------------------|
+| `--input`  | `file` | Integrated AnnData HDF5 file.               |
+| `--output` | `file` | (*Output*) An integrated AnnData HDF5 file. |
 
 </div>
 

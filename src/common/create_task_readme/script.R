@@ -24,12 +24,13 @@ task_dir <- paste0(dirname(par[["viash_yaml"]]), "/src/tasks/", par[["task"]]) %
   gsub("^\\./", "", .)
 task_api <- read_task_api(task_dir)
 
-r_graph <- render_task_graph(task_api)
+# determine ordering
+root <- .task_graph_get_root(task_api)
 
-# todo: fix hard coded node
-order <- names(igraph::bfs(task_api$task_graph, "file_common_dataset")$order)
+r_graph <- render_task_graph(task_api, root)
 
 cat("Render API details\n")
+order <- names(igraph::bfs(task_api$task_graph, root)$order)
 r_details <- map_chr(
   order,
   function(file_name) {
@@ -54,6 +55,7 @@ authors_str <-
   }
 
 cat("Generate qmd content\n")
+task_dir_short <- gsub(".*openproblems-v2/", "", task_dir)
 qmd_content <- strip_margin(glue::glue("
   §---
   §title: \"{task_api$task_info$label}\"
@@ -62,7 +64,7 @@ qmd_content <- strip_margin(glue::glue("
   §
   §{task_api$task_info$summary}
   §
-  §Path: [`{task_dir}`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{task_dir})
+  §Path: [`{task_dir_short}`](https://github.com/openproblems-bio/openproblems-v2/tree/main/{task_dir_short})
   §
   §## Motivation
   §
