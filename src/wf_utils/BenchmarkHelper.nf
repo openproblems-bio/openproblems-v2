@@ -7,6 +7,8 @@ def runComponents(Map args) {
   if (components_ !instanceof List) {
     components_ = [ components_ ]
   }
+  assert components.size() > 0: "pass at least one component to runComponents"
+
   def from_state_ = args.from_state
   def to_state_ = args.to_state
   def filter_ = args.filter
@@ -42,10 +44,10 @@ def runComponents(Map args) {
       }
 
     // mix all results
-    output_ch = out_chs[0]
-    if (out_chs.size() > 1) {
-      output_ch = output_ch.mix(*out_chs.drop(1))
-    }
+    output_ch =
+      (out_chs.size == 1)
+        ? out_chs[0]
+        : out_chs[0].mix(*out_chs.drop(1))
 
     emit: output_ch
   }
@@ -54,6 +56,8 @@ def runComponents(Map args) {
 }
 
 def joinStates(Map args) {
+  assert args.apply: "joinStates should be passed a function in the apply argument"
+
   def apply_ = args.apply
   workflow joinStatesWf {
     take: input_ch

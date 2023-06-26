@@ -121,15 +121,8 @@ workflow run_wf {
         [new_id, new_state]
       }
     )
-
-    | runComponents(
-      components: extract_scores,
-      from_state: { id, state, config ->
-        [id, state]
-      },
-      to_state: { id, output, config ->
-        [output: output]
-      },
+    
+    | extract_scores.run(
       auto: [publish: true]
     )
 
