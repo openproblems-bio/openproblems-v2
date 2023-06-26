@@ -68,7 +68,10 @@ workflow run_wf {
   output_ch = input_ch
     | preprocessInputs(config: config)
 
-    // run methods
+    // run all methods
+    //   - use the 'filter' argument to only run a method on the normalisation the component is asking for
+    //   - use 'from_state' to fetch the arguments the component requires from the overall state
+    //   - use 'to_state' to publish that component's outputs to the overall state
     | runComponents(
       components: methods,
       filter: { id, state, config ->
@@ -97,7 +100,9 @@ workflow run_wf {
       }
     )
 
-    // run metrics
+    // run all metrics
+    //   - use 'from_state' to fetch the arguments the component requires from the overall state
+    //   - use 'to_state' to publish that component's outputs to the overall state
     | runComponents(
       components: metrics,
       from_state: { id, state, config ->
@@ -115,6 +120,9 @@ workflow run_wf {
       }
     )
 
+    // join all events into a new event where the new id is simply "output" and the new state consists of:
+    //   - "input": a list of score h5ads
+    //   - "output": the output argument of this workflow
     | joinStates(
       apply: { ids, states ->
         def new_id = "output"
@@ -126,6 +134,7 @@ workflow run_wf {
       }
     )
 
+    // convert to tsv and publish
     | extract_scores.run(
       auto: [publish: true]
     )
