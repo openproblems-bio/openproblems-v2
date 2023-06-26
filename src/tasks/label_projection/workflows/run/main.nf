@@ -21,9 +21,12 @@ include { xgboost } from "$targetDir/label_projection/methods/xgboost/main.nf"
 include { accuracy } from "$targetDir/label_projection/metrics/accuracy/main.nf"
 include { f1 } from "$targetDir/label_projection/metrics/f1/main.nf"
 
+// convert scores to tsv
+include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
+
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { runComponents; aggregate_scores } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { runComponents; joinStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 // read in pipeline config
 config = readConfig("$projectDir/config.vsh.yaml")
@@ -68,28 +71,28 @@ workflow run_wf {
     // run methods
     | runComponents(
       components: methods,
-      filter: { id, data, config ->
-        def norm = data.normalization_id
+      filter: { id, state, config ->
+        def norm = state.normalization_id
         def pref = config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
         (norm == "log_cpm" && pref == "counts") || norm == pref
       },
-      fetch_data: { id, data, config ->
+      from_state: { id, state, config ->
         def new_id = id + "." + config.functionality.name
         def new_args = [
-          input_train: data.input_train,
-          input_test: data.input_test
+          input_train: state.input_train,
+          input_test: state.input_test
         ]
         if (config.functionality.info.type == "control_method") {
-          new_args.input_solution = data.input_solution
+          new_args.input_solution = state.input_solution
         }
         [new_id, new_args]
       },
-      store_data: { id, data, config ->
+      to_state: { id, output, config ->
         [
           method_id: config.functionality.name,
-          prediction: data.output
+          prediction: output.output
         ]
       }
     )
@@ -97,23 +100,42 @@ workflow run_wf {
     // run metrics
     | runComponents(
       components: metrics,
-      fetch_data: { id, data, config ->
+      from_state: { id, state, config ->
         def new_args = [
-          input_solution: data.input_solution,
-          input_prediction: data.prediction
+          input_solution: state.input_solution,
+          input_prediction: state.prediction
         ]
         [id, new_args]
       },
-      store_data: { id, data, config ->
+      to_state: { id, output, config ->
         [
           metric_id: config.functionality.name,
-          scores: data.output
+          scores: output.output
         ]
       }
     )
-    // | view{"DEBUG2: ${it}"}
 
-    | aggregate_scores
+    | joinStates(
+      apply: { ids, states ->
+        def new_id = "output"
+        def new_state = [
+          "input": states.collect{it.scores},
+          "output": states[0].output
+        ]
+        [new_id, new_state]
+      }
+    )
+
+    | runComponents(
+      components: extract_scores,
+      from_state: { id, state, config ->
+        [id, state]
+      },
+      to_state: { id, output, config ->
+        [output: output]
+      },
+      auto: [publish: true]
+    )
 
   emit:
   output_ch

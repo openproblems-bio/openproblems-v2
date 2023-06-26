@@ -74,7 +74,7 @@ workflow run_wf {
         // we can pass whichever dataset we want
         (norm == "log_cpm" && pref == "counts") || norm == pref
       },
-      fetch_data: { id, data, config ->
+      from_state: { id, data, config ->
         def new_id = id + "." + config.functionality.name
         def new_args = [
           input: data.input
@@ -84,7 +84,7 @@ workflow run_wf {
         }
         [new_id, new_args]
       },
-      store_data: { id, data, config ->
+      to_state: { id, data, config ->
         [
           method_id: config.functionality.name,
           embedding: data.output
@@ -95,14 +95,14 @@ workflow run_wf {
     // run metrics
     | runComponents(
       components: metrics,
-      fetch_data: { id, data, config ->
+      from_state: { id, data, config ->
         def new_args = [
           input_embedding: data.embedding,
           input_solution: data.input_solution
         ]
         [id, new_args]
       },
-      store_data: { id, data, config ->
+      to_state: { id, data, config ->
         [
           metric_id: config.functionality.name,
           scores: data.output
@@ -111,7 +111,27 @@ workflow run_wf {
     )
     // | view{"DEBUG2: ${it}"}
 
-    | aggregate_scores
+    | joinStates(
+      apply: { ids, states ->
+        def new_id = "output"
+        def new_state = [
+          "input": states.collect{it.scores},
+          "output": states[0].output
+        ]
+        [new_id, new_state]
+      }
+    )
+
+    | runComponents(
+      components: extract_scores,
+      from_state: { id, state, config ->
+        [id, state]
+      },
+      to_state: { id, output, config ->
+        [output: output]
+      },
+      auto: [publish: true]
+    )
 
   emit:
   output_ch

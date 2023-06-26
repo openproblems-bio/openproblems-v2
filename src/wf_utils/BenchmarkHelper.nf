@@ -1,46 +1,51 @@
-sourceDir = params.rootDir + "/src"
-targetDir = params.rootDir + "/target/nextflow"
-
-include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
-include { preprocessInputs; processConfig } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-
 def runComponents(Map args) {
   assert args.components: "runComponents should be passed a list of components to run"
-  assert args.fetch_data: "runComponents should be passed a fetch_data function"
-  assert args.store_data: "runComponents should be passed a store_data function"
+  assert args.from_state: "runComponents should be passed a from_state function"
+  assert args.to_state: "runComponents should be passed a to_state function"
 
   def components_ = args.components
-  def fetch_data_ = args.fetch_data
-  def store_data_ = args.store_data
-  def filter_ = args.filter ?: { id, data, comp -> true }
+  if (components_ !instanceof List) {
+    components_ = [ components_ ]
+  }
+  def from_state_ = args.from_state
+  def to_state_ = args.to_state
+  def filter_ = args.filter
 
   workflow runComponentsWf {
     take: input_ch
     main:
 
     // generate one channel per method
-    out_chs = components_.collect { comp_ ->
+    out_chs = components_.collect{ comp_ ->
       def comp_config = comp_.config
 
-      input_ch
-        | filter{tup -> 
-          filter_(tup[0], tup[1], comp_config)
-        }
-        | map{tup ->
-          def new_tup = fetch_data_(tup[0], tup[1], comp_config)
+      if (filter_) {
+        mid_ch = input_ch
+          | filter{ tup -> 
+            filter_(tup[0], tup[1], comp_config)
+          }
+      } else {
+        mid_ch = input_ch
+      }
+      mid_ch
+        | map{ tup ->
+          def new_tup = from_state_(tup[0], tup[1], comp_config)
           new_tup + tup.drop(1)
         }
         | comp_.run(
-          auto: [simplifyInput: false, simplifyOutput: false]
+          auto: (args.auto ?: [:]) + [simplifyInput: false, simplifyOutput: false]
         )
         | map{tup ->
-          def new_outputs = store_data_(tup[0], tup[1], comp_config)
+          def new_outputs = to_state_(tup[0], tup[1], comp_config)
           [tup[0], tup[2] + new_outputs] + tup.drop(3)
         }
       }
 
     // mix all results
-    output_ch = out_chs[0].mix(*out_chs.drop(1))
+    output_ch = out_chs[0]
+    if (out_chs.size() > 1) {
+      output_ch = output_ch.mix(*out_chs.drop(1))
+    }
 
     emit: output_ch
   }
@@ -48,25 +53,21 @@ def runComponents(Map args) {
   return runComponentsWf
 }
 
+def joinStates(Map args) {
+  def apply_ = args.apply
+  workflow joinStatesWf {
+    take: input_ch
+    main:
+    output_ch = input_ch
+      | toSortedList
+      | filter{ it.size() > 0 }
+      | map{ tups ->
+        def ids = tups.collect{it[0]}
+        def states = tups.collect{it[1]}
+        apply_(ids, states)
+      }
 
-workflow aggregate_scores {
-  take: input_ch
-  main:
-
-  output_ch = input_ch
-    | toSortedList
-    | filter{ it.size() > 0 }
-    | map{ tups -> 
-      def new_id = "combined"
-      def new_data = [
-        "input": tups.collect{ it[1].scores },
-        "output": tups[0][1].output
-      ]
-      [new_id, new_data]
-    }
-    | extract_scores.run(
-        auto: [ publish: true ]
-    )
-
-  emit: output_ch
+    emit: output_ch
+  }
+  return joinStatesWf
 }
