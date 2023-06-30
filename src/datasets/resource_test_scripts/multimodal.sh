@@ -19,6 +19,7 @@ mkdir -p $DATASET_DIR
 viash run src/datasets/loaders/openproblems_v1_multimodal/config.vsh.yaml -- \
     --obs_tissue "source" \
     --layer_counts "counts" \
+    --obs_celltype "cell_name" \
     --dataset_id scicar_cell_lines \
     --dataset_name "sci-CAR cell lines" \
     --data_url "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117089" \
@@ -40,7 +41,7 @@ viash run src/datasets/processors/subsample/config.vsh.yaml -- \
     --n_obs 600 \
     --n_vars 1500 \
     --output $DATASET_DIR/raw_mod1.h5ad \
-    --output_mod2 $DATASET_DIR/raw_mod2.h5ad
+    --output_mod2 $DATASET_DIR/raw_mod2.h5ad \
     --seed 123
 
 # # run log cpm normalisation
