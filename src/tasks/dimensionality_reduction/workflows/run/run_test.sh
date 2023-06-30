@@ -12,7 +12,7 @@ cd "$REPO_ROOT"
 DATASET_DIR=resources_test/dimensionality_reduction/pancreas
 
 # run benchmark
-export NXF_VER=22.04.5
+export NXF_VER=23.04.2
 
 nextflow \
   run . \
@@ -25,4 +25,4 @@ nextflow \
   --input $DATASET_DIR/dataset.h5ad \
   --input_solution $DATASET_DIR/solution.h5ad \
   --output scores.tsv \
-  --publish_dir output/
+  --publish_dir output/dimensionality_reduction/

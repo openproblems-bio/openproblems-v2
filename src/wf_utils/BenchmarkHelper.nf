@@ -1,19 +1,18 @@
-def runComponents(Map args) {
-  assert args.components: "runComponents should be passed a list of components to run"
-  assert args.from_state: "runComponents should be passed a from_state function"
-  assert args.to_state: "runComponents should be passed a to_state function"
+def run_components(Map args) {
+  assert args.components: "run_components should be passed a list of components to run"
 
   def components_ = args.components
   if (components_ !instanceof List) {
     components_ = [ components_ ]
   }
-  assert components.size() > 0: "pass at least one component to runComponents"
+  assert components_.size() > 0: "pass at least one component to run_components"
 
   def from_state_ = args.from_state
   def to_state_ = args.to_state
   def filter_ = args.filter
+  def id_ = args.id
 
-  workflow runComponentsWf {
+  workflow run_components_wf {
     take: input_ch
     main:
 
@@ -21,27 +20,62 @@ def runComponents(Map args) {
     out_chs = components_.collect{ comp_ ->
       def comp_config = comp_.config
 
-      if (filter_) {
-        mid_ch = input_ch
-          | filter{ tup -> 
-            filter_(tup[0], tup[1], comp_config)
-          }
-      } else {
-        mid_ch = input_ch
-      }
-      mid_ch
-        | map{ tup ->
-          def new_tup = from_state_(tup[0], tup[1], comp_config)
-          new_tup + tup.drop(1)
+      filter_ch = filter_
+        ? input_ch | filter{tup ->
+          filter_(tup[0], tup[1], comp_config)
         }
+        : input_ch
+      id_ch = id_
+        ? filter_ch | map{tup ->
+          // def new_id = id_(tup[0], tup[1], comp_config)
+          def new_id = tup[0]
+          if (from_state_ instanceof String) {
+            new_id = from_state_
+          } else if (from_state_ instanceof Closure) {
+            new_id = id_(new_id, tup[1], comp_config)
+          }
+          [new_id] + tup.drop(1)
+        }
+        : filter_ch
+      data_ch = id_ch | map{tup ->
+          def new_data = tup[1]
+          if (from_state_ instanceof Map) {
+            new_data = from_state_.collectEntries{ key0, key1 ->
+              [key0, new_data[key1]]
+            }
+          } else if (from_state_ instanceof List) {
+            new_data = from_state_.collectEntries{ key ->
+              [key, new_data[key]]
+            }
+          } else if (from_state_ instanceof Closure) {
+            new_data = from_state_(tup[0], new_data, comp_config)
+          }
+          tup.take(1) + [new_data] + tup.drop(1)
+        }
+      out_ch = data_ch
         | comp_.run(
           auto: (args.auto ?: [:]) + [simplifyInput: false, simplifyOutput: false]
         )
-        | map{tup ->
-          def new_outputs = to_state_(tup[0], tup[1], comp_config)
+      post_ch = to_state_
+        ? out_ch | map{tup ->
+          def new_outputs = tup[1]
+          if (to_state_ instanceof Map) {
+            new_outputs = to_state_.collectEntries{ key0, key1 ->
+              [key0, new_outputs[key1]]
+            }
+          } else if (to_state_ instanceof List) {
+            new_outputs = to_state_.collectEntries{ key ->
+              [key, new_outputs[key]]
+            }
+          } else if (to_state_ instanceof Closure) {
+            new_outputs = to_state_(tup[0], new_outputs, comp_config)
+          }
           [tup[0], tup[2] + new_outputs] + tup.drop(3)
         }
-      }
+        : out_ch
+      
+      post_ch
+    }
 
     // mix all results
     output_ch =
@@ -52,14 +86,11 @@ def runComponents(Map args) {
     emit: output_ch
   }
 
-  return runComponentsWf
+  return run_components_wf
 }
 
-def joinStates(Map args) {
-  assert args.apply: "joinStates should be passed a function in the apply argument"
-
-  def apply_ = args.apply
-  workflow joinStatesWf {
+def join_states(Closure apply_) {
+  workflow join_states_wf {
     take: input_ch
     main:
     output_ch = input_ch
@@ -73,5 +104,45 @@ def joinStates(Map args) {
 
     emit: output_ch
   }
-  return joinStatesWf
+  return join_states_wf
+}
+
+
+class CustomTraceObserver implements nextflow.trace.TraceObserver {
+  List traces
+
+  CustomTraceObserver(List traces) {
+    this.traces = traces
+  }
+
+  @Override
+  void onProcessComplete(nextflow.processor.TaskHandler handler, nextflow.trace.TraceRecord trace) {
+    traces.add(trace.store.clone())
+  }
+
+  @Override
+  void onProcessCached(nextflow.processor.TaskHandler handler, nextflow.trace.TraceRecord trace) {
+    traces.add(trace.store.clone())
+  }
+}
+
+def initialize_tracer() {
+  def traces = Collections.synchronizedList([])
+
+  // add custom trace observer which stores traces in the traces object
+  session.observers.add(new CustomTraceObserver(traces))
+
+  traces
+}
+
+def write_json(data, file) {
+  assert data: "write_json: data should not be null"
+  assert file: "write_json: file should not be null"
+  file.write(groovy.json.JsonOutput.toJson(data))
+}
+
+def get_publish_dir() {
+  return params.containsKey("publish_dir") ? params.publish_dir : 
+    params.containsKey("publishDir") ? params.publishDir : 
+    null
 }
