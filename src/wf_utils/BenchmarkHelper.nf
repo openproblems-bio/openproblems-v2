@@ -29,9 +29,9 @@ def run_components(Map args) {
         ? filter_ch | map{tup ->
           // def new_id = id_(tup[0], tup[1], comp_config)
           def new_id = tup[0]
-          if (from_state_ instanceof String) {
-            new_id = from_state_
-          } else if (from_state_ instanceof Closure) {
+          if (id_ instanceof String) {
+            new_id = id_
+          } else if (id_ instanceof Closure) {
             new_id = id_(new_id, tup[1], comp_config)
           }
           [new_id] + tup.drop(1)
@@ -117,12 +117,16 @@ class CustomTraceObserver implements nextflow.trace.TraceObserver {
 
   @Override
   void onProcessComplete(nextflow.processor.TaskHandler handler, nextflow.trace.TraceRecord trace) {
-    traces.add(trace.store.clone())
+    def trace2 = trace.store.clone()
+    trace2.script = null
+    traces.add(trace2)
   }
 
   @Override
   void onProcessCached(nextflow.processor.TaskHandler handler, nextflow.trace.TraceRecord trace) {
-    traces.add(trace.store.clone())
+    def trace2 = trace.store.clone()
+    trace2.script = null
+    traces.add(trace2)
   }
 }
 
