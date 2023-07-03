@@ -1,5 +1,3 @@
-nextflow.enable.dsl=2
-
 sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
 
@@ -69,7 +67,13 @@ workflow run_wf {
 
   main:
   output_ch = input_ch
+    // based on the config file (config.vsh.yaml), run assertions on parameter sets
+    // and fill in default values
     | preprocessInputs(config: config)
+
+    | view{ id, state ->
+      "input event: [id: $id, dataset_id: $state.dataset_id, normalization_id: $state.normalization_id, ...]"
+    }
 
     // run all methods
     | run_components(
@@ -110,6 +114,10 @@ workflow run_wf {
       }
     )
 
+    | view{ id, state ->
+      "after method: [id: $id, dataset_id: $state.dataset_id, normalization_id: $state.normalization_id, method_id: $state.method_id, ...]"
+    }
+
     // run all metrics
     | run_components(
       components: metrics,
@@ -126,6 +134,10 @@ workflow run_wf {
         ]
       }
     )
+
+    | view{ id, state ->
+      "after metric: [id: $id, dataset_id: $state.dataset_id, normalization_id: $state.normalization_id, method_id: $state.method_id, metric_id: $state.metric_id, ...]"
+    }
 
     // join all events into a new event where the new id is simply "output" and the new state consists of:
     //   - "input": a list of score h5ads
