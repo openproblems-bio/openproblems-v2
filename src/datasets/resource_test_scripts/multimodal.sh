@@ -44,24 +44,42 @@ viash run src/datasets/processors/subsample/config.vsh.yaml -- \
     --output_mod2 $DATASET_DIR/raw_mod2.h5ad \
     --seed 123
 
-# # run log cpm normalisation
-# viash run src/datasets/normalization/log_cpm/config.vsh.yaml -- \
-#     --input $DATASET_DIR/raw.h5ad \
-#     --output $DATASET_DIR/normalized.h5ad
 
-# # run pca
-# viash run src/datasets/processors/pca/config.vsh.yaml -- \
-#     --input $DATASET_DIR/normalized.h5ad \
-#     --output $DATASET_DIR/pca.h5ad
+# run sqrt cpm normalisation on mod 1 file
+viash run src/datasets/normalization/log_cpm/config.vsh.yaml -- \
+    --input $DATASET_DIR/raw_mod1.h5ad \
+    --output $DATASET_DIR/normalized_mod1.h5ad
 
-# # run hvg
-# viash run src/datasets/processors/hvg/config.vsh.yaml -- \
-#     --input $DATASET_DIR/pca.h5ad \
-#     --output $DATASET_DIR/hvg.h5ad
+# run log cpm normalisation on mod 2 file
+viash run src/datasets/normalization/log_cpm/config.vsh.yaml -- \
+    --input $DATASET_DIR/raw_mod2.h5ad \
+    --output $DATASET_DIR/normalized_mod2.h5ad
 
-# # run knn
-# viash run src/datasets/processors/knn/config.vsh.yaml -- \
-#     --input $DATASET_DIR/hvg.h5ad \
-#     --output $DATASET_DIR/dataset.h5ad
+# run pca
+viash run src/datasets/processors/pca/config.vsh.yaml -- \
+    --input $DATASET_DIR/normalized_mod1.h5ad \
+    --output $DATASET_DIR/pca_mod1.h5ad
+
+viash run src/datasets/processors/pca/config.vsh.yaml -- \
+    --input $DATASET_DIR/normalized_mod2.h5ad \
+    --output $DATASET_DIR/pca_mod2.h5ad
+
+# run hvg
+viash run src/datasets/processors/hvg/config.vsh.yaml -- \
+    --input $DATASET_DIR/pca_mod1.h5ad \
+    --output $DATASET_DIR/hvg_mod1.h5ad
+
+viash run src/datasets/processors/hvg/config.vsh.yaml -- \
+    --input $DATASET_DIR/pca_mod2.h5ad \
+    --output $DATASET_DIR/hvg_mod2.h5ad
+
+# run knn
+viash run src/datasets/processors/knn/config.vsh.yaml -- \
+    --input $DATASET_DIR/hvg_mod1.h5ad \
+    --output $DATASET_DIR/dataset_mod1.h5ad
+
+viash run src/datasets/processors/knn/config.vsh.yaml -- \
+    --input $DATASET_DIR/hvg_mod2.h5ad \
+    --output $DATASET_DIR/dataset_mod2.h5ad
 
 rm -r $DATASET_DIR/temp_*
