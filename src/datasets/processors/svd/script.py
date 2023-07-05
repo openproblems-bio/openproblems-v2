@@ -15,11 +15,11 @@ par = {
 print(">> Load data", flush=True)
 adata = ad.read(par["input"])
 
-print("check parameters", flush=True)
-n_svd = min([par["num_components"], min(adata.layers["normalized"].shape) - 1])
+print(">> check parameters", flush=True)
+n_svd = min([par["num_components"], min(adata.layers[par["layer_input"]].shape) - 1])
 
 print(">> Run SVD", flush=True)
-svd = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata.layers["normalized"])
+svd = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata.layers[par["layer_input"]])
 
 print(">> Storing output", flush=True)
 adata.obsm[par["obsm_embedding"]] = svd

@@ -52,31 +52,22 @@ viash run src/datasets/normalization/log_cpm/config.vsh.yaml -- \
     --input $DATASET_DIR/raw_mod2.h5ad \
     --output $DATASET_DIR/normalized_mod2.h5ad
 
-# run pca
-viash run src/datasets/processors/pca/config.vsh.yaml -- \
+# run svd
+viash run src/datasets/processors/svd/config.vsh.yaml -- \
     --input $DATASET_DIR/normalized_mod1.h5ad \
-    --output $DATASET_DIR/pca_mod1.h5ad
+    --output $DATASET_DIR/svd_mod1.h5ad
 
-viash run src/datasets/processors/pca/config.vsh.yaml -- \
+viash run src/datasets/processors/svd/config.vsh.yaml -- \
     --input $DATASET_DIR/normalized_mod2.h5ad \
-    --output $DATASET_DIR/pca_mod2.h5ad
+    --output $DATASET_DIR/svd_mod2.h5ad
 
 # run hvg
 viash run src/datasets/processors/hvg/config.vsh.yaml -- \
-    --input $DATASET_DIR/pca_mod1.h5ad \
-    --output $DATASET_DIR/hvg_mod1.h5ad
-
-viash run src/datasets/processors/hvg/config.vsh.yaml -- \
-    --input $DATASET_DIR/pca_mod2.h5ad \
-    --output $DATASET_DIR/hvg_mod2.h5ad
-
-# run knn
-viash run src/datasets/processors/knn/config.vsh.yaml -- \
-    --input $DATASET_DIR/hvg_mod1.h5ad \
+    --input $DATASET_DIR/svd_mod1.h5ad \
     --output $DATASET_DIR/dataset_mod1.h5ad
 
-viash run src/datasets/processors/knn/config.vsh.yaml -- \
-    --input $DATASET_DIR/hvg_mod2.h5ad \
+viash run src/datasets/processors/hvg/config.vsh.yaml -- \
+    --input $DATASET_DIR/svd_mod2.h5ad \
     --output $DATASET_DIR/dataset_mod2.h5ad
 
 rm -r $DATASET_DIR/temp_*

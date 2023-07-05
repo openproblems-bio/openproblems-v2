@@ -27,7 +27,7 @@ functionality:
       description: "In which .obsm slot to store the resulting embedding."
     - name: "--num_components"
       type: integer
-      example: 100
+      default: 100
       description: Number of principal components to compute. Defaults to 100, or 1 - minimum dimension size of selected representation.
   test_resources:
     - path: /resources_test/common/pancreas
