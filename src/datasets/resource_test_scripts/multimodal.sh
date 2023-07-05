@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #make sure the following command has been executed
-#viash_build -q 'label_projection|common'
+#viash ns build -q 'datasets|common' --parallel --setup cb
 
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -30,9 +30,6 @@ viash run src/datasets/loaders/openproblems_v1_multimodal/config.vsh.yaml -- \
     --output_mod1 $DATASET_DIR/temp_mod1_full.h5ad \
     --output_mod2 $DATASET_DIR/temp_mod2_full.h5ad
 
-# wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/g2m_genes_tirosh_hm.txt -O $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt
-# wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/s_genes_tirosh_hm.txt -O $DATASET_DIR/temp_s_genes_tirosh_hm.txt
-# KEEP_FEATURES=`cat $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt $DATASET_DIR/temp_s_genes_tirosh_hm.txt | paste -sd ":" -`
 
 # subsample
 viash run src/datasets/processors/subsample/config.vsh.yaml -- \
