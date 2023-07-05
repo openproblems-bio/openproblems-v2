@@ -96,34 +96,40 @@ workflow run_wf {
     )
 
     // // transform data
-    // | run_components(
-    //   //  TODO: filter to feature output methods only
-    //   components: feature_to_embed,
-    //   from_state: ["input"],
-    //   to_state: { id, output, config ->
-    //     [
-    //       transformer_id: config.functionality.name,
-    //       transformer_output: output.output
-    //     ]
-    //   },
-    // )
+    | run_components(
+      //  TODO: filter to feature output methods only
+      components: feature_to_embed,
+      from_state: [
+        input: "method_output"
+      ],
+      to_state: { id, output, config ->
+        [
+          transformer_feature_to_embed_id: config.functionality.name,
+          transformer_feature_to_embed_output: output.output
+        ]
+      },
+    )
 
-    // | run_components(
-    //   //  TODO: filter to feature and embedding output methods only
-    //   components: embed_to_graph,
-    //   from_state: ["input"],
-    //   to_state: { id, output, config ->
-    //     [
-    //       transformer_id: config.functionality.name,
-    //       transformer_output: output.output
-    //     ]
-    //   },
-    // )
+    | run_components(
+      //  TODO: filter to feature and embedding output methods only
+      components: embed_to_graph,
+      from_state: [
+        input: "transformer_feature_to_embed_output"
+      ],
+      to_state: { id, output, config ->
+        [
+          transformer_embed_to_graph_id: config.functionality.name,
+          transformer_embed_to_graph_output: output.output
+        ]
+      },
+    )
 
     // run all metrics
     | run_components(
       components: metrics,
-      from_state: ["input_integrated"],
+      from_state: [
+        input_integrated: "transformer_embed_to_graph_output"
+      ],
       to_state: { id, output, config ->
         [
           metric_id: config.functionality.name,
