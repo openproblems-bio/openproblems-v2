@@ -25,12 +25,12 @@ if par["seed"]:
 print(">> Load data", flush=True)
 adata_input = sc.read_h5ad(par["input"])
 
-if par["input_mod2"]:
+if par["input_mod2"] is not None:
     adata_mod2 = sc.read_h5ad(par["input_mod2"])
 
 # copy counts to .X because otherwise filter_genes and filter_cells won't work
 adata_input.X = adata_input.layers["counts"]
-if adata_mod2:
+if par["input_mod2"] is not None:
     adata_mod2.X = adata_mod2.layers["counts"]
 
 print(">> Determining output shape", flush=True)
@@ -75,7 +75,7 @@ else:
 
 
 adata_output = adata_input[obs_index, var_ix].copy()
-if adata_mod2:
+if par["input_mod2"] is not None:
     adata_output_mod2 = adata_mod2[obs_index, var_ix].copy()
 
 # todo: this should not remove features in keep_features!
@@ -83,21 +83,21 @@ print(">> Remove empty observations and features", flush=True)
 sc.pp.filter_genes(adata_output, min_cells=1)
 sc.pp.filter_cells(adata_output, min_counts=2)
 
-if adata_output_mod2:
+if par["input_mod2"] is not None:
     sc.pp.filter_genes(adata_output_mod2, min_cells=1)
     sc.pp.filter_cells(adata_output_mod2, min_counts=2)
 
 print(">> Update dataset_id", flush=True)
 adata_output.uns["dataset_id"] = adata_output.uns["dataset_id"] + "_subsample"
-if adata_output_mod2:
+if par["input_mod2"] is not None:
     adata_output_mod2.uns["dataset_id"] = adata_output_mod2.uns["dataset_id"] + "_subsample"
 
 # remove previously copied .X
 del adata_output.X
-if adata_output_mod2:
+if par["input_mod2"] is not None:
     del adata_output_mod2.X
 
 print(">> Writing data")
 adata_output.write_h5ad(par["output"])
-if adata_output_mod2:
+if par["output_mod2"] is not None:
     adata_output_mod2.write_h5ad(par["output_mod2"])
