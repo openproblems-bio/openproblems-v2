@@ -55,11 +55,9 @@ viash run src/datasets/normalization/log_cpm/config.vsh.yaml -- \
 # run svd
 viash run src/datasets/processors/svd/config.vsh.yaml -- \
     --input $DATASET_DIR/normalized_mod1.h5ad \
-    --output $DATASET_DIR/svd_mod1.h5ad
-
-viash run src/datasets/processors/svd/config.vsh.yaml -- \
-    --input $DATASET_DIR/normalized_mod2.h5ad \
-    --output $DATASET_DIR/svd_mod2.h5ad
+    --input_mod2 $DATASET_DIR/normalized_mod2.h5ad \
+    --output $DATASET_DIR/svd_mod1.h5ad \
+    --output_mod2 $DATASET_DIR/svd_mod2.h5ad
 
 # run hvg
 viash run src/datasets/processors/hvg/config.vsh.yaml -- \
