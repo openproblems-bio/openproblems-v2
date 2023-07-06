@@ -16,7 +16,11 @@ functionality:
       __merge__: file_mod.yaml
       direction: input
       required: true
-    - name: "--output"
+    - name: "--output_mod1"
+      __merge__: file_integrated.yaml
+      direction: output
+      required: true
+    - name: "--output_mod2"
       __merge__: file_integrated.yaml
       direction: output
       required: true

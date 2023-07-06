@@ -47,5 +47,5 @@ adata_mod2.obsm["aligned"] = XY_aligned[-adata_mod2.obsm["X_svd"].shape[0] :]
 print("Write output to file", flush=True)
 adata_mod1.uns["method_id"] = meta["functionality_name"]
 adata_mod2.uns["method_id"] = meta["functionality_name"]
-adata_mod1.write_h5ad(par["output"], compression = "gzip")
-adata_mod2.write_h5ad(par["output"], compression = "gzip")
+adata_mod1.write_h5ad(par["output_mod1"], compression = "gzip")
+adata_mod2.write_h5ad(par["output_mod2"], compression = "gzip")

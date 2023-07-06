@@ -1,8 +1,8 @@
 type: file
 example: "resources_test/label_projection/pancreas/solution.h5ad"
 info:
-  label: "Solution"
-  summary: "The solution for the test data"
+  label: "Integrated"
+  summary: "The integrated data"
   slots:
     layers: 
       - type: integer
