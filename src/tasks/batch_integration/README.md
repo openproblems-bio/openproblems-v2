@@ -57,8 +57,8 @@ flowchart LR
   file_common_dataset("Common dataset")
   comp_process_dataset[/"Data processor"/]
   file_unintegrated("Unintegrated")
-  comp_control_method_embedding[/"control method (embedding)"/]
-  comp_control_method_graaf[/"control method (graph)"/]
+  comp_control_method_embedding[/"Control method (embedding)"/]
+  comp_control_method_graaf[/"Control method (graph)"/]
   comp_method_embedding[/"Method (embedding)"/]
   comp_method_feature[/"Method (feature)"/]
   comp_method_graaf[/"Method (graph)"/]
@@ -215,7 +215,7 @@ Slot description:
 
 </div>
 
-## Component type: control method (embedding)
+## Component type: Control method (embedding)
 
 Path:
 [`src/batch_integration/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/control_methods)
@@ -234,7 +234,7 @@ Arguments:
 
 </div>
 
-## Component type: control method (graph)
+## Component type: Control method (graph)
 
 Path:
 [`src/batch_integration/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/control_methods)
