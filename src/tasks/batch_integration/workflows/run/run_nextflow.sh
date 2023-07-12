@@ -11,7 +11,7 @@ cd "$REPO_ROOT"
 
 set -xe
 
-DATASET_DIR=resources_test/common/pancreas
+DATASET_DIR=resources_test/batch_integration/pancreas
 
 # run benchmark
 export NXF_VER=22.04.5
@@ -25,6 +25,6 @@ nextflow run . \
   --id pancreas \
   --dataset_id pancreas \
   --normalization_id log_cpm \
-  --input $DATASET_DIR/dataset.h5ad \
+  --input $DATASET_DIR/unintegrated.h5ad \
   --output scores.tsv \
   --publish_dir $DATASET_DIR/
