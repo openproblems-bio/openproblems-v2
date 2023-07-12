@@ -79,9 +79,7 @@ workflow run_wf {
       components: check_dataset_schema,
       from_state: ["input"],
       to_state: { id, output, config ->
-        def dataset_metadata = new org.yaml.snakeyaml.Yaml().load(output.meta)
-        def tup = [output: output.output] 
-        tup + dataset_metadata
+        new org.yaml.snakeyaml.Yaml().load(output.meta)
       }
     )
 
@@ -154,7 +152,7 @@ workflow run_wf {
       filter: { id, state, config ->
         state.method_subtype == config.functionality.info.subtype
       },
-      from_state: [input: "method_output"],
+      from_state: [input_integrated: "method_output"],
       to_state: { id, output, config ->
         [
           metric_id: config.functionality.name,
