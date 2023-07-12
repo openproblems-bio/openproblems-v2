@@ -8,7 +8,8 @@ dataset_id: # please fill in - example: "foo"
 sparse: true
 
 # Outputs
-# output: "$id.$key.output.h5ad"
+# output_dataset: "$id.$key.output_dataset.h5ad"
+# output_meta: "$id.$key.output_meta.yaml"
 
 # Metadata
 dataset_name: # please fill in - example: "foo"

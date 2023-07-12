@@ -188,18 +188,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "description" : "The metric values obtained for the given prediction. Must be of same length as 'metric_ids'.",
                 "multiple" : true,
                 "required" : true
-              },
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "If the method was done on hvg or full",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "output_type",
-                "description" : "what kind of output has been generated",
-                "required" : true
               }
             ]
           }
@@ -319,6 +307,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "id" : "nextflow",
       "variant" : "vdsl3",
       "directives" : {
+        "label" : [
+          "midmem",
+          "lowcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -335,7 +327,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/clustering_overlap/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "bd2a128ccedc6749a54edda47aa5b576a0979db1",
+    "git_commit" : "8874ba94c0cf07dd139379e9025b38a90b9cda8e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -396,9 +388,7 @@ output = ad.AnnData(
         'normalization_id': input.uns['normalization_id'],
         "method_id": input.uns['method_id'],
         "metric_ids": [ "ari", "nmi" ],
-        "metric_values": [ ari_score, nmi_score ],
-        "hvg": input.uns['hvg'],
-        'output_type': input.uns['output_type'],
+        "metric_values": [ ari_score, nmi_score ]
     }
 )
 
@@ -421,6 +411,10 @@ thisDefaultProcessArgs = [
     "image" : "openproblems-bio/batch_integration/metrics/clustering_overlap",
     "tag" : "main_build"
   },
+  "label" : [
+    "midmem",
+    "lowcpu"
+  ],
   "tag" : "$id"
 }'''),
   // auto settings

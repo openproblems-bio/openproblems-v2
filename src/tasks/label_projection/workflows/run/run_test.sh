@@ -9,16 +9,10 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 # ensure that the command below is run from the root of the repository
 cd "$REPO_ROOT"
 
-RAW_DATA=resources_test/common/pancreas/dataset.h5ad
 DATASET_DIR=resources_test/label_projection/pancreas
 
-if [ ! -f $RAW_DATA ]; then
-    echo "Error! Could not find raw data"
-    exit 1
-fi
-
 # run benchmark
-export NXF_VER=22.04.5
+export NXF_VER=23.04.2
 
 nextflow \
   run . \
@@ -32,4 +26,4 @@ nextflow \
   --input_test $DATASET_DIR/test.h5ad \
   --input_solution $DATASET_DIR/solution.h5ad \
   --output scores.tsv \
-  --publish_dir output/
+  --publish_dir output/label_projection/

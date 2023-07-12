@@ -119,7 +119,7 @@ functionality:
   - name: "Outputs"
     arguments:
     - type: "file"
-      name: "--output"
+      name: "--output_dataset"
       description: "A raw dataset"
       info:
         label: "Raw dataset"
@@ -148,7 +148,19 @@ functionality:
             description: "A unique identifier for the dataset"
             required: true
       example:
-      - "raw_dataset.h5ad"
+      - "dataset.h5ad"
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_meta"
+      description: "Dataset metadata"
+      example:
+      - "dataset_meta.yaml"
       must_exist: true
       create_parent: true
       required: false
@@ -182,5 +194,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1/process_openproblems_v1"
   viash_version: "0.7.3"
-  git_commit: "bd2a128ccedc6749a54edda47aa5b576a0979db1"
+  git_commit: "8874ba94c0cf07dd139379e9025b38a90b9cda8e"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

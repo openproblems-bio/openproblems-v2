@@ -319,7 +319,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "control_method",
       "subtype" : "embedding",
       "type_info" : {
-        "label" : "control method (embedding)",
+        "label" : "Control method (embedding)",
         "summary" : "A batch integration embedding control method.",
         "description" : "A batch integration control method which outputs a batch-corrected embedding.\n"
       }
@@ -373,7 +373,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/control_methods/random_embed_cell_jitter/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "bd2a128ccedc6749a54edda47aa5b576a0979db1",
+    "git_commit" : "8874ba94c0cf07dd139379e9025b38a90b9cda8e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -432,7 +432,6 @@ input.obsm['X_emb'] = csr_matrix(embedding + np.random.uniform(-1 * par['jitter'
 
 print("Store outputs", flush=True)
 input.uns['output_type'] = output_type
-input.uns['hvg'] = par['hvg']
 input.uns['method_id'] = meta['functionality_name']
 input.write_h5ad(par['output'], compression='gzip')
 

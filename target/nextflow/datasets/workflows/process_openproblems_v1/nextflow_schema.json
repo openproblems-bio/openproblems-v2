@@ -52,10 +52,15 @@
         "type": "object",
         "description": "No description",
         "properties": {
-          "output": {
+          "output_dataset": {
             "type": "string",
             "description": "A raw dataset",
-            "default": "$id.$key.output.h5ad"
+            "default": "$id.$key.output_dataset.h5ad"
+          },
+          "output_meta": {
+            "type": "string",
+            "description": "Dataset metadata",
+            "default": "$id.$key.output_meta.yaml"
           }
           
         }

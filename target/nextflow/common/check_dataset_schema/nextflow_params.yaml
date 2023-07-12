@@ -1,6 +1,6 @@
 # Inputs
 input: # please fill in - example: "path/to/file"
-schema: # please fill in - example: "path/to/file"
+# schema: "path/to/file"
 
 # Arguments
 stop_on_error: false
@@ -8,6 +8,7 @@ stop_on_error: false
 # Output
 # checks: "$id.$key.checks.json"
 # output: "$id.$key.output.h5ad"
+# meta: "$id.$key.meta.yaml"
 
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"

@@ -363,6 +363,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "id" : "nextflow",
       "variant" : "vdsl3",
       "directives" : {
+        "label" : [
+          "midmem",
+          "lowcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -379,7 +383,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/combat/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "bd2a128ccedc6749a54edda47aa5b576a0979db1",
+    "git_commit" : "8874ba94c0cf07dd139379e9025b38a90b9cda8e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -456,6 +460,10 @@ thisDefaultProcessArgs = [
     "image" : "openproblems-bio/batch_integration/methods/combat",
     "tag" : "main_build"
   },
+  "label" : [
+    "midmem",
+    "lowcpu"
+  ],
   "tag" : "$id"
 }'''),
   // auto settings

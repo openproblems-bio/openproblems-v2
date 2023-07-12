@@ -49,6 +49,11 @@
             "type": "string",
             "description": "If specified, the output file will be a copy of the input file.",
             "default": "$id.$key.output.h5ad"
+          },
+          "meta": {
+            "type": "string",
+            "description": "If specified, the output file will contain metadata of the dataset.",
+            "default": "$id.$key.meta.yaml"
           }
           
         }
