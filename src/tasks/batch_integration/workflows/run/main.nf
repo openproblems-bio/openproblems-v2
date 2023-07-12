@@ -15,6 +15,12 @@ include { scanorama_embed } from "$targetDir/batch_integration/methods/scanorama
 include { scanorama_feature } from "$targetDir/batch_integration/methods/scanorama_feature/main.nf"
 include { scvi } from "$targetDir/batch_integration/methods/scvi/main.nf"
 
+// import control methods
+include { no_integration_batch } from "$targetDir/batch_integration/control_methods/no_integration_batch/main.nf"
+include { random_embed_cell } from "$targetDir/batch_integration/control_methods/random_embed_cell/main.nf"
+include { random_embed_cell_jitter } from "$targetDir/batch_integration/control_methods/random_embed_cell_jitter/main.nf"
+include { random_integration } from "$targetDir/batch_integration/control_methods/random_integration/main.nf"
+
 // import transformers
 include { feature_to_embed } from "$targetDir/batch_integration/transformers/feature_to_embed/main.nf"
 include { embed_to_graph } from "$targetDir/batch_integration/transformers/embed_to_graph/main.nf"
@@ -44,7 +50,11 @@ methods = [
   combat,
   scanorama_embed,
   scanorama_feature,
-  scvi
+  scvi,
+  no_integration_batch,
+  random_embed_cell,
+  random_embed_cell_jitter,
+  random_integration
 ]
 
 // collect metric list
