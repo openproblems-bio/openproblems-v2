@@ -23,7 +23,8 @@ print("create output objects", flush=True)
 prediction = csc_matrix((ad_mod1_test.n_obs, ad_mod2.n_vars), dtype = np.float32)
 
 out = anndata.AnnData(
-    X=prediction,
+    layers={"normalized": prediction},
+    shape=prediction.shape,
     obs=ad_mod1_test.obs,
     var=ad_mod2.var,
     uns={

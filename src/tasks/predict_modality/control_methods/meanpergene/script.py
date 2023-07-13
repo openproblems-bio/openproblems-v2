@@ -20,12 +20,13 @@ input_train_mod2 = ad.read_h5ad(par["input_train_mod2"])
 
 
 # Find the correct shape
-mean = np.array(input_train_mod2.X.mean(axis=0)).flatten()
+mean = np.array(input_train_mod2.layers["normalized"].mean(axis=0)).flatten()
 prediction = csc_matrix(np.tile(mean, (input_test_mod1.shape[0], 1)))
 
 # Write out prediction
 out = ad.AnnData(
-    X=prediction,
+    layers={"normalized": prediction},
+    shape=prediction.shape,
     obs=input_test_mod1.obs,
     var=input_train_mod2.var,
     uns={

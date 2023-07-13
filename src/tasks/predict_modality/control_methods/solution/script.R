@@ -13,7 +13,7 @@ meta <- list(
 ## VIASH END
 
 cat("Reading h5ad files\n")
-ad2_test <- anndata::read_h5ad(par$input_solution)
+ad2_test <- anndata::read_h5ad(par$input_test_mod2)
 ad2_test$uns[["method_id"]] <- meta$functionality_name
 
 cat("Writing predictions to file\n")

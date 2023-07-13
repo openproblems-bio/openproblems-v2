@@ -1,6 +1,4 @@
 cat("Loading dependencies\n")
-options(tidyverse.quiet = TRUE)
-library(tidyverse)
 requireNamespace("anndata", quietly = TRUE)
 library(Matrix, warn.conflicts = FALSE, quietly = TRUE)
 
@@ -20,11 +18,12 @@ input_test_mod1 <- anndata::read_h5ad(par$input_test_mod1)
 
 cat("Creating outputs object\n")
 sample_ix <- sample.int(nrow(input_train_mod2), nrow(input_test_mod1), replace = TRUE)
-prediction <- input_train_mod2$X[sample_ix, , drop = FALSE]
+prediction <- input_train_mod2$layers[["normalized"]][sample_ix, , drop = FALSE]
 rownames(prediction) <- rownames(input_test_mod1)
 
 out <- anndata::AnnData(
-  X = prediction,
+  layers = list(normalized = prediction),
+  shape = dim(prediction),
   uns = list(
     dataset_id = input_train_mod2$uns[["dataset_id"]],
     method_id = meta[["functionality_name"]]

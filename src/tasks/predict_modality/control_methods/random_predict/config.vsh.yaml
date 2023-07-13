@@ -1,24 +1,16 @@
 __merge__: ../../api/comp_control_method.yaml
 functionality:
   name: random_predict
-  namespace: predict_modality/control_methods
-  description: Returns random training profiles.
   info:
-    type: negative_control
-    method_name: Random predictions
+    label: Random predictions
+    summary: Returns random training profiles.
+    description: Returns random training profiles.
   resources:
     - type: r_script
       path: script.R
 platforms:
   - type: docker
-    image: eddelbuettel/r2u:22.04
-    setup:
-      - type: r
-        cran: [ anndata, tidyverse]
-      - type: apt
-        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
-      - type: python
-        pip: [ anndata>=0.8 ]
+    image: ghcr.io/openproblems-bio/base_r:1.0.1
   - type: nextflow
     directives:
       label: [ lowmem, lowcpu ]
