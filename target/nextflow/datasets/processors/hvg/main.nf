@@ -413,7 +413,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/hvg/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "dc35c4350a6982d381df05af0aa64a1588b5c07c",
+    "git_commit" : "863c0082f730e18fb85afd77e0293c0e99fb8aae",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -458,7 +458,7 @@ adata = sc.read_h5ad(par['input'])
 print(">> Look for layer")
 layer = adata.X if not par['layer_input'] else adata.layers[par['layer_input']]
 
-print(">> Run PCA")
+print(">> Run HVG")
 out = sc.pp.highly_variable_genes(
   adata,
   layer=par["layer_input"],

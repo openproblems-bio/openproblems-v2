@@ -398,9 +398,9 @@ FROM ghcr.io/openproblems-bio/base_python:1.0.1
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization sqrt_cpm"
-LABEL org.opencontainers.image.created="2023-07-13T02:28:40Z"
+LABEL org.opencontainers.image.created="2023-07-13T05:41:05Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="dc35c4350a6982d381df05af0aa64a1588b5c07c"
+LABEL org.opencontainers.image.revision="863c0082f730e18fb85afd77e0293c0e99fb8aae"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
