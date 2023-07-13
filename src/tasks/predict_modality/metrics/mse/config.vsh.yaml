@@ -5,15 +5,20 @@ functionality:
     metrics:
       - name: rmse
         label: RMSE
+        summary: The root mean squared error.
+        description: The square root of the mean of the square of all of the error.
         min: 0
         max: "+inf"
         maximize: false
+        reference: chai2014root
       - name: mae
         label: MAE
-        description: Mean Absolute Error
+        summary: The mean absolute error.
+        description: The average difference between the expression values and the predicted expression values.
         min: 0
         max: "+inf"
         maximize: false
+        reference: chai2014root
   resources:
     - type: python_script
       path: script.py
