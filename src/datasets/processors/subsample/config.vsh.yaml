@@ -42,10 +42,6 @@ functionality:
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.1
-    setup:
-      - type: python
-        pypi:
-          - scprep
     test_setup:
       - type: python
         packages:

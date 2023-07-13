@@ -1,7 +1,6 @@
 import scanpy as sc
 import random
 import numpy as np
-import scprep
 
 ### VIASH START
 par = {
@@ -80,8 +79,8 @@ if par["input_mod2"] is not None:
 
 # filter cells and genes
 if par["input_mod2"] is not None:
-    n_cells =  scprep.utils.toarray(adata_output.X.sum(axis=1)).flatten()
-    n_cells_mod2 =  scprep.utils.toarray(adata_output_mod2.X.sum(axis=1)).flatten()
+    n_cells =  adata_output.X.sum(axis=1).A.flatten()
+    n_cells_mod2 =  adata_output_mod2.X.sum(axis=1).A.flatten()
     keep_cells = np.minimum(n_cells, n_cells_mod2) > 1
     adata_output = adata_output[keep_cells, :].copy()
     adata_output_mod2 = adata_output_mod2[keep_cells, :].copy()
@@ -114,8 +113,8 @@ if par["input_mod2"] is not None:
 
 # filter cells and genes
 if par["input_mod2"] is not None:
-    n_cells =  scprep.utils.toarray(adata_output.X.sum(axis=1)).flatten()
-    n_cells_mod2 =  scprep.utils.toarray(adata_output_mod2.X.sum(axis=1)).flatten()
+    n_cells =  adata_output.X.sum(axis=1).A.flatten()
+    n_cells_mod2 =  adata_output_mod2.X.sum(axis=1).A.flatten()
     keep_cells = np.minimum(n_cells, n_cells_mod2) > 1
     adata_output = adata_output[keep_cells, :].copy()
     adata_output_mod2 = adata_output_mod2[keep_cells, :].copy()
