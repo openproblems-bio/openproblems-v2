@@ -1,84 +1,30 @@
 functionality:
+  namespace: "predict_modality/metrics"
+  info:
+    type: metric
+    type_info:
+      label: Metric
+      summary: A predict modality metric.
+      description: |
+        A metric for evaluating predicted expression.
   arguments:
     - name: --input_prediction
-      __merge__: anndata_prediction.yaml
+      __merge__: file_prediction.yaml
+      direction: input
+      required: true
     - name: --input_solution
-      __merge__: anndata_solution.yaml
+      __merge__: file_solution.yaml
+      direction: input
+      required: true
     - name: --output
-      __merge__: anndata_score.yaml
+      __merge__: file_score.yaml
       direction: output
+      required: true
   test_resources:
-    - path: ../../../../resources_test
     - type: python_script
-      path: generic_test.py
-      text: |
-        from os import path
-        import subprocess
-        import anndata as ad
-        import pandas as pd
-        import yaml
-
-        input_prediction_path = "resources_test/predict_modality/bmmc_cite/knnr_py.h5ad"
-        input_solution_path = "resources_test/predict_modality/bmmc_cite/cite_solution.h5ad"
-        output_path = "output.h5ad"
-        # define some filenames
-        with open(meta["config"], "r") as file:
-                config = yaml.safe_load(file)
-
-        cmd = [
-            meta['executable'],
-            "--input_prediction", input_prediction_path,
-            "--input_solution", input_solution_path,
-            "--output", output_path
-        ]
-
-        print("> Running method", flush=True)
-        out = subprocess.run(cmd, check=True)
-
-
-        print("> Checking whether output files were created", flush=True)
-        assert path.exists(output_path)
-
-        print("> Reading h5ad files", flush=True)
-        input_prediction = ad.read_h5ad(input_prediction_path)
-        input_solution = ad.read_h5ad(input_solution_path)
-        output = ad.read_h5ad(output_path)
-
-        # Create DF from metric config info
-        metric_info = config['functionality']['info']['metrics']
-        metric_meta = pd.DataFrame(metric_info)
-        metric_meta = metric_meta.astype({'metric_id': str, 'metric_name': str, 'metric_description': str, 'min': float, 'max': float, 'maximize': bool})
-        print("> Checking contents of metric info", flush=True)
-        assert 'metric_id' in metric_meta
-        assert 'min' in metric_meta
-        assert 'max' in metric_meta
-        assert 'maximize' in metric_meta
-
-        print("> Checking .uns['dataset_id']", flush=True)
-        assert 'dataset_id' in output.uns
-        assert output.uns['dataset_id'] == input_prediction.uns['dataset_id']
-
-        print("> Checking .uns['method_id']", flush=True)
-        assert 'method_id' in output.uns
-        assert output.uns['method_id'] == input_prediction.uns['method_id']
-
-        print("> Checking .uns['metric_ids']", flush=True)
-        assert 'metric_ids' in output.uns
-        assert set(output.uns['metric_ids']) == set(metric_meta.metric_id)
-
-        print("> Checking .uns['metric_values']", flush=True)
-        assert 'metric_values' in output.uns
-        assert output.uns['metric_ids'].size == output.uns['metric_values'].size
-
-        # merge with metric_meta to see if metric_value lies within the expected range
-        output_uns = pd.DataFrame({
-          'metric_id': output.uns['metric_ids'], 
-          'value': output.uns['metric_values']
-        })
-
-        scores = metric_meta.merge(output_uns, on="metric_id")
-
-        assert all(scores.value >= scores['min'])
-        assert all(scores.value <= scores['max'])
-
-        print("> Test succeeded!", flush=True)
+      path: /src/common/comp_tests/check_metric_config.py
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+    - path: /resources_test/predict_modality/bmmc_cite_starter
+      dest: resources_test/predict_modality/bmmc_cite_starter
+    - path: /src/common/library.bib

@@ -1,55 +1,45 @@
 functionality:
+  namespace: "predict_modality/control_methods"
+  info:
+    type: control_method
+    type_info:
+      label: Control method
+      summary: Quality control methods for verifying the pipeline.
+      description: |
+        These components have the same interface as the regular methods
+        but also receive the solution object as input. It serves as a
+        starting point to test the relative accuracy of new methods in
+        the task, and also as a quality control for the metrics defined
+        in the task. 
   arguments:
     - name: "--input_train_mod1"
-      __merge__: anndata_masked_mod1.yaml
+      __merge__: file_masked_mod1.yaml
+      direction: input
+      required: true
     - name: "--input_train_mod2"
-      __merge__: anndata_masked_mod2.yaml
+      __merge__: file_masked_mod2.yaml
+      direction: input
+      required: true
     - name: "--input_test_mod1"
-      __merge__: anndata_masked_mod1.yaml
+      __merge__: file_masked_mod1.yaml
+      direction: input
+      required: true
     - name: "--input_solution"
-      __merge__: anndata_solution.yaml
+      __merge__: file_solution.yaml
+      direction: input
+      required: true
     - name: "--output"
-      __merge__: anndata_prediction.yaml
+      __merge__: file_prediction.yaml
       direction: output
+      required: true
   test_resources:
-    - path: ../../../../resources_test   
     - type: python_script
-      path: generic_test.py
-      text: |
-        from os import path
-        import subprocess
-        import anndata as ad
-        from scipy import sparse
+      path: /src/common/comp_tests/check_method_config.py
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+    - path: /resources_test/predict_modality/bmmc_cite_starter
+      dest: resources_test/predict_modality/bmmc_cite_starter
 
-        input_train_mod2 = "resources_test/predict_modality/bmmc_cite/cite_train_mod2.h5ad"
-        input_test_mod1 = "resources_test/predict_modality/bmmc_cite/cite_test_mod1.h5ad"
-        input_solution = "resources_test/predict_modality/bmmc_cite/cite_solution.h5ad"
-        output_path = "output.h5ad"
-
-        cmd = [
-            meta['executable'],
-            "--input_train_mod2", input_train_mod2,
-            "--input_test_mod1", input_test_mod1,
-            "--input_solution", input_solution,
-            "--output", output_path
-        ]
-
-        print(">> Running script as test", flush=True)
-        out = subprocess.run(cmd, check=True, stderr=subprocess.STDOUT)
-        
-        print("> Checking whether output files were created", flush=True)
-        assert path.exists(output_path)
-
-        print("> Reading h5ad files", flush=True)
-        ad_sol = ad.read_h5ad(input_solution)
-        ad_pred = ad.read_h5ad(output_path)
-
-        print("> Checking contents of output.h5ad", flush=True)
-        assert ad_pred.uns['dataset_id'] == ad_sol.uns['dataset_id']
-        assert ad_pred.uns['method_id'] == meta['functionality_name']
-        assert ad_pred.n_obs == ad_sol.n_obs
-        assert ad_pred.n_vars == ad_sol.n_vars
-        assert all(ad_pred.obs_names == ad_sol.obs_names)
-        assert all(ad_pred.var_names == ad_sol.var_names)
-
-        print("> Test succeeded!", flush=True)
+        # input_train_mod2 = "resources_test/predict_modality/bmmc_cite_starter/cite_train_mod2.h5ad"
+        # input_test_mod1 = "resources_test/predict_modality/bmmc_cite_starter/cite_test_mod1.h5ad"
+        # input_solution = "resources_test/predict_modality/bmmc_cite_starter/cite_solution.h5ad"
