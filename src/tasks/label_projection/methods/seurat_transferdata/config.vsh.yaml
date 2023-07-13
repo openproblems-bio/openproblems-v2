@@ -1,0 +1,35 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: "seurat_transferdata"
+  info:
+    label: Seurat TransferData
+    summary: "Seurat reference mapping predicts cell types for unlabelled cells using PCA distances, labelled anchors, and transfer anchors from Seurat, with SCTransform normalization."
+    description: |
+      Seurat reference mapping is a cell type label transfer method provided by the
+      Seurat package. Gene expression counts are first normalised by SCTransform
+      before computing PCA. Then it finds mutual nearest neighbours, known as
+      transfer anchors, between the labelled and unlabelled part of the data in PCA
+      space, and computes each cell's distance to each of the anchor pairs.
+      Finally, it uses the labelled anchors to predict cell types for unlabelled
+      cells based on these distances.
+    reference: "hao2021integrated"
+    repository_url: "https://github.com/satijalab/seurat"
+    documentation_url: "https://satijalab.org/seurat/articles/integration_mapping.html"
+    v1:
+      path: openproblems/tasks/label_projection/methods/seurat.py
+      commit: 3f19f0e87a8bc8b59c7521ba01917580aff81bc8
+    preferred_normalization: log_cpm
+    variants:
+      seurat:
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_r:1.0.1
+    setup:
+      - type: r
+        cran: [ Matrix, Seurat, rlang, bit64 ]
+  - type: nextflow
+    directives: 
+      label: [ highmem, highcpu ]

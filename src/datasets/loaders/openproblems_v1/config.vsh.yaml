@@ -1,11 +1,11 @@
+__merge__: ../../api/comp_dataset_loader.yaml
 functionality:
   name: "openproblems_v1"
-  namespace: "datasets/loaders"
   description: "Fetch a dataset from OpenProblems v1"
   argument_groups:
     - name: Inputs
       arguments:
-        - name: "--id"
+        - name: "--dataset_id"
           type: "string"
           description: "The ID of the dataset"
           required: true
@@ -26,11 +26,32 @@ functionality:
           type: boolean
           default: true
           description: Convert layers to a sparse CSR format.
-    - name: Outputs
+    - name: Metadata
       arguments:
-        - name: "--output"
-          __merge__: ../../api/anndata_raw.yaml
-          direction: "output"
+        - name: "--dataset_name"
+          type: string
+          description: Nicely formatted name.
+          required: true
+        - name: "--data_url"
+          type: string
+          description: Link to the original source of the dataset.
+          required: false
+        - name: "--data_reference"
+          type: string
+          description: Bibtex reference of the paper in which the dataset was published.
+          required: false
+        - name: "--dataset_summary"
+          type: string
+          description: Short description of the dataset.
+          required: true
+        - name: "--dataset_description"
+          type: string
+          description: Long description of the dataset.
+          required: true
+        - name: "--dataset_organism"
+          type: string
+          description: The organism of the dataset.
+          required: false
   resources:
     - type: python_script
       path: script.py
@@ -39,10 +60,13 @@ functionality:
       path: test.py
 platforms:
   - type: docker
-    image: singlecellopenproblems/openproblems
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
     setup:
-      - type: python
-        packages:
-          - scanpy
-          - "anndata>=0.8"
+      - type: apt
+        packages: git
+      - type: docker
+        run: |
+          git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems && \
+            pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt && \
+            pip install --no-cache-dir --editable /opt/openproblems
   - type: nextflow

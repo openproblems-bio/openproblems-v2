@@ -1,0 +1,59 @@
+# use metric api spec
+__merge__: ../../api/comp_metric_graph.yaml
+functionality:
+  name: clustering_overlap
+  info:
+    metrics:
+      - name: ari
+        label: ARI
+        summary: "Adjusted Rand Index compares clustering overlap, correcting for random labels and considering correct overlaps and disagreements."
+        description: |
+          The Adjusted Rand Index (ARI) compares the overlap of two clusterings;
+          it considers both correct clustering overlaps while also counting correct
+          disagreements between two clusterings.
+          We compared the cell-type labels with the NMI-optimized
+          Louvain clustering computed on the integrated dataset.
+          The adjustment of the Rand index corrects for randomly correct labels.
+          An ARI of 0 or 1 corresponds to random labeling or a perfect match,
+          respectively.
+          We used the scikit-learn implementation of the ARI.
+        reference: hubert1985comparing
+        min: 0
+        max: 1
+        maximize: true
+        v1:
+          path: openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py
+          commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+      - name: nmi
+        label: NMI
+        summary: "NMI compares overlap by scaling using mean entropy terms and optimizing Louvain clustering to obtain the best match between clusters and labels."
+        description: |
+          Normalized Mutual Information (NMI) compares the overlap of two clusterings.
+          We used NMI to compare the cell-type labels with Louvain clusters computed on
+          the integrated dataset. The overlap was scaled using the mean of the entropy terms
+          for cell-type and cluster labels. Thus, NMI scores of 0 or 1 correspond to uncorrelated
+          clustering or a perfect match, respectively. We performed optimized Louvain clustering
+          for this metric to obtain the best match between clusters and labels.
+          Louvain clustering was performed at a resolution range of 0.1 to 2 in steps of 0.1,
+          and the clustering output with the highest NMI with the label set was used. We
+          the scikit-learn implementation of NMI.
+        reference: amelio2015normalized
+        min: 0
+        max: 1
+        maximize: true
+        v1:
+          path: openproblems/tasks/_batch_integration/batch_integration_graph/metrics/nmi.py
+          commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    setup:
+      - type: python
+        pypi:
+          - scib==1.1.3
+  - type: nextflow
+    directives: 
+      label: [ midmem, lowcpu ]

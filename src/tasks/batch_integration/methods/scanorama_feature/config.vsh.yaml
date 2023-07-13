@@ -1,0 +1,40 @@
+# use method api spec
+__merge__: ../../api/comp_method_feature.yaml
+functionality:
+  name: scanorama_feature
+  info:
+    label: Scanorama
+    summary: "Efficient integration of heterogeneous single-cell
+      transcriptomes using Scanorama"
+    description: |
+      "Scanorama is an extension of the MNN method. Other then MNN, it finds mutual nearest neighbours over all batches and embeds observations into a joint hyperplane."
+    reference: "hie2019efficient"
+    repository_url: "https://github.com/brianhie/scanorama"
+    documentation_url: "https://github.com/brianhie/scanorama#readme"
+    v1:
+      path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/scanorama.py
+      commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+    preferred_normalization: log_cpm
+    variants:
+      scanorama_feature_full_unscaled:
+      scanorama_feature_hvg_unscaled:
+        hvg: true
+      scanorama_feature_hvg_scaled:
+        hvg: true
+        preferred_normalization: log_cpm_scaled
+      scanorama_feature_full_scaled:
+        preferred_normalization: log_cpm_scaled
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    setup:
+      - type: python
+        pypi:
+          - scanorama
+          - scib==1.1.3
+  - type: nextflow
+    directives: 
+      label: [ midmem, lowcpu ]

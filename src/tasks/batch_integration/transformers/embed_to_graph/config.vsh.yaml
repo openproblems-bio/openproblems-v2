@@ -1,0 +1,18 @@
+__merge__: ../../api/comp_transformer_embedding_to_graph.yaml
+functionality:
+  name: embed_to_graph
+  info:
+    label: Embedding to Graph
+    summary: Transform an embedding to a graph output.
+    description: |
+      Transform an embedding to a graph output by applying the k nearest neighbors algorithm.
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    setup:
+      - type: python
+        pypi: scanpy
+  - type: nextflow
