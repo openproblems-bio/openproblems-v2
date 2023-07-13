@@ -4,7 +4,7 @@ info:
   label: "Unintegrated"
   summary: Unintegrated AnnData HDF5 file.
   slots:
-    layers: 
+    layers:
       - type: integer
         name: counts
         description: Raw counts
