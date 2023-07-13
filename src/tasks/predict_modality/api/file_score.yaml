@@ -1,8 +1,8 @@
 type: file
-description: "Metric score file"
-example: "output.h5ad"
+example: "resources_test/predict_modality/bmmc_cite_starter/score.h5ad"
 info:
-  short_description: "Score"
+  label: "Score"
+  summary: "Metric score file"
   slots:
     uns:
       - type: string
