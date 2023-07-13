@@ -55,14 +55,14 @@ workflow run_wf {
     // split params for downstream components
     | setWorkflowArguments(
       method: ["input_train_mod1", "input_train_mod2", "input_test_mod1"],
-      metric: ["input_solution"],
+      metric: ["input_test_mod2"],
       output: ["output"]
     )
 
     // multiply events by the number of method
     | add_methods
 
-    // add input_solution to data for the positive controls
+    // add input_test_mod2 to data for the positive controls
     | controls_can_cheat
 
     // run methods
@@ -74,7 +74,7 @@ workflow run_wf {
       // derive unique ids from output filenames
       def newId = file.getName().replaceAll(".output.*", "")
       // combine prediction with solution
-      def newData = [ input_prediction: file, input_solution: passthrough.metric.input_solution ]
+      def newData = [ input_prediction: file, input_test_mod2: passthrough.metric.input_test_mod2 ]
       [ newId, newData, passthrough ]
     }
     
@@ -114,7 +114,7 @@ workflow controls_can_cheat {
       def method_type = method.config.functionality.info.method_type
       def new_data = data.clone()
       if (method_type != "method") {
-        new_data = new_data + [input_solution: passthrough.metric.input_solution]
+        new_data = new_data + [input_test_mod2: passthrough.metric.input_test_mod2]
       }
       [id, new_data, passthrough]
     }

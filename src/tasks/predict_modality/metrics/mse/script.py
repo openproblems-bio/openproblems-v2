@@ -4,14 +4,14 @@ import numpy as np
 
 ## VIASH START
 par = {
-  "input_solution" : "resources_test/predict_modality/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.test_mod2.h5ad",
+  "input_test_mod2" : "resources_test/predict_modality/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.test_mod2.h5ad",
   "input_prediction" : "resources_test/predict_modality/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.prediction.h5ad",
   "output" : "openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.scores.h5ad"
 }
 ## VIASH END
 
 logging.info("Reading solution file")
-ad_sol = ad.read_h5ad(par["input_solution"])
+ad_sol = ad.read_h5ad(par["input_test_mod2"])
 
 logging.info("Reading prediction file")
 ad_pred = ad.read_h5ad(par["input_prediction"])
@@ -25,7 +25,7 @@ if ad_sol.shape != ad_pred.shape:
 
 logging.info("Computing MSE metrics")
 
-tmp = ad_sol.X - ad_pred.X
+tmp = ad_sol.layers["normalized"] - ad_pred.layers["normalized"]
 rmse = np.sqrt(tmp.power(2).mean())
 mae = np.abs(tmp).mean()
 

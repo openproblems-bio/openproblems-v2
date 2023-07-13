@@ -5,7 +5,7 @@ requireNamespace("anndata", quietly = TRUE)
 
 ## VIASH START
 par <- list(
-  input_solution = "resources_test/predict_modality/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.test_mod2.h5ad",
+  input_test_mod2 = "resources_test/predict_modality/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.test_mod2.h5ad",
   input_prediction = "resources_test/predict_modality/openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.prediction.h5ad",
   output = "openproblems_bmmc_multiome_starter/openproblems_bmmc_multiome_starter.scores.h5ad"
 )
@@ -13,7 +13,7 @@ par <- list(
 ## VIASH END
 
 cat("Reading solution file\n")
-ad_sol <- anndata::read_h5ad(par$input_solution)
+ad_sol <- anndata::read_h5ad(par$input_test_mod2)
 
 cat("Reading prediction file\n")
 ad_pred <- anndata::read_h5ad(par$input_prediction)
@@ -31,8 +31,8 @@ expect_true(
 
 cat("Computing correlation metrics\n")
 # Wrangle data
-tv <- ad_sol$X
-pv <- ad_pred$X
+tv <- ad_sol$layers[["normalized"]]
+pv <- ad_pred$layers[["normalized"]]
 
 # precompute sds
 tv_sd2 <- proxyC::colSds(tv)

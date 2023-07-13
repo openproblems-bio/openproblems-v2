@@ -33,16 +33,16 @@ viash run src/tasks/predict_modality/process_dataset/config.vsh.yaml -- \
 
 # run one method
 viash run src/tasks/predict_modality/methods/knnr_py/config.vsh.yaml -- \
-    --input_train_mod1 $DATASET_DIR/cite_train_mod1.h5ad \
-    --input_train_mod2 $DATASET_DIR/cite_train_mod2.h5ad \
-    --input_test_mod1 $DATASET_DIR/cite_test_mod1.h5ad \
-    --output $DATASET_DIR/knnr_py.h5ad
+    --input_train_mod1 $DATASET_DIR/train_mod1.h5ad \
+    --input_train_mod2 $DATASET_DIR/train_mod2.h5ad \
+    --input_test_mod1 $DATASET_DIR/test_mod1.h5ad \
+    --output $DATASET_DIR/prediction.h5ad
 
 # run one metric
 viash run src/tasks/predict_modality/metrics/mse/config.vsh.yaml -- \
-    --input_prediction $DATASET_DIR/knnr_py.h5ad \
-    --input_solution $DATASET_DIR/cite_solution.h5ad \
-    --output $DATASET_DIR/mse.h5ad
+    --input_prediction $DATASET_DIR/prediction.h5ad \
+    --input_test_mod2 $DATASET_DIR/test_mod2.h5ad \
+    --output $DATASET_DIR/score.h5ad
 
 # run benchmark
 export NXF_VER=22.04.5
@@ -57,6 +57,6 @@ nextflow \
   --input_train_mod1 $DATASET_DIR/cite_train_mod1.h5ad \
   --input_train_mod2 $DATASET_DIR/cite_train_mod2.h5ad \
   --input_test_mod1 $DATASET_DIR/cite_test_mod1.h5ad \
-  --input_solution $DATASET_DIR/cite_solution.h5ad \
+  --input_test_mod2 $DATASET_DIR/cite_solution.h5ad \
   --output scores.tsv \
   --publish_dir $DATASET_DIR/

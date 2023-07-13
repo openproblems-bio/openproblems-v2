@@ -1,43 +1,35 @@
 __merge__: ../../api/comp_metric.yaml
 functionality:
   name: correlation
-  namespace: predict_modality/metrics
-  description: Calculating basic metrics for the predict modality task.
   info:
     metrics:
-      - metric_id: mean_pearson_per_cell
-        metric_name: mean pearson per cell
-        metric_description: Calculate correlation for the predict modality
+      - name: mean_pearson_per_cell
+        label: mean pearson per cell
         min: -1
         max: 1
         maximize: True
-      - metric_id: mean_spearman_per_cell
-        metric_name: mean spearman per cell
-        metric_description: Calculate correlation for the predict modality
+      - name: mean_spearman_per_cell
+        label: mean spearman per cell
         min: -1
         max: 1
         maximize: True
-      - metric_id: mean_pearson_per_gene
-        metric_name: mean pearson per gene
-        metric_description: Calculate correlation for the predict modality
+      - name: mean_pearson_per_gene
+        label: mean pearson per gene
         min: -1
         max: 1
         maximize: True
-      - metric_id: mean_spearman_per_gene
-        metric_name: mean spearman per gene
-        metric_description: Calculate correlation for the predict modality
+      - name: mean_spearman_per_gene
+        label: mean spearman per gene
         min: -1
         max: 1
         maximize: True
-      - metric_id: overall_pearson
-        metric_name: overall pearson
-        metric_description: Calculate correlation for the predict modality
+      - name: overall_pearson
+        label: overall pearson
         min: -1
         max: 1
         maximize: True
-      - metric_id: overall_spearman
-        metric_name: overall spearman
-        metric_description: Calculate correlation for the predict modality
+      - name: overall_spearman
+        label: overall spearman
         min: -1
         max: 1
         maximize: True
@@ -46,14 +38,11 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: eddelbuettel/r2u:22.04
+    image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran: [ anndata, dynutils, proxyC, testthat, bit64]
-      - type: apt
-        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
-      - type: python
-        pip: [ anndata>=0.8, pyyaml ]
+        cran: [ proxyC, testthat ]
+        github: dynverse/dynutils
   - type: nextflow
     directives:
       label: [ lowmem, lowcpu ]

@@ -14,7 +14,7 @@ functionality:
           type: "file" 
         - name: "--input_test_mod1"
           type: "file"# todo: replace with includes
-        - name: "--input_solution"
+        - name: "--input_test_mod2"
           type: "file" # todo: replace with includes
     - name: Outputs
       arguments:
