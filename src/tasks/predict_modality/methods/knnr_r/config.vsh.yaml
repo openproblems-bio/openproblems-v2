@@ -5,6 +5,9 @@ functionality:
     label: KNNR (R)
     summary: K-nearest neighbor regression in R.
     description: K-nearest neighbor regression in R.
+    reference: fix1989discriminatory
+    documentation_url: https://cran.r-project.org/package=FNN
+    repository_url: https://github.com/cran/FNN
   arguments:
     - name: "--distance_method"
       type: "string"

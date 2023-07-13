@@ -5,6 +5,9 @@ functionality:
     label: KNNR (Py)
     summary: K-nearest neighbor regression in Python.
     description: K-nearest neighbor regression in Python.
+    reference: fix1989discriminatory
+    documentation_url: https://scikit-learn.org/stable/modules/neighbors.html
+    repository_url: https://github.com/scikit-learn/scikit-learn
   arguments:
     - name: "--distance_method"
       type: "string"

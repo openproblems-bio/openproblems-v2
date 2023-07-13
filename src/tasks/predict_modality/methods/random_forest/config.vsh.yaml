@@ -5,6 +5,9 @@ functionality:
     label: Random Forests
     summary: Random forest regression.
     description: A random forest regression method.
+    reference: breiman2001random
+    documentation_url: https://www.stat.berkeley.edu/~breiman/RandomForests/reg_home.htm
+    repository_url: https://github.com/cran/randomForest
   arguments:
     - name: "--distance_method"
       type: "string"
