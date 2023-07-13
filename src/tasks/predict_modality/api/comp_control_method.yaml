@@ -13,19 +13,19 @@ functionality:
         in the task. 
   arguments:
     - name: "--input_train_mod1"
-      __merge__: file_masked_mod1.yaml
+      __merge__: file_train_mod1.yaml
       direction: input
       required: true
     - name: "--input_train_mod2"
-      __merge__: file_masked_mod2.yaml
+      __merge__: file_train_mod2.yaml
       direction: input
       required: true
     - name: "--input_test_mod1"
-      __merge__: file_masked_mod1.yaml
+      __merge__: file_test_mod1.yaml
       direction: input
       required: true
-    - name: "--input_solution"
-      __merge__: file_solution.yaml
+    - name: "--input_test_mod2"
+      __merge__: file_test_mod2.yaml
       direction: input
       required: true
     - name: "--output"
@@ -39,7 +39,3 @@ functionality:
       path: /src/common/comp_tests/run_and_check_adata.py
     - path: /resources_test/predict_modality/bmmc_cite_starter
       dest: resources_test/predict_modality/bmmc_cite_starter
-
-        # input_train_mod2 = "resources_test/predict_modality/bmmc_cite_starter/cite_train_mod2.h5ad"
-        # input_test_mod1 = "resources_test/predict_modality/bmmc_cite_starter/cite_test_mod1.h5ad"
-        # input_solution = "resources_test/predict_modality/bmmc_cite_starter/cite_solution.h5ad"

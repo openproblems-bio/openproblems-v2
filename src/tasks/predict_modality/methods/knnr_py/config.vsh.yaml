@@ -1,11 +1,10 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: knnr_py
-  namespace: predict_modality/methods
-  description: K-nearest neighbor regression in Python.
   info:
-    type: method
-    method_name: KNNR (Py)
+    label: KNNR (Py)
+    summary: K-nearest neighbor regression in Python.
+    description: K-nearest neighbor regression in Python.
   arguments:
     - name: "--distance_method"
       type: "string"
@@ -24,13 +23,7 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: python:3.10
-    setup:
-      - type: python
-        pip:
-          - scikit-learn
-          - anndata>=0.8
-          - scipy
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
   - type: nextflow
     directives:
       label: [ lowmem, lowcpu ]

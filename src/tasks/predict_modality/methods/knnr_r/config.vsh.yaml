@@ -1,11 +1,10 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: knnr_r
-  namespace: predict_modality/methods
-  description: K-nearest neighbor regression in R.
   info:
-    type: method
-    method_name: KNNR (R)
+    label: KNNR (R)
+    summary: K-nearest neighbor regression in R.
+    description: K-nearest neighbor regression in R.
   arguments:
     - name: "--distance_method"
       type: "string"
@@ -24,14 +23,10 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: eddelbuettel/r2u:22.04
+    image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran: [ anndata, tidyverse, lmds, FNN, proxyC]
-      - type: apt
-        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
-      - type: python
-        pip: [ anndata>=0.8 ]
+        cran: [ anndata, lmds, FNN, proxyC]
   - type: nextflow
     directives:
       label: [ lowmem, lowcpu ]

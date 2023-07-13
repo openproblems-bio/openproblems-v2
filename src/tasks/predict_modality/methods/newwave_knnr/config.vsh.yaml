@@ -1,11 +1,10 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: newwave_knnr
-  namespace: predict_modality/methods
-  description: Perform DR with NewWave, predict modality with KNN regression.
   info:
-    type: method
-    method_name: NewWave+KNNR
+    label: NewWave+KNNR
+    summary: Perform DR with NewWave, predict modality with KNN regression.
+    description: Perform DR with NewWave, predict modality with KNN regression.
   arguments:
     - name: "--newwave_maxiter"
       type: "integer"
@@ -28,15 +27,13 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: eddelbuettel/r2u:22.04
+    image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran: [ anndata, tidyverse, lmds, dynutils, FNN, proxy, proxyC]
+        cran: [ anndata, lmds, FNN, proxy, proxyC]
         bioc: [ SingleCellExperiment, NewWave ]
-      - type: apt
-        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
-      - type: python
-        pip: [ anndata>=0.8 ]
+      - type: r
+        github: [Jiefei-Wang/SharedObject, fedeago/NewWave]
   - type: nextflow
     directives:
       label: [ highmem, highcpu ]

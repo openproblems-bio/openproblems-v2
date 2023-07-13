@@ -1,11 +1,10 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: random_forest
-  namespace: predict_modality/methods
-  description: Random forest regression.
   info:
-    type: method
-    method name: Random Forests
+    label: Random Forests
+    summary: Random forest regression.
+    description: A random forest regression method.
   arguments:
     - name: "--distance_method"
       type: "string"
@@ -24,14 +23,10 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: eddelbuettel/r2u:22.04
+    image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran: [ anndata, tidyverse, lmds, ranger, pbapply]
-      - type: apt
-        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
-      - type: python
-        pip: [ anndata>=0.8 ]
+        cran: [ anndata, lmds, ranger, pbapply]
   - type: nextflow
     directives:
       label: [ highmem, highcpu ]

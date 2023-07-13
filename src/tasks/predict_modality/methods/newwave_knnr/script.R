@@ -1,6 +1,4 @@
 cat("Loading dependencies\n")
-options(tidyverse.quiet = TRUE)
-library(tidyverse)
 requireNamespace("anndata", quietly = TRUE)
 library(Matrix, warn.conflicts = FALSE, quietly = TRUE)
 requireNamespace("NewWave", quietly = TRUE)
@@ -79,10 +77,10 @@ knn_ix <- FNN::get.knnx(
 )$nn.index
 
 # perform knn regression.
-pred <- input_train_mod2$X[knn_ix[, 1], , drop = FALSE]
+pred <- input_train_mod2$layers[["normalized"]][knn_ix[, 1], , drop = FALSE]
 if (par$n_neighbors > 1) {
   for (k in seq(2, par$n_neighbors)) {
-    pred <- pred + input_train_mod2$X[knn_ix[, k], , drop = FALSE]
+    pred <- pred + input_train_mod2$layers[["normalized"]][knn_ix[, k], , drop = FALSE]
   }
 }
 pred <- pred / par$n_neighbors
@@ -90,7 +88,8 @@ rownames(pred) <- rownames(dr_mod1_test)
 
 cat("Creating outputs object\n")
 out <- anndata::AnnData(
-  X = pred,
+  layers = list(normalized = pred),
+  shape = dim(pred),
   uns = list(
     dataset_id = input_train_mod2$uns[["dataset_id"]],
     method_id = meta$functionality_name
