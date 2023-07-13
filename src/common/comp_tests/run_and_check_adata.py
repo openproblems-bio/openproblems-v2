@@ -83,7 +83,7 @@ for arg in arguments:
     if arg["type"] == "file":
         print(f"Reading and checking {arg['clean_name']}", flush=True)
         adata = ad.read_h5ad(arg["value"])
-        slots = arg["info"]["slots"]
+        slots = arg["info"].get("slots") or {}
 
         print(f"  {adata}")
 
