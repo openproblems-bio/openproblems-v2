@@ -70,7 +70,8 @@ rownames(prediction) <- rownames(dr_test)
 colnames(prediction) <- colnames(X_mod2)
 
 out <- anndata::AnnData(
-  X = prediction,
+  layers = list(normalized = prediction),
+  shape = dim(prediction),
   uns = list(
     dataset_id = dataset_id,
     method_id = meta$functionality_name
