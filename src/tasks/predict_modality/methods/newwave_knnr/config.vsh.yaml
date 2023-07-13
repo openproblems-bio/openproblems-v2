@@ -33,7 +33,7 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran: [ anndata, lmds, FNN, proxy, proxyC]
+        cran: [ lmds, FNN, proxy, proxyC, bit64 ]
         bioc: [ SingleCellExperiment, NewWave ]
       - type: r
         github: [Jiefei-Wang/SharedObject, fedeago/NewWave]

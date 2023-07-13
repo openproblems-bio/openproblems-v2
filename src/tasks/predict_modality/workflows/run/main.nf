@@ -1,5 +1,3 @@
-nextflow.enable.dsl=2
-
 sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
 
@@ -9,9 +7,7 @@ include { random_predict } from "$targetDir/predict_modality/control_methods/ran
 include { zeros } from "$targetDir/predict_modality/control_methods/zeros/main.nf"
 include { solution } from "$targetDir/predict_modality/control_methods/solution/main.nf"
 
-
 // import methods
-// include { babel } from "$targetDir/predict_modality/methods/babel/main.nf"
 include { knnr_py } from "$targetDir/predict_modality/methods/knnr_py/main.nf"
 include { knnr_r } from "$targetDir/predict_modality/methods/knnr_r/main.nf"
 include { lm } from "$targetDir/predict_modality/methods/lm/main.nf"
@@ -27,21 +23,40 @@ include { mse } from "$targetDir/predict_modality/metrics/mse/main.nf"
 include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
-include { readConfig; viashChannel; helpMessage } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { setWorkflowArguments; getWorkflowArguments; passthroughMap as pmap } from sourceDir + "/wf_utils/DataflowHelper.nf"
+include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
+include { run_components; join_states; initialize_tracer; write_json; get_publish_dir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
+// read in pipeline config
 config = readConfig("$projectDir/config.vsh.yaml")
 
-// construct a map of methods (id -> method_module)
-methods = [ meanpergene, random_predict, zeros, solution, knnr_py, knnr_r, lm, newwave_knnr, random_forest]
-  .collectEntries{method ->
-    [method.config.functionality.name, method]
-  }
+// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
+traces = initialize_tracer()
+
+// collect method list
+methods = [
+  meanpergene,
+  random_predict,
+  zeros,
+  solution,
+  knnr_py,
+  knnr_r,
+  lm,
+  newwave_knnr,
+  random_forest
+]
+
+// collect metric list
+metrics = [
+  correlation,
+  mse
+]
 
 workflow {
   helpMessage(config)
 
-  viashChannel(params, config)
+  // create channel from input parameters with
+  // arguments as defined in the config
+  channelFromParams(params, config)
     | run_wf
 }
 
@@ -51,116 +66,94 @@ workflow run_wf {
 
   main:
   output_ch = input_ch
+    // based on the config file (config.vsh.yaml), run assertions on parameter sets
+    // and fill in default values
+    | preprocessInputs(config: config)
 
-    // split params for downstream components
-    | setWorkflowArguments(
-      method: ["input_train_mod1", "input_train_mod2", "input_test_mod1"],
-      metric: ["input_test_mod2"],
-      output: ["output"]
+    // run all methods
+    | run_components(
+      components: methods,
+
+      // // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      // filter: { id, state, config ->
+      //   def norm = state.normalization_id
+      //   def pref = config.functionality.info.preferred_normalization
+      //   // if the preferred normalisation is none at all,
+      //   // we can pass whichever dataset we want
+      //   (norm == "log_cpm" && pref == "counts") || norm == pref
+      // },
+
+      // define a new 'id' by appending the method name to the dataset id
+      id: { id, state, config ->
+        id + "." + config.functionality.name
+      },
+
+      // use 'from_state' to fetch the arguments the component requires from the overall state
+      from_state: { id, state, config ->
+        def new_args = [
+          input_train_mod1: state.input_train_mod1,
+          input_train_mod2: state.input_train_mod2,
+          input_test_mod1: state.input_test_mod1
+        ]
+        if (config.functionality.info.type == "control_method") {
+          new_args.input_test_mod2 = state.input_test_mod2
+        }
+        new_args
+      },
+
+      // use 'to_state' to publish that component's outputs to the overall state
+      to_state: { id, output, config ->
+        [
+          method_id: config.functionality.name,
+          method_output: output.output
+        ]
+      }
     )
 
-    // multiply events by the number of method
-    | add_methods
+    // run all metrics
+    | run_components(
+      components: metrics,
+      // use 'from_state' to fetch the arguments the component requires from the overall state
+      from_state: [
+        input_test_mod2: "input_test_mod2", 
+        input_prediction: "method_output"
+      ],
+      // use 'to_state' to publish that component's outputs to the overall state
+      to_state: { id, output, config ->
+        [
+          metric_id: config.functionality.name,
+          metric_output: output.output
+        ]
+      }
+    )
 
-    // add input_test_mod2 to data for the positive controls
-    | controls_can_cheat
-
-    // run methods
-    | getWorkflowArguments(key: "method")
-    | run_methods
-
-    // construct tuples for metrics
-    | pmap{ id, file, passthrough ->
-      // derive unique ids from output filenames
-      def newId = file.getName().replaceAll(".output.*", "")
-      // combine prediction with solution
-      def newData = [ input_prediction: file, input_test_mod2: passthrough.metric.input_test_mod2 ]
-      [ newId, newData, passthrough ]
+    // join all events into a new event where the new id is simply "output" and the new state consists of:
+    //   - "input": a list of score h5ads
+    //   - "output": the output argument of this workflow
+    | join_states{ ids, states ->
+      def new_id = "output"
+      def new_state = [
+        input: states.collect{it.metric_output},
+        output: states[0].output
+      ]
+      [new_id, new_state]
     }
-    
-    // run metrics
-    | getWorkflowArguments(key: "metric")
-    | run_metrics
-    
-    // convert to tsv  
-    | aggregate_results
+
+    // convert to tsv and publish
+    | extract_scores.run(
+      auto: [publish: true]
+    )
 
   emit:
   output_ch
 }
 
-workflow add_methods {
-  take: input_ch
-  main:
-  output_ch = Channel.fromList(methods.keySet())
-    | combine(input_ch)
+// store the trace log in the publish dir
+workflow.onComplete {
+  def publish_dir = get_publish_dir()
 
-    // generate combined id for method_id and dataset_id
-    | pmap{method_id, dataset_id, data ->
-      def new_id = dataset_id + "." + method_id
-      def new_data = data.clone() + [method_id: method_id]
-      new_data.remove("id")
-      [new_id, new_data]
-    }
-  emit: output_ch
-}
-
-workflow controls_can_cheat {
-  take: input_ch
-  main:
-  output_ch = input_ch
-    | pmap{id, data, passthrough ->
-      def method = methods[data.method_id]
-      def method_type = method.config.functionality.info.method_type
-      def new_data = data.clone()
-      if (method_type != "method") {
-        new_data = new_data + [input_test_mod2: passthrough.metric.input_test_mod2]
-      }
-      [id, new_data, passthrough]
-    }
-  emit: output_ch
-}
-
-workflow run_methods {
-  take: input_ch
-  main:
-    // generate one channel per method
-    method_chs = methods.collect { method_id, method_module ->
-        input_ch
-          | filter{it[1].method_id == method_id}
-          | method_module
-      }
-    // mix all results
-    output_ch = method_chs[0].mix(*method_chs.drop(1))
-
-  emit: output_ch
-}
-
-workflow run_metrics {
-  take: input_ch
-  main:
-
-  output_ch = input_ch
-    | (correlation & mse)
-    | mix
-
-  emit: output_ch
-}
-
-workflow aggregate_results {
-  take: input_ch
-  main:
-
-  output_ch = input_ch
-    | toSortedList
-    | filter{ it.size() > 0 }
-    | map{ it -> 
-      [ "combined", it.collect{ it[1] } ] + it[0].drop(2) 
-    }
-    | getWorkflowArguments(key: "output")
-    | extract_scores.run(
-        auto: [ publish: true ]
-    )
-
-  emit: output_ch
+  write_json(traces, file("$publish_dir/traces.json"))
+  // todo: add datasets logging
+  write_json(methods.collect{it.config}, file("$publish_dir/methods.json"))
+  write_json(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }

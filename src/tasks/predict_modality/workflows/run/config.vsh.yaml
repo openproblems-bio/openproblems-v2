@@ -13,7 +13,7 @@ functionality:
         - name: "--input_train_mod2"
           type: "file" 
         - name: "--input_test_mod1"
-          type: "file"# todo: replace with includes
+          type: "file" # todo: replace with includes
         - name: "--input_test_mod2"
           type: "file" # todo: replace with includes
     - name: Outputs

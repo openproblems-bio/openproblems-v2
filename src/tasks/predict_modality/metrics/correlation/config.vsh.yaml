@@ -59,7 +59,7 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran: [ proxyC, testthat ]
+        cran: [ proxyC, testthat, bit64 ]
         github: dynverse/dynutils
   - type: nextflow
     directives:
