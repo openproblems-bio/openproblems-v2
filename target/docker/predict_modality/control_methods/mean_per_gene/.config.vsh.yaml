@@ -1,5 +1,5 @@
 functionality:
-  name: "meanpergene"
+  name: "mean_per_gene"
   namespace: "predict_modality/control_methods"
   version: "main_build"
   arguments:
@@ -313,9 +313,9 @@ platforms:
   container: "docker"
 info:
   config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/control_methods/meanpergene/config.vsh.yaml"
-  platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/meanpergene"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/meanpergene/meanpergene"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/control_methods/mean_per_gene"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/control_methods/mean_per_gene/mean_per_gene"
   viash_version: "0.7.3"
-  git_commit: "f5d1871df0006b952176a2a6baccae2f5babc631"
+  git_commit: "e4fabb019a9aeae50db5e5758d633edf7e346745"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

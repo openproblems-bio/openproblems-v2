@@ -135,7 +135,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/workflows/run/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "f5d1871df0006b952176a2a6baccae2f5babc631",
+    "git_commit" : "e4fabb019a9aeae50db5e5758d633edf7e346745",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -152,7 +152,7 @@ sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
 
 // import control methods
-include { meanpergene } from "\\$targetDir/predict_modality/control_methods/meanpergene/main.nf"
+include { mean_per_gene } from "\\$targetDir/predict_modality/control_methods/mean_per_gene/main.nf"
 include { random_predict } from "\\$targetDir/predict_modality/control_methods/random_predict/main.nf"
 include { zeros } from "\\$targetDir/predict_modality/control_methods/zeros/main.nf"
 include { solution } from "\\$targetDir/predict_modality/control_methods/solution/main.nf"
@@ -184,7 +184,7 @@ traces = initialize_tracer()
 
 // collect method list
 methods = [
-  meanpergene,
+  mean_per_gene,
   random_predict,
   zeros,
   solution,
