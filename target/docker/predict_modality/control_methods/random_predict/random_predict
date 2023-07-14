@@ -405,9 +405,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/control_methods random_predict"
-LABEL org.opencontainers.image.created="2023-07-14T09:54:26Z"
+LABEL org.opencontainers.image.created="2023-07-14T12:30:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="12ab8d3012fb939c70b4a282ec21230983094587"
+LABEL org.opencontainers.image.revision="18606b55ffaeeaac2097ad8e9e00c20c578baa80"
 LABEL org.opencontainers.image.version="integration_build"
 VIASHDOCKER
 }
