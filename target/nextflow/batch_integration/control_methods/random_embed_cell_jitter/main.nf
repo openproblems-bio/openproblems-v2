@@ -105,10 +105,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : true
               },
               {
-                "type" : "string",
                 "name" : "dataset_organism",
-                "description" : "Which normalization was used",
-                "required" : true
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : false
               },
               {
                 "type" : "object",
@@ -166,10 +166,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : true
               },
               {
-                "type" : "string",
                 "name" : "dataset_organism",
-                "description" : "Which normalization was used",
-                "required" : true
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : false
               },
               {
                 "type" : "object",
@@ -373,7 +373,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/control_methods/random_embed_cell_jitter/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "863c0082f730e18fb85afd77e0293c0e99fb8aae",
+    "git_commit" : "afb06fe00dd38c5ddefc760447a7312eb8d1e7e8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

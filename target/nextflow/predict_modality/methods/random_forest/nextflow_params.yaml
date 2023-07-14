@@ -1,0 +1,8 @@
+# Arguments
+distance_method: "pearson"
+n_pcs: 20
+n_trees: 50
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
