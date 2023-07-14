@@ -1,0 +1,262 @@
+functionality:
+  name: "pca"
+  namespace: "datasets/processors"
+  version: "integration_build"
+  arguments:
+  - type: "file"
+    name: "--input"
+    info:
+      label: "Normalized dataset"
+      summary: "A normalized dataset"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalised expression values"
+          required: true
+        obs:
+        - type: "string"
+          name: "celltype"
+          description: "Cell type information"
+          required: false
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+          required: false
+        - type: "string"
+          name: "tissue"
+          description: "Tissue information"
+          required: false
+        - type: "double"
+          name: "size_factors"
+          description: "The size factors created by the normalisation method, if any."
+          required: false
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - name: "dataset_name"
+          type: "string"
+          description: "Nicely formatted name."
+          required: true
+        - type: "string"
+          name: "data_url"
+          description: "Link to the original source of the dataset."
+          required: false
+        - name: "data_reference"
+          type: "string"
+          description: "Bibtex reference of the paper in which the dataset was published."
+          required: false
+        - name: "dataset_summary"
+          type: "string"
+          description: "Short description of the dataset."
+          required: true
+        - name: "dataset_description"
+          type: "string"
+          description: "Long description of the dataset."
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+    example:
+    - "resources_test/common/pancreas/normalized.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--layer_input"
+    description: "Which layer to use as input."
+    default:
+    - "normalized"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    info:
+      label: "Dataset+PCA"
+      summary: "A normalised dataset with a PCA embedding"
+      slots:
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+        varm:
+        - type: "double"
+          name: "pca_loadings"
+          description: "The PCA loadings matrix."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - name: "dataset_name"
+          type: "string"
+          description: "Nicely formatted name."
+          required: true
+        - type: "string"
+          name: "data_url"
+          description: "Link to the original source of the dataset."
+          required: false
+        - name: "data_reference"
+          type: "string"
+          description: "Bibtex reference of the paper in which the dataset was published."
+          required: false
+        - name: "dataset_summary"
+          type: "string"
+          description: "Short description of the dataset."
+          required: true
+        - name: "dataset_description"
+          type: "string"
+          description: "Long description of the dataset."
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+        - type: "double"
+          name: "pca_variance"
+          description: "The PCA variance objects."
+          required: true
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalised expression values"
+          required: true
+        obs:
+        - type: "string"
+          name: "celltype"
+          description: "Cell type information"
+          required: false
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+          required: false
+        - type: "string"
+          name: "tissue"
+          description: "Tissue information"
+          required: false
+        - type: "double"
+          name: "size_factors"
+          description: "The size factors created by the normalisation method, if any."
+          required: false
+    example:
+    - "resources_test/common/pancreas/pca.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--obsm_embedding"
+    description: "In which .obsm slot to store the resulting embedding."
+    default:
+    - "X_pca"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--varm_loadings"
+    description: "In which .varm slot to store the resulting loadings matrix."
+    default:
+    - "pca_loadings"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--uns_variance"
+    description: "In which .uns slot to store the resulting variance objects."
+    default:
+    - "pca_variance"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--num_components"
+    description: "Number of principal components to compute. Defaults to 50, or 1\
+      \ - minimum dimension size of selected representation."
+    example:
+    - 25
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "python_script"
+    path: "script.py"
+    is_executable: true
+  description: "Compute PCA"
+  test_resources:
+  - type: "file"
+    path: "resources_test/common/pancreas"
+    dest: "resources_test/common/pancreas"
+  - type: "python_script"
+    path: "src/common/comp_tests/run_and_check_adata.py"
+    is_executable: true
+  info:
+    type: "dataset_processor"
+    type_info:
+      label: "PCA"
+      summary: "Computes a PCA embedding of the normalized data.\n"
+      description: "The resulting AnnData will contain an embedding in obsm, as well\
+        \ as optional loadings in 'varm'."
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.1"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/pca/config.vsh.yaml"
+  platform: "nextflow"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca/pca"
+  viash_version: "0.7.3"
+  git_commit: "12ab8d3012fb939c70b4a282ec21230983094587"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

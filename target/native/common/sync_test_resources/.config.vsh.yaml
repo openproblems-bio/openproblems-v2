@@ -1,0 +1,103 @@
+functionality:
+  name: "sync_test_resources"
+  namespace: "common"
+  version: "integration_build"
+  arguments:
+  - type: "string"
+    name: "--input"
+    alternatives:
+    - "-i"
+    description: "Path to the S3 bucket to sync from."
+    default:
+    - "s3://openproblems-data/resources_test"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    alternatives:
+    - "-o"
+    description: "Path to the test resource directory."
+    default:
+    - "resources_test"
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "boolean_true"
+    name: "--quiet"
+    description: "Displays the operations that would be performed using the specified\
+      \ command without actually running them."
+    direction: "input"
+    dest: "par"
+  - type: "boolean_true"
+    name: "--dryrun"
+    description: "Does not display the operations performed from the specified command."
+    direction: "input"
+    dest: "par"
+  - type: "boolean_true"
+    name: "--delete"
+    description: "Files that exist in the destination but not in the source are deleted\
+      \ during sync."
+    direction: "input"
+    dest: "par"
+  - type: "string"
+    name: "--exclude"
+    description: "Exclude all files or objects from the command that matches the specified\
+      \ pattern."
+    required: false
+    direction: "input"
+    multiple: true
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "bash_script"
+    path: "script.sh"
+    is_executable: true
+  description: "Synchronise the test resources from s3 to resources_test"
+  usage: "sync_test_resources\nsync_test_resources --input s3://openproblems-data/resources_test\
+    \ --output resources_test\n"
+  test_resources:
+  - type: "bash_script"
+    path: "run_test.sh"
+    is_executable: true
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "amazon/aws-cli:2.7.12"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+- type: "native"
+  id: "native"
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/sync_test_resources/config.vsh.yaml"
+  platform: "native"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/common/sync_test_resources"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/common/sync_test_resources/sync_test_resources"
+  viash_version: "0.7.3"
+  git_commit: "12ab8d3012fb939c70b4a282ec21230983094587"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -1,0 +1,117 @@
+functionality:
+  name: "get_method_info"
+  namespace: "common"
+  version: "integration_build"
+  arguments:
+  - type: "file"
+    name: "--input"
+    description: "the root repo"
+    example:
+    - "../openproblems-v2"
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--task_id"
+    description: "A task dir"
+    example:
+    - "label_projection"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    description: "Output json"
+    default:
+    - "output.json"
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "r_script"
+    path: "script.R"
+    is_executable: true
+  description: "Extract method info"
+  test_resources:
+  - type: "file"
+    path: "src"
+    dest: "openproblems-v2/src"
+  - type: "file"
+    path: "_viash.yaml"
+    dest: "openproblems-v2/_viash.yaml"
+  - type: "python_script"
+    text: "import subprocess\nfrom os import path\nimport json\n\ninput_path = meta[\"\
+      resources_dir\"] + \"/openproblems-v2\"\ntask_id = \"denoising\"\noutput_path\
+      \ = \"output.json\"\n\ncmd = [\n    meta['executable'],\n    \"--input\", input_path,\n\
+      \    \"--task_id\", task_id,\n    \"--output\", output_path,\n]\n\nprint(\"\
+      >> Running script as test\", flush=True)\nout = subprocess.run(cmd, stderr=subprocess.STDOUT)\n\
+      \nif out.stdout:\n  print(out.stdout)\n\nif out.returncode:\n  print(f\"script:\
+      \ '{cmd}' exited with an error.\")\n  exit(out.returncode)\n\nprint(\">> Checking\
+      \ whether output file exists\", flush=True)\nassert path.exists(output_path),\
+      \ \"Output does not exist\"\n\nprint(\">> Reading json file\", flush=True)\n\
+      with open(output_path, 'r') as f:\n    out = json.load(f)\n    print(out)\n\n\
+      print(\"All checks succeeded!\", flush=True)"
+    dest: "generic_test.py"
+    is_executable: true
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.1"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "r"
+    cran:
+    - "purrr"
+    - "dplyr"
+    - "yaml"
+    - "rlang"
+    - "processx"
+    bioc_force_install: false
+  - type: "apt"
+    packages:
+    - "curl"
+    - "default-jdk"
+    interactive: false
+  - type: "docker"
+    run:
+    - "curl -fsSL get.viash.io | bash -s -- --bin /usr/local/bin/"
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+- type: "native"
+  id: "native"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/get_method_info/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/get_method_info"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/get_method_info/get_method_info"
+  viash_version: "0.7.3"
+  git_commit: "12ab8d3012fb939c70b4a282ec21230983094587"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

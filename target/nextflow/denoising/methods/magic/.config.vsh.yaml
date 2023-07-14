@@ -1,0 +1,203 @@
+functionality:
+  name: "magic"
+  namespace: "denoising/methods"
+  version: "integration_build"
+  arguments:
+  - type: "file"
+    name: "--input_train"
+    description: "The training data"
+    info:
+      label: "Training data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+    example:
+    - "resources_test/denoising/pancreas/train.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    description: "The denoised data"
+    info:
+      label: "Denoised data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+        - type: "integer"
+          name: "denoised"
+          description: "denoised data"
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+    example:
+    - "resources_test/denoising/pancreas/magic.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--solver"
+    description: "Which solver to use."
+    default:
+    - "exact"
+    required: false
+    choices:
+    - "exact"
+    - "approximate"
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "string"
+    name: "--norm"
+    description: "Normalization method"
+    default:
+    - "sqrt"
+    required: false
+    choices:
+    - "sqrt"
+    - "log"
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--decay"
+    description: "sets decay rate of kernel tails"
+    default:
+    - 1
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--t"
+    description: "power to which the diffusion operator is powered"
+    default:
+    - 3
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "python_script"
+    path: "script.py"
+    is_executable: true
+  test_resources:
+  - type: "python_script"
+    path: "src/common/comp_tests/check_method_config.py"
+    is_executable: true
+  - type: "python_script"
+    path: "src/common/comp_tests/run_and_check_adata.py"
+    is_executable: true
+  - type: "file"
+    path: "resources_test/denoising/pancreas"
+    dest: "resources_test/denoising/pancreas"
+  - type: "file"
+    path: "src/common/library.bib"
+  - type: "file"
+    path: "src/common/api"
+  info:
+    label: "MAGIC"
+    summary: "MAGIC imputes and denoises scRNA-seq data using Euclidean distances\
+      \ and a Gaussian kernel to calculate the affinity matrix, followed by a Markov\
+      \ process and multiplication with the normalised data to obtain imputed values."
+    description: "MAGIC (Markov Affinity-based Graph Imputation of Cells) is a method\
+      \ for imputation and denoising of noisy or dropout-prone single cell RNA-sequencing\
+      \ data. Given a normalised scRNA-seq expression matrix, it first calculates\
+      \ Euclidean distances between each pair of cells in the dataset, which is then\
+      \ augmented using a Gaussian kernel (function) and row-normalised to give a\
+      \ normalised affinity matrix. A t-step markov process is then calculated, by\
+      \ powering this affinity matrix t times. Finally, the powered affinity matrix\
+      \ is right-multiplied by the normalised data, causing the final imputed values\
+      \ to take the value of a per-gene average weighted by the affinities of cells.\
+      \ The resultant imputed matrix is then rescaled, to more closely match the magnitude\
+      \ of measurements in the normalised (input) matrix."
+    reference: "van2018recovering"
+    documentation_url: "https://github.com/KrishnaswamyLab/MAGIC#readme"
+    repository_url: "https://github.com/KrishnaswamyLab/MAGIC"
+    v1:
+      path: "openproblems/tasks/denoising/methods/magic.py"
+      commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+    variants:
+      magic: null
+      magic_approx:
+        solver: "approximate"
+      knn_naive:
+        norm: "log"
+        decay: "none"
+        t: 1
+    preferred_normalization: "counts"
+    type: "method"
+    type_info:
+      label: "Method"
+      summary: "A denoising method."
+      description: "A denoising method to remove noise (i.e. technical artifacts)\
+        \ from a dataset.\n"
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.1"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "python"
+    user: false
+    pip:
+    - "scprep"
+    - "magic-impute"
+    - "scipy"
+    - "scikit-learn<1.2"
+    upgrade: true
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    label:
+    - "highmem"
+    - "highcpu"
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/methods/magic/config.vsh.yaml"
+  platform: "nextflow"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic/magic"
+  viash_version: "0.7.3"
+  git_commit: "12ab8d3012fb939c70b4a282ec21230983094587"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

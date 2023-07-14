@@ -1,0 +1,125 @@
+functionality:
+  name: "create_task_readme"
+  namespace: "common"
+  version: "integration_build"
+  arguments:
+  - type: "string"
+    name: "--task"
+    description: "Which task the component will be added to."
+    example:
+    - "denoising"
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    description: "Path to the component directory. Suggested location is `src/<TASK>/README.md`."
+    default:
+    - "src/tasks/${VIASH_PAR_TASK}/README.md"
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--viash_yaml"
+    description: "Path to the project config file. Needed for knowing the relative\
+      \ location of a file to the project root.\n"
+    default:
+    - "_viash.yaml"
+    must_exist: true
+    create_parent: true
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "r_script"
+    path: "script.R"
+    is_executable: true
+  - type: "file"
+    path: "src/common/helper_functions/read_and_merge_yaml.R"
+  - type: "file"
+    path: "src/common/helper_functions/read_api_files.R"
+  - type: "file"
+    path: "src/common/helper_functions/strip_margin.R"
+  description: "Create a README for the task.\n"
+  test_resources:
+  - type: "r_script"
+    path: "test.R"
+    is_executable: true
+  - type: "file"
+    path: "src"
+    dest: "openproblems-v2/src"
+  - type: "file"
+    path: "_viash.yaml"
+    dest: "openproblems-v2/_viash.yaml"
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.1"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "r"
+    packages:
+    - "dplyr"
+    - "purrr"
+    - "rlang"
+    - "glue"
+    - "yaml"
+    - "fs"
+    - "cli"
+    - "igraph"
+    - "rmarkdown"
+    - "bit64"
+    bioc_force_install: false
+  - type: "apt"
+    packages:
+    - "jq"
+    - "curl"
+    interactive: false
+  - type: "docker"
+    run:
+    - "release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest)\
+      \ && \\\n  download_url=$(echo \"$release_info\" | jq -r '.assets[] | select(.name\
+      \ | test(\"quarto-.*-linux-amd64.deb\")) | .browser_download_url') && \\\n \
+      \ curl -sL \"$download_url\" -o /opt/quarto.deb && \\\n  dpkg -i /opt/quarto.deb\
+      \ && \\\n  rm /opt/quarto.deb\n"
+- type: "native"
+  id: "native"
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    label:
+    - "lowmem"
+    - "lowcpu"
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/create_task_readme/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/create_task_readme"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/create_task_readme/create_task_readme"
+  viash_version: "0.7.3"
+  git_commit: "12ab8d3012fb939c70b4a282ec21230983094587"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -1,0 +1,259 @@
+functionality:
+  name: "bbknn"
+  namespace: "batch_integration/methods"
+  version: "integration_build"
+  arguments:
+  - type: "file"
+    name: "--input"
+    info:
+      label: "Unintegrated"
+      summary: "Unintegrated AnnData HDF5 file."
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized expression values"
+          required: true
+        obs:
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+          required: true
+        - type: "string"
+          name: "label"
+          description: "label information"
+          required: true
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+        obsp:
+        - type: "double"
+          name: "knn_distances"
+          description: "K nearest neighbors distance matrix."
+          required: true
+        - type: "double"
+          name: "knn_connectivities"
+          description: "K nearest neighbors connectivities matrix."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+        - type: "object"
+          name: "knn"
+          description: "Supplementary K nearest neighbors data."
+          required: true
+    example:
+    - "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    info:
+      prediction_type: "graph"
+      label: "Integrated Graph"
+      summary: "Integrated AnnData HDF5 file."
+      slots:
+        obsp:
+        - type: "double"
+          name: "knn_distances"
+          description: "K nearest neighbors distance matrix."
+          required: true
+        - type: "double"
+          name: "knn_connectivities"
+          description: "K nearest neighbors connectivities matrix."
+          required: true
+        - type: "double"
+          name: "connectivities"
+          description: "Neighbors connectivities matrix."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+        - type: "object"
+          name: "knn"
+          description: "Supplementary K nearest neighbors data."
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+          required: true
+        - type: "string"
+          name: "output_type"
+          description: "what kind of output has been generated"
+          required: true
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized expression values"
+          required: true
+        obs:
+        - type: "string"
+          name: "batch"
+          description: "Batch information"
+          required: true
+        - type: "string"
+          name: "label"
+          description: "label information"
+          required: true
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
+    example:
+    - "resources_test/batch_integration/pancreas/integrated_graph.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "boolean"
+    name: "--hvg"
+    description: "Whether to subset to highly variable genes"
+    default:
+    - false
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "python_script"
+    path: "script.py"
+    is_executable: true
+  test_resources:
+  - type: "python_script"
+    path: "src/common/comp_tests/check_method_config.py"
+    is_executable: true
+  - type: "file"
+    path: "src/common/library.bib"
+  - type: "python_script"
+    path: "src/common/comp_tests/run_and_check_adata.py"
+    is_executable: true
+  - type: "file"
+    path: "resources_test/batch_integration/pancreas"
+    dest: "resources_test/batch_integration/pancreas"
+  info:
+    label: "BBKNN"
+    summary: "BBKNN creates k nearest neighbours graph by identifying neighbours within\
+      \ batches, then combining and processing them with UMAP for visualization."
+    description: "\"BBKNN or batch balanced k nearest neighbours graph is built for\
+      \ each cell by\nidentifying its k nearest neighbours within each defined batch\
+      \ separately,\ncreating independent neighbour sets for each cell in each batch.\
+      \ These sets\nare then combined and processed with the UMAP algorithm for visualisation.\"\
+      \n"
+    reference: "polanski2020bbknn"
+    repository_url: "https://github.com/Teichlab/bbknn"
+    documentation_url: "https://github.com/Teichlab/bbknn#readme"
+    v1:
+      path: "openproblems/tasks/_batch_integration/batch_integration_graph/methods/bbknn.py"
+      commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+    preferred_normalization: "log_cpm"
+    variants:
+      bbknn_full_unscaled: null
+      bbknn_hvg_unscaled:
+        hvg: true
+      bbknn_hvg_scaled:
+        preferred_normalization: "log_cpm_scaled"
+      bbknn_full_scaled:
+        hvg: true
+        preferred_normalization: "log_cpm_scaled"
+    type: "method"
+    subtype: "graph"
+    type_info:
+      label: "Method (graph)"
+      summary: "A batch integration graph method."
+      description: "A batch integration method which outputs a batch-corrected cell\
+        \ graphs.\n"
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.1"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "python"
+    user: false
+    pypi:
+    - "scib==1.1.3"
+    - "bbknn"
+    upgrade: true
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    label:
+    - "midmem"
+    - "lowcpu"
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/bbknn/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/bbknn"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/bbknn/bbknn"
+  viash_version: "0.7.3"
+  git_commit: "12ab8d3012fb939c70b4a282ec21230983094587"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"
