@@ -409,9 +409,9 @@ FROM ghcr.io/openproblems-bio/base_python:1.0.1
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors hvg"
-LABEL org.opencontainers.image.created="2023-07-14T11:59:25Z"
+LABEL org.opencontainers.image.created="2023-07-14T12:44:24Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18606b55ffaeeaac2097ad8e9e00c20c578baa80"
+LABEL org.opencontainers.image.revision="33e609e1fa6ab35f9367c7a271540ed366b664ef"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
