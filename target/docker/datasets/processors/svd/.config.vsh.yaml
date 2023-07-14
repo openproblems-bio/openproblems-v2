@@ -379,5 +379,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/svd"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/svd/svd"
   viash_version: "0.7.3"
-  git_commit: "33e609e1fa6ab35f9367c7a271540ed366b664ef"
+  git_commit: "ae31ddbf2c7511b389d234a0797ac7375906251b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
