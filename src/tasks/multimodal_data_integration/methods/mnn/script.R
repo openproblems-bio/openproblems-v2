@@ -1,8 +1,8 @@
 ## VIASH START
 par <- list(
-  input = "output.h5ad",
-  output = "output.mnn.h5ad",
-  n_svd = 100
+  input_mod1 = "resources_test/common/multimodal/dataset_mod1.h5ad",
+  input_mod2 = "resources_test/common/multimodal/dataset_mod2.h5ad",
+  output = "output.mnn.h5ad"
 )
 ## VIASH END
 
@@ -13,21 +13,12 @@ requireNamespace("sparsesvd", quietly = TRUE)
 requireNamespace("batchelor", quietly = TRUE)
 
 cat("Reading input h5ad file\n")
-adata <- read_h5ad(par$input)
+adata_mod1 <- read_h5ad(par$input_mod1)
+adata_mod2 <- read_h5ad(par$input_mod2)
 
-# Convert data to friendly sparse format
-mode1 <- as(adata$X, "CsparseMatrix")
-mode2 <- as(adata$obsm[["mode2"]], "CsparseMatrix")
-
-# Check parameters
-n_svd <- min(
-  par$n_svd,
-  ncol(mode1),
-  ncol(mode2)
-)
 
 cat("Running SVD\n")
-mode1_svd <- sparsesvd::sparsesvd(mode1, rank = n_svd)
+mode1_svd <- adata_mod1$obsm[["svd"]]
 mode1_svd_uv <- mode1_svd$u %*% diag(mode1_svd$d)
 mode2_svd <- sparsesvd::sparsesvd(mode2, rank = n_svd)
 mode2_svd_uv <- mode2_svd$u %*% diag(mode2_svd$d)
