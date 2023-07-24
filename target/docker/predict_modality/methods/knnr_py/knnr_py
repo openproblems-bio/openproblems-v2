@@ -414,9 +414,9 @@ FROM ghcr.io/openproblems-bio/base_python:1.0.1
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods knnr_py"
-LABEL org.opencontainers.image.created="2023-07-20T14:19:06Z"
+LABEL org.opencontainers.image.created="2023-07-24T08:18:07Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ae31ddbf2c7511b389d234a0797ac7375906251b"
+LABEL org.opencontainers.image.revision="c7c4ab78afdbda7a6d756d4cd30a948a5a4cbb0e"
 LABEL org.opencontainers.image.version="integration_build"
 VIASHDOCKER
 }
