@@ -389,9 +389,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/transformers embed_to_graph"
-LABEL org.opencontainers.image.created="2023-07-24T09:28:01Z"
+LABEL org.opencontainers.image.created="2023-07-24T11:23:33Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="112c14297b0b3c68bc86ccf7b20046229be2a6a5"
+LABEL org.opencontainers.image.revision="8fad5a1d38d7340528d92bd2b83c8b1610395583"
 LABEL org.opencontainers.image.version="integration_build"
 VIASHDOCKER
 }
@@ -859,11 +859,6 @@ meta = {
 
 ## VIASH END
 
-with open(meta['config'], 'r', encoding="utf8") as file:
-    config = yaml.safe_load(file)
-
-output_type = config["functionality"]["info"]["subtype"]
-
 print('Read input', flush=True)
 adata = sc.read_h5ad(par['input'])
 
@@ -871,7 +866,6 @@ print('Run kNN', flush=True)
 sc.pp.neighbors(adata, use_rep='X_emb')
 
 print("Store outputs", flush=True)
-adata.uns['output_type'] = output_type
 adata.write_h5ad(par['output'], compression='gzip')
 
 VIASHMAIN
