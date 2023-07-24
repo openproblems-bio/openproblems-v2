@@ -258,7 +258,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/metrics/mse/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "c7c4ab78afdbda7a6d756d4cd30a948a5a4cbb0e",
+    "git_commit" : "112c14297b0b3c68bc86ccf7b20046229be2a6a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
