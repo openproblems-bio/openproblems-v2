@@ -18,8 +18,6 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
-        cran:
-          - sparsesvd
         bioc:
           - batchelor
   - type: nextflow
