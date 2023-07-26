@@ -3,7 +3,8 @@ functionality:
   name: "knn_auc"
   info:
     metrics:
-      - label: KNN-AUC
+      - label: KNN AUC
+        name: knn_auc
         summary: "Compute the kNN Area Under the Curve"
         description: |
           "Compute the kNN Area Under the Curve"

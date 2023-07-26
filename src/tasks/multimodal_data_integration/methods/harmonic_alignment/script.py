@@ -41,8 +41,8 @@ XY_aligned = ha_op.diffusion_map(n_eigenvectors=n_eigenvectors)
 
 print("Storing output data structures", flush=True)
 
-adata_mod1.obsm["aligned"] = XY_aligned[: adata_mod1.obsm["X_svd"].shape[0]]
-adata_mod2.obsm["aligned"] = XY_aligned[-adata_mod2.obsm["X_svd"].shape[0] :]
+adata_mod1.obsm["integrated"] = XY_aligned[: adata_mod1.obsm["X_svd"].shape[0]]
+adata_mod2.obsm["integrated"] = XY_aligned[-adata_mod2.obsm["X_svd"].shape[0] :]
 
 print("Write output to file", flush=True)
 adata_mod1.uns["method_id"] = meta["functionality_name"]

@@ -18,6 +18,7 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
       - type: r
+        cran: [Matrix, SingleCellExperiment]
         bioc:
           - batchelor
   - type: nextflow

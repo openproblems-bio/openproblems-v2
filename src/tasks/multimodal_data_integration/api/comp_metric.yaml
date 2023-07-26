@@ -9,11 +9,11 @@ functionality:
         A metric for evaluating integrated data.
   arguments:
     - name: "--input_mod1"
-      __merge__: file_integrated.yaml
+      __merge__: file_integrated_mod1.yaml
       direction: input
       required: true
     - name: "--input_mod2"
-      __merge__: file_integrated.yaml
+      __merge__: file_integrated_mod1.yaml
       direction: input
       required: true
     - name: "--output"
@@ -21,8 +21,8 @@ functionality:
       required: true
       direction: output
   test_resources:
-    - path: /resources_test/data_integration/scicar
-      dest: resources_test/data_integration/scicar
+    - path: /resources_test/multimodal
+      dest: resources_test/multimodal
     - type: python_script
       path: /src/common/comp_tests/check_metric_config.py
     - type: python_script
