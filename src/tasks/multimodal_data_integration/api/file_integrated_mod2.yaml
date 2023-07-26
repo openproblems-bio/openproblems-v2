@@ -1,8 +1,8 @@
 type: file
-example: "resources_test/label_projection/pancreas/train.h5ad"
+example: "resources_test/multimodal/integrated_mod2.h5ad"
 info:
-  label: "Training data"
-  summary: "The training data"
+  label: "Integrated"
+  summary: "The integrated data"
   slots:
     layers: 
       - type: integer
@@ -27,6 +27,10 @@ info:
         name: X_svd
         description: The resulting SVD PCA embedding.
         required: true
+      - type: double
+        name: integrated
+        description: The resulting integrated embedding.
+        required: true
     uns:
       - type: string
         name: dataset_id
@@ -35,4 +39,8 @@ info:
       - type: string
         name: normalization_id
         description: "Which normalization was used"
+        required: true
+      - type: string
+        name: method_id
+        description: "Which method was used"
         required: true

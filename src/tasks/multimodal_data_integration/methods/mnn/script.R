@@ -1,3 +1,7 @@
+library(anndata, warn.conflicts = FALSE)
+library(Matrix, warn.conflicts = FALSE)
+requireNamespace("batchelor", quietly = TRUE)
+
 ## VIASH START
 par <- list(
   input_mod1 = "resources_test/common/multimodal/dataset_mod1.h5ad",
@@ -6,11 +10,6 @@ par <- list(
   output_mod2 = "output_mod2.h5ad"
 )
 ## VIASH END
-
-cat("Loading dependencies\n")
-library(anndata, warn.conflicts = FALSE)
-library(Matrix, warn.conflicts = FALSE)
-requireNamespace("batchelor", quietly = TRUE)
 
 cat("Reading input h5ad file\n")
 adata_mod1 <- read_h5ad(par$input_mod1)
