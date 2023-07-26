@@ -26,8 +26,8 @@ combined_recons <- t(SummarizedExperiment::assay(sce_mnn, "reconstructed"))
 mode1_recons <- combined_recons[seq_len(nrow(adata_mod1$obsm[["X_svd"]])), , drop = FALSE]
 mode2_recons <- combined_recons[-seq_len(nrow(adata_mod1$obsm[["X_svd"]])), , drop = FALSE]
 
-adata_mod1$obsm[["aligned"]] <- as.matrix(mode1_recons)
-adata_mod2$obsm[["aligned"]] <- as.matrix(mode2_recons)
+adata_mod1$obsm[["integrated"]] <- as.matrix(mode1_recons)
+adata_mod2$obsm[["integrated"]] <- as.matrix(mode2_recons)
 
 cat("Writing to file\n")
 adata_mod1$uns["method_id"] <- meta$functionality_name
