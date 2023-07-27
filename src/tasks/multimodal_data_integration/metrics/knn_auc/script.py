@@ -32,11 +32,11 @@ _, indices_true = (
     .kneighbors(adata_mod1.obsm["X_svd"])
 )
 
-print("Compute KNN on aligned matrix", flush=True)
+print("Compute KNN on integrated matrix", flush=True)
 _, indices_pred = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
-    .fit(adata_mod1.obsm["aligned"])
-    .kneighbors(adata_mod2.obsm["aligned"])
+    .fit(adata_mod1.obsm["integrated"])
+    .kneighbors(adata_mod2.obsm["integrated"])
 )
 
 print("Check which neighbours match", flush=True)

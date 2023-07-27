@@ -22,5 +22,7 @@ platforms:
     image: ghcr.io/openproblems-bio/base_python:1.0.1
     setup:
       - type: python
-        github: atong01/SCOT
+        github: openproblems-bio/SCOT
   - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]
