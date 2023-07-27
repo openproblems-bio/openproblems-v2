@@ -16,8 +16,9 @@ functionality:
     label: Scanvi
     # A one sentence summary of how this method works (required). Used when 
     # rendering summary tables.
-    summary: "ScanVI is an extension of scVI but instead using a Bayesian semi-supervised approach for more principled cell annotation. Run as implemented by Luecken et al. 2022."
-    description : "TODO"
+    summary: "ScanVI is a deep learning method that considers cell type labels."
+    description : |
+      scANVI (single-cell ANnotation using Variational Inference; Python class SCANVI) is a semi-supervised model for single-cell transcriptomics data. In a sense, it can be seen as a scVI extension that can leverage the cell type knowledge for a subset of the cells present in the data sets to infer the states of the rest of the cells.
     reference: "lopez2018deep"
     repository_url: "https://github.com/YosefLab/scvi-tools"
     documentation_url: "https://github.com/YosefLab/scvi-tools#readme"
