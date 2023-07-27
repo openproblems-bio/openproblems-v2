@@ -4,14 +4,14 @@ functionality:
   name: mnn
   info:
     label: MNN
-    summary: "TODO"
+    summary: "Batch effect correction by matching mutual nearest neighbors, Python implementation."
     description: |
-      "TODO"
+      "Large-scale single-cell RNA sequencing (scRNA-seq) data sets that are produced in different laboratories and at different times contain batch effects that may compromise the integration and interpretation of the data. Existing scRNA-seq analysis methods incorrectly assume that the composition of cell populations is either known or identical across batches. We present a strategy for batch correction based on the detection of mutual nearest neighbors (MNNs) in the high-dimensional expression space. Our approach does not rely on predefined or equal population compositions across batches; instead, it requires only that a subset of the population be shared between batches. We demonstrate the superiority of our approach compared with existing methods by using both simulated and real scRNA-seq data sets. Using multiple droplet-based scRNA-seq data sets, we demonstrate that our MNN batch-effect-correction method can be scaled to large numbers of cells."
     reference: "hie2019efficient"
-    repository_url: "https://github.com/brianhie/scanorama"
-    documentation_url: "https://github.com/brianhie/scanorama#readme"
+    repository_url: "https://github.com/chriscainx/mnnpy"
+    documentation_url: "https://github.com/chriscainx/mnnpy#readme"
     v1:
-      path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/scanorama.py
+      path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/mnn.py
       commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
     preferred_normalization: log_cpm
     variants:
