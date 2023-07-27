@@ -31,3 +31,6 @@ platforms:
         github: 
           - KrishnaswamyLab/harmonic-alignment#subdirectory=python
   - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]
+

@@ -29,3 +29,5 @@ platforms:
           - numpy
           - scikit-learn
   - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]

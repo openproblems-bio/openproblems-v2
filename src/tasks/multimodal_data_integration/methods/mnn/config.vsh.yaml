@@ -22,3 +22,5 @@ platforms:
         bioc:
           - batchelor
   - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]
