@@ -1,6 +1,6 @@
 print("Loading dependencies")
 import anndata as ad
-from scotv1 import SCOT
+import SCOT
 
 # importing helper functions from common preprocessing.py file in resources dir
 import sys
