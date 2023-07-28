@@ -1,47 +1,47 @@
-import anndata as ad
-import numpy as np
-import sklearn.decomposition
-import sklearn.neighbors
-
 ## VIASH START
 # The code between the the comments above and below gets stripped away before 
 # execution. Here you can put anything that helps the prototyping of your script.
 par = {
-    "input_mod1": "resources_test/multimodal/integrated_mod1.h5ad",
-    "input_mod2": "resources_test/multimodal/integrated_mod2.h5ad",
-    "output": "resources_test/multimodal/score.h5ad",
+    "input": "out_bash/multimodal_data_integration/methods/citeseq_cbmc_mnn.h5ad",
+    "output": "out_bash/multimodal_data_integration/metrics/citeseq_cbmc_mnn_knn_auc.h5ad",
     "proportion_neighbors": 0.1,
-}
-
-meta = {
-    "functionality_name": "knn_auc"
+    "n_svd": 100
 }
 ## VIASH END
 
-print("Reading adata file", flush=True)
-adata_mod1 = ad.read_h5ad(par["input_mod1"])
-adata_mod2 = ad.read_h5ad(par["input_mod2"])
+print("Importing libraries")
+import anndata
+import numpy as np
+import sklearn.decomposition
+import sklearn.neighbors
+
+print("Reading adata file")
+adata = anndata.read_h5ad(par["input"])
 
 print("Checking parameters")
-n_neighbors = int(np.ceil(par["proportion_neighbors"] * adata_mod1.layers["normalized"].shape[0]))
+n_svd = min([par["n_svd"], min(adata.X.shape) - 1])
+n_neighbors = int(np.ceil(par["proportion_neighbors"] * adata.X.shape[0]))
 
-print("Compute KNN on PCA", flush=True)
+print("Performing PCA")
+X_pca = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata.X)
+
+print("Compute KNN on PCA")
 _, indices_true = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
-    .fit(adata_mod1.obsm["X_svd"])
-    .kneighbors(adata_mod1.obsm["X_svd"])
+    .fit(X_pca)
+    .kneighbors(X_pca)
 )
 
-print("Compute KNN on integrated matrix", flush=True)
+print("Compute KNN on aligned matrix")
 _, indices_pred = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
-    .fit(adata_mod1.obsm["integrated"])
-    .kneighbors(adata_mod2.obsm["integrated"])
+    .fit(adata.obsm["aligned"])
+    .kneighbors(adata.obsm["mode2_aligned"])
 )
 
-print("Check which neighbours match", flush=True)
+print("Check which neighbours match")
 neighbors_match = np.zeros(n_neighbors, dtype=int)
-for i in range(adata_mod1.layers["normalized"].shape[0]):
+for i in range(adata.shape[0]):
     _, pred_matches, true_matches = np.intersect1d(
         indices_pred[i], indices_true[i], return_indices=True
     )
@@ -51,25 +51,15 @@ for i in range(adata_mod1.layers["normalized"].shape[0]):
         axis=0,
     )
 
-print("Compute area under neighbours match curve", flush=True)
+print("Compute area under neighbours match curve")
 neighbors_match_curve = neighbors_match / (
-    np.arange(1, n_neighbors + 1) * adata_mod1.layers["normalized"].shape[0]
+    np.arange(1, n_neighbors + 1) * adata.shape[0]
 )
 area_under_curve = np.mean(neighbors_match_curve)
 
-print("Store metic value", flush=True)
-output_metric = ad.AnnData(
-    layers={},
-    obs=adata_mod1.obs[[]],
-    var=adata_mod1.var[[]],
-    uns={},
-)
+print("Store metic value")
+adata.uns["metric_id"] = "knn_auc"
+adata.uns["metric_value"] = area_under_curve
 
-for key in adata_mod1.uns_keys():
-    output_metric.uns[key] = adata_mod1.uns[key]
-
-output_metric.uns["metric_ids"] = meta["functionality_name"]
-output_metric.uns["metric_values"] = area_under_curve
-
-print("Writing adata to file", flush=True)
-output_metric.write_h5ad(par["output"], compression = "gzip")
+print("Writing adata to file")
+adata.write_h5ad(par["output"], compression = "gzip")

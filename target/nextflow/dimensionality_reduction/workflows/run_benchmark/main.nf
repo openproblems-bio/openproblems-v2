@@ -135,7 +135,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/workflows/run/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1b8b6f09714349e1b549688a74f389af129f5319",
+    "git_commit" : "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -169,6 +169,9 @@ include { coranking } from "\\$targetDir/dimensionality_reduction/metrics/corank
 include { density_preservation } from "\\$targetDir/dimensionality_reduction/metrics/density_preservation/main.nf"
 include { rmse } from "\\$targetDir/dimensionality_reduction/metrics/rmse/main.nf"
 include { trustworthiness } from "\\$targetDir/dimensionality_reduction/metrics/trustworthiness/main.nf"
+
+// convert scores to tsv
+include { extract_scores } from "\\$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
@@ -277,14 +280,14 @@ workflow run_wf {
     // join all events into a new event where the new id is simply "output" and the new state consists of:
     //   - "input": a list of score h5ads
     //   - "output": the output argument of this workflow
- join_states(
-      apply: { ids, states ->
-        ["output", [
-          input: states.collect{it.metric_output},
-          output: states[0].output
-        ]]
-      }
-    )
+ join_states{ ids, states ->
+      def new_id = "output"
+      def new_state = [
+        input: states.collect{it.metric_output},
+        output: states[0].output
+      ]
+      [new_id, new_state]
+    }
 
     // convert to tsv and publish
  extract_scores.run(

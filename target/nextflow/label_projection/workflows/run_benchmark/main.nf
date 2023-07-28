@@ -147,7 +147,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1b8b6f09714349e1b549688a74f389af129f5319",
+    "git_commit" : "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -174,7 +174,7 @@ include { logistic_regression } from "\\$targetDir/label_projection/methods/logi
 include { mlp } from "\\$targetDir/label_projection/methods/mlp/main.nf"
 include { scanvi } from "\\$targetDir/label_projection/methods/scanvi/main.nf"
 include { scanvi_scarches } from "\\$targetDir/label_projection/methods/scanvi_scarches/main.nf"
-include { seurat_transferdata } from "\\$targetDir/label_projection/methods/seurat_transferdata/main.nf"
+// include { seurat_transferdata } from "\\$targetDir/label_projection/methods/seurat_transferdata/main.nf"
 include { xgboost } from "\\$targetDir/label_projection/methods/xgboost/main.nf"
 
 // import metrics
@@ -204,7 +204,7 @@ methods = [
   mlp,
   scanvi,
   scanvi_scarches,
-  seurat_transferdata,
+  // seurat_transferdata,
   xgboost
 ]
 

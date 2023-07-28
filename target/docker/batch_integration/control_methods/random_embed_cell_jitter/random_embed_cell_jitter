@@ -398,9 +398,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_embed_cell_jitter"
-LABEL org.opencontainers.image.created="2023-07-28T06:33:05Z"
+LABEL org.opencontainers.image.created="2023-07-28T09:57:52Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1b8b6f09714349e1b549688a74f389af129f5319"
+LABEL org.opencontainers.image.revision="54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082"
 LABEL org.opencontainers.image.version="integration_build"
 VIASHDOCKER
 }
@@ -916,11 +916,6 @@ meta = {
 
 ## VIASH END
 
-with open(meta['config'], 'r', encoding="utf8") as file:
-    config = yaml.safe_load(file)
-
-output_type = config["functionality"]["info"]["subtype"]
-
 print('Read input', flush=True)
 input = ad.read_h5ad(par['input'])
 
@@ -933,7 +928,6 @@ embedding = OneHotEncoder().fit_transform(
 input.obsm['X_emb'] = csr_matrix(embedding + np.random.uniform(-1 * par['jitter'], par['jitter'], embedding.shape))
 
 print("Store outputs", flush=True)
-input.uns['output_type'] = output_type
 input.uns['method_id'] = meta['functionality_name']
 input.write_h5ad(par['output'], compression='gzip')
 

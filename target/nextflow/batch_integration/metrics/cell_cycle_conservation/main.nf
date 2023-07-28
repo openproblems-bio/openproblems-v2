@@ -78,12 +78,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
                 "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "output_type",
-                "description" : "what kind of output has been generated",
-                "required" : true
               }
             ],
             "layers" : [
@@ -313,7 +307,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/cell_cycle_conservation/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "1b8b6f09714349e1b549688a74f389af129f5319",
+    "git_commit" : "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
