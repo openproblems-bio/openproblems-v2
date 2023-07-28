@@ -1,0 +1,31 @@
+# use metric api spec
+__merge__: ../../api/comp_metric_graph.yaml
+functionality:
+  name: asw_batch
+  info:
+    metrics:
+      - name: lisi
+        label: LISI
+        summary: Local inverse Simpson's Index
+        description: |
+          "Local Inverse Simpson’s Index metrics adapted from Korsunsky et al. 2019 to run on all full feature, embedding and kNN integration outputs via shortest path-based distance computation on single-cell kNN graphs. The metric assesses whether clusters of cells in a single-cell RNA-seq dataset are well-mixed across a categorical batch (iLISI) or cell type (cLISI) variable. The original LISI score ranges from 0 to the number of categories, with the latter indicating good cell mixing. This is rescaled to a score between 0 and 1."
+        reference: luecken2022benchmarking
+        min: 0
+        max: 1
+        maximize: true
+        v1:
+          path: https://github.com/theislab/scib/blob/main/scib/metrics/lisi.py
+          commit: d9f9e501d130e253273571facf7a97526ef05354
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    setup:
+      - type: python
+        pypi:
+          - scib==1.1.4
+  - type: nextflow
+    directives: 
+      label: [ midmem, lowcpu ]
