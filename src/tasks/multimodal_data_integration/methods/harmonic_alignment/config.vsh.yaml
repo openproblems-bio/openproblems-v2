@@ -1,6 +1,5 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
-  status: disabled
   name: "harmonic_alignment"
   info:
     label: "Harmonic Alignment"
