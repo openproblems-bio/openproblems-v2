@@ -390,9 +390,9 @@ FROM ghcr.io/openproblems-bio/base_python:1.0.1
 
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/control_methods random_features"
-LABEL org.opencontainers.image.created="2023-07-24T14:18:55Z"
+LABEL org.opencontainers.image.created="2023-07-28T06:32:56Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18428d8aa6a145058e7a4ee47242af3facbb271e"
+LABEL org.opencontainers.image.revision="1b8b6f09714349e1b549688a74f389af129f5319"
 LABEL org.opencontainers.image.version="integration_build"
 VIASHDOCKER
 }

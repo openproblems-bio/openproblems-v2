@@ -40,6 +40,10 @@ functionality:
           name: "method_id"
           description: "A unique identifier for the method"
           required: true
+        - type: "string"
+          name: "output_type"
+          description: "what kind of output has been generated"
+          required: true
         layers:
         - type: "integer"
           name: "counts"
@@ -122,6 +126,10 @@ functionality:
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
+          required: true
+        - type: "string"
+          name: "output_type"
+          description: "what kind of output has been generated"
           required: true
         layers:
         - type: "integer"
@@ -221,5 +229,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph/embed_to_graph"
   viash_version: "0.7.3"
-  git_commit: "18428d8aa6a145058e7a4ee47242af3facbb271e"
+  git_commit: "1b8b6f09714349e1b549688a74f389af129f5319"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

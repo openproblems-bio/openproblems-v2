@@ -78,6 +78,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "output_type",
+                "description" : "what kind of output has been generated",
+                "required" : true
               }
             ],
             "layers" : [
@@ -200,6 +206,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "output_type",
+                "description" : "what kind of output has been generated",
                 "required" : true
               }
             ],
@@ -342,7 +354,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/transformers/embed_to_graph/config.vsh.yaml",
     "platform" : "nextflow",
     "viash_version" : "0.7.3",
-    "git_commit" : "18428d8aa6a145058e7a4ee47242af3facbb271e",
+    "git_commit" : "1b8b6f09714349e1b549688a74f389af129f5319",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -377,6 +389,11 @@ meta = {
 
 ## VIASH END
 
+with open(meta['config'], 'r', encoding="utf8") as file:
+    config = yaml.safe_load(file)
+
+output_type = config["functionality"]["info"]["subtype"]
+
 print('Read input', flush=True)
 adata = sc.read_h5ad(par['input'])
 
@@ -384,6 +401,7 @@ print('Run kNN', flush=True)
 sc.pp.neighbors(adata, use_rep='X_emb')
 
 print("Store outputs", flush=True)
+adata.uns['output_type'] = output_type
 adata.write_h5ad(par['output'], compression='gzip')
 
 VIASHMAIN

@@ -166,5 +166,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca/pca"
   viash_version: "0.7.3"
-  git_commit: "18428d8aa6a145058e7a4ee47242af3facbb271e"
+  git_commit: "1b8b6f09714349e1b549688a74f389af129f5319"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

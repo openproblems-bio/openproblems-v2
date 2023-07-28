@@ -1,0 +1,240 @@
+functionality:
+  name: "knn_auc"
+  namespace: "multimodal_data_integration/metrics"
+  version: "integration_build"
+  arguments:
+  - type: "file"
+    name: "--input_mod1"
+    info:
+      label: "Integrated"
+      summary: "The integrated data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized counts"
+          required: true
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_svd"
+          description: "The resulting SVD PCA embedding."
+          required: true
+        - type: "double"
+          name: "integrated"
+          description: "The resulting integrated embedding."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "Which method was used"
+          required: true
+    example:
+    - "resources_test/multimodal/integrated_mod1.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--input_mod2"
+    info:
+      label: "Integrated"
+      summary: "The integrated data"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized counts"
+          required: true
+        var:
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "integer"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_svd"
+          description: "The resulting SVD PCA embedding."
+          required: true
+        - type: "double"
+          name: "integrated"
+          description: "The resulting integrated embedding."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "Which method was used"
+          required: true
+    example:
+    - "resources_test/multimodal/integrated_mod1.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--output"
+    info:
+      label: "Score"
+      summary: "Metric score file"
+      slots:
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+        - type: "string"
+          name: "method_id"
+          description: "A unique identifier for the method"
+          required: true
+        - type: "string"
+          name: "metric_ids"
+          description: "One or more unique metric identifiers"
+          multiple: true
+          required: true
+        - type: "double"
+          name: "metric_values"
+          description: "The metric values obtained for the given prediction. Must\
+            \ be of same length as 'metric_ids'."
+          multiple: true
+          required: true
+    example:
+    - "resources_test/multimodal/score.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "double"
+    name: "--proportion_neighbors"
+    description: "The propotion of neighbours to use in computing the KNN."
+    default:
+    - 0.1
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  resources:
+  - type: "python_script"
+    path: "script.py"
+    is_executable: true
+  test_resources:
+  - type: "file"
+    path: "resources_test/multimodal"
+    dest: "resources_test/multimodal"
+  - type: "python_script"
+    path: "src/common/comp_tests/check_metric_config.py"
+    is_executable: true
+  - type: "python_script"
+    path: "src/common/comp_tests/run_and_check_adata.py"
+    is_executable: true
+  - type: "file"
+    path: "src/common/library.bib"
+  info:
+    metrics:
+    - label: "KNN AUC"
+      name: "knn_auc"
+      summary: "Compute the kNN Area Under the Curve"
+      description: "\"Compute the kNN Area Under the Curve\"\n"
+      reference: ""
+      min: 0
+      max: 1
+      maximize: true
+    type: "metric"
+    type_info:
+      label: "Metric"
+      summary: "A multimodal data integration metric."
+      description: "A metric for evaluating integrated data.\n"
+  status: "enabled"
+  set_wd_to_resources_dir: false
+platforms:
+- type: "docker"
+  id: "docker"
+  image: "ghcr.io/openproblems-bio/base_python:1.0.1"
+  target_organization: "openproblems-bio"
+  target_registry: "ghcr.io"
+  namespace_separator: "/"
+  resolve_volume: "Automatic"
+  chown: true
+  setup_strategy: "ifneedbepullelsecachedbuild"
+  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "python"
+    user: false
+    packages:
+    - "numpy"
+    - "scikit-learn"
+    upgrade: true
+- type: "nextflow"
+  id: "nextflow"
+  variant: "vdsl3"
+  directives:
+    label:
+    - "lowmem"
+    - "lowcpu"
+    tag: "$id"
+  auto:
+    simplifyInput: true
+    simplifyOutput: true
+    transcript: false
+    publish: false
+  debug: false
+  container: "docker"
+info:
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/multimodal_data_integration/metrics/knn_auc/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/multimodal_data_integration/metrics/knn_auc"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/multimodal_data_integration/metrics/knn_auc/knn_auc"
+  viash_version: "0.7.3"
+  git_commit: "1b8b6f09714349e1b549688a74f389af129f5319"
+  git_remote: "https://github.com/openproblems-bio/openproblems-v2"

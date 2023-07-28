@@ -1,29 +1,16 @@
+__merge__: ../../api/comp_method.yaml
 functionality:
-  status: disabled
   name: "harmonic_alignment"
-  namespace: "multimodal_data_integration/methods"
-  version: "dev"
-  description: "Run Harmonic Alignment"
   info:
-    method_name: "Harmonic Alignment"
-    paper_name: "Harmonic Alignment"
-    paper_doi: "10.1137/1.9781611976236.36"
-    paper_year: "2020"
-    code_url: "https://github.com/KrishnaswamyLab/harmonic-alignment"
+    label: "Harmonic Alignment"
+    summary: "Harmonic Alignment"
+    description: |
+      Harmonic Alignment is a method for integrating multimodal single-cell data. It is based on the idea of aligning the eigenvectors of the Laplacian matrices of the two modalities. The alignment is achieved by solving a generalized eigenvalue problem. The method is described in the following paper: https://doi.org/10.1137/1.9781611976236.36
+    preferred_normalization: "log_cpm"
+    reference: "stanley2020harmonic"
+    documentation_url: "https://github.com/KrishnaswamyLab/harmonic-alignment#readme"
+    repository_url: "https://github.com/KrishnaswamyLab/harmonic-alignment"
   arguments:
-    - name: "--input_mod1"
-      type: "file"
-      default: "dataset_mod1_censored.h5ad"
-      description: "Input h5ad file containing at least `ad.X` and `ad.obsm['mode2']`."
-    - name: "--output"
-      type: "file"
-      direction: "output"
-      default: "output.h5ad"
-      description: "Output h5ad file containing both RNA and ADT data"
-    - name: "--n_svd"
-      type: "integer"
-      default: 100
-      description: "Number of SVDs to use. Bounded by the number of columns in `ad.X` and `ad.obsm['mode2']`."
     - name: "--n_pca_XY"
       type: "integer"
       default: 100
@@ -35,21 +22,14 @@ functionality:
   resources:
     - type: python_script
       path: script.py
-    - path: "../../utils/preprocessing.py"
-  test_resources:
-    - type: python_script
-      path: test.py
-    - path: "../../resources/sample_dataset.h5ad"
 platforms:
   - type: docker
-    image: "python:3.8"
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
     setup:
       - type: python
-        packages:
-          - anndata # needed by utils.py
-          - scanpy # needed by utils.py
-          - numpy # needed by utils.py
-          - scprep # needed by utils.py
-          - sklearn
-          - git+https://github.com/KrishnaswamyLab/harmonic-alignment#subdirectory=python
+        github: 
+          - KrishnaswamyLab/harmonic-alignment#subdirectory=python
   - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]
+

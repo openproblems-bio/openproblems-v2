@@ -394,9 +394,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_embed_cell"
-LABEL org.opencontainers.image.created="2023-07-24T14:19:04Z"
+LABEL org.opencontainers.image.created="2023-07-28T06:33:05Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="18428d8aa6a145058e7a4ee47242af3facbb271e"
+LABEL org.opencontainers.image.revision="1b8b6f09714349e1b549688a74f389af129f5319"
 LABEL org.opencontainers.image.version="integration_build"
 VIASHDOCKER
 }
@@ -889,6 +889,11 @@ meta = {
 
 ## VIASH END
 
+with open(meta['config'], 'r', encoding="utf8") as file:
+    config = yaml.safe_load(file)
+
+output_type = config["functionality"]["info"]["subtype"]
+
 print('Read input', flush=True)
 input = ad.read_h5ad(par['input'])
 
@@ -899,6 +904,7 @@ input.obsm['X_emb'] = OneHotEncoder().fit_transform(
 )
 
 print("Store outputs", flush=True)
+input.uns['output_type'] = output_type
 input.uns['method_id'] = meta['functionality_name']
 input.write_h5ad(par['output'], compression='gzip')
 
