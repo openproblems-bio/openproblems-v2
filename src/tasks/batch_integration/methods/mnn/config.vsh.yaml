@@ -28,13 +28,35 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.0
+    image: eddelbuettel/r2u:20.04
     setup:
       - type: apt
-        packages: [ gcc-8 ]
+        packages:
+          - procps
+          - git
+          - libhdf5-dev
+          - libgeos-dev
+          - python3.8
+          - python3-pip
+          - python3.8-dev
+          - python-is-python3
       - type: python
         pypi:
-          - mnnpy
+          - rpy2
+          - anndata~=0.8.0
           - scanpy
+          - pyyaml
+          - requests
+          - jsonschema
           - scib==1.1.3
+          - mnnpy
+      - type: r
+        packages:
+          - anndata
+          - BiocManager
+        github:
+          - rstudio/reticulate
   - type: nextflow
+    directives:
+      label: [ lowcpu, lowmem ]
+``
