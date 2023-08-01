@@ -393,9 +393,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_integration"
-LABEL org.opencontainers.image.created="2023-08-01T08:55:57Z"
+LABEL org.opencontainers.image.created="2023-08-01T08:56:13Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2ff31f9390afa7e400c4bbd6960defab93ebaba1"
+LABEL org.opencontainers.image.revision="aae41f1c7509c4e28b812edca11dca4640ebb47c"
 LABEL org.opencontainers.image.version="main_build"
 VIASHDOCKER
 }
@@ -915,11 +915,6 @@ def _randomize_graph(adata, partition=None):
     _set_uns(adata)
     return adata
 
-with open(meta['config'], 'r', encoding="utf8") as file:
-    config = yaml.safe_load(file)
-
-output_type = config["functionality"]["info"]["subtype"]
-
 print('Read input', flush=True)
 input = ad.read_h5ad(par['input'])
 input.X = input.layers["normalized"]
@@ -930,7 +925,6 @@ input = _randomize_graph(input)
 del input.X
 
 print("Store outputs", flush=True)
-input.uns['output_type'] = output_type
 input.uns['method_id'] = meta['functionality_name']
 
 input.write_h5ad(par['output'], compression='gzip')
