@@ -59,4 +59,3 @@ platforms:
   - type: nextflow
     directives:
       label: [ lowcpu, lowmem ]
-``
