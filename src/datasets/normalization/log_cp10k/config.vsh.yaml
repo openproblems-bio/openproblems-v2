@@ -1,0 +1,13 @@
+__merge__: ../../api/comp_normalization.yaml
+functionality:
+  name: "log_cp10k"
+  description: "Normalize data using Log CP10k"
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
+  - type: nextflow
+    directives: 
+      label: [ lowmem, lowcpu ]
