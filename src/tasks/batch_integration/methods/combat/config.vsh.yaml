@@ -18,7 +18,7 @@ functionality:
     documentation_url: "https://scanpy.readthedocs.io/en/stable/api/scanpy.pp.combat.html"
     v1:
       path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/combat.py
-      commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
+      commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
     preferred_normalization: log_cpm
     variants:
       combat_full_unscaled:
