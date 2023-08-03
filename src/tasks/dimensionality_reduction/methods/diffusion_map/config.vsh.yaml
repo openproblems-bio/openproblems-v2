@@ -11,9 +11,9 @@ functionality:
     v1:
       path: openproblems/tasks/dimensionality_reduction/methods/diffusion_map.py
       commit: 4a0ee9b3731ff10d8cd2e584726a61b502aef613
-    preferred_normalization: counts
+    preferred_normalization: log_cp10k
     variants:
-      spectral_features:
+      diffusion_map:
   arguments:
     - name: "--n_comps"
       type: integer
