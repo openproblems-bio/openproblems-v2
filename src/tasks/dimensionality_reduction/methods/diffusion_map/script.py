@@ -1,17 +1,18 @@
 import anndata as ad
+import umap
 
 ## VIASH START
 par = {
     "input": "resources_test/dimensionality_reduction/pancreas/test.h5ad",
     "output": "reduced.h5ad",
-    "n_comps": 20,
+    "n_comps": 2,
 }
 meta = {
-    "functionality_name": "spectral_features",
+    "functionality_name": "foo",
 }
 ## VIASH END
 
-def _diffusion_map(graph, n_comps, t, n_retries=1):
+def diffusion_map(graph, n_comps, t, n_retries):
     import numpy as np
     import scipy.sparse.linalg
 
@@ -34,40 +35,30 @@ def _diffusion_map(graph, n_comps, t, n_retries=1):
         )
         return (eigenvalues**t) * eigenvectors
     except scipy.sparse.linalg.ArpackNoConvergence:
-        # add some noise and try again
-        graph_rand = graph.copy().tocoo()
-        graph_rand.row = np.random.choice(
-            graph_rand.shape[0], len(graph_rand.row), replace=True
-        )
-        graph_rand.data *= 0.01
-        return _diffusion_map(
-            graph + graph_rand, n_comps, t, n_retries=n_retries - 1
-        )
-
-def diffusion_map(
-    adata, n_comps: int = 2, t: int = 1, n_retries: int = 1
-):
-    import umap
-
-    graph = umap.UMAP(transform_mode="graph").fit_transform(adata)
-
-    adata.obsm["X_emb"] = _diffusion_map(graph, n_comps, t, n_retries=n_retries)
-    adata.uns["method_code_version"] = check_version("openproblems")
-    return adata
+        if n_retries > 0:
+            # add some noise and try again
+            graph_rand = graph.copy().tocoo()
+            graph_rand.row = np.random.choice(
+                graph_rand.shape[0], len(graph_rand.row), replace=True
+            )
+            graph_rand.data *= 0.01
+            return diffusion_map(
+                graph + graph_rand, n_comps, t, n_retries=n_retries - 1
+            )
+        else:
+            raise
 
 print("Load input data", flush=True)
 input = ad.read_h5ad(par["input"])
 
 print("Create high dimensionally embedding with all features", flush=True)
 
-n_comps = min(par("n_comps"), min(input.shape) - 2)
+n_comps = min(par["n_comps"], min(input.shape) - 2)
 
-diffusion_map(adata, n_comps=n_comps)
+graph = umap.UMAP(transform_mode="graph").fit_transform(input.layers["normalized"])
 
-if par["n_hvg"]:
-    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
-    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
-    X_emb = X_emb[:, idx]
+X_emb = diffusion_map(graph, n_comps, t=par["t"], n_retries=par["n_retries"])
+
 
 print("Create output AnnData", flush=True)
 output = ad.AnnData(
