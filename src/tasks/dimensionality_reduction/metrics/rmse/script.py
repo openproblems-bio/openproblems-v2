@@ -31,12 +31,13 @@ high_dim = input_solution.layers["normalized"]
 X_emb = input_embedding.obsm["X_emb"]
 
 print("Compute NNLS residual after SVD", flush=True)
-n_svd = 200
+n_svd = 500
 svd_emb = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(high_dim)
 rmse = _rmse(svd_emb, X_emb)
 
+#! TODO: change spectral to commit 80b37e7a6aa27df4436f400397564c01276817e0
 print("Compute NLSS residual after spectral embedding", flush=True)
-n_comps = min(200, min(input_solution.shape) - 2)
+n_comps = min(1000, min(input_solution.shape) - 2)
 umap_graph = umap.UMAP(transform_mode="graph").fit_transform(high_dim)
 spectral_emb = umap.spectral.spectral_layout(
     high_dim, umap_graph, n_comps, random_state=np.random.default_rng()
