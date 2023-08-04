@@ -17,11 +17,11 @@ functionality:
           path: openproblems/tasks/dimensionality_reduction/metrics/density.py 
           commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
   arguments:
-    - name: "n_neighbors"
+    - name: "--n_neighbors"
       type: integer
       default: 30
       description: "Number of neighbors to use for density estimation."
-    - name: "seed"
+    - name: "--seed"
       type: integer
       default: 42
       description: "Random seed."
