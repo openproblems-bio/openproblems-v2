@@ -5,7 +5,8 @@ par = {
     'input': "resources_test/common/pancreas/dataset.h5ad",
     'output': "output.h5ad",
     'layer_output': "log_cpm",
-    'obs_size_factors': "log_cpm_size_factors"
+    'obs_size_factors': "log_cpm_size_factors",
+    'n_cp': 1e6,
 }
 meta = {
     "functionality_name": "normalize_log_cpm"
@@ -18,7 +19,7 @@ adata = sc.read_h5ad(par['input'])
 print(">> Normalize data")
 norm = sc.pp.normalize_total(
     adata, 
-    target_sum=1e4, 
+    target_sum=par["n_cp"], 
     layer="counts", 
     inplace=False
 )

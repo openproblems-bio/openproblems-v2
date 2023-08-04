@@ -1,10 +1,15 @@
 __merge__: ../../api/comp_normalization.yaml
 functionality:
-  name: "sqrt_cp10k"
+  name: "sqrt_cpm"
   description: "Normalize data using Log Sqrt"
   resources:
     - type: python_script
       path: script.py
+  arguments:
+    - name: "--n_cp"
+      type: integer
+      default: 1e6
+      description: "Number of counts per cell"
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.1
