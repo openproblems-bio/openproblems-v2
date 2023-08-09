@@ -1,9 +1,9 @@
 # use method api spec
 __merge__: ../../api/comp_method_feature.yaml
 functionality:
-  name: mnn
+  name: mnnpy
   info:
-    label: MNN
+    label: MNN-py
     summary: "Batch effect correction by matching mutual nearest neighbors, Python implementation."
     description: |
       "Large-scale single-cell RNA sequencing (scRNA-seq) data sets that are produced in different laboratories and at different times contain batch effects that may compromise the integration and interpretation of the data. Existing scRNA-seq analysis methods incorrectly assume that the composition of cell populations is either known or identical across batches. We present a strategy for batch correction based on the detection of mutual nearest neighbors (MNNs) in the high-dimensional expression space. Our approach does not rely on predefined or equal population compositions across batches; instead, it requires only that a subset of the population be shared between batches. We demonstrate the superiority of our approach compared with existing methods by using both simulated and real scRNA-seq data sets. Using multiple droplet-based scRNA-seq data sets, we demonstrate that our MNN batch-effect-correction method can be scaled to large numbers of cells."
