@@ -3,7 +3,7 @@ from scib.metrics import cell_cycle
 
 ## VIASH START
 par = {
-    'input_integrated': 'resources_test/batch_integration/pancreas/scvi.h5ad',
+    'input_integrated': 'resources_test/batch_integration/pancreas/integrated_embedding.h5ad',
     'output': 'output.h5ad'
 }
 
@@ -40,9 +40,7 @@ output = ad.AnnData(
         'normalization_id': adata.uns['normalization_id'],
         'method_id': adata.uns['method_id'],
         'metric_ids': [ meta['functionality_name'] ],
-        'metric_values': [ score ],
-        'hvg': adata.uns['hvg'],
-        'output_type': adata.uns['output_type'],
+        'metric_values': [ score ]
     }
 )
 

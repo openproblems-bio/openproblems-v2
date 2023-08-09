@@ -54,33 +54,45 @@ extensive benchmark of single-cell data integration methods
 
 ``` mermaid
 flowchart LR
-  file_unintegrated("Unintegrated")
-  file_integrated_embedding("Integrated embedding")
-  file_integrated_feature("Integrated Feature")
-  file_integrated_graaf("Integrated Graph")
-  file_score("Score")
   file_common_dataset("Common dataset")
+  comp_process_dataset[/"Data processor"/]
+  file_unintegrated("Unintegrated")
+  comp_control_method_embedding[/"Control method (embedding)"/]
+  comp_control_method_graaf[/"Control method (graph)"/]
   comp_method_embedding[/"Method (embedding)"/]
   comp_method_feature[/"Method (feature)"/]
   comp_method_graaf[/"Method (graph)"/]
+  file_integrated_embedding("Integrated embedding")
+  file_integrated_graaf("Integrated Graph")
+  file_integrated_feature("Integrated Feature")
   comp_metric_embedding[/"Metric (embedding)"/]
-  comp_metric_feature[/"Metric (feature)"/]
+  comp_transformer_embedding_to_graaf[/"Embedding to Graph"/]
   comp_metric_graaf[/"Metric (graph)"/]
-  comp_process_dataset[/"Data processor"/]
+  comp_metric_feature[/"Metric (feature)"/]
+  comp_transformer_feature_to_embedding[/"Feature to Embedding"/]
+  file_score("Score")
+  file_common_dataset---comp_process_dataset
+  comp_process_dataset-->file_unintegrated
+  file_unintegrated---comp_control_method_embedding
+  file_unintegrated---comp_control_method_graaf
   file_unintegrated---comp_method_embedding
   file_unintegrated---comp_method_feature
   file_unintegrated---comp_method_graaf
-  file_integrated_embedding---comp_metric_embedding
-  file_integrated_feature---comp_metric_feature
-  file_integrated_graaf---comp_metric_graaf
-  file_common_dataset---comp_process_dataset
+  comp_control_method_embedding-->file_integrated_embedding
+  comp_control_method_graaf-->file_integrated_graaf
   comp_method_embedding-->file_integrated_embedding
   comp_method_feature-->file_integrated_feature
   comp_method_graaf-->file_integrated_graaf
+  file_integrated_embedding---comp_metric_embedding
+  file_integrated_embedding---comp_transformer_embedding_to_graaf
+  file_integrated_graaf---comp_metric_graaf
+  file_integrated_feature---comp_metric_feature
+  file_integrated_feature---comp_transformer_feature_to_embedding
   comp_metric_embedding-->file_score
-  comp_metric_feature-->file_score
+  comp_transformer_embedding_to_graaf-->file_integrated_graaf
   comp_metric_graaf-->file_score
-  comp_process_dataset-->file_unintegrated
+  comp_metric_feature-->file_score
+  comp_transformer_feature_to_embedding-->file_integrated_embedding
 ```
 
 ## File format: Common dataset
@@ -176,9 +188,9 @@ Format:
      obs: 'batch', 'label'
      var: 'hvg'
      obsm: 'X_pca'
-     obsp: 'knn_connectivities'
+     obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'normalization_id', 'dataset_organism'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'knn'
 
 </div>
 
@@ -192,12 +204,52 @@ Slot description:
 | `obs["label"]`               | `string`  | label information.                                                       |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
 | `layers["counts"]`           | `integer` | Raw counts.                                                              |
 | `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
 | `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
 | `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
-| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                  |
+| `uns["knn"]`                 | `object`  | Supplementary K nearest neighbors data.                                  |
+
+</div>
+
+## Component type: Control method (embedding)
+
+Path:
+[`src/batch_integration/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/control_methods)
+
+A batch integration embedding control method.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type      | Description                                                                |
+|:-----------|:----------|:---------------------------------------------------------------------------|
+| `--input`  | `file`    | Unintegrated AnnData HDF5 file.                                            |
+| `--output` | `file`    | (*Output*) An integrated AnnData HDF5 file.                                |
+| `--hvg`    | `boolean` | (*Optional*) Whether to subset to highly variable genes. Default: `FALSE`. |
+
+</div>
+
+## Component type: Control method (graph)
+
+Path:
+[`src/batch_integration/control_methods`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/control_methods)
+
+A batch integration graph control method.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type      | Description                                                                |
+|:-----------|:----------|:---------------------------------------------------------------------------|
+| `--input`  | `file`    | Unintegrated AnnData HDF5 file.                                            |
+| `--output` | `file`    | (*Output*) Integrated AnnData HDF5 file.                                   |
+| `--hvg`    | `boolean` | (*Optional*) Whether to subset to highly variable genes. Default: `FALSE`. |
 
 </div>
 
@@ -262,7 +314,8 @@ Arguments:
 
 An integrated AnnData HDF5 file.
 
-Example file: `resources_test/batch_integration/pancreas/scvi.h5ad`
+Example file:
+`resources_test/batch_integration/pancreas/integrated_embedding.h5ad`
 
 Description:
 
@@ -276,9 +329,9 @@ Format:
      obs: 'batch', 'label'
      var: 'hvg'
      obsm: 'X_pca', 'X_emb'
-     obsp: 'knn_connectivities'
+     obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'method_id', 'hvg', 'output_type'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'knn', 'method_id', 'output_type'
 
 </div>
 
@@ -293,61 +346,15 @@ Slot description:
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
 | `obsm["X_emb"]`              | `double`  | integration embedding prediction.                                        |
+| `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
 | `layers["counts"]`           | `integer` | Raw counts.                                                              |
 | `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
 | `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
 | `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
-| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                  |
+| `uns["knn"]`                 | `object`  | Supplementary K nearest neighbors data.                                  |
 | `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
-| `uns["hvg"]`                 | `boolean` | If the method was done on hvg or full.                                   |
-| `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
-
-</div>
-
-## File format: Integrated Feature
-
-Integrated AnnData HDF5 file.
-
-Example file: `resources_test/batch_integration/pancreas/combat.h5ad`
-
-Description:
-
-NA
-
-Format:
-
-<div class="small">
-
-    AnnData object
-     obs: 'batch', 'label'
-     var: 'hvg'
-     obsm: 'X_pca'
-     obsp: 'knn_connectivities'
-     layers: 'counts', 'normalized', 'corrected_counts'
-     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'method_id', 'hvg', 'output_type'
-
-</div>
-
-Slot description:
-
-<div class="small">
-
-| Slot                         | Type      | Description                                                              |
-|:-----------------------------|:----------|:-------------------------------------------------------------------------|
-| `obs["batch"]`               | `string`  | Batch information.                                                       |
-| `obs["label"]`               | `string`  | label information.                                                       |
-| `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
-| `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
-| `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
-| `layers["counts"]`           | `integer` | Raw counts.                                                              |
-| `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
-| `layers["corrected_counts"]` | `double`  | Corrected counts after integration.                                      |
-| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
-| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
-| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
-| `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
-| `uns["hvg"]`                 | `boolean` | If the method was done on hvg or full.                                   |
 | `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
 
 </div>
@@ -356,7 +363,8 @@ Slot description:
 
 Integrated AnnData HDF5 file.
 
-Example file: `resources_test/batch_integration/pancreas/bbknn.h5ad`
+Example file:
+`resources_test/batch_integration/pancreas/integrated_graph.h5ad`
 
 Description:
 
@@ -370,9 +378,9 @@ Format:
      obs: 'batch', 'label'
      var: 'hvg'
      obsm: 'X_pca'
-     obsp: 'knn_connectivities', 'connectivities'
+     obsp: 'knn_distances', 'knn_connectivities', 'connectivities'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'method_id', 'hvg', 'output_type'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'knn', 'method_id', 'output_type'
 
 </div>
 
@@ -386,15 +394,65 @@ Slot description:
 | `obs["label"]`               | `string`  | label information.                                                       |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
 | `obsp["connectivities"]`     | `double`  | Neighbors connectivities matrix.                                         |
 | `layers["counts"]`           | `integer` | Raw counts.                                                              |
 | `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
 | `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
 | `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
-| `uns["dataset_organism"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                  |
+| `uns["knn"]`                 | `object`  | Supplementary K nearest neighbors data.                                  |
 | `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
-| `uns["hvg"]`                 | `boolean` | If the method was done on hvg or full.                                   |
+| `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
+
+</div>
+
+## File format: Integrated Feature
+
+Integrated AnnData HDF5 file.
+
+Example file:
+`resources_test/batch_integration/pancreas/integrated_feature.h5ad`
+
+Description:
+
+NA
+
+Format:
+
+<div class="small">
+
+    AnnData object
+     obs: 'batch', 'label'
+     var: 'hvg'
+     obsm: 'X_pca'
+     obsp: 'knn_distances', 'knn_connectivities'
+     layers: 'counts', 'normalized', 'corrected_counts'
+     uns: 'dataset_id', 'normalization_id', 'dataset_organism', 'knn', 'method_id', 'output_type'
+
+</div>
+
+Slot description:
+
+<div class="small">
+
+| Slot                         | Type      | Description                                                              |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------|
+| `obs["batch"]`               | `string`  | Batch information.                                                       |
+| `obs["label"]`               | `string`  | label information.                                                       |
+| `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
+| `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
+| `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
+| `layers["counts"]`           | `integer` | Raw counts.                                                              |
+| `layers["normalized"]`       | `double`  | Normalized expression values.                                            |
+| `layers["corrected_counts"]` | `double`  | Corrected counts after integration.                                      |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                     |
+| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                            |
+| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                  |
+| `uns["knn"]`                 | `object`  | Supplementary K nearest neighbors data.                                  |
+| `uns["method_id"]`           | `string`  | A unique identifier for the method.                                      |
 | `uns["output_type"]`         | `string`  | what kind of output has been generated.                                  |
 
 </div>
@@ -417,21 +475,21 @@ Arguments:
 
 </div>
 
-## Component type: Metric (feature)
+## Component type: Embedding to Graph
 
 Path:
-[`src/batch_integration/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/metrics)
+[`src/batch_integration/transformers`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/transformers)
 
-A batch integration feature metric.
+Transform an embedding to a graph output.
 
 Arguments:
 
 <div class="small">
 
-| Name                 | Type   | Description                   |
-|:---------------------|:-------|:------------------------------|
-| `--input_integrated` | `file` | Integrated AnnData HDF5 file. |
-| `--output`           | `file` | (*Output*) Metric score file. |
+| Name       | Type   | Description                              |
+|:-----------|:-------|:-----------------------------------------|
+| `--input`  | `file` | An integrated AnnData HDF5 file.         |
+| `--output` | `file` | (*Output*) Integrated AnnData HDF5 file. |
 
 </div>
 
@@ -453,6 +511,42 @@ Arguments:
 
 </div>
 
+## Component type: Metric (feature)
+
+Path:
+[`src/batch_integration/metrics`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/metrics)
+
+A batch integration feature metric.
+
+Arguments:
+
+<div class="small">
+
+| Name                 | Type   | Description                   |
+|:---------------------|:-------|:------------------------------|
+| `--input_integrated` | `file` | Integrated AnnData HDF5 file. |
+| `--output`           | `file` | (*Output*) Metric score file. |
+
+</div>
+
+## Component type: Feature to Embedding
+
+Path:
+[`src/batch_integration/transformers`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/batch_integration/transformers)
+
+Transform a feature output to an embedding.
+
+Arguments:
+
+<div class="small">
+
+| Name       | Type   | Description                                 |
+|:-----------|:-------|:--------------------------------------------|
+| `--input`  | `file` | Integrated AnnData HDF5 file.               |
+| `--output` | `file` | (*Output*) An integrated AnnData HDF5 file. |
+
+</div>
+
 ## File format: Score
 
 Metric score file
@@ -468,7 +562,7 @@ Format:
 <div class="small">
 
     AnnData object
-     uns: 'dataset_id', 'normalization_id', 'method_id', 'metric_ids', 'metric_values', 'hvg', 'output_type'
+     uns: 'dataset_id', 'normalization_id', 'method_id', 'metric_ids', 'metric_values'
 
 </div>
 
@@ -476,14 +570,12 @@ Slot description:
 
 <div class="small">
 
-| Slot                      | Type      | Description                                                                                  |
-|:--------------------------|:----------|:---------------------------------------------------------------------------------------------|
-| `uns["dataset_id"]`       | `string`  | A unique identifier for the dataset.                                                         |
-| `uns["normalization_id"]` | `string`  | Which normalization was used.                                                                |
-| `uns["method_id"]`        | `string`  | A unique identifier for the method.                                                          |
-| `uns["metric_ids"]`       | `string`  | One or more unique metric identifiers.                                                       |
-| `uns["metric_values"]`    | `double`  | The metric values obtained for the given prediction. Must be of same length as ‘metric_ids’. |
-| `uns["hvg"]`              | `boolean` | If the method was done on hvg or full.                                                       |
-| `uns["output_type"]`      | `string`  | what kind of output has been generated.                                                      |
+| Slot                      | Type     | Description                                                                                  |
+|:--------------------------|:---------|:---------------------------------------------------------------------------------------------|
+| `uns["dataset_id"]`       | `string` | A unique identifier for the dataset.                                                         |
+| `uns["normalization_id"]` | `string` | Which normalization was used.                                                                |
+| `uns["method_id"]`        | `string` | A unique identifier for the method.                                                          |
+| `uns["metric_ids"]`       | `string` | One or more unique metric identifiers.                                                       |
+| `uns["metric_values"]`    | `double` | The metric values obtained for the given prediction. Must be of same length as ‘metric_ids’. |
 
 </div>

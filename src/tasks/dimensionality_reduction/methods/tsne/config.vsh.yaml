@@ -35,16 +35,15 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.0
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
     setup:
       - type: apt
         packages:
           - cmake
           - gcc
       - type: python
-        packages:
-          - scanpy
-          - MulticoreTSNE
+        github:
+          - DmitryUlyanov/Multicore-TSNE
   - type: nextflow
     directives: 
       label: [ highmem, highcpu ]
