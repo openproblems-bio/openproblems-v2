@@ -3,10 +3,14 @@ __merge__: ../../api/comp_method_feature.yaml
 functionality:
   name: mnnpy
   info:
-    label: MNN-py
+    label: mnnpy
     summary: "Batch effect correction by matching mutual nearest neighbors, Python implementation."
     description: |
-      "Large-scale single-cell RNA sequencing (scRNA-seq) data sets that are produced in different laboratories and at different times contain batch effects that may compromise the integration and interpretation of the data. Existing scRNA-seq analysis methods incorrectly assume that the composition of cell populations is either known or identical across batches. We present a strategy for batch correction based on the detection of mutual nearest neighbors (MNNs) in the high-dimensional expression space. Our approach does not rely on predefined or equal population compositions across batches; instead, it requires only that a subset of the population be shared between batches. We demonstrate the superiority of our approach compared with existing methods by using both simulated and real scRNA-seq data sets. Using multiple droplet-based scRNA-seq data sets, we demonstrate that our MNN batch-effect-correction method can be scaled to large numbers of cells."
+      An implementation of MNN correct in python featuring low memory usage, full multicore support and compatibility with the scanpy framework.
+
+      Batch effect correction by matching mutual nearest neighbors (Haghverdi et al, 2018) has been implemented as a function 'mnnCorrect' in the R package scran. Sadly it's extremely slow for big datasets and doesn't make full use of the parallel architecture of modern CPUs.
+
+      This project is a python implementation of the MNN correct algorithm which takes advantage of python's extendability and hackability. It seamlessly integrates with the scanpy framework and has multicore support in its bones.
     reference: "hie2019efficient"
     repository_url: "https://github.com/chriscainx/mnnpy"
     documentation_url: "https://github.com/chriscainx/mnnpy#readme"
