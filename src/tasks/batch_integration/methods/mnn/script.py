@@ -1,4 +1,3 @@
-import yaml
 import anndata as ad
 from scib.integration import mnn
 
@@ -26,16 +25,6 @@ adata.X = adata.layers['normalized']
 adata.layers['corrected_counts'] = mnn(adata, batch='batch').X
 
 del adata.X
-
-# ? Create new comp feature_to_graph?
-# print("Run PCA", flush=True)
-# sc.pp.pca(
-#     adata,
-#     n_comps=50,
-#     use_highly_variable=False,
-#     svd_solver='arpack',
-#     return_info=True
-# )
 
 print("Store outputs", flush=True)
 adata.uns['method_id'] = meta['functionality_name']
