@@ -26,22 +26,14 @@ if ("hvg" %in% names(par) && par$hvg) {
 }
 
 cat("Run mnn\n")
-out <- suppressWarnings(batchelor::fastMNN(
+out <- suppressWarnings(batchelor::mnnCorrect(
   t(adata$layers[["normalized"]]),
   batch = adata$obs[["batch"]]
 ))
 
 cat("Reformat output\n")
-# reusing the same script for mnn_correct and mnn_correct_feature
-return_type <- gsub("mnn_correct_", "", meta[["functionality_name"]])
-
-if (return_type == "feature") {
-  layer <- SummarizedExperiment::assay(out, "reconstructed")
-  adata$layers[["corrected_counts"]] <- as.matrix(t(layer))
-} else if (return_type == "embedding") {
-  obsm <- SingleCellExperiment::reducedDim(out, "corrected")
-  adata$obsm[["X_emb"]] <- obsm
-}
+layer <- SummarizedExperiment::assay(out, "corrected")
+adata$layers[["corrected_counts"]] <- as(t(layer), "sparseMatrix")
 
 cat("Store outputs\n")
 adata$uns[["method_id"]] <- meta$functionality_name

@@ -1,9 +1,9 @@
 # use method api spec
-__merge__: ../../api/comp_method_embedding.yaml
+__merge__: ../../api/comp_method_feature.yaml
 functionality:
-  name: mnn_correct_embedding
+  name: mnn_correct
   info:
-    label: mnnCorrect (embedding)
+    label: mnnCorrect
     summary: "Correct for batch effects in single-cell expression data using the mutual nearest neighbors method."
     description: |
       We present a strategy for batch correction based on the detection of mutual nearest neighbors (MNNs) in the high-dimensional expression space.
@@ -18,7 +18,7 @@ functionality:
         hvg: true
   resources:
     - type: r_script
-      path: ../mnn_correct_feature/script.R
+      path: script.R
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_r:1.0.1
