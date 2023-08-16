@@ -1,6 +1,5 @@
-import yaml
 import anndata as ad
-from scib.integration import bbknn
+from scib.integration import mnn
 
 ## VIASH START
 par = {
@@ -15,17 +14,18 @@ meta = {
 ## VIASH END
 
 print('Read input', flush=True)
-input = ad.read_h5ad(par['input'])
+adata = ad.read_h5ad(par['input'])
 
 if par['hvg']:
     print('Select HVGs', flush=True)
-    input = input[:, input.var['hvg']].copy()
+    adata = adata[:, adata.var['hvg']]
 
-print('Run BBKNN', flush=True)
-input.X = input.layers['normalized']
-input = bbknn(input, batch='batch')
-del input.X
+print('Run mnn', flush=True)
+adata.X = adata.layers['normalized']
+adata.layers['corrected_counts'] = mnn(adata, batch='batch').X
+
+del adata.X
 
 print("Store outputs", flush=True)
-input.uns['method_id'] = meta['functionality_name']
-input.write_h5ad(par['output'], compression='gzip')
+adata.uns['method_id'] = meta['functionality_name']
+adata.write_h5ad(par['output'], compression='gzip')

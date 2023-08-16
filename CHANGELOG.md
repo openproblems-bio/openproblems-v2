@@ -59,6 +59,10 @@
 
 * Add library.bib file check to component unit test (PR #167)
 
+### BUG FIXES
+
+* fix typos in metric and common defenition schemas (PR #212)
+
 ## migration
 
 ### NEW FUNCTIONALITY
@@ -104,7 +108,9 @@
 
 * `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
 
-* `metrics/lisi`: Added a component for cLISI and iLISI graph metrics from scib.
+* `workflows/run`: Added nf-tower test script (PR #205).
+
+* `metrics/lisi`: Added a component for cLISI and iLISI graph metrics from scib (PR #213).
 
 ### V1 MIGRATION
 
@@ -148,6 +154,10 @@
 
 * `metrics/pcr`: Migrated from v1 embedding.
 
+### MINOR CHANGES
+
+* Removed the `.uns["output_type"]` field from output anndata in methods and control methods. (PR #205)
+
 ## label_projection
 
 ### NEW FUNCTIONALITY
@@ -159,6 +169,8 @@
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
+
+* * `workflows/run`: Added nf-tower test script. (PR #205)
 
 ### V1 MIGRATION
 
@@ -197,6 +209,8 @@
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `resources_test/denoising/pancreas` with `src/tasks/denoising/resources_test_scripts/pancreas.sh`.
+  
+* `workflows/run`: Added nf-tower test script. (PR #205)
 
 ### V1 MIGRATION
 
@@ -238,6 +252,8 @@
 * `resources_test/dimensionality_reduction/pancreas` with `src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
 
 * Added `variant` key to config files to store variants (different input parameters) of every component.
+  
+* `workflows/run`: Added nf-tower test script. (PR #205)
 
 ### V1 migration
 * `control_methods/true_features`: Migrated from v1. Extracted from baseline method `True Features`.
