@@ -25,6 +25,8 @@ if ("hvg" %in% names(par) && par$hvg) {
   adata <- adata[, adata$var[["hvg"]]]
 }
 
+# TODO: pass output of 'multiBatchNorm' to fastMNN
+
 cat("Run mnn\n")
 out <- suppressWarnings(batchelor::fastMNN(
   t(adata$layers[["normalized"]]),
