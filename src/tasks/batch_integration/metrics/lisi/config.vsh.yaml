@@ -8,7 +8,14 @@ functionality:
         label: iLISI
         summary: Local inverse Simpson's Index
         description: |
-          "Local Inverse Simpson’s Index metrics adapted from Korsunsky et al. 2019 to run on all full feature, embedding and kNN integration outputs via shortest path-based distance computation on single-cell kNN graphs. The metric assesses whether clusters of cells in a single-cell RNA-seq dataset are well-mixed across a categorical batch (iLISI) or cell type (cLISI) variable. The original LISI score ranges from 0 to the number of categories, with the latter indicating good cell mixing. This is rescaled to a score between 0 and 1."
+          Local Inverse Simpson's Index metrics adapted from Korsunsky et al. 2019 to run on
+          all full feature, embedding and kNN integration outputs via shortest path-based
+          distance computation on single-cell kNN graphs. The metric assesses whether clusters
+          of cells in a single-cell RNA-seq dataset are well-mixed across a categorical batch
+          variable.
+          
+          The original LISI score ranges from 0 to the number of categories, with the latter
+          indicating good cell mixing. This is rescaled to a score between 0 and 1.
         reference: luecken2022benchmarking
         min: 0
         max: 1
@@ -19,7 +26,12 @@ functionality:
         label: cLISI
         summary: Local inverse Simpson's Index
         description: |
-          "Local Inverse Simpson’s Index metrics adapted from Korsunsky et al. 2019 to run on all full feature, embedding and kNN integration outputs via shortest path-based distance computation on single-cell kNN graphs. The metric assesses whether clusters of cells in a single-cell RNA-seq dataset are well-mixed across a categorical batch (iLISI) or cell type (cLISI) variable. The original LISI score ranges from 0 to the number of categories, with the latter indicating good cell mixing. This is rescaled to a score between 0 and 1."
+          Local Inverse Simpson's Index metrics adapted from Korsunsky et al. 2019 to run on
+          all full feature, embedding and kNN integration outputs via shortest path-based
+          distance computation on single-cell kNN graphs. The metric assesses whether clusters
+          of cells in a single-cell RNA-seq dataset are well-mixed across a categorical cell type variable.
+          
+          The original LISI score ranges from 0 to the number of categories, with the latter indicating good cell mixing. This is rescaled to a score between 0 and 1.
         reference: luecken2022benchmarking
         min: 0
         max: 1

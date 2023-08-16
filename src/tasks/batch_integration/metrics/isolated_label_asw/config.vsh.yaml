@@ -6,9 +6,16 @@ functionality:
     metrics:
       - name: isolated_label_asw
         label: Isolated label ASW
-        summary: "Evaluate how well isolated labels separate by average silhouette width"
+        summary: Evaluate how well isolated labels separate by average silhouette width
         description: |
-          "Isolated cell labels are labels present in the least number of batches and can be subject to overintegration. The score evaluates how well these isolated labels separate from other cell identities through the silhouette score (ASW)."
+          Isolated cell labels are defined as the labels present in the least number
+          of batches in the integration task. The score evaluates how well these isolated labels
+          separate from other cell identities.
+
+          The isolated label ASW score is obtained by computing the
+          ASW of isolated versus non-isolated labels on the PCA embedding (ASW metric above) and
+          scaling this score to be between 0 and 1. The final score for each metric version
+          consists of the mean isolated score of all isolated labels.
         reference: luecken2022benchmarking
         v1:
           path: openproblems/tasks/_batch_integration/batch_integration_graph/metrics/iso_label_sil.py
