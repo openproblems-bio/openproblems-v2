@@ -412,7 +412,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_feature",
     "viash_version" : "0.7.5",
-    "git_commit" : "d86505da74adf67ee8be8c6380c9c93a800904ac",
+    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -460,16 +460,6 @@ adata.X = adata.layers['normalized']
 adata.layers['corrected_counts'] = scanorama(adata, batch='batch').X
 
 del adata.X
-
-# ? Create new comp feature_to_graph?
-# print("Run PCA", flush=True)
-# sc.pp.pca(
-#     adata,
-#     n_comps=50,
-#     use_highly_variable=False,
-#     svd_solver='arpack',
-#     return_info=True
-# )
 
 print("Store outputs", flush=True)
 adata.uns['method_id'] = meta['functionality_name']

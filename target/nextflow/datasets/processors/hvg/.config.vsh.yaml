@@ -310,5 +310,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg/hvg"
   viash_version: "0.7.5"
-  git_commit: "d86505da74adf67ee8be8c6380c9c93a800904ac"
+  git_commit: "dcecd3775790cc5bc9768c388f2c8b8b53dddd25"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
