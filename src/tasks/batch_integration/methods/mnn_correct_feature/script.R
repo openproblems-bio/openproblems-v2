@@ -1,14 +1,18 @@
 cat("Loading dependencies\n")
-requireNamespace("anndata", quietly = TRUE)
-library(Matrix, warn.conflicts = FALSE)
-requireNamespace("batchelor", quietly = TRUE)
-library(SingleCellExperiment, warn.conflicts = FALSE)
-
+suppressPackageStartupMessages({
+  requireNamespace("anndata", quietly = TRUE)
+  library(Matrix, warn.conflicts = FALSE)
+  requireNamespace("batchelor", quietly = TRUE)
+  library(SingleCellExperiment, warn.conflicts = FALSE)
+})
 ## VIASH START
 par <- list(
   input = 'resources_test/batch_integration/pancreas/unintegrated.h5ad',
   output = 'output.h5ad',
   hvg = FALSE
+)
+meta <- list(
+  functionality_name = "mnn_correct_feature"
 )
 ## VIASH END
 
@@ -22,18 +26,18 @@ if ("hvg" %in% names(par) && par$hvg) {
 }
 
 cat("Run mnn\n")
-out <- batchelor::fastMNN(
+out <- suppressWarnings(batchelor::fastMNN(
   t(adata$layers[["normalized"]]),
   batch = adata$obs[["batch"]]
-)
+))
 
-cat("Store output\n")
+cat("Reformat output\n")
 # reusing the same script for mnn_correct and mnn_correct_feature
 return_type <- gsub("mnn_correct_", "", meta[["functionality_name"]])
 
 if (return_type == "feature") {
   layer <- SummarizedExperiment::assay(out, "reconstructed")
-  adata$layers[["corrected_counts"]] <- as(t(layer), "sparseMatrix")
+  adata$layers[["corrected_counts"]] <- as.matrix(t(layer))
 } else if (return_type == "embedding") {
   obsm <- SingleCellExperiment::reducedDim(out, "corrected")
   adata$obsm[["X_emb"]] <- obsm
@@ -41,4 +45,4 @@ if (return_type == "feature") {
 
 cat("Store outputs\n")
 adata$uns[["method_id"]] <- meta$functionality_name
-adata$write_h5ad(par$output, compression = "gzip")
+zzz <- adata$write_h5ad(par$output, compression = "gzip")
