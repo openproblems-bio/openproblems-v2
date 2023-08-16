@@ -6,6 +6,7 @@ functionality:
   - type: "file"
     name: "--library"
     description: "Path to bibtex file"
+    info: null
     default:
     - "src/common/library.bib"
     must_exist: true
@@ -18,6 +19,7 @@ functionality:
   - type: "string"
     name: "--library_v1"
     description: "Url of the v1 bibtex file"
+    info: null
     default:
     - "https://raw.githubusercontent.com/openproblems-bio/openproblems/main/main.bib"
     required: false
@@ -33,6 +35,7 @@ functionality:
   - type: "python_script"
     path: "test.py"
     is_executable: true
+  info: null
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
@@ -52,11 +55,13 @@ platforms:
     pypi:
     - "git+https://github.com/sciunto-org/python-bibtexparser@main"
     upgrade: true
+  entrypoint: []
+  cmd: null
 info:
   config: "/home/runner/work/openproblems-v2/openproblems-v2/src/migration/update_bibtex/config.vsh.yaml"
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/migration/update_bibtex"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/migration/update_bibtex/update_bibtex"
-  viash_version: "0.7.3"
-  git_commit: "4f1d8d8a587621411b9df9a5c56d6707c37d898b"
+  viash_version: "0.7.5"
+  git_commit: "d86505da74adf67ee8be8c6380c9c93a800904ac"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

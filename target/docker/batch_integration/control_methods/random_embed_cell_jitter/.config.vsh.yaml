@@ -155,6 +155,7 @@ functionality:
   - type: "boolean"
     name: "--hvg"
     description: "Whether to subset to highly variable genes"
+    info: null
     default:
     - false
     required: false
@@ -164,6 +165,7 @@ functionality:
     dest: "par"
   - type: "double"
     name: "--jitter"
+    info: null
     default:
     - 0.01
     required: false
@@ -223,9 +225,10 @@ platforms:
     - "numpy"
     - "scipy"
     upgrade: true
+  entrypoint: []
+  cmd: null
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     tag: "$id"
   auto:
@@ -233,6 +236,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -240,6 +275,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/control_methods/random_embed_cell_jitter"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/control_methods/random_embed_cell_jitter/random_embed_cell_jitter"
-  viash_version: "0.7.3"
-  git_commit: "4f1d8d8a587621411b9df9a5c56d6707c37d898b"
+  viash_version: "0.7.5"
+  git_commit: "d86505da74adf67ee8be8c6380c9c93a800904ac"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -8,6 +8,7 @@ functionality:
     - type: "string"
       name: "--dataset_id"
       description: "The ID of the dataset"
+      info: null
       required: true
       direction: "input"
       multiple: false
@@ -16,6 +17,7 @@ functionality:
     - type: "string"
       name: "--obs_celltype"
       description: "Location of where to find the observation cell types."
+      info: null
       required: false
       direction: "input"
       multiple: false
@@ -24,6 +26,7 @@ functionality:
     - type: "string"
       name: "--obs_batch"
       description: "Location of where to find the observation batch IDs."
+      info: null
       required: false
       direction: "input"
       multiple: false
@@ -32,6 +35,7 @@ functionality:
     - type: "string"
       name: "--obs_tissue"
       description: "Location of where to find the observation tissue information."
+      info: null
       required: false
       direction: "input"
       multiple: false
@@ -41,6 +45,7 @@ functionality:
       name: "--layer_counts"
       description: "In which layer to find the counts matrix. Leave undefined to use\
         \ `.X`."
+      info: null
       example:
       - "counts"
       required: false
@@ -51,6 +56,7 @@ functionality:
     - type: "boolean"
       name: "--sparse"
       description: "Convert layers to a sparse CSR format."
+      info: null
       default:
       - true
       required: false
@@ -63,6 +69,7 @@ functionality:
     - type: "string"
       name: "--dataset_name"
       description: "Nicely formatted name."
+      info: null
       required: true
       direction: "input"
       multiple: false
@@ -71,6 +78,7 @@ functionality:
     - type: "string"
       name: "--data_url"
       description: "Link to the original source of the dataset."
+      info: null
       required: false
       direction: "input"
       multiple: false
@@ -79,6 +87,7 @@ functionality:
     - type: "string"
       name: "--data_reference"
       description: "Bibtex reference of the paper in which the dataset was published."
+      info: null
       required: false
       direction: "input"
       multiple: false
@@ -87,6 +96,7 @@ functionality:
     - type: "string"
       name: "--dataset_summary"
       description: "Short description of the dataset."
+      info: null
       required: true
       direction: "input"
       multiple: false
@@ -95,6 +105,7 @@ functionality:
     - type: "string"
       name: "--dataset_description"
       description: "Long description of the dataset."
+      info: null
       required: true
       direction: "input"
       multiple: false
@@ -103,6 +114,7 @@ functionality:
     - type: "string"
       name: "--dataset_organism"
       description: "The organism of the dataset."
+      info: null
       required: false
       direction: "input"
       multiple: false
@@ -243,6 +255,7 @@ functionality:
   - type: "python_script"
     path: "test.py"
     is_executable: true
+  info: null
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
@@ -266,9 +279,10 @@ platforms:
     - "git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems\
       \ && \\\n  pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt\
       \ && \\\n  pip install --no-cache-dir --editable /opt/openproblems\n"
+  entrypoint: []
+  cmd: null
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     tag: "$id"
   auto:
@@ -276,6 +290,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -283,6 +329,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal/openproblems_v1_multimodal"
-  viash_version: "0.7.3"
-  git_commit: "4f1d8d8a587621411b9df9a5c56d6707c37d898b"
+  viash_version: "0.7.5"
+  git_commit: "d86505da74adf67ee8be8c6380c9c93a800904ac"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
