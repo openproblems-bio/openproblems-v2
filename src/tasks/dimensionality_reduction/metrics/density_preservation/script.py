@@ -11,7 +11,7 @@ par = {
     "input_embedding": "resources_test/dimensionality_reduction/pancreas/reduced.h5ad",
     "input_solution": "resources_test/dimensionality_reduction/pancreas/test.h5ad",
     "output": "score.h5ad",
-    "n_neigbors": 30,
+    "n_neighbors": 30,
     "seed": 42,
 }
 ## VIASH END
@@ -113,7 +113,7 @@ X_emb = input_embedding.obsm["X_emb"]
 density_preservation = compute_density_preservation(
     X_emb=X_emb,
     high_dim=high_dim,
-    n_neighbors=par["n_neigbors"],
+    n_neighbors=par["n_neighbors"],
     random_state=par["seed"]
 )
 
