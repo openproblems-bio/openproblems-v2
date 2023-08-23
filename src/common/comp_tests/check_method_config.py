@@ -79,7 +79,11 @@ if info["type"] == "method":
     assert "reference" in info, "reference not an info field"
     bib = _load_bib()
     if info["reference"]:
-        assert search_ref_bib(info["reference"]), f"reference {info['reference']} not added to library.bib"
+        reference = info["reference"]
+        if not isinstance(reference, list):
+            reference = [reference]
+        for ref in reference:
+            assert search_ref_bib(ref), f"reference {ref} not added to library.bib"
     assert "documentation_url" in info is not None, "documentation_url not an info field or is empty"
     assert "repository_url" in info is not None, "repository_url not an info field or is empty"
     assert check_url(info["documentation_url"]), f"{info['documentation_url']} is not reachable"
