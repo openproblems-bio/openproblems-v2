@@ -500,7 +500,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest",
     "viash_version" : "0.7.5",
-    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
+    "git_commit" : "488e40df01346015a7bfde21e69aa08e91bae669",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

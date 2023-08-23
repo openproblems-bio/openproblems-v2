@@ -4,29 +4,6 @@
     "description": "Preprocess adata object for data integration",
     "type": "object",
     "definitions": {
-      "arguments" : {
-        "title": "Arguments",
-        "type": "object",
-        "description": "No description",
-        "properties": {
-          "obs_label": {
-            "type": "string",
-            "description": "Which .obs slot to use as label.",
-            "default": "celltype"
-          },
-          "obs_batch": {
-            "type": "string",
-            "description": "Which .obs slot to use as batch covariate.",
-            "default": "batch"
-          },
-          "hvgs": {
-            "type": "integer",
-            "description": "Number of highly variable genes",
-            "default": "2000"
-          }
-          
-        }
-      },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
@@ -47,9 +24,6 @@
       }
     },
     "allOf": [
-      {
-        "$ref": "#/definitions/arguments"
-      },
       {
         "$ref": "#/definitions/nextflow input-output arguments"
       }

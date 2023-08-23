@@ -167,11 +167,6 @@ function ViashHelp {
   echo "        example:"
   echo "resources_test/batch_integration/pancreas/integrated_embedding.h5ad"
   echo ""
-  echo "    --hvg"
-  echo "        type: boolean"
-  echo "        default: false"
-  echo "        Whether to subset to highly variable genes"
-  echo ""
   echo "    --jitter"
   echo "        type: double"
   echo "        default: 0.01"
@@ -401,9 +396,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_embed_cell_jitter"
-LABEL org.opencontainers.image.created="2023-08-23T11:47:26Z"
+LABEL org.opencontainers.image.created="2023-08-23T12:07:52Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="dd975cd8d28443ccc438087a48a7182f2ffac505"
+LABEL org.opencontainers.image.revision="488e40df01346015a7bfde21e69aa08e91bae669"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -580,17 +575,6 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --hvg)
-            [ -n "$VIASH_PAR_HVG" ] && ViashError Bad arguments for option \'--hvg\': \'$VIASH_PAR_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_HVG="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --hvg. Use "--help" to get more information on the parameters. && exit 1
-            shift 2
-            ;;
-        --hvg=*)
-            [ -n "$VIASH_PAR_HVG" ] && ViashError Bad arguments for option \'--hvg=*\': \'$VIASH_PAR_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_HVG=$(ViashRemoveFlags "$1")
-            shift 1
-            ;;
         --jitter)
             [ -n "$VIASH_PAR_JITTER" ] && ViashError Bad arguments for option \'--jitter\': \'$VIASH_PAR_JITTER\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_JITTER="$2"
@@ -750,9 +734,6 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
 fi
 
 # filling in defaults
-if [ -z ${VIASH_PAR_HVG+x} ]; then
-  VIASH_PAR_HVG="false"
-fi
 if [ -z ${VIASH_PAR_JITTER+x} ]; then
   VIASH_PAR_JITTER="0.01"
 fi
@@ -764,12 +745,6 @@ if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
 fi
 
 # check whether parameters values are of the right type
-if [[ -n "$VIASH_PAR_HVG" ]]; then
-  if ! [[ "$VIASH_PAR_HVG" =~ ^(true|True|TRUE|false|False|FALSE|yes|Yes|YES|no|No|NO)$ ]]; then
-    ViashError '--hvg' has to be a boolean. Use "--help" to get more information on the parameters.
-    exit 1
-  fi
-fi
 if [[ -n "$VIASH_PAR_JITTER" ]]; then
   if ! [[ "$VIASH_PAR_JITTER" =~ ^[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?$ ]]; then
     ViashError '--jitter' has to be a double. Use "--help" to get more information on the parameters.
@@ -900,7 +875,6 @@ from scipy.sparse import csr_matrix
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'hvg': $( if [ ! -z ${VIASH_PAR_HVG+x} ]; then echo "r'${VIASH_PAR_HVG//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi ),
   'jitter': $( if [ ! -z ${VIASH_PAR_JITTER+x} ]; then echo "float(r'${VIASH_PAR_JITTER//\'/\'\"\'\"r\'}')"; else echo None; fi )
 }
 meta = {

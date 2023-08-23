@@ -1,8 +1,3 @@
-# Arguments
-obs_label: "celltype"
-obs_batch: "batch"
-hvgs: 2000
-
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"
 # param_list: "my_params.yaml"

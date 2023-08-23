@@ -248,19 +248,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "dest" : "par"
       },
       {
-        "type" : "boolean",
-        "name" : "--hvg",
-        "description" : "Whether to subset to highly variable genes",
-        "default" : [
-          false
-        ],
-        "required" : false,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
         "type" : "double",
         "name" : "--jitter",
         "default" : [
@@ -401,7 +388,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_embed_cell_jitter",
     "viash_version" : "0.7.5",
-    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
+    "git_commit" : "488e40df01346015a7bfde21e69aa08e91bae669",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -421,7 +408,6 @@ from scipy.sparse import csr_matrix
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'hvg': $( if [ ! -z ${VIASH_PAR_HVG+x} ]; then echo "r'${VIASH_PAR_HVG//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
   'jitter': $( if [ ! -z ${VIASH_PAR_JITTER+x} ]; then echo "float(r'${VIASH_PAR_JITTER//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {

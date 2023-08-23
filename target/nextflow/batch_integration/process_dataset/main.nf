@@ -329,6 +329,19 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
+      },
+      {
+        "type" : "boolean",
+        "name" : "--subset_hvg",
+        "description" : "Whether to subset to highly variable genes",
+        "default" : [
+          false
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
       }
     ],
     "resources" : [
@@ -448,7 +461,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset",
     "viash_version" : "0.7.5",
-    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
+    "git_commit" : "488e40df01346015a7bfde21e69aa08e91bae669",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -467,7 +480,8 @@ par = {
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_label': $( if [ ! -z ${VIASH_PAR_OBS_LABEL+x} ]; then echo "r'${VIASH_PAR_OBS_LABEL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'hvgs': $( if [ ! -z ${VIASH_PAR_HVGS+x} ]; then echo "int(r'${VIASH_PAR_HVGS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
+  'hvgs': $( if [ ! -z ${VIASH_PAR_HVGS+x} ]; then echo "int(r'${VIASH_PAR_HVGS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'subset_hvg': $( if [ ! -z ${VIASH_PAR_SUBSET_HVG+x} ]; then echo "r'${VIASH_PAR_SUBSET_HVG//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -514,6 +528,10 @@ def compute_batched_hvg(adata, n_hvgs):
 
 print(f'Select {par["hvgs"]} highly variable genes', flush=True)
 adata_with_hvg = compute_batched_hvg(input, n_hvgs=par['hvgs'])
+
+if par['subset_hvg']:
+    print('Subsetting to HVG dimensions', flush=True)
+    adata_with_hvg = adata_with_hvg[:, adata_with_hvg.var['hvg']].copy()
 
 print(">> Figuring out which data needs to be copied to which output file", flush=True)
 # use par arguments to look for label and batch value in different slots

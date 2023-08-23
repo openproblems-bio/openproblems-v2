@@ -398,9 +398,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common get_task_info"
-LABEL org.opencontainers.image.created="2023-08-23T11:47:31Z"
+LABEL org.opencontainers.image.created="2023-08-23T12:07:57Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="dd975cd8d28443ccc438087a48a7182f2ffac505"
+LABEL org.opencontainers.image.revision="488e40df01346015a7bfde21e69aa08e91bae669"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
