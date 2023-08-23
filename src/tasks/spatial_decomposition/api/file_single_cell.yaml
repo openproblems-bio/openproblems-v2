@@ -1,0 +1,25 @@
+type: file
+example: "resources_test/spatial_decomposition/pancreas/anndata_single_cell.h5ad"
+info:
+  label: "Single cell data"
+  summary: "The single cell data file"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+        required: true
+    obs:
+      - type: integer
+        name: label
+        description: Cell type label IDs
+        required: true
+    uns:
+      - type: string
+        name: cell_type_names
+        description: Cell type names corresponding to values in `label`
+        required: true
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
