@@ -23,7 +23,7 @@ input_solution.obsp["distances"] = input_integrated.obsp["distances"]
 input_solution.uns["neighbors"] = input_integrated.uns["neighbors"]
 input_solution.X = input_solution.layers['normalized']
 
-print('compute score')
+print('compute score', flush=True)
 score = isolated_labels_f1(
     input_solution,
     label_key='label',

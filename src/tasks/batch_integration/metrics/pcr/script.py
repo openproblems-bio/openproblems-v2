@@ -17,7 +17,7 @@ input_solution = ad.read_h5ad(par['input_solution'])
 input_integrated = ad.read_h5ad(par['input_integrated'])
 input_solution.X = input_solution.layers['normalized']
 
-print('compute score')
+print('compute score', flush=True)
 score = pcr_comparison(
     input_solution,
     input_integrated,
