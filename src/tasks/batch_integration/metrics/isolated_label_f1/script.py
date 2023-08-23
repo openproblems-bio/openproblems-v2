@@ -21,7 +21,6 @@ input_solution.obsp["distances"] = input_integrated.obsp["distances"]
 
 # TODO: if we don't copy neighbors over, the metric doesn't work
 input_solution.uns["neighbors"] = input_integrated.uns["neighbors"]
-input_solution.X = input_solution.layers['normalized']
 
 print('compute score', flush=True)
 score = isolated_labels_f1(

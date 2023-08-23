@@ -14,9 +14,8 @@ meta = {
 
 print('Read input', flush=True)
 input_solution = ad.read_h5ad(par['input_solution'])
-input_solution.X = input_solution.layers['normalized']
-
 input_integrated = ad.read_h5ad(par['input_integrated'])
+input_solution.X = input_solution.layers['normalized']
 
 translator = {
     "homo_sapiens": "human",
