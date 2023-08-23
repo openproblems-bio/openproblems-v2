@@ -450,7 +450,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels",
     "viash_version" : "0.7.5",
-    "git_commit" : "488e40df01346015a7bfde21e69aa08e91bae669",
+    "git_commit" : "dafa63242e01d970c186a1365dbdfc378ce867a3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

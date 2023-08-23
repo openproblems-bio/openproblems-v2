@@ -289,11 +289,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "repository_url" : "https://code.bioconductor.org/browse/batchelor/",
       "documentation_url" : "https://bioconductor.org/packages/batchelor/",
       "preferred_normalization" : "log_cpm",
-      "variants" : {
-        "mnn_hvg_unscaled" : {
-          "hvg" : true
-        }
-      },
       "type" : "method",
       "subtype" : "feature",
       "type_info" : {
@@ -386,7 +381,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnn_correct",
     "viash_version" : "0.7.5",
-    "git_commit" : "488e40df01346015a7bfde21e69aa08e91bae669",
+    "git_commit" : "dafa63242e01d970c186a1365dbdfc378ce867a3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -434,12 +429,6 @@ rm(.viash_orig_warn)
 
 cat("Read input\\\\n")
 adata <- anndata::read_h5ad(par\\$input)
-
-# don't subset when return_type is not "feature"
-if ("hvg" %in% names(par) && par\\$hvg) {
-  cat("Select HVGs\\\\n")
-  adata <- adata[, adata\\$var[["hvg"]]]
-}
 
 cat("Run mnn\\\\n")
 out <- suppressWarnings(batchelor::mnnCorrect(
