@@ -236,8 +236,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "name" : "asw_batch",
           "label" : "ASW batch",
-          "summary" : "Average silhouette of batches per label",
-          "description" : "\\"A batch correction metric that computes the silhouette score over all batch labels per cell type. Here, 0 indicates that batches are well mixed and any deviation from 0 indicates there remains a separation between batch labels. This is rescaled to a score between 0 and 1 by taking.\\"\n",
+          "summary" : "Average silhouette of batches per cell identity label (cell type)",
+          "description" : "We consider the absolute silhouette width, s(i), on\nbatch labels per cell i. Here, 0 indicates that batches are well mixed, and any\ndeviation from 0 indicates a batch effect:\n𝑠batch(𝑖)=|𝑠(𝑖)|.\n\nTo ensure higher scores indicate better batch mixing, these scores are scaled by\nsubtracting them from 1. As we expect batches to integrate within cell identity\nclusters, we compute the batchASWj score for each cell label j separately,\nusing the equation:\nbatchASW𝑗=1|𝐶𝑗|∑𝑖∈𝐶𝑗1−𝑠batch(𝑖),\n\nwhere Cj is the set of cells with the cell label j and |Cj| denotes the number of cells\nin that set.\n\nTo obtain the final batchASW score, the label-specific batchASWj scores are averaged:\nbatchASW=1|𝑀|∑𝑗∈𝑀batchASW𝑗.\n\nHere, M is the set of unique cell labels.\n",
           "reference" : "luecken2022benchmarking",
           "min" : 0,
           "max" : 1,
@@ -341,7 +341,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_batch",
     "viash_version" : "0.7.5",
-    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
+    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

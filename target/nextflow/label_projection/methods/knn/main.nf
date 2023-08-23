@@ -385,7 +385,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn",
     "viash_version" : "0.7.5",
-    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
+    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

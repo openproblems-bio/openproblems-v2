@@ -236,8 +236,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "name" : "cell_cycle_conservation",
           "label" : "Cell Cycle Conservation",
-          "summary" : "Cell cycle conservation score based on cell cycle gene scoring",
-          "description" : "The cell-cycle conservation score evaluates how well the cell-cycle effect can be captured before and after integration.",
+          "summary" : "Cell cycle conservation score based on principle component regression on cell cycle gene scores",
+          "description" : "The cell-cycle conservation score evaluates how well the cell-cycle effect can be\ncaptured before and after integration. We computed cell-cycle scores using Scanpy’s\nscore_cell_cycle function with a reference gene set from Tirosh et al for the\nrespective cell-cycle phases. We used the same set of cell-cycle genes for mouse and\nhuman data (using capitalization to convert between the gene symbols). We then computed\nthe variance contribution of the resulting S and G2/M phase scores using principal\ncomponent regression (Principal component regression), which was performed for each\nbatch separately. The differences in variance before, Varbefore, and after, Varafter,\nintegration were aggregated into a final score between 0 and 1, using the equation:\nCCconservation=1−|Varafter−Varbefore|/Varbefore.\n\nIn this equation, values close to 0 indicate lower conservation and 1 indicates complete\nconservation of the variance explained by cell cycle. In other words, the variance\nremains unchanged within each batch for complete conservation, while any deviation from\nthe preintegration variance contribution reduces the score.\n",
           "reference" : "luecken2022benchmarking",
           "min" : 0,
           "max" : 1,
@@ -341,7 +341,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/cell_cycle_conservation",
     "viash_version" : "0.7.5",
-    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
+    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

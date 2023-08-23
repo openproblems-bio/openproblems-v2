@@ -236,8 +236,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "name" : "pcr",
           "label" : "PCR",
-          "summary" : "The comparison of explained variance by batch before and after integration.",
-          "description" : "\\"This compares the explained variance by batch before and after integration. It\nreturns a score between 0 and 1 (scaled=True) with 0 if the variance\ncontribution hasn’t changed. The larger the score, the more different the\nvariance contributions are before and after integration.\\"\n",
+          "summary" : "Compare explained variance by batch before and after integration",
+          "description" : "Principal component regression, derived from PCA, has previously been used to quantify\nbatch removal. Briefly, the R2 was calculated from a linear regression of the\ncovariate of interest (for example, the batch variable B) onto each principal component.\nThe variance contribution of the batch effect per principal component was then\ncalculated as the product of the variance explained by the ith principal component (PC)\nand the corresponding R2(PCi|B). The sum across all variance contributions by the batch\neffects in all principal components gives the total variance explained by the batch\nvariable as follows:\nVar(𝐶|𝐵)=∑𝑖=1𝐺Var(𝐶|PC𝑖)×𝑅2(PC𝑖|𝐵),\n\nwhere Var(C|PCi) is the variance of the data matrix C explained by the ith principal\ncomponent.\n",
           "reference" : "luecken2022benchmarking",
           "v1" : {
             "path" : "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/pcr.py",
@@ -341,7 +341,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/pcr",
     "viash_version" : "0.7.5",
-    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
+    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

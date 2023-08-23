@@ -236,8 +236,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         {
           "name" : "asw_label",
           "label" : "ASW Label",
-          "summary" : "Average silhouette of labels",
-          "description" : "The absolute silhouette width is computed on cell identity labels, measuring their compactness.",
+          "summary" : "Average silhouette of cell identity labels (cell types)",
+          "description" : "For the bio-conservation score, the ASW was computed on cell identity labels and\nscaled to a value between 0 and 1 using the equation:\ncelltypeASW=(ASW_C+1)/2,\n\nwhere C denotes the set of all cell identity labels.\nFor information about the batch silhouette score, check sil_batch.\n",
           "reference" : "luecken2022benchmarking",
           "min" : 0,
           "max" : 1,
@@ -341,7 +341,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label",
     "viash_version" : "0.7.5",
-    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
+    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

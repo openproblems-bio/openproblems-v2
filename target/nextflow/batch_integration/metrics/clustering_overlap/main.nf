@@ -237,8 +237,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "name" : "ari",
           "label" : "ARI",
           "summary" : "Adjusted Rand Index compares clustering overlap, correcting for random labels and considering correct overlaps and disagreements.",
-          "description" : "The Adjusted Rand Index (ARI) compares the overlap of two clusterings;\nit considers both correct clustering overlaps while also counting correct\ndisagreements between two clusterings.\nWe compared the cell-type labels with the NMI-optimized\nLouvain clustering computed on the integrated dataset.\nThe adjustment of the Rand index corrects for randomly correct labels.\nAn ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\nWe used the scikit-learn implementation of the ARI.\n",
-          "reference" : "hubert1985comparing",
+          "description" : "The Adjusted Rand Index (ARI) compares the overlap of two clusterings;\nit considers both correct clustering overlaps while also counting correct\ndisagreements between two clusterings.\nWe compared the cell-type labels with the NMI-optimized\nLouvain clustering computed on the integrated dataset.\nThe adjustment of the Rand index corrects for randomly correct labels.\nAn ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\n",
+          "reference" : [
+            "hubert1985comparing",
+            "luecken2022benchmarking"
+          ],
           "min" : 0,
           "max" : 1,
           "maximize" : true,
@@ -251,8 +254,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "name" : "nmi",
           "label" : "NMI",
           "summary" : "NMI compares overlap by scaling using mean entropy terms and optimizing Louvain clustering to obtain the best match between clusters and labels.",
-          "description" : "Normalized Mutual Information (NMI) compares the overlap of two clusterings.\nWe used NMI to compare the cell-type labels with Louvain clusters computed on\nthe integrated dataset. The overlap was scaled using the mean of the entropy terms\nfor cell-type and cluster labels. Thus, NMI scores of 0 or 1 correspond to uncorrelated\nclustering or a perfect match, respectively. We performed optimized Louvain clustering\nfor this metric to obtain the best match between clusters and labels.\nLouvain clustering was performed at a resolution range of 0.1 to 2 in steps of 0.1,\nand the clustering output with the highest NMI with the label set was used. We\nthe scikit-learn implementation of NMI.\n",
-          "reference" : "amelio2015normalized",
+          "description" : "Normalized Mutual Information (NMI) compares the overlap of two clusterings.\nWe used NMI to compare the cell-type labels with Louvain clusters computed on\nthe integrated dataset. The overlap was scaled using the mean of the entropy terms\nfor cell-type and cluster labels. Thus, NMI scores of 0 or 1 correspond to uncorrelated\nclustering or a perfect match, respectively. We performed optimized Louvain clustering\nfor this metric to obtain the best match between clusters and labels.\n",
+          "reference" : [
+            "amelio2015normalized",
+            "luecken2022benchmarking"
+          ],
           "min" : 0,
           "max" : 1,
           "maximize" : true,
@@ -355,7 +361,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/clustering_overlap",
     "viash_version" : "0.7.5",
-    "git_commit" : "dcecd3775790cc5bc9768c388f2c8b8b53dddd25",
+    "git_commit" : "dd975cd8d28443ccc438087a48a7182f2ffac505",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
