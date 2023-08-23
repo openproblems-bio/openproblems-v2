@@ -1,6 +1,5 @@
-import yaml
 import anndata as ad
-from scib.integration import scanorama
+from scib.integration import mnn
 
 ## VIASH START
 par = {
@@ -21,9 +20,9 @@ if par['hvg']:
     print('Select HVGs', flush=True)
     adata = adata[:, adata.var['hvg']]
 
-print('Run scanorama', flush=True)
+print('Run mnn', flush=True)
 adata.X = adata.layers['normalized']
-adata.layers['corrected_counts'] = scanorama(adata, batch='batch').X
+adata.layers['corrected_counts'] = mnn(adata, batch='batch').X
 
 del adata.X
 

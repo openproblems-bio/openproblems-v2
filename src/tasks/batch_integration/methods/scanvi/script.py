@@ -1,6 +1,6 @@
 import yaml
 import anndata as ad
-from scib.integration import scanorama
+from scib.integration import scanvi
 
 ## VIASH START
 par = {
@@ -9,22 +9,23 @@ par = {
     'hvg': True,
 }
 meta = {
-    'functionality_name': 'foo',
+    'functionality_name' : 'foo',
     'config': 'bar'
 }
 ## VIASH END
+
+
 
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
 if par['hvg']:
     print('Select HVGs', flush=True)
-    adata = adata[:, adata.var['hvg']]
+    adata = adata[:, adata.var['hvg']].copy()
 
-print('Run scanorama', flush=True)
+print('Run scanvi', flush=True)
 adata.X = adata.layers['normalized']
-adata.layers['corrected_counts'] = scanorama(adata, batch='batch').X
-
+adata = scanvi(adata, batch='batch', labels='label')
 del adata.X
 
 print("Store outputs", flush=True)
