@@ -17,16 +17,16 @@ functionality:
     v1:
       path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/mnn.py
       commit: 29803b95c88b4ec5921df2eec7111fd5d1a95daf
-    preferred_normalization: log_cpm
+    preferred_normalization: log_cp10k
     variants:
       mnn_full_unscaled:
       mnn_hvg_unscaled:
         hvg: true
       mnn_hvg_scaled:
         hvg: true
-        preferred_normalization: log_cpm_scaled
+        preferred_normalization: log_cp10k_scaled
       mnn_full_scaled:
-        preferred_normalization: log_cpm_scaled
+        preferred_normalization: log_cp10k_scaled
   resources:
     - type: python_script
       path: script.py

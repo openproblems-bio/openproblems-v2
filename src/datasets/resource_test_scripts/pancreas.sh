@@ -42,7 +42,7 @@ viash run src/datasets/processors/subsample/config.vsh.yaml -- \
     --output $DATASET_DIR/raw.h5ad \
     --seed 123
 
-# run log cpm normalisation
+# run log cp10k normalisation
 viash run src/datasets/normalization/log_cp/config.vsh.yaml -- \
     --input $DATASET_DIR/raw.h5ad \
     --output $DATASET_DIR/normalized.h5ad
@@ -61,26 +61,5 @@ viash run src/datasets/processors/hvg/config.vsh.yaml -- \
 viash run src/datasets/processors/knn/config.vsh.yaml -- \
     --input $DATASET_DIR/hvg.h5ad \
     --output $DATASET_DIR/dataset.h5ad
-
-# run log cp10k normalisation
-viash run src/datasets/normalization/log_cp/config.vsh.yaml -- \
-    --input $DATASET_DIR/raw.h5ad \
-    --n_cp 10000 \
-    --output $DATASET_DIR/cp10k_normalized.h5ad
-
-# run pca
-viash run src/datasets/processors/pca/config.vsh.yaml -- \
-    --input $DATASET_DIR/cp10k_normalized.h5ad \
-    --output $DATASET_DIR/cp10k_pca.h5ad
-
-# run hvg
-viash run src/datasets/processors/hvg/config.vsh.yaml -- \
-    --input $DATASET_DIR/cp10k_pca.h5ad \
-    --output $DATASET_DIR/cp10k_hvg.h5ad
-
-# run knn
-viash run src/datasets/processors/knn/config.vsh.yaml -- \
-    --input $DATASET_DIR/cp10k_hvg.h5ad \
-    --output $DATASET_DIR/cp10k_dataset.h5ad
 
 rm -r $DATASET_DIR/temp_*
