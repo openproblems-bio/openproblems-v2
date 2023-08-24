@@ -596,7 +596,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/process_dataset",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -647,7 +647,7 @@ if par["seed"]:
     print(f">> Setting seed to {par['seed']}")
     random.seed(par["seed"])
 
-print(">> Load data")
+print(">> Load data", flush=True)
 adata = ad.read_h5ad(par["input"])
 print("input:", adata)
 
@@ -662,7 +662,7 @@ elif par["method"] == "random":
     is_test = [ not x in train_ix for x in range(0, adata.n_obs) ]
 
 # subset the different adatas
-print(">> Figuring which data needs to be copied to which output file")
+print(">> Figuring which data needs to be copied to which output file", flush=True)
 # use par arguments to look for label and batch value in different slots
 slot_mapping = {
     "obs": {
@@ -672,25 +672,25 @@ slot_mapping = {
 }
 slot_info = read_config_slots_info(meta["config"], slot_mapping)
 
-print(">> Creating train data")
+print(">> Creating train data", flush=True)
 output_train = subset_anndata(
     adata[[not x for x in is_test]], 
     slot_info["output_train"]
 )
 
-print(">> Creating test data")
+print(">> Creating test data", flush=True)
 output_test = subset_anndata(
     adata[is_test],
     slot_info["output_test"]
 )
 
-print(">> Creating solution data")
+print(">> Creating solution data", flush=True)
 output_solution = subset_anndata(
     adata[is_test],
     slot_info['output_solution']
 )
 
-print(">> Writing data")
+print(">> Writing data", flush=True)
 output_train.write_h5ad(par["output_train"])
 output_test.write_h5ad(par["output_test"])
 output_solution.write_h5ad(par["output_solution"])

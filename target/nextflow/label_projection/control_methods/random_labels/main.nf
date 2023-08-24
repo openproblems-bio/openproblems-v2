@@ -450,7 +450,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -486,15 +486,15 @@ meta = {
 
 ## VIASH END
 
-print("Load data")
+print("Load data", flush=True)
 input_train = ad.read_h5ad(par['input_train'])
 input_test = ad.read_h5ad(par['input_test'])
 
-print("Compute label distribution")
+print("Compute label distribution", flush=True)
 label_distribution = input_train.obs.label.value_counts()
 label_distribution = label_distribution / label_distribution.sum()
 
-print("Create prediction object")
+print("Create prediction object", flush=True)
 input_test.obs["label_pred"] = np.random.choice(
     label_distribution.index,
     size=input_test.n_obs,
@@ -502,7 +502,7 @@ input_test.obs["label_pred"] = np.random.choice(
     p=label_distribution
 )
 
-print("Write output to file")
+print("Write output to file", flush=True)
 input_test.uns["method_id"] = meta["functionality_name"]
 input_test.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN

@@ -424,7 +424,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -463,20 +463,20 @@ meta = {
 
 ### VIASH END
 
-print(">> Load data")
+print(">> Load data", flush=True)
 adata = sc.read(par['input'])
 
-print(">> Look for layer")
+print(">> Look for layer", flush=True)
 layer = adata.X if not par['layer_input'] else adata.layers[par['layer_input']]
 
-print(">> Run PCA")
+print(">> Run PCA", flush=True)
 X_pca, loadings, variance, variance_ratio = sc.tl.pca(
     layer, 
     n_comps=par["num_components"], 
     return_info=True
 )
 
-print(">> Storing output")
+print(">> Storing output", flush=True)
 adata.obsm[par["obsm_embedding"]] = X_pca
 adata.varm[par["varm_loadings"]] = loadings.T
 adata.uns[par["uns_variance"]] = {
@@ -484,7 +484,7 @@ adata.uns[par["uns_variance"]] = {
     "variance_ratio": variance_ratio
 }
 
-print(">> Writing data")
+print(">> Writing data", flush=True)
 adata.write_h5ad(par['output'])
 VIASHMAIN
 python -B "$tempscript"

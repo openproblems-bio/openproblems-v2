@@ -870,7 +870,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -1033,7 +1033,7 @@ del adata_output.X
 if par["input_mod2"] is not None:
     del adata_output_mod2.X
 
-print(">> Writing data")
+print(">> Writing data", flush=True)
 adata_output.write_h5ad(par["output"])
 if par["output_mod2"] is not None:
     adata_output_mod2.write_h5ad(par["output_mod2"])

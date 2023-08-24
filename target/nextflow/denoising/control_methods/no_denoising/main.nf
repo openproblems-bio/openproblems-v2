@@ -258,7 +258,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -292,15 +292,15 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
+print("Load input data", flush=True)
 input_train = ad.read_h5ad(par['input_train'])
 
-print("Process data")
+print("Process data", flush=True)
 input_train.layers["denoised"] = input_train.layers['counts']
 
 input_train.uns["method_id"] = meta['functionality_name']
 
-print("Write Data")
+print("Write Data", flush=True)
 input_train.write_h5ad(par['output'],compression="gzip")
 VIASHMAIN
 python -B "$tempscript"

@@ -292,7 +292,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -328,14 +328,14 @@ meta = {
 
 ## VIASH END
 
-print("Load Data")
+print("Load Data", flush=True)
 input_denoised = ad.read_h5ad(par['input_denoised'])
 input_test = ad.read_h5ad(par['input_test'])
 
 test_data = input_test.layers["counts"].toarray()
 denoised_data = input_denoised.layers["denoised"].toarray()
 
-print("Compute metric value")
+print("Compute metric value", flush=True)
 # scaling
 initial_sum = input_denoised.layers["counts"].sum()
 target_sum = test_data.sum()
@@ -348,7 +348,7 @@ def poisson_nll_loss(y_pred: np.ndarray, y_true: np.ndarray) -> float:
 
 error = poisson_nll_loss(scprep.utils.toarray(test_data), denoised_data)
 
-print("Store poisson value")
+print("Store poisson value", flush=True)
 output_metric = ad.AnnData(
     layers={},
     obs=input_denoised.obs[[]],
@@ -362,7 +362,7 @@ for key in input_denoised.uns_keys():
 output_metric.uns["metric_ids"] = meta['functionality_name']
 output_metric.uns["metric_values"] = error
 
-print("Write adata to file")
+print("Write adata to file", flush=True)
 output_metric.write_h5ad(par['output'], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"

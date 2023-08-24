@@ -320,7 +320,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -363,7 +363,7 @@ meta = {
 ## VIASH END
 
 
-print("load data")
+print("load data", flush=True)
 input_train = ad.read_h5ad(par['input_train'])
 
 normtype = par['norm']
@@ -375,7 +375,7 @@ elif normtype == "log":
     norm_fn = np.log1p
     denorm_fn = np.expm1
 
-print("processing data")
+print("processing data", flush=True)
 
 X, libsize = scprep.normalize.library_size_normalize(
     input_train.layers['counts'], rescale=1, return_library_size=True
@@ -393,7 +393,7 @@ output_denoised = input_train.copy()
 output_denoised.uns["method_id"] = meta["functionality_name"]
 output_denoised.layers["denoised"] = scipy.sparse.csr_matrix(Y)
 
-print("Writing Data")
+print("Writing Data", flush=True)
 output_denoised.write_h5ad(par['output'],compression="gzip")
 VIASHMAIN
 python -B "$tempscript"

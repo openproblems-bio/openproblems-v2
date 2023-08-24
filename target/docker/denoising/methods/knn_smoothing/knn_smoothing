@@ -394,9 +394,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/scottgigante-immunai/knn-smoothing@python_package"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods knn_smoothing"
-LABEL org.opencontainers.image.created="2023-08-24T07:51:04Z"
+LABEL org.opencontainers.image.created="2023-08-24T07:51:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9"
+LABEL org.opencontainers.image.revision="995ca846a87f8799cba3eca51480a3db7a4e107d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -867,14 +867,14 @@ meta = {
 
 ## VIASH END
 
-print("Load input data")
+print("Load input data", flush=True)
 input_train = ad.read_h5ad(par["input_train"])
 
-print("process data")
+print("process data", flush=True)
 X = input_train.layers["counts"].transpose().toarray()
 input_train.layers["denoised"] = scipy.sparse.csr_matrix((knn_smooth.knn_smoothing(X, k=10)).transpose())
 
-print("Writing data")
+print("Writing data", flush=True)
 input_train.uns["method_id"] = meta["functionality_name"]
 input_train.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN

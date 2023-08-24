@@ -366,7 +366,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -403,20 +403,20 @@ meta = {
 
 ## VIASH END
 
-print("Load data")
+print("Load data", flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print("Normalize data")
+print("Normalize data", flush=True)
 # libsize and sqrt L1 norm
 sqrt_data = scprep.utils.matrix_transform(adata.layers['counts'], np.sqrt)
 l1_sqrt, libsize = scprep.normalize.library_size_normalize(sqrt_data, rescale=1, return_library_size=True)
 l1_sqrt = l1_sqrt.tocsr()
 
-print("Store output in adata")
+print("Store output in adata", flush=True)
 adata.layers[par["layer_output"]] = l1_sqrt
 adata.uns["normalization_id"] = meta['functionality_name']
 
-print("Write data")
+print("Write data", flush=True)
 adata.write_h5ad(par['output'], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"

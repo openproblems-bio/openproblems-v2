@@ -413,9 +413,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scprep" "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization l1_sqrt"
-LABEL org.opencontainers.image.created="2023-08-24T07:50:58Z"
+LABEL org.opencontainers.image.created="2023-08-24T07:51:22Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9"
+LABEL org.opencontainers.image.revision="995ca846a87f8799cba3eca51480a3db7a4e107d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -917,20 +917,20 @@ meta = {
 
 ## VIASH END
 
-print("Load data")
+print("Load data", flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print("Normalize data")
+print("Normalize data", flush=True)
 # libsize and sqrt L1 norm
 sqrt_data = scprep.utils.matrix_transform(adata.layers['counts'], np.sqrt)
 l1_sqrt, libsize = scprep.normalize.library_size_normalize(sqrt_data, rescale=1, return_library_size=True)
 l1_sqrt = l1_sqrt.tocsr()
 
-print("Store output in adata")
+print("Store output in adata", flush=True)
 adata.layers[par["layer_output"]] = l1_sqrt
 adata.uns["normalization_id"] = meta['functionality_name']
 
-print("Write data")
+print("Write data", flush=True)
 adata.write_h5ad(par['output'], compression="gzip")
 VIASHMAIN
 python -B "\$tempscript" &

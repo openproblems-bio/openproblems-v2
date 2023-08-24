@@ -412,9 +412,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors hvg"
-LABEL org.opencontainers.image.created="2023-08-24T07:50:55Z"
+LABEL org.opencontainers.image.created="2023-08-24T07:51:19Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9"
+LABEL org.opencontainers.image.revision="995ca846a87f8799cba3eca51480a3db7a4e107d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -951,13 +951,13 @@ meta = {
 
 ### VIASH END
 
-print(">> Load data")
+print(">> Load data", flush=True)
 adata = sc.read_h5ad(par['input'])
 
-print(">> Look for layer")
+print(">> Look for layer", flush=True)
 layer = adata.X if not par['layer_input'] else adata.layers[par['layer_input']]
 
-print(">> Run HVG")
+print(">> Run HVG", flush=True)
 out = sc.pp.highly_variable_genes(
   adata,
   layer=par["layer_input"],
@@ -966,11 +966,11 @@ out = sc.pp.highly_variable_genes(
   inplace=False
 )
 
-print(">> Storing output")
+print(">> Storing output", flush=True)
 adata.var[par["var_hvg"]] = out['highly_variable'].values
 adata.var[par["var_hvg_score"]] = out['dispersions_norm'].values
 
-print(">> Writing data")
+print(">> Writing data", flush=True)
 adata.write_h5ad(par['output'])
 VIASHMAIN
 python -B "\$tempscript" &

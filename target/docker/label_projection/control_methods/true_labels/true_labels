@@ -397,9 +397,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/control_methods true_labels"
-LABEL org.opencontainers.image.created="2023-08-24T07:50:56Z"
+LABEL org.opencontainers.image.created="2023-08-24T07:51:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9"
+LABEL org.opencontainers.image.revision="995ca846a87f8799cba3eca51480a3db7a4e107d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -915,15 +915,15 @@ meta = {
 
 ## VIASH END
 
-print("Load data")
+print("Load data", flush=True)
 # input_train = ad.read_h5ad(par['input_train'])
 input_test = ad.read_h5ad(par['input_test'])
 input_solution = ad.read_h5ad(par['input_solution'])
 
-print("Create prediction object")
+print("Create prediction object", flush=True)
 input_test.obs["label_pred"] = input_solution.obs["label"]
 
-print("Write output to file")
+print("Write output to file", flush=True)
 input_test.uns["method_id"] = meta["functionality_name"]
 input_test.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN

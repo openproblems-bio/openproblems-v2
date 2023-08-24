@@ -416,7 +416,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset",
     "viash_version" : "0.7.5",
-    "git_commit" : "c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9",
+    "git_commit" : "995ca846a87f8799cba3eca51480a3db7a4e107d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -462,7 +462,7 @@ from helper import split_molecules
 # set random state
 random_state = np.random.RandomState(par['seed'])
 
-print(">> Load Data")
+print(">> Load Data", flush=True)
 adata = ad.read_h5ad(par["input"])
 
 # remove all layers except for counts
@@ -473,7 +473,7 @@ for key in list(adata.layers.keys()):
 # round counts and convert to int
 counts = np.array(adata.layers["counts"]).round().astype(int)
 
-print(">> process and split data")
+print(">> process and split data", flush=True)
 train_data, test_data = split_molecules(
     counts.data, par["train_frac"], 0.0, random_state
 )
@@ -505,7 +505,7 @@ is_missing = np.array(X_train.sum(axis=0) == 0)
 output_train = output_train[:, ~is_missing.flatten()]
 output_test = output_test[:, ~is_missing.flatten()]
 
-print(">> Write to file")
+print(">> Write to file", flush=True)
 output_train.write_h5ad(par["output_train"])
 output_test.write_h5ad(par["output_test"])
 VIASHMAIN
