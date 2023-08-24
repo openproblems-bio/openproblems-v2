@@ -402,9 +402,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods umap"
-LABEL org.opencontainers.image.created="2023-08-23T13:24:20Z"
+LABEL org.opencontainers.image.created="2023-08-24T07:51:01Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="dafa63242e01d970c186a1365dbdfc378ce867a3"
+LABEL org.opencontainers.image.revision="c5542aea744b0b1d9bd8b7cc2a0d80478ea100b9"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
