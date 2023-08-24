@@ -22,7 +22,7 @@ print("Reading adata file", flush=True)
 adata_mod1 = ad.read_h5ad(par["input_mod1"])
 adata_mod2 = ad.read_h5ad(par["input_mod2"])
 
-print("Checking parameters")
+print("Checking parameters", flush=True)
 n_neighbors = int(np.ceil(par["proportion_neighbors"] * adata_mod1.layers["normalized"].shape[0]))
 
 print("Compute KNN on PCA", flush=True)
@@ -40,6 +40,7 @@ _, indices_pred = (
 )
 
 print("Check which neighbours match", flush=True)
+print("Check which neighbours match", flush=True)
 neighbors_match = np.zeros(n_neighbors, dtype=int)
 for i in range(adata_mod1.layers["normalized"].shape[0]):
     _, pred_matches, true_matches = np.intersect1d(
@@ -51,6 +52,7 @@ for i in range(adata_mod1.layers["normalized"].shape[0]):
         axis=0,
     )
 
+print("Compute area under neighbours match curve", flush=True)
 print("Compute area under neighbours match curve", flush=True)
 neighbors_match_curve = neighbors_match / (
     np.arange(1, n_neighbors + 1) * adata_mod1.layers["normalized"].shape[0]

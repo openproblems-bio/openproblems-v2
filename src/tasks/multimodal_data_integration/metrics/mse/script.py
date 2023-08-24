@@ -1,4 +1,3 @@
-print("Importing libraries")
 import anndata as ad
 import scprep
 import numpy as np
@@ -44,9 +43,9 @@ output_metric = ad.AnnData(
 for key in adata_mod1.uns_keys():
     output_metric.uns[key] = adata_mod1.uns[key]
 
-print("Store metic value")
+print("Store metic value", flush=True)
 output_metric.uns["metric_ids"] = meta["functionality_name"]
 output_metric.uns["metric_values"] = metric_value
 
-print("Writing adata to file")
+print("Writing adata to file", flush=True)
 output_metric.write_h5ad(par["output"], compression = "gzip")

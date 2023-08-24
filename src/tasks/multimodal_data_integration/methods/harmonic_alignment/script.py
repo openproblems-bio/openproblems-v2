@@ -1,4 +1,3 @@
-print("Loading dependencies")
 import anndata as ad
 import harmonicalignment
 

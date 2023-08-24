@@ -1,4 +1,3 @@
-print("Loading dependencies")
 import anndata as ad
 from SCOT import SCOT
 
