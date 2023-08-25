@@ -284,9 +284,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "documentation_url" : "https://xgboost.readthedocs.io/en/stable/index.html",
       "v1" : {
         "path" : "openproblems/tasks/label_projection/methods/xgboost.py",
-        "commit" : "123bb7b39c51c58e19ddf0fbbc1963c3dffde14c"
+        "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6"
       },
-      "preferred_normalization" : "log_cpm",
+      "preferred_normalization" : "log_cp10k",
       "variants" : {
         "xgboost_scran" : {
           "preferred_normalization" : "log_scran_pooling"
@@ -384,7 +384,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

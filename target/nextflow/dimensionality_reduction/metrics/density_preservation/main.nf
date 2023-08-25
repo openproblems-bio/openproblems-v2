@@ -183,6 +183,32 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_neighbors",
+        "description" : "Number of neighbors to use for density estimation.",
+        "default" : [
+          30
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--seed",
+        "description" : "Random seed.",
+        "default" : [
+          42
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
       }
     ],
     "resources" : [
@@ -231,7 +257,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/density.py",
-            "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+            "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
           }
         }
       ],
@@ -329,7 +355,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -350,7 +376,9 @@ from scipy.stats import pearsonr
 par = {
   'input_embedding': $( if [ ! -z ${VIASH_PAR_INPUT_EMBEDDING+x} ]; then echo "r'${VIASH_PAR_INPUT_EMBEDDING//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'n_neighbors': $( if [ ! -z ${VIASH_PAR_N_NEIGHBORS+x} ]; then echo "int(r'${VIASH_PAR_N_NEIGHBORS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -439,27 +467,22 @@ def compute_density_preservation(
         return 0.0
     
     print("Compute local radii in original data", flush=True)
-    _, ro, _ = UMAP(
-        n_neighbors=_K,
-        random_state=_SEED,
-        densmap=True,
-        output_dens=True
-    ).fit_transform(high_dim)
+    ro = _calculate_radii(
+        high_dim,
+        n_neighbors=n_neighbors,
+        random_state=random_state
+    )
 
     print("Compute local radii of embedding", flush=True)
     re = _calculate_radii(
         X_emb,
-        n_neighbors=_K,
-        random_state=_SEED
+        n_neighbors=n_neighbors,
+        random_state=random_state
     )
     
     print("Compute pearson correlation", flush=True)
     return pearsonr(ro, re)[0]
 
-# number of neighbors
-_K = 30
-# Fix seed
-_SEED = 42
 
 print("Load data", flush=True)
 input_solution = ad.read_h5ad(par["input_solution"])
@@ -471,8 +494,8 @@ X_emb = input_embedding.obsm["X_emb"]
 density_preservation = compute_density_preservation(
     X_emb=X_emb,
     high_dim=high_dim,
-    n_neighbors=_K,
-    random_state=_SEED
+    n_neighbors=par["n_neighbors"],
+    random_state=par["seed"]
 )
 
 print("Create output AnnData object", flush=True)

@@ -1,0 +1,7 @@
+# Arguments
+n_cp: 10000.0
+norm_id: "sqrt_cp10k"
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"

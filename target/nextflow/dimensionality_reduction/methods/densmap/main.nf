@@ -193,17 +193,17 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "documentation_url" : "https://github.com/lmcinnes/umap#readme",
       "v1" : {
         "path" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
-        "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf"
+        "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
-      "preferred_normalization" : "log_cpm",
+      "preferred_normalization" : "log_cp10k",
       "variants" : {
-        "densmap_pca_logCPM" : {
+        "densmap_pca_logCP10k" : {
           "n_pca_dims" : 50
         },
-        "densmap_logCPM_1kHVG" : {
+        "densmap_logCP10k_1kHVG" : {
           "n_hvg" : 1000
         },
-        "densmap_pca_logCPM_1kHVG" : {
+        "densmap_pca_logCP10k_1kHVG" : {
           "n_pca_dims" : 50,
           "n_hvg" : 1000
         }
@@ -304,7 +304,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/densmap",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

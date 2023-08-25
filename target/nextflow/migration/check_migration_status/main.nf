@@ -169,7 +169,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/migration/check_migration_status",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -211,10 +211,18 @@ def check_status(comp_item: List[Dict[str, str]], git_objects: List[Dict[str, st
     git_object["sha"]."""
 
     v1_path = comp_item.get("v1", {}).get("path")
+
+    if "metric_id" in comp_item:
+        v1_path = comp_item.get("v1.path")
+    
     if not v1_path:
         return "v1.path missing"
     
     v1_commit = comp_item.get("v1", {}).get("commit")
+
+    if "metric_id" in comp_item:
+        v1_commit = comp_item.get("v1.commit")
+
     if not v1_commit:
         return "v1.commit missing"
     
@@ -223,7 +231,7 @@ def check_status(comp_item: List[Dict[str, str]], git_objects: List[Dict[str, st
         return "v1.path does not exist in git repo"
 
     git_sha = git_object[0]["sha"]
-    if git_sha == comp_item["v1_commit"]:
+    if git_sha == v1_commit:
         return "up to date"
     else:
         return f"out of date (sha: {git_sha})"

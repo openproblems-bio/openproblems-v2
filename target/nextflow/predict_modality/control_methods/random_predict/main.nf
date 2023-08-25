@@ -529,7 +529,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

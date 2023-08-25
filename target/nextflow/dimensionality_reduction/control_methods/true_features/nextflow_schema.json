@@ -4,24 +4,6 @@
     "description": "No description",
     "type": "object",
     "definitions": {
-      "arguments" : {
-        "title": "Arguments",
-        "type": "object",
-        "description": "No description",
-        "properties": {
-          "use_normalized_layer": {
-            "type": "boolean",
-            "description": "Whether to work with the raw counts or the normalized counts.",
-            "default": "False"
-          },
-          "n_hvg": {
-            "type": "integer",
-            "description": "Number of highly variable genes to subset to. If not specified, the input matrix will not be subset.",
-            "default": "1000"
-          }
-          
-        }
-      },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
@@ -42,9 +24,6 @@
       }
     },
     "allOf": [
-      {
-        "$ref": "#/definitions/arguments"
-      },
       {
         "$ref": "#/definitions/nextflow input-output arguments"
       }

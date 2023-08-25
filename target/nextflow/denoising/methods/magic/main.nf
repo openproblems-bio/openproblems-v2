@@ -205,14 +205,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     ],
     "info" : {
       "label" : "MAGIC",
-      "summary" : "MAGIC imputes and denoises scRNA-seq data using Euclidean distances and a Gaussian kernel to calculate the affinity matrix, followed by a Markov process and multiplication with the normalised data to obtain imputed values.",
+      "summary" : "MAGIC imputes and denoises scRNA-seq data that is noisy or dropout-prone.",
       "description" : "MAGIC (Markov Affinity-based Graph Imputation of Cells) is a method for imputation and denoising of noisy or dropout-prone single cell RNA-sequencing data. Given a normalised scRNA-seq expression matrix, it first calculates Euclidean distances between each pair of cells in the dataset, which is then augmented using a Gaussian kernel (function) and row-normalised to give a normalised affinity matrix. A t-step markov process is then calculated, by powering this affinity matrix t times. Finally, the powered affinity matrix is right-multiplied by the normalised data, causing the final imputed values to take the value of a per-gene average weighted by the affinities of cells. The resultant imputed matrix is then rescaled, to more closely match the magnitude of measurements in the normalised (input) matrix.",
       "reference" : "van2018recovering",
       "documentation_url" : "https://github.com/KrishnaswamyLab/MAGIC#readme",
       "repository_url" : "https://github.com/KrishnaswamyLab/MAGIC",
       "v1" : {
         "path" : "openproblems/tasks/denoising/methods/magic.py",
-        "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+        "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
       "variants" : {
         "magic_approx" : {
@@ -320,7 +320,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

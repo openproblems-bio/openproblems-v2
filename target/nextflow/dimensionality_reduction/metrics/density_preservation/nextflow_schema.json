@@ -4,6 +4,24 @@
     "description": "No description",
     "type": "object",
     "definitions": {
+      "arguments" : {
+        "title": "Arguments",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "n_neighbors": {
+            "type": "integer",
+            "description": "Number of neighbors to use for density estimation.",
+            "default": "30"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Random seed.",
+            "default": "42"
+          }
+          
+        }
+      },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
@@ -24,6 +42,9 @@
       }
     },
     "allOf": [
+      {
+        "$ref": "#/definitions/arguments"
+      },
       {
         "$ref": "#/definitions/nextflow input-output arguments"
       }

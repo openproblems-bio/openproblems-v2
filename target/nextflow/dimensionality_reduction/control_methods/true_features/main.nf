@@ -185,32 +185,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
-      },
-      {
-        "type" : "boolean",
-        "name" : "--use_normalized_layer",
-        "description" : "Whether to work with the raw counts or the normalized counts.",
-        "default" : [
-          false
-        ],
-        "required" : false,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
-        "type" : "integer",
-        "name" : "--n_hvg",
-        "description" : "Number of highly variable genes to subset to. If not specified, the input matrix will not be subset.",
-        "default" : [
-          1000
-        ],
-        "required" : false,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
       }
     ],
     "resources" : [
@@ -247,20 +221,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "description" : "This serves as a positive control since the original high-dimensional data is retained as is, without any loss of information",
       "v1" : {
         "path" : "openproblems/tasks/dimensionality_reduction/methods/baseline.py",
-        "commit" : "4a0ee9b3731ff10d8cd2e584726a61b502aef613"
+        "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
-      "preferred_normalization" : "counts",
-      "variants" : {
-        "true_features_log_cpm" : {
-          "preferred_normalization" : "log_cpm",
-          "use_normalized_layer" : true
-        },
-        "true_features_log_cpm_hvg" : {
-          "preferred_normalization" : "log_cpm",
-          "use_normalized_layer" : true,
-          "n_hvg" : 1000
-        }
-      },
+      "preferred_normalization" : "log_cp10k",
       "type" : "control_method",
       "type_info" : {
         "label" : "Control method",
@@ -282,17 +245,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "resolve_volume" : "Automatic",
       "chown" : true,
       "setup_strategy" : "ifneedbepullelsecachedbuild",
-      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
-      "setup" : [
-        {
-          "type" : "python",
-          "user" : false,
-          "packages" : [
-            "scanpy"
-          ],
-          "upgrade" : true
-        }
-      ]
+      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2"
     },
     {
       "type" : "nextflow",
@@ -353,7 +306,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/true_features",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -368,9 +321,7 @@ import anndata as ad
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'use_normalized_layer': $( if [ ! -z ${VIASH_PAR_USE_NORMALIZED_LAYER+x} ]; then echo "r'${VIASH_PAR_USE_NORMALIZED_LAYER//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
-  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -393,15 +344,7 @@ print("Load input data", flush=True)
 input = ad.read_h5ad(par["input"])
 
 print("Create high dimensionally embedding with all features", flush=True)
-if par["use_normalized_layer"]:
-    X_emb = input.layers["counts"].toarray()
-else:
-    X_emb = input.layers["normalized"].toarray()
-
-if par["n_hvg"]:
-    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
-    idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
-    X_emb = X_emb[:, idx]
+X_emb = input.layers["normalized"].toarray()
 
 print("Create output AnnData", flush=True)
 output = ad.AnnData(

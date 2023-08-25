@@ -259,7 +259,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "reference" : "grandini2020metrics",
           "v1" : {
             "path" : "openproblems/tasks/label_projection/metrics/accuracy.py",
-            "commit" : "fcd5b876e7d0667da73a2858bc27c40224e19f65"
+            "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
           }
         }
       ],
@@ -351,7 +351,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/accuracy",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

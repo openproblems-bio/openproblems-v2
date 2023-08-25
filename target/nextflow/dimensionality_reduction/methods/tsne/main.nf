@@ -196,11 +196,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "documentation_url" : "https://scikit-learn.org/stable/modules/generated/sklearn.manifold.TSNE.html#sklearn.manifold.TSNE",
       "v1" : {
         "path" : "openproblems/tasks/dimensionality_reduction/methods/tsne.py",
-        "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf"
+        "commit" : "154ccb9fd99113f3d28d9c3f139194539a0290f9"
       },
-      "preferred_normalization" : "log_cpm",
+      "preferred_normalization" : "log_cp10k",
       "variants" : {
-        "tsne_logCPM_1kHVG" : {
+        "tsne_logCP10k_1kHVG" : {
           "n_hvg" : 1000
         }
       },
@@ -304,7 +304,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/tsne",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

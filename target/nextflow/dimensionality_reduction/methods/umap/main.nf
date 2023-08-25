@@ -198,15 +198,15 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "path" : "openproblems/tasks/dimensionality_reduction/methods/umap.py",
         "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf"
       },
-      "preferred_normalization" : "log_cpm",
+      "preferred_normalization" : "log_cp10k",
       "variants" : {
-        "umap_pca_logCPM" : {
+        "umap_pca_logCP10k" : {
           "n_pca_dims" : 50
         },
-        "umap_logCPM_1kHVG" : {
+        "umap_logCP10k_1kHVG" : {
           "n_hvg" : 1000
         },
-        "umap_pca_logCPM_1kHVG" : {
+        "umap_pca_logCP10k_1kHVG" : {
           "n_pca_dims" : 50,
           "n_hvg" : 1000
         }
@@ -303,7 +303,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/umap",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

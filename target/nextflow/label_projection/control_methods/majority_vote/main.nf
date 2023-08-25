@@ -355,7 +355,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "description" : "A control-type method that predicts all cells to belong to the most abundant cell type in the dataset",
       "v1" : {
         "path" : "openproblems/tasks/label_projection/methods/baseline.py",
-        "commit" : "b460ecb183328c857cbbf653488f522a4034a61c"
+        "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
       "preferred_normalization" : "counts",
       "type" : "control_method",
@@ -440,7 +440,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

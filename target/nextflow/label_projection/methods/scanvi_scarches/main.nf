@@ -348,6 +348,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "documentation_url" : "https://docs.scvi-tools.org",
       "repository_url" : "https://github.com/scverse/scvi-tools",
       "preferred_normalization" : "counts",
+      "v1" : {
+        "path" : "openproblems/tasks/label_projection/methods/scvi_tools.py",
+        "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6"
+      },
       "type" : "method",
       "type_info" : {
         "label" : "Method",
@@ -440,7 +444,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

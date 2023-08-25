@@ -233,7 +233,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         },
@@ -250,7 +250,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         },
@@ -267,7 +267,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         },
@@ -284,7 +284,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         },
@@ -301,7 +301,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         },
@@ -318,7 +318,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         },
@@ -335,7 +335,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/nn_ranking.py",
-            "commit" : "14d70b330cae09527a6d4c4e552db240601e31cf",
+            "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6",
             "note" : "The original v1 implementations consisted of a lot of helper functions which were \nderived from the pyDRMetrics package. This version uses the coRanking package\nto avoid reimplementing and potentially introducing a lot of bugs in how\nthe various metrics are computed.\n\nIn addition, the references for each of the metrics were looked up to\nproperly attribute the original authors of each of the metrics.\n"
           }
         }
@@ -432,7 +432,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/coranking",
     "viash_version" : "0.7.5",
-    "git_commit" : "19ee4d855eda16a011abbbad8b61672516bf4eae",
+    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
