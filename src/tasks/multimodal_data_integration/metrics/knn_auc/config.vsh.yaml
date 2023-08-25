@@ -12,11 +12,14 @@ functionality:
         min: 0
         max: 1
         maximize: true
+        v1:
+          path: openproblems/tasks/matching_modalities/metrics/knn_auc.py
+          commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
   arguments:
     - name: "--proportion_neighbors"
       type: "double"
       default: 0.1
-      description: The propotion of neighbours to use in computing the KNN.
+      description: The proportion of neighbours to use in computing the KNN.
   resources:
     - type: python_script
       path: script.py

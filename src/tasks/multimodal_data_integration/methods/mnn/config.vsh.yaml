@@ -6,7 +6,12 @@ functionality:
     summary: "Mutual Nearest Neighbors"
     description: |
       Mutual Nearest Neighbors is a method for integrating multimodal single-cell data. It is based on the idea of finding mutual nearest neighbors between the two modalities. The method is described in the following paper: https://doi.org/10.1038/nbt.4091
-    preferred_normalization: "log_cpm"
+    preferred_normalization: "log_cp10k"
+    variants:
+      mnn_log_cp10k:
+      mnn_log_scran_pooling:
+        preferred_normalization: "log_scran_pooling"
+        info: "The normalization only changes for the first modality dataset, the second still uses log_cp10k"
     reference: "haghverdi2018batch"
     repository_url: "https://github.com/LTLA/batchelor"
     documentation_url: "https://github.com/LTLA/batchelor#readme"
@@ -22,6 +27,7 @@ platforms:
       - type: r
         cran: [Matrix, SingleCellExperiment]
         script:
+          # Install batchelor from Bioconductor devel because the version on r2u is behind
           - remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")
   - type: nextflow
     directives:

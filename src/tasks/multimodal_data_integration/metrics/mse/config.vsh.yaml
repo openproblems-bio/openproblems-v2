@@ -11,7 +11,10 @@ functionality:
         reference: ""
         maximize: true
         min: 0
-        max: +inf 
+        max: "+.inf"
+        v1:
+          path: openproblems/tasks/matching_modalities/metrics/mse.py
+          commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
   resources:
     - type: python_script
       path: ./script.py
@@ -21,7 +24,6 @@ platforms:
     setup:
       - type: python
         packages:
-          - anndata
           - numpy
           - scipy
           - scprep
