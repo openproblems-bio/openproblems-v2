@@ -10,8 +10,8 @@ functionality:
     variants:
       mnn_log_cp10k:
       mnn_log_scran_pooling:
+      # "The normalization only changes for the first modality dataset, the second still uses log_cp10k"
         preferred_normalization: "log_scran_pooling"
-        info: "The normalization only changes for the first modality dataset, the second still uses log_cp10k"
     reference: "haghverdi2018batch"
     repository_url: "https://github.com/LTLA/batchelor"
     documentation_url: "https://github.com/LTLA/batchelor#readme"
