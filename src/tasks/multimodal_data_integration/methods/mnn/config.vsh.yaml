@@ -17,10 +17,12 @@ platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
+      - type: apt
+        packages: git
       - type: r
         cran: [Matrix, SingleCellExperiment]
-        bioc:
-          - batchelor
+        script:
+          - remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")
   - type: nextflow
     directives:
       label: [ lowmem, lowcpu ]
