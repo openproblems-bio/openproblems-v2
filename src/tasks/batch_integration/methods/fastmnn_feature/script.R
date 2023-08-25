@@ -31,7 +31,7 @@ cat("Reformat output\n")
 return_type <- gsub("fastmnn_", "", meta[["functionality_name"]])
 
 if (return_type == "feature") {
-  layer <- as(SummarizedExperiment::assay(out, "reconstructed"), "dgCMatrix")
+  layer <- as(SummarizedExperiment::assay(out, "reconstructed"), "sparseMatrix")
   adata$layers[["corrected_counts"]] <- t(layer)
 } else if (return_type == "embedding") {
   obsm <- SingleCellExperiment::reducedDim(out, "corrected")
