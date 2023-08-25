@@ -31,7 +31,7 @@ X_new_unbal, y_new_unbal = scot.align(
     k=50, e=1e-3, rho=0.0005, normalize=True, balanced=par["balanced"]
 )
 
-print()
+print("store output", flush=True)
 adata_mod1.obsm["integrated"] = X_new_unbal
 adata_mod2.obsm["integrated"] = y_new_unbal
 

@@ -6,7 +6,6 @@ par = {
   "mod1" : "resources_test/common/multimodal/dataset_mod1.h5ad",
   "mod2" : "resources_test/common/multimodal/dataset_mod2.h5ad",
   "output" : "output.scot.h5ad",
-  "n_svd" : 100,
   "n_pca_XY" : 100,
   "eigenvectors" : 100
 }
