@@ -413,9 +413,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scprep" "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization l1_sqrt"
-LABEL org.opencontainers.image.created="2023-08-24T07:51:22Z"
+LABEL org.opencontainers.image.created="2023-08-25T10:04:43Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="995ca846a87f8799cba3eca51480a3db7a4e107d"
+LABEL org.opencontainers.image.revision="19ee4d855eda16a011abbbad8b61672516bf4eae"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
