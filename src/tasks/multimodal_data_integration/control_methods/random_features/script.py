@@ -21,8 +21,8 @@ adata_mod1 = ad.read_h5ad(par["input_mod1"])
 adata_mod2 = ad.read_h5ad(par["input_mod2"])
 
 print("Generating random features", flush=True)
-adata_mod1.obsm["integrated"] = np.random.permutation(np.arange(adata_mod1.shape[0]))
-adata_mod2.obsm["integrated"] = np.random.permutation(np.arange(adata_mod1.shape[0]))
+adata_mod1.obsm["integrated"] = adata_mod1.obsm["X_svd"][np.random.permutation(np.arange(adata_mod1.shape[0]))]
+adata_mod2.obsm["integrated"] = adata_mod1.obsm["X_svd"][np.random.permutation(np.arange(adata_mod1.shape[0]))]
 
 print("Write output to file", flush=True)
 adata_mod1.uns["method_id"] = meta["functionality_name"]

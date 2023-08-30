@@ -1,10 +1,15 @@
 sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
 
+// import control methods
+include { random_features }      from "$targetDir/multimodal_data_integration/control_methods/random_features/main.nf" params(params)
+include { true_features }        from "$targetDir/multimodal_data_integration/control_methods/true_features/main.nf"   params(params)
+
 // import methods
-// include { mnn }                  from "$targetDir/multimodal_data_integration/methods/mnn/main.nf"                 params(params)
+include { mnn }                  from "$targetDir/multimodal_data_integration/methods/mnn/main.nf"                 params(params)
 include { scot }                 from "$targetDir/multimodal_data_integration/methods/scot/main.nf"                params(params)
 include { harmonic_alignment }   from "$targetDir/multimodal_data_integration/methods/harmonic_alignment/main.nf"  params(params)
+include { procrustes }           from "$targetDir/multimodal_data_integration/methods/procrustes/main.nf"          params(params)
 
 // import metrics
 include { knn_auc }              from "$targetDir/multimodal_data_integration/metrics/knn_auc/main.nf"             params(params)
@@ -25,8 +30,12 @@ traces = initialize_tracer()
 
 // collect method list
 methods = [
+    random_features,
+    true_features,
     scot,
-    harmonic_alignment
+    harmonic_alignment,
+    mnn,
+    procrustes
 ]
 
 // collect metric list
@@ -59,6 +68,15 @@ workflow run_wf {
     // run all methods
     | run_components(
         components: methods,
+
+        // // use the 'filter' argument to only run a method on the normalisation the component is asking for
+        // filter: { id, state, config ->
+        // def norm = state.normalization_id
+        // def pref = config.functionality.info.preferred_normalization
+        // // if the preferred normalisation is none at all,
+        // // we can pass whichever dataset we want
+        // (norm == "log_cp10k" && pref == "counts") || norm == pref
+        // },
 
         // define a new 'id' by appending the method name to the dataset id
         id: { id, state, config ->
