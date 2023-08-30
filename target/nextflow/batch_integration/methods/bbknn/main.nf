@@ -30,7 +30,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "name" : "--input",
         "info" : {
-          "label" : "Unintegrated",
+          "label" : "Dataset",
           "summary" : "Unintegrated AnnData HDF5 file.",
           "slots" : {
             "layers" : [
@@ -156,6 +156,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "connectivities",
                 "description" : "Neighbors connectivities matrix.",
                 "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "distances",
+                "description" : "Neighbors connectivities matrix.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -187,6 +193,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
+                "required" : true
+              },
+              {
+                "type" : "object",
+                "name" : "neighbors",
+                "description" : "Supplementary K nearest neighbors data.",
                 "required" : true
               }
             ],
@@ -392,7 +404,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/bbknn",
     "viash_version" : "0.7.5",
-    "git_commit" : "12f54cfbbfacafc618ac09dee819001308e8858c",
+    "git_commit" : "0ec105d78cceadb640528c4b4dd5fa166291f9ba",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
