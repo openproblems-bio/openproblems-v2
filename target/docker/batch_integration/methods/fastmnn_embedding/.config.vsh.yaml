@@ -1,5 +1,5 @@
 functionality:
-  name: "fastmnn"
+  name: "fastmnn_embedding"
   namespace: "batch_integration/methods"
   version: "main_build"
   arguments:
@@ -154,7 +154,7 @@ functionality:
     dest: "par"
   resources:
   - type: "r_script"
-    path: "script.R"
+    path: "../fastmnn_feature/script.R"
     is_executable: true
   test_resources:
   - type: "python_script"
@@ -169,7 +169,7 @@ functionality:
     path: "resources_test/batch_integration/pancreas"
     dest: "resources_test/batch_integration/pancreas"
   info:
-    label: "fastMnn"
+    label: "fastMnn (embedding)"
     summary: "A simpler version of the original mnnCorrect algorithm."
     description: "The fastMNN() approach is much simpler than the original mnnCorrect()\
       \ algorithm, and proceeds in several steps.\n\n1. Perform a multi-sample PCA\
@@ -184,6 +184,9 @@ functionality:
     repository_url: "https://code.bioconductor.org/browse/batchelor/"
     documentation_url: "https://bioconductor.org/packages/batchelor/"
     preferred_normalization: "log_cp10k"
+    v1:
+      path: "openproblems/tasks/_batch_integration/batch_integration_graph/methods/fastmnn.py"
+      commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     type: "method"
     subtype: "embedding"
     type_info:
@@ -257,10 +260,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/fastmnn/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/fastmnn_embedding/config.vsh.yaml"
   platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/fastmnn"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/fastmnn/fastmnn"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/fastmnn_embedding"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/fastmnn_embedding/fastmnn_embedding"
   viash_version: "0.7.5"
-  git_commit: "0ec105d78cceadb640528c4b4dd5fa166291f9ba"
+  git_commit: "e485faa7fbc056b86d500962183e1d5e1f00b3f7"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

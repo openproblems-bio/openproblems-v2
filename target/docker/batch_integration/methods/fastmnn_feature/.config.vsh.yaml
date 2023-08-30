@@ -1,5 +1,5 @@
 functionality:
-  name: "fastmnn"
+  name: "fastmnn_feature"
   namespace: "batch_integration/methods"
   version: "main_build"
   arguments:
@@ -76,18 +76,22 @@ functionality:
   - type: "file"
     name: "--output"
     info:
-      prediction_type: "embedding"
-      label: "Integrated embedding"
-      summary: "An integrated AnnData HDF5 file."
+      prediction_type: "feature"
+      label: "Integrated Feature"
+      summary: "Integrated AnnData HDF5 file."
       slots:
-        obsm:
-        - type: "double"
-          name: "X_pca"
-          description: "The resulting PCA embedding."
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
           required: true
         - type: "double"
-          name: "X_emb"
-          description: "integration embedding prediction"
+          name: "normalized"
+          description: "Normalized expression values"
+          required: true
+        - type: "double"
+          name: "corrected_counts"
+          description: "Corrected counts after integration"
           required: true
         uns:
         - type: "string"
@@ -110,15 +114,6 @@ functionality:
           name: "method_id"
           description: "A unique identifier for the method"
           required: true
-        layers:
-        - type: "integer"
-          name: "counts"
-          description: "Raw counts"
-          required: true
-        - type: "double"
-          name: "normalized"
-          description: "Normalized expression values"
-          required: true
         obs:
         - type: "string"
           name: "batch"
@@ -134,6 +129,11 @@ functionality:
           description: "Whether or not the feature is considered to be a 'highly variable\
             \ gene'"
           required: true
+        obsm:
+        - type: "double"
+          name: "X_pca"
+          description: "The resulting PCA embedding."
+          required: true
         obsp:
         - type: "double"
           name: "knn_distances"
@@ -144,7 +144,7 @@ functionality:
           description: "K nearest neighbors connectivities matrix."
           required: true
     example:
-    - "resources_test/batch_integration/pancreas/integrated_embedding.h5ad"
+    - "resources_test/batch_integration/pancreas/integrated_feature.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -169,7 +169,7 @@ functionality:
     path: "resources_test/batch_integration/pancreas"
     dest: "resources_test/batch_integration/pancreas"
   info:
-    label: "fastMnn"
+    label: "fastMnn (feature)"
     summary: "A simpler version of the original mnnCorrect algorithm."
     description: "The fastMNN() approach is much simpler than the original mnnCorrect()\
       \ algorithm, and proceeds in several steps.\n\n1. Perform a multi-sample PCA\
@@ -183,13 +183,16 @@ functionality:
     reference: "haghverdi2018batch"
     repository_url: "https://code.bioconductor.org/browse/batchelor/"
     documentation_url: "https://bioconductor.org/packages/batchelor/"
-    preferred_normalization: "log_cp10k"
+    preferred_normalization: "log_cpm"
+    v1:
+      path: "openproblems/tasks/_batch_integration/batch_integration_graph/methods/fastmnn.py"
+      commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     type: "method"
-    subtype: "embedding"
+    subtype: "feature"
     type_info:
-      label: "Method (embedding)"
-      summary: "A batch integration embedding method."
-      description: "A batch integration method which outputs a batch-corrected embedding.\n"
+      label: "Method (feature)"
+      summary: "A batch integration feature method."
+      description: "A batch integration method which outputs a batch-corrected feature-space.\n"
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
@@ -204,9 +207,14 @@ platforms:
   setup_strategy: "ifneedbepullelsecachedbuild"
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
+  - type: "apt"
+    packages:
+    - "git"
+    interactive: false
   - type: "r"
-    bioc:
-    - "batchelor"
+    script:
+    - "remotes::install_bioc(\"3.18/batchelor\", upgrade = \"always\", type = \"source\"\
+      )"
     bioc_force_install: false
   entrypoint: []
   cmd: null
@@ -257,10 +265,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/fastmnn/config.vsh.yaml"
-  platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn/fastmnn"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/fastmnn_feature/config.vsh.yaml"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/fastmnn_feature"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/fastmnn_feature/fastmnn_feature"
   viash_version: "0.7.5"
-  git_commit: "0ec105d78cceadb640528c4b4dd5fa166291f9ba"
+  git_commit: "e485faa7fbc056b86d500962183e1d5e1f00b3f7"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

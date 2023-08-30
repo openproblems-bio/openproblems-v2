@@ -393,7 +393,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation",
     "viash_version" : "0.7.5",
-    "git_commit" : "0ec105d78cceadb640528c4b4dd5fa166291f9ba",
+    "git_commit" : "e485faa7fbc056b86d500962183e1d5e1f00b3f7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
