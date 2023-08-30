@@ -149,6 +149,7 @@ functionality:
   - type: "integer"
     name: "--n_latent"
     description: "Number of units in the latent layer"
+    info: null
     default:
     - 30
     required: false
@@ -159,6 +160,7 @@ functionality:
   - type: "integer"
     name: "--n_layers"
     description: "Number of hidden layers"
+    info: null
     default:
     - 2
     required: false
@@ -169,6 +171,7 @@ functionality:
   - type: "integer"
     name: "--n_hidden"
     description: "Number of units in the hidden layers"
+    info: null
     default:
     - 128
     required: false
@@ -179,6 +182,7 @@ functionality:
   - type: "double"
     name: "--dropout_rate"
     description: "Rate of dropout applied in training"
+    info: null
     default:
     - 0.2
     required: false
@@ -189,6 +193,7 @@ functionality:
   - type: "integer"
     name: "--max_epochs"
     description: "Maximum number of training epochs"
+    info: null
     default:
     - 2
     required: false
@@ -227,6 +232,9 @@ functionality:
     documentation_url: "https://docs.scvi-tools.org"
     repository_url: "https://github.com/scverse/scvi-tools"
     preferred_normalization: "counts"
+    v1:
+      path: "openproblems/tasks/label_projection/methods/scvi_tools.py"
+      commit: "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6"
     variants:
       scanvi_scarches: null
     type: "method"
@@ -254,9 +262,10 @@ platforms:
     pypi:
     - "scvi-tools"
     upgrade: true
+  entrypoint: []
+  cmd: null
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     label:
     - "midmem"
@@ -267,6 +276,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -274,6 +315,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches/scanvi_scarches"
-  viash_version: "0.7.3"
-  git_commit: "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082"
+  viash_version: "0.7.5"
+  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

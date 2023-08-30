@@ -141,19 +141,26 @@ functionality:
     metrics:
     - name: "asw_batch"
       label: "ASW batch"
-      summary: "Average silhouette of batches per label"
-      description: "\"A batch correction metric that computes the silhouette score\
-        \ over all batch labels per cell type. Here, 0 indicates that batches are\
-        \ well mixed and any deviation from 0 indicates there remains a separation\
-        \ between batch labels. This is rescaled to a score between 0 and 1 by taking.\"\
-        \n"
+      summary: "Average silhouette of batches per cell identity label (cell type)"
+      description: "We consider the absolute silhouette width, s(i), on\nbatch labels\
+        \ per cell i. Here, 0 indicates that batches are well mixed, and any\ndeviation\
+        \ from 0 indicates a batch effect:\n\U0001d460batch(\U0001d456)=|\U0001d460\
+        (\U0001d456)|.\n\nTo ensure higher scores indicate better batch mixing, these\
+        \ scores are scaled by\nsubtracting them from 1. As we expect batches to integrate\
+        \ within cell identity\nclusters, we compute the batchASWj score for each\
+        \ cell label j separately,\nusing the equation:\nbatchASW\U0001d457=1|\U0001d436\
+        \U0001d457|∑\U0001d456∈\U0001d436\U0001d4571−\U0001d460batch(\U0001d456),\n\
+        \nwhere Cj is the set of cells with the cell label j and |Cj| denotes the\
+        \ number of cells\nin that set.\n\nTo obtain the final batchASW score, the\
+        \ label-specific batchASWj scores are averaged:\nbatchASW=1|\U0001d440|∑\U0001d457\
+        ∈\U0001d440batchASW\U0001d457.\n\nHere, M is the set of unique cell labels.\n"
       reference: "luecken2022benchmarking"
       min: 0
       max: 1
       maximize: true
       v1:
         path: "openproblems/tasks/_batch_integration/batch_integration_embed/metrics/sil_batch.py"
-        commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+        commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     type: "metric"
     subtype: "embedding"
     type_info:
@@ -179,9 +186,10 @@ platforms:
     pypi:
     - "scib==1.1.3"
     upgrade: true
+  entrypoint: []
+  cmd: null
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     label:
     - "midmem"
@@ -192,6 +200,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -199,6 +239,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/metrics/asw_batch"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/metrics/asw_batch/asw_batch"
-  viash_version: "0.7.3"
-  git_commit: "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082"
+  viash_version: "0.7.5"
+  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

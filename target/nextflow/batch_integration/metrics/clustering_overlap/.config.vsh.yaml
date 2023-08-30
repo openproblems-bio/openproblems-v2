@@ -148,15 +148,16 @@ functionality:
         disagreements between two clusterings.\nWe compared the cell-type labels with\
         \ the NMI-optimized\nLouvain clustering computed on the integrated dataset.\n\
         The adjustment of the Rand index corrects for randomly correct labels.\nAn\
-        \ ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\n\
-        We used the scikit-learn implementation of the ARI.\n"
-      reference: "hubert1985comparing"
+        \ ARI of 0 or 1 corresponds to random labeling or a perfect match,\nrespectively.\n"
+      reference:
+      - "hubert1985comparing"
+      - "luecken2022benchmarking"
       min: 0
       max: 1
       maximize: true
       v1:
         path: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/ari.py"
-        commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+        commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     - name: "nmi"
       label: "NMI"
       summary: "NMI compares overlap by scaling using mean entropy terms and optimizing\
@@ -167,17 +168,16 @@ functionality:
         \ of the entropy terms\nfor cell-type and cluster labels. Thus, NMI scores\
         \ of 0 or 1 correspond to uncorrelated\nclustering or a perfect match, respectively.\
         \ We performed optimized Louvain clustering\nfor this metric to obtain the\
-        \ best match between clusters and labels.\nLouvain clustering was performed\
-        \ at a resolution range of 0.1 to 2 in steps of 0.1,\nand the clustering output\
-        \ with the highest NMI with the label set was used. We\nthe scikit-learn implementation\
-        \ of NMI.\n"
-      reference: "amelio2015normalized"
+        \ best match between clusters and labels.\n"
+      reference:
+      - "amelio2015normalized"
+      - "luecken2022benchmarking"
       min: 0
       max: 1
       maximize: true
       v1:
         path: "openproblems/tasks/_batch_integration/batch_integration_graph/metrics/nmi.py"
-        commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
+        commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     type: "metric"
     subtype: "graph"
     type_info:
@@ -203,9 +203,10 @@ platforms:
     pypi:
     - "scib==1.1.3"
     upgrade: true
+  entrypoint: []
+  cmd: null
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     label:
     - "midmem"
@@ -216,6 +217,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -223,6 +256,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/clustering_overlap"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/clustering_overlap/clustering_overlap"
-  viash_version: "0.7.3"
-  git_commit: "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082"
+  viash_version: "0.7.5"
+  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

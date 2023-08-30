@@ -6,6 +6,7 @@ functionality:
   - type: "string"
     name: "--task"
     description: "Which task the component will be added to."
+    info: null
     example:
     - "denoising"
     required: false
@@ -17,6 +18,7 @@ functionality:
     name: "--type"
     description: "The type of component to create. Typically must be one of 'method',\
       \ 'control_method' or 'metric'."
+    info: null
     example:
     - "metric"
     required: false
@@ -27,6 +29,7 @@ functionality:
   - type: "string"
     name: "--language"
     description: "Which scripting language to use. Options are 'python', 'r'."
+    info: null
     default:
     - "python"
     required: false
@@ -40,6 +43,7 @@ functionality:
   - type: "string"
     name: "--name"
     description: "Name of the new method, formatted in snake case."
+    info: null
     example:
     - "new_comp"
     required: false
@@ -50,6 +54,7 @@ functionality:
   - type: "file"
     name: "--output"
     description: "Path to the component directory. Suggested location is `src/<TASK>/<TYPE>s/<NAME>`."
+    info: null
     default:
     - "src/tasks/${VIASH_PAR_TASK}/${VIASH_PAR_TYPE}s/${VIASH_PAR_NAME}"
     must_exist: true
@@ -64,6 +69,7 @@ functionality:
     description: "Which API file to use. Defaults to `src/<TASK>/api/comp_<TYPE>.yaml`.\n\
       In tasks with different subtypes of method, this location might not exist and\
       \ you might need\nto manually specify a different API file to inherit from.\n"
+    info: null
     default:
     - "src/tasks/${VIASH_PAR_TASK}/api/comp_${VIASH_PAR_TYPE}.yaml"
     must_exist: false
@@ -77,6 +83,7 @@ functionality:
     name: "--viash_yaml"
     description: "Path to the project config file. Needed for knowing the relative\
       \ location of a file to the project root.\n"
+    info: null
     default:
     - "_viash.yaml"
     must_exist: true
@@ -105,6 +112,7 @@ functionality:
   - type: "file"
     path: "_viash.yaml"
     dest: "openproblems-v2/_viash.yaml"
+  info: null
   status: "enabled"
   set_wd_to_resources_dir: false
 platforms:
@@ -124,11 +132,12 @@ platforms:
     pypi:
     - "ruamel.yaml"
     upgrade: true
+  entrypoint: []
+  cmd: null
 - type: "native"
   id: "native"
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     tag: "$id"
   auto:
@@ -136,6 +145,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -143,6 +184,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/create_component"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/common/create_component/create_component"
-  viash_version: "0.7.3"
-  git_commit: "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082"
+  viash_version: "0.7.5"
+  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

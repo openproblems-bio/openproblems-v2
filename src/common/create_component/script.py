@@ -16,9 +16,6 @@ par = {
 }
 ## VIASH END
 
-# Remove this after upgrading to Viash 0.7.5
-sys.dont_write_bytecode = True
-
 # import helper function
 sys.path.append(meta["resources_dir"])
 from read_and_merge_yaml import read_and_merge_yaml
@@ -83,7 +80,7 @@ def generate_info(par, component_type, pretty_name) -> str:
       |    description: |
       |      FILL IN: A (multi-line) description of how this method works.
       |    # Which normalisation method this component prefers to use (required).
-      |    preferred_normalization: log_cpm
+      |    preferred_normalization: log_cp10k
       |''')
     if component_type == "method":
       str += strip_margin(f'''\

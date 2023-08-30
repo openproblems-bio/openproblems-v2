@@ -79,6 +79,7 @@ functionality:
     name: "--n_hvg"
     description: "Number of highly variable genes to subset to. If not specified,\
       \ the input matrix will not be subset."
+    info: null
     required: false
     direction: "input"
     multiple: false
@@ -114,11 +115,11 @@ functionality:
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"
     v1:
       path: "openproblems/tasks/dimensionality_reduction/methods/pca.py"
-      commit: "14d70b330cae09527a6d4c4e552db240601e31cf"
-    preferred_normalization: "log_cpm"
+      commit: "154ccb9fd99113f3d28d9c3f139194539a0290f9"
+    preferred_normalization: "log_cp10k"
     variants:
-      pca_logCPM: null
-      pca_logCPM_1kHVG:
+      pca_logCP10k: null
+      pca_logCP10k_1kHVG:
         n_hvg: 1000
     type: "method"
     type_info:
@@ -145,9 +146,10 @@ platforms:
     packages:
     - "scanpy"
     upgrade: true
+  entrypoint: []
+  cmd: null
 - type: "nextflow"
   id: "nextflow"
-  variant: "vdsl3"
   directives:
     label:
     - "highmem"
@@ -158,6 +160,38 @@ platforms:
     simplifyOutput: true
     transcript: false
     publish: false
+  config:
+    labels:
+      mem1gb: "memory = 1.GB"
+      mem2gb: "memory = 2.GB"
+      mem4gb: "memory = 4.GB"
+      mem8gb: "memory = 8.GB"
+      mem16gb: "memory = 16.GB"
+      mem32gb: "memory = 32.GB"
+      mem64gb: "memory = 64.GB"
+      mem128gb: "memory = 128.GB"
+      mem256gb: "memory = 256.GB"
+      mem512gb: "memory = 512.GB"
+      mem1tb: "memory = 1.TB"
+      mem2tb: "memory = 2.TB"
+      mem4tb: "memory = 4.TB"
+      mem8tb: "memory = 8.TB"
+      mem16tb: "memory = 16.TB"
+      mem32tb: "memory = 32.TB"
+      mem64tb: "memory = 64.TB"
+      mem128tb: "memory = 128.TB"
+      mem256tb: "memory = 256.TB"
+      mem512tb: "memory = 512.TB"
+      cpu1: "cpus = 1"
+      cpu2: "cpus = 2"
+      cpu5: "cpus = 5"
+      cpu10: "cpus = 10"
+      cpu20: "cpus = 20"
+      cpu50: "cpus = 50"
+      cpu100: "cpus = 100"
+      cpu200: "cpus = 200"
+      cpu500: "cpus = 500"
+      cpu1000: "cpus = 1000"
   debug: false
   container: "docker"
 info:
@@ -165,6 +199,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca/pca"
-  viash_version: "0.7.3"
-  git_commit: "54ef82f32c2a6307f3e3a2aa793ee3b16a8a1082"
+  viash_version: "0.7.5"
+  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

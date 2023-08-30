@@ -3,6 +3,10 @@
 
 ## general
 
+### NEW FUNCTIONALITY
+
+* Updated all current tasks in v2 to latest changes in OP v1 (PR #214)
+
 ### MAJOR CHANGES
 
 * Relocate task directories to new `src/tasks/` location (PR #142).
@@ -11,6 +15,8 @@
   and `ghcr.io/openproblems-bio/base-r` (PR #168).
 
 * Update batch integration docker images to OpenProblems base images (PR #171).
+  
+* Changed default normalization CPM to CP10k (PR #214)
 
 ### MINOR CHANGES
 
@@ -59,6 +65,10 @@
 
 * Add library.bib file check to component unit test (PR #167)
 
+### BUG FIXES
+
+* fix typos in metric and common defenition schemas (PR #212)
+
 ## migration
 
 ### NEW FUNCTIONALITY
@@ -104,7 +114,9 @@
 
 * `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
 
-* `workflows/run`: Added nf-tower test script. (PR #205)
+* `workflows/run`: Added nf-tower test script (PR #205).
+
+* `metrics/lisi`: Added a component for cLISI and iLISI graph metrics from scib (PR #213).
 
 ### V1 MIGRATION
 
@@ -135,6 +147,16 @@
 * `metrics/cell_cycle_conservation`: Migrated from v1 embedding.
 
 * `metrics/clustering_overlap`: Migrated from v1 graph NMI & ARI.
+
+* `metrics/graph_connectivity`: Migrated from v1 graph.
+
+* `metrics/hvg_overlap`: Migrated from v1 feature.
+
+* `metrics/isolated_label_asw`: Migrated from v1 embedding.
+
+* `metrics/isolated_label_f1`: Migrated from v1 graph.
+
+* `metrics/kbet`: Migrated from v1 embedding.
 
 * `metrics/pcr`: Migrated from v1 embedding.
 
@@ -258,7 +280,7 @@
 
 * `methods/neuralee`: Migrated from v1.
 
-* `metrics/rmse`: Migrated from v1, but will likely be removed.
+* `metrics/distance_correlation`: Migrated from v1, but will likely be removed.
 
 * `metrics/trustworthiness`: Migrated from v1, but will likely be removed.
 
@@ -282,3 +304,50 @@
 * `metrics/rmse` should be removed because RMSE metrics don't really make sense here.
 
 * `metrics/trustworthiness` should be removed because it is already included in `metrics/coranking`.
+
+
+## match_modalities (PR #201)
+
+### New functionality
+
+* `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+
+* `api/comp_*`: Created an api definition for the split, control method, method and metric components.
+
+* `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
+
+* `control_methods`: Added a component for baseline methods specifically.
+
+* `resources_test/dimensionality_reduction/pancreas` with `src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
+
+* Added `variant` key to config files to store variants (different input parameters) of every component.
+  
+* `workflows/run`: Added nf-tower test script.
+
+### V1 migration
+
+* `control_methods/true_features`: Migrated from v1. Extracted from baseline method `True Features`.
+
+* `control_methods/random_features`: Migrated from v1. Extracted from baseline method `Random Features`.
+
+* `methods/harmonic_alignment`: Migrated from v1.
+
+* `methods/mnn`: Migrated from v1.
+
+* `methods/procrustes`: Migrated from v1.
+
+* `metrics/knn_auc`: Migrated from v1.
+
+* `metrics/mse`: Migrated from v1.
+
+
+### Changes from V1
+
+* `methods/scot`: Add new scot method.
+
+* Raw counts and normalized expression data is stored in `.layers["counts"]` and `.layers["normalized"]`, respectively,
+  instead of in `.X`.
+
+* The methods and metrics now take 2 modal datasets as input instead of 1.
+
+
