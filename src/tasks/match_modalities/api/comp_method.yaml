@@ -1,5 +1,5 @@
 functionality:
-  namespace: "multimodal_data_integration/methods"
+  namespace: "match_modalities/methods"
   info:
     type: method
     type_info:

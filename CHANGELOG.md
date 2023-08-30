@@ -306,7 +306,7 @@
 * `metrics/trustworthiness` should be removed because it is already included in `metrics/coranking`.
 
 
-## multimodal_data_integration (PR #201)
+## match_modalities (PR #201)
 
 ### New functionality
 

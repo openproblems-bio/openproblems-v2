@@ -1,4 +1,4 @@
-name: multimodal_data_integration
+name: match_modalities
 label: Multimodal Data Integration
 summary: |
   Multimodal data integration is the task of combining multiple datasets

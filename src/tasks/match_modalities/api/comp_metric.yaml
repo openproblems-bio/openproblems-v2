@@ -1,5 +1,5 @@
 functionality:
-  namespace: "multimodal_data_integration/metrics"
+  namespace: "match_modalities/metrics"
   info:
     type: metric
     type_info:

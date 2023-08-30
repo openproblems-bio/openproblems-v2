@@ -1,6 +1,6 @@
 functionality:
   name: "run_benchmark"
-  namespace: "multimodal_data_integration/workflows"
+  namespace: "match_modalities/workflows"
   argument_groups:
     - name: Inputs
       arguments:

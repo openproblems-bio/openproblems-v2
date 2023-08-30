@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run this prior to executing this script:
-# viash ns build -q 'multimodal_data_integration|common' --setup cb --parallel
+# viash ns build -q 'match_modalities|common' --setup cb --parallel
 
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -16,7 +16,7 @@ export NXF_VER=23.04.2
 
 nextflow \
   run . \
-  -main-script src/tasks/multimodal_data_integration/workflows/run/main.nf \
+  -main-script src/tasks/match_modalities/workflows/run/main.nf \
   -resume \
   -c src/wf_utils/labels_ci.config \
   -profile docker \
@@ -24,7 +24,7 @@ nextflow \
   --input_mod1 $DATASET_DIR/dataset_mod1.h5ad \
   --input_mod2 $DATASET_DIR/dataset_mod2.h5ad \
   --output scores.tsv \
-  --publish_dir output/multimodal_data_integration/ \
+  --publish_dir output/match_modalities/ \
 
 
 

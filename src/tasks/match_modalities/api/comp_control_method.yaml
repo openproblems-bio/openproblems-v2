@@ -1,5 +1,5 @@
 functionality:
-  namespace: "multimodal_data_integration/control_methods"
+  namespace: "match_modalities/control_methods"
   info:
     type: control_method
     type_info:
