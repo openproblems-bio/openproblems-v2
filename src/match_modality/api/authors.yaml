@@ -1,0 +1,28 @@
+functionality:
+  authors:
+    - name: Robrecht Cannoodt
+      roles: [ author, contributor ]
+      props: { github: rcannood, orcid: "0000-0003-3641-729X" }
+    - name: Kai Waldrant
+      roles: [ contributor ]
+      props: { github: KaiWaldrant }
+    - name: Michaela Mueller
+      email: mumichae@in.tum.de
+      roles: [ author, maintainer ]
+      props: { github: mumichae, orcid: "0000-0002-1401-1785" }
+    - name: Louise Deconinck
+      email: louise.deconinck@gmail.com
+      roles: [ author, maintainer ]
+      props: { github: LouiseDck, orcid: "" }
+    - name: Alejandro Granados
+      email: alejandro.granados@czbiohub.org
+      roles: [ author, maintainer ]
+      props: { github: agranado }
+    - name: Alex Tong
+      email: alexandertongdev@gmail.com
+      roles: [ author, maintainer ]
+      props: { github: atong01 }
+    - name: Daniel Burkhardt
+      email: daniel.b.burkhardt@gmail.com
+      roles: [ author, maintainer ]
+      props: { github: dburkhardt }

@@ -1,0 +1,37 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: newwave_knnr_knn
+  namespace: match_modality/methods
+  description: Perform DR with NewWave, predict embedding with KNN regression, and match cells with a KNN.
+  info:
+    type: method
+    method_name: NewWave+KNNR+KNN
+  arguments:
+    - name: "--newwave_maxiter"
+      type: "integer"
+      default: 40
+      description: Maximum number of NewWave iterations.
+    - name: "--newwave_ngene"
+      type: "integer"
+      default: 200
+      description: Setting of the n_gene_par NewWave parameter.
+    - name: "--newwave_ncell"
+      type: "integer"
+      default: 200
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, tidyverse, lmds, dynutils, proxy, FNN]
+        bioc: [ SingleCellExperiment, NewWave ]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8, tensorflow ]
+  - type: nextflow
+    directives: 
+      label: [ highmem, highcpu ]

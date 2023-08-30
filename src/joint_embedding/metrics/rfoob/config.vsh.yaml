@@ -1,0 +1,50 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: rfoob
+  namespace: joint_embedding/metrics
+  description: Calculating basic metrics for the joint embedding task.
+  info:
+    metrics:
+      - metric_id: rfoob_celltype_accuracy
+        metric_name: Rfoob Celltype Accuray
+        metric_description: check the celltype accuracy
+        min: 0
+        max: 1
+        maximize: True
+      - metric_metric_id: rfoob_pseudotimegex_rsq
+        metric_name: rfoob pseudotimegex rsq
+        metric_description: rfoob pseudotimegex rsq
+        min: -1
+        max: 1
+        maximize: true
+      - metric_id: rfoob_pseudotimeadt_rsq
+        metric_name: rfoob pseudotimeadt rsq
+        metric_description: rfoob pseudotimeadt rsq
+        min: -1
+        max: 1
+        maximize: True
+      - metric_id: rfoob_batch_error
+        metric_name: rfoob batch error
+        metric_description: rfoob batch error
+        min: 0
+        max: 1
+        maximize: True
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3, git ]
+      - type: python
+        pip: [ anndata>=0.8 ]
+      - type: r
+        cran: [  anndata, ranger, tidyverse, testthat]
+    test_setup:
+      - type: python
+        pip: [ pyyaml ]
+  - type: nextflow
+    directives: 
+      label: [ lowmem, lowcpu ]

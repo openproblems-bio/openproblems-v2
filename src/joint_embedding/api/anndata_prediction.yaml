@@ -1,0 +1,25 @@
+type: file
+description: "The prediction file"
+example: "prediction.h5ad"
+info:
+  short_description: "Prediction"
+  slots:     
+    obs:
+      - type: string
+        name: batch
+        description: Batch information
+        required: true
+    obsm:
+      - type: double
+        name: X_emb
+        description:
+        required: true
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: method_id
+        description: "A unique identifier for the method"
+        required: true

@@ -1,0 +1,35 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: check_format
+  namespace: match_modality/metrics
+  description: Checking whether the prediction of a method has the right format.
+  info:
+    metrics:
+      - metric_id: finished
+        metric_name: Finished
+        metric_description: Check if metric finished succesfully
+        maximize: true
+        min: 0
+        max: 1
+      - metric_id: correct_format
+        metric_name: Correct Format
+        metric_description: Check if predictioin has the right format
+        maximize: true
+        min: 0
+        max: 1
+  resources:
+    - type: r_script
+      path: script.R
+platforms:
+  - type: docker
+    image: eddelbuettel/r2u:22.04
+    setup:
+      - type: r
+        cran: [ anndata, bit64]
+      - type: apt
+        packages: [ libhdf5-dev, libgeos-dev, python3, python3-pip, python3-dev, python-is-python3]
+      - type: python
+        pip: [ anndata>=0.8, pyyaml ]
+  - type: nextflow
+    directives:
+      label: [ lowmem, lowcpu ]
