@@ -1,11 +1,11 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
-  name: "mnn"
+  name: "fastmnn"
   info:
-    label: "Mutual Nearest Neighbors"
-    summary: "Mutual Nearest Neighbors"
+    label: "fastMNN"
+    summary: "A simpler version of the original mnnCorrect algorithm."
     description: |
-      Mutual Nearest Neighbors is a method for integrating multimodal single-cell data. It is based on the idea of finding mutual nearest neighbors between the two modalities. The method is described in the following paper: https://doi.org/10.1038/nbt.4091
+      FastMNN is a simplified version of the mnnCorrect algorithm. Both use Mutual Nearest Neighbors to integrate multimodal single-cell data.
     preferred_normalization: "log_cp10k"
     variants:
       mnn_log_cp10k:
@@ -20,7 +20,7 @@ functionality:
       path: ./script.R
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.1
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
     setup:
       - type: apt
         packages: git
