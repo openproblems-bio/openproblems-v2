@@ -42,9 +42,13 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           {
             "type" : "file",
             "name" : "--input",
+            "description" : "A dataset",
+            "example" : [
+              "dataset.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -58,6 +62,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           {
             "type" : "file",
             "name" : "--output",
+            "description" : "A TSV file containing the scores of each of the methods",
+            "example" : [
+              "scores.tsv"
+            ],
             "must_exist" : true,
             "create_parent" : true,
             "required" : false,
@@ -89,7 +97,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -136,7 +144,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "e5283b889123c7b1b16973ab6a6069641058b32b",
+    "git_commit" : "cb3a55d5a0f73b8a07444590458d7350dc962df3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -250,8 +258,8 @@ workflow run_wf {
     // extract the dataset metadata
  run_components(
       components: check_dataset_schema,
-      from_state: ["input"],
-      to_state: { id, output, config ->
+      fromState: ["input"],
+      toState: { id, output, config ->
         new org.yaml.snakeyaml.Yaml().load(output.meta)
       }
     )
@@ -275,11 +283,11 @@ workflow run_wf {
         id + "." + config.functionality.name
       },
 
-      // use 'from_state' to fetch the arguments the component requires from the overall state
-      from_state: ["input"],
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: ["input"],
 
-      // use 'to_state' to publish that component's outputs to the overall state
-      to_state: { id, output, config ->
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, config ->
         [
           method_id: config.functionality.name,
           method_output: output.output,
@@ -293,8 +301,8 @@ workflow run_wf {
  run_components(
       components: feature_to_embed,
       filter: { id, state, config -> state.method_subtype == "feature"},
-      from_state: [ input: "method_output" ],
-      to_state: { id, output, config ->
+      fromState: [ input: "method_output" ],
+      toState: { id, output, config ->
         [
           method_output: output.output,
           method_subtype: config.functionality.info.subtype
@@ -308,8 +316,8 @@ workflow run_wf {
  run_components(
       components: embed_to_graph,
       filter: { id, state, config -> state.method_subtype == "embedding"},
-      from_state: [ input: "method_output" ],
-      to_state: { id, output, config ->
+      fromState: [ input: "method_output" ],
+      toState: { id, output, config ->
         [
           method_output: output.output,
           method_subtype: config.functionality.info.subtype
@@ -325,8 +333,8 @@ workflow run_wf {
       filter: { id, state, config ->
         state.method_subtype == config.functionality.info.subtype
       },
-      from_state: [input_integrated: "method_output"],
-      to_state: { id, output, config ->
+      fromState: [input_integrated: "method_output"],
+      toState: { id, output, config ->
         [
           metric_id: config.functionality.name,
           metric_output: output.output
@@ -380,7 +388,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

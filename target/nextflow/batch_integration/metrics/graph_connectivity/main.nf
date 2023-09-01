@@ -52,6 +52,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "connectivities",
                 "description" : "Neighbors connectivities matrix.",
                 "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "distances",
+                "description" : "Neighbors connectivities matrix.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -83,6 +89,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
+                "required" : true
+              },
+              {
+                "type" : "object",
+                "name" : "neighbors",
+                "description" : "Supplementary K nearest neighbors data.",
                 "required" : true
               }
             ],
@@ -134,6 +146,110 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         },
         "example" : [
           "resources_test/batch_integration/pancreas/integrated_graph.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--input_solution",
+        "info" : {
+          "label" : "Solution",
+          "summary" : "Solution dataset",
+          "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized expression values",
+                "required" : true
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "string",
+                "name" : "batch",
+                "description" : "Batch information",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "label",
+                "description" : "label information",
+                "required" : true
+              }
+            ],
+            "var" : [
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "obsp" : [
+              {
+                "type" : "double",
+                "name" : "knn_distances",
+                "description" : "K nearest neighbors distance matrix.",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "knn_connectivities",
+                "description" : "K nearest neighbors connectivities matrix.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : false
+              },
+              {
+                "type" : "object",
+                "name" : "knn",
+                "description" : "Supplementary K nearest neighbors data.",
+                "required" : true
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/batch_integration/pancreas/unintegrated.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -294,7 +410,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -341,7 +457,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/graph_connectivity",
     "viash_version" : "0.7.5",
-    "git_commit" : "e5283b889123c7b1b16973ab6a6069641058b32b",
+    "git_commit" : "cb3a55d5a0f73b8a07444590458d7350dc962df3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -356,6 +472,7 @@ import scib
 # The following code has been auto-generated by Viash.
 par = {
   'input_integrated': $( if [ ! -z ${VIASH_PAR_INPUT_INTEGRATED+x} ]; then echo "r'${VIASH_PAR_INPUT_INTEGRATED//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
@@ -376,20 +493,27 @@ meta = {
 ## VIASH END
 
 print('Read input', flush=True)
-adata = ad.read_h5ad(par['input_integrated'])
+input_solution = ad.read_h5ad(par['input_solution'])
+input_integrated = ad.read_h5ad(par['input_integrated'])
+
+input_solution.obsp["connectivities"] = input_integrated.obsp["connectivities"]
+input_solution.obsp["distances"] = input_integrated.obsp["distances"]
+
+# TODO: if we don't copy neighbors over, the metric doesn't work
+input_solution.uns["neighbors"] = input_integrated.uns["neighbors"]
 
 print('compute score', flush=True)
 score = scib.metrics.graph_connectivity(
-    adata,
-    label_key='label',
+    input_solution,
+    label_key='label'
 )
 
 print('Create output AnnData object', flush=True)
 output = ad.AnnData(
     uns={
-        'dataset_id': adata.uns['dataset_id'],
-        'normalization_id': adata.uns['normalization_id'],
-        'method_id': adata.uns['method_id'],
+        'dataset_id': input_solution.uns['dataset_id'],
+        'normalization_id': input_solution.uns['normalization_id'],
+        'method_id': input_integrated.uns['method_id'],
         'metric_ids': [ meta['functionality_name'] ],
         'metric_values': [ score ]
     }
@@ -422,7 +546,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

@@ -1,11 +1,11 @@
 name: match_modalities
-label: Multimodal Data Integration
+label: Match Modalities
 summary: |
-  Multimodal data integration is the task of combining multiple datasets
+  Match modalities is the task of combining multiple datasets
   that have been generated from the same set of samples.
 motivation: "No motivation has been provided for this task."
 description: |
-  Multimodal data integration is the task of combining multiple datasets
+  Match modalities is the task of combining multiple datasets
   that have been generated from the same set of samples. This task is
   important for integrating datasets generated from different modalities
   (e.g. RNA and ATAC) or from different technologies (e.g. 10x and

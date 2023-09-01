@@ -164,7 +164,11 @@ function ViashHelp {
   echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/common/pancreas/dataset.h5ad"
   echo ""
-  echo "    --output"
+  echo "    --output_dataset"
+  echo "        type: file, required parameter, output, file must exist"
+  echo "        example: resources_test/batch_integration/pancreas/unintegrated.h5ad"
+  echo ""
+  echo "    --output_solution"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example: resources_test/batch_integration/pancreas/unintegrated.h5ad"
   echo ""
@@ -413,9 +417,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.3"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration process_dataset"
-LABEL org.opencontainers.image.created="2023-08-30T12:51:45Z"
+LABEL org.opencontainers.image.created="2023-09-01T15:18:49Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e5283b889123c7b1b16973ab6a6069641058b32b"
+LABEL org.opencontainers.image.revision="cb3a55d5a0f73b8a07444590458d7350dc962df3"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -581,15 +585,26 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_INPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --output)
-            [ -n "$VIASH_PAR_OUTPUT" ] && ViashError Bad arguments for option \'--output\': \'$VIASH_PAR_OUTPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OUTPUT="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
+        --output_dataset)
+            [ -n "$VIASH_PAR_OUTPUT_DATASET" ] && ViashError Bad arguments for option \'--output_dataset\': \'$VIASH_PAR_OUTPUT_DATASET\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_DATASET="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output_dataset. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --output=*)
-            [ -n "$VIASH_PAR_OUTPUT" ] && ViashError Bad arguments for option \'--output=*\': \'$VIASH_PAR_OUTPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
+        --output_dataset=*)
+            [ -n "$VIASH_PAR_OUTPUT_DATASET" ] && ViashError Bad arguments for option \'--output_dataset=*\': \'$VIASH_PAR_OUTPUT_DATASET\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_DATASET=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --output_solution)
+            [ -n "$VIASH_PAR_OUTPUT_SOLUTION" ] && ViashError Bad arguments for option \'--output_solution\': \'$VIASH_PAR_OUTPUT_SOLUTION\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_SOLUTION="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output_solution. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --output_solution=*)
+            [ -n "$VIASH_PAR_OUTPUT_SOLUTION" ] && ViashError Bad arguments for option \'--output_solution=*\': \'$VIASH_PAR_OUTPUT_SOLUTION\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_SOLUTION=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --obs_label)
@@ -758,8 +773,12 @@ if [ -z ${VIASH_PAR_INPUT+x} ]; then
   ViashError '--input' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
-if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
-  ViashError '--output' is a required argument. Use "--help" to get more information on the parameters.
+if [ -z ${VIASH_PAR_OUTPUT_DATASET+x} ]; then
+  ViashError '--output_dataset' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then
+  ViashError '--output_solution' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
 if [ -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then
@@ -860,8 +879,11 @@ if [[ -n "$VIASH_META_MEMORY_PB" ]]; then
 fi
 
 # create parent directories of output files, if so desired
-if [ ! -z "$VIASH_PAR_OUTPUT" ] && [ ! -d "$(dirname "$VIASH_PAR_OUTPUT")" ]; then
-  mkdir -p "$(dirname "$VIASH_PAR_OUTPUT")"
+if [ ! -z "$VIASH_PAR_OUTPUT_DATASET" ] && [ ! -d "$(dirname "$VIASH_PAR_OUTPUT_DATASET")" ]; then
+  mkdir -p "$(dirname "$VIASH_PAR_OUTPUT_DATASET")"
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_SOLUTION" ] && [ ! -d "$(dirname "$VIASH_PAR_OUTPUT_SOLUTION")" ]; then
+  mkdir -p "$(dirname "$VIASH_PAR_OUTPUT_SOLUTION")"
 fi
 
 # detect volumes from file arguments
@@ -870,10 +892,15 @@ if [ ! -z "$VIASH_PAR_INPUT" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT")" )
   VIASH_PAR_INPUT=$(ViashAutodetectMount "$VIASH_PAR_INPUT")
 fi
-if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
-  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT")" )
-  VIASH_PAR_OUTPUT=$(ViashAutodetectMount "$VIASH_PAR_OUTPUT")
-  VIASH_CHOWN_VARS+=( "$VIASH_PAR_OUTPUT" )
+if [ ! -z "$VIASH_PAR_OUTPUT_DATASET" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT_DATASET")" )
+  VIASH_PAR_OUTPUT_DATASET=$(ViashAutodetectMount "$VIASH_PAR_OUTPUT_DATASET")
+  VIASH_CHOWN_VARS+=( "$VIASH_PAR_OUTPUT_DATASET" )
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_SOLUTION" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT_SOLUTION")" )
+  VIASH_PAR_OUTPUT_SOLUTION=$(ViashAutodetectMount "$VIASH_PAR_OUTPUT_SOLUTION")
+  VIASH_CHOWN_VARS+=( "$VIASH_PAR_OUTPUT_SOLUTION" )
 fi
 if [ ! -z "$VIASH_META_RESOURCES_DIR" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_META_RESOURCES_DIR")" )
@@ -936,7 +963,8 @@ import anndata as ad
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'output_dataset': $( if [ ! -z ${VIASH_PAR_OUTPUT_DATASET+x} ]; then echo "r'${VIASH_PAR_OUTPUT_DATASET//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'output_solution': $( if [ ! -z ${VIASH_PAR_OUTPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_OUTPUT_SOLUTION//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'obs_label': $( if [ ! -z ${VIASH_PAR_OBS_LABEL+x} ]; then echo "r'${VIASH_PAR_OBS_LABEL//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'hvgs': $( if [ ! -z ${VIASH_PAR_HVGS+x} ]; then echo "int(r'${VIASH_PAR_HVGS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
@@ -1003,10 +1031,12 @@ slot_mapping = {
 slot_info = read_config_slots_info(meta["config"], slot_mapping)
 
 print(">> Create output object", flush=True)
-output = subset_anndata(adata_with_hvg, slot_info["output"])
+output_dataset = subset_anndata(adata_with_hvg, slot_info["output_dataset"])
+output_solution = subset_anndata(adata_with_hvg, slot_info["output_solution"])
 
 print('Writing adatas to file', flush=True)
-output.write(par['output'], compression='gzip')
+output_dataset.write(par['output_dataset'], compression='gzip')
+output_solution.write(par['output_solution'], compression='gzip')
 VIASHMAIN
 python -B "\$tempscript" &
 wait "\$!"
@@ -1018,8 +1048,11 @@ VIASHEOF
 if [ ! -z "$VIASH_PAR_INPUT" ]; then
   VIASH_PAR_INPUT=$(ViashStripAutomount "$VIASH_PAR_INPUT")
 fi
-if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
-  VIASH_PAR_OUTPUT=$(ViashStripAutomount "$VIASH_PAR_OUTPUT")
+if [ ! -z "$VIASH_PAR_OUTPUT_DATASET" ]; then
+  VIASH_PAR_OUTPUT_DATASET=$(ViashStripAutomount "$VIASH_PAR_OUTPUT_DATASET")
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_SOLUTION" ]; then
+  VIASH_PAR_OUTPUT_SOLUTION=$(ViashStripAutomount "$VIASH_PAR_OUTPUT_SOLUTION")
 fi
 if [ ! -z "$VIASH_META_RESOURCES_DIR" ]; then
   VIASH_META_RESOURCES_DIR=$(ViashStripAutomount "$VIASH_META_RESOURCES_DIR")
@@ -1036,8 +1069,12 @@ fi
 
 
 # check whether required files exist
-if [ ! -z "$VIASH_PAR_OUTPUT" ] && [ ! -e "$VIASH_PAR_OUTPUT" ]; then
-  ViashError "Output file '$VIASH_PAR_OUTPUT' does not exist."
+if [ ! -z "$VIASH_PAR_OUTPUT_DATASET" ] && [ ! -e "$VIASH_PAR_OUTPUT_DATASET" ]; then
+  ViashError "Output file '$VIASH_PAR_OUTPUT_DATASET' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_SOLUTION" ] && [ ! -e "$VIASH_PAR_OUTPUT_SOLUTION" ]; then
+  ViashError "Output file '$VIASH_PAR_OUTPUT_SOLUTION' does not exist."
   exit 1
 fi
 

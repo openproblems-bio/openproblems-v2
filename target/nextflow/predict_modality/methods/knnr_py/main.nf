@@ -405,8 +405,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "reference" : "fix1989discriminatory",
       "documentation_url" : "https://scikit-learn.org/stable/modules/neighbors.html",
       "repository_url" : "https://github.com/scikit-learn/scikit-learn",
-      "type" : "method",
       "preferred_normalization" : "counts",
+      "type" : "method",
       "type_info" : {
         "label" : "Method",
         "summary" : "A regression method.",
@@ -441,7 +441,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -488,7 +488,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py",
     "viash_version" : "0.7.5",
-    "git_commit" : "e5283b889123c7b1b16973ab6a6069641058b32b",
+    "git_commit" : "cb3a55d5a0f73b8a07444590458d7350dc962df3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -603,7 +603,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

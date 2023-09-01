@@ -100,7 +100,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -147,7 +147,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "e5283b889123c7b1b16973ab6a6069641058b32b",
+    "git_commit" : "cb3a55d5a0f73b8a07444590458d7350dc962df3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -162,12 +162,14 @@ cat > "$tempscript" << VIASHMAIN
 sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
 
+include { check_dataset_schema } from "\\$targetDir/common/check_dataset_schema/main.nf"
+
 // import control methods
 include { random_features }      from "\\$targetDir/match_modalities/control_methods/random_features/main.nf" params(params)
 include { true_features }        from "\\$targetDir/match_modalities/control_methods/true_features/main.nf"   params(params)
 
 // import methods
-include { mnn }                  from "\\$targetDir/match_modalities/methods/mnn/main.nf"                 params(params)
+include { fastmnn }                  from "\\$targetDir/match_modalities/methods/fastmnn/main.nf"                 params(params)
 include { scot }                 from "\\$targetDir/match_modalities/methods/scot/main.nf"                params(params)
 include { harmonic_alignment }   from "\\$targetDir/match_modalities/methods/harmonic_alignment/main.nf"  params(params)
 include { procrustes }           from "\\$targetDir/match_modalities/methods/procrustes/main.nf"          params(params)
@@ -195,7 +197,7 @@ methods = [
     true_features,
     scot,
     harmonic_alignment,
-    mnn,
+    fastmnn,
     procrustes
 ]
 
@@ -226,6 +228,17 @@ workflow run_wf {
     // and fill in default values
  preprocessInputs(config: config)
 
+    // extract the dataset metadata
+ check_dataset_schema.run(
+        fromState: [ "input": "input_mod1" ],
+        toState: { id, output, state ->
+            // load output yaml file
+            def metadata = new org.yaml.snakeyaml.Yaml().load(output.meta)
+            // add metadata from file to state
+            state + metadata
+        }
+    )
+
     // run all methods
  run_components(
         components: methods,
@@ -244,8 +257,8 @@ workflow run_wf {
             id + "." + config.functionality.name
         },
 
-        // use 'from_state' to fetch the arguments the component requires from the overall state
-        from_state: { id, state, config ->
+        // use 'fromState' to fetch the arguments the component requires from the overall state
+        fromState: { id, state, config ->
             def new_args = [
             input_mod1: state.input_mod1,
             input_mod2: state.input_mod2
@@ -253,8 +266,8 @@ workflow run_wf {
             new_args
         },
 
-        // use 'to_state' to publish that component's outputs to the overall state
-        to_state: { id, output, config ->
+        // use 'toState' to publish that component's outputs to the overall state
+        toState: { id, output, config ->
             [
             method_id: config.functionality.name,
             method_output_mod1: output.output_mod1,
@@ -266,13 +279,13 @@ workflow run_wf {
         // run all metrics
  run_components(
         components: metrics,
-        // use 'from_state' to fetch the arguments the component requires from the overall state
-        from_state: [
+        // use 'fromState' to fetch the arguments the component requires from the overall state
+        fromState: [
             input_mod1: "method_output_mod1",
             input_mod2: "method_output_mod2"
         ],
-        // use 'to_state' to publish that component's outputs to the overall state
-        to_state: { id, output, config ->
+        // use 'toState' to publish that component's outputs to the overall state
+        toState: { id, output, config ->
             [
             metric_id: config.functionality.name,
             metric_output: output.output
@@ -327,7 +340,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

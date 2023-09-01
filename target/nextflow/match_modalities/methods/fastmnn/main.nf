@@ -23,15 +23,15 @@ def jsonSlurper = new JsonSlurper()
 thisConfig = processConfig(jsonSlurper.parseText('''{
   "functionality" : {
     "name" : "fastmnn",
-    "namespace" : "batch_integration/methods",
+    "namespace" : "match_modalities/methods",
     "version" : "integration_build",
     "arguments" : [
       {
         "type" : "file",
-        "name" : "--input",
+        "name" : "--input_mod1",
         "info" : {
-          "label" : "Unintegrated",
-          "summary" : "Unintegrated AnnData HDF5 file.",
+          "label" : "multimodal mod 1 data",
+          "summary" : "the first modal data",
           "slots" : {
             "layers" : [
               {
@@ -43,21 +43,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
+                "description" : "Normalized counts",
                 "required" : true
               }
             ],
@@ -67,27 +53,19 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "hvg",
                 "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
                 "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
               }
             ],
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "obsp" : [
-              {
-                "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
                 "required" : true
               }
             ],
@@ -103,24 +81,12 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "normalization_id",
                 "description" : "Which normalization was used",
                 "required" : true
-              },
-              {
-                "name" : "dataset_organism",
-                "type" : "string",
-                "description" : "The organism of the sample in the dataset.",
-                "required" : false
-              },
-              {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
               }
             ]
           }
         },
         "example" : [
-          "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+          "resources_test/common/multimodal/dataset_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -132,23 +98,120 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "file",
-        "name" : "--output",
+        "name" : "--input_mod2",
         "info" : {
-          "prediction_type" : "embedding",
-          "label" : "Integrated embedding",
-          "summary" : "An integrated AnnData HDF5 file.",
+          "label" : "multimodal mod 2 data",
+          "summary" : "the second modal data",
           "slots" : {
-            "obsm" : [
+            "layers" : [
               {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
                 "required" : true
               },
               {
                 "type" : "double",
-                "name" : "X_emb",
-                "description" : "integration embedding prediction",
+                "name" : "normalized",
+                "description" : "Normalized counts",
+                "required" : true
+              }
+            ],
+            "var" : [
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/common/multimodal/dataset_mod2.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--output_mod1",
+        "info" : {
+          "label" : "Integrated",
+          "summary" : "The integrated data",
+          "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized counts",
+                "required" : true
+              }
+            ],
+            "var" : [
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "integrated",
+                "description" : "The resulting integrated embedding.",
                 "required" : true
               }
             ],
@@ -166,24 +229,32 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : true
               },
               {
-                "name" : "dataset_organism",
-                "type" : "string",
-                "description" : "The organism of the sample in the dataset.",
-                "required" : false
-              },
-              {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              },
-              {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method",
+                "description" : "Which method was used",
                 "required" : true
               }
-            ],
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/multimodal/integrated_mod1.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "output",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--output_mod2",
+        "info" : {
+          "label" : "Integrated",
+          "summary" : "The integrated data",
+          "slots" : {
             "layers" : [
               {
                 "type" : "integer",
@@ -194,21 +265,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
               {
                 "type" : "double",
                 "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
+                "description" : "Normalized counts",
                 "required" : true
               }
             ],
@@ -218,26 +275,52 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "name" : "hvg",
                 "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
                 "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
               }
             ],
-            "obsp" : [
+            "obsm" : [
               {
                 "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
                 "required" : true
               },
               {
                 "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
+                "name" : "integrated",
+                "description" : "The resulting integrated embedding.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "method_id",
+                "description" : "Which method was used",
                 "required" : true
               }
             ]
           }
         },
         "example" : [
-          "resources_test/batch_integration/pancreas/integrated_embedding.h5ad"
+          "resources_test/multimodal/integrated_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -251,21 +334,22 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "resources" : [
       {
         "type" : "r_script",
-        "path" : "script.R",
+        "path" : "./script.R",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/fastmnn/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/fastmnn/"
       }
     ],
     "test_resources" : [
       {
-        "type" : "python_script",
-        "path" : "src/common/comp_tests/check_method_config.py",
-        "is_executable" : true,
+        "type" : "file",
+        "path" : "resources_test/common/multimodal",
+        "dest" : "resources_test/common/multimodal",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
-        "type" : "file",
-        "path" : "src/common/library.bib",
+        "type" : "python_script",
+        "path" : "src/common/comp_tests/check_method_config.py",
+        "is_executable" : true,
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -276,25 +360,33 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "file",
-        "path" : "resources_test/batch_integration/pancreas",
-        "dest" : "resources_test/batch_integration/pancreas",
+        "path" : "src/common/library.bib",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/api",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
-      "label" : "fastMnn",
+      "label" : "fastMNN",
       "summary" : "A simpler version of the original mnnCorrect algorithm.",
-      "description" : "The fastMNN() approach is much simpler than the original mnnCorrect() algorithm, and proceeds in several steps.\n\n1. Perform a multi-sample PCA on the (cosine-)normalized expression values to reduce dimensionality.\n2. Identify MNN pairs in the low-dimensional space between a reference batch and a target batch.\n3. Remove variation along the average batch vector in both reference and target batches.\n4. Correct the cells in the target batch towards the reference, using locally weighted correction vectors.\n5. Merge the corrected target batch with the reference, and repeat with the next target batch.\n",
-      "reference" : "haghverdi2018batch",
-      "repository_url" : "https://code.bioconductor.org/browse/batchelor/",
-      "documentation_url" : "https://bioconductor.org/packages/batchelor/",
+      "description" : "FastMNN is a simplified version of the mnnCorrect algorithm. Both use Mutual Nearest Neighbors to integrate multimodal single-cell data.\n",
       "preferred_normalization" : "log_cp10k",
+      "variants" : {
+        "mnn_log_scran_pooling" : {
+          "preferred_normalization" : "log_scran_pooling"
+        }
+      },
+      "reference" : "haghverdi2018batch",
+      "repository_url" : "https://github.com/LTLA/batchelor",
+      "documentation_url" : "https://github.com/LTLA/batchelor#readme",
       "type" : "method",
-      "subtype" : "embedding",
       "type_info" : {
-        "label" : "Method (embedding)",
-        "summary" : "A batch integration embedding method.",
-        "description" : "A batch integration method which outputs a batch-corrected embedding.\n"
+        "label" : "Method",
+        "summary" : "A multimodal data integration method.",
+        "description" : "A multimodal method to integrate data.\n"
       }
     },
     "status" : "enabled",
@@ -304,7 +396,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.1",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -314,9 +406,20 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
       "setup" : [
         {
+          "type" : "apt",
+          "packages" : [
+            "git"
+          ],
+          "interactive" : false
+        },
+        {
           "type" : "r",
-          "bioc" : [
-            "batchelor"
+          "cran" : [
+            "Matrix",
+            "SingleCellExperiment"
+          ],
+          "script" : [
+            "remotes::install_bioc(\\"3.18/batchelor\\", upgrade = \\"always\\", type = \\"source\\")"
           ],
           "bioc_force_install" : false
         }
@@ -327,14 +430,14 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "lowcpu",
-          "highmem"
+          "lowmem",
+          "lowcpu"
         ],
         "tag" : "$id"
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -377,11 +480,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/fastmnn/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/fastmnn/config.vsh.yaml",
     "platform" : "nextflow",
-    "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn",
+    "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn",
     "viash_version" : "0.7.5",
-    "git_commit" : "e5283b889123c7b1b16973ab6a6069641058b32b",
+    "git_commit" : "cb3a55d5a0f73b8a07444590458d7350dc962df3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -389,21 +492,20 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
 thisScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-cat("Loading dependencies\\\\n")
-suppressPackageStartupMessages({
-  requireNamespace("anndata", quietly = TRUE)
-  library(Matrix, warn.conflicts = FALSE)
-  requireNamespace("batchelor", quietly = TRUE)
-  library(SingleCellExperiment, warn.conflicts = FALSE)
-})
+library(anndata, warn.conflicts = FALSE)
+library(Matrix, warn.conflicts = FALSE)
+requireNamespace("batchelor", quietly = TRUE)
+
 ## VIASH START
 # The following code has been auto-generated by Viash.
 # treat warnings as errors
 .viash_orig_warn <- options(warn = 2)
 
 par <- list(
-  "input" = $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
+  "input_mod1" = $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_mod2" = $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_MOD2" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output_mod2" = $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_MOD2" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
   "functionality_name" = $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo -n "'"; echo -n "$VIASH_META_FUNCTIONALITY_NAME" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -427,36 +529,30 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-cat("Read input\\\\n")
-adata <- anndata::read_h5ad(par\\$input)
+cat("Reading input h5ad file\\\\n")
+adata_mod1 <- read_h5ad(par\\$input_mod1)
+adata_mod2 <- read_h5ad(par\\$input_mod2)
 
-# TODO: pass output of 'multiBatchNorm' to fastMNN
+cat("Running MNN\\\\n")
+sce_mnn <- batchelor::fastMNN(
+  t(adata_mod1\\$obsm[["X_svd"]]),
+  t(adata_mod2\\$obsm[["X_svd"]])
+)
 
-cat("Run mnn\\\\n")
-out <- suppressWarnings(batchelor::fastMNN(
-  t(adata\\$layers[["normalized"]]),
-  batch = adata\\$obs[["batch"]]
-))
+cat("Storing output\\\\n")
+combined_recons <- t(SummarizedExperiment::assay(sce_mnn, "reconstructed"))
+mode1_recons <- combined_recons[seq_len(nrow(adata_mod1\\$obsm[["X_svd"]])), , drop = FALSE]
+mode2_recons <- combined_recons[-seq_len(nrow(adata_mod1\\$obsm[["X_svd"]])), , drop = FALSE]
 
-cat("Reformat output\\\\n")
-obsm <- SingleCellExperiment::reducedDim(out, "corrected")
-adata\\$obsm[["X_emb"]] <- obsm
-# return_type == "feature" is currently not working in fastMNN
+adata_mod1\\$obsm[["integrated"]] <- as.matrix(mode1_recons)
+adata_mod2\\$obsm[["integrated"]] <- as.matrix(mode2_recons)
 
-# # reusing the same script for mnn_correct and mnn_correct_feature
-# return_type <- gsub("mnn_correct_", "", meta[["functionality_name"]])
+cat("Writing to file\\\\n")
+adata_mod1\\$uns["method_id"] <- meta\\$functionality_name
+adata_mod2\\$uns["method_id"] <- meta\\$functionality_name
 
-# if (return_type == "feature") {
-#   layer <- SummarizedExperiment::assay(out, "corrected")
-#   adata\\$layers[["corrected_counts"]] <- as(t(layer), "sparseMatrix")
-# } else if (return_type == "embedding") {
-#   obsm <- SingleCellExperiment::reducedDim(out, "corrected")
-#   adata\\$obsm[["X_emb"]] <- obsm
-# }
-
-cat("Store outputs\\\\n")
-adata\\$uns[["method_id"]] <- meta\\$functionality_name
-zzz <- adata\\$write_h5ad(par\\$output, compression = "gzip")
+yyy <- adata_mod1\\$write_h5ad(par\\$output_mod1, compression = "gzip")
+zzz <- adata_mod2\\$write_h5ad(par\\$output_mod2, compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''
@@ -470,19 +566,19 @@ thisDefaultProcessArgs = [
   directives: jsonSlurper.parseText('''{
   "container" : {
     "registry" : "ghcr.io",
-    "image" : "openproblems-bio/batch_integration/methods/fastmnn",
+    "image" : "openproblems-bio/match_modalities/methods/fastmnn",
     "tag" : "integration_build"
   },
   "label" : [
-    "lowcpu",
-    "highmem"
+    "lowmem",
+    "lowcpu"
   ],
   "tag" : "$id"
 }'''),
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

@@ -5,18 +5,20 @@ functionality:
   arguments:
   - type: "file"
     name: "--input_train"
-    description: "The training data"
     info:
       label: "Training data"
+      summary: "The subset of molecules used for the training dataset"
       slots:
         layers:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
     example:
     - "resources_test/denoising/pancreas/train.h5ad"
     must_exist: true
@@ -28,18 +30,20 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--input_test"
-    description: "The test data"
     info:
       label: "Test data"
+      summary: "The subset of molecules used for the test dataset"
       slots:
         layers:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
     example:
     - "resources_test/denoising/pancreas/test.h5ad"
     must_exist: true
@@ -51,26 +55,30 @@ functionality:
     dest: "par"
   - type: "file"
     name: "--output"
-    description: "The denoised data"
     info:
       label: "Denoised data"
+      summary: "A denoised dataset as output by a denoising method."
       slots:
         layers:
         - type: "integer"
           name: "counts"
           description: "Raw counts"
+          required: true
         - type: "integer"
           name: "denoised"
           description: "denoised data"
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
           description: "A unique identifier for the dataset"
+          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
+          required: true
     example:
-    - "resources_test/denoising/pancreas/magic.h5ad"
+    - "resources_test/denoising/pancreas/denoised.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -136,7 +144,7 @@ platforms:
     tag: "$id"
   auto:
     simplifyInput: true
-    simplifyOutput: true
+    simplifyOutput: false
     transcript: false
     publish: false
   config:
@@ -179,5 +187,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/control_methods/perfect_denoising"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/denoising/control_methods/perfect_denoising/perfect_denoising"
   viash_version: "0.7.5"
-  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
+  git_commit: "cb3a55d5a0f73b8a07444590458d7350dc962df3"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -1,5 +1,5 @@
 functionality:
-  name: "mnn"
+  name: "fastmnn"
   namespace: "match_modalities/methods"
   version: "integration_build"
   arguments:
@@ -230,12 +230,10 @@ functionality:
   - type: "file"
     path: "src/common/api"
   info:
-    label: "Mutual Nearest Neighbors"
-    summary: "Mutual Nearest Neighbors"
-    description: "Mutual Nearest Neighbors is a method for integrating multimodal\
-      \ single-cell data. It is based on the idea of finding mutual nearest neighbors\
-      \ between the two modalities. The method is described in the following paper:\
-      \ https://doi.org/10.1038/nbt.4091\n"
+    label: "fastMNN"
+    summary: "A simpler version of the original mnnCorrect algorithm."
+    description: "FastMNN is a simplified version of the mnnCorrect algorithm. Both\
+      \ use Mutual Nearest Neighbors to integrate multimodal single-cell data.\n"
     preferred_normalization: "log_cp10k"
     variants:
       mnn_log_cp10k: null
@@ -254,7 +252,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_r:1.0.1"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.2"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -286,7 +284,7 @@ platforms:
     tag: "$id"
   auto:
     simplifyInput: true
-    simplifyOutput: true
+    simplifyOutput: false
     transcript: false
     publish: false
   config:
@@ -324,10 +322,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/mnn/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/fastmnn/config.vsh.yaml"
   platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/mnn"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/mnn/mnn"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn/fastmnn"
   viash_version: "0.7.5"
-  git_commit: "e5283b889123c7b1b16973ab6a6069641058b32b"
+  git_commit: "cb3a55d5a0f73b8a07444590458d7350dc962df3"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
