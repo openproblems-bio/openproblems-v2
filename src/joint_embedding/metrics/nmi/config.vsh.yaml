@@ -1,0 +1,28 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: nmi
+  namespace: joint_embedding/metrics
+  description: Normalised mutual information (NMI)
+  info:
+    metrics:
+      - metric_id: nmi
+        metric_name: NMI
+        metric_description: Normalised mutual information (NMI)
+        min: 0
+        max: 1
+        maximize: True
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: python:3.10
+    setup:
+      - type: python
+        pip: [anndata>=0.8, scib]
+    test_setup:
+      - type: python
+        pip: [ pyyaml ]
+  - type: nextflow
+    directives: 
+      label: [ lowmem, lowcpu ]

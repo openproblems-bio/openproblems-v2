@@ -1,0 +1,33 @@
+__merge__: ../../api/comp_metric.yaml
+functionality:
+  name: latent_mixing
+  namespace: joint_embedding/metrics
+  description: Calculate latent mixing metric for joint embedding task.
+  info:
+    metrics:
+      - metric_id: latent_mixing
+        metric_name: Latent mixing
+        metric_description: Calculate latent mixing 
+        min: -1
+        max: 0
+        maximize: True
+  arguments:
+    - name: "--n_neighbors"
+      type: integer
+      default: 100
+      description: Number of neighbors for the entropy_batch_mixing metric.
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: python:3.10
+    setup:
+      - type: python
+        pip: [anndata>=0.8, scikit-learn, scipy]
+    test_setup:
+      - type: python
+        pip: [ pyyaml ]
+  - type: nextflow
+    directives: 
+      label: [ lowmem, lowcpu ]

@@ -304,3 +304,67 @@
 * `metrics/rmse` should be removed because RMSE metrics don't really make sense here.
 
 * `metrics/trustworthiness` should be removed because it is already included in `metrics/coranking`.
+
+
+## Multi modality - Joint Embedding
+
+### New functionality
+
+* `api/anndata_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+
+* `api/comp_*`: Created an api definition for the mask, method and metric components.
+
+* `mask_dataset`: Added a component for masking raw datasets into task-ready dataset objects.
+
+* `resources_test/joint_embedding/pancreas` with `src/joint_embedding/resources_test_scripts/pancreas.sh`.
+  
+### neurips 2021 migration
+
+* `control_methods/random_embed`: Migrated from neurips 2021. Extracted from baseline method `dummy_random`.
+
+* `control_methods/zeros_embed`: Migrated from neurips 2021. Extracted from baseline method `dummy_zeros`.
+
+* `methods/lmds`: Migrated from neurips 2021.
+
+* `methods/mnn`: Migrated and adapted from neurips 2021.
+
+* `methods/newwave`: Migrated and adapted from neurips 2021.
+
+* `methods/pca`: Migrated from neurips 2021.
+
+* `methods/totalvi`: Migrated from neurips 2021.
+
+* `methods/umap`: Migrated from neurips 2021.
+
+* `metrics/ari`: Migrated from neurips 2021.
+  
+* `metrics/asw_batch`: Migrated from neurips 2021.
+
+* `metrics/asw_label`: Migrated from neurips 2021.
+
+* `metrics/cc_cons`: Migrated from neurips 2021.
+
+* `metrics/check_format`: Migrated from neurips 2021.
+
+* `metrics/graph_connectivity`: Migrated from neurips 2021.
+
+* `metrics/latent_mixing`: Migrated from neurips 2021.
+
+* `metrics/nmi`: Migrated from neurips 2021.
+
+* `metrics/rfoob`: Migrated from neurips 2021.
+
+* `metrics/ti_cons`: Migrated from neurips 2021.
+
+* `metrics/ti_cons_batch`: Migrated from neurips 2021.
+
+### changes from neurips 2021
+
+* Updated docker config from R script. Was using an old `anndata` package which was giving warnings
+
+* stores the output from the methods in `.obsm["X_emb"]` instead of `.X` in the `anndata`
+
+* `X_emb` data is stored as a `Sparse Matrix`
+  
+
+* updated configs to latest `viash` 
