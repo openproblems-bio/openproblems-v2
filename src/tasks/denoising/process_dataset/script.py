@@ -16,9 +16,6 @@ meta = {
 }
 ## VIASH END
 
-# Remove this after upgrading to Viash 0.7.5
-sys.dont_write_bytecode = True
-
 # add helper scripts to path
 sys.path.append(meta["resources_dir"])
 from helper import split_molecules
@@ -26,7 +23,7 @@ from helper import split_molecules
 # set random state
 random_state = np.random.RandomState(par['seed'])
 
-print(">> Load Data")
+print(">> Load Data", flush=True)
 adata = ad.read_h5ad(par["input"])
 
 # remove all layers except for counts
@@ -37,7 +34,7 @@ for key in list(adata.layers.keys()):
 # round counts and convert to int
 counts = np.array(adata.layers["counts"]).round().astype(int)
 
-print(">> process and split data")
+print(">> process and split data", flush=True)
 train_data, test_data = split_molecules(
     counts.data, par["train_frac"], 0.0, random_state
 )
@@ -69,6 +66,6 @@ is_missing = np.array(X_train.sum(axis=0) == 0)
 output_train = output_train[:, ~is_missing.flatten()]
 output_test = output_test[:, ~is_missing.flatten()]
 
-print(">> Write to file")
+print(">> Write to file", flush=True)
 output_train.write_h5ad(par["output_train"])
 output_test.write_h5ad(par["output_test"])

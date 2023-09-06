@@ -3,15 +3,10 @@ import yaml
 
 ## VIASH START
 par = {
-    'input': 'resources_test/batch_integration/pancreas/combat.h5ad',
+    'input': 'resources_test/batch_integration/pancreas/integrated_feature.h5ad',
     'ouput': 'output.h5ad'
 }
 ## VIASH END
-
-with open(meta['config'], 'r', encoding="utf8") as file:
-    config = yaml.safe_load(file)
-
-output_type = config["functionality"]["info"]["output_type"]
 
 print('Read input', flush=True)
 adata= sc.read_h5ad(par['input'])
@@ -27,5 +22,4 @@ adata.obsm['X_emb'] = sc.pp.pca(
 )
 
 print('Store outputs', flush=True)
-adata.uns['output_type'] = output_type
 adata.write_h5ad(par['output'], compression='gzip')

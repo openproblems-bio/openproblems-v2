@@ -40,6 +40,10 @@ def compute_batched_hvg(adata, n_hvgs):
 print(f'Select {par["hvgs"]} highly variable genes', flush=True)
 adata_with_hvg = compute_batched_hvg(input, n_hvgs=par['hvgs'])
 
+if par['subset_hvg']:
+    print('Subsetting to HVG dimensions', flush=True)
+    adata_with_hvg = adata_with_hvg[:, adata_with_hvg.var['hvg']].copy()
+
 print(">> Figuring out which data needs to be copied to which output file", flush=True)
 # use par arguments to look for label and batch value in different slots
 slot_mapping = {
@@ -51,7 +55,9 @@ slot_mapping = {
 slot_info = read_config_slots_info(meta["config"], slot_mapping)
 
 print(">> Create output object", flush=True)
-output = subset_anndata(adata_with_hvg, slot_info["output"])
+output_dataset = subset_anndata(adata_with_hvg, slot_info["output_dataset"])
+output_solution = subset_anndata(adata_with_hvg, slot_info["output_solution"])
 
 print('Writing adatas to file', flush=True)
-output.write(par['output'], compression='gzip')
+output_dataset.write(par['output_dataset'], compression='gzip')
+output_solution.write(par['output_solution'], compression='gzip')

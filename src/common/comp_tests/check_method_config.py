@@ -11,7 +11,7 @@ NAME_MAXLEN = 50
 
 SUMMARY_MAXLEN = 400
 
-DESCRIPTION_MAXLEN = 1000
+DESCRIPTION_MAXLEN = 5000
 
 _MISSING_DOIS = ["vandermaaten2008visualizing", "hosmer2013applied"]
 
@@ -79,7 +79,11 @@ if info["type"] == "method":
     assert "reference" in info, "reference not an info field"
     bib = _load_bib()
     if info["reference"]:
-        assert search_ref_bib(info["reference"]), f"reference {info['reference']} not added to library.bib"
+        reference = info["reference"]
+        if not isinstance(reference, list):
+            reference = [reference]
+        for ref in reference:
+            assert search_ref_bib(ref), f"reference {ref} not added to library.bib"
     assert "documentation_url" in info is not None, "documentation_url not an info field or is empty"
     assert "repository_url" in info is not None, "repository_url not an info field or is empty"
     assert check_url(info["documentation_url"]), f"{info['documentation_url']} is not reachable"
@@ -94,7 +98,7 @@ if "variants" in info:
                 assert arg_id in arg_names, f"Argument '{arg_id}' in `.functionality.info.variants['{paramset_id}']` is not an argument in `.functionality.arguments`."
 
 assert "preferred_normalization" in info, "preferred_normalization not an info field"
-norm_methods = ["log_cpm", "counts", "log_scran_pooling", "sqrt_cpm", "l1_sqrt"]
+norm_methods = ["log_cpm", "log_cp10k", "counts", "log_scran_pooling", "sqrt_cpm", "sqrt_cp10k", "l1_sqrt"]
 assert info["preferred_normalization"] in norm_methods, "info['preferred_normalization'] not one of '" + "', '".join(norm_methods) + "'."
 
 

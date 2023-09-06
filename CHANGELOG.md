@@ -3,6 +3,10 @@
 
 ## general
 
+### NEW FUNCTIONALITY
+
+* Updated all current tasks in v2 to latest changes in OP v1 (PR #214)
+
 ### MAJOR CHANGES
 
 * Relocate task directories to new `src/tasks/` location (PR #142).
@@ -11,12 +15,23 @@
   and `ghcr.io/openproblems-bio/base-r` (PR #168).
 
 * Update batch integration docker images to OpenProblems base images (PR #171).
+  
+* Changed default normalization CPM to CP10k (PR #214)
 
 ### MINOR CHANGES
 
 * Update test scripts (PR #143).
 
 * Update "baseline" to "control" (PR #146).
+
+### BUG FIXES
+
+* `dimensionality_reduction/methods/tsne`: Use GitHub version of MulticoreTSNE.
+
+* `label_projection/methods/seurat_transferdata`: Temporarily disable component as it appears to not be working (PR #206).
+
+* Remove the ns-list action for workflows in integration test (PR #208)
+
 
 ## common
 
@@ -50,6 +65,10 @@
 
 * Add library.bib file check to component unit test (PR #167)
 
+### BUG FIXES
+
+* fix typos in metric and common defenition schemas (PR #212)
+
 ## migration
 
 ### NEW FUNCTIONALITY
@@ -75,11 +94,75 @@
 * `subsample`: Subsample an h5ad file. Allows keeping observations from specific batches and celltypes, 
   also allows keeping certain features.
 
+* `resources_test_scripts`: Scripts to create test_resources for local development with "pancreas", "pancreas_tasks" and "multimodal".
+
 ### V1 MIGRATION
 
 * `loaders/openproblems_v1`: Fetch a dataset from OpenProblems v1, whilst adding extra information to the `.uns`.
 
 * `loaders/openproblems_v1_multimodal`: Fetch a multimodal dataset from OpenProblems v1, whilst adding extra information to the `.uns`.
+
+## batch_integration
+
+### NEW FUNCTIONALITY
+
+* `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+
+* `api/comp_*`: Created an api definition for the process, method and metric components.
+
+* `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
+
+* `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
+
+* `workflows/run`: Added nf-tower test script (PR #205).
+
+* `metrics/lisi`: Added a component for cLISI and iLISI graph metrics from scib (PR #213).
+
+### V1 MIGRATION
+
+* Removed the separate subtask specific subfolders. The "subtask" is added to the config.
+
+* `control_methods/no_integration_batch`: Migrated from v1 embedding.
+
+* `control_methods/random_embed_cell`: Migrated from v1 embedding.
+
+* `control_methods/random_embed_cel_jitter`: Migrated from v1 embedding.
+
+* `control_methods/random_integration`: Migrated from v1 graph.
+
+* `methods/bbknn`: Migrated from v1 graph.
+
+* `methods/combat`: Migrated from v1 feature.
+
+* `methods/scanorama_embed`: Migrated from v1 embedding.
+
+* `methods/scanorama_feature`: Migrated from v1 feature.
+
+* `methods/scvi`: Migrated from v1 embedding.
+
+* `metrics/asw_batch`: Migrated from v1 embedding.
+
+* `metrics/asw_label`: Migrated from v1 embedding.
+
+* `metrics/cell_cycle_conservation`: Migrated from v1 embedding.
+
+* `metrics/clustering_overlap`: Migrated from v1 graph NMI & ARI.
+
+* `metrics/graph_connectivity`: Migrated from v1 graph.
+
+* `metrics/hvg_overlap`: Migrated from v1 feature.
+
+* `metrics/isolated_label_asw`: Migrated from v1 embedding.
+
+* `metrics/isolated_label_f1`: Migrated from v1 graph.
+
+* `metrics/kbet`: Migrated from v1 embedding.
+
+* `metrics/pcr`: Migrated from v1 embedding.
+
+### MINOR CHANGES
+
+* Removed the `.uns["output_type"]` field from output anndata in methods and control methods. (PR #205)
 
 ## label_projection
 
@@ -92,6 +175,8 @@
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `resources_test/label_projection/pancreas` with `src/tasks/label_projection/resources_test_scripts/pancreas.sh`.
+
+* * `workflows/run`: Added nf-tower test script. (PR #205)
 
 ### V1 MIGRATION
 
@@ -130,6 +215,8 @@
 * `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
 
 * `resources_test/denoising/pancreas` with `src/tasks/denoising/resources_test_scripts/pancreas.sh`.
+  
+* `workflows/run`: Added nf-tower test script. (PR #205)
 
 ### V1 MIGRATION
 
@@ -171,6 +258,8 @@
 * `resources_test/dimensionality_reduction/pancreas` with `src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh`.
 
 * Added `variant` key to config files to store variants (different input parameters) of every component.
+  
+* `workflows/run`: Added nf-tower test script. (PR #205)
 
 ### V1 migration
 * `control_methods/true_features`: Migrated from v1. Extracted from baseline method `True Features`.
@@ -191,7 +280,7 @@
 
 * `methods/neuralee`: Migrated from v1.
 
-* `metrics/rmse`: Migrated from v1, but will likely be removed.
+* `metrics/distance_correlation`: Migrated from v1, but will likely be removed.
 
 * `metrics/trustworthiness`: Migrated from v1, but will likely be removed.
 

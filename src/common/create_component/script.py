@@ -16,9 +16,6 @@ par = {
 }
 ## VIASH END
 
-# Remove this after upgrading to Viash 0.7.5
-sys.dont_write_bytecode = True
-
 # import helper function
 sys.path.append(meta["resources_dir"])
 from read_and_merge_yaml import read_and_merge_yaml
@@ -83,7 +80,7 @@ def generate_info(par, component_type, pretty_name) -> str:
       |    description: |
       |      FILL IN: A (multi-line) description of how this method works.
       |    # Which normalisation method this component prefers to use (required).
-      |    preferred_normalization: log_cpm
+      |    preferred_normalization: log_cp10k
       |''')
     if component_type == "method":
       str += strip_margin(f'''\
@@ -144,11 +141,11 @@ def generate_resources(par, script_path) -> str:
 def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
-    image_str = "ghcr.io/openproblems-bio/base_python:1.0.0"
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.1"
     setup_type = "python"
-    package_example = "scanpy"
+    package_example = "scib==1.1.3"
   elif par["language"] == "r":
-    image_str = "ghcr.io/openproblems-bio/base_r:1.0.0"
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.1"
     setup_type = "r"
     package_example = "tidyverse"
   return strip_margin(f'''\

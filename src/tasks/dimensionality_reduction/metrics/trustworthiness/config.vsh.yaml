@@ -13,14 +13,14 @@ functionality:
         maximize: true
         v1:
           path: openproblems/tasks/dimensionality_reduction/metrics/trustworthiness.py 
-          commit: c2470ce02e6f196267cec1c554ba7ae389c0956a
+          commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
           note: This metric is already included in the 'coranking' component and can be removed.
   resources:
     - type: python_script
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.0
+    image: ghcr.io/openproblems-bio/base_python:1.0.1
     setup:
       - type: python
         packages:
