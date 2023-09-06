@@ -21,8 +21,10 @@ platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.1
     setup:
-      - type: python
-        github: KaiWaldrant/SCOT
+      - type: apt
+        packages: git
+      - type: docker
+        run: "cd /opt && git clone --depth 1 https://github.com/rsinghlab/SCOT.git && cd SCOT && pip install -r requirements.txt"
   - type: nextflow
     directives:
       label: [ lowmem, lowcpu ]

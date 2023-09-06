@@ -1,5 +1,8 @@
 import anndata as ad
-from SCOT import SCOT
+import sys
+sys.path.append("/opt/SCOT/src/")
+import scotv1
+import pandas as pd
 
 # importing helper functions from common preprocessing.py file in resources dir
 import sys
@@ -23,13 +26,14 @@ adata_mod2 = ad.read_h5ad(par["input_mod2"])
 
 
 print("Initialize SCOT", flush=True)
-scot = SCOT(adata_mod1.obsm["X_svd"], adata_mod2.obsm["X_svd"])
+scot = scotv1.SCOT(adata_mod1.obsm["X_svd"], adata_mod2.obsm["X_svd"])
 
 print("Call the unbalanced alignment", flush=True)
 # From https://github.com/rsinghlab/SCOT/blob/master/examples/unbalanced_GW_SNAREseq.ipynb # noqa: 501
 X_new_unbal, y_new_unbal = scot.align(
-    k=50, e=1e-3, rho=0.0005, normalize=True, balanced=par["balanced"]
+    k=50, e=1e-3, normalize=True
 )
+
 
 print("store output", flush=True)
 adata_mod1.obsm["integrated"] = X_new_unbal
