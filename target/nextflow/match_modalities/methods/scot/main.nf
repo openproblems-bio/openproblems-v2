@@ -408,12 +408,17 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
       "setup" : [
         {
-          "type" : "python",
-          "user" : false,
-          "github" : [
-            "KaiWaldrant/SCOT"
+          "type" : "apt",
+          "packages" : [
+            "git"
           ],
-          "upgrade" : true
+          "interactive" : false
+        },
+        {
+          "type" : "docker",
+          "run" : [
+            "cd /opt && git clone --depth 1 https://github.com/rsinghlab/SCOT.git && cd SCOT && pip install -r requirements.txt"
+          ]
         }
       ]
     },
@@ -476,7 +481,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot",
     "viash_version" : "0.7.5",
-    "git_commit" : "cb3a55d5a0f73b8a07444590458d7350dc962df3",
+    "git_commit" : "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -485,7 +490,10 @@ thisScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 import anndata as ad
-from SCOT import SCOT
+import sys
+sys.path.append("/opt/SCOT/src/")
+import scotv1
+import pandas as pd
 
 # importing helper functions from common preprocessing.py file in resources dir
 import sys
@@ -524,13 +532,14 @@ adata_mod2 = ad.read_h5ad(par["input_mod2"])
 
 
 print("Initialize SCOT", flush=True)
-scot = SCOT(adata_mod1.obsm["X_svd"], adata_mod2.obsm["X_svd"])
+scot = scotv1.SCOT(adata_mod1.obsm["X_svd"], adata_mod2.obsm["X_svd"])
 
 print("Call the unbalanced alignment", flush=True)
 # From https://github.com/rsinghlab/SCOT/blob/master/examples/unbalanced_GW_SNAREseq.ipynb # noqa: 501
 X_new_unbal, y_new_unbal = scot.align(
-    k=50, e=1e-3, rho=0.0005, normalize=True, balanced=par["balanced"]
+    k=50, e=1e-3, normalize=True
 )
+
 
 print("store output", flush=True)
 adata_mod1.obsm["integrated"] = X_new_unbal
