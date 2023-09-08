@@ -454,7 +454,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/kbet",
     "viash_version" : "0.7.5",
-    "git_commit" : "51487dbacb703d7abbc8c8f6402bb3fcfede70a8",
+    "git_commit" : "6181d459fb344a46e74f7aec4d9b0b209c7661e5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
