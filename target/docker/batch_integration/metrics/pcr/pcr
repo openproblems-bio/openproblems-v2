@@ -396,9 +396,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.3"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics pcr"
-LABEL org.opencontainers.image.created="2023-09-08T14:30:56Z"
+LABEL org.opencontainers.image.created="2023-09-08T15:04:39Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f3f27a989eb4b3805feb79ae1edd6d5e48cc76d9"
+LABEL org.opencontainers.image.revision="06e942ab4095085026570b0265972b6535bb473c"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

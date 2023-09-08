@@ -1,0 +1,7 @@
+# Arguments
+n_pca_XY: 100
+n_eigenvectors: 100
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"
