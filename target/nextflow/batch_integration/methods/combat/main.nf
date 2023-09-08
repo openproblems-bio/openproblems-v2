@@ -391,7 +391,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/combat",
     "viash_version" : "0.7.5",
-    "git_commit" : "6181d459fb344a46e74f7aec4d9b0b209c7661e5",
+    "git_commit" : "f3f27a989eb4b3805feb79ae1edd6d5e48cc76d9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

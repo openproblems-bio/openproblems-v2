@@ -450,9 +450,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1_multimodal"
-LABEL org.opencontainers.image.created="2023-09-08T14:30:30Z"
+LABEL org.opencontainers.image.created="2023-09-08T14:30:47Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="6181d459fb344a46e74f7aec4d9b0b209c7661e5"
+LABEL org.opencontainers.image.revision="f3f27a989eb4b3805feb79ae1edd6d5e48cc76d9"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
