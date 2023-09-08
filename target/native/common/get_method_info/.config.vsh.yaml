@@ -105,7 +105,7 @@ platforms:
     tag: "$id"
   auto:
     simplifyInput: true
-    simplifyOutput: true
+    simplifyOutput: false
     transcript: false
     publish: false
   config:
@@ -150,5 +150,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/common/get_method_info"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/common/get_method_info/get_method_info"
   viash_version: "0.7.5"
-  git_commit: "e485faa7fbc056b86d500962183e1d5e1f00b3f7"
+  git_commit: "51487dbacb703d7abbc8c8f6402bb3fcfede70a8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

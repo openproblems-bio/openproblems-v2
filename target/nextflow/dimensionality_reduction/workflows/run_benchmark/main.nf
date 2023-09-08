@@ -40,18 +40,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "dest" : "par"
           },
           {
-            "type" : "string",
-            "name" : "--dataset_id",
-            "description" : "The ID of the dataset",
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          },
-          {
             "type" : "file",
-            "name" : "--input",
+            "name" : "--input_dataset",
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
@@ -66,15 +56,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          },
-          {
-            "type" : "string",
-            "name" : "--normalization_id",
-            "required" : false,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -122,7 +103,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -169,7 +150,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "e485faa7fbc056b86d500962183e1d5e1f00b3f7",
+    "git_commit" : "51487dbacb703d7abbc8c8f6402bb3fcfede70a8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -183,6 +164,8 @@ cat > "$tempscript" << VIASHMAIN
 //// VIASH END
 sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
+
+include { check_dataset_schema } from "\\$targetDir/common/check_dataset_schema/main.nf"
 
 // import control methods
 include { random_features } from "\\$targetDir/dimensionality_reduction/control_methods/random_features/main.nf"
@@ -253,6 +236,15 @@ workflow run_wf {
   output_ch = input_ch
  preprocessInputs(config: config)
 
+    // extract the dataset metadata
+ run_components(
+      components: check_dataset_schema,
+      fromState: [input: "input_dataset"],
+      toState: { id, output, config ->
+        new org.yaml.snakeyaml.Yaml().load(output.meta)
+      }
+    )
+
     // run all methods
  run_components(
       components: methods,
@@ -271,10 +263,10 @@ workflow run_wf {
         id + "." + config.functionality.name
       },
 
-      // use 'from_state' to fetch the arguments the component requires from the overall state
-      from_state: { id, state, config ->
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: { id, state, config ->
         def new_args = [
-          input: state.input
+          input: state.input_dataset
         ]
         if (config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
@@ -282,8 +274,8 @@ workflow run_wf {
         new_args
       },
 
-      // use 'to_state' to publish that component's outputs to the overall state
-      to_state: { id, output, config ->
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, config ->
         [
           method_id: config.functionality.name,
           method_output: output.output
@@ -294,15 +286,15 @@ workflow run_wf {
     // run all metrics
  run_components(
       components: metrics,
-      // use 'from_state' to fetch the arguments the component requires from the overall state
-      from_state: { id, state, config ->
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: { id, state, config ->
         [
           input_solution: state.input_solution,
           input_embedding: state.method_output
         ]
       },
-      // use 'to_state' to publish that component's outputs to the overall state
-      to_state: { id, output, config ->
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, config ->
         [
           metric_id: config.functionality.name,
           metric_output: output.output
@@ -356,7 +348,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

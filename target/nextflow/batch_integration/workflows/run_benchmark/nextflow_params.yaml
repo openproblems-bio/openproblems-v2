@@ -1,9 +1,9 @@
 # Inputs
 id: # please fill in - example: "foo"
-# input: "path/to/file"
+input: # please fill in - example: "dataset.h5ad"
 
 # Outputs
-# output: "$id.$key.output.output"
+# output: "$id.$key.output.tsv"
 
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"

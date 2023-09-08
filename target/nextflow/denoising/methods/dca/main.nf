@@ -29,22 +29,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--input_train",
-        "description" : "The training data",
         "info" : {
           "label" : "Training data",
+          "summary" : "The subset of molecules used for the training dataset",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               }
             ]
           }
@@ -63,38 +65,42 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output",
-        "description" : "The denoised data",
         "info" : {
           "label" : "Denoised data",
+          "summary" : "A denoised dataset as output by a denoising method.",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "integer",
                 "name" : "denoised",
-                "description" : "denoised data"
+                "description" : "denoised data",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "method_id",
-                "description" : "A unique identifier for the method"
+                "description" : "A unique identifier for the method",
+                "required" : true
               }
             ]
           }
         },
         "example" : [
-          "resources_test/denoising/pancreas/magic.h5ad"
+          "resources_test/denoising/pancreas/denoised.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -213,7 +219,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -260,7 +266,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca",
     "viash_version" : "0.7.5",
-    "git_commit" : "e485faa7fbc056b86d500962183e1d5e1f00b3f7",
+    "git_commit" : "51487dbacb703d7abbc8c8f6402bb3fcfede70a8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -337,7 +343,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

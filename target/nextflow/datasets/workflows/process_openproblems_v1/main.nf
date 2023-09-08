@@ -270,7 +270,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -317,7 +317,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.7.5",
-    "git_commit" : "e485faa7fbc056b86d500962183e1d5e1f00b3f7",
+    "git_commit" : "51487dbacb703d7abbc8c8f6402bb3fcfede70a8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -379,19 +379,19 @@ workflow run_wf {
     // fetch data from legacy openproblems
  run_components(
       components: openproblems_v1,
-      from_state: [
+      fromState: [
         "dataset_id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts", "sparse",
         "dataset_name", "data_url", "data_reference", "dataset_summary", "dataset_description", "dataset_organism"
       ],
-      to_state: [ dataset: "output" ]
+      toState: [ dataset: "output" ]
     )
 
     // run normalization methods
  run_components(
       components: normalization_methods,
       id: { id, state, config -> id + "/" + config.functionality.name },
-      from_state: [ input: "dataset" ],
-      to_state: [
+      fromState: [ input: "dataset" ],
+      toState: [
         normalization_id: config.functionality.name,
         output_normalization: "output"
       ]
@@ -399,25 +399,25 @@ workflow run_wf {
 
  run_components(
       components: pca,
-      from_state: [ input: "output_normalization" ],
-      to_state: [ pca: "output" ]
+      fromState: [ input: "output_normalization" ],
+      toState: [ pca: "output" ]
     )
 
  run_components(
       components: hvg,
-      from_state: [ input: "pca" ],
-      to_state: [ hvg: "output" ]
+      fromState: [ input: "pca" ],
+      toState: [ hvg: "output" ]
     )
 
  run_components(
       components: knn,
-      from_state: [ input: "hvg" ],
-      to_state: [ knn: "output" ]
+      fromState: [ input: "hvg" ],
+      toState: [ knn: "output" ]
     )
 
  run_components(
       components: check_dataset_schema,
-      from_state: {id, state, config ->
+      fromState: {id, state, config ->
         [
           input: state.knn,
           meta: state.output_meta,
@@ -425,7 +425,7 @@ workflow run_wf {
           checks: null
         ]
       },
-      to_state: [],
+      toState: [],
       auto: [publish: true]
     )
 
@@ -456,7 +456,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

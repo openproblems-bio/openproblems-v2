@@ -190,22 +190,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output_train",
-        "description" : "The training data",
         "info" : {
           "label" : "Training data",
+          "summary" : "The subset of molecules used for the training dataset",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               }
             ]
           }
@@ -224,22 +226,24 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "type" : "file",
         "name" : "--output_test",
-        "description" : "The test data",
         "info" : {
           "label" : "Test data",
+          "summary" : "The subset of molecules used for the test dataset",
           "slots" : {
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
-                "description" : "Raw counts"
+                "description" : "Raw counts",
+                "required" : true
               }
             ],
             "uns" : [
               {
                 "type" : "string",
                 "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset"
+                "description" : "A unique identifier for the dataset",
+                "required" : true
               }
             ]
           }
@@ -369,7 +373,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -416,7 +420,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset",
     "viash_version" : "0.7.5",
-    "git_commit" : "e485faa7fbc056b86d500962183e1d5e1f00b3f7",
+    "git_commit" : "51487dbacb703d7abbc8c8f6402bb3fcfede70a8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -529,7 +533,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

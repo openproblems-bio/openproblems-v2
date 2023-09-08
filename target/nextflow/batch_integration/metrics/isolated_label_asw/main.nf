@@ -398,7 +398,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       "auto" : {
         "simplifyInput" : true,
-        "simplifyOutput" : true,
+        "simplifyOutput" : false,
         "transcript" : false,
         "publish" : false
       },
@@ -445,7 +445,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/isolated_label_asw",
     "viash_version" : "0.7.5",
-    "git_commit" : "e485faa7fbc056b86d500962183e1d5e1f00b3f7",
+    "git_commit" : "51487dbacb703d7abbc8c8f6402bb3fcfede70a8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -535,7 +535,7 @@ thisDefaultProcessArgs = [
   // auto settings
   auto: jsonSlurper.parseText('''{
   "simplifyInput" : true,
-  "simplifyOutput" : true,
+  "simplifyOutput" : false,
   "transcript" : false,
   "publish" : false
 }'''),

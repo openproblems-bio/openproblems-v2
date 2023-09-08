@@ -16,7 +16,7 @@
           },
           "input": {
             "type": "string",
-            "description": "No description",
+            "description": "A dataset",
             "default": ""
           }
           
@@ -29,8 +29,8 @@
         "properties": {
           "output": {
             "type": "string",
-            "description": "No description",
-            "default": "$id.$key.output.output"
+            "description": "A TSV file containing the scores of each of the methods",
+            "default": "$id.$key.output.tsv"
           }
           
         }

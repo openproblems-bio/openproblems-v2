@@ -1,9 +1,7 @@
 # Inputs
 id: # please fill in - example: "foo"
-dataset_id: # please fill in - example: "foo"
-input: # please fill in - example: "path/to/file"
+input_dataset: # please fill in - example: "path/to/file"
 input_solution: # please fill in - example: "path/to/file"
-# normalization_id: "foo"
 
 # Outputs
 # output: "$id.$key.output.tsv"

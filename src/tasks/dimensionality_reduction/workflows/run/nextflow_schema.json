@@ -14,22 +14,12 @@
             "description": "The ID of the normalized dataset",
             "default": ""
           },
-          "dataset_id": {
-            "type": "string",
-            "description": "The ID of the dataset",
-            "default": ""
-          },
-          "input": {
+          "input_dataset": {
             "type": "string",
             "description": "No description",
             "default": ""
           },
           "input_solution": {
-            "type": "string",
-            "description": "No description",
-            "default": ""
-          },
-          "normalization_id": {
             "type": "string",
             "description": "No description",
             "default": ""

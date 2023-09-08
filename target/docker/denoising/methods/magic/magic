@@ -161,12 +161,10 @@ function ViashHelp {
   echo "    --input_train"
   echo "        type: file, required parameter, file must exist"
   echo "        example: resources_test/denoising/pancreas/train.h5ad"
-  echo "        The training data"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
-  echo "        example: resources_test/denoising/pancreas/magic.h5ad"
-  echo "        The denoised data"
+  echo "        example: resources_test/denoising/pancreas/denoised.h5ad"
   echo ""
   echo "    --solver"
   echo "        type: string"
@@ -415,9 +413,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scprep" "magic-impute" "scipy" "scikit-learn<1.2"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods magic"
-LABEL org.opencontainers.image.created="2023-08-30T12:36:21Z"
+LABEL org.opencontainers.image.created="2023-09-08T14:30:27Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e485faa7fbc056b86d500962183e1d5e1f00b3f7"
+LABEL org.opencontainers.image.revision="51487dbacb703d7abbc8c8f6402bb3fcfede70a8"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -14,24 +14,6 @@ functionality:
       multiple: false
       multiple_sep: ":"
       dest: "par"
-    - type: "string"
-      name: "--dataset_id"
-      description: "The ID of the dataset"
-      info: null
-      required: true
-      direction: "input"
-      multiple: false
-      multiple_sep: ":"
-      dest: "par"
-    - type: "string"
-      name: "--normalization_id"
-      description: "The ID of the normalization used"
-      info: null
-      required: true
-      direction: "input"
-      multiple: false
-      multiple_sep: ":"
-      dest: "par"
     - type: "file"
       name: "--input_train"
       info: null
@@ -78,7 +60,7 @@ platforms:
     tag: "$id"
   auto:
     simplifyInput: true
-    simplifyOutput: true
+    simplifyOutput: false
     transcript: false
     publish: false
   config:
@@ -121,5 +103,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark/run_benchmark"
   viash_version: "0.7.5"
-  git_commit: "e485faa7fbc056b86d500962183e1d5e1f00b3f7"
+  git_commit: "51487dbacb703d7abbc8c8f6402bb3fcfede70a8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
