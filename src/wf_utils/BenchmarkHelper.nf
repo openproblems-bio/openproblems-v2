@@ -58,19 +58,20 @@ def runComponents(Map args) {
         )
       post_ch = toState_
         ? out_ch | map{tup ->
-          def new_outputs = tup[1]
+          def output = tup[1]
+          def old_state = tup[2]
           if (toState_ instanceof Map) {
-            new_outputs = toState_.collectEntries{ key0, key1 ->
-              [key0, new_outputs[key1]]
+            new_state = old_state + toState_.collectEntries{ key0, key1 ->
+              [key0, output[key1]]
             }
           } else if (toState_ instanceof List) {
-            new_outputs = toState_.collectEntries{ key ->
-              [key, new_outputs[key]]
+            new_state = old_state + toState_.collectEntries{ key ->
+              [key, output[key]]
             }
           } else if (toState_ instanceof Closure) {
-            new_outputs = toState_(tup[0], new_outputs, comp_config)
+            new_state = toState_(tup[0], output, old_state, comp_config)
           }
-          [tup[0], tup[2] + new_outputs] + tup.drop(3)
+          [tup[0], new_state] + tup.drop(3)
         }
         : out_ch
       

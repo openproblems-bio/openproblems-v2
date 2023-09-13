@@ -72,7 +72,7 @@ workflow run_wf {
         fromState: [ "input": "input_mod1" ],
         toState: { id, output, state ->
             // load output yaml file
-            def metadata = new org.yaml.snakeyaml.Yaml().load(output.meta)
+            def metadata = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
             // add metadata from file to state
             state + metadata
         }
@@ -106,8 +106,8 @@ workflow run_wf {
         },
 
         // use 'toState' to publish that component's outputs to the overall state
-        toState: { id, output, config ->
-            [
+        toState: { id, output, state, config ->
+            state + [
             method_id: config.functionality.name,
             method_output_mod1: output.output_mod1,
             method_output_mod2: output.output_mod2
@@ -124,8 +124,8 @@ workflow run_wf {
             input_mod2: "method_output_mod2"
         ],
         // use 'toState' to publish that component's outputs to the overall state
-        toState: { id, output, config ->
-            [
+        toState: { id, output, state, config ->
+            state + [
             metric_id: config.functionality.name,
             metric_output: output.output
             ]

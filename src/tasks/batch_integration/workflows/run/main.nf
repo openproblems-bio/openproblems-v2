@@ -101,8 +101,8 @@ workflow run_wf {
     | runComponents(
       components: check_dataset_schema,
       fromState: ["input"],
-      toState: { id, output, config ->
-        new org.yaml.snakeyaml.Yaml().load(output.meta)
+      toState: { id, output, state, config ->
+        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       }
     )
 
@@ -129,7 +129,7 @@ workflow run_wf {
       fromState: ["input"],
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, config ->
+      toState: { id, output, state, config ->
         [
           method_id: config.functionality.name,
           method_output: output.output,
@@ -144,8 +144,8 @@ workflow run_wf {
       components: feature_to_embed,
       filter: { id, state, config -> state.method_subtype == "feature"},
       fromState: [ input: "method_output" ],
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           method_output: output.output,
           method_subtype: config.functionality.info.subtype
         ]
@@ -159,8 +159,8 @@ workflow run_wf {
       components: embed_to_graph,
       filter: { id, state, config -> state.method_subtype == "embedding"},
       fromState: [ input: "method_output" ],
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           method_output: output.output,
           method_subtype: config.functionality.info.subtype
         ]
@@ -176,8 +176,8 @@ workflow run_wf {
         state.method_subtype == config.functionality.info.subtype
       },
       fromState: [input_integrated: "method_output"],
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           metric_id: config.functionality.name,
           metric_output: output.output
         ]

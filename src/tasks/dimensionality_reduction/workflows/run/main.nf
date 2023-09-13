@@ -76,8 +76,8 @@ workflow run_wf {
     | runComponents(
       components: check_dataset_schema,
       fromState: [input: "input_dataset"],
-      toState: { id, output, config ->
-        new org.yaml.snakeyaml.Yaml().load(output.meta)
+      toState: { id, output, state, config ->
+        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       }
     )
 
@@ -111,8 +111,8 @@ workflow run_wf {
       },
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           method_id: config.functionality.name,
           method_output: output.output
         ]
@@ -130,8 +130,8 @@ workflow run_wf {
         ]
       },
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           metric_id: config.functionality.name,
           metric_output: output.output
         ]

@@ -7,9 +7,9 @@ targetDir = params.rootDir + "/target/nextflow"
 include { openproblems_v1 } from "$targetDir/datasets/loaders/openproblems_v1/main.nf"
 
 // normalization methods
-include { log_cpm } from "$targetDir/datasets/normalization/log_cp/main.nf"
+include { log_cp } from "$targetDir/datasets/normalization/log_cp/main.nf"
 include { log_scran_pooling } from "$targetDir/datasets/normalization/log_scran_pooling/main.nf"
-include { sqrt_cpm } from "$targetDir/datasets/normalization/sqrt_cp/main.nf"
+include { sqrt_cp } from "$targetDir/datasets/normalization/sqrt_cp/main.nf"
 include { l1_sqrt } from "$targetDir/datasets/normalization/l1_sqrt/main.nf"
 
 // dataset processors
@@ -20,7 +20,7 @@ include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/ma
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishStates; runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
@@ -84,9 +84,8 @@ workflow run_wf {
       toState: [ knn: "output" ]
     )
 
-    | runComponents(
-      components: check_dataset_schema,
-      fromState: {id, state, config ->
+    | check_dataset_schema.run(
+      fromState: {id, state ->
         [
           input: state.knn,
           meta: state.output_meta,
@@ -98,13 +97,14 @@ workflow run_wf {
         // load output yaml file
         def metadata = new org.yaml.snakeyaml.Yaml().load(output.meta)
         // add metadata from file to state
-        [ dataset: output.output ] + metadata
+        [
+          output_dataset: output.output,
+          output_meta: output.meta
+        ]
       }
     )
 
-    | view()
-
-    | publishStates([:])
+    | publishState([:])
 
   emit:
   output_ch

@@ -67,7 +67,7 @@ workflow run_wf {
       fromState: [ "input": "input_train" ],
       toState: { id, output, state ->
         // load output yaml file
-        def metadata = new org.yaml.snakeyaml.Yaml().load(output.meta)
+        def metadata = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
         // add metadata from file to state
         state + metadata
       }
@@ -93,8 +93,8 @@ workflow run_wf {
 
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           method_id: config.functionality.name,
           method_output: output.output
         ]
@@ -110,8 +110,8 @@ workflow run_wf {
         input_denoised: "method_output"
       ],
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, config ->
-        [
+      toState: { id, output, state, config ->
+        state + [
           metric_id: config.functionality.name,
           metric_output: output.output
         ]

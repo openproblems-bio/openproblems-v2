@@ -65,7 +65,7 @@ functionality:
           # __merge__: ../../api/file_raw.yaml
           type: file
           description: "A raw dataset"
-          example: "dataset.h5ad"
+          default: "dataset.h5ad"
           info:
             label: "Raw dataset"
             slots:
@@ -96,7 +96,7 @@ functionality:
           direction: "output"
           type: file
           description: "Dataset metadata"
-          example: "dataset_meta.yaml"
+          default: "dataset_metadata.yaml"
   resources:
     - type: nextflow_script
       path: main.nf

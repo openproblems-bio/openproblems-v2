@@ -46,11 +46,17 @@ def is_dict_of_atomics(obj):
 
 if par['meta'] is not None:
   print("Extract metadata from object", flush=True)
-  meta = {
+  uns = {
     key: val
     for key, val in adata.uns.items()
     if is_atomic(val) or is_list_of_atomics(val) or is_dict_of_atomics(val)
   }
+  structure = {
+    struct: list(getattr(adata, struct).keys())
+    for struct
+    in ["obs", "var", "obsp", "varp", "obsm", "varm", "layers", "uns"]
+  }
+  meta = {"uns": uns, "structure": structure}
   with open(par["meta"], "w") as f:
     yaml.dump(meta, f, indent=2)
 
