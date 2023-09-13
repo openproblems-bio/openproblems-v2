@@ -1,18 +1,18 @@
-def run_components(Map args) {
-  assert args.components: "run_components should be passed a list of components to run"
+def runComponents(Map args) {
+  assert args.components: "runComponents should be passed a list of components to run"
 
   def components_ = args.components
   if (components_ !instanceof List) {
     components_ = [ components_ ]
   }
-  assert components_.size() > 0: "pass at least one component to run_components"
+  assert components_.size() > 0: "pass at least one component to runComponents"
 
   def fromState_ = args.fromState
   def toState_ = args.toState
   def filter_ = args.filter
   def id_ = args.id
 
-  workflow run_components_wf {
+  workflow runComponentsWf {
     take: input_ch
     main:
 
@@ -86,11 +86,11 @@ def run_components(Map args) {
     emit: output_ch
   }
 
-  return run_components_wf
+  return runComponentsWf
 }
 
-def join_states(Closure apply_) {
-  workflow join_states_wf {
+def joinStates(Closure apply_) {
+  workflow joinStatesWf {
     take: input_ch
     main:
     output_ch = input_ch
@@ -104,7 +104,7 @@ def join_states(Closure apply_) {
 
     emit: output_ch
   }
-  return join_states_wf
+  return joinStatesWf
 }
 
 
@@ -130,7 +130,7 @@ class CustomTraceObserver implements nextflow.trace.TraceObserver {
   }
 }
 
-def initialize_tracer() {
+def initializeTracer() {
   def traces = Collections.synchronizedList([])
 
   // add custom trace observer which stores traces in the traces object
@@ -139,14 +139,80 @@ def initialize_tracer() {
   traces
 }
 
-def write_json(data, file) {
-  assert data: "write_json: data should not be null"
-  assert file: "write_json: file should not be null"
+def writeJson(data, file) {
+  assert data: "writeJson: data should not be null"
+  assert file: "writeJson: file should not be null"
   file.write(groovy.json.JsonOutput.toJson(data))
 }
 
-def get_publish_dir() {
+def getPublishDir() {
   return params.containsKey("publish_dir") ? params.publish_dir : 
     params.containsKey("publishDir") ? params.publishDir : 
     null
+}
+
+
+process publishStateProc {
+  publishDir path: {getPublishDir() + "/" + id + "/"}, mode: "copy"
+  tag "$id"
+  input:
+    tuple val(id), val(args), path(inputFiles)
+  output:
+    tuple val(id), path{["state.json"] + inputFiles}
+  script:
+  def stateJson = new groovy.json.JsonBuilder(args).toPrettyString()
+  """
+  echo '$stateJson' > state.json
+  """
+}
+
+def collectFiles(obj) {
+  if (obj instanceof java.io.File || obj instanceof Path)  {
+    return [obj]
+  } else if (obj instanceof List && obj !instanceof String) {
+    return obj.collectMany{item ->
+      collectFiles(item)
+    }
+  } else if (obj instanceof Map) {
+    return obj.collectMany{key, item ->
+      collectFiles(item)
+    }
+  } else {
+    return []
+  }
+}
+
+
+def convertFilesToString(obj) {
+  if (obj instanceof java.io.File || obj instanceof Path)  {
+    return obj.name
+  } else if (obj instanceof List && obj !instanceof String) {
+    return obj.collect{item ->
+      convertFilesToString(item)
+    }
+  } else if (obj instanceof Map) {
+    return obj.collectEntries{key, item ->
+      [key, convertFilesToString(item)]
+    }
+  } else {
+    return obj
+  }
+}
+
+def publishState(Map args) {
+  workflow publishStateWf {
+    take: input_ch
+    main:
+      input_ch
+        | map { tup ->
+          def id = tup[0]
+          def state = tup[1]
+          def files = collectFiles(state)
+          def convertedState = convertFilesToString(state)
+          [id, convertedState, files]
+        }
+        | publishStateProc
+    emit: input_ch
+  }
+  return publishStateWf
 }

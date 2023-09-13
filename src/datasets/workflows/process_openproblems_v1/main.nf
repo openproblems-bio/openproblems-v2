@@ -20,12 +20,12 @@ include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/ma
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { run_components; join_states; initialize_tracer; write_json; get_publish_dir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { runComponents; joinStates; initializeTracer; writeJson getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initialize_tracer()
+traces = initializeTracer()
 
 // normalization_methods = [log_cp, log_scran_pooling, sqrt_cp, l1_sqrt
 normalization_methods = [log_cp, sqrt_cp, l1_sqrt]
@@ -46,7 +46,7 @@ workflow run_wf {
     | preprocessInputs(config: config)
 
     // fetch data from legacy openproblems
-    | run_components(
+    | runComponents(
       components: openproblems_v1,
       fromState: [
         "dataset_id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts", "sparse",
@@ -56,7 +56,7 @@ workflow run_wf {
     )
 
     // run normalization methods
-    | run_components(
+    | runComponents(
       components: normalization_methods,
       id: { id, state, config -> id + "/" + config.functionality.name },
       fromState: [ input: "dataset" ],
@@ -66,25 +66,25 @@ workflow run_wf {
       ]
     )
 
-    | run_components(
+    | runComponents(
       components: pca,
       fromState: [ input: "output_normalization" ],
       toState: [ pca: "output" ]
     )
 
-    | run_components(
+    | runComponents(
       components: hvg,
       fromState: [ input: "pca" ],
       toState: [ hvg: "output" ]
     )
 
-    | run_components(
+    | runComponents(
       components: knn,
       fromState: [ input: "hvg" ],
       toState: [ knn: "output" ]
     )
 
-    | run_components(
+    | runComponents(
       components: check_dataset_schema,
       fromState: {id, state, config ->
         [
@@ -104,8 +104,8 @@ workflow run_wf {
 
 // store the trace log in the publish dir
 workflow.onComplete {
-  def publish_dir = get_publish_dir()
+  def publish_dir = getPublishDir()
 
-  write_json(traces, file("$publish_dir/traces.json"))
-  write_json(normalization_methods.collect{it.config}, file("$publish_dir/normalization_methods.json"))
+  writeJsontraces, file("$publish_dir/traces.json"))
+  writeJsonnormalization_methods.collect{it.config}, file("$publish_dir/normalization_methods.json"))
 }

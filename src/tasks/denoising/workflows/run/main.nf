@@ -22,12 +22,12 @@ include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { run_components; join_states; initialize_tracer; write_json; get_publish_dir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initialize_tracer()
+traces = initializeTracer()
 
 // construct a map of methods (id -> method_module)
 methods = [
@@ -74,7 +74,7 @@ workflow run_wf {
     )
 
     // run all methods
-    | run_components(
+    | runComponents(
       components: methods,
 
       // define a new 'id' by appending the method name to the dataset id
@@ -102,7 +102,7 @@ workflow run_wf {
     )
 
     // run all metrics
-    | run_components(
+    | runComponents(
       components: metrics,
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
@@ -121,7 +121,7 @@ workflow run_wf {
     // join all events into a new event where the new id is simply "output" and the new state consists of:
     //   - "input": a list of score h5ads
     //   - "output": the output argument of this workflow
-    | join_states{ ids, states ->
+    | joinStates{ ids, states ->
       def new_id = "output"
       def new_state = [
         input: states.collect{it.metric_output},
@@ -141,10 +141,10 @@ workflow run_wf {
 
 // store the trace log in the publish dir
 workflow.onComplete {
-  def publish_dir = get_publish_dir()
+  def publish_dir = getPublishDir()
 
-  write_json(traces, file("$publish_dir/traces.json"))
+  writeJson(traces, file("$publish_dir/traces.json"))
   // todo: add datasets logging
-  write_json(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  write_json(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
+  writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
+  writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
