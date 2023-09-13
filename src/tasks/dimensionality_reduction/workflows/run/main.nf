@@ -19,7 +19,7 @@ include { umap } from "$targetDir/dimensionality_reduction/methods/umap/main.nf"
 // import metrics
 include { coranking } from "$targetDir/dimensionality_reduction/metrics/coranking/main.nf"
 include { density_preservation } from "$targetDir/dimensionality_reduction/metrics/density_preservation/main.nf"
-include { rmse } from "$targetDir/dimensionality_reduction/metrics/rmse/main.nf"
+include { distance_correlation } from "$targetDir/dimensionality_reduction/metrics/distance_correlation/main.nf"
 include { trustworthiness } from "$targetDir/dimensionality_reduction/metrics/trustworthiness/main.nf"
 
 // convert scores to tsv
@@ -51,7 +51,7 @@ methods = [
 metrics = [
   coranking,
   density_preservation,
-  rmse,
+  distance_correlation,
   trustworthiness
 ]
 
