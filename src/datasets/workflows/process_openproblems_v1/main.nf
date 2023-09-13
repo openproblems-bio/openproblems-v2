@@ -20,7 +20,7 @@ include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/ma
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { runComponents; joinStates; initializeTracer; writeJson getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishStates; runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
@@ -94,9 +94,17 @@ workflow run_wf {
           checks: null
         ]
       },
-      toState: [],
-      auto: [publish: true]
+      toState: { id, output, state ->
+        // load output yaml file
+        def metadata = new org.yaml.snakeyaml.Yaml().load(output.meta)
+        // add metadata from file to state
+        [ dataset: output.output ] + metadata
+      }
     )
+
+    | view()
+
+    | publishStates([:])
 
   emit:
   output_ch
@@ -106,6 +114,6 @@ workflow run_wf {
 workflow.onComplete {
   def publish_dir = getPublishDir()
 
-  writeJsontraces, file("$publish_dir/traces.json"))
-  writeJsonnormalization_methods.collect{it.config}, file("$publish_dir/normalization_methods.json"))
+  writeJson(traces, file("$publish_dir/traces.json"))
+  writeJson(normalization_methods.collect{it.config}, file("$publish_dir/normalization_methods.json"))
 }
