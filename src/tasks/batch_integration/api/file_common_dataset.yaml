@@ -17,11 +17,11 @@ info:
       - type: string
         name: celltype
         description: Cell type information
-        required: false
+        required: true
       - type: string
         name: batch
         description: Batch information
-        required: false
+        required: true
     var:
       - type: boolean
         name: hvg
