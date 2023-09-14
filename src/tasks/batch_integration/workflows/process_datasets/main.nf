@@ -36,23 +36,44 @@ workflow run_wf {
       fromState: { id, state ->
         [
           input: state.input,
-          schema: state.input_schema,
-          stop_on_error: true,
-          output: null,
+          schema: state.schema,
+          stop_on_error: false,
+          output: '$id.$key.output.h5ad',
+          checks: null,
           meta: null
         ]
       },
       toState: { id, output, state ->
-        state
+        state + [
+          input: output.output
+        ]
       }
     )
 
+    // dataset must have passed the check
+    | filter{ id, state -> state.input }
+
     | process_dataset.run(
       fromState: ["input", "output_dataset", "output_solution"],
-      toState: ["output_dataset", "output_solution"]
+      toState: [
+        dataset: "output_dataset",
+        solution: "output_solution"
+      ]
     )
 
-    | view {"Output: $it"}
+    // only output the files for which an output file was specified
+    | map { id, state ->
+      def keys = ["dataset", "solution"]
+      def newState = keys.collectMany{ key ->
+        def output_key = "output_$key"
+        if (state[output_key]) {
+          [ [ output_key, state[key] ] ]
+        } else {
+          []
+        }
+      }.collectEntries()
+      [id, newState]
+    }
 
   emit:
   output_ch

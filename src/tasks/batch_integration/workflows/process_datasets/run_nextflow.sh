@@ -11,19 +11,18 @@ cd "$REPO_ROOT"
 
 set -xe
 
-# run benchmark
 export NXF_VER=22.04.5
 
-  # -profile docker \
+OUTPUT_DIR=resources_test/batch_integration
+
 nextflow run . \
   -main-script src/tasks/batch_integration/workflows/process_datasets/main.nf \
   -profile docker \
   -c src/wf_utils/labels_ci.config \
-  -resume \
   --id pancreas \
   --input resources_test/common/pancreas/dataset.h5ad \
-  --schema src/tasks/batch_integration/api/file_dataset.yaml \
-  --publish_dir resources_test/batch_integration/pancreas_foo/ \
+  --schema src/tasks/batch_integration/api/file_common_dataset.yaml \
+  --publish_dir "$OUTPUT_DIR" \
   --output_dataset dataset.h5ad \
   --output_solution solution.h5ad \
   $@

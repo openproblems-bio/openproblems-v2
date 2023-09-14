@@ -1,8 +1,8 @@
 type: file
-example: "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+example: "resources_test/common/pancreas/dataset.h5ad"
 info:
-  label: "Dataset"
-  summary: Unintegrated AnnData HDF5 file.
+  label: "Common Dataset"
+  summary: A subset of the common dataset.
   slots:
     layers:
       - type: integer
@@ -15,13 +15,13 @@ info:
         required: true
     obs:
       - type: string
+        name: celltype
+        description: Cell type information
+        required: false
+      - type: string
         name: batch
         description: Batch information
-        required: true
-      - type: string
-        name: label
-        description: label information
-        required: true
+        required: false
     var:
       - type: boolean
         name: hvg

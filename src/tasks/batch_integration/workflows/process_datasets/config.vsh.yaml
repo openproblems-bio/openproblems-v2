@@ -1,5 +1,5 @@
 functionality:
-  name: "run_benchmark"
+  name: "process_datasets"
   namespace: "batch_integration/workflows"
   argument_groups:
     - name: Inputs
@@ -19,11 +19,11 @@ functionality:
     - name: Outputs
       arguments:
         - name: "--output_dataset"
-          __merge__: file_dataset.yaml
+          type: file
           direction: output
           required: true
         - name: "--output_solution"
-          __merge__: file_solution.yaml
+          type: file
           direction: output
           required: true
   resources:
