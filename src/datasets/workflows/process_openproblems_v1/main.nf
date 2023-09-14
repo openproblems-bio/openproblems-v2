@@ -35,6 +35,7 @@ workflow {
 
   channelFromParams(params, config)
     | run_wf
+    | publishState([:])
 }
 
 workflow run_wf {
@@ -103,8 +104,6 @@ workflow run_wf {
         ]
       }
     )
-
-    | publishState([:])
 
   emit:
   output_ch

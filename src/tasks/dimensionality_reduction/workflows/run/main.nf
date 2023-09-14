@@ -73,10 +73,9 @@ workflow run_wf {
     | preprocessInputs(config: config)
 
     // extract the dataset metadata
-    | runComponents(
-      components: check_dataset_schema,
+    | check_dataset_schema.run(
       fromState: [input: "input_dataset"],
-      toState: { id, output, state, config ->
+      toState: { id, output, state ->
         state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       }
     )

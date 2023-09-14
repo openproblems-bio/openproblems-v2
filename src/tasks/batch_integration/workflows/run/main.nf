@@ -5,9 +5,6 @@ targetDir = params.rootDir + "/target/nextflow"
 
 include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/main.nf"
 
-// import preprocessing
-include { process_dataset } from "$targetDir/batch_integration/process_dataset/main.nf"
-
 // import methods
 include { bbknn } from "$targetDir/batch_integration/methods/bbknn/main.nf"
 include { combat } from "$targetDir/batch_integration/methods/combat/main.nf"
@@ -31,7 +28,6 @@ include { asw_label } from "$targetDir/batch_integration/metrics/asw_label/main.
 include { cell_cycle_conservation } from "$targetDir/batch_integration/metrics/cell_cycle_conservation/main.nf"
 include { clustering_overlap } from "$targetDir/batch_integration/metrics/clustering_overlap/main.nf"
 include { graph_connectivity } from "$targetDir/batch_integration/metrics/graph_connectivity/main.nf"
-include { lisi } from "$targetDir/batch_integration/metrics/lisi/main.nf"
 include { hvg_overlap } from "$targetDir/batch_integration/metrics/hvg_overlap/main.nf"
 include { isolated_label_asw } from "$targetDir/batch_integration/metrics/isolated_label_asw/main.nf"
 include { isolated_label_f1 } from "$targetDir/batch_integration/metrics/isolated_label_f1/main.nf"
@@ -98,10 +94,9 @@ workflow run_wf {
     | preprocessInputs(config: config)
 
     // extract the dataset metadata
-    | runComponents(
-      components: check_dataset_schema,
+    | check_dataset_schema.run(
       fromState: ["input"],
-      toState: { id, output, state, config ->
+      toState: { id, output, state ->
         state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       }
     )
