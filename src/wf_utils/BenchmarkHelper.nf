@@ -210,7 +210,7 @@ def publishState(Map args) {
           def id = tup[0]
           def state = tup[1]
           def files = collectFiles(state)
-          def convertedState = convertFilesToString(state)
+          def convertedState = [id: id] + convertFilesToString(state)
           [id, convertedState, files]
         }
         | publishStateProc
