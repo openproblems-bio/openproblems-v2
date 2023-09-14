@@ -154,7 +154,8 @@ def getPublishDir() {
 
 
 process publishStateProc {
-  publishDir path: {getPublishDir() + "/" + id + "/"}, mode: "copy"
+  // todo: check publishpath?
+  publishDir path: "${getPublishDir()}/${id}/", mode: "copy"
   tag "$id"
   input:
     tuple val(id), val(args), path(inputFiles)

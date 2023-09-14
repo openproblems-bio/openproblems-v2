@@ -119,7 +119,8 @@ def processArgument(arg) {
     arg.create_parent = arg.create_parent != null ? arg.create_parent : true
   }
 
-  if (arg.type == "file" && arg.direction == "output") {
+  // add default values to required output files which haven't already got a default
+  if (arg.type == "file" && arg.direction == "output" && arg.default == null && arg.required) {
     def mult = arg.multiple ? "_*" : ""
     def extSearch = ""
     if (arg.default != null) {

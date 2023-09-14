@@ -146,7 +146,7 @@ param_list:
     dataset_organism: danio_rerio
 
 output_dataset: dataset.h5ad
-output_meta: dataset_meta.yaml
+output_meta: dataset_metadata.yaml
 HERE
 fi
 
