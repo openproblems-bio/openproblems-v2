@@ -393,9 +393,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/transformers feature_to_embed"
-LABEL org.opencontainers.image.created="2023-09-08T15:04:43Z"
+LABEL org.opencontainers.image.created="2023-09-15T14:23:06Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="06e942ab4095085026570b0265972b6535bb473c"
+LABEL org.opencontainers.image.revision="e8318199eeec56b249d05ba9c5a02cba2bd980d2"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

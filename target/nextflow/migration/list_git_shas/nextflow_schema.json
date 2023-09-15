@@ -11,17 +11,20 @@
         "properties": {
           "input": {
             "type": "string",
-            "description": "Path to a git repository",
+            "description": "Type: `file`, required, example: `\"/path/to/repo\"`. Path to a git repository",
+            "help_text": "Type: `file`, required, example: `\"/path/to/repo\"`. Path to a git repository",
             "default": ""
           },
           "output": {
             "type": "string",
-            "description": "A json containing a list of entries. Each entry must have the","help_text": "A json containing a list of entries. Each entry must have the\nfollowing values: \n\n* \"path\" `string`: Path a file in the repository\n* \"last_modified\" `string`: Date of when the file was last modified, in `yyyy-mm-dd HH:mm:ss` format.\n* \"sha\" `string`: Sha of the commit in which the file was last modified\n* \"history_sha\" `string` (optional): A list of SHAs during which the file was modified\n",
+            "description": "Type: `file`, required, default: `\"$id.$key.output.json\"`, example: `\"output.json\"`. A json containing a list of entries",
+            "help_text": "Type: `file`, required, default: `\"$id.$key.output.json\"`, example: `\"output.json\"`. A json containing a list of entries. Each entry must have the\nfollowing values: \n\n* \"path\" `string`: Path a file in the repository\n* \"last_modified\" `string`: Date of when the file was last modified, in `yyyy-mm-dd HH:mm:ss` format.\n* \"sha\" `string`: Sha of the commit in which the file was last modified\n* \"history_sha\" `string` (optional): A list of SHAs during which the file was modified\n",
             "default": "$id.$key.output.json"
           },
           "show_history": {
             "type": "boolean",
-            "description": "Whether or not to include the full history of SHAs for each file.",
+            "description": "Type: `boolean_true`, default: `false`. Whether or not to include the full history of SHAs for each file",
+            "help_text": "Type: `boolean_true`, default: `false`. Whether or not to include the full history of SHAs for each file.",
             "default": "False"
           }
           
@@ -34,12 +37,14 @@
         "properties": {
           "publish_dir": {
             "type": "string",
-            "description": "Path to an output directory.",
+            "description": "Type: `string`, required, example: `\"output/\"`. Path to an output directory",
+            "help_text": "Type: `string`, required, example: `\"output/\"`. Path to an output directory.",
             "default": ""
           },
           "param_list": {
             "type": "string",
-            "description": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.","help_text": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
+            "description": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
+            "help_text": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
             "default": ""
           }
           

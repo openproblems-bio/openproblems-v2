@@ -11,32 +11,38 @@
         "properties": {
           "dataset_id": {
             "type": "string",
-            "description": "The ID of the dataset",
+            "description": "Type: `string`, required. The ID of the dataset",
+            "help_text": "Type: `string`, required. The ID of the dataset",
             "default": ""
           },
           "obs_celltype": {
             "type": "string",
-            "description": "Location of where to find the observation cell types.",
+            "description": "Type: `string`. Location of where to find the observation cell types",
+            "help_text": "Type: `string`. Location of where to find the observation cell types.",
             "default": ""
           },
           "obs_batch": {
             "type": "string",
-            "description": "Location of where to find the observation batch IDs.",
+            "description": "Type: `string`. Location of where to find the observation batch IDs",
+            "help_text": "Type: `string`. Location of where to find the observation batch IDs.",
             "default": ""
           },
           "obs_tissue": {
             "type": "string",
-            "description": "Location of where to find the observation tissue information.",
+            "description": "Type: `string`. Location of where to find the observation tissue information",
+            "help_text": "Type: `string`. Location of where to find the observation tissue information.",
             "default": ""
           },
           "layer_counts": {
             "type": "string",
-            "description": "In which layer to find the counts matrix. Leave undefined to use `.X`.",
+            "description": "Type: `string`, example: `\"counts\"`. In which layer to find the counts matrix",
+            "help_text": "Type: `string`, example: `\"counts\"`. In which layer to find the counts matrix. Leave undefined to use `.X`.",
             "default": ""
           },
           "sparse": {
             "type": "boolean",
-            "description": "Convert layers to a sparse CSR format.",
+            "description": "Type: `boolean`, default: `true`. Convert layers to a sparse CSR format",
+            "help_text": "Type: `boolean`, default: `true`. Convert layers to a sparse CSR format.",
             "default": "True"
           }
           
@@ -49,32 +55,38 @@
         "properties": {
           "dataset_name": {
             "type": "string",
-            "description": "Nicely formatted name.",
+            "description": "Type: `string`, required. Nicely formatted name",
+            "help_text": "Type: `string`, required. Nicely formatted name.",
             "default": ""
           },
           "data_url": {
             "type": "string",
-            "description": "Link to the original source of the dataset.",
+            "description": "Type: `string`. Link to the original source of the dataset",
+            "help_text": "Type: `string`. Link to the original source of the dataset.",
             "default": ""
           },
           "data_reference": {
             "type": "string",
-            "description": "Bibtex reference of the paper in which the dataset was published.",
+            "description": "Type: `string`. Bibtex reference of the paper in which the dataset was published",
+            "help_text": "Type: `string`. Bibtex reference of the paper in which the dataset was published.",
             "default": ""
           },
           "dataset_summary": {
             "type": "string",
-            "description": "Short description of the dataset.",
+            "description": "Type: `string`, required. Short description of the dataset",
+            "help_text": "Type: `string`, required. Short description of the dataset.",
             "default": ""
           },
           "dataset_description": {
             "type": "string",
-            "description": "Long description of the dataset.",
+            "description": "Type: `string`, required. Long description of the dataset",
+            "help_text": "Type: `string`, required. Long description of the dataset.",
             "default": ""
           },
           "dataset_organism": {
             "type": "string",
-            "description": "The organism of the dataset.",
+            "description": "Type: `string`. The organism of the dataset",
+            "help_text": "Type: `string`. The organism of the dataset.",
             "default": ""
           }
           
@@ -87,12 +99,14 @@
         "properties": {
           "publish_dir": {
             "type": "string",
-            "description": "Path to an output directory.",
+            "description": "Type: `string`, required, example: `\"output/\"`. Path to an output directory",
+            "help_text": "Type: `string`, required, example: `\"output/\"`. Path to an output directory.",
             "default": ""
           },
           "param_list": {
             "type": "string",
-            "description": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.","help_text": "Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
+            "description": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
+            "help_text": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
             "default": ""
           }
           
