@@ -6,6 +6,8 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 # ensure that the command below is run from the root of the repository
 cd "$REPO_ROOT"
 
+set -e
+
 COMMON_DATASETS="resources/datasets/openproblems_v1"
 OUTPUT_DIR="resources/batch_integration/datasets/openproblems_v1"
 

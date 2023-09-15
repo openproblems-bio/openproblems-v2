@@ -416,33 +416,52 @@ def autoDetectStates(Map params, Map config) {
           }
 
           // construct renameMap
-          def renameMap = args.rename_keys.collectEntries{renameString ->
-            def split = renameString.split(":")
-            assert split.size() == 2: "Argument 'rename' should be of the form 'newKey:oldKey,newKey:oldKey'"
-            split
-          }
-
-          // rename keys in state, only let states through which have all keys
-          // also add global settings
-          def finalStates = states.collectMany{id, state ->
-            def newState = [:]
-
-            for (key in renameMap.keySet()) {
-              def origKey = renameMap[key]
-              if (!(state.containsKey(origKey))) {
-                return []
-              }
-              newState[key] = state[origKey]
+          if (args.rename_keys) {
+            def renameMap = args.rename_keys.collectEntries{renameString ->
+              def split = renameString.split(":")
+              assert split.size() == 2: "Argument 'rename' should be of the form 'newKey:oldKey,newKey:oldKey'"
+              split
             }
 
-            [[id, globalSettings + newState]]
+            // rename keys in state, only let states through which have all keys
+            // also add global settings
+            states = states.collectMany{id, state ->
+              def newState = [:]
+
+              for (key in renameMap.keySet()) {
+                def origKey = renameMap[key]
+                if (!(state.containsKey(origKey))) {
+                  return []
+                }
+                newState[key] = state[origKey]
+              }
+
+              [[id, globalSettings + newState]]
+            }
           }
 
-          finalStates
+          states
         }
     emit:
     output_ch
   }
 
   return autoDetectStatesWf
+}
+
+def setState(fun) {
+  workflow setStateWf {
+    take: input_ch
+    main:
+      output_ch = input_ch
+        | map { tup ->
+          def id = tup[0]
+          def state = tup[1]
+          def unfilteredState = fun(id, state)
+          def newState = unfilteredState.findAll{key, val -> val != null}
+          [id, newState] + tup.drop(2)
+        }
+    emit: output_ch
+  }
+  return setStateWf
 }

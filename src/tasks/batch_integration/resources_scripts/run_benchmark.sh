@@ -18,11 +18,11 @@ if [ ! -d "$OUTPUT_DIR" ]; then
 fi
 
 export NXF_VER=22.04.5
-nextflow \
-  run . \
+nextflow run . \
   -main-script src/tasks/batch_integration/workflows/run_benchmark/main.nf \
   -profile docker \
   -resume \
+  -entry auto \
   --id resources \
   --input_dir "$DATASETS_DIR" \
   --rename_keys 'input_dataset:output_dataset,input_solution:output_solution' \

@@ -20,7 +20,7 @@ include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/ma
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; setState } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
@@ -188,17 +188,13 @@ workflow run_wf {
     )
 
     // only output the files for which an output file was specified
-    | map { id, state ->
-      def keys = ["dataset_mod1", "dataset_mod2", "meta_mod1", "meta_mod2"]
-      def newState = keys.collectMany{ key ->
-        def output_key = "output_" + key
-        if (state.containsKey(output_key)) {
-          [ [ output_key, state[key] ] ]
-        } else {
-          []
-        }
-      }.collectEntries()
-      [id, newState]
+    | setState{ id, state ->
+      [
+        "output_dataset_mod1" : state.output_dataset_mod1 ? state.dataset_mod1: null,
+        "output_dataset_mod2" : state.output_dataset_mod2 ? state.dataset_mod2: null,
+        "output_meta_mod1" : state.output_meta_mod1 ? state.meta_mod1: null,
+        "output_meta_mod2" : state.output_meta_mod2 ? state.meta_mod2: null
+      ]
     }
 
   emit:

@@ -72,7 +72,7 @@ metrics = [
   isolated_label_f1,
   kbet,
   lisi,
-  pcr,
+  pcr
 ]
 
 
@@ -202,9 +202,7 @@ workflow run_wf {
   }
 
   // convert to tsv and publish
-  | extract_scores.run(
-    auto: [publish: true]
-  )
+  | extract_scores
 
   emit:
   output_ch

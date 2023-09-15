@@ -21,7 +21,7 @@ include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/ma
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; setState } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
@@ -171,17 +171,16 @@ workflow run_wf {
     )
 
     // only output the files for which an output file was specified
-    | map { id, state ->
-      def keys = ["dataset", "meta", "raw", "normalized", "pca", "hvg", "knn"]
-      def newState = keys.collectMany{ key ->
-        def output_key = "output_" + key
-        if (state.containsKey(output_key)) {
-          [ [ output_key, state[key] ] ]
-        } else {
-          []
-        }
-      }.collectEntries()
-      [id, newState]
+    | setState{ id, state ->
+      [
+        "output_dataset": state.output_dataset ? state.dataset : null,
+        "output_meta": state.output_meta ? state.meta : null,
+        "output_raw": state.output_raw ? state.raw : null,
+        "output_normalized": state.output_normalized ? state.normalized : null,
+        "output_pca": state.output_pca ? state.pca : null,
+        "output_hvg": state.output_hvg ? state.hvg : null,
+        "output_knn": state.output_knn ? state.knn : null
+      ]
     }
 
   emit:
