@@ -191,8 +191,8 @@ workflow run_wf {
     | map { id, state ->
       def keys = ["dataset_mod1", "dataset_mod2", "meta_mod1", "meta_mod2"]
       def newState = keys.collectMany{ key ->
-        def output_key = "output_$key"
-        if (state[output_key]) {
+        def output_key = "output_" + key
+        if (state.containsKey(output_key)) {
           [ [ output_key, state[key] ] ]
         } else {
           []

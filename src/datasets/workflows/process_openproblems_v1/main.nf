@@ -174,8 +174,8 @@ workflow run_wf {
     | map { id, state ->
       def keys = ["dataset", "meta", "raw", "normalized", "pca", "hvg", "knn"]
       def newState = keys.collectMany{ key ->
-        def output_key = "output_$key"
-        if (state[output_key]) {
+        def output_key = "output_" + key
+        if (state.containsKey(output_key)) {
           [ [ output_key, state[key] ] ]
         } else {
           []

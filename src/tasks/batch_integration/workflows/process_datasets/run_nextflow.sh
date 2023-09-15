@@ -9,20 +9,17 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 # ensure that the command below is run from the root of the repository
 cd "$REPO_ROOT"
 
-set -xe
+set -e
 
 export NXF_VER=22.04.5
-
-OUTPUT_DIR=resources_test/batch_integration
 
 nextflow run . \
   -main-script src/tasks/batch_integration/workflows/process_datasets/main.nf \
   -profile docker \
+  -entry auto \
   -c src/wf_utils/labels_ci.config \
-  --id pancreas \
-  --input resources_test/common/pancreas/dataset.h5ad \
-  --schema src/tasks/batch_integration/api/file_common_dataset.yaml \
-  --publish_dir "$OUTPUT_DIR" \
-  --output_dataset dataset.h5ad \
-  --output_solution solution.h5ad \
-  $@
+  --id resources_test \
+  --input_dir resources_test/common \
+  --rename_keys 'input:output_dataset' \
+  --settings '{"output_dataset": "dataset.h5ad", "output_solution": "solution.h5ad"}' \
+  --publish_dir "output/test"

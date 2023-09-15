@@ -777,7 +777,10 @@ private List<Tuple2<String, Map>> _parseParamListArguments(Map params, Map confi
   def paramListFile = paramListOut[0]
   def paramSets = paramListOut[1] // these are the actual parameters from reading the blob/file
 
-  // data checks
+  return checkParamListArguments(paramListFile, paramSets, config)
+}
+
+def checkParamListArguments(paramListFile, paramSets, config) {
   assert paramSets instanceof List: "--param_list should contain a list of maps"
   for (value in paramSets) {
     assert value instanceof Map: "--param_list should contain a list of maps"

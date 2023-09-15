@@ -146,25 +146,89 @@ def writeJson(data, file) {
   file.write(groovy.json.JsonOutput.toJson(data))
 }
 
+import org.yaml.snakeyaml.DumperOptions
+import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.nodes.Node
+import org.yaml.snakeyaml.nodes.Tag
+import org.yaml.snakeyaml.representer.Representer
+import org.yaml.snakeyaml.representer.Represent
+
+
+
+// Custom representer to modify how certain objects are represented in YAML
+class CustomRepresenter extends Representer {
+  class RepresentFile implements Represent {
+    public Node representData(Object data) {
+      File file = (File) data;
+      String value = file.name;
+      Tag tag = new Tag("!file");
+      return representScalar(tag, value);
+    }
+  }
+  CustomRepresenter(DumperOptions options) {
+    super(options)
+    this.representers.put(File, new RepresentFile())
+  }
+}
+
+String toTaggedYamlBlob(Map data) {
+  def options = new DumperOptions()
+  options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK)
+  def representer = new CustomRepresenter(options)
+  def yaml = new Yaml(representer, options)
+  return yaml.dump(data)
+}
+
+
+import org.yaml.snakeyaml.TypeDescription
+import org.yaml.snakeyaml.constructor.AbstractConstruct
+import org.yaml.snakeyaml.constructor.Constructor
+
+// Custom constructor to modify how certain objects are parsed from YAML
+class CustomConstructor extends Constructor {
+  File root
+
+  class ConstructFile extends AbstractConstruct {
+    public Object construct(Node node) {
+      String filename = (String) constructScalar(node);
+      if (root != null) {
+        return new File(root, filename);
+      }
+      return new File(filename);
+    }
+  }
+
+  CustomConstructor(File root = null) {
+    super()
+    this.root = root
+    // Handling !file tag and parse it back to a File type
+    this.yamlConstructors.put(new Tag("!file"), new ConstructFile())
+  }
+}
+
+def readTaggedYaml(File file) {
+  Constructor constructor = new CustomConstructor(file.absoluteFile.parentFile)
+  Yaml yaml = new Yaml(constructor)
+  return yaml.load(file.text)
+}
+
 def getPublishDir() {
   return params.containsKey("publish_dir") ? params.publish_dir : 
     params.containsKey("publishDir") ? params.publishDir : 
     null
 }
 
-
 process publishStateProc {
   // todo: check publishpath?
   publishDir path: "${getPublishDir()}/${id}/", mode: "copy"
   tag "$id"
   input:
-    tuple val(id), val(args), path(inputFiles)
+    tuple val(id), val(yamlBlob), path(inputFiles)
   output:
-    tuple val(id), path{["state.json"] + inputFiles}
+    tuple val(id), path{["state.yaml"] + inputFiles}
   script:
-  def stateJson = new groovy.json.JsonBuilder(args).toPrettyString()
   """
-  echo '$stateJson' > state.json
+  echo '${yamlBlob}' > state.yaml
   """
 }
 
@@ -185,20 +249,78 @@ def collectFiles(obj) {
 }
 
 
-def convertFilesToString(obj) {
-  if (obj instanceof java.io.File || obj instanceof Path)  {
-    return obj.name
-  } else if (obj instanceof List && obj !instanceof String) {
+def iterateMap(obj, fun) {
+  if (obj instanceof List && obj !instanceof String) {
     return obj.collect{item ->
-      convertFilesToString(item)
+      iterateMap(item, fun)
     }
   } else if (obj instanceof Map) {
     return obj.collectEntries{key, item ->
-      [key, convertFilesToString(item)]
+      [key.toString(), iterateMap(item, fun)]
     }
   } else {
-    return obj
+    return fun(obj)
   }
+}
+
+
+// def convertPathsToFile(obj) {
+//   if (obj instanceof File) {
+//     return obj
+//   } else if (obj instanceof Path)  {
+//     return obj.toFile()
+//   } else if (obj instanceof List && obj !instanceof String) {
+//     return obj.collect{item ->
+//       convertPathsToFile(item)
+//     }
+//   } else if (obj instanceof Map) {
+//     return obj.collectEntries{key, item ->
+//       [key, convertPathsToFile(item)]
+//     }
+//   } else {
+//     return obj
+//   }
+// }
+
+// def convertFilesToPath(obj) {
+//   if (obj instanceof File) {
+//     return obj.toPath()
+//   } else if (obj instanceof Path)  {
+//     return obj
+//   } else if (obj instanceof List && obj !instanceof String) {
+//     return obj.collect{item ->
+//       convertFilesToPath(item)
+//     }
+//   } else if (obj instanceof Map) {
+//     return obj.collectEntries{key, item ->
+//       [key, convertFilesToPath(item)]
+//     }
+//   } else {
+//     return obj
+//   }
+// }
+
+def convertPathsToFile(obj) {
+  iterateMap(obj, {x ->
+    if (x instanceof File) {
+      return x
+    } else if (x instanceof Path)  {
+      return x.toFile()
+    } else {
+      return x
+    }
+  })
+}
+def convertFilesToPath(obj) {
+  iterateMap(obj, {x ->
+    if (x instanceof Path) {
+      return x
+    } else if (x instanceof File)  {
+      return x.toPath()
+    } else {
+      return x
+    }
+  })
 }
 
 def publishState(Map args) {
@@ -210,11 +332,117 @@ def publishState(Map args) {
           def id = tup[0]
           def state = tup[1]
           def files = collectFiles(state)
-          def convertedState = [id: id] + convertFilesToString(state)
-          [id, convertedState, files]
+          def convertedState = [id: id] + convertPathsToFile(state)
+          def yamlBlob = toTaggedYamlBlob(convertedState)
+          [id, yamlBlob, files]
         }
         | publishStateProc
     emit: input_ch
   }
   return publishStateWf
+}
+
+
+include { processConfig; helpMessage; channelFromParams; readYamlBlob } from "./WorkflowHelper.nf"
+
+
+def autoDetectStates(Map params, Map config) {
+  // TODO: do a deep clone of config
+  def auto_config = config.clone()
+  auto_config.functionality = auto_config.functionality.clone()
+  // override arguments
+  auto_config.functionality.argument_groups = []
+  auto_config.functionality.arguments = [
+    [
+      type: "file",
+      name: "--input_dir",
+      example: "/path/to/input/directory",
+      description: "Path to input directory containing the datasets to be integrated.",
+      required: true
+    ],
+    [
+      type: "string",
+      name: "--filter",
+      example: "foo/.*/state.yaml",
+      description: "Regex to filter state files by path.",
+      required: false
+    ],
+    // to do: make this a yaml blob?
+    [
+      type: "string",
+      name: "--rename_keys",
+      example: ["newKey1:oldKey1", "newKey2:oldKey2"],
+      description: "Rename keys in the detected input files. This is useful if the input files do not match the set of input arguments of the workflow.",
+      required: false,
+      multiple: true,
+      multiple_sep: ","
+    ],
+    [
+      type: "string",
+      name: "--settings",
+      example: '{"output_dataset": "dataset.h5ad", "k": 10}',
+      description: "Global arguments as a JSON glob to be passed to all components.",
+      required: false
+    ]
+  ]
+
+  // run auto config through processConfig once more
+  auto_config = processConfig(auto_config)
+
+  workflow autoDetectStatesWf {
+    helpMessage(auto_config)
+
+    output_ch = 
+      channelFromParams(params, auto_config)
+        | flatMap { autoId, args ->
+
+          def globalSettings = args.settings ? readYamlBlob(args.settings) : [:]
+
+          // look for state files in input dir
+          def stateFiles = file("${args.input_dir}/**/state.yaml")
+
+          // filter state files by regex
+          if (args.filter) {
+            stateFiles = stateFiles.findAll{ stateFile ->
+              def stateFileStr = stateFile.toString()
+              def matcher = stateFileStr =~ args.filter
+              matcher.matches()}
+          }
+
+          // read in states
+          def states = stateFiles.collect { stateFile ->
+            def state_ = convertFilesToPath(readTaggedYaml(stateFile.toFile()))
+            [state_.id, state_]
+          }
+
+          // construct renameMap
+          def renameMap = args.rename_keys.collectEntries{renameString ->
+            def split = renameString.split(":")
+            assert split.size() == 2: "Argument 'rename' should be of the form 'newKey:oldKey,newKey:oldKey'"
+            split
+          }
+
+          // rename keys in state, only let states through which have all keys
+          // also add global settings
+          def finalStates = states.collectMany{id, state ->
+            def newState = [:]
+
+            for (key in renameMap.keySet()) {
+              def origKey = renameMap[key]
+              if (!(state.containsKey(origKey))) {
+                return []
+              }
+              newState[key] = state[origKey]
+            }
+
+            [[id, globalSettings + newState]]
+          }
+
+          finalStates
+        }
+    emit:
+    output_ch
+  }
+
+  return autoDetectStatesWf
 }

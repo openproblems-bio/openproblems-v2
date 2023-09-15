@@ -40,7 +40,7 @@ include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs; readYaml } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; autoDetectStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("$projectDir/config.vsh.yaml")
 
@@ -81,6 +81,13 @@ workflow {
 
   channelFromParams(params, config)
     | run_wf
+    | publishState([:])
+}
+
+workflow auto {
+  autoDetectStates(params, config)
+    | run_wf
+    | publishState([:])
 }
 
 workflow run_wf {
@@ -95,7 +102,7 @@ workflow run_wf {
 
     // extract the dataset metadata
     | check_dataset_schema.run(
-      fromState: ["input"],
+      fromState: [input: "input_dataset"],
       toState: { id, output, state ->
         state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       }
@@ -121,11 +128,11 @@ workflow run_wf {
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
-      fromState: ["input"],
+      fromState: [input: "input_dataset"],
 
       // use 'toState' to publish that component's outputs to the overall state
       toState: { id, output, state, config ->
-        [
+        state + [
           method_id: config.functionality.name,
           method_output: output.output,
           method_subtype: config.functionality.info.subtype
@@ -170,7 +177,10 @@ workflow run_wf {
       filter: { id, state, config ->
         state.method_subtype == config.functionality.info.subtype
       },
-      fromState: [input_integrated: "method_output"],
+      fromState: [
+        input_integrated: "method_output",
+        input_solution: "input_solution"
+      ],
       toState: { id, output, state, config ->
         state + [
           metric_id: config.functionality.name,
@@ -206,6 +216,6 @@ workflow.onComplete {
 
   writeJson(traces, file("$publish_dir/traces.json"))
   // todo: add datasets logging
-  writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
+  // writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
+  // writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
