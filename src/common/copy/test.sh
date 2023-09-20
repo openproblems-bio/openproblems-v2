@@ -4,14 +4,14 @@ set -ex
 touch test_file.txt
 
 echo ">>> Testing if publish in local dir works"
-./publish \
+"$meta_executable" \
   --input test_file.txt \
   --output another_file.txt
 
 [[ ! -f another_file.txt ]] && echo "It seems no output is generated" && exit 1
 
 echo ">>> Testing if publish in local dir works"
-./publish \
+"$meta_executable" \
   --input test_file.txt \
   --output adir/yadir/another_file.txt
 
