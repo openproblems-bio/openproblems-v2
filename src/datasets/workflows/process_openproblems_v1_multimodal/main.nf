@@ -166,7 +166,7 @@ workflow run_wf {
     | check_dataset_schema.run(
       fromState: { id, state ->
         [
-          input: state.svd_mod1,
+          input: state.hvg_mod1,
           meta: state.output_meta_mod1 ?: '$id.$key.output_meta_mod1.yaml',
           output: state.output_dataset_mod1 ?: '$id.$key.output_dataset_mod1.h5ad',
           checks: null
@@ -178,7 +178,7 @@ workflow run_wf {
     | check_dataset_schema.run(
       fromState: { id, state ->
         [
-          input: state.svd_mod2,
+          input: state.hvg_mod2,
           meta: state.output_meta_mod2 ?: '$id.$key.output_meta_mod2.yaml',
           output: state.output_dataset_mod2 ?: '$id.$key.output_dataset_mod2.h5ad',
           checks: null
