@@ -40,3 +40,5 @@ nextflow run . \
   --output_meta_mod1 dataset_metadata_mod1.yaml \
   --output_meta_mod2 dataset_metadata_mod2.yaml \
   --publish_dir "$DATASET_DIR"
+
+src/tasks/match_modalities/resources_test_scripts/scicar_cell_lines.sh
