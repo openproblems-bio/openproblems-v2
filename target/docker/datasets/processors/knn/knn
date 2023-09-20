@@ -171,7 +171,7 @@ function ViashHelp {
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
-  echo "        example: resources_test/common/pancreas/dataset.h5ad"
+  echo "        example: resources_test/common/pancreas/knn.h5ad"
   echo ""
   echo "    --key_added"
   echo "        type: string"
@@ -409,9 +409,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors knn"
-LABEL org.opencontainers.image.created="2023-09-15T14:23:39Z"
+LABEL org.opencontainers.image.created="2023-09-20T12:53:06Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="86d799adf18b770f2b141d2e275cac7ed169e973"
+LABEL org.opencontainers.image.revision="fbc9476f3a208567cfc0c08c3fed857e400f1012"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

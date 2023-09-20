@@ -429,9 +429,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("Jiefei-Wang/SharedObject", "fedeago/NewWave"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods newwave_knnr"
-LABEL org.opencontainers.image.created="2023-09-15T14:23:29Z"
+LABEL org.opencontainers.image.created="2023-09-20T12:52:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="86d799adf18b770f2b141d2e275cac7ed169e973"
+LABEL org.opencontainers.image.revision="fbc9476f3a208567cfc0c08c3fed857e400f1012"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

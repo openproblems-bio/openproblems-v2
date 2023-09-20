@@ -15,10 +15,16 @@
             "help_text": "Type: `string`, required. The ID of the dataset",
             "default": ""
           },
-          "input": {
+          "input_dataset": {
             "type": "string",
             "description": "Type: `file`, required, example: `\"dataset.h5ad\"`. A dataset",
             "help_text": "Type: `file`, required, example: `\"dataset.h5ad\"`. A dataset",
+            "default": ""
+          },
+          "input_solution": {
+            "type": "string",
+            "description": "Type: `file`, required, example: `\"solution.h5ad\"`. A solution",
+            "help_text": "Type: `file`, required, example: `\"solution.h5ad\"`. A solution",
             "default": ""
           }
           

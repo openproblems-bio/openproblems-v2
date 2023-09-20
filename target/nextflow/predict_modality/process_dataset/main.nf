@@ -93,7 +93,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/common/bmmc_cite_starter/openproblems_bmmc_cite_starter.output_rna.h5ad"
+          "resources_test/common/bmmc_cite_starter/dataset_rna.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -170,7 +170,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/common/bmmc_cite_starter/openproblems_bmmc_cite_starter.output_adt.h5ad"
+          "resources_test/common/bmmc_cite_starter/dataset_adt.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -657,7 +657,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.7.5",
-    "git_commit" : "86d799adf18b770f2b141d2e275cac7ed169e973",
+    "git_commit" : "fbc9476f3a208567cfc0c08c3fed857e400f1012",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

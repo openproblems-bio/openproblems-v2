@@ -41,16 +41,6 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           },
           {
             "type" : "string",
-            "name" : "--dataset_id",
-            "description" : "The ID of the dataset",
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          },
-          {
-            "type" : "string",
             "name" : "--obs_celltype",
             "description" : "Location of where to find the observation cell types.",
             "required" : false,
@@ -110,6 +100,16 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       {
         "name" : "Metadata",
         "arguments" : [
+          {
+            "type" : "string",
+            "name" : "--dataset_id",
+            "description" : "The ID of the dataset",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
           {
             "type" : "string",
             "name" : "--dataset_name",
@@ -173,12 +173,131 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         ]
       },
       {
+        "name" : "Sampling options",
+        "arguments" : [
+          {
+            "type" : "boolean",
+            "name" : "--do_subsample",
+            "description" : "Whether or not to subsample the dataset",
+            "default" : [
+              false
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "integer",
+            "name" : "--n_obs",
+            "description" : "Maximum number of observations to be kept. It might end up being less because empty cells / genes are removed.",
+            "default" : [
+              500
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "integer",
+            "name" : "--n_vars",
+            "description" : "Maximum number of variables to be kept. It might end up being less because empty cells / genes are removed.",
+            "default" : [
+              500
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--keep_features",
+            "description" : "A list of genes to keep.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : true,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--keep_celltype_categories",
+            "description" : "Categories indexes to be selected",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : true,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--keep_batch_categories",
+            "description" : "Categories indexes to be selected",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : true,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "boolean_true",
+            "name" : "--even",
+            "description" : "Subsample evenly from different batches",
+            "direction" : "input",
+            "dest" : "par"
+          },
+          {
+            "type" : "integer",
+            "name" : "--seed",
+            "description" : "A seed for the subsampling.",
+            "example" : [
+              123
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
+      },
+      {
+        "name" : "Normalization",
+        "arguments" : [
+          {
+            "type" : "string",
+            "name" : "--normalization_methods",
+            "description" : "Which normalization methods to run.",
+            "default" : [
+              "log_cp",
+              "sqrt_cp",
+              "l1_sqrt"
+            ],
+            "required" : false,
+            "choices" : [
+              "log_cp",
+              "sqrt_cp",
+              "l1_sqrt"
+            ],
+            "direction" : "input",
+            "multiple" : true,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
+      },
+      {
         "name" : "Outputs",
         "arguments" : [
           {
             "type" : "file",
             "name" : "--output_dataset",
-            "description" : "A raw dataset",
+            "description" : "A dataset",
             "info" : {
               "label" : "Raw dataset",
               "slots" : {
@@ -220,7 +339,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 ]
               }
             },
-            "example" : [
+            "default" : [
               "dataset.h5ad"
             ],
             "must_exist" : true,
@@ -235,8 +354,78 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
             "type" : "file",
             "name" : "--output_meta",
             "description" : "Dataset metadata",
+            "default" : [
+              "dataset_metadata.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_raw",
             "example" : [
-              "dataset_meta.yaml"
+              "raw.h5ad"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_normalized",
+            "example" : [
+              "normalized.h5ad"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_pca",
+            "example" : [
+              "pca.h5ad"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_hvg",
+            "example" : [
+              "hvg.h5ad"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_knn",
+            "example" : [
+              "knn.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -317,7 +506,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.7.5",
-    "git_commit" : "86d799adf18b770f2b141d2e275cac7ed169e973",
+    "git_commit" : "fbc9476f3a208567cfc0c08c3fed857e400f1012",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -338,12 +527,13 @@ targetDir = params.rootDir + "/target/nextflow"
 include { openproblems_v1 } from "\\$targetDir/datasets/loaders/openproblems_v1/main.nf"
 
 // normalization methods
-include { log_cpm } from "\\$targetDir/datasets/normalization/log_cp/main.nf"
+include { log_cp } from "\\$targetDir/datasets/normalization/log_cp/main.nf"
 include { log_scran_pooling } from "\\$targetDir/datasets/normalization/log_scran_pooling/main.nf"
-include { sqrt_cpm } from "\\$targetDir/datasets/normalization/sqrt_cp/main.nf"
+include { sqrt_cp } from "\\$targetDir/datasets/normalization/sqrt_cp/main.nf"
 include { l1_sqrt } from "\\$targetDir/datasets/normalization/l1_sqrt/main.nf"
 
 // dataset processors
+include { subsample } from "\\$targetDir/datasets/processors/subsample/main.nf"
 include { pca } from "\\$targetDir/datasets/processors/pca/main.nf"
 include { hvg } from "\\$targetDir/datasets/processors/hvg/main.nf"
 include { knn } from "\\$targetDir/datasets/processors/knn/main.nf"
@@ -351,21 +541,21 @@ include { check_dataset_schema } from "\\$targetDir/common/check_dataset_schema/
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { run_components; join_states; initialize_tracer; write_json; get_publish_dir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; setState } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("\\$projectDir/config.vsh.yaml")
 
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initialize_tracer()
+traces = initializeTracer()
 
-// normalization_methods = [log_cp, log_scran_pooling, sqrt_cp, l1_sqrt
-normalization_methods = [log_cp, sqrt_cp, l1_sqrt]
+normalization_methods = [log_cp, sqrt_cp, l1_sqrt, log_scran_pooling]
 
 workflow {
   helpMessage(config)
 
   channelFromParams(params, config)
  run_wf
+ publishState([:])
 }
 
 workflow run_wf {
@@ -373,61 +563,145 @@ workflow run_wf {
   input_ch
 
   main:
-  output_ch = input_ch
+  dataset_ch = input_ch
  preprocessInputs(config: config)
 
     // fetch data from legacy openproblems
- run_components(
-      components: openproblems_v1,
-      fromState: [
-        "dataset_id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts", "sparse",
-        "dataset_name", "data_url", "data_reference", "dataset_summary", "dataset_description", "dataset_organism"
-      ],
-      toState: [ dataset: "output" ]
-    )
-
-    // run normalization methods
- run_components(
-      components: normalization_methods,
-      id: { id, state, config -> id + "/" + config.functionality.name },
-      fromState: [ input: "dataset" ],
-      toState: [
-        normalization_id: config.functionality.name,
-        output_normalization: "output"
+ openproblems_v1.run(
+      fromState: { id, state -> 
+        def output_filename =
+          (!state.do_subsample && state.output_raw) ? 
+          state.output_raw :
+          '\\$id.\\$key.output_raw.h5ad'
+        [
+          dataset_id: state.dataset_id,
+          obs_celltype: state.obs_celltype,
+          obs_batch: state.obs_batch,
+          obs_tissue: state.obs_tussue,
+          layer_counts: state.layer_counts,
+          sparse: state.sparse,
+          dataset_name: state.dataset_name,
+          data_url: state.data_url,
+          data_reference: state.data_reference, 
+          dataset_summary: state.dataset_summary,
+          dataset_description: state.dataset_description,
+          dataset_organism: state.dataset_organism,
+          output: output_filename
+        ]
+      },
+      toState: [ 
+        raw: "output"
       ]
     )
 
- run_components(
-      components: pca,
-      fromState: [ input: "output_normalization" ],
+  sampled_dataset_ch = dataset_ch
+ filter{ id, state -> state.do_subsample }
+ subsample.run(
+      fromState: { id, state ->
+        [
+          input: state.raw,
+          n_obs: state.n_obs,
+          n_vars: state.n_vars,
+          keep_features: state.keep_features,
+          keep_celltype_categories: state.keep_celltype_categories,
+          keep_batch_categories: state.keep_batch_categories,
+          even: state.even,
+          seed: state.seed,
+          output: state.output_raw ?: '\\$id.\\$key.output_raw.h5ad',
+          output_mod2: null
+        ]
+      },
+      toState: [
+        raw: "output"
+      ]
+    )
+  notsampled_dataset_ch = dataset_ch
+ filter{ id, state -> !state.do_subsample }
+  
+  output_ch = sampled_dataset_ch
+ concat(notsampled_dataset_ch)
+
+    // run normalization methods
+ runComponents(
+      components: normalization_methods,
+      id: { id, state, config ->
+        if (state.normalization_methods.size() > 1) {
+          id + "/" + config.functionality.name
+        } else {
+          id
+        }
+      },
+      filter: { id, state, config ->
+        config.functionality.name in state.normalization_methods
+      },
+      fromState: { id, state, config -> 
+        [
+          input: state.raw,
+          output: state.output_normalized ?: '\\$id.\\$key.output_normalized.h5ad'
+        ]
+      },
+      toState: { id, output, state, config -> 
+        state + [
+          normalization_id: config.functionality.name,
+          normalized: output.output
+        ]
+      }
+    )
+
+ pca.run(
+      fromState: { id, state ->
+        [
+          input: state.normalized,
+          output: state.output_pca ?: '\\$id.\\$key.output_pca.h5ad'
+        ]
+      },
       toState: [ pca: "output" ]
     )
 
- run_components(
-      components: hvg,
-      fromState: [ input: "pca" ],
+ hvg.run(
+      fromState: { id, state -> 
+        [
+          input: state.pca,
+          output: state.output_hvg ?: '\\$id.\\$key.output_hvg.h5ad'
+        ]
+      },
       toState: [ hvg: "output" ]
     )
 
- run_components(
-      components: knn,
-      fromState: [ input: "hvg" ],
+ knn.run(
+      fromState: { id, state ->
+        [
+          input: state.hvg,
+          output: state.output_knn ?: '\\$id.\\$key.output_knn.h5ad'
+        ]
+      },
       toState: [ knn: "output" ]
     )
 
- run_components(
-      components: check_dataset_schema,
-      fromState: {id, state, config ->
+ check_dataset_schema.run(
+      fromState: { id, state ->
         [
           input: state.knn,
-          meta: state.output_meta,
-          output: state.output_dataset,
+          meta: state.output_meta ?: '\\$id.\\$key.output_meta.yaml',
+          output: state.output_dataset ?: '\\$id.\\$key.output_dataset.h5ad',
           checks: null
         ]
       },
-      toState: [],
-      auto: [publish: true]
+      toState: [ dataset: "output", meta: "meta" ]
     )
+
+    // only output the files for which an output file was specified
+ setState{ id, state ->
+      [
+        "output_dataset": state.output_dataset ? state.dataset : null,
+        "output_meta": state.output_meta ? state.meta : null,
+        "output_raw": state.output_raw ? state.raw : null,
+        "output_normalized": state.output_normalized ? state.normalized : null,
+        "output_pca": state.output_pca ? state.pca : null,
+        "output_hvg": state.output_hvg ? state.hvg : null,
+        "output_knn": state.output_knn ? state.knn : null
+      ]
+    }
 
   emit:
   output_ch
@@ -435,10 +709,10 @@ workflow run_wf {
 
 // store the trace log in the publish dir
 workflow.onComplete {
-  def publish_dir = get_publish_dir()
+  def publish_dir = getPublishDir()
 
-  write_json(traces, file("\\$publish_dir/traces.json"))
-  write_json(normalization_methods.collect{it.config}, file("\\$publish_dir/normalization_methods.json"))
+  writeJson(traces, file("\\$publish_dir/traces.json"))
+  // writeJson(normalization_methods.collect{it.config}, file("\\$publish_dir/normalization_methods.json"))
 }
 VIASHMAIN
 nextflow run . -main-script "$tempscript"

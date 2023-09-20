@@ -98,7 +98,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/multimodal/integrated_mod1.h5ad"
+          "resources_test/match_modalities/integrated_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -180,7 +180,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/multimodal/integrated_mod1.h5ad"
+          "resources_test/match_modalities/integrated_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -234,7 +234,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/multimodal/score.h5ad"
+          "resources_test/match_modalities/score.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -401,7 +401,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc",
     "viash_version" : "0.7.5",
-    "git_commit" : "86d799adf18b770f2b141d2e275cac7ed169e973",
+    "git_commit" : "fbc9476f3a208567cfc0c08c3fed857e400f1012",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

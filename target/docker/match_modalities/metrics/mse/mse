@@ -160,15 +160,15 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input_mod1"
   echo "        type: file, required parameter, file must exist"
-  echo "        example: resources_test/multimodal/integrated_mod1.h5ad"
+  echo "        example: resources_test/match_modalities/integrated_mod1.h5ad"
   echo ""
   echo "    --input_mod2"
   echo "        type: file, required parameter, file must exist"
-  echo "        example: resources_test/multimodal/integrated_mod1.h5ad"
+  echo "        example: resources_test/match_modalities/integrated_mod1.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
-  echo "        example: resources_test/multimodal/score.h5ad"
+  echo "        example: resources_test/match_modalities/score.h5ad"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -395,9 +395,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy" "scipy" "scprep"
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/metrics mse"
-LABEL org.opencontainers.image.created="2023-09-15T14:23:33Z"
+LABEL org.opencontainers.image.created="2023-09-20T12:52:59Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="86d799adf18b770f2b141d2e275cac7ed169e973"
+LABEL org.opencontainers.image.revision="fbc9476f3a208567cfc0c08c3fed857e400f1012"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -3,7 +3,11 @@ id: # please fill in - example: "foo"
 input: # please fill in - example: "dataset.h5ad"
 
 # Outputs
-# output: "$id.$key.output.tsv"
+# output_dataset: "$id.$key.output_dataset.h5ad"
+# output_solution: "$id.$key.output_solution.h5ad"
+
+# Schemas
+dataset_schema: # please fill in - example: "src/tasks/batch_integration/api/file_common_dataset.yaml"
 
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"

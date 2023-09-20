@@ -30,10 +30,53 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "name" : "--input",
         "info" : {
-          "label" : "Common dataset",
-          "summary" : "A dataset processed by the common dataset processing pipeline.",
-          "description" : "This dataset contains both raw counts and normalized data matrices,\nas well as a PCA embedding, HVG selection and a kNN graph.",
+          "label" : "Common Dataset",
+          "summary" : "A subset of the common dataset.",
           "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized expression values",
+                "required" : true
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "string",
+                "name" : "celltype",
+                "description" : "Cell type information",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "batch",
+                "description" : "Batch information",
+                "required" : true
+              }
+            ],
+            "var" : [
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
             "obsp" : [
               {
                 "type" : "double",
@@ -56,33 +99,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : true
               },
               {
-                "name" : "dataset_name",
                 "type" : "string",
-                "description" : "Nicely formatted name.",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "data_url",
-                "description" : "Link to the original source of the dataset.",
-                "required" : false
-              },
-              {
-                "name" : "data_reference",
-                "type" : "string",
-                "description" : "Bibtex reference of the paper in which the dataset was published.",
-                "required" : false
-              },
-              {
-                "name" : "dataset_summary",
-                "type" : "string",
-                "description" : "Short description of the dataset.",
-                "required" : true
-              },
-              {
-                "name" : "dataset_description",
-                "type" : "string",
-                "description" : "Long description of the dataset.",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
                 "required" : true
               },
               {
@@ -92,86 +111,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
                 "required" : false
               },
               {
-                "type" : "double",
-                "name" : "pca_variance",
-                "description" : "The PCA variance objects.",
-                "required" : true
-              },
-              {
                 "type" : "object",
                 "name" : "knn",
                 "description" : "Supplementary K nearest neighbors data.",
                 "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
-                "required" : true
-              }
-            ],
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalised expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "celltype",
-                "description" : "Cell type information",
-                "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "tissue",
-                "description" : "Tissue information",
-                "required" : false
-              },
-              {
-                "type" : "double",
-                "name" : "size_factors",
-                "description" : "The size factors created by the normalisation method, if any.",
-                "required" : false
               }
             ]
           }
@@ -385,7 +328,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+          "resources_test/batch_integration/pancreas/solution.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -565,7 +508,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset",
     "viash_version" : "0.7.5",
-    "git_commit" : "86d799adf18b770f2b141d2e275cac7ed169e973",
+    "git_commit" : "fbc9476f3a208567cfc0c08c3fed857e400f1012",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

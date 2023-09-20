@@ -1,6 +1,5 @@
 # Inputs
 id: # please fill in - example: "foo"
-dataset_id: # please fill in - example: "foo"
 # obs_celltype: "foo"
 # obs_batch: "foo"
 # obs_tissue: "foo"
@@ -10,14 +9,33 @@ sparse: true
 # Outputs
 # output_dataset: "$id.$key.output_dataset.h5ad"
 # output_meta: "$id.$key.output_meta.yaml"
+# output_raw: "$id.$key.output_raw.h5ad"
+# output_normalized: "$id.$key.output_normalized.h5ad"
+# output_pca: "$id.$key.output_pca.h5ad"
+# output_hvg: "$id.$key.output_hvg.h5ad"
+# output_knn: "$id.$key.output_knn.h5ad"
 
 # Metadata
+dataset_id: # please fill in - example: "foo"
 dataset_name: # please fill in - example: "foo"
 # data_url: "foo"
 # data_reference: "foo"
 dataset_summary: # please fill in - example: "foo"
 dataset_description: # please fill in - example: "foo"
 # dataset_organism: "foo"
+
+# Sampling options
+do_subsample: false
+n_obs: 500
+n_vars: 500
+# keep_features: ["foo"]
+# keep_celltype_categories: ["foo"]
+# keep_batch_categories: ["foo"]
+even: false
+# seed: 123
+
+# Normalization
+normalization_methods: ["log_cp", "sqrt_cp", "l1_sqrt"]
 
 # Nextflow input-output arguments
 publish_dir: # please fill in - example: "output/"

@@ -1,0 +1,244 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "title": "process_openproblems_v1_multimodal",
+    "description": "Fetch and process legacy OpenProblems v1 multimodal datasets\n",
+    "type": "object",
+    "definitions": {
+      "inputs" : {
+        "title": "Inputs",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Type: `string`, required. The ID of the dataset",
+            "help_text": "Type: `string`, required. The ID of the dataset",
+            "default": ""
+          },
+          "obs_celltype": {
+            "type": "string",
+            "description": "Type: `string`. Location of where to find the observation cell types",
+            "help_text": "Type: `string`. Location of where to find the observation cell types.",
+            "default": ""
+          },
+          "obs_batch": {
+            "type": "string",
+            "description": "Type: `string`. Location of where to find the observation batch IDs",
+            "help_text": "Type: `string`. Location of where to find the observation batch IDs.",
+            "default": ""
+          },
+          "obs_tissue": {
+            "type": "string",
+            "description": "Type: `string`. Location of where to find the observation tissue information",
+            "help_text": "Type: `string`. Location of where to find the observation tissue information.",
+            "default": ""
+          },
+          "layer_counts": {
+            "type": "string",
+            "description": "Type: `string`, example: `\"counts\"`. In which layer to find the counts matrix",
+            "help_text": "Type: `string`, example: `\"counts\"`. In which layer to find the counts matrix. Leave undefined to use `.X`.",
+            "default": ""
+          },
+          "sparse": {
+            "type": "boolean",
+            "description": "Type: `boolean`, default: `true`. Convert layers to a sparse CSR format",
+            "help_text": "Type: `boolean`, default: `true`. Convert layers to a sparse CSR format.",
+            "default": "True"
+          }
+          
+        }
+      },
+      "outputs" : {
+        "title": "Outputs",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "output_dataset_mod1": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_dataset_mod1.h5ad\"`, example: `\"dataset_mod1.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_dataset_mod1.h5ad\"`, example: `\"dataset_mod1.h5ad\"`. ",
+            "default": "$id.$key.output_dataset_mod1.h5ad"
+          },
+          "output_dataset_mod2": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_dataset_mod2.h5ad\"`, example: `\"dataset_mod2.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_dataset_mod2.h5ad\"`, example: `\"dataset_mod2.h5ad\"`. ",
+            "default": "$id.$key.output_dataset_mod2.h5ad"
+          },
+          "output_meta_mod1": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_meta_mod1.yaml\"`, example: `\"dataset_metadata_mod1.yaml\"`. Dataset metadata",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_meta_mod1.yaml\"`, example: `\"dataset_metadata_mod1.yaml\"`. Dataset metadata",
+            "default": "$id.$key.output_meta_mod1.yaml"
+          },
+          "output_meta_mod2": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_meta_mod2.yaml\"`, example: `\"dataset_metadata_mod2.yaml\"`. Dataset metadata",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_meta_mod2.yaml\"`, example: `\"dataset_metadata_mod2.yaml\"`. Dataset metadata",
+            "default": "$id.$key.output_meta_mod2.yaml"
+          }
+          
+        }
+      },
+      "metadata" : {
+        "title": "Metadata",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "dataset_id": {
+            "type": "string",
+            "description": "Type: `string`, required. The ID of the dataset",
+            "help_text": "Type: `string`, required. The ID of the dataset",
+            "default": ""
+          },
+          "dataset_name": {
+            "type": "string",
+            "description": "Type: `string`, required. Nicely formatted name",
+            "help_text": "Type: `string`, required. Nicely formatted name.",
+            "default": ""
+          },
+          "data_url": {
+            "type": "string",
+            "description": "Type: `string`. Link to the original source of the dataset",
+            "help_text": "Type: `string`. Link to the original source of the dataset.",
+            "default": ""
+          },
+          "data_reference": {
+            "type": "string",
+            "description": "Type: `string`. Bibtex reference of the paper in which the dataset was published",
+            "help_text": "Type: `string`. Bibtex reference of the paper in which the dataset was published.",
+            "default": ""
+          },
+          "dataset_summary": {
+            "type": "string",
+            "description": "Type: `string`, required. Short description of the dataset",
+            "help_text": "Type: `string`, required. Short description of the dataset.",
+            "default": ""
+          },
+          "dataset_description": {
+            "type": "string",
+            "description": "Type: `string`, required. Long description of the dataset",
+            "help_text": "Type: `string`, required. Long description of the dataset.",
+            "default": ""
+          },
+          "dataset_organism": {
+            "type": "string",
+            "description": "Type: `string`. The organism of the dataset",
+            "help_text": "Type: `string`. The organism of the dataset.",
+            "default": ""
+          }
+          
+        }
+      },
+      "sampling options" : {
+        "title": "Sampling options",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "do_subsample": {
+            "type": "boolean",
+            "description": "Type: `boolean`, default: `false`. Whether or not to subsample the dataset",
+            "help_text": "Type: `boolean`, default: `false`. Whether or not to subsample the dataset",
+            "default": "False"
+          },
+          "n_obs": {
+            "type": "integer",
+            "description": "Type: `integer`, default: `500`. Maximum number of observations to be kept",
+            "help_text": "Type: `integer`, default: `500`. Maximum number of observations to be kept. It might end up being less because empty cells / genes are removed.",
+            "default": "500"
+          },
+          "n_vars": {
+            "type": "integer",
+            "description": "Type: `integer`, default: `500`. Maximum number of variables to be kept",
+            "help_text": "Type: `integer`, default: `500`. Maximum number of variables to be kept. It might end up being less because empty cells / genes are removed.",
+            "default": "500"
+          },
+          "keep_features": {
+            "type": "string",
+            "description": "Type: List of `string`, multiple_sep: `\":\"`. A list of genes to keep",
+            "help_text": "Type: List of `string`, multiple_sep: `\":\"`. A list of genes to keep.",
+            "default": ""
+          },
+          "keep_celltype_categories": {
+            "type": "string",
+            "description": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "help_text": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "default": ""
+          },
+          "keep_batch_categories": {
+            "type": "string",
+            "description": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "help_text": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "default": ""
+          },
+          "even": {
+            "type": "boolean",
+            "description": "Type: `boolean_true`, default: `false`. Subsample evenly from different batches",
+            "help_text": "Type: `boolean_true`, default: `false`. Subsample evenly from different batches",
+            "default": "False"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Type: `integer`, example: `123`. A seed for the subsampling",
+            "help_text": "Type: `integer`, example: `123`. A seed for the subsampling.",
+            "default": ""
+          }
+          
+        }
+      },
+      "normalization" : {
+        "title": "Normalization",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "normalization_methods": {
+            "type": "string",
+            "description": "Type: List of `string`, default: `[\"log_cp\"]`, multiple_sep: `\":\"`, choices: ``log_cp`, `sqrt_cp`, `l1_sqrt``. Which normalization methods to run",
+            "help_text": "Type: List of `string`, default: `[\"log_cp\"]`, multiple_sep: `\":\"`, choices: ``log_cp`, `sqrt_cp`, `l1_sqrt``. Which normalization methods to run.","enum": ["log_cp", "sqrt_cp", "l1_sqrt"],
+            "default": "['log_cp']"
+          }
+          
+        }
+      },
+      "nextflow input-output arguments" : {
+        "title": "Nextflow input-output arguments",
+        "type": "object",
+        "description": "Input/output parameters for Nextflow itself. Please note that both publishDir and publish_dir are supported but at least one has to be configured.",
+        "properties": {
+          "publish_dir": {
+            "type": "string",
+            "description": "Type: `string`, required, example: `\"output/\"`. Path to an output directory",
+            "help_text": "Type: `string`, required, example: `\"output/\"`. Path to an output directory.",
+            "default": ""
+          },
+          "param_list": {
+            "type": "string",
+            "description": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
+            "help_text": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
+            "default": ""
+          }
+          
+        }
+      }
+    },
+    "allOf": [
+      {
+        "$ref": "#/definitions/inputs"
+      },
+      {
+        "$ref": "#/definitions/outputs"
+      },
+      {
+        "$ref": "#/definitions/metadata"
+      },
+      {
+        "$ref": "#/definitions/sampling options"
+      },
+      {
+        "$ref": "#/definitions/normalization"
+      },
+      {
+        "$ref": "#/definitions/nextflow input-output arguments"
+      }
+      ]
+}

@@ -1,0 +1,39 @@
+# Inputs
+id: # please fill in - example: "foo"
+# obs_celltype: "foo"
+# obs_batch: "foo"
+# obs_tissue: "foo"
+# layer_counts: "counts"
+sparse: true
+
+# Outputs
+# output_dataset_mod1: "$id.$key.output_dataset_mod1.h5ad"
+# output_dataset_mod2: "$id.$key.output_dataset_mod2.h5ad"
+# output_meta_mod1: "$id.$key.output_meta_mod1.yaml"
+# output_meta_mod2: "$id.$key.output_meta_mod2.yaml"
+
+# Metadata
+dataset_id: # please fill in - example: "foo"
+dataset_name: # please fill in - example: "foo"
+# data_url: "foo"
+# data_reference: "foo"
+dataset_summary: # please fill in - example: "foo"
+dataset_description: # please fill in - example: "foo"
+# dataset_organism: "foo"
+
+# Sampling options
+do_subsample: false
+n_obs: 500
+n_vars: 500
+# keep_features: ["foo"]
+# keep_celltype_categories: ["foo"]
+# keep_batch_categories: ["foo"]
+even: false
+# seed: 123
+
+# Normalization
+normalization_methods: ["log_cp"]
+
+# Nextflow input-output arguments
+publish_dir: # please fill in - example: "output/"
+# param_list: "my_params.yaml"

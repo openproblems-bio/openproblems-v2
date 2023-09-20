@@ -15,12 +15,6 @@
             "help_text": "Type: `string`, required. The ID of the dataset",
             "default": ""
           },
-          "dataset_id": {
-            "type": "string",
-            "description": "Type: `string`, required. The ID of the dataset",
-            "help_text": "Type: `string`, required. The ID of the dataset",
-            "default": ""
-          },
           "obs_celltype": {
             "type": "string",
             "description": "Type: `string`. Location of where to find the observation cell types",
@@ -61,15 +55,45 @@
         "properties": {
           "output_dataset": {
             "type": "string",
-            "description": "Type: `file`, default: `\"$id.$key.output_dataset.h5ad\"`, example: `\"dataset.h5ad\"`. A raw dataset",
-            "help_text": "Type: `file`, default: `\"$id.$key.output_dataset.h5ad\"`, example: `\"dataset.h5ad\"`. A raw dataset",
+            "description": "Type: `file`, default: `\"$id.$key.output_dataset.h5ad\"`. A dataset",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_dataset.h5ad\"`. A dataset",
             "default": "$id.$key.output_dataset.h5ad"
           },
           "output_meta": {
             "type": "string",
-            "description": "Type: `file`, default: `\"$id.$key.output_meta.yaml\"`, example: `\"dataset_meta.yaml\"`. Dataset metadata",
-            "help_text": "Type: `file`, default: `\"$id.$key.output_meta.yaml\"`, example: `\"dataset_meta.yaml\"`. Dataset metadata",
+            "description": "Type: `file`, default: `\"$id.$key.output_meta.yaml\"`. Dataset metadata",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_meta.yaml\"`. Dataset metadata",
             "default": "$id.$key.output_meta.yaml"
+          },
+          "output_raw": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_raw.h5ad\"`, example: `\"raw.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_raw.h5ad\"`, example: `\"raw.h5ad\"`. ",
+            "default": "$id.$key.output_raw.h5ad"
+          },
+          "output_normalized": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_normalized.h5ad\"`, example: `\"normalized.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_normalized.h5ad\"`, example: `\"normalized.h5ad\"`. ",
+            "default": "$id.$key.output_normalized.h5ad"
+          },
+          "output_pca": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_pca.h5ad\"`, example: `\"pca.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_pca.h5ad\"`, example: `\"pca.h5ad\"`. ",
+            "default": "$id.$key.output_pca.h5ad"
+          },
+          "output_hvg": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_hvg.h5ad\"`, example: `\"hvg.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_hvg.h5ad\"`, example: `\"hvg.h5ad\"`. ",
+            "default": "$id.$key.output_hvg.h5ad"
+          },
+          "output_knn": {
+            "type": "string",
+            "description": "Type: `file`, default: `\"$id.$key.output_knn.h5ad\"`, example: `\"knn.h5ad\"`. ",
+            "help_text": "Type: `file`, default: `\"$id.$key.output_knn.h5ad\"`, example: `\"knn.h5ad\"`. ",
+            "default": "$id.$key.output_knn.h5ad"
           }
           
         }
@@ -79,6 +103,12 @@
         "type": "object",
         "description": "No description",
         "properties": {
+          "dataset_id": {
+            "type": "string",
+            "description": "Type: `string`, required. The ID of the dataset",
+            "help_text": "Type: `string`, required. The ID of the dataset",
+            "default": ""
+          },
           "dataset_name": {
             "type": "string",
             "description": "Type: `string`, required. Nicely formatted name",
@@ -118,6 +148,76 @@
           
         }
       },
+      "sampling options" : {
+        "title": "Sampling options",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "do_subsample": {
+            "type": "boolean",
+            "description": "Type: `boolean`, default: `false`. Whether or not to subsample the dataset",
+            "help_text": "Type: `boolean`, default: `false`. Whether or not to subsample the dataset",
+            "default": "False"
+          },
+          "n_obs": {
+            "type": "integer",
+            "description": "Type: `integer`, default: `500`. Maximum number of observations to be kept",
+            "help_text": "Type: `integer`, default: `500`. Maximum number of observations to be kept. It might end up being less because empty cells / genes are removed.",
+            "default": "500"
+          },
+          "n_vars": {
+            "type": "integer",
+            "description": "Type: `integer`, default: `500`. Maximum number of variables to be kept",
+            "help_text": "Type: `integer`, default: `500`. Maximum number of variables to be kept. It might end up being less because empty cells / genes are removed.",
+            "default": "500"
+          },
+          "keep_features": {
+            "type": "string",
+            "description": "Type: List of `string`, multiple_sep: `\":\"`. A list of genes to keep",
+            "help_text": "Type: List of `string`, multiple_sep: `\":\"`. A list of genes to keep.",
+            "default": ""
+          },
+          "keep_celltype_categories": {
+            "type": "string",
+            "description": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "help_text": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "default": ""
+          },
+          "keep_batch_categories": {
+            "type": "string",
+            "description": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "help_text": "Type: List of `string`, multiple_sep: `\":\"`. Categories indexes to be selected",
+            "default": ""
+          },
+          "even": {
+            "type": "boolean",
+            "description": "Type: `boolean_true`, default: `false`. Subsample evenly from different batches",
+            "help_text": "Type: `boolean_true`, default: `false`. Subsample evenly from different batches",
+            "default": "False"
+          },
+          "seed": {
+            "type": "integer",
+            "description": "Type: `integer`, example: `123`. A seed for the subsampling",
+            "help_text": "Type: `integer`, example: `123`. A seed for the subsampling.",
+            "default": ""
+          }
+          
+        }
+      },
+      "normalization" : {
+        "title": "Normalization",
+        "type": "object",
+        "description": "No description",
+        "properties": {
+          "normalization_methods": {
+            "type": "string",
+            "description": "Type: List of `string`, default: `[\"log_cp\", \"sqrt_cp\", \"l1_sqrt\"]`, multiple_sep: `\":\"`, choices: ``log_cp`, `sqrt_cp`, `l1_sqrt``. Which normalization methods to run",
+            "help_text": "Type: List of `string`, default: `[\"log_cp\", \"sqrt_cp\", \"l1_sqrt\"]`, multiple_sep: `\":\"`, choices: ``log_cp`, `sqrt_cp`, `l1_sqrt``. Which normalization methods to run.","enum": ["log_cp", "sqrt_cp", "l1_sqrt"],
+            "default": "['log_cp', 'sqrt_cp', 'l1_sqrt']"
+          }
+          
+        }
+      },
       "nextflow input-output arguments" : {
         "title": "Nextflow input-output arguments",
         "type": "object",
@@ -148,6 +248,12 @@
       },
       {
         "$ref": "#/definitions/metadata"
+      },
+      {
+        "$ref": "#/definitions/sampling options"
+      },
+      {
+        "$ref": "#/definitions/normalization"
       },
       {
         "$ref": "#/definitions/nextflow input-output arguments"
