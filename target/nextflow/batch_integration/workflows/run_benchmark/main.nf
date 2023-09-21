@@ -159,7 +159,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "fbc9476f3a208567cfc0c08c3fed857e400f1012",
+    "git_commit" : "b7c6e5a60e9ea4f19fd8121e09be01c46ad9359a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -213,7 +213,7 @@ include { extract_scores } from "\\$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs; readYaml } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; autoDetectStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishState; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; findStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("\\$projectDir/config.vsh.yaml")
 
@@ -258,7 +258,7 @@ workflow {
 }
 
 workflow auto {
-  autoDetectStates(params, config)
+  findStates(params, config)
  run_wf
  publishState([:])
 }
