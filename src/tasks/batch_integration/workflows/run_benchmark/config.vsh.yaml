@@ -1,0 +1,32 @@
+functionality:
+  name: "run_benchmark"
+  namespace: "batch_integration/workflows"
+  argument_groups:
+    - name: Inputs
+      arguments:
+        - name: "--id"
+          type: "string"
+          description: "The ID of the dataset"
+          required: true
+        - name: "--input_dataset"
+          type: "file"
+          description: "A dataset"
+          required: true
+          example: dataset.h5ad
+        - name: "--input_solution"
+          type: "file"
+          description: "A solution"
+          required: true
+          example: solution.h5ad
+    - name: Outputs
+      arguments:
+        - name: "--output"
+          direction: "output"
+          type: file
+          description: A TSV file containing the scores of each of the methods
+          example: scores.tsv
+  resources:
+    - type: nextflow_script
+      path: main.nf
+platforms:
+  - type: nextflow

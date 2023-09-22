@@ -1,6 +1,8 @@
 sourceDir = params.rootDir + "/src"
 targetDir = params.rootDir + "/target/nextflow"
 
+include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/main.nf"
+
 // import control methods
 include { random_features } from "$targetDir/dimensionality_reduction/control_methods/random_features/main.nf"
 include { true_features } from "$targetDir/dimensionality_reduction/control_methods/true_features/main.nf"
@@ -17,7 +19,7 @@ include { umap } from "$targetDir/dimensionality_reduction/methods/umap/main.nf"
 // import metrics
 include { coranking } from "$targetDir/dimensionality_reduction/metrics/coranking/main.nf"
 include { density_preservation } from "$targetDir/dimensionality_reduction/metrics/density_preservation/main.nf"
-include { rmse } from "$targetDir/dimensionality_reduction/metrics/rmse/main.nf"
+include { distance_correlation } from "$targetDir/dimensionality_reduction/metrics/distance_correlation/main.nf"
 include { trustworthiness } from "$targetDir/dimensionality_reduction/metrics/trustworthiness/main.nf"
 
 // convert scores to tsv
@@ -25,13 +27,13 @@ include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { run_components; join_states; initialize_tracer; write_json; get_publish_dir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { runComponents; joinStates; initializeTracer; writeJson; getPublishDir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 // read in pipeline config
 config = readConfig("$projectDir/config.vsh.yaml")
 
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initialize_tracer()
+traces = initializeTracer()
 
 // collect method list
 methods = [
@@ -49,7 +51,7 @@ methods = [
 metrics = [
   coranking,
   density_preservation,
-  rmse,
+  distance_correlation,
   trustworthiness
 ]
 
@@ -70,8 +72,16 @@ workflow run_wf {
   output_ch = input_ch
     | preprocessInputs(config: config)
 
+    // extract the dataset metadata
+    | check_dataset_schema.run(
+      fromState: [input: "input_dataset"],
+      toState: { id, output, state ->
+        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+      }
+    )
+
     // run all methods
-    | run_components(
+    | runComponents(
       components: methods,
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
@@ -88,10 +98,10 @@ workflow run_wf {
         id + "." + config.functionality.name
       },
 
-      // use 'from_state' to fetch the arguments the component requires from the overall state
-      from_state: { id, state, config ->
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: { id, state, config ->
         def new_args = [
-          input: state.input
+          input: state.input_dataset
         ]
         if (config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
@@ -99,9 +109,9 @@ workflow run_wf {
         new_args
       },
 
-      // use 'to_state' to publish that component's outputs to the overall state
-      to_state: { id, output, config ->
-        [
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, state, config ->
+        state + [
           method_id: config.functionality.name,
           method_output: output.output
         ]
@@ -109,18 +119,18 @@ workflow run_wf {
     )
 
     // run all metrics
-    | run_components(
+    | runComponents(
       components: metrics,
-      // use 'from_state' to fetch the arguments the component requires from the overall state
-      from_state: { id, state, config ->
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: { id, state, config ->
         [
           input_solution: state.input_solution,
           input_embedding: state.method_output
         ]
       },
-      // use 'to_state' to publish that component's outputs to the overall state
-      to_state: { id, output, config ->
-        [
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, state, config ->
+        state + [
           metric_id: config.functionality.name,
           metric_output: output.output
         ]
@@ -130,7 +140,7 @@ workflow run_wf {
     // join all events into a new event where the new id is simply "output" and the new state consists of:
     //   - "input": a list of score h5ads
     //   - "output": the output argument of this workflow
-    | join_states{ ids, states ->
+    | joinStates{ ids, states ->
       def new_id = "output"
       def new_state = [
         input: states.collect{it.metric_output},
@@ -150,10 +160,10 @@ workflow run_wf {
 
 // store the trace log in the publish dir
 workflow.onComplete {
-  def publish_dir = get_publish_dir()
+  def publish_dir = getPublishDir()
 
-  write_json(traces, file("$publish_dir/traces.json"))
+  writeJson(traces, file("$publish_dir/traces.json"))
   // todo: add datasets logging
-  write_json(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  write_json(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
+  writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
+  writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
