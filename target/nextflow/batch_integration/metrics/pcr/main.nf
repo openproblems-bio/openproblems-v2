@@ -237,7 +237,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+          "resources_test/batch_integration/pancreas/solution.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -445,7 +445,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/pcr",
     "viash_version" : "0.7.5",
-    "git_commit" : "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334",
+    "git_commit" : "1e75a50865ef0f5ebb16509d0282d1ff5cea1304",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

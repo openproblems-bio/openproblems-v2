@@ -160,7 +160,17 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "resolve_volume" : "Automatic",
       "chown" : true,
       "setup_strategy" : "ifneedbepullelsecachedbuild",
-      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2"
+      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
+      "test_setup" : [
+        {
+          "type" : "python",
+          "user" : false,
+          "packages" : [
+            "viashpy"
+          ],
+          "upgrade" : true
+        }
+      ]
     },
     {
       "type" : "nextflow",
@@ -217,7 +227,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema",
     "viash_version" : "0.7.5",
-    "git_commit" : "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334",
+    "git_commit" : "1e75a50865ef0f5ebb16509d0282d1ff5cea1304",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -265,12 +275,13 @@ def check_structure(slot_info, adata_slot):
   return missing
 
 print('Load data', flush=True)
-adata = ad.read_h5ad(par['input'])
+adata = ad.read_h5ad(par['input']).copy()
 
 # create data structure
 out = {
   "exit_code": 0,
-  "error": {}
+  "error": {},
+  "data_schema": "ok"
 }
 
 def is_atomic(obj):
@@ -289,11 +300,17 @@ def is_dict_of_atomics(obj):
 
 if par['meta'] is not None:
   print("Extract metadata from object", flush=True)
-  meta = {
+  uns = {
     key: val
     for key, val in adata.uns.items()
     if is_atomic(val) or is_list_of_atomics(val) or is_dict_of_atomics(val)
   }
+  structure = {
+    struct: list(getattr(adata, struct).keys())
+    for struct
+    in ["obs", "var", "obsp", "varp", "obsm", "varm", "layers", "uns"]
+  }
+  meta = {"uns": uns, "structure": structure}
   with open(par["meta"], "w") as f:
     yaml.dump(meta, f, indent=2)
 
@@ -304,20 +321,18 @@ if par['schema'] is not None:
 
   def_slots = data_struct['info']['slots']
 
-  out["data_schema"] = "ok"
-
   for slot in def_slots:
-    check = check_structure(def_slots[slot], getattr(adata, slot))
-    if bool(check):
+    missing = check_structure(def_slots[slot], getattr(adata, slot))
+    if missing:
       out['exit_code'] = 1
       out['data_schema'] = 'not ok'
-      out['error'][slot] = check
+      out['error'][slot] = missing
 
   if par['checks'] is not None:
     with open(par["checks"], "w") as f:
       json.dump(out, f, indent=2)
 
-if par['output'] is not None:
+if par['output'] is not None and out["data_schema"] == "ok":
   shutil.copyfile(par["input"], par["output"])
 
 if par['stop_on_error']:

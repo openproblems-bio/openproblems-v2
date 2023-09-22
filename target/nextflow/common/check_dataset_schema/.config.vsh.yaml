@@ -109,6 +109,12 @@ platforms:
   chown: true
   setup_strategy: "ifneedbepullelsecachedbuild"
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  test_setup:
+  - type: "python"
+    user: false
+    packages:
+    - "viashpy"
+    upgrade: true
   entrypoint: []
   cmd: null
 - type: "nextflow"
@@ -160,5 +166,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema/check_dataset_schema"
   viash_version: "0.7.5"
-  git_commit: "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334"
+  git_commit: "1e75a50865ef0f5ebb16509d0282d1ff5cea1304"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -47,7 +47,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/common/bmmc_cite_starter/openproblems_bmmc_cite_starter.output_rna.h5ad"
+    - "resources_test/common/bmmc_cite_starter/dataset_rna.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -100,7 +100,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/common/bmmc_cite_starter/openproblems_bmmc_cite_starter.output_adt.h5ad"
+    - "resources_test/common/bmmc_cite_starter/dataset_adt.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -444,5 +444,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset/process_dataset"
   viash_version: "0.7.5"
-  git_commit: "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334"
+  git_commit: "1e75a50865ef0f5ebb16509d0282d1ff5cea1304"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

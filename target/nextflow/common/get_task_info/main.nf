@@ -94,9 +94,9 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       },
       {
         "type" : "python_script",
-        "text" : "import subprocess\nfrom os import path\nimport json\n\ninput_path = meta[\\"resources_dir\\"] + \\"/openproblems-v2\\"\ntask_id = \\"denoising\\"\noutput_path = \\"output.json\\"\n\ncmd = [\n    meta['executable'],\n    \\"--input\\", input_path,\n    \\"--task_id\\", task_id,\n    \\"--output\\", output_path,\n]\n\nprint(\\">> Running script as test\\", flush=True)\nout = subprocess.run(cmd, stderr=subprocess.STDOUT)\n\nif out.stdout:\n  print(out.stdout)\n\nif out.returncode:\n  print(f\\"script: '{cmd}' exited with an error.\\")\n  exit(out.returncode)\n\nprint(\\">> Checking whether output file exists\\", flush=True)\nassert path.exists(output_path), \\"Output does not exist\\"\n\nprint(\\">> Reading json file\\", flush=True)\nwith open(output_path, 'r') as f:\n    out = json.load(f)\n    print(out)\n\nprint(\\"All checks succeeded!\\", flush=True)",
-        "dest" : "generic_test.py",
-        "is_executable" : true
+        "path" : "src/common/comp_tests/check_get_info.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "status" : "enabled",
@@ -174,7 +174,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_task_info",
     "viash_version" : "0.7.5",
-    "git_commit" : "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334",
+    "git_commit" : "1e75a50865ef0f5ebb16509d0282d1ff5cea1304",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

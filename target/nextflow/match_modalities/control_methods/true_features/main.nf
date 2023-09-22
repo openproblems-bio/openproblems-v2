@@ -86,7 +86,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/common/multimodal/dataset_mod1.h5ad"
+          "resources_test/common/scicar_cell_lines/dataset_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -156,7 +156,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/common/multimodal/dataset_mod2.h5ad"
+          "resources_test/common/scicar_cell_lines/dataset_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -238,7 +238,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/multimodal/integrated_mod1.h5ad"
+          "resources_test/match_modalities/integrated_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -320,7 +320,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/multimodal/integrated_mod2.h5ad"
+          "resources_test/match_modalities/integrated_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -342,8 +342,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "resources_test/common/multimodal",
-        "dest" : "resources_test/common/multimodal",
+        "path" : "resources_test/common/scicar_cell_lines",
+        "dest" : "resources_test/common/scicar_cell_lines",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -460,7 +460,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features",
     "viash_version" : "0.7.5",
-    "git_commit" : "4ce4d4e00119ad5d93a0e6e8f739f19ebde14334",
+    "git_commit" : "1e75a50865ef0f5ebb16509d0282d1ff5cea1304",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -160,13 +160,11 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input_rna"
   echo "        type: file, required parameter, file must exist"
-  echo "        example:"
-  echo "resources_test/common/bmmc_cite_starter/openproblems_bmmc_cite_starter.output_rna.h5ad"
+  echo "        example: resources_test/common/bmmc_cite_starter/dataset_rna.h5ad"
   echo ""
   echo "    --input_other_mod"
   echo "        type: file, required parameter, file must exist"
-  echo "        example:"
-  echo "resources_test/common/bmmc_cite_starter/openproblems_bmmc_cite_starter.output_adt.h5ad"
+  echo "        example: resources_test/common/bmmc_cite_starter/dataset_adt.h5ad"
   echo ""
   echo "    --output_train_mod1"
   echo "        type: file, required parameter, output, file must exist"
@@ -423,9 +421,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2023-09-06T14:02:54Z"
+LABEL org.opencontainers.image.created="2023-09-22T15:13:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4ce4d4e00119ad5d93a0e6e8f739f19ebde14334"
+LABEL org.opencontainers.image.revision="1e75a50865ef0f5ebb16509d0282d1ff5cea1304"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
