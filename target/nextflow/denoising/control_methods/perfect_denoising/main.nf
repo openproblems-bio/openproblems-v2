@@ -266,7 +266,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising",
     "viash_version" : "0.7.5",
-    "git_commit" : "f165dba4553a20ec000b52da491dad6256f8e8a4",
+    "git_commit" : "49dfa257fba73b5c25a4c5178258e9d5da5a2819",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

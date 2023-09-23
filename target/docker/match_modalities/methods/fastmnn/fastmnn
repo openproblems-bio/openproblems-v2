@@ -404,9 +404,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")'
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/methods fastmnn"
-LABEL org.opencontainers.image.created="2023-09-21T13:25:13Z"
+LABEL org.opencontainers.image.created="2023-09-23T04:14:31Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f165dba4553a20ec000b52da491dad6256f8e8a4"
+LABEL org.opencontainers.image.revision="49dfa257fba73b5c25a4c5178258e9d5da5a2819"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
