@@ -176,6 +176,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "highmem",
+          "highcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -227,7 +231,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema",
     "viash_version" : "0.7.5",
-    "git_commit" : "d69435f854518c08dd34cd590f614fbaa254e5b7",
+    "git_commit" : "5e8d67198c3f63c00cf19a93f5359fac78180536",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -353,6 +357,10 @@ thisDefaultProcessArgs = [
     "image" : "openproblems-bio/common/check_dataset_schema",
     "tag" : "main_build"
   },
+  "label" : [
+    "highmem",
+    "highcpu"
+  ],
   "tag" : "$id"
 }'''),
   // auto settings
