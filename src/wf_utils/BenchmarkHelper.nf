@@ -295,7 +295,7 @@ def publishStates(Map args) {
           def id = tup[0]
           def state = tup[1]
           def files = collectFiles(state)
-          def yamlBlob = toTaggedYamlBlob(state)
+          def yamlBlob = toTaggedYamlBlob([id: id] + state)
           [id, yamlBlob, files]
         }
         | publishStatesProc
