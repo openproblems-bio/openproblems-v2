@@ -421,7 +421,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1_multimodal",
     "viash_version" : "0.7.5",
-    "git_commit" : "ac645395f81bd9217bc5b6f3bbff9180ae15ee57",
+    "git_commit" : "d69435f854518c08dd34cd590f614fbaa254e5b7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -455,7 +455,7 @@ include { check_dataset_schema } from "\\$targetDir/common/check_dataset_schema/
 
 // helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishStates; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; setState } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishStates; runComponents; collectTraces; writeJson; getPublishDir; setState } from sourceDir + "/wf_utils/WorkflowHelper.nf"
 
 config = readConfig("\\$projectDir/config.vsh.yaml")
 

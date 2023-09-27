@@ -159,7 +159,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "ac645395f81bd9217bc5b6f3bbff9180ae15ee57",
+    "git_commit" : "d69435f854518c08dd34cd590f614fbaa254e5b7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -213,12 +213,13 @@ include { extract_scores } from "\\$targetDir/common/extract_scores/main.nf"
 
 // import helper functions
 include { readConfig; helpMessage; channelFromParams; preprocessInputs; readYaml } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishStates; runComponents; joinStates; initializeTracer; writeJson; getPublishDir; findStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
+include { publishStates; runComponents; collectTraces; writeJson; getPublishDir; findStates; setState } from sourceDir + "/wf_utils/WorkflowHelper.nf"
+include { joinStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
 
 config = readConfig("\\$projectDir/config.vsh.yaml")
 
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initializeTracer()
+traces = collectTraces()
 
 // collect method list
 methods = [
