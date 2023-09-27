@@ -160,7 +160,7 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input"
   echo "        type: file, required parameter, file must exist"
-  echo "        example: resources_test/batch_integration/pancreas/unintegrated.h5ad"
+  echo "        example: resources_test/batch_integration/pancreas/dataset.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
@@ -391,9 +391,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_integration"
-LABEL org.opencontainers.image.created="2023-09-23T04:14:24Z"
+LABEL org.opencontainers.image.created="2023-09-27T11:13:54Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="49dfa257fba73b5c25a4c5178258e9d5da5a2819"
+LABEL org.opencontainers.image.revision="0c96e0cb3ff3aa9648a029e7c91add93ecfc80ad"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

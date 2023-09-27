@@ -120,7 +120,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+          "resources_test/batch_integration/pancreas/dataset.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -392,7 +392,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_feature",
     "viash_version" : "0.7.5",
-    "git_commit" : "49dfa257fba73b5c25a4c5178258e9d5da5a2819",
+    "git_commit" : "0c96e0cb3ff3aa9648a029e7c91add93ecfc80ad",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
