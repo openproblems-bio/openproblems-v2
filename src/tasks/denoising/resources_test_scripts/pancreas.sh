@@ -29,13 +29,13 @@ viash run src/tasks/denoising/process_dataset/config.vsh.yaml -- \
 # run one method
 viash run src/tasks/denoising/methods/magic/config.vsh.yaml -- \
     --input_train $DATASET_DIR/train.h5ad \
-    --output $DATASET_DIR/magic.h5ad
+    --output $DATASET_DIR/denoised.h5ad
 
 # run one metric
 viash run src/tasks/denoising/metrics/poisson/config.vsh.yaml -- \
-    --input_denoised $DATASET_DIR/magic.h5ad \
+    --input_denoised $DATASET_DIR/denoised.h5ad \
     --input_test $DATASET_DIR/test.h5ad \
-    --output $DATASET_DIR/magic_poisson.h5ad
+    --output $DATASET_DIR/score.h5ad
 
 # run benchmark
 export NXF_VER=22.04.5
@@ -46,7 +46,6 @@ nextflow \
   -profile docker \
   -resume \
   --id pancreas \
-  --dataset_id pancreas \
   --input_train $DATASET_DIR/train.h5ad \
   --input_test $DATASET_DIR/test.h5ad \
   --output scores.tsv \
