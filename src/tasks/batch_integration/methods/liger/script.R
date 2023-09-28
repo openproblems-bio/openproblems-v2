@@ -5,11 +5,10 @@ requireNamespace("rliger", quietly = TRUE)
 ## VIASH START
 par <- list(
   input = "resources_test/batch_integration/pancreas/dataset.h5ad",
-  output = "output.h5ad",
-  hvg = FALSE
+  output = "output.h5ad"
 )
 meta <- list(
-  functionality_name = "liger_embed"
+  functionality_name = "liger"
 )
 ## VIASH END
 
@@ -27,7 +26,7 @@ anndataToLiger <- function(adata) {
   })
   names(raw_data) <- batch_names
 
-  rliger::createLiger(raw.data = raw_data)
+  rliger::createLiger(raw.data = raw_data, remove.missing = FALSE)
 }
 
 addNormalizedDataToLiger <- function(adata, lobj) {
@@ -65,7 +64,7 @@ cat(">> Select genes\n")
 lobj <- rliger::selectGenes(lobj)
 
 cat(">> Perform scaling\n")
-lobj <- rliger::scaleNotCenter(lobj)
+lobj <- rliger::scaleNotCenter(lobj, remove.missing = FALSE)
 
 cat(">> Joint Matrix Factorization\n")
 lobj <- rliger::optimizeALS(lobj, k = 20)
