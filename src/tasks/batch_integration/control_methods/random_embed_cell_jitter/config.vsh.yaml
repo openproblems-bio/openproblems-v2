@@ -27,3 +27,5 @@ platforms:
           - numpy
           - scipy
   - type: nextflow
+    directives:
+      label: [ "midtime", "lowmem", "lowcpu"]
