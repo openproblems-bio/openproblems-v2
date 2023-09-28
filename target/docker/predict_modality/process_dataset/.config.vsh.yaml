@@ -445,5 +445,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/process_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/process_dataset/process_dataset"
   viash_version: "0.7.5"
-  git_commit: "ce1c92b93e39eac2f5574b5dc714e91d8ab714de"
+  git_commit: "96598b8e4fe591f01071ebe5c18dd50553c5edf3"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
