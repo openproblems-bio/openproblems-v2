@@ -1,16 +1,11 @@
-cat("Loading dependencies\n")
-suppressPackageStartupMessages({
-  requireNamespace("anndata", quietly = TRUE)
-  library(Matrix, warn.conflicts = FALSE)
-  requireNamespace("rliger", quietly = TRUE)
-  library(SingleCellExperiment, warn.conflicts = FALSE)
-  requireNamespace("Seurat", quietly = TRUE)
-  requireNamespace("zellkonverter", quietly = FALSE)
-})
+cat(">> Load dependencies\n")
+requireNamespace("anndata", quietly = TRUE)
+requireNamespace("rliger", quietly = TRUE)
+
 ## VIASH START
 par <- list(
-  input = 'resources_test/batch_integration/pancreas/unintegrated.h5ad',
-  output = 'output.h5ad',
+  input = "resources_test/batch_integration/pancreas/dataset.h5ad",
+  output = "output.h5ad",
   hvg = FALSE
 )
 meta <- list(
@@ -20,61 +15,67 @@ meta <- list(
 
 cat("Read input\n")
 adata <- anndata::read_h5ad(par$input)
-adata$X <- adata$layers[["normalized"]]
-sce <- zellkonverter::AnnData2SCE(adata, skip_assays = FALSE, hdf5_backed = TRUE)
 
-cat("Prepare data...\n")
-sobj <- Seurat::as.Seurat(sce, data = NULL)
-sobj@assays$RNA <- sobj@assays$originalexp
-sobj@assays$RNA@counts <- sobj@assays$RNA@data
+anndataToLiger <- function(adata) {
+  # fetch batch names
+  batch <- adata$obs$batch
+  batch_names <- as.character(unique(batch))
 
+  # restructure data
+  raw_data <- lapply(batch_names, function(batch_name) {
+    Matrix::t(adata$layers[["counts"]][batch == batch_name, , drop = FALSE])
+  })
+  names(raw_data) <- batch_names
 
-# Create Liger object
-lobj <- rliger::seuratToLiger(
-  sobj,
-  combined.seurat = TRUE,
-  meta.var = 'batch',
-  raw.assay='RNA',
-  renormalize = FALSE,
-  remove.missing = FALSE
-)
+  rliger::createLiger(raw.data = raw_data)
+}
 
-# We only pass nomarlized data, so store it as such
-lobj@norm.data <- lobj@raw.data
+addNormalizedDataToLiger <- function(adata, lobj) {
+  norm_data <- lapply(names(lobj@raw.data), function(name) {
+    norm <- adata$layers[["normalized"]]
+    # subset
+    norm <- norm[
+      colnames(lobj@raw.data[[name]]),
+      rownames(lobj@raw.data[[name]]),
+      drop = FALSE
+    ]
+    # transpose
+    norm <- Matrix::t(norm)
 
-cat("Run liger...\n")
-# # Assign hvgs
-# lobj@var.genes <- rownames(sobj@assays$RNA)
+    # turn into dgcMatrix
+    as(as(norm, "denseMatrix"), "CsparseMatrix")
+  })
+  names(norm_data) <- names(lobj@raw.data)
 
-cat("scaleNotCenter\n")
-lobj <- rliger::scaleNotCenter(
-  lobj,
-  remove.missing = FALSE,
-)
+  lobj@norm.data <- norm_data
 
-cat("optimizeALS\n")
-# Use tutorial coarse k suggests of 20.
-print(lobj)
-lobj <- rliger::optimizeALS(
-  lobj,
-  k = 20,
-  thresh = 3,
-  nrep = 5e-5,
-  remove.missing = FALSE,
-  verbose = TRUE
-)
+  lobj
+}
 
-cat("quantileAlignSNF\n")
-lobj <- rliger::quantileAlignSNF(
-  lobj,
-  resolution = 0.4,
-  small.clust.thresh = 20,
-  remove.missing = FALSE
-)
+cat(">> Create Liger Data object\n")
+lobj <- anndataToLiger(adata)
 
-cat("Reformat output\n")
-adata$obsm[["X_emb"]] <- lobj@H.norm
+cat(">> Normalize data\n")
+lobj <- addNormalizedDataToLiger(adata, lobj)
 
-cat("Store outputs...\n")
+# could also use the rliger normalization instead
+# lobj <- rliger::normalize(lobj)
+
+cat(">> Select genes\n")
+lobj <- rliger::selectGenes(lobj)
+
+cat(">> Perform scaling\n")
+lobj <- rliger::scaleNotCenter(lobj)
+
+cat(">> Joint Matrix Factorization\n")
+lobj <- rliger::optimizeALS(lobj, k = 20)
+
+cat(">> Quantile normalization\n")
+lobj <- rliger::quantile_norm(lobj)
+
+cat(">> Store dimred in adata\n")
+adata$obsm[["X_emb"]] <- lobj@H.norm[rownames(adata), , drop = FALSE]
 adata$uns[["method_id"]] <- meta$functionality_name
+
+cat(">> Write AnnData to disk\n")
 zzz <- adata$write_h5ad(par$output, compression = "gzip")

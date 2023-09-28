@@ -3,7 +3,7 @@ __merge__: ../../api/comp_method_embedding.yaml
 functionality:
   name: liger
   info:
-    label: liger
+    label: LIGER
     summary: Linked Inference of Genomic Experimental Relationships
     description: |
       LIGER or linked inference of genomic experimental relationships uses iNMF 
@@ -14,10 +14,6 @@ functionality:
     repository_url: https://github.com/welch-lab/liger
     documentation_url: https://github.com/welch-lab/liger
     preferred_normalization: log_cpm
-    variants:
-      liger_unscaled:
-      liger_scaled:
-        preferred_normalization: log_cpm_scaled
   resources:
     - type: r_script
       path: script.R
@@ -25,18 +21,8 @@ platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_r:1.0.1
     setup:
-      - type: apt
-        packages: git
       - type: r
-        bioc:
-          - Seurat
-          - rliger
-      - type: r
-        script:
-          - remotes::install_bioc("3.18/basilisk", upgrade = "always", type = "source")
-      - type: r
-        bioc:
-          - zellkonverter
+        cran: rliger
   - type: nextflow
     directives:
       label: [ lowcpu, highmem ]
