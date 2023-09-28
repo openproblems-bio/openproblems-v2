@@ -434,9 +434,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "ruamel.yaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2023-09-27T17:59:33Z"
+LABEL org.opencontainers.image.created="2023-09-28T09:47:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="fcfa91ae338880285902c549ea7e4a8f76c9a278"
+LABEL org.opencontainers.image.revision="eb47650b34ad2d483249d4dd994fa096e4414a91"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1037,7 +1037,7 @@ def create_config(par, component_type, pretty_name, script_path) -> str:
     |  # Allows turning the component into a Nextflow module / pipeline.
     |  - type: nextflow
     |    directives:
-    |      label: [midmem, midcpu]
+    |      label: [ "midtime",midmem, midcpu]
     |'''
   )
 

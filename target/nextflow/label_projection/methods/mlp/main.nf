@@ -357,6 +357,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "id" : "nextflow",
       "directives" : {
         "label" : [
+          "midtime",
           "midmem",
           "lowcpu"
         ],
@@ -411,7 +412,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp",
     "viash_version" : "0.7.5",
-    "git_commit" : "fcfa91ae338880285902c549ea7e4a8f76c9a278",
+    "git_commit" : "eb47650b34ad2d483249d4dd994fa096e4414a91",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -482,6 +483,7 @@ thisDefaultProcessArgs = [
     "tag" : "main_build"
   },
   "label" : [
+    "midtime",
     "midmem",
     "lowcpu"
   ],
