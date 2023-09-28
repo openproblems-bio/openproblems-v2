@@ -30,8 +30,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "name" : "--input_mod1",
         "info" : {
-          "label" : "multimodal mod 1 data",
-          "summary" : "the first modal data",
+          "label" : "Modality 1",
+          "summary" : "The first modality of a multimodal dataset.",
           "slots" : {
             "layers" : [
               {
@@ -100,8 +100,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "type" : "file",
         "name" : "--input_mod2",
         "info" : {
-          "label" : "multimodal mod 2 data",
-          "summary" : "the second modal data",
+          "label" : "Modality 2",
+          "summary" : "The second modality of a multimodal dataset.",
           "slots" : {
             "layers" : [
               {
@@ -238,7 +238,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/match_modalities/integrated_mod1.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -320,7 +320,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/match_modalities/integrated_mod2.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/integrated_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -471,7 +471,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/random_features",
     "viash_version" : "0.7.5",
-    "git_commit" : "b88e0981d4eaa9469d2220907b5b217e08f49383",
+    "git_commit" : "ce1c92b93e39eac2f5574b5dc714e91d8ab714de",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

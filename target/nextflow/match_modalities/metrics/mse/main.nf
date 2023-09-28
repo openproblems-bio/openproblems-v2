@@ -98,7 +98,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/match_modalities/integrated_mod1.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -180,7 +180,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
           }
         },
         "example" : [
-          "resources_test/match_modalities/integrated_mod1.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -256,8 +256,8 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "resources_test/common/scicar_cell_lines",
-        "dest" : "resources_test/common/scicar_cell_lines",
+        "path" : "resources_test/match_modalities/scicar_cell_lines",
+        "dest" : "resources_test/match_modalities/scicar_cell_lines",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -390,7 +390,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse",
     "viash_version" : "0.7.5",
-    "git_commit" : "b88e0981d4eaa9469d2220907b5b217e08f49383",
+    "git_commit" : "ce1c92b93e39eac2f5574b5dc714e91d8ab714de",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
