@@ -446,7 +446,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/cell_cycle_conservation",
     "viash_version" : "0.7.5",
-    "git_commit" : "eb47650b34ad2d483249d4dd994fa096e4414a91",
+    "git_commit" : "b88e0981d4eaa9469d2220907b5b217e08f49383",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -488,7 +488,9 @@ input_solution.X = input_solution.layers['normalized']
 
 translator = {
     "homo_sapiens": "human",
-    "mus_musculus": "mouse"
+    "mus_musculus": "mouse",
+    "danio_rerio": "zebrafish",
+    "caenorhabditis_elegans": "C. elegans"
 }
 
 print('compute score', flush=True)

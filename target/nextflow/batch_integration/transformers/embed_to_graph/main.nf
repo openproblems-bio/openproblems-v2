@@ -337,6 +337,11 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "midtime",
+          "midmem",
+          "lowcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -388,7 +393,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph",
     "viash_version" : "0.7.5",
-    "git_commit" : "eb47650b34ad2d483249d4dd994fa096e4414a91",
+    "git_commit" : "b88e0981d4eaa9469d2220907b5b217e08f49383",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -446,6 +451,11 @@ thisDefaultProcessArgs = [
     "image" : "openproblems-bio/batch_integration/transformers/embed_to_graph",
     "tag" : "main_build"
   },
+  "label" : [
+    "midtime",
+    "midmem",
+    "lowcpu"
+  ],
   "tag" : "$id"
 }'''),
   // auto settings
