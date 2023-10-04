@@ -82,13 +82,13 @@ workflow {
 
   channelFromParams(params, config)
     | run_wf
-    | publishStates([:])
+    | publishStates(key: config.functionality.name)
 }
 
 workflow auto {
   findStates(params, config)
     | run_wf
-    | publishStates([:])
+    | publishStates(key: config.functionality.name)
 }
 
 workflow run_wf {
@@ -100,6 +100,12 @@ workflow run_wf {
   // process input parameter channel
   dataset_ch = input_ch
     | preprocessInputs(config: config)
+
+    | map { id, state -> 
+      def newId = id.replaceAll(/\//, "_")
+
+      [newId, state]
+    }
 
     // extract the dataset metadata
     | check_dataset_schema.run(
