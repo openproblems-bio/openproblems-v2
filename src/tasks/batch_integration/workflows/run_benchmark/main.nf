@@ -161,6 +161,12 @@ methods = [
   output_ch
 }
 
+workflow auto {
+  findStates(params, thisConfig)
+    | run_benckmark
+    | publishStates([key: thisConfig.functionality.name])
+}
+
 // store the trace log in the publish dir
 workflow.onComplete {
   def publish_dir = getPublishDir()
