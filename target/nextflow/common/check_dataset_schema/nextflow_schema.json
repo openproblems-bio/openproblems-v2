@@ -9,17 +9,17 @@
         "type": "object",
         "description": "No description",
         "properties": {
+          
           "input": {
             "type": "string",
             "description": "Type: `file`, required. A h5ad file",
-            "help_text": "Type: `file`, required. A h5ad file.",
-            "default": ""
+            "help_text": "Type: `file`, required. A h5ad file."
           },
+          
           "schema": {
             "type": "string",
             "description": "Type: `file`. A schema file for the h5ad object",
-            "help_text": "Type: `file`. A schema file for the h5ad object.",
-            "default": ""
+            "help_text": "Type: `file`. A schema file for the h5ad object."
           }
           
         }
@@ -29,6 +29,7 @@
         "type": "object",
         "description": "No description",
         "properties": {
+          
           "stop_on_error": {
             "type": "boolean",
             "description": "Type: `boolean`, default: `false`. Whether or not to stop with exit code 1 if the input file does not adhere to the schema",
@@ -43,22 +44,25 @@
         "type": "object",
         "description": "No description",
         "properties": {
+          
           "checks": {
             "type": "string",
-            "description": "Type: `file`, default: `\"$id.$key.checks.json\"`, example: `\"checks.json\"`. If specified, this file will contain a structured log of which checks succeeded (or not)",
-            "help_text": "Type: `file`, default: `\"$id.$key.checks.json\"`, example: `\"checks.json\"`. If specified, this file will contain a structured log of which checks succeeded (or not).",
+            "description": "Type: `file`, default: `$id.$key.checks.json`, example: `checks.json`. If specified, this file will contain a structured log of which checks succeeded (or not)",
+            "help_text": "Type: `file`, default: `$id.$key.checks.json`, example: `checks.json`. If specified, this file will contain a structured log of which checks succeeded (or not).",
             "default": "$id.$key.checks.json"
           },
+          
           "output": {
             "type": "string",
-            "description": "Type: `file`, default: `\"$id.$key.output.h5ad\"`, example: `\"output.h5ad\"`. If specified, the output file will be a copy of the input file",
-            "help_text": "Type: `file`, default: `\"$id.$key.output.h5ad\"`, example: `\"output.h5ad\"`. If specified, the output file will be a copy of the input file.",
+            "description": "Type: `file`, default: `$id.$key.output.h5ad`, example: `output.h5ad`. If specified, the output file will be a copy of the input file",
+            "help_text": "Type: `file`, default: `$id.$key.output.h5ad`, example: `output.h5ad`. If specified, the output file will be a copy of the input file.",
             "default": "$id.$key.output.h5ad"
           },
+          
           "meta": {
             "type": "string",
-            "description": "Type: `file`, default: `\"$id.$key.meta.yaml\"`, example: `\"output_meta.yaml\"`. If specified, the output file will contain metadata of the dataset",
-            "help_text": "Type: `file`, default: `\"$id.$key.meta.yaml\"`, example: `\"output_meta.yaml\"`. If specified, the output file will contain metadata of the dataset.",
+            "description": "Type: `file`, default: `$id.$key.meta.yaml`, example: `output_meta.yaml`. If specified, the output file will contain metadata of the dataset",
+            "help_text": "Type: `file`, default: `$id.$key.meta.yaml`, example: `output_meta.yaml`. If specified, the output file will contain metadata of the dataset.",
             "default": "$id.$key.meta.yaml"
           }
           
@@ -69,17 +73,18 @@
         "type": "object",
         "description": "Input/output parameters for Nextflow itself. Please note that both publishDir and publish_dir are supported but at least one has to be configured.",
         "properties": {
+          
           "publish_dir": {
             "type": "string",
-            "description": "Type: `string`, required, example: `\"output/\"`. Path to an output directory",
-            "help_text": "Type: `string`, required, example: `\"output/\"`. Path to an output directory.",
-            "default": ""
+            "description": "Type: `string`, required, example: `output/`. Path to an output directory",
+            "help_text": "Type: `string`, required, example: `output/`. Path to an output directory."
           },
+          
           "param_list": {
             "type": "string",
-            "description": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
-            "help_text": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
-            "default": ""
+            "description": "Type: `string`, example: `my_params.yaml`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
+            "help_text": "Type: `string`, example: `my_params.yaml`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.",            
+            "hidden": true
           }
           
         }

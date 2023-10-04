@@ -159,7 +159,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "5f2a6838e6a4cfaa1d7bd1651b1c8c83f5033da4",
+    "git_commit" : "e230935f327ca7e54a71b93dace3b55806b1ead5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -255,13 +255,13 @@ workflow {
 
   channelFromParams(params, config)
  run_wf
- publishStates([:])
+ publishStates(key: config.functionality.name)
 }
 
 workflow auto {
   findStates(params, config)
  run_wf
- publishStates([:])
+ publishStates(key: config.functionality.name)
 }
 
 workflow run_wf {

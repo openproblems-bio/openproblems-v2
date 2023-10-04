@@ -9,16 +9,17 @@
         "type": "object",
         "description": "No description",
         "properties": {
+          
           "input": {
             "type": "string",
             "description": "Type: `file`, required. Input filename",
-            "help_text": "Type: `file`, required. Input filename",
-            "default": ""
+            "help_text": "Type: `file`, required. Input filename"
           },
+          
           "output": {
             "type": "string",
-            "description": "Type: `file`, required, default: `\"$id.$key.output.output\"`. Output filename",
-            "help_text": "Type: `file`, required, default: `\"$id.$key.output.output\"`. Output filename",
+            "description": "Type: `file`, required, default: `$id.$key.output.output`. Output filename",
+            "help_text": "Type: `file`, required, default: `$id.$key.output.output`. Output filename",
             "default": "$id.$key.output.output"
           }
           
@@ -29,17 +30,18 @@
         "type": "object",
         "description": "Input/output parameters for Nextflow itself. Please note that both publishDir and publish_dir are supported but at least one has to be configured.",
         "properties": {
+          
           "publish_dir": {
             "type": "string",
-            "description": "Type: `string`, required, example: `\"output/\"`. Path to an output directory",
-            "help_text": "Type: `string`, required, example: `\"output/\"`. Path to an output directory.",
-            "default": ""
+            "description": "Type: `string`, required, example: `output/`. Path to an output directory",
+            "help_text": "Type: `string`, required, example: `output/`. Path to an output directory."
           },
+          
           "param_list": {
             "type": "string",
-            "description": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
-            "help_text": "Type: `string`, example: `\"my_params.yaml\"`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.","hidden": true,
-            "default": ""
+            "description": "Type: `string`, example: `my_params.yaml`. Allows inputting multiple parameter sets to initialise a Nextflow channel",
+            "help_text": "Type: `string`, example: `my_params.yaml`. Allows inputting multiple parameter sets to initialise a Nextflow channel. A `param_list` can either be a list of maps, a csv file, a json file, a yaml file, or simply a yaml blob.\n\n* A list of maps (as-is) where the keys of each map corresponds to the arguments of the pipeline. Example: in a `nextflow.config` file: `param_list: [ [\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027], [\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027] ]`.\n* A csv file should have column names which correspond to the different arguments of this pipeline. Example: `--param_list data.csv` with columns `id,input`.\n* A json or a yaml file should be a list of maps, each of which has keys corresponding to the arguments of the pipeline. Example: `--param_list data.json` with contents `[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]`.\n* A yaml blob can also be passed directly as a string. Example: `--param_list \"[ {\u0027id\u0027: \u0027foo\u0027, \u0027input\u0027: \u0027foo.txt\u0027}, {\u0027id\u0027: \u0027bar\u0027, \u0027input\u0027: \u0027bar.txt\u0027} ]\"`.\n\nWhen passing a csv, json or yaml file, relative path names are relativized to the location of the parameter file. No relativation is performed when `param_list` is a list of maps (as-is) or a yaml blob.",            
+            "hidden": true
           }
           
         }

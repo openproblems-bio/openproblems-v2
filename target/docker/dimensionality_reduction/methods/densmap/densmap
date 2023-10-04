@@ -401,9 +401,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods densmap"
-LABEL org.opencontainers.image.created="2023-10-02T07:59:56Z"
+LABEL org.opencontainers.image.created="2023-10-04T12:59:34Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="5f2a6838e6a4cfaa1d7bd1651b1c8c83f5033da4"
+LABEL org.opencontainers.image.revision="e230935f327ca7e54a71b93dace3b55806b1ead5"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
