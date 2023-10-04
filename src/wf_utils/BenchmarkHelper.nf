@@ -309,6 +309,45 @@ include { processConfig; helpMessage; channelFromParams; readYamlBlob } from "./
 
 
 def findStates(Map params, Map config) {
+  // TODO: do a deep clone of config
+  def auto_config = config.clone()
+  auto_config.functionality = auto_config.functionality.clone()
+  // override arguments
+  auto_config.functionality.argument_groups = []
+  auto_config.functionality.arguments = [
+    [
+      type: "string",
+      name: "--input_dir",
+      example: "/path/to/input/directory",
+      description: "Path to input directory containing the datasets to be integrated.",
+      required: true
+    ],
+    [
+      type: "string",
+      name: "--filter",
+      example: "foo/.*/state.yaml",
+      description: "Regex to filter state files by path.",
+      required: false
+    ],
+    // to do: make this a yaml blob?
+    [
+      type: "string",
+      name: "--rename_keys",
+      example: ["newKey1:oldKey1", "newKey2:oldKey2"],
+      description: "Rename keys in the detected input files. This is useful if the input files do not match the set of input arguments of the workflow.",
+      required: false,
+      multiple: true,
+      multiple_sep: ","
+    ],
+    [
+      type: "string",
+      name: "--settings",
+      example: '{"output_dataset": "dataset.h5ad", "k": 10}',
+      description: "Global arguments as a JSON glob to be passed to all components.",
+      required: false
+    ]
+  ]
+
   // run auto config through processConfig once more
   auto_config = processConfig(auto_config)
 
