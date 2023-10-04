@@ -1,0 +1,47 @@
+functionality:
+  name: "run_auto"
+  namespace: "batch_integration/workflows"
+  argument_groups:
+    - name: Inputs
+      arguments:
+        - name: "--id"
+          type: "string"
+          description: "The ID of the dataset"
+          required: true
+        - name: "--input_dir"
+          type: "string"
+          example: "/path/to/input/directory"
+          description: "Path to input directory containing the datasets to be integrated."
+          required: true
+        - name: "--filter"
+          type: "string"
+          example: "foo/.*/state.yaml"
+          description: "Regex to filter state files by path."
+          required: false
+        - name: "--rename_keys"
+          type: "string"
+          example: ["newKey1:oldKey1", "newKey2:oldKey2"]
+          description: "Rename keys in the detected input files. This is useful if the input files do not match the set of input arguments of the workflow."
+          required: false
+          multiple: true
+          multiple_sep: ","
+        - name: "--settings"
+          type: "string"
+          example: '{"output_dataset": "dataset.h5ad", "k": 10}'
+          description: "Global arguments as a JSON glob to be passed to all components."
+          required: false
+    - name: Outputs
+      arguments:
+        - name: "--output"
+          direction: "output"
+          type: file
+          description: A TSV file containing the scores of each of the methods
+          example: scores.tsv
+  resources:
+    - type: nextflow_script
+      path: main.nf
+      entrypoint: run_wf
+  dependencies: 
+    - name: batch_integration/workflows/run_benchmark
+platforms:
+  - type: nextflow
