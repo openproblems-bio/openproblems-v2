@@ -5,7 +5,7 @@ traces = collectTraces()
 workflow run_wf {
   findStates(params, config)
     | run_wf
-    | publishStates([:])
+    | publishStates([key: config.functionality.name])
 }
 
 
