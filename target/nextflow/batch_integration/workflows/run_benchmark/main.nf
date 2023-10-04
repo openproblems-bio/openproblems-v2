@@ -159,7 +159,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.7.5",
-    "git_commit" : "3e8ca3ffdb50238962a5372a79ebeaa678999fa0",
+    "git_commit" : "9f7f899bdeefa44318d9a79c02b704baa8b1e605",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -181,8 +181,17 @@ include { check_dataset_schema } from "\\$targetDir/common/check_dataset_schema/
 // import methods
 include { bbknn } from "\\$targetDir/batch_integration/methods/bbknn/main.nf"
 include { combat } from "\\$targetDir/batch_integration/methods/combat/main.nf"
+include { fastmnn_embedding } from "\\$targetDir/batch_integration/methods/fastmnn_embedding/main.nf"
+include { fastmnn_feature } from "\\$targetDir/batch_integration/methods/fastmnn_feature/main.nf"
+include { liger } from "\\$targetDir/batch_integration/methods/liger/main.nf"
+include { mnn_correct } from "\\$targetDir/batch_integration/methods/mnn_correct/main.nf"
+include { mnnpy } from "\\$targetDir/batch_integration/methods/mnnpy/main.nf"
+include { pyliger } from "\\$targetDir/batch_integration/methods/pyliger/main.nf"
+include { scalex_embed } from "\\$targetDir/batch_integration/methods/scalex_embed/main.nf"
+include { scalex_feature } from "\\$targetDir/batch_integration/methods/scalex_feature/main.nf"
 include { scanorama_embed } from "\\$targetDir/batch_integration/methods/scanorama_embed/main.nf"
 include { scanorama_feature } from "\\$targetDir/batch_integration/methods/scanorama_feature/main.nf"
+include { scanvi } from "\\$targetDir/batch_integration/methods/scanvi/main.nf"
 include { scvi } from "\\$targetDir/batch_integration/methods/scvi/main.nf"
 
 // import control methods
@@ -225,8 +234,17 @@ traces = collectTraces()
 methods = [
   bbknn,
   combat,
+  fastmnn_embedding,
+  fastmnn_feature,
+  liger,
+  mnn_correct,
+  mnnpy,
+  pyliger,
+  scalex_embed,
+  scalex_feature,
   scanorama_embed,
   scanorama_feature,
+  scanvi,
   scvi,
   no_integration_batch,
   random_embed_cell,
