@@ -380,7 +380,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
       "label" : "Single Cell Optimal Transport",
       "description" : "Single Cell Optimal Transport (SCOT) is a method for integrating multimodal single-cell data. It is based on the idea of aligning the distributions of the two modalities using optimal transport.\n",
       "summary" : "Run Single Cell Optimal Transport",
-      "preferred_normalization" : "log_cpm",
+      "preferred_normalization" : "log_cp10k",
       "reference" : "Demetci2020scot",
       "documentation_url" : "https://github.com/rsinghlab/SCOT#readme",
       "repository_url" : "https://github.com/rsinghlab/SCOT",
@@ -482,7 +482,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot",
     "viash_version" : "0.7.5",
-    "git_commit" : "9f7f899bdeefa44318d9a79c02b704baa8b1e605",
+    "git_commit" : "adb47c7601ec22c56e2e1b1c6919a523d5ba2023",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

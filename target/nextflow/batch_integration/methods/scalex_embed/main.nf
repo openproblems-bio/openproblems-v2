@@ -292,10 +292,10 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
         "path" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scalex.py",
         "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
-      "preferred_normalization" : "log_cpm",
+      "preferred_normalization" : "log_cp10k",
       "variants" : {
         "scanorama_feature_scaled" : {
-          "preferred_normalization" : "log_cpm_scaled"
+          "preferred_normalization" : "log_cp10k_scaled"
         }
       },
       "type" : "method",
@@ -392,7 +392,7 @@ thisConfig = processConfig(jsonSlurper.parseText('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_embed",
     "viash_version" : "0.7.5",
-    "git_commit" : "9f7f899bdeefa44318d9a79c02b704baa8b1e605",
+    "git_commit" : "adb47c7601ec22c56e2e1b1c6919a523d5ba2023",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
