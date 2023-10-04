@@ -1,11 +1,10 @@
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
 traces = collectTraces()
 
-
 workflow auto {
   findStates(params, config)
     | run_wf
-    | publishStates([:])
+    | publishStates(key: config.functionality.name)
 }
 
 workflow run_wf {
