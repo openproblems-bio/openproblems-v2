@@ -7,18 +7,27 @@ workflow run_wf {
 
   main:
 
-  // collect method list
-  methods = [
-    bbknn,
-    combat,
-    scanorama_embed,
-    scanorama_feature,
-    scvi,
-    no_integration_batch,
-    random_embed_cell,
-    random_embed_cell_jitter,
-    random_integration
-  ]
+// collect method list
+methods = [
+  bbknn,
+  combat,
+  fastmnn_embedding,
+  fastmnn_feature,
+  liger,
+  mnn_correct,
+  mnnpy,
+  pyliger,
+  scalex_embed,
+  scalex_feature,
+  scanorama_embed,
+  scanorama_feature,
+  scanvi,
+  scvi,
+  no_integration_batch,
+  random_embed_cell,
+  random_embed_cell_jitter,
+  random_integration
+]
 
   // collect metric list
   metrics = [

@@ -34,8 +34,17 @@ functionality:
     - name: common/extract_scores
     - name: batch_integration/methods/bbknn
     - name: batch_integration/methods/combat
+    - name: batch_integration/methods/fastmnn_embedding
+    - name: batch_integration/methods/fastmnn_feature
+    - name: batch_integration/methods/liger
+    - name: batch_integration/methods/mnn_correct
+    - name: batch_integration/methods/mnnpy
+    - name: batch_integration/methods/pyliger
+    - name: batch_integration/methods/scalex_embed
+    - name: batch_integration/methods/scalex_feature
     - name: batch_integration/methods/scanorama_embed
     - name: batch_integration/methods/scanorama_feature
+    - name: batch_integration/methods/scanvi
     - name: batch_integration/methods/scvi
     - name: batch_integration/control_methods/no_integration_batch
     - name: batch_integration/control_methods/random_embed_cell
