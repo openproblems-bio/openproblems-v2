@@ -61,7 +61,9 @@ lobj <- addNormalizedDataToLiger(adata, lobj)
 # lobj <- rliger::normalize(lobj)
 
 cat(">> Select genes\n")
-lobj <- rliger::selectGenes(lobj)
+# lobj <- rliger::selectGenes(lobj)
+# overwrite gene selection to include all genes
+lobj@var.genes <- adata$var_names
 
 cat(">> Perform scaling\n")
 lobj <- rliger::scaleNotCenter(lobj, remove.missing = FALSE)
