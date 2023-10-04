@@ -1,16 +1,7 @@
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
 traces = initializeTracer()
 
-workflow {
-    helpMessage(config)
-
-    // create channel from input parameters with
-    // arguments as defined in the config
-    channelFromParams(params, config)
-        | run_wf
-}
-
-    // run the workflow
+// run the workflow
 workflow run_wf {
     take:
     input_ch
