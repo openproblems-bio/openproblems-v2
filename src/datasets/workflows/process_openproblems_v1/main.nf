@@ -28,7 +28,13 @@ config = readConfig("$projectDir/config.vsh.yaml")
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
 traces = collectTraces()
 
-normalization_methods = [log_cp, sqrt_cp, l1_sqrt, log_scran_pooling]
+normalization_methods = [
+  log_cp.run(args: [norm_id: "log_cp10k", n_cp: 10000]),
+  log_cp.run(args: [norm_id: "log_cpm", n_cp: 1000000]),
+  sqrt_cp,
+  l1_sqrt,
+  log_scran_pooling
+]
 
 workflow {
   helpMessage(config)
@@ -104,13 +110,6 @@ workflow run_wf {
     // run normalization methods
     | runComponents(
       components: normalization_methods,
-      id: { id, state, config ->
-        if (state.normalization_methods.size() > 1) {
-          id + "/" + config.functionality.name
-        } else {
-          id
-        }
-      },
       filter: { id, state, config ->
         config.functionality.name in state.normalization_methods
       },
@@ -127,6 +126,22 @@ workflow run_wf {
         ]
       }
     )
+
+    // extract normalization_id and append it to the id
+    | check_dataset_schema.run(
+      fromState: [input: "normalized"],
+      toState: { id, output, state ->
+        def uns = readYaml(output.meta).uns
+        state + [ normalization_id: uns.normalization_id ]
+      }
+    )
+    | map { id, state ->
+      def new_id = id
+      if (state.normalization_methods.size() > 1) {
+        new_id = id + "/" + state.normalization_id
+      }
+      [ new_id, state ]
+    }
 
     | pca.run(
       fromState: { id, state ->
