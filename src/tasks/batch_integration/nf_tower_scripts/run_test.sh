@@ -4,8 +4,8 @@ DATASET_DIR=resources_test/batch_integration/pancreas
 
 # try running on nf tower
 cat > /tmp/params.yaml << HERE
-d: batch_integration_test
-input_dir: s3://openproblems-data/resources_test/batch_integration/pancreas
+id: batch_integration_test
+input_dir: s3://openproblems-data/resources_test/batch_integration/pancreas/
 rename_keys: 'input_dataset:output_dataset,input_solution:output_solution'
 settings: '{"output": "scores.tsv"}'
 publish_dir: s3://openproblems-nextflow/output_test/v2/batch_integration/
