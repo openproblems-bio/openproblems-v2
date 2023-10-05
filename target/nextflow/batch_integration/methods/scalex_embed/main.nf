@@ -279,7 +279,7 @@ thisConfig = processConfig(readJsonBlob('''{
       }
     ],
     "info" : {
-      "label" : "SCALEX",
+      "label" : "SCALEX (embedding)",
       "summary" : "Online single-cell data integration through projecting heterogeneous datasets into a common cell-embedding space",
       "description" : "SCALEX is a method for integrating heterogeneous single-cell data online using a VAE framework. Its generalised encoder disentangles batch-related components from batch-invariant biological components, which are then projected into a common cell-embedding space.\n",
       "reference" : "xiong2021online",
@@ -391,7 +391,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_embed",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+    "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

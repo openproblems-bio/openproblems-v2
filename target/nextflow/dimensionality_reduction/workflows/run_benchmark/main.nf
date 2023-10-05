@@ -108,7 +108,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -130,7 +130,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -152,7 +152,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/random_features"
@@ -174,7 +174,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/true_features"
@@ -196,7 +196,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/methods/densmap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/densmap"
@@ -218,7 +218,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/methods/neuralee/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/neuralee"
@@ -240,7 +240,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/methods/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca"
@@ -262,7 +262,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/methods/phate/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/phate"
@@ -284,7 +284,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/methods/tsne/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/tsne"
@@ -306,7 +306,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/methods/umap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/umap"
@@ -328,7 +328,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/coranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/coranking"
@@ -350,7 +350,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/density_preservation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation"
@@ -372,7 +372,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/distance_correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation"
@@ -394,7 +394,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/trustworthiness/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness"
@@ -458,7 +458,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+    "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

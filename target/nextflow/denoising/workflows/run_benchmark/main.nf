@@ -105,7 +105,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -127,7 +127,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -149,7 +149,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/control_methods/no_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising"
@@ -171,7 +171,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/control_methods/perfect_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising"
@@ -193,7 +193,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/methods/alra/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra"
@@ -215,7 +215,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/methods/dca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca"
@@ -237,7 +237,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/methods/knn_smoothing/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/knn_smoothing"
@@ -259,7 +259,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/methods/magic/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
@@ -281,7 +281,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse"
@@ -303,7 +303,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
           "executable" : "/nextflow/denoising/metrics/poisson/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson"
@@ -367,7 +367,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "7ae14da15eafab154ade65b6dd31d535a6336b0d",
+    "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
