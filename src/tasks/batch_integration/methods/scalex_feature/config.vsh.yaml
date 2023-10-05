@@ -43,4 +43,4 @@ platforms:
           - numpy<1.24
   - type: nextflow
     directives:
-      label: [ lowmem, lowcpu ]
+      label: [ lowmem, lowcpu, midtime ]
