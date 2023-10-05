@@ -39,9 +39,98 @@ thisConfig = processConfig(readJsonBlob('''{
           {
             "type" : "file",
             "name" : "--input_dataset",
-            "description" : "A dataset",
+            "info" : {
+              "label" : "Dataset",
+              "summary" : "Unintegrated AnnData HDF5 file.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "label",
+                    "description" : "label information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "obsp" : [
+                  {
+                    "type" : "double",
+                    "name" : "knn_distances",
+                    "description" : "K nearest neighbors distance matrix.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "knn_connectivities",
+                    "description" : "K nearest neighbors connectivities matrix.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "object",
+                    "name" : "knn",
+                    "description" : "Supplementary K nearest neighbors data.",
+                    "required" : true
+                  }
+                ]
+              }
+            },
             "example" : [
-              "dataset.h5ad"
+              "resources_test/batch_integration/pancreas/dataset.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -54,9 +143,98 @@ thisConfig = processConfig(readJsonBlob('''{
           {
             "type" : "file",
             "name" : "--input_solution",
-            "description" : "A solution",
+            "info" : {
+              "label" : "Dataset",
+              "summary" : "Unintegrated AnnData HDF5 file.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "label",
+                    "description" : "label information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "obsp" : [
+                  {
+                    "type" : "double",
+                    "name" : "knn_distances",
+                    "description" : "K nearest neighbors distance matrix.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "knn_connectivities",
+                    "description" : "K nearest neighbors connectivities matrix.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "object",
+                    "name" : "knn",
+                    "description" : "Supplementary K nearest neighbors data.",
+                    "required" : true
+                  }
+                ]
+              }
+            },
             "example" : [
-              "solution.h5ad"
+              "resources_test/batch_integration/pancreas/dataset.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -80,7 +258,7 @@ thisConfig = processConfig(readJsonBlob('''{
             ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "output",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -117,7 +295,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -139,7 +317,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -161,7 +339,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/bbknn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/bbknn"
@@ -183,7 +361,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/combat/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/combat"
@@ -205,7 +383,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/fastmnn_embedding/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_embedding"
@@ -227,7 +405,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/fastmnn_feature/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_feature"
@@ -249,7 +427,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/liger/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/liger"
@@ -271,7 +449,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/mnn_correct/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnn_correct"
@@ -293,7 +471,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/mnnpy/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnnpy"
@@ -315,7 +493,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/pyliger/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/pyliger"
@@ -337,7 +515,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/scalex_embed/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_embed"
@@ -359,7 +537,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/scalex_feature/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_feature"
@@ -381,7 +559,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/scanorama_embed/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_embed"
@@ -403,7 +581,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/scanorama_feature/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_feature"
@@ -425,7 +603,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/scanvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanvi"
@@ -447,7 +625,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/methods/scvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scvi"
@@ -469,7 +647,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/control_methods/no_integration_batch/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/no_integration_batch"
@@ -491,7 +669,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/control_methods/random_embed_cell/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_embed_cell"
@@ -513,7 +691,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/control_methods/random_embed_cell_jitter/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_embed_cell_jitter"
@@ -535,7 +713,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/control_methods/random_integration/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_integration"
@@ -557,7 +735,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/transformers",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/transformers/feature_to_embed/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/feature_to_embed"
@@ -579,7 +757,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/transformers",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/transformers/embed_to_graph/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph"
@@ -601,7 +779,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/asw_batch/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_batch"
@@ -623,7 +801,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/asw_label/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label"
@@ -645,7 +823,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/cell_cycle_conservation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/cell_cycle_conservation"
@@ -667,7 +845,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/clustering_overlap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/clustering_overlap"
@@ -689,7 +867,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/graph_connectivity/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/graph_connectivity"
@@ -711,7 +889,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/hvg_overlap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/hvg_overlap"
@@ -733,7 +911,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/isolated_label_asw/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/isolated_label_asw"
@@ -755,7 +933,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/isolated_label_f1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/isolated_label_f1"
@@ -777,7 +955,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/kbet/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/kbet"
@@ -799,7 +977,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/lisi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/lisi"
@@ -821,7 +999,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/batch_integration/metrics/pcr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/pcr"
@@ -885,7 +1063,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+    "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

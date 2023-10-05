@@ -406,9 +406,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_integration"
-LABEL org.opencontainers.image.created="2023-10-05T15:23:03Z"
+LABEL org.opencontainers.image.created="2023-10-05T15:24:07Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="53580cb64e350ec4a1ae10614c5016af31bd281b"
+LABEL org.opencontainers.image.revision="adb94dc60b83de38e544fce8b3ea10afa1ea77c2"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

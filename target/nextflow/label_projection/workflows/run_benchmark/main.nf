@@ -119,7 +119,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -141,7 +141,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -163,7 +163,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/control_methods/true_labels/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/true_labels"
@@ -185,7 +185,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/control_methods/majority_vote/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote"
@@ -207,7 +207,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/control_methods/random_labels/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels"
@@ -229,7 +229,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/methods/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn"
@@ -251,7 +251,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/methods/logistic_regression/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/logistic_regression"
@@ -273,7 +273,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/methods/mlp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp"
@@ -295,7 +295,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/methods/scanvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi"
@@ -317,7 +317,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/methods/scanvi_scarches/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches"
@@ -339,7 +339,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/methods/xgboost/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost"
@@ -361,7 +361,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/metrics/accuracy/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/accuracy"
@@ -383,7 +383,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "label_projection/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
           "executable" : "/nextflow/label_projection/metrics/f1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1"
@@ -447,7 +447,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+    "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

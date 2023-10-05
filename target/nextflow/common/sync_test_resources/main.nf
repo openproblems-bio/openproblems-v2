@@ -182,7 +182,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/sync_test_resources",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "53580cb64e350ec4a1ae10614c5016af31bd281b",
+    "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
