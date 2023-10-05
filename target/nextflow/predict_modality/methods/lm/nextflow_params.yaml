@@ -1,7 +1,0 @@
-# Arguments
-distance_method: "spearman"
-n_pcs: 50
-
-# Nextflow input-output arguments
-publish_dir: # please fill in - example: "output/"
-# param_list: "my_params.yaml"

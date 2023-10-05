@@ -1,8 +1,0 @@
-# Arguments
-# input_scores: ["resources/label_projection/benchmarks/openproblems_v1/combined.extract_scores.output.tsv"]
-# input_execution: ["resources/label_projection/benchmarks/openproblems_v1/nextflow_log.tsv"]
-# output: "$id.$key.output.json"
-
-# Nextflow input-output arguments
-publish_dir: # please fill in - example: "output/"
-# param_list: "my_params.yaml"

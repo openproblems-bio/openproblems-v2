@@ -1,8 +1,0 @@
-# Arguments
-distance_method: "minkowski"
-n_pcs: 50
-n_neighbors: 100
-
-# Nextflow input-output arguments
-publish_dir: # please fill in - example: "output/"
-# param_list: "my_params.yaml"

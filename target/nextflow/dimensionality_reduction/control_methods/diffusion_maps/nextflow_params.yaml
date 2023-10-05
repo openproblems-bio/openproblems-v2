@@ -1,8 +1,0 @@
-# Arguments
-n_comps: 2
-t: 1
-n_retries: 1
-
-# Nextflow input-output arguments
-publish_dir: # please fill in - example: "output/"
-# param_list: "my_params.yaml"

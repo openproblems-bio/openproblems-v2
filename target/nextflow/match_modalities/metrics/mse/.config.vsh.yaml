@@ -264,6 +264,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse/mse"
-  viash_version: "0.7.5"
-  git_commit: "adb47c7601ec22c56e2e1b1c6919a523d5ba2023"
+  viash_version: "0.8.0-RC2"
+  git_commit: "7ae14da15eafab154ade65b6dd31d535a6336b0d"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
