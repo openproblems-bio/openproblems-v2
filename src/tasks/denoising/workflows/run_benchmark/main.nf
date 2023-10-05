@@ -101,6 +101,12 @@ workflow run_wf {
   output_ch
 }
 
+workflow auto {
+  findStates(params, thisConfig)
+    | run_wf
+    | publishStates([key: thisConfig.functionality.name])
+}
+
 // store the trace log in the publish dir
 workflow.onComplete {
   def publish_dir = getPublishDir()
@@ -109,4 +115,24 @@ workflow.onComplete {
   // todo: add datasets logging
   writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
   writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
+}
+
+
+// helper function
+def joinStates(Closure apply_) {
+  workflow joinStatesWf {
+    take: input_ch
+    main:
+    output_ch = input_ch
+      | toSortedList
+      | filter{ it.size() > 0 }
+      | map{ tups ->
+        def ids = tups.collect{it[0]}
+        def states = tups.collect{it[1]}
+        apply_(ids, states)
+      }
+
+    emit: output_ch
+  }
+  return joinStatesWf
 }
