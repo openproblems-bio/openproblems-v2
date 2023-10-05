@@ -29,8 +29,9 @@ config = readConfig("$projectDir/config.vsh.yaml")
 traces = collectTraces()
 
 normalization_methods = [
-  log_cp.run(args: [norm_id: "log_cp10k", n_cp: 10000]),
-  log_cp.run(args: [norm_id: "log_cpm", n_cp: 1000000]),
+  log_cp.run(key: "log_cp10k", args: [norm_id: "log_cp10k", n_cp: 10000]),
+  // TODO: fix - these settings are overwritten again afterwards
+  // log_cp.run(key: "log_cpm", args: [norm_id: "log_cpm", n_cp: 1000000]),
   sqrt_cp,
   l1_sqrt,
   log_scran_pooling
@@ -41,7 +42,7 @@ workflow {
 
   channelFromParams(params, config)
     | run_wf
-    | publishStates([:])
+    | publishStates(key: config.functionality.name)
 }
 
 workflow run_wf {
@@ -131,7 +132,7 @@ workflow run_wf {
     | check_dataset_schema.run(
       fromState: [input: "normalized"],
       toState: { id, output, state ->
-        def uns = readYaml(output.meta).uns
+        def uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
         state + [ normalization_id: uns.normalization_id ]
       }
     )
