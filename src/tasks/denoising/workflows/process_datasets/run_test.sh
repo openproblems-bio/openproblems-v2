@@ -14,12 +14,12 @@ set -e
 export NXF_VER=22.04.5
 
 nextflow run . \
-  -main-script target/nextflow/batch_integration/workflows/process_datasets/main.nf \
+  -main-script target/nextflow/denoising/workflows/process_datasets/main.nf \
   -profile docker \
   -entry auto \
   -c src/wf_utils/labels_ci.config \
-  --id resources_test \
+  --id run_test \
   --input_states "resources_test/common/**/state.yaml" \
   --rename_keys 'input:output_dataset' \
-  --settings '{"output_dataset": "dataset.h5ad", "output_solution": "solution.h5ad"}' \
-  --publish_dir "resources_test/batch_integration"
+  --settings '{"output_train": "train.h5ad", "output_test": "test.h5ad"}' \
+  --publish_dir "resources_test/denoising"
