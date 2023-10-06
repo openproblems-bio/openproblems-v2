@@ -48,15 +48,13 @@ nextflow run . \
   --output_knn '$id/knn.h5ad' \
   --output_dataset '$id/dataset.h5ad' \
   --output_meta '$id/dataset_meta.yaml' \
+  --output_state '$id/state.yaml' \
   --publish_dir "$DATASET_DIR"
-
-# workaround because we can't override the state yaml filename yet
-mv "$DATASET_DIR/.pancreas.process_openproblems_v1.state.yaml" "$DATASET_DIR/pancreas/.state.yaml"
 
 rm -r $DATASET_DIR/temp_*
 
-# run task process dataset components
-src/tasks/batch_integration/resources_test_scripts/pancreas.sh
-src/tasks/denoising/resources_test_scripts/pancreas.sh
-src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh
-src/tasks/label_projection/resources_test_scripts/pancreas.sh
+# # run task process dataset components
+# src/tasks/batch_integration/resources_test_scripts/pancreas.sh
+# src/tasks/denoising/resources_test_scripts/pancreas.sh
+# src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh
+# src/tasks/label_projection/resources_test_scripts/pancreas.sh

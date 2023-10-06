@@ -3,23 +3,35 @@ workflow run_wf {
   input_ch
 
   main:
-  normalization_settings = Channel.fromList([
-    // [functionality_name, args]
-    ["log_cp", [normalization_id: "log_cp10k", n_cp: 10000]],
-    ["log_cp", [normalization_id: "log_cpm", n_cp: 1000000]],
-    ["sqrt_cp", [normalization_id: "sqrt_cp10k", n_cp: 10000]],
-    ["sqrt_cp", [normalization_id: "sqrt_cpm", n_cp: 1000000]],
-    ["l1_sqrt", [normalization_id: "l1_sqrt"]],
-    ["log_scran_pooling", [normalization_id: "log_scran_pooling"]]
-  ])
+
+  // create different normalization methods by overriding the defaults
   normalization_methods = [
-    log_cp,
-    sqrt_cp,
+    log_cp.run(
+      key: "log_cp10k",
+      args: [normalization_id: "log_cp10k", n_cp: 10000],
+    ),
+    log_cp.run(
+      key: "log_cpm",
+      args: [normalization_id: "log_cpm", n_cp: 1000000],
+    ),
+    sqrt_cp.run(
+      key: "sqrt_cp10k",
+      args: [normalization_id: "sqrt_cp10k", n_cp: 10000],
+    ),
+    sqrt_cp.run(
+      key: "sqrt_cpm",
+      args: [normalization_id: "sqrt_cpm", n_cp: 1000000],
+    ),
     l1_sqrt,
     log_scran_pooling
   ]
 
-  dataset_ch = input_ch
+  output_ch = input_ch
+
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
 
     // fetch data from legacy openproblems
     | openproblems_v1.run(
@@ -30,10 +42,10 @@ workflow run_wf {
       ],
       toState: ["raw": "output"]
     )
-
-  sampled_dataset_ch = dataset_ch
-    | filter{ id, state -> state.do_subsample }
+    
+    // subsample if so desired
     | subsample.run(
+      runIf: { id, state -> state.do_subsample },
       fromState: [
         "input": "raw",
         "n_obs": "n_obs",
@@ -44,41 +56,23 @@ workflow run_wf {
         "even": "even",
         "seed": "seed"
       ],
-      args: [
-        output_mod2: null
-      ],
-      toState: [
-        raw: "output"
-      ]
+      args: [output_mod2: null],
+      toState: [raw: "output"]
     )
-  notsampled_dataset_ch = dataset_ch
-    | filter{ id, state -> !state.do_subsample }
-  
-  output_ch = sampled_dataset_ch
-    | concat(notsampled_dataset_ch)
 
-    // run normalization methods
-    | combine(normalization_settings)
-    | map{ id, state, norm_fun, norm_args ->
-      [id, state + [ norm_fun: norm_fun, norm_args: norm_args ]]
-    }
-
-    | runComponents(
+    | runEach(
       components: normalization_methods,
-      id: { id, state, config ->
+      id: { id, state, comp ->
         if (state.normalization_methods.size() > 1) {
-          id + "/" + state.norm_args.normalization_id
+          id + "/" + comp.name
         } else {
           id
         }
       },
-      filter: { id, state, config ->
-        config.functionality.name == state.norm_fun &&
-        state.norm_args.normalization_id in state.normalization_methods
+      filter: { id, state, comp ->
+        comp.name in state.normalization_methods
       },
-      fromState: { id, state, config ->
-        [input: state.raw] + state.norm_args
-      },
+      fromState: ["input": "raw"],
       toState: ["normalized": "output"]
     )
 
@@ -116,7 +110,8 @@ workflow run_wf {
         "output_normalized": state.output_normalized ? state.normalized : null,
         "output_pca": state.output_pca ? state.pca : null,
         "output_hvg": state.output_hvg ? state.hvg : null,
-        "output_knn": state.output_knn ? state.knn : null
+        "output_knn": state.output_knn ? state.knn : null,
+        "_meta": state._meta
       ]
     }
 

@@ -114,7 +114,7 @@ functionality:
         - name: "--output_raw"
           __merge__: /src/datasets/api/file_raw.yaml
           direction: "output"
-          required: true
+          required: false
         - name: "--output_normalized"
           __merge__: /src/datasets/api/file_normalized.yaml
           direction: "output"
