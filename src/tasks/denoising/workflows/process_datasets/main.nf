@@ -36,8 +36,8 @@ workflow run_wf {
     | process_dataset.run(
       fromState: [
         input: "dataset",
-        output_dataset: "output_train",
-        output_solution: "output_test"
+        output_train: "output_train",
+        output_test: "output_test"
       ],
       toState: [train: "output_train", test: "output_test"]
     )
