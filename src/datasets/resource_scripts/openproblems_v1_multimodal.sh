@@ -20,27 +20,33 @@ if [ ! -f $params_file ]; then
   cat > "$params_file" << 'HERE'
 param_list:
   - id: citeseq_cbmc
+    dataset_id: citeseq_cbmc
     layer_counts: counts
 
   - id: scicar_cell_lines
+    dataset_id: scicar_cell_lines
     obs_celltype: cell_name
     layer_counts: counts
 
   - id: scicar_mouse_kidney
+    dataset_id: scicar_mouse_kidney
     obs_celltype: cell_name
     obs_batch: replicate
     layer_counts: counts
 
-output: '$id.h5ad'
+output_dataset_mod1: '$id/dataset_mod1.h5ad'
+output_dataset_mod1: '$id/dataset_mod2.h5ad'
+output_meta_mod1: '$id/dataset_metadata_mod1.h5ad'
+output_meta_mod1: '$id/dataset_metadata_mod2.h5ad'
+output_state: '$id/state.yaml'
 HERE
 fi
 
 export NXF_VER=22.04.5
 nextflow \
   run . \
-  -main-script src/datasets/workflows/process_openproblems_v1_multimodal/main.nf \
+  -main-script target/nextflow/datasets/workflows/process_openproblems_v1_multimodal/main.nf \
   -profile docker \
   -resume \
   -params-file "$params_file" \
-  --publish_dir "$OUTPUT_DIR" \
-  -with-tower
+  --publish_dir "$OUTPUT_DIR"
