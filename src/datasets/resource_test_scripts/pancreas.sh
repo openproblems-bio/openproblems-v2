@@ -21,7 +21,7 @@ KEEP_FEATURES=`cat $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt $DATASET_DIR/temp_s
 
 # download dataset
 nextflow run . \
-  -main-script src/datasets/workflows/process_openproblems_v1/main.nf \
+  -main-script target/nextflow/datasets/workflows/process_openproblems_v1/main.nf \
   -profile docker \
   -resume \
   --id pancreas \
@@ -39,16 +39,19 @@ nextflow run . \
   --keep_batch_categories "celseq:inDrop4:smarter" \
   --keep_features "$KEEP_FEATURES" \
   --seed 123 \
-  --normalization_methods log_cp \
+  --normalization_methods log_cp10k \
   --do_subsample true \
-  --output_raw raw.h5ad \
-  --output_normalized normalized.h5ad \
-  --output_pca pca.h5ad \
-  --output_hvg hvg.h5ad \
-  --output_knn knn.h5ad \
-  --output_dataset dataset.h5ad \
-  --output_meta dataset_metadata.yaml \
+  --output_raw '$id/raw.h5ad' \
+  --output_normalized '$id/normalized.h5ad' \
+  --output_pca '$id/pca.h5ad' \
+  --output_hvg '$id/hvg.h5ad' \
+  --output_knn '$id/knn.h5ad' \
+  --output_dataset '$id/dataset.h5ad' \
+  --output_meta '$id/dataset_meta.yaml' \
   --publish_dir "$DATASET_DIR"
+
+# workaround because we can't override the state yaml filename yet
+mv "$DATASET_DIR/.pancreas.process_openproblems_v1.state.yaml" "$DATASET_DIR/pancreas/.state.yaml"
 
 rm -r $DATASET_DIR/temp_*
 

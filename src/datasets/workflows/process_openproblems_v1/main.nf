@@ -1,60 +1,52 @@
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = collectTraces()
-
 workflow run_wf {
   take:
   input_ch
 
   main:
-  normalization_methods = [log_cp, sqrt_cp, l1_sqrt, log_scran_pooling]
+  normalization_settings = Channel.fromList([
+    // [functionality_name, args]
+    ["log_cp", [normalization_id: "log_cp10k", n_cp: 10000]],
+    ["log_cp", [normalization_id: "log_cpm", n_cp: 1000000]],
+    ["sqrt_cp", [normalization_id: "sqrt_cp10k", n_cp: 10000]],
+    ["sqrt_cp", [normalization_id: "sqrt_cpm", n_cp: 1000000]],
+    ["l1_sqrt", [normalization_id: "l1_sqrt"]],
+    ["log_scran_pooling", [normalization_id: "log_scran_pooling"]]
+  ])
+  normalization_methods = [
+    log_cp,
+    sqrt_cp,
+    l1_sqrt,
+    log_scran_pooling
+  ]
 
   dataset_ch = input_ch
 
     // fetch data from legacy openproblems
     | openproblems_v1.run(
-      fromState: { id, state -> 
-        def output_filename =
-          (!state.do_subsample && state.output_raw) ? 
-          state.output_raw :
-          '$id.$key.output_raw.h5ad'
-        [
-          dataset_id: state.dataset_id,
-          obs_celltype: state.obs_celltype,
-          obs_batch: state.obs_batch,
-          obs_tissue: state.obs_tussue,
-          layer_counts: state.layer_counts,
-          sparse: state.sparse,
-          dataset_name: state.dataset_name,
-          data_url: state.data_url,
-          data_reference: state.data_reference, 
-          dataset_summary: state.dataset_summary,
-          dataset_description: state.dataset_description,
-          dataset_organism: state.dataset_organism,
-          output: output_filename
-        ]
-      },
-      toState: [ 
-        raw: "output"
-      ]
+      fromState: [
+        "dataset_id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts",
+        "sparse", "dataset_name", "data_url", "data_reference", "dataset_summary",
+        "dataset_description", "dataset_organism"
+      ],
+      toState: ["raw": "output"]
     )
 
   sampled_dataset_ch = dataset_ch
     | filter{ id, state -> state.do_subsample }
     | subsample.run(
-      fromState: { id, state ->
-        [
-          input: state.raw,
-          n_obs: state.n_obs,
-          n_vars: state.n_vars,
-          keep_features: state.keep_features,
-          keep_celltype_categories: state.keep_celltype_categories,
-          keep_batch_categories: state.keep_batch_categories,
-          even: state.even,
-          seed: state.seed,
-          output: state.output_raw ?: '$id.$key.output_raw.h5ad',
-          output_mod2: null
-        ]
-      },
+      fromState: [
+        "input": "raw",
+        "n_obs": "n_obs",
+        "n_vars": "n_vars",
+        "keep_features": "keep_features",
+        "keep_celltype_categories": "keep_celltype_categories",
+        "keep_batch_categories": "keep_batch_categories",
+        "even": "even",
+        "seed": "seed"
+      ],
+      args: [
+        output_mod2: null
+      ],
       toState: [
         raw: "output"
       ]
@@ -66,72 +58,53 @@ workflow run_wf {
     | concat(notsampled_dataset_ch)
 
     // run normalization methods
+    | combine(normalization_settings)
+    | map{ id, state, norm_fun, norm_args ->
+      [id, state + [ norm_fun: norm_fun, norm_args: norm_args ]]
+    }
+
     | runComponents(
       components: normalization_methods,
       id: { id, state, config ->
         if (state.normalization_methods.size() > 1) {
-          id + "/" + config.functionality.name
+          id + "/" + state.norm_args.normalization_id
         } else {
           id
         }
       },
       filter: { id, state, config ->
-        config.functionality.name in state.normalization_methods
+        config.functionality.name == state.norm_fun &&
+        state.norm_args.normalization_id in state.normalization_methods
       },
-      fromState: { id, state, config -> 
-        [
-          input: state.raw,
-          output: state.output_normalized ?: '$id.$key.output_normalized.h5ad'
-        ]
+      fromState: { id, state, config ->
+        [input: state.raw] + state.norm_args
       },
-      toState: { id, output, state, config -> 
-        state + [
-          normalization_id: config.functionality.name,
-          normalized: output.output
-        ]
-      }
+      toState: ["normalized": "output"]
     )
 
     | pca.run(
-      fromState: { id, state ->
-        [
-          input: state.normalized,
-          output: state.output_pca ?: '$id.$key.output_pca.h5ad'
-        ]
-      },
-      toState: [ pca: "output" ]
+      fromState: ["input": "normalized"],
+      toState: ["pca": "output" ]
     )
 
     | hvg.run(
-      fromState: { id, state -> 
-        [
-          input: state.pca,
-          output: state.output_hvg ?: '$id.$key.output_hvg.h5ad'
-        ]
-      },
-      toState: [ hvg: "output" ]
+      fromState: ["input": "pca"],
+      toState: ["hvg": "output"]
     )
 
     | knn.run(
-      fromState: { id, state ->
-        [
-          input: state.hvg,
-          output: state.output_knn ?: '$id.$key.output_knn.h5ad'
-        ]
-      },
-      toState: [ knn: "output" ]
+      fromState: ["input": "hvg"],
+      toState: ["knn": "output"]
     )
 
     | check_dataset_schema.run(
       fromState: { id, state ->
         [
           input: state.knn,
-          meta: state.output_meta ?: '$id.$key.output_meta.yaml',
-          output: state.output_dataset ?: '$id.$key.output_dataset.h5ad',
           checks: null
         ]
       },
-      toState: [ dataset: "output", meta: "meta" ]
+      toState: ["dataset": "output", "meta": "meta"]
     )
 
     // only output the files for which an output file was specified
@@ -149,12 +122,4 @@ workflow run_wf {
 
   emit:
   output_ch
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = getPublishDir()
-
-  writeJson(traces, file("$publish_dir/traces.json"))
-  // writeJson(normalization_methods.collect{it.config}, file("$publish_dir/normalization_methods.json"))
 }
