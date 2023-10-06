@@ -1,5 +1,5 @@
 // add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initializeTracer()
+traces = collectTraces()
 
 workflow run_wf {
   take:
