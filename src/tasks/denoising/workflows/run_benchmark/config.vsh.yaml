@@ -9,9 +9,11 @@ functionality:
           description: "The ID of the dataset"
           required: true
         - name: "--input_train"
-          type: "file"
+          __merge__: "/src/tasks/denoising/api/file_train.yaml"
+          direction: input
         - name: "--input_test"
-          type: "file"
+          __merge__: "/src/tasks/denoising/api/file_test.yaml"
+          direction: input
     - name: Outputs
       arguments:
         - name: "--output"

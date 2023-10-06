@@ -9,8 +9,6 @@ functionality:
           description: "The ID of the dataset"
           required: true
         - name: "--input"
-          type: "file"
-          description: "A dataset"
           required: true
           example: dataset.h5ad
           __merge__: "/src/tasks/denoising/api/file_common_dataset.yaml"
@@ -24,15 +22,13 @@ functionality:
     - name: Outputs
       arguments:
         - name: "--output_train"
-          type: file
+          __merge__: "/src/tasks/denoising/api/file_train.yaml"
           direction: output
           required: true
-          example: train.h5ad
         - name: "--output_test"
-          type: file
+          __merge__: "/src/tasks/denoising/api/file_test.yaml"
           direction: output
           required: true
-          example: test.h5ad
   resources:
     - type: nextflow_script
       path: main.nf
