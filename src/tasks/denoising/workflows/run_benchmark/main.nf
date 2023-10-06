@@ -20,9 +20,15 @@ workflow run_wf {
     mse,
     poisson
   ]
-
+  
 
   output_ch = input_ch
+    
+    | map { id, state -> 
+      def newId = id.replaceAll(/\//, "_")
+
+      [newId, state]
+    }
 
     // extract the dataset metadata
     | check_dataset_schema.run(
@@ -113,8 +119,8 @@ workflow.onComplete {
 
   writeJson(traces, file("$publish_dir/traces.json"))
   // todo: add datasets logging
-  writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
+  // writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
+  // writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
 
 

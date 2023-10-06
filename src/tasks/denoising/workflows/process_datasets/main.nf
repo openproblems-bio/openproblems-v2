@@ -1,4 +1,5 @@
 workflow auto {
+  // TODO: `thisConfig` might be renamed to `meta["config"]` in the future
   findStates(params, thisConfig)
     | run_wf
     | publishStates([key: thisConfig.functionality.name])

@@ -25,7 +25,7 @@ nextflow run . \
   -entry auto \
   -c src/wf_utils/labels_ci.config \
   --id resources \
-  --input_states "$DATASETS_DIR/**state.yaml" \
+  --input_states "$DATASETS_DIR/**/.*state.yaml" \
   --rename_keys 'input_train:output_train,input_test:output_test' \
   --settings '{"output": "scores.tsv"}' \
   --publish_dir "$OUTPUT_DIR"
