@@ -36,7 +36,7 @@ param_list:
     dataset_description: "Single cell RNA-seq and ATAC-seq co-profiling for HEK293T cells, NIH/3T3 cells, A549 cells across three treatment conditions (DEX 0 hour, 1 hour and 3 hour treatment)."
     data_reference: cao2018joint
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117089
-    dataset_organism: homo_sapiens
+    dataset_organism: [homo_sapiens, mus_musculus]
     obs_celltype: cell_name
     layer_counts: counts
 
@@ -52,6 +52,7 @@ param_list:
     obs_batch: replicate
     layer_counts: counts
 
+normalization_id: [log_cp10k, sqrt_cp10k, l1_sqrt]
 output_dataset_mod1: '$id/dataset_mod1.h5ad'
 output_dataset_mod1: '$id/dataset_mod2.h5ad'
 output_meta_mod1: '$id/dataset_metadata_mod1.h5ad'
