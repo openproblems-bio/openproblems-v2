@@ -518,7 +518,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
+    "git_commit" : "dbf4c0b37ea7012290e28de88b76ebe501bbb363",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

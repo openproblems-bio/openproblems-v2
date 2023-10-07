@@ -39,7 +39,6 @@ thisConfig = processConfig(readJsonBlob('''{
           {
             "type" : "file",
             "name" : "--input",
-            "description" : "A dataset",
             "info" : {
               "label" : "Common Dataset",
               "summary" : "A subset of the common dataset.",
@@ -169,8 +168,98 @@ thisConfig = processConfig(readJsonBlob('''{
           {
             "type" : "file",
             "name" : "--output_dataset",
+            "info" : {
+              "label" : "Dataset",
+              "summary" : "Unintegrated AnnData HDF5 file.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "label",
+                    "description" : "label information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "obsp" : [
+                  {
+                    "type" : "double",
+                    "name" : "knn_distances",
+                    "description" : "K nearest neighbors distance matrix.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "knn_connectivities",
+                    "description" : "K nearest neighbors connectivities matrix.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "object",
+                    "name" : "knn",
+                    "description" : "Supplementary K nearest neighbors data.",
+                    "required" : true
+                  }
+                ]
+              }
+            },
             "example" : [
-              "dataset.h5ad"
+              "resources_test/batch_integration/pancreas/dataset.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -183,8 +272,98 @@ thisConfig = processConfig(readJsonBlob('''{
           {
             "type" : "file",
             "name" : "--output_solution",
+            "info" : {
+              "label" : "Solution",
+              "summary" : "Solution dataset",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "label",
+                    "description" : "label information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "obsp" : [
+                  {
+                    "type" : "double",
+                    "name" : "knn_distances",
+                    "description" : "K nearest neighbors distance matrix.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "knn_connectivities",
+                    "description" : "K nearest neighbors connectivities matrix.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "object",
+                    "name" : "knn",
+                    "description" : "Supplementary K nearest neighbors data.",
+                    "required" : true
+                  }
+                ]
+              }
+            },
             "example" : [
-              "solution.h5ad"
+              "resources_test/batch_integration/pancreas/solution.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -225,7 +404,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
+          "git_commit" : "dbf4c0b37ea7012290e28de88b76ebe501bbb363",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -247,7 +426,7 @@ thisConfig = processConfig(readJsonBlob('''{
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
+          "git_commit" : "dbf4c0b37ea7012290e28de88b76ebe501bbb363",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -311,7 +490,7 @@ thisConfig = processConfig(readJsonBlob('''{
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0-RC2",
-    "git_commit" : "adb94dc60b83de38e544fce8b3ea10afa1ea77c2",
+    "git_commit" : "dbf4c0b37ea7012290e28de88b76ebe501bbb363",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
