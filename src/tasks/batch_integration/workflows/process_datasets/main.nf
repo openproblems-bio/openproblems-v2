@@ -1,7 +1,7 @@
 workflow auto {
-  findStates(params, config)
+  findStates(params, thisConfig)
     | run_wf
-    | publishStates([:])
+    | publishStates([key: thisConfig.functionality.name])
 }
 
 workflow run_wf {
