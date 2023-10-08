@@ -1,7 +1,9 @@
 workflow auto {
-  findStates(params, thisConfig)
-    | run_wf
-    | publishStates([key: thisConfig.functionality.name])
+  findStates(params, meta.config)
+    | view{"found: $it"}
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
 }
 
 workflow run_wf {
