@@ -217,14 +217,19 @@ functionality:
       description: "Which normalization methods to run."
       info: null
       default:
-      - "log_cp"
-      - "sqrt_cp"
+      - "log_cp10k"
+      - "log_cpm"
+      - "sqrt_cp10k"
+      - "sqrt_cpm"
       - "l1_sqrt"
       required: false
       choices:
-      - "log_cp"
-      - "sqrt_cp"
+      - "log_cp10k"
+      - "log_cpm"
+      - "sqrt_cp10k"
+      - "sqrt_cpm"
       - "l1_sqrt"
+      - "log_scran_pooling"
       direction: "input"
       multiple: true
       multiple_sep: ":"
@@ -233,9 +238,132 @@ functionality:
     arguments:
     - type: "file"
       name: "--output_dataset"
-      description: "A dataset"
+      info:
+        label: "Common dataset"
+        summary: "A dataset processed by the common dataset processing pipeline."
+        description: "This dataset contains both raw counts and normalized data matrices,\n\
+          as well as a PCA embedding, HVG selection and a kNN graph."
+        slots:
+          obsp:
+          - type: "double"
+            name: "knn_distances"
+            description: "K nearest neighbors distance matrix."
+            required: true
+          - type: "double"
+            name: "knn_connectivities"
+            description: "K nearest neighbors connectivities matrix."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the sample in the dataset."
+            required: false
+          - type: "double"
+            name: "pca_variance"
+            description: "The PCA variance objects."
+            required: true
+          - type: "object"
+            name: "knn"
+            description: "Supplementary K nearest neighbors data."
+            required: true
+          var:
+          - type: "boolean"
+            name: "hvg"
+            description: "Whether or not the feature is considered to be a 'highly\
+              \ variable gene'"
+            required: true
+          - type: "integer"
+            name: "hvg_score"
+            description: "A ranking of the features by hvg."
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          varm:
+          - type: "double"
+            name: "pca_loadings"
+            description: "The PCA loadings matrix."
+            required: true
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalised expression values"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          - type: "double"
+            name: "size_factors"
+            description: "The size factors created by the normalisation method, if\
+              \ any."
+            required: false
+      example:
+      - "resources_test/common/pancreas/dataset.h5ad"
+      must_exist: true
+      create_parent: true
+      required: true
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_meta"
+      description: "Dataset metadata"
+      info: null
+      default:
+      - "dataset_metadata.yaml"
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_raw"
       info:
         label: "Raw dataset"
+        summary: "An unprocessed dataset as output by a dataset loader."
         slots:
           layers:
           - type: "integer"
@@ -260,33 +388,32 @@ functionality:
             name: "dataset_id"
             description: "A unique identifier for the dataset"
             required: true
-      default:
-      - "dataset.h5ad"
-      must_exist: true
-      create_parent: true
-      required: false
-      direction: "output"
-      multiple: false
-      multiple_sep: ":"
-      dest: "par"
-    - type: "file"
-      name: "--output_meta"
-      description: "Dataset metadata"
-      info: null
-      default:
-      - "dataset_metadata.yaml"
-      must_exist: true
-      create_parent: true
-      required: false
-      direction: "output"
-      multiple: false
-      multiple_sep: ":"
-      dest: "par"
-    - type: "file"
-      name: "--output_raw"
-      info: null
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the sample in the dataset."
+            required: false
       example:
-      - "raw.h5ad"
+      - "resources_test/common/pancreas/raw.h5ad"
       must_exist: true
       create_parent: true
       required: false
@@ -296,9 +423,68 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--output_normalized"
-      info: null
+      info:
+        label: "Normalized dataset"
+        summary: "A normalized dataset"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalised expression values"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          - type: "double"
+            name: "size_factors"
+            description: "The size factors created by the normalisation method, if\
+              \ any."
+            required: false
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the sample in the dataset."
+            required: false
       example:
-      - "normalized.h5ad"
+      - "resources_test/common/pancreas/normalized.h5ad"
       must_exist: true
       create_parent: true
       required: false
@@ -308,9 +494,82 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--output_pca"
-      info: null
+      info:
+        label: "Dataset+PCA"
+        summary: "A normalised dataset with a PCA embedding"
+        slots:
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          varm:
+          - type: "double"
+            name: "pca_loadings"
+            description: "The PCA loadings matrix."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the sample in the dataset."
+            required: false
+          - type: "double"
+            name: "pca_variance"
+            description: "The PCA variance objects."
+            required: true
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalised expression values"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          - type: "double"
+            name: "size_factors"
+            description: "The size factors created by the normalisation method, if\
+              \ any."
+            required: false
       example:
-      - "pca.h5ad"
+      - "resources_test/common/pancreas/pca.h5ad"
       must_exist: true
       create_parent: true
       required: false
@@ -320,9 +579,92 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--output_hvg"
-      info: null
+      info:
+        label: "Dataset+PCA+HVG"
+        summary: "A normalised dataset with a PCA embedding and HVG selection."
+        slots:
+          var:
+          - type: "boolean"
+            name: "hvg"
+            description: "Whether or not the feature is considered to be a 'highly\
+              \ variable gene'"
+            required: true
+          - type: "integer"
+            name: "hvg_score"
+            description: "A ranking of the features by hvg."
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          varm:
+          - type: "double"
+            name: "pca_loadings"
+            description: "The PCA loadings matrix."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the sample in the dataset."
+            required: false
+          - type: "double"
+            name: "pca_variance"
+            description: "The PCA variance objects."
+            required: true
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalised expression values"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          - type: "double"
+            name: "size_factors"
+            description: "The size factors created by the normalisation method, if\
+              \ any."
+            required: false
       example:
-      - "hvg.h5ad"
+      - "resources_test/common/pancreas/hvg.h5ad"
       must_exist: true
       create_parent: true
       required: false
@@ -332,9 +674,106 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--output_knn"
-      info: null
+      info:
+        label: "Dataset+PCA+HVG+kNN"
+        summary: "A normalised data with a PCA embedding, HVG selection and a kNN\
+          \ graph"
+        slots:
+          obsp:
+          - type: "double"
+            name: "knn_distances"
+            description: "K nearest neighbors distance matrix."
+            required: true
+          - type: "double"
+            name: "knn_connectivities"
+            description: "K nearest neighbors connectivities matrix."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - name: "dataset_name"
+            type: "string"
+            description: "Nicely formatted name."
+            required: true
+          - type: "string"
+            name: "data_url"
+            description: "Link to the original source of the dataset."
+            required: false
+          - name: "data_reference"
+            type: "string"
+            description: "Bibtex reference of the paper in which the dataset was published."
+            required: false
+          - name: "dataset_summary"
+            type: "string"
+            description: "Short description of the dataset."
+            required: true
+          - name: "dataset_description"
+            type: "string"
+            description: "Long description of the dataset."
+            required: true
+          - name: "dataset_organism"
+            type: "string"
+            description: "The organism of the sample in the dataset."
+            required: false
+          - type: "double"
+            name: "pca_variance"
+            description: "The PCA variance objects."
+            required: true
+          - type: "object"
+            name: "knn"
+            description: "Supplementary K nearest neighbors data."
+            required: true
+          var:
+          - type: "boolean"
+            name: "hvg"
+            description: "Whether or not the feature is considered to be a 'highly\
+              \ variable gene'"
+            required: true
+          - type: "integer"
+            name: "hvg_score"
+            description: "A ranking of the features by hvg."
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          varm:
+          - type: "double"
+            name: "pca_loadings"
+            description: "The PCA loadings matrix."
+            required: true
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalised expression values"
+            required: true
+          obs:
+          - type: "string"
+            name: "celltype"
+            description: "Cell type information"
+            required: false
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: false
+          - type: "string"
+            name: "tissue"
+            description: "Tissue information"
+            required: false
+          - type: "double"
+            name: "size_factors"
+            description: "The size factors created by the normalisation method, if\
+              \ any."
+            required: false
       example:
-      - "knn.h5ad"
+      - "resources_test/common/pancreas/knn.h5ad"
       must_exist: true
       create_parent: true
       required: false
@@ -361,12 +800,12 @@ functionality:
       functionalityName: "openproblems_v1"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/loaders/openproblems_v1/config.vsh.yaml"
       functionalityNamespace: "datasets/loaders"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/loaders/openproblems_v1/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1"
   - name: "datasets/normalization/log_cp"
@@ -379,12 +818,12 @@ functionality:
       functionalityName: "log_cp"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_cp/config.vsh.yaml"
       functionalityNamespace: "datasets/normalization"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/normalization/log_cp/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
   - name: "datasets/normalization/log_scran_pooling"
@@ -397,12 +836,12 @@ functionality:
       functionalityName: "log_scran_pooling"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/log_scran_pooling/config.vsh.yaml"
       functionalityNamespace: "datasets/normalization"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
   - name: "datasets/normalization/sqrt_cp"
@@ -415,12 +854,12 @@ functionality:
       functionalityName: "sqrt_cp"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/sqrt_cp/config.vsh.yaml"
       functionalityNamespace: "datasets/normalization"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/normalization/sqrt_cp/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
   - name: "datasets/normalization/l1_sqrt"
@@ -433,12 +872,12 @@ functionality:
       functionalityName: "l1_sqrt"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/normalization/l1_sqrt/config.vsh.yaml"
       functionalityNamespace: "datasets/normalization"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/normalization/l1_sqrt/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
   - name: "datasets/processors/subsample"
@@ -451,12 +890,12 @@ functionality:
       functionalityName: "subsample"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/subsample/config.vsh.yaml"
       functionalityNamespace: "datasets/processors"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/processors/subsample/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
   - name: "datasets/processors/pca"
@@ -469,12 +908,12 @@ functionality:
       functionalityName: "pca"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/pca/config.vsh.yaml"
       functionalityNamespace: "datasets/processors"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/processors/pca/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
   - name: "datasets/processors/hvg"
@@ -487,12 +926,12 @@ functionality:
       functionalityName: "hvg"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/hvg/config.vsh.yaml"
       functionalityNamespace: "datasets/processors"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/processors/hvg/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
   - name: "datasets/processors/knn"
@@ -505,12 +944,12 @@ functionality:
       functionalityName: "knn"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/processors/knn/config.vsh.yaml"
       functionalityNamespace: "datasets/processors"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/datasets/processors/knn/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
   - name: "common/check_dataset_schema"
@@ -523,12 +962,12 @@ functionality:
       functionalityName: "check_dataset_schema"
       git_tag: ""
       git_remote: "https://github.com/openproblems-bio/openproblems-v2"
-      viash_version: "0.8.0-RC2"
+      viash_version: "0.8.0-RC3"
       config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml"
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+      git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
       executable: "/nextflow/common/check_dataset_schema/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
   set_wd_to_resources_dir: false
@@ -581,6 +1020,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1/main.nf"
-  viash_version: "0.8.0-RC2"
-  git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+  viash_version: "0.8.0-RC3"
+  git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

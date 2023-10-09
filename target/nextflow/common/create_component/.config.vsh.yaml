@@ -184,6 +184,6 @@ info:
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component/create_component"
-  viash_version: "0.8.0-RC2"
-  git_commit: "dbf4c0b37ea7012290e28de88b76ebe501bbb363"
+  viash_version: "0.8.0-RC3"
+  git_commit: "6bad8d6d4dd2e92a4b6f0f5e77534274cf021d3c"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
