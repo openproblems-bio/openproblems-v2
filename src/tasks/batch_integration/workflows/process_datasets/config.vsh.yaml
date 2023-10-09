@@ -5,8 +5,6 @@ functionality:
     - name: Inputs
       arguments:
         - name: "--input"
-          type: "file"
-          description: "A dataset"
           required: true
           example: dataset.h5ad
           __merge__: "/src/tasks/batch_integration/api/file_common_dataset.yaml"
@@ -20,15 +18,13 @@ functionality:
     - name: Outputs
       arguments:
         - name: "--output_dataset"
-          type: file
-          direction: output
+          __merge__: /src/tasks/batch_integration/api/file_dataset.yaml
           required: true
-          example: dataset.h5ad
+          direction: output
         - name: "--output_solution"
-          type: file
-          direction: output
+          __merge__: /src/tasks/batch_integration/api/file_solution.yaml
           required: true
-          example: solution.h5ad
+          direction: output
   resources:
     - type: nextflow_script
       path: main.nf
