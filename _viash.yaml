@@ -1,4 +1,4 @@
-viash_version: 0.8.0dev
+viash_version: 0.8.0-rc4
 
 source: src
 target: target

@@ -4,10 +4,6 @@ functionality:
   argument_groups:
     - name: Inputs
       arguments:
-        - name: "--id"
-          type: "string"
-          description: "The ID of the normalized dataset"
-          required: true
         - name: "--input_dataset"
           __merge__: "/src/tasks/dimensionality_reduction/api/file_dataset.yaml"
           required: true
