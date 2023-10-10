@@ -5,15 +5,14 @@ functionality:
     - name: Inputs
       arguments:
         - name: "--input"
-          required: true
-          example: dataset.h5ad
           __merge__: "/src/tasks/dimensionality_reduction/api/file_common_dataset.yaml"
-    - name: Schemas
-      arguments:
+          required: true
+          direction: input
         - name: "--dataset_schema"
           type: "file"
-          description: "The schema of the dataset to validate against"
           required: true
+          direction: input
+          description: "The schema of the dataset to validate against"
           default: "/src/tasks/dimensionality_reduction/api/file_common_dataset.yaml"
     - name: Outputs
       arguments:

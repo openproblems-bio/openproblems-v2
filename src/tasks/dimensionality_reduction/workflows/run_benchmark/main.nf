@@ -1,13 +1,9 @@
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = collectTraces()
-
-workflow {
-  helpMessage(config)
-
-  // create channel from input parameters with
-  // arguments as defined in the config
-  channelFromParams(params, config)
-    | run_wf
+workflow auto {
+  findStates(params, meta.config)
+    | view{"auto: $it"}
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
 }
 
 workflow run_wf {
@@ -38,10 +34,9 @@ workflow run_wf {
 
   output_ch = input_ch
 
-    | map { id, state -> 
-      def newId = id.replaceAll(/\//, "_")
-
-      [newId, state]
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
     }
 
     // extract the dataset metadata
@@ -121,41 +116,14 @@ workflow run_wf {
       [new_id, new_state]
     }
 
-    // convert to tsv and publish
-    | extract_scores.run(
-      auto: [publish: true]
-    )
+  // convert to tsv and publish
+  | extract_scores.run(
+    fromState: ["input"],
+    toState: ["output"]
+  )
+
+  | setState(["output", "_meta"])
 
   emit:
   output_ch
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = getPublishDir()
-
-  writeJson(traces, file("$publish_dir/traces.json"))
-  // todo: add datasets logging
-  // writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  // writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
-}
-
-
-// helper function
-def joinStates(Closure apply_) {
-  workflow joinStatesWf {
-    take: input_ch
-    main:
-    output_ch = input_ch
-      | toSortedList
-      | filter{ it.size() > 0 }
-      | map{ tups ->
-        def ids = tups.collect{it[0]}
-        def states = tups.collect{it[1]}
-        apply_(ids, states)
-      }
-
-    emit: output_ch
-  }
-  return joinStatesWf
 }
