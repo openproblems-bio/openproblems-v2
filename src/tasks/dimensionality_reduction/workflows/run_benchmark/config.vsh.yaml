@@ -9,11 +9,13 @@ functionality:
           description: "The ID of the normalized dataset"
           required: true
         - name: "--input_dataset"
-          type: "file"
+          __merge__: "/src/tasks/dimensionality_reduction/api/file_dataset.yaml"
           required: true
+          direction: input
         - name: "--input_solution"
-          type: "file"
+          __merge__: "/src/tasks/dimensionality_reduction/api/file_solution.yaml"
           required: true
+          direction: input
     - name: Outputs
       arguments:
         - name: "--output"

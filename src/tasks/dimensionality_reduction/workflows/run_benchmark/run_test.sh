@@ -10,8 +10,8 @@ set -e
 
 # export TOWER_WORKSPACE_ID=53907369739130
 
-DATASETS_DIR="resources/dimensionality_reduction"
-OUTPUT_DIR="resources/dimensionality_reduction/benchmarks/openproblems_v1"
+DATASETS_DIR="resources_test/dimensionality_reduction"
+OUTPUT_DIR="resources_test/dimensionality_reduction/benchmarks/openproblems_v1"
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
