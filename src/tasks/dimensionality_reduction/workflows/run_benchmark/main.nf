@@ -1,6 +1,5 @@
 workflow auto {
   findStates(params, meta.config)
-    | view{"auto: $it"}
     | meta.workflow.run(
       auto: [publish: "state"]
     )
@@ -48,57 +47,57 @@ workflow run_wf {
     )
 
     // run all methods
-    | runComponents(
+    | runEach(
       components: methods,
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, config ->
+      filter: { id, state, comp ->
         def norm = state.normalization_id
-        def pref = config.functionality.info.preferred_normalization
+        def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
         (norm == "log_cp10k" && pref == "counts") || norm == pref
       },
 
       // define a new 'id' by appending the method name to the dataset id
-      id: { id, state, config ->
-        id + "." + config.functionality.name
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
-      fromState: { id, state, config ->
+      fromState: { id, state, comp ->
         def new_args = [
           input: state.input_dataset
         ]
-        if (config.functionality.info.type == "control_method") {
+        if (comp.config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
         }
         new_args
       },
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          method_id: config.functionality.name,
+          method_id: comp.config.functionality.name,
           method_output: output.output
         ]
       }
     )
 
     // run all metrics
-    | runComponents(
+    | runEach(
       components: metrics,
       // use 'fromState' to fetch the arguments the component requires from the overall state
-      fromState: { id, state, config ->
+      fromState: { id, state, comp ->
         [
           input_solution: state.input_solution,
           input_embedding: state.method_output
         ]
       },
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          metric_id: config.functionality.name,
+          metric_id: comp.config.functionality.name,
           metric_output: output.output
         ]
       }
@@ -111,7 +110,7 @@ workflow run_wf {
       def new_id = "output"
       def new_state = [
         input: states.collect{it.metric_output},
-        output: states[0].output
+        _meta: states[0]._meta
       ]
       [new_id, new_state]
     }

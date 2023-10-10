@@ -11,7 +11,7 @@ set -e
 # export TOWER_WORKSPACE_ID=53907369739130
 
 DATASETS_DIR="resources/dimensionality_reduction"
-OUTPUT_DIR="resources/dimensionality_reduction/benchmarks/openproblems_v1"
+OUTPUT_DIR="output/test"
 
 if [ ! -d "$OUTPUT_DIR" ]; then
   mkdir -p "$OUTPUT_DIR"
@@ -24,8 +24,8 @@ nextflow run . \
   -resume \
   -entry auto \
   -c src/wf_utils/labels_ci.config \
-  --id resources_test \
-  --input_states "$DATASETS_DIR/**/*state.yaml" \
+  --input_states "$DATASETS_DIR/**/state.yaml" \
   --rename_keys 'input_dataset:output_dataset,input_solution:output_solution' \
   --settings '{"output": "scores.tsv"}' \
-  --publish_dir "$OUTPUT_DIR"
+  --publish_dir "$OUTPUT_DIR"\
+  --output_state '$id/state.yaml'

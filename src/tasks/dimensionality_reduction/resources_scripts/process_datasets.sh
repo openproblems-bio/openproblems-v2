@@ -17,7 +17,6 @@ nextflow run . \
   -main-script target/nextflow/dimensionality_reduction/workflows/process_datasets/main.nf \
   -profile docker \
   -entry auto \
-  --id run_test \
   --input_states "$COMMON_DATASETS/**/state.yaml" \
   --rename_keys 'input:output_dataset' \
   --settings '{"output_dataset": "$id/dataset.h5ad", "output_solution": "$id/solution.h5ad"}' \

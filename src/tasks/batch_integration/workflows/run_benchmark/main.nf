@@ -1,6 +1,5 @@
 workflow auto {
   findStates(params, meta.config)
-    | view{"Found state: $it"}
     | meta.workflow.run(
       auto: [publish: "state"]
     )
