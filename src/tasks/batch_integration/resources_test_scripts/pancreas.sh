@@ -13,8 +13,6 @@ DATASET_DIR=resources_test/batch_integration
 
 mkdir -p $DATASET_DIR
 
-set -e
-
 # process dataset
 echo Running process_dataset
 nextflow run . \
