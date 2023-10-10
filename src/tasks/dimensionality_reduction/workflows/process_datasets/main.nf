@@ -47,7 +47,7 @@ workflow run_wf {
     // only output the files for which an output file was specified
     | setState { id, state ->
       [
-        "output_dataset": state.output_train ? state.dataset : null,
+        "output_dataset": state.output_dataset ? state.dataset : null,
         "output_solution": state.output_solution ? state.solution : null
       ]
     }

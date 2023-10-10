@@ -10,16 +10,10 @@ cd "$REPO_ROOT"
 
 set -e
 
-RAW_DATA=resources_test/common/pancreas/dataset.h5ad
-DATASET_DIR=resources_test/dimensionality_reduction/pancreas
-
-if [ ! -f $RAW_DATA ]; then
-    echo "Error! Could not find raw data"
-    exit 1
-fi
+RAW_DATA=resources_test/common
+DATASET_DIR=resources_test/dimensionality_reduction
 
 mkdir -p $DATASET_DIR
-
 
 # process dataset
 echo Running process_dataset
@@ -32,6 +26,8 @@ nextflow run . \
   --settings '{"output_dataset": "$id/dataset.h5ad", "output_solution": "$id/solution.h5ad"}' \
   --publish_dir "$DATASET_DIR" \
   --output_state '$id/state.yaml'
+# output_state should be moved to settings once workaround is solved
+
 
 # # run one method
 # viash run src/tasks/dimensionality_reduction/methods/densmap/config.vsh.yaml -- \

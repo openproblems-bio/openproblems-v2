@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Run this prior to executing this script:
-# bin/viash_build -q 'batch_integration'
-
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
@@ -11,6 +8,9 @@ cd "$REPO_ROOT"
 
 set -e
 
+COMMON_DATASETS="resources/datasets/openproblems_v1"
+OUTPUT_DIR="resources/dimensionality_reduction/datasets/openproblems_v1"
+
 export NXF_VER=22.04.5
 
 nextflow run . \
@@ -18,7 +18,8 @@ nextflow run . \
   -profile docker \
   -entry auto \
   --id run_test \
-  --input_states "resources/common/**/state.yaml" \
+  --input_states "$COMMON_DATASETS/**/state.yaml" \
   --rename_keys 'input:output_dataset' \
-  --settings '{"output_dataset": "dataset.h5ad", "output_solution": "solution.h5ad"}' \
-  --publish_dir "resources/dimensionality_reduction"
+  --settings '{"output_dataset": "$id/dataset.h5ad", "output_solution": "$id/solution.h5ad"}' \
+  --publish_dir "$OUTPUT_DIR" \
+  --output_state '$id/state.yaml'
