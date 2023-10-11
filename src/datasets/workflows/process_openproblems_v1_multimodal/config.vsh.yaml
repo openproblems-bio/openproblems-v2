@@ -3,20 +3,13 @@ functionality:
   namespace: datasets/workflows
   description: |
     Fetch and process legacy OpenProblems v1 multimodal datasets
-  # viash 0.8.0-RC4 workaround. Remove after 0.8.0 is released
-  arguments:
-    - name: "--id"
-      type: "string"
-      description: "The ID of the dataset"
-      required: true
   argument_groups:
     - name: Inputs
       arguments:
-      # viash 0.8.0-RC4 workaround. Uncomment after 0.8.0 is released
-        # - name: "--id"
-        #   type: "string"
-        #   description: "The ID of the dataset"
-        #   required: true
+        - name: "--id"
+          type: "string"
+          description: "The ID of the dataset"
+          required: true
         - name: "--obs_celltype"
           type: "string"
           description: "Location of where to find the observation cell types."
