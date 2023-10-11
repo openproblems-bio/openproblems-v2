@@ -1,4 +1,3 @@
-
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
