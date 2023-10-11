@@ -2963,7 +2963,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "9e6ca5c57cf36e7ebe0f3171dddfc856a3e0fea7",
+          "git_commit" : "a5acc125ae62f20df60f3eddc2db53c8f76de8ad",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2985,7 +2985,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction",
           "output" : "",
           "platform" : "",
-          "git_commit" : "9e6ca5c57cf36e7ebe0f3171dddfc856a3e0fea7",
+          "git_commit" : "a5acc125ae62f20df60f3eddc2db53c8f76de8ad",
           "executable" : "/nextflow/dimensionality_reduction/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/process_dataset"
@@ -3031,7 +3031,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/process_datasets",
     "viash_version" : "0.8.0-RC5",
-    "git_commit" : "9e6ca5c57cf36e7ebe0f3171dddfc856a3e0fea7",
+    "git_commit" : "a5acc125ae62f20df60f3eddc2db53c8f76de8ad",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3078,24 +3078,15 @@ workflow run_wf {
     }
 
     | process_dataset.run(
-      fromState: [
-        input: "dataset",
+      fromState: [input: "dataset"],
+      toState: [
         output_dataset: "output_dataset",
         output_solution: "output_solution"
-      ],
-      toState: [
-        dataset: "output_dataset",
-        solution: "output_solution"
       ]
     )
 
     // only output the files for which an output file was specified
-    | setState { id, state ->
-      [
-        "output_dataset": state.output_dataset ? state.dataset : null,
-        "output_solution": state.output_solution ? state.solution : null
-      ]
-    }
+    | setState(["output_dataset", "output_solution"])
 
   emit:
   output_ch

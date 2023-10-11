@@ -413,9 +413,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("dynverse/dynutils"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/metrics correlation"
-LABEL org.opencontainers.image.created="2023-10-11T12:55:33Z"
+LABEL org.opencontainers.image.created="2023-10-11T13:24:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9e6ca5c57cf36e7ebe0f3171dddfc856a3e0fea7"
+LABEL org.opencontainers.image.revision="a5acc125ae62f20df60f3eddc2db53c8f76de8ad"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -3143,7 +3143,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/pcr",
     "viash_version" : "0.8.0-RC5",
-    "git_commit" : "9e6ca5c57cf36e7ebe0f3171dddfc856a3e0fea7",
+    "git_commit" : "a5acc125ae62f20df60f3eddc2db53c8f76de8ad",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
