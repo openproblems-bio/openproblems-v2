@@ -13,7 +13,7 @@ functionality:
           description: "The schema of the dataset to validate against"
           required: true
           default: "src/tasks/batch_integration/api/file_common_dataset.yaml"
-          direction: 
+          direction: input
     - name: Outputs
       arguments:
         - name: "--output_dataset"
