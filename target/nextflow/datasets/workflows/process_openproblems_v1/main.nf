@@ -3834,7 +3834,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1"
@@ -3856,7 +3856,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3878,7 +3878,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -3900,7 +3900,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -3922,7 +3922,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -3944,7 +3944,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -3966,7 +3966,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -3988,7 +3988,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4010,7 +4010,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -4032,7 +4032,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+          "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -4078,7 +4078,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.8.0-RC5",
-    "git_commit" : "3da9d9e85806a8f399cc727235bc1e3196126743",
+    "git_commit" : "5f71a6678c484f424d461c776861a277c59b4eca",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -4189,7 +4189,12 @@ workflow run_wf {
         comp.name in state.normalization_methods
       },
       fromState: ["input": "output_raw"],
-      toState: ["output_normalized": "output"]
+      toState: { id, state, output, comp ->
+        state + [
+          output_normalization: output.output,
+          normalization_id: comp.name
+        ]
+      }
     )
 
     | pca.run(
@@ -4219,8 +4224,10 @@ workflow run_wf {
       def is_ok = id == expected_id
       
       if (!is_ok) {
-        println("DETECTED ID MISMATCH: $id != $expected_id.\nState: $state\n")
+        println("DETECTED ID MISMATCH: $id != $expected_id.\nTuple:\n${toYamlBlob([id, state])}\n")
       }
+
+      is_ok
     }
 
     // only output the files for which an output file was specified
