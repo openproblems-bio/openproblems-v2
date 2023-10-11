@@ -84,16 +84,17 @@ param_list:
     dataset_description: Human pancreatic islet scRNA-seq data from 6 datasets across technologies (CEL-seq, CEL-seq2, Smart-seq2, inDrop, Fluidigm C1, and SMARTER-seq). 
     dataset_organism: homo_sapiens
 
-  - id: tabula_muris_senis_droplet_lung
-    obs_celltype: cell_type
-    obs_batch: donor_id
-    layer_counts: counts
-    dataset_name: Tabula Muris Senis Lung
-    data_url: https://tabula-muris-senis.ds.czbiohub.org
-    data_reference: tabula2020single
-    dataset_summary: Aging mouse lung cells from Tabula Muris Senis
-    dataset_description: All lung cells from 10x profiles in Tabula Muris Senis, a 500k cell-atlas from 18 organs and tissues across the mouse lifespan.
-    dataset_organism: mus_musculus
+  # disabled as this is not working in openproblemsv1
+  # - id: tabula_muris_senis_droplet_lung
+  #   obs_celltype: cell_type
+  #   obs_batch: donor_id
+  #   layer_counts: counts
+  #   dataset_name: Tabula Muris Senis Lung
+  #   data_url: https://tabula-muris-senis.ds.czbiohub.org
+  #   data_reference: tabula2020single
+  #   dataset_summary: Aging mouse lung cells from Tabula Muris Senis
+  #   dataset_description: All lung cells from 10x profiles in Tabula Muris Senis, a 500k cell-atlas from 18 organs and tissues across the mouse lifespan.
+  #   dataset_organism: mus_musculus
 
   - id: tenx_1k_pbmc
     layer_counts: counts
