@@ -1,8 +1,11 @@
 type: file
 example: "resources_test/common/scicar_cell_lines/dataset_mod2.h5ad"
 info:
-  label: "Modality 2"
-  summary: "The second modality of a multimodal dataset."
+  label: "Common dataset mod2"
+  summary: The second modality (ADT or ATAC) of a dataset processed by the common multimodal dataset processing pipeline. 
+  description: |
+    This dataset contains both raw counts and normalized data matrices,
+    as well as a PCA embedding, HVG selection and a kNN graph.
   slots:
     layers: 
       - type: integer
@@ -12,15 +15,6 @@ info:
       - type: double
         name: normalized
         description: Normalized counts
-        required: true
-    var:
-      - type: boolean
-        name: hvg
-        description: Whether or not the feature is considered to be a 'highly variable gene'
-        required: true
-      - type: integer
-        name: hvg_score
-        description: A ranking of the features by hvg.
         required: true
     obsm:
       - type: double

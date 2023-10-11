@@ -29,7 +29,7 @@ print("Compute KNN on PCA", flush=True)
 _, indices_true = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
     .fit(adata_mod1.obsm["X_svd"])
-    .kneighbors(adata_mod1.obsm["X_svd"])
+    .kneighbors(adata_mod2.obsm["X_svd"])
 )
 
 print("Compute KNN on integrated matrix", flush=True)
@@ -39,7 +39,6 @@ _, indices_pred = (
     .kneighbors(adata_mod2.obsm["integrated"])
 )
 
-print("Check which neighbours match", flush=True)
 print("Check which neighbours match", flush=True)
 neighbors_match = np.zeros(n_neighbors, dtype=int)
 for i in range(adata_mod1.layers["normalized"].shape[0]):
@@ -52,7 +51,6 @@ for i in range(adata_mod1.layers["normalized"].shape[0]):
         axis=0,
     )
 
-print("Compute area under neighbours match curve", flush=True)
 print("Compute area under neighbours match curve", flush=True)
 neighbors_match_curve = neighbors_match / (
     np.arange(1, n_neighbors + 1) * adata_mod1.layers["normalized"].shape[0]
@@ -70,7 +68,7 @@ output_metric = ad.AnnData(
 for key in adata_mod1.uns_keys():
     output_metric.uns[key] = adata_mod1.uns[key]
 
-output_metric.uns["metric_ids"] = meta["functionality_name"]
+output_metric.uns["metric_ids"] = "knn_auc"
 output_metric.uns["metric_values"] = area_under_curve
 
 print("Writing adata to file", flush=True)

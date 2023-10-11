@@ -2,7 +2,7 @@ type: file
 example: "resources_test/common/scicar_cell_lines/dataset_mod1.h5ad"
 info:
   label: "Modality 1"
-  summary: "The first modality of a multimodal dataset."
+  summary: "The first modality of a multimodal dataset. The cells of this dataset are randomly permuted."
   slots:
     layers: 
       - type: integer
@@ -12,15 +12,6 @@ info:
       - type: double
         name: normalized
         description: Normalized counts
-        required: true
-    var:
-      - type: boolean
-        name: hvg
-        description: Whether or not the feature is considered to be a 'highly variable gene'
-        required: true
-      - type: integer
-        name: hvg_score
-        description: A ranking of the features by hvg.
         required: true
     obsm:
       - type: double

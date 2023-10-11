@@ -1,0 +1,34 @@
+type: file
+example: "resources_test/common/scicar_cell_lines/solution_mod1.h5ad"
+info:
+  label: "Solution mod1"
+  summary: "The ground truth information for the first modality"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+        required: true
+      - type: double
+        name: normalized
+        description: Normalized counts
+        required: true
+    obs:
+      - type: integer
+        name: permutation_indices
+        description: "Indices with which to revert the permutation of the cells"
+        required: true
+    obsm:
+      - type: double
+        name: X_svd
+        description: The resulting SVD PCA embedding.
+        required: true
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: normalization_id
+        description: "Which normalization was used"
+        required: true

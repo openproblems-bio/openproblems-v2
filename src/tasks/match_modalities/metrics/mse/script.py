@@ -44,7 +44,7 @@ for key in adata_mod1.uns_keys():
     output_metric.uns[key] = adata_mod1.uns[key]
 
 print("Store metic value", flush=True)
-output_metric.uns["metric_ids"] = meta["functionality_name"]
+output_metric.uns["metric_ids"] = "mse"
 output_metric.uns["metric_values"] = metric_value
 
 print("Writing adata to file", flush=True)
