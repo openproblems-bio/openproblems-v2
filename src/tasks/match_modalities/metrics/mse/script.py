@@ -43,7 +43,7 @@ print("Store metric value", flush=True)
 uns = {
   "dataset_id": input_solution_mod1.uns["dataset_id"],
   "normalization_id": input_solution_mod1.uns["normalization_id"],
-  "method_id": input_solution_mod1.uns["method_id"],
+  "method_id": input_integrated_mod1.uns["method_id"],
   "metric_ids": "mse",
   "metric_values": metric_value
 }
