@@ -1,6 +1,3 @@
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = collectTraces()
-
 workflow run_wf {
   take:
   input_ch
@@ -24,10 +21,9 @@ workflow run_wf {
 
   output_ch = input_ch
     
-    | map { id, state -> 
-      def newId = id.replaceAll(/\//, "_")
-
-      [newId, state]
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
     }
 
     // extract the dataset metadata
@@ -42,35 +38,34 @@ workflow run_wf {
     )
 
     // run all methods
-    | runComponents(
+  method_out_ch1 = dataset_ch
+    | runEach(
       components: methods,
 
       // define a new 'id' by appending the method name to the dataset id
-      id: { id, state, config ->
-        id + "." + config.functionality.name
+      id: { id, state, comp ->
+        id + "." + comp.functionality.name
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
-      fromState: { id, state, config ->
-        def new_args = [
-          input_train: state.input_train,
-          input_test: state.input_test
-        ]
-        new_args
-      },
+      fromState: [
+          input_train: "input_train",
+          input_test: "input_test"
+        ],
 
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          method_id: config.functionality.name,
+          method_id: comp.functionality.name,
           method_output: output.output
         ]
       }
     )
 
     // run all metrics
-    | runComponents(
+  output_ch = method_out_ch1
+    | runEach(
       components: metrics,
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
@@ -78,9 +73,9 @@ workflow run_wf {
         input_denoised: "method_output"
       ],
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          metric_id: config.functionality.name,
+          metric_id: comp.functionality.name,
           metric_output: output.output
         ]
       }
@@ -99,46 +94,18 @@ workflow run_wf {
     }
     
     // convert to tsv and publish
-    | extract_scores.run(
-      auto: [publish: true]
-    )
+  | extract_scores.run(
+    fromState: ["input"],
+    toState: ["output"]
+  )
 
   emit:
   output_ch
 }
 
 workflow auto {
-  findStates(params, thisConfig)
-    | run_wf
-    | publishStates([key: thisConfig.functionality.name])
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = getPublishDir()
-
-  writeJson(traces, file("$publish_dir/traces.json"))
-  // todo: add datasets logging
-  // writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  // writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
-}
-
-
-// helper function
-def joinStates(Closure apply_) {
-  workflow joinStatesWf {
-    take: input_ch
-    main:
-    output_ch = input_ch
-      | toSortedList
-      | filter{ it.size() > 0 }
-      | map{ tups ->
-        def ids = tups.collect{it[0]}
-        def states = tups.collect{it[1]}
-        apply_(ids, states)
-      }
-
-    emit: output_ch
-  }
-  return joinStatesWf
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
 }
