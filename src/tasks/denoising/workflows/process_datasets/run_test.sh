@@ -9,19 +9,17 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 # ensure that the command below is run from the root of the repository
 cd "$REPO_ROOT"
 
-set -xe
+set -e
 
-DATASET_DIR=resources_test/batch_integration
-
-# run benchmark
 export NXF_VER=22.04.5
 
-  # -profile docker \
 nextflow run . \
-  -main-script src/tasks/batch_integration/workflows/run_benchmark/main.nf \
+  -main-script target/nextflow/denoising/workflows/process_datasets/main.nf \
   -profile docker \
+  -entry auto \
   -c src/wf_utils/labels_ci.config \
-  -resume \
-  --id foo \
-  --input_states "$DATASET_DIR/**/state.yaml" \
-  --publish_dir "output"
+  --id run_test \
+  --input_states "resources_test/common/**/state.yaml" \
+  --rename_keys 'input:output_dataset' \
+  --settings '{"output_train": "train.h5ad", "output_test": "test.h5ad"}' \
+  --publish_dir "resources_test/denoising"

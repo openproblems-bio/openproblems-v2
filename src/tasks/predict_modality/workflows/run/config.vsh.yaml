@@ -4,10 +4,6 @@ functionality:
   argument_groups:
     - name: Inputs
       arguments:
-        - name: "--id"
-          type: "string"
-          description: "The ID of the dataset"
-          required: true
         - name: "--input_train_mod1"
           type: "file" # todo: replace with includes
         - name: "--input_train_mod2"
@@ -24,5 +20,20 @@ functionality:
   resources:
     - type: nextflow_script
       path: main.nf
+      entrypoint: run_wf
+  dependencies:
+    - name: common/check_dataset_schema
+    - name: common/extract_scores
+    - name: predict_modality/control_methods/mean_per_gene
+    - name: predict_modality/control_methods/random_predict
+    - name: predict_modality/control_methods/zeros
+    - name: predict_modality/control_methods/solution
+    - name: predict_modality/methods/knnr_py
+    - name: predict_modality/methods/knnr_r
+    - name: predict_modality/methods/lm
+    - name: predict_modality/methods/newwave_knnr
+    - name: predict_modality/methods/random_forest
+    - name: predict_modality/metrics/correlation
+    - name: predict_modality/metrics/mse
 platforms:
   - type: nextflow

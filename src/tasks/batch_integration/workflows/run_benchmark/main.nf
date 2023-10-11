@@ -1,94 +1,8 @@
-nextflow.enable.dsl=2
-
-sourceDir = params.rootDir + "/src"
-targetDir = params.rootDir + "/target/nextflow"
-
-include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/main.nf"
-
-// import methods
-include { bbknn } from "$targetDir/batch_integration/methods/bbknn/main.nf"
-include { combat } from "$targetDir/batch_integration/methods/combat/main.nf"
-include { scanorama_embed } from "$targetDir/batch_integration/methods/scanorama_embed/main.nf"
-include { scanorama_feature } from "$targetDir/batch_integration/methods/scanorama_feature/main.nf"
-include { scvi } from "$targetDir/batch_integration/methods/scvi/main.nf"
-
-// import control methods
-include { no_integration_batch } from "$targetDir/batch_integration/control_methods/no_integration_batch/main.nf"
-include { random_embed_cell } from "$targetDir/batch_integration/control_methods/random_embed_cell/main.nf"
-include { random_embed_cell_jitter } from "$targetDir/batch_integration/control_methods/random_embed_cell_jitter/main.nf"
-include { random_integration } from "$targetDir/batch_integration/control_methods/random_integration/main.nf"
-
-// import transformers
-include { feature_to_embed } from "$targetDir/batch_integration/transformers/feature_to_embed/main.nf"
-include { embed_to_graph } from "$targetDir/batch_integration/transformers/embed_to_graph/main.nf"
-
-// import metrics
-include { asw_batch } from "$targetDir/batch_integration/metrics/asw_batch/main.nf"
-include { asw_label } from "$targetDir/batch_integration/metrics/asw_label/main.nf"
-include { cell_cycle_conservation } from "$targetDir/batch_integration/metrics/cell_cycle_conservation/main.nf"
-include { clustering_overlap } from "$targetDir/batch_integration/metrics/clustering_overlap/main.nf"
-include { graph_connectivity } from "$targetDir/batch_integration/metrics/graph_connectivity/main.nf"
-include { hvg_overlap } from "$targetDir/batch_integration/metrics/hvg_overlap/main.nf"
-include { isolated_label_asw } from "$targetDir/batch_integration/metrics/isolated_label_asw/main.nf"
-include { isolated_label_f1 } from "$targetDir/batch_integration/metrics/isolated_label_f1/main.nf"
-include { kbet } from "$targetDir/batch_integration/metrics/kbet/main.nf"
-include { lisi } from "$targetDir/batch_integration/metrics/lisi/main.nf"
-include { pcr } from "$targetDir/batch_integration/metrics/pcr/main.nf"
-
-// tsv generation component
-include { extract_scores } from "$targetDir/common/extract_scores/main.nf"
-
-// import helper functions
-include { readConfig; helpMessage; channelFromParams; preprocessInputs; readYaml } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { publishStates; runComponents; collectTraces; writeJson; getPublishDir; findStates; setState } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { joinStates } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
-
-config = readConfig("$projectDir/config.vsh.yaml")
-
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = collectTraces()
-
-// collect method list
-methods = [
-  bbknn,
-  combat,
-  scanorama_embed,
-  scanorama_feature,
-  scvi,
-  no_integration_batch,
-  random_embed_cell,
-  random_embed_cell_jitter,
-  random_integration
-]
-
-// collect metric list
-metrics = [
-  asw_batch,
-  asw_label,
-  cell_cycle_conservation,
-  clustering_overlap,
-  graph_connectivity,
-  hvg_overlap,
-  isolated_label_asw,
-  isolated_label_f1,
-  kbet,
-  lisi,
-  pcr
-]
-
-
-workflow {
-  helpMessage(config)
-
-  channelFromParams(params, config)
-    | run_wf
-    | publishStates([:])
-}
-
 workflow auto {
-  findStates(params, config)
-    | run_wf
-    | publishStates([:])
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
 }
 
 workflow run_wf {
@@ -97,9 +11,50 @@ workflow run_wf {
 
   main:
 
+  // collect method list
+  methods = [
+    bbknn,
+    combat,
+    fastmnn_embedding,
+    fastmnn_feature,
+    liger,
+    mnn_correct,
+    mnnpy,
+    pyliger,
+    scalex_embed,
+    scalex_feature,
+    scanorama_embed,
+    scanorama_feature,
+    scanvi,
+    scvi,
+    no_integration_batch,
+    random_embed_cell,
+    random_embed_cell_jitter,
+    random_integration
+  ]
+
+  // collect metric list
+  metrics = [
+    asw_batch,
+    asw_label,
+    cell_cycle_conservation,
+    clustering_overlap,
+    graph_connectivity,
+    hvg_overlap,
+    isolated_label_asw,
+    isolated_label_f1,
+    kbet,
+    lisi,
+    pcr
+  ]
+
   // process input parameter channel
   dataset_ch = input_ch
-    | preprocessInputs(config: config)
+
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
 
     // extract the dataset metadata
     | check_dataset_schema.run(
@@ -109,48 +64,49 @@ workflow run_wf {
       }
     )
 
-  // run all methods
+    // run all methods
   method_out_ch1 = dataset_ch
-    | runComponents(
+    | runEach(
       components: methods,
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, config ->
+      filter: { id, state, comp ->
         def norm = state.normalization_id
-        def pref = config.functionality.info.preferred_normalization
+        def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
         (norm == "log_cp10k" && pref == "counts") || norm == pref
       },
 
       // define a new 'id' by appending the method name to the dataset id
-      id: { id, state, config ->
-        id + "." + config.functionality.name
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [input: "input_dataset"],
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          method_id: config.functionality.name,
+          method_id: comp.config.functionality.name,
           method_output: output.output,
-          method_subtype: config.functionality.info.subtype
+          method_subtype: comp.config.functionality.info.subtype
         ]
       }
     )
   
+
   // append feature->embed transformations
   method_out_ch2 = method_out_ch1
-    | runComponents(
+    | runEach(
       components: feature_to_embed,
-      filter: { id, state, config -> state.method_subtype == "feature"},
+      filter: { id, state, comp -> state.method_subtype == "feature"},
       fromState: [ input: "method_output" ],
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
           method_output: output.output,
-          method_subtype: config.functionality.info.subtype
+          method_subtype: comp.config.functionality.info.subtype
         ]
       }
     )
@@ -158,14 +114,14 @@ workflow run_wf {
 
   // append embed->graph transformations
   method_out_ch3 = method_out_ch2
-    | runComponents(
+    | runEach(
       components: embed_to_graph,
-      filter: { id, state, config -> state.method_subtype == "embedding"},
+      filter: { id, state, comp -> state.method_subtype == "embedding"},
       fromState: [ input: "method_output" ],
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
           method_output: output.output,
-          method_subtype: config.functionality.info.subtype
+          method_subtype: comp.config.functionality.info.subtype
         ]
       }
     )
@@ -173,18 +129,18 @@ workflow run_wf {
 
   // run metrics
   output_ch = method_out_ch3
-    | runComponents(
+    | runEach(
       components: metrics,
-      filter: { id, state, config ->
-        state.method_subtype == config.functionality.info.subtype
+      filter: { id, state, comp ->
+        state.method_subtype == comp.config.functionality.info.subtype
       },
       fromState: [
         input_integrated: "method_output",
         input_solution: "input_solution"
       ],
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          metric_id: config.functionality.name,
+          metric_id: comp.config.functionality.name,
           metric_output: output.output
         ]
       }
@@ -197,24 +153,19 @@ workflow run_wf {
     def new_id = "output"
     def new_state = [
       input: states.collect{it.metric_output},
-      output: states[0].output
+      _meta: states[0]._meta
     ]
     [new_id, new_state]
   }
 
   // convert to tsv and publish
-  | extract_scores
+  | extract_scores.run(
+    fromState: ["input"],
+    toState: ["output"]
+  )
+
+  | setState(["output", "_meta"])
 
   emit:
   output_ch
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = getPublishDir()
-
-  writeJson(traces, file("$publish_dir/traces.json"))
-  // todo: add datasets logging
-  // writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  // writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }

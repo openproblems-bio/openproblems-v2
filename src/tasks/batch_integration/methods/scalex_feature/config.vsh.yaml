@@ -13,7 +13,7 @@ functionality:
   # Metadata for your component
   info:
     # A relatively short label, used when rendering visualisarions (required)
-    label: SCALEX
+    label: SCALEX (feature)
     # A one sentence summary of how this method works (required). Used when 
     # rendering summary tables.
     summary: Online single-cell data integration through projecting heterogeneous datasets into a common cell-embedding space
@@ -25,22 +25,23 @@ functionality:
     v1:
       path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/scalex.py
       commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
-    preferred_normalization: log_cpm
+    preferred_normalization: log_cp10k
     variants:
       scalex_feature_unscaled:
       scanorama_feature_scaled:
-        preferred_normalization: log_cpm_scaled
+        preferred_normalization: log_cp10k_scaled
   resources:
     - type: python_script
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
     setup:
       - type: python
         pypi:
           - scalex
           - numpy<1.24
+          - torch<2.1
   - type: nextflow
     directives:
-      label: [ lowmem, lowcpu ]
+      label: [ lowmem, lowcpu, midtime ]
