@@ -1,3 +1,10 @@
+workflow auto {
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
+}
+
 workflow run_wf {
   take:
   input_ch
@@ -38,7 +45,6 @@ workflow run_wf {
     )
 
     // run all methods
-  method_out_ch1 = dataset_ch
     | runEach(
       components: methods,
 
@@ -64,7 +70,6 @@ workflow run_wf {
     )
 
     // run all metrics
-  output_ch = method_out_ch1
     | runEach(
       components: metrics,
       // use 'fromState' to fetch the arguments the component requires from the overall state
@@ -99,13 +104,8 @@ workflow run_wf {
     toState: ["output"]
   )
 
+  | setState(["output", "_meta"])
+
   emit:
   output_ch
-}
-
-workflow auto {
-  findStates(params, meta.config)
-    | meta.workflow.run(
-      auto: [publish: "state"]
-    )
 }
