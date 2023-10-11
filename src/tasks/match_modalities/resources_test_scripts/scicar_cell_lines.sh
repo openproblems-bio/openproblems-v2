@@ -21,34 +21,14 @@ nextflow run . \
   -entry auto \
   --input_states "$RAW_DATA/**/state.yaml" \
   --rename_keys 'input_mod1:output_dataset_mod1,input_mod2:output_dataset_mod2' \
-  --settings '{"output_mod1": "$id/output_mod1.h5ad", "output_mod2": "$id/output_mod2.h5ad", "output_solution_mod1": "$id/output_solution_mod1.h5ad", "output_solution_mod2": "$id/output_solution_mod2.h5ad"}' \
+  --settings '{"output_mod1": "$id/dataset_mod1.h5ad", "output_mod2": "$id/dataset_mod2.h5ad", "output_solution_mod1": "$id/solution_mod1.h5ad", "output_solution_mod2": "$id/solution_mod2.h5ad"}' \
   --publish_dir "$DATASET_DIR" \
   --output_state '$id/state.yaml'
 # output_state should be moved to settings once workaround is solved
 
-# # run one method
-# viash run src/tasks/match_modalities/methods/knn/config.vsh.yaml -- \
-#     --input_train $DATASET_DIR/train.h5ad \
-#     --input_test $DATASET_DIR/test.h5ad \
-#     --output $DATASET_DIR/knn.h5ad
-
-# # run one metric
-# viash run src/tasks/match_modalities/metrics/accuracy/config.vsh.yaml -- \
-#     --input_prediction $DATASET_DIR/knn.h5ad \
-#     --input_solution $DATASET_DIR/solution.h5ad \
-#     --output $DATASET_DIR/knn_accuracy.h5ad
-
-# # # run benchmark
-# # export NXF_VER=22.04.5
-
-# # nextflow \
-# #   run . \
-# #   -main-script src/tasks/match_modalities/workflows/run/main.nf \
-# #   -profile docker \
-# #   -resume \
-# #   --id pancreas \
-# #   --input_train $DATASET_DIR/train.h5ad \
-# #   --input_test $DATASET_DIR/test.h5ad \
-# #   --input_solution $DATASET_DIR/solution.h5ad \
-# #   --output scores.tsv \
-# #   --publish_dir $DATASET_DIR/
+# run one method
+viash run src/tasks/match_modalities/methods/fastmnn/config.vsh.yaml -- \
+    --input_mod1 $DATASET_DIR/scicar_cell_lines/dataset_mod1.h5ad \
+    --input_mod2 $DATASET_DIR/scicar_cell_lines/dataset_mod2.h5ad \
+    --output_mod1 $DATASET_DIR/scicar_cell_lines/integrated_mod1.h5ad \
+    --output_mod2 $DATASET_DIR/scicar_cell_lines/integrated_mod2.h5ad
