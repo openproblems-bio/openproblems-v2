@@ -1,5 +1,4 @@
 import anndata as ad
-import scprep
 import numpy as np
 from scipy import sparse
 
@@ -29,15 +28,16 @@ def _square(X):
 		X.data = X.data ** 2
 		return X
 	else:
-		return scprep.utils.toarray(X) ** 2
+		return X ** 2
 
-X = scprep.utils.toarray(input_integrated_mod1.obsm["integrated"])
-Y = scprep.utils.toarray(input_integrated_mod2.obsm["integrated"])
+
+X = input_integrated_mod1.obsm["integrated"].toarray()
+Y = input_integrated_mod2.obsm["integrated"].toarray()
 
 X_shuffled = X[np.random.permutation(np.arange(X.shape[0])), :]
 error_random = np.mean(np.sum(_square(X_shuffled - Y)))
 error_abs = np.mean(np.sum(_square(X - Y)))
-metric_value = error_abs / error_random
+metric_value = (error_abs / error_random).item()
 
 print("Store metric value", flush=True)
 uns = {

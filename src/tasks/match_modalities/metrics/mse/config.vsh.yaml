@@ -26,7 +26,6 @@ platforms:
         packages:
           - numpy
           - scipy
-          - scprep
   - type: nextflow
     directives:
       label: [ "midtime", lowmem, lowcpu ]
