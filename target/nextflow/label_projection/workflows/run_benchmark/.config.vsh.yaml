@@ -7,7 +7,54 @@ functionality:
     arguments:
     - type: "file"
       name: "--input_train"
-      info: null
+      info:
+        label: "Training data"
+        summary: "The training data"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obs:
+          - type: "string"
+            name: "label"
+            description: "Ground truth cell type labels"
+            required: true
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: true
+          var:
+          - type: "boolean"
+            name: "hvg"
+            description: "Whether or not the feature is considered to be a 'highly\
+              \ variable gene'"
+            required: true
+          - type: "integer"
+            name: "hvg_score"
+            description: "A ranking of the features by hvg."
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/label_projection/pancreas/train.h5ad"
       must_exist: true
       create_parent: true
       required: true
@@ -17,7 +64,50 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--input_test"
-      info: null
+      info:
+        label: "Test data"
+        summary: "The test data (without labels)"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obs:
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: true
+          var:
+          - type: "boolean"
+            name: "hvg"
+            description: "Whether or not the feature is considered to be a 'highly\
+              \ variable gene'"
+            required: true
+          - type: "integer"
+            name: "hvg_score"
+            description: "A ranking of the features by hvg."
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/label_projection/pancreas/test.h5ad"
       must_exist: true
       create_parent: true
       required: true
@@ -27,7 +117,54 @@ functionality:
       dest: "par"
     - type: "file"
       name: "--input_solution"
-      info: null
+      info:
+        label: "Solution"
+        summary: "The solution for the test data"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obs:
+          - type: "string"
+            name: "label"
+            description: "Ground truth cell type labels"
+            required: true
+          - type: "string"
+            name: "batch"
+            description: "Batch information"
+            required: true
+          var:
+          - type: "boolean"
+            name: "hvg"
+            description: "Whether or not the feature is considered to be a 'highly\
+              \ variable gene'"
+            required: true
+          - type: "integer"
+            name: "hvg_score"
+            description: "A ranking of the features by hvg."
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_pca"
+            description: "The resulting PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/label_projection/pancreas/solution.h5ad"
       must_exist: true
       create_parent: true
       required: true
@@ -39,12 +176,13 @@ functionality:
     arguments:
     - type: "file"
       name: "--output"
+      description: "A TSV file containing the scores of each of the methods"
       info: null
       example:
       - "output.tsv"
       must_exist: true
       create_parent: true
-      required: false
+      required: true
       direction: "output"
       multiple: false
       multiple_sep: ":"
@@ -72,7 +210,7 @@ functionality:
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/common/check_dataset_schema/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
   - name: "common/extract_scores"
@@ -90,7 +228,7 @@ functionality:
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/common/extract_scores/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
   - name: "label_projection/control_methods/true_labels"
@@ -108,7 +246,7 @@ functionality:
       functionalityNamespace: "label_projection/control_methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/control_methods/true_labels/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/true_labels"
   - name: "label_projection/control_methods/majority_vote"
@@ -126,7 +264,7 @@ functionality:
       functionalityNamespace: "label_projection/control_methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/control_methods/majority_vote/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote"
   - name: "label_projection/control_methods/random_labels"
@@ -144,7 +282,7 @@ functionality:
       functionalityNamespace: "label_projection/control_methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/control_methods/random_labels/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels"
   - name: "label_projection/methods/knn"
@@ -162,7 +300,7 @@ functionality:
       functionalityNamespace: "label_projection/methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/methods/knn/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn"
   - name: "label_projection/methods/logistic_regression"
@@ -180,7 +318,7 @@ functionality:
       functionalityNamespace: "label_projection/methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/methods/logistic_regression/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/logistic_regression"
   - name: "label_projection/methods/mlp"
@@ -198,7 +336,7 @@ functionality:
       functionalityNamespace: "label_projection/methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/methods/mlp/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp"
   - name: "label_projection/methods/scanvi"
@@ -216,7 +354,7 @@ functionality:
       functionalityNamespace: "label_projection/methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/methods/scanvi/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi"
   - name: "label_projection/methods/scanvi_scarches"
@@ -234,7 +372,7 @@ functionality:
       functionalityNamespace: "label_projection/methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/methods/scanvi_scarches/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches"
   - name: "label_projection/methods/xgboost"
@@ -252,7 +390,7 @@ functionality:
       functionalityNamespace: "label_projection/methods"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/methods/xgboost/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost"
   - name: "label_projection/metrics/accuracy"
@@ -270,7 +408,7 @@ functionality:
       functionalityNamespace: "label_projection/metrics"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/metrics/accuracy/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/accuracy"
   - name: "label_projection/metrics/f1"
@@ -288,7 +426,7 @@ functionality:
       functionalityNamespace: "label_projection/metrics"
       output: ""
       platform: ""
-      git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+      git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
       executable: "/nextflow/label_projection/metrics/f1/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1"
   set_wd_to_resources_dir: false
@@ -318,10 +456,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run_benchmark/config.vsh.yaml"
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/workflows/run_benchmark"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/workflows/run_benchmark/main.nf"
   viash_version: "0.8.0-RC6"
-  git_commit: "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+  git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

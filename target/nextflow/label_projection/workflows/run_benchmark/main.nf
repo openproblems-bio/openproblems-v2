@@ -2746,6 +2746,79 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_train",
+            "info" : {
+              "label" : "Training data",
+              "summary" : "The training data",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "label",
+                    "description" : "Ground truth cell type labels",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/label_projection/pancreas/train.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
@@ -2757,6 +2830,73 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_test",
+            "info" : {
+              "label" : "Test data",
+              "summary" : "The test data (without labels)",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/label_projection/pancreas/test.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
@@ -2768,6 +2908,79 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_solution",
+            "info" : {
+              "label" : "Solution",
+              "summary" : "The solution for the test data",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "label",
+                    "description" : "Ground truth cell type labels",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/label_projection/pancreas/solution.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
@@ -2784,12 +2997,13 @@ meta = [
           {
             "type" : "file",
             "name" : "--output",
+            "description" : "A TSV file containing the scores of each of the methods",
             "example" : [
               "output.tsv"
             ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "output",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2803,7 +3017,7 @@ meta = [
         "type" : "nextflow_script",
         "path" : "main.nf",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run/",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run_benchmark/",
         "entrypoint" : "run_wf"
       }
     ],
@@ -2826,7 +3040,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2848,7 +3062,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -2870,7 +3084,7 @@ meta = [
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/control_methods/true_labels/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/true_labels"
@@ -2892,7 +3106,7 @@ meta = [
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/control_methods/majority_vote/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote"
@@ -2914,7 +3128,7 @@ meta = [
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/control_methods/random_labels/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels"
@@ -2936,7 +3150,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/methods/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn"
@@ -2958,7 +3172,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/methods/logistic_regression/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/logistic_regression"
@@ -2980,7 +3194,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/methods/mlp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp"
@@ -3002,7 +3216,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/methods/scanvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi"
@@ -3024,7 +3238,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/methods/scanvi_scarches/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches"
@@ -3046,7 +3260,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/methods/xgboost/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost"
@@ -3068,7 +3282,7 @@ meta = [
           "functionalityNamespace" : "label_projection/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/metrics/accuracy/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/accuracy"
@@ -3090,7 +3304,7 @@ meta = [
           "functionalityNamespace" : "label_projection/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
           "executable" : "/nextflow/label_projection/metrics/f1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1"
@@ -3132,11 +3346,11 @@ meta = [
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/label_projection/workflows/run_benchmark/config.vsh.yaml",
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2",
+    "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3160,8 +3374,12 @@ include { f1 } from "${meta.resources_dir}/../../../../nextflow/label_projection
 
 // inner workflow
 // user-provided Nextflow code
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initializeTracer()
+workflow auto {
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
+}
 
 workflow run_wf {
   take:
@@ -3191,6 +3409,11 @@ workflow run_wf {
 
   output_ch = input_ch
 
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
+
     // extract the dataset metadata
     | check_dataset_schema.run(
       fromState: [ "input": "input_train" ],
@@ -3203,46 +3426,46 @@ workflow run_wf {
     )
 
     // run all methods
-    | runComponents(
+    | runEach(
       components: methods,
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, config ->
+      filter: { id, state, comp ->
         def norm = state.normalization_id
-        def pref = config.functionality.info.preferred_normalization
+        def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
         (norm == "log_cp10k" && pref == "counts") || norm == pref
       },
 
       // define a new 'id' by appending the method name to the dataset id
-      id: { id, state, config ->
-        id + "." + config.functionality.name
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
-      fromState: { id, state, config ->
+      fromState: { id, state, comp ->
         def new_args = [
           input_train: state.input_train,
           input_test: state.input_test
         ]
-        if (config.functionality.info.type == "control_method") {
+        if (comp.config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
         }
         new_args
       },
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          method_id: config.functionality.name,
+          method_id: comp.config.functionality.name,
           method_output: output.output
         ]
       }
     )
 
     // run all metrics
-    | runComponents(
+    | runEach(
       components: metrics,
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
@@ -3250,43 +3473,35 @@ workflow run_wf {
         input_prediction: "method_output"
       ],
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          metric_id: config.functionality.name,
+          metric_id: comp.config.functionality.name,
           metric_output: output.output
         ]
       }
     )
 
-    // join all events into a new event where the new id is simply "output" and the new state consists of:
-    //   - "input": a list of score h5ads
-    //   - "output": the output argument of this workflow
+    // join all events into a new event
     | joinStates{ ids, states ->
       def new_id = "output"
       def new_state = [
         input: states.collect{it.metric_output},
-        output: states[0].output
+        _meta: states[0]._meta
       ]
       [new_id, new_state]
     }
 
     // convert to tsv and publish
     | extract_scores.run(
-      auto: [publish: true]
+      fromState: ["input"],
+      toState: ["output"]
     )
+
+    | setState(["output", "_meta"])
+
 
   emit:
   output_ch
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = getPublishDir()
-
-  writeJson(traces, file("$publish_dir/traces.json"))
-  // todo: add datasets logging
-  writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
 
 // inner workflow hook

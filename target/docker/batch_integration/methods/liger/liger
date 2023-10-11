@@ -407,9 +407,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("rliger"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods liger"
-LABEL org.opencontainers.image.created="2023-10-11T14:15:01Z"
+LABEL org.opencontainers.image.created="2023-10-11T18:33:21Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d8ad72fdd75bee3b1a92c2861f232bcbd10e63d2"
+LABEL org.opencontainers.image.revision="0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
