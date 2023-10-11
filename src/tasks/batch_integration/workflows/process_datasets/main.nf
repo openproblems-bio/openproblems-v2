@@ -20,13 +20,22 @@ workflow run_wf {
         "schema": "dataset_schema"
       ],
       args: [
-        "stop_on_error": false,
-        "checks": null
+        "stop_on_error": false
       ],
-      toState: ["dataset": "output"]
+      toState: [
+        "dataset": "output",
+        "dataset_checks": "checks"
+      ]
     )
 
     // remove datasets which didn't pass the schema check
+    | view { id, state ->
+      if (state.dataset == null) {
+        "Dataset ${state.input} did not pass the schema check. Checks: ${state.dataset_checks}"
+      } else {
+        null
+      }
+    }
     | filter { id, state ->
       state.dataset != null
     }

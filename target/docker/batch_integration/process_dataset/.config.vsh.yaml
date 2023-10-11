@@ -328,6 +328,6 @@ info:
   platform: "docker"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/process_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/process_dataset/process_dataset"
-  viash_version: "0.8.0-RC4"
-  git_commit: "e60945955df548e0f3991f0b48078e8f8fa7be4a"
+  viash_version: "0.8.0-RC5"
+  git_commit: "3da9d9e85806a8f399cc727235bc1e3196126743"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -5,16 +5,15 @@ functionality:
     - name: Inputs
       arguments:
         - name: "--input"
-          required: true
-          example: dataset.h5ad
           __merge__: "/src/tasks/batch_integration/api/file_common_dataset.yaml"
-    - name: Schemas
-      arguments:
+          required: true
+          direction: input
         - name: "--dataset_schema"
           type: "file"
           description: "The schema of the dataset to validate against"
           required: true
           default: "src/tasks/batch_integration/api/file_common_dataset.yaml"
+          direction: input
     - name: Outputs
       arguments:
         - name: "--output_dataset"
