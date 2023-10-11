@@ -29,36 +29,20 @@ workflow run_wf {
     )
 
     // remove datasets which didn't pass the schema check
-    | view { id, state ->
-      if (state.dataset == null) {
-        "Dataset ${state.input} did not pass the schema check. Checks: ${state.dataset_checks}"
-      } else {
-        null
-      }
-    }
     | filter { id, state ->
       state.dataset != null
     }
 
     | process_dataset.run(
-      fromState: [
-        input: "dataset",
+      fromState: [ input: "dataset" ],
+      toState: [
         output_dataset: "output_dataset",
         output_solution: "output_solution"
-      ],
-      toState: [
-        dataset: "output_dataset",
-        solution: "output_solution"
       ]
     )
 
     // only output the files for which an output file was specified
-    | setState { id, state ->
-      [
-        "output_dataset": state.output_dataset ? state.dataset : null,
-        "output_solution": state.output_solution ? state.solution : null
-      ]
-    }
+    | setState(["output_dataset", "output_solution"])
 
   emit:
   output_ch

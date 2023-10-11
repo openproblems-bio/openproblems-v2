@@ -1,8 +1,8 @@
 workflow auto {
-  // TODO: `thisConfig` might be renamed to `meta["config"]` in the future
-  findStates(params, thisConfig)
-    | run_wf
-    | publishStates([key: thisConfig.functionality.name])
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
 }
 
 workflow run_wf {
@@ -15,40 +15,34 @@ workflow run_wf {
     // TODO: check schema based on the values in `config`
     // instead of having to provide a separate schema file
     | check_dataset_schema.run(
-      fromState: { id, state ->
-        [
-          input: state.input,
-          schema: state.dataset_schema,
-          output: '$id.$key.output.h5ad',
-          stop_on_error: false,
-          checks: null
-        ]
-      },
-      toState: { id, output, state ->
-        state + [ dataset: output.output ]
-      }
+      fromState: [
+        "input": "input",
+        "schema": "dataset_schema"
+      ],
+      args: [
+        "stop_on_error": false
+      ],
+      toState: [
+        "dataset": "output",
+        "dataset_checks": "checks"
+      ]
     )
 
+    // remove datasets which didn't pass the schema check
     | filter { id, state ->
       state.dataset != null
     }
 
     | process_dataset.run(
-      fromState: [
-        input: "dataset",
+      fromState: [ input: "dataset" ],
+      toState: [
         output_train: "output_train",
         output_test: "output_test"
-      ],
-      toState: [train: "output_train", test: "output_test"]
+      ]
     )
 
     // only output the files for which an output file was specified
-    | setState { id, state ->
-      [
-        "output_train": state.output_train ? state.train : null,
-        "output_test": state.output_test ? state.test : null
-      ]
-    }
+    | setState(["output_train", "output_test"])
 
   emit:
   output_ch

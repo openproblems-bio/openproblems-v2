@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Run this prior to executing this script:
-# bin/viash_build -q 'batch_integration'
-
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
@@ -11,15 +8,19 @@ cd "$REPO_ROOT"
 
 set -e
 
+COMMON_DATASETS="resources/datasets/openproblems_v1"
+OUTPUT_DIR="resources/denoising/datasets/openproblems_v1"
+
 export NXF_VER=22.04.5
 
 nextflow run . \
   -main-script target/nextflow/denoising/workflows/process_datasets/main.nf \
   -profile docker \
   -entry auto \
-  -c src/wf_utils/labels_ci.config \
-  --id resources \
-  --input_states "resources/common/**/state.yaml" \
+  -resume \
+  --input_states "$COMMON_DATASETS/**/state.yaml" \
   --rename_keys 'input:output_dataset' \
-  --settings '{"output_train": "train.h5ad", "output_test": "test.h5ad"}' \
-  --publish_dir "resources/batch_integration/datasets/openproblems_v1"
+  --settings '{"output_train": "$id/train.h5ad", "output_test": "$id/test.h5ad"}' \
+  --publish_dir "$OUTPUT_DIR" \
+  --output_state '$id/state.yaml'
+# output_state should be moved to settings once workaround is solved
