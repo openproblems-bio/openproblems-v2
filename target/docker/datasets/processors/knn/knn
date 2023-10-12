@@ -424,9 +424,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors knn"
-LABEL org.opencontainers.image.created="2023-10-12T15:09:23Z"
+LABEL org.opencontainers.image.created="2023-10-12T16:00:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cd8f679a458f5560d901ae6b0a4d3b259cac2601"
+LABEL org.opencontainers.image.revision="f74841e104979cc7431d70f267b09f9c1539636e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
