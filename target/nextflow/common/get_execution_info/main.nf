@@ -2802,7 +2802,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.1",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -2861,7 +2861,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_execution_info",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "f74841e104979cc7431d70f267b09f9c1539636e",
+    "git_commit" : "2077e79e1793e34d2975d1bbbd90de2ee83834c1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

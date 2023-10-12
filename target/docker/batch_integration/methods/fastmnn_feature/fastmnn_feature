@@ -410,9 +410,9 @@ RUN apt-get update && \
 RUN Rscript -e 'remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")'
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods fastmnn_feature"
-LABEL org.opencontainers.image.created="2023-10-12T16:00:19Z"
+LABEL org.opencontainers.image.created="2023-10-12T18:26:17Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f74841e104979cc7431d70f267b09f9c1539636e"
+LABEL org.opencontainers.image.revision="2077e79e1793e34d2975d1bbbd90de2ee83834c1"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

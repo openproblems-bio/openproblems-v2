@@ -2943,7 +2943,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "f74841e104979cc7431d70f267b09f9c1539636e",
+    "git_commit" : "2077e79e1793e34d2975d1bbbd90de2ee83834c1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3120,11 +3120,11 @@ def generate_resources(par, script_path) -> str:
 def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
-    image_str = "ghcr.io/openproblems-bio/base_python:1.0.1"
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.2"
     setup_type = "python"
     package_example = "scib==1.1.3"
   elif par["language"] == "r":
-    image_str = "ghcr.io/openproblems-bio/base_r:1.0.1"
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.2"
     setup_type = "r"
     package_example = "tidyverse"
   return strip_margin(f\'\'\'\\\\
