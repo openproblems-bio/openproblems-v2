@@ -430,9 +430,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common check_dataset_schema"
-LABEL org.opencontainers.image.created="2023-10-12T11:41:41Z"
+LABEL org.opencontainers.image.created="2023-10-12T13:56:08Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3ee9310b7ad6621174be81431888fcbeb9e9af33"
+LABEL org.opencontainers.image.revision="8881f59b397ca69c481dbf441bec1075af628403"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -992,7 +992,7 @@ dep = {
 def check_structure(slot_info, adata_slot):
   missing = []
   for obj in slot_info:
-    if obj['name'] not in adata_slot:
+    if 'required' in obj and obj['required'] and obj['name'] not in adata_slot:
       missing.append(obj['name'])
   return missing
 
@@ -1043,8 +1043,16 @@ if par['schema'] is not None:
 
   def_slots = data_struct['info']['slots']
 
+  missing= []
   for slot in def_slots:
+    missing_x = False
+    if slot == "X":
+      if adata.X is None:
+        missing_x = True
+      continue
     missing = check_structure(def_slots[slot], getattr(adata, slot))
+    if missing_x:
+      missing.append("X")
     if missing:
       out['exit_code'] = 1
       out['data_schema'] = 'not ok'

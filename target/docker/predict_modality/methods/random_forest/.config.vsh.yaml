@@ -271,7 +271,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_r:1.0.1"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.2"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -285,7 +285,6 @@ platforms:
     - "lmds"
     - "ranger"
     - "pbapply"
-    - "bit64"
     bioc_force_install: false
   entrypoint: []
   cmd: null
@@ -323,5 +322,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/random_forest"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/random_forest/random_forest"
   viash_version: "0.8.0-RC6"
-  git_commit: "3ee9310b7ad6621174be81431888fcbeb9e9af33"
+  git_commit: "8881f59b397ca69c481dbf441bec1075af628403"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

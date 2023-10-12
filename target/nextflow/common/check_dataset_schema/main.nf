@@ -2928,7 +2928,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+    "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2981,7 +2981,7 @@ dep = {
 def check_structure(slot_info, adata_slot):
   missing = []
   for obj in slot_info:
-    if obj['name'] not in adata_slot:
+    if 'required' in obj and obj['required'] and obj['name'] not in adata_slot:
       missing.append(obj['name'])
   return missing
 
@@ -3032,8 +3032,16 @@ if par['schema'] is not None:
 
   def_slots = data_struct['info']['slots']
 
+  missing= []
   for slot in def_slots:
+    missing_x = False
+    if slot == "X":
+      if adata.X is None:
+        missing_x = True
+      continue
     missing = check_structure(def_slots[slot], getattr(adata, slot))
+    if missing_x:
+      missing.append("X")
     if missing:
       out['exit_code'] = 1
       out['data_schema'] = 'not ok'

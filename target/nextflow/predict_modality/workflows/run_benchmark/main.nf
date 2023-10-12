@@ -2746,9 +2746,82 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_train_mod1",
+            "info" : {
+              "label" : "Train mod1",
+              "summary" : "The mod1 expression values of the train cells.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "size_factors",
+                    "description" : "The size factors of the cells prior to normalization.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "gene_ids",
+                    "description" : "The gene identifiers (if available)",
+                    "required" : false
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "gene_activity_var_names",
+                    "description" : "Names of the gene activity matrix",
+                    "required" : false
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "gene_activity",
+                    "description" : "ATAC gene activity",
+                    "required" : false
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/predict_modality/bmmc_cite_starter/train_mod1.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2757,9 +2830,82 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_train_mod2",
+            "info" : {
+              "label" : "Train mod2",
+              "summary" : "The mod2 expression values of the train cells.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "size_factors",
+                    "description" : "The size factors of the cells prior to normalization.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "gene_ids",
+                    "description" : "The gene identifiers (if available)",
+                    "required" : false
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "gene_activity_var_names",
+                    "description" : "Names of the gene activity matrix",
+                    "required" : false
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "gene_activity",
+                    "description" : "ATAC gene activity",
+                    "required" : false
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/predict_modality/bmmc_cite_starter/train_mod2.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2768,9 +2914,82 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_test_mod1",
+            "info" : {
+              "label" : "Test mod1",
+              "summary" : "The mod1 expression values of the test cells.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "size_factors",
+                    "description" : "The size factors of the cells prior to normalization.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "gene_ids",
+                    "description" : "The gene identifiers (if available)",
+                    "required" : false
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "gene_activity_var_names",
+                    "description" : "Names of the gene activity matrix",
+                    "required" : false
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "gene_activity",
+                    "description" : "ATAC gene activity",
+                    "required" : false
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/predict_modality/bmmc_cite_starter/test_mod1.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2779,9 +2998,82 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_test_mod2",
+            "info" : {
+              "label" : "Test mod2",
+              "summary" : "The mod2 expression values of the test cells.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "Batch information",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "size_factors",
+                    "description" : "The size factors of the cells prior to normalization.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "gene_ids",
+                    "description" : "The gene identifiers (if available)",
+                    "required" : false
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "gene_activity_var_names",
+                    "description" : "Names of the gene activity matrix",
+                    "required" : false
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "gene_activity",
+                    "description" : "ATAC gene activity",
+                    "required" : false
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/predict_modality/bmmc_cite_starter/test_mod2.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2795,9 +3087,13 @@ meta = [
           {
             "type" : "file",
             "name" : "--output",
+            "description" : "A TSV file containing the scores of each of the methods",
+            "example" : [
+              "scores.tsv"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "output",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2811,7 +3107,7 @@ meta = [
         "type" : "nextflow_script",
         "path" : "main.nf",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/workflows/run/",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/workflows/run_benchmark/",
         "entrypoint" : "run_wf"
       }
     ],
@@ -2834,7 +3130,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2856,7 +3152,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -2878,7 +3174,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
@@ -2900,7 +3196,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/control_methods/random_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
@@ -2922,7 +3218,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/control_methods/zeros/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
@@ -2944,7 +3240,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/control_methods/solution/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
@@ -2966,7 +3262,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/methods/knnr_py/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
@@ -2988,7 +3284,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/methods/knnr_r/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
@@ -3010,7 +3306,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/methods/lm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
@@ -3032,7 +3328,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
@@ -3054,7 +3350,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/methods/random_forest/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
@@ -3076,7 +3372,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
@@ -3098,7 +3394,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+          "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
           "executable" : "/nextflow/predict_modality/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
@@ -3140,11 +3436,11 @@ meta = [
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/workflows/run/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/workflows/run_benchmark/config.vsh.yaml",
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+    "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3168,8 +3464,12 @@ include { mse } from "${meta.resources_dir}/../../../../nextflow/predict_modalit
 
 // inner workflow
 // user-provided Nextflow code
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initializeTracer()
+workflow auto {
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
+}
 
 workflow run_wf {
   take:
@@ -3198,50 +3498,68 @@ workflow run_wf {
 
   output_ch = input_ch
 
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
+
     // extract the dataset metadata
     | check_dataset_schema.run(
       fromState: [ "input": "input_train_mod1" ],
       toState: { id, output, state ->
-        // load output yaml file
-        def metadata = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        // add metadata from file to state
-        state + metadata
+        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+      }
+    )
+
+    | check_dataset_schema.run(
+      fromState: [ "input": "input_train_mod2" ],
+      toState: { id, output, state ->
+        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       }
     )
 
     // run all methods
-    | runComponents(
+    | runEach(
       components: methods,
 
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      filter: { id, state, comp ->
+        def norm = state.normalization_id
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        (norm == "log_cp10k" && pref == "counts") || norm == pref
+      },
+
       // define a new 'id' by appending the method name to the dataset id
-      id: { id, state, config ->
-        id + "." + config.functionality.name
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
-      fromState: { id, state, config ->
+      fromState:fromState: { id, state, comp ->
         def new_args = [
           input_train_mod1: state.input_train_mod1,
           input_train_mod2: state.input_train_mod2,
           input_test_mod1: state.input_test_mod1
         ]
-        if (config.functionality.info.type == "control_method") {
+        if (comp.config.functionality.info.type == "control_method") {
           new_args.input_test_mod2 = state.input_test_mod2
         }
         new_args
       },
 
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          method_id: config.functionality.name,
+          method_id: comp.config.functionality.name,
           method_output: output.output
         ]
       }
     )
 
     // run all metrics
-    | runComponents(
+    | runEach(
       components: metrics,
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
@@ -3249,9 +3567,9 @@ workflow run_wf {
         input_prediction: "method_output"
       ],
       // use 'toState' to publish that component's outputs to the overall state
-      toState: { id, output, state, config ->
+      toState: { id, output, state, comp ->
         state + [
-          metric_id: config.functionality.name,
+          metric_id: comp.config.functionality.name,
           metric_output: output.output
         ]
       }
@@ -3264,28 +3582,21 @@ workflow run_wf {
       def new_id = "output"
       def new_state = [
         input: states.collect{it.metric_output},
-        output: states[0].output
+        _meta: states[0]._meta
       ]
       [new_id, new_state]
     }
 
     // convert to tsv and publish
     | extract_scores.run(
-      auto: [publish: true]
+      fromState: ["input"],
+      toState: ["output"]
     )
+
+    | setState(["output", "_meta"])
 
   emit:
   output_ch
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = getPublishDir()
-
-  writeJson(traces, file("$publish_dir/traces.json"))
-  // todo: add datasets logging
-  writeJson(methods.collect{it.config}, file("$publish_dir/methods.json"))
-  writeJson(metrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
 
 // inner workflow hook

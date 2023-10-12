@@ -3134,7 +3134,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.1",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3148,8 +3148,7 @@ meta = [
           "cran" : [
             "lmds",
             "FNN",
-            "proxyC",
-            "bit64"
+            "proxyC"
           ],
           "bioc_force_install" : false
         }
@@ -3197,7 +3196,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
+    "git_commit" : "8881f59b397ca69c481dbf441bec1075af628403",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

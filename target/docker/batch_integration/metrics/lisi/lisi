@@ -410,9 +410,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/theislab/scib.git@v1.1.4"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics lisi"
-LABEL org.opencontainers.image.created="2023-10-12T11:41:30Z"
+LABEL org.opencontainers.image.created="2023-10-12T13:55:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3ee9310b7ad6621174be81431888fcbeb9e9af33"
+LABEL org.opencontainers.image.revision="8881f59b397ca69c481dbf441bec1075af628403"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
