@@ -4,38 +4,15 @@ functionality:
   version: "main_build"
   arguments:
   - type: "file"
-    name: "--input_mod1"
+    name: "--input_integrated_mod1"
     info:
-      label: "Integrated"
-      summary: "The integrated data"
+      label: "Integrated mod1"
+      summary: "The integrated embedding for the first modality"
       slots:
-        layers:
-        - type: "integer"
-          name: "counts"
-          description: "Raw counts"
-          required: true
-        - type: "double"
-          name: "normalized"
-          description: "Normalized counts"
-          required: true
-        var:
-        - type: "boolean"
-          name: "hvg"
-          description: "Whether or not the feature is considered to be a 'highly variable\
-            \ gene'"
-          required: true
-        - type: "integer"
-          name: "hvg_score"
-          description: "A ranking of the features by hvg."
-          required: true
         obsm:
         - type: "double"
-          name: "X_svd"
-          description: "The resulting SVD PCA embedding."
-          required: true
-        - type: "double"
           name: "integrated"
-          description: "The resulting integrated embedding."
+          description: "An integrated embedding."
           required: true
         uns:
         - type: "string"
@@ -60,38 +37,15 @@ functionality:
     multiple_sep: ":"
     dest: "par"
   - type: "file"
-    name: "--input_mod2"
+    name: "--input_integrated_mod2"
     info:
-      label: "Integrated"
-      summary: "The integrated data"
+      label: "Integrated mod2"
+      summary: "The integrated embedding for the second modality"
       slots:
-        layers:
-        - type: "integer"
-          name: "counts"
-          description: "Raw counts"
-          required: true
-        - type: "double"
-          name: "normalized"
-          description: "Normalized counts"
-          required: true
-        var:
-        - type: "boolean"
-          name: "hvg"
-          description: "Whether or not the feature is considered to be a 'highly variable\
-            \ gene'"
-          required: true
-        - type: "integer"
-          name: "hvg_score"
-          description: "A ranking of the features by hvg."
-          required: true
         obsm:
         - type: "double"
-          name: "X_svd"
-          description: "The resulting SVD PCA embedding."
-          required: true
-        - type: "double"
           name: "integrated"
-          description: "The resulting integrated embedding."
+          description: "An integrated embedding."
           required: true
         uns:
         - type: "string"
@@ -107,7 +61,93 @@ functionality:
           description: "Which method was used"
           required: true
     example:
-    - "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
+    - "resources_test/match_modalities/scicar_cell_lines/integrated_mod2.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--input_solution_mod1"
+    info:
+      label: "Solution mod1"
+      summary: "The ground truth information for the first modality"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized counts"
+          required: true
+        obs:
+        - type: "integer"
+          name: "permutation_indices"
+          description: "Indices with which to revert the permutation of the cells"
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_svd"
+          description: "The resulting SVD PCA embedding."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+    example:
+    - "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
+    must_exist: true
+    create_parent: true
+    required: true
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "file"
+    name: "--input_solution_mod2"
+    info:
+      label: "Solution mod1"
+      summary: "The ground truth information for the second modality"
+      slots:
+        layers:
+        - type: "integer"
+          name: "counts"
+          description: "Raw counts"
+          required: true
+        - type: "double"
+          name: "normalized"
+          description: "Normalized counts"
+          required: true
+        obs:
+        - type: "integer"
+          name: "permutation_indices"
+          description: "Indices with which to revert the permutation of the cells"
+          required: true
+        obsm:
+        - type: "double"
+          name: "X_svd"
+          description: "The resulting SVD PCA embedding."
+          required: true
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset"
+          required: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
+    example:
+    - "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -146,7 +186,7 @@ functionality:
           multiple: true
           required: true
     example:
-    - "resources_test/match_modalities/score.h5ad"
+    - "resources_test/match_modalities/scicar_cell_lines/score.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -156,7 +196,7 @@ functionality:
     dest: "par"
   resources:
   - type: "python_script"
-    path: "./script.py"
+    path: "script.py"
     is_executable: true
   test_resources:
   - type: "file"
@@ -208,7 +248,6 @@ platforms:
     packages:
     - "numpy"
     - "scipy"
-    - "scprep"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -228,10 +267,10 @@ platforms:
   config:
     labels:
       lowmem: "memory = 20.Gb"
-      lowcpu: "cpus = 5"
       midmem: "memory = 50.Gb"
-      midcpu: "cpus = 15"
       highmem: "memory = 100.Gb"
+      lowcpu: "cpus = 5"
+      midcpu: "cpus = 15"
       highcpu: "cpus = 30"
       lowtime: "time = 1.h"
       midtime: "time = 4.h"
@@ -246,5 +285,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse/mse"
   viash_version: "0.8.0-RC6"
-  git_commit: "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
+  git_commit: "3ee9310b7ad6621174be81431888fcbeb9e9af33"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

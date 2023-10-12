@@ -2746,9 +2746,54 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_mod1",
+            "info" : {
+              "label" : "Modality 1",
+              "summary" : "The first modality of a multimodal dataset. The cells of this dataset are randomly permuted.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_svd",
+                    "description" : "The resulting SVD PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2757,9 +2802,182 @@ meta = [
           {
             "type" : "file",
             "name" : "--input_mod2",
+            "info" : {
+              "label" : "Modality 2",
+              "summary" : "The second modality of a multimodal dataset. The cells of this dataset are randomly permuted.",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_svd",
+                    "description" : "The resulting SVD PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--input_solution_mod1",
+            "info" : {
+              "label" : "Solution mod1",
+              "summary" : "The ground truth information for the first modality",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "integer",
+                    "name" : "permutation_indices",
+                    "description" : "Indices with which to revert the permutation of the cells",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_svd",
+                    "description" : "The resulting SVD PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--input_solution_mod2",
+            "info" : {
+              "label" : "Solution mod1",
+              "summary" : "The ground truth information for the second modality",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized counts",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "integer",
+                    "name" : "permutation_indices",
+                    "description" : "Indices with which to revert the permutation of the cells",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_svd",
+                    "description" : "The resulting SVD PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
+            "example" : [
+              "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2773,9 +2991,13 @@ meta = [
           {
             "type" : "file",
             "name" : "--output",
+            "description" : "A TSV file containing the scores of each of the methods",
+            "example" : [
+              "output.tsv"
+            ],
             "must_exist" : true,
             "create_parent" : true,
-            "required" : false,
+            "required" : true,
             "direction" : "output",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -2789,7 +3011,7 @@ meta = [
         "type" : "nextflow_script",
         "path" : "main.nf",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/workflows/run/",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/workflows/run_benchmark/",
         "entrypoint" : "run_wf"
       }
     ],
@@ -2812,7 +3034,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2834,7 +3056,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -2856,7 +3078,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/random_features"
@@ -2878,7 +3100,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features"
@@ -2900,7 +3122,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/methods/fastmnn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn"
@@ -2922,7 +3144,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/methods/scot/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot"
@@ -2944,7 +3166,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/methods/harmonic_alignment/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/harmonic_alignment"
@@ -2966,7 +3188,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/methods/procrustes/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/procrustes"
@@ -2988,7 +3210,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/metrics/knn_auc/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc"
@@ -3010,7 +3232,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/match_modalities/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse"
@@ -3034,10 +3256,10 @@ meta = [
       "config" : {
         "labels" : {
           "lowmem" : "memory = 20.Gb",
-          "lowcpu" : "cpus = 5",
           "midmem" : "memory = 50.Gb",
-          "midcpu" : "cpus = 15",
           "highmem" : "memory = 100.Gb",
+          "lowcpu" : "cpus = 5",
+          "midcpu" : "cpus = 15",
           "highcpu" : "cpus = 30",
           "lowtime" : "time = 1.h",
           "midtime" : "time = 4.h",
@@ -3052,11 +3274,11 @@ meta = [
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/workflows/run/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/workflows/run_benchmark/config.vsh.yaml",
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3077,129 +3299,136 @@ include { mse } from "${meta.resources_dir}/../../../../nextflow/match_modalitie
 
 // inner workflow
 // user-provided Nextflow code
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initializeTracer()
+workflow auto {
+  findStates(params, meta.config)
+  | meta.workflow.run(
+    auto: [publish: "state"]
+  )
+}
 
-// run the workflow
 workflow run_wf {
-    take:
-    input_ch
+  take:
+  input_ch
 
-    main:
+  main:
 
-    // collect method list
-    methods = [
-        random_features,
-        true_features,
-        scot,
-        harmonic_alignment,
-        fastmnn,
-        procrustes
-    ]
+  // collect method list
+  methods = [
+    random_features,
+    true_features,
+    scot,
+    harmonic_alignment,
+    fastmnn,
+    procrustes
+  ]
 
-    // collect metric list
-    metrics = [
-        knn_auc,
-        mse
-    ]
+  // collect metric list
+  metrics = [
+    knn_auc,
+    mse
+  ]
 
-    output_ch = input_ch
+  output_ch = input_ch
+
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
 
     // extract the dataset metadata
     | check_dataset_schema.run(
-        fromState: [ "input": "input_mod1" ],
-        toState: { id, output, state ->
-            // load output yaml file
-            def metadata = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-            // add metadata from file to state
-            state + metadata
-        }
+      fromState: [ "input": "input_mod1" ],
+      toState: { id, output, state ->
+        // load output yaml file
+        def metadata = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        // add metadata from file to state
+        state + metadata
+      }
     )
 
     // run all methods
-    | runComponents(
-        components: methods,
+    | runEach(
+      components: methods,
 
-        // // use the 'filter' argument to only run a method on the normalisation the component is asking for
-        // filter: { id, state, config ->
-        // def norm = state.normalization_id
-        // def pref = config.functionality.info.preferred_normalization
-        // // if the preferred normalisation is none at all,
-        // // we can pass whichever dataset we want
-        // (norm == "log_cp10k" && pref == "counts") || norm == pref
-        // },
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      filter: { id, state, comp ->
+      def norm = state.normalization_id
+      def pref = comp.config.functionality.info.preferred_normalization
+      // if the preferred normalisation is none at all,
+      // we can pass whichever dataset we want
+      (norm == "log_cp10k" && pref == "counts") || norm == pref
+      },
 
-        // define a new 'id' by appending the method name to the dataset id
-        id: { id, state, config ->
-            id + "." + config.functionality.name
-        },
+      // define a new 'id' by appending the method name to the dataset id
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
+      },
 
-        // use 'fromState' to fetch the arguments the component requires from the overall state
-        fromState: { id, state, config ->
-            def new_args = [
-            input_mod1: state.input_mod1,
-            input_mod2: state.input_mod2
-            ]
-            new_args
-        },
-
-        // use 'toState' to publish that component's outputs to the overall state
-        toState: { id, output, state, config ->
-            state + [
-            method_id: config.functionality.name,
-            method_output_mod1: output.output_mod1,
-            method_output_mod2: output.output_mod2
-            ]
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: { id, state, comp ->
+        def new_args = [
+          input_mod1: state.input_mod1,
+          input_mod2: state.input_mod2
+        ]
+        if (comp.config.functionality.info.type == "control_method") {
+          new_args.input_solution_mod1 = state.input_solution_mod1
+          new_args.input_solution_mod2 = state.input_solution_mod2
         }
+        new_args
+      },
+
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, state, comp ->
+        state + [
+          method_id: comp.config.functionality.name,
+          method_output_mod1: output.output_mod1,
+          method_output_mod2: output.output_mod2
+        ]
+      }
     )
 
-        // run all metrics
-    | runComponents(
-        components: metrics,
-        // use 'fromState' to fetch the arguments the component requires from the overall state
-        fromState: [
-            input_mod1: "method_output_mod1",
-            input_mod2: "method_output_mod2"
-        ],
-        // use 'toState' to publish that component's outputs to the overall state
-        toState: { id, output, state, config ->
-            state + [
-            metric_id: config.functionality.name,
-            metric_output: output.output
-            ]
-        }
+      // run all metrics
+    | runEach(
+      components: metrics,
+      // use 'fromState' to fetch the arguments the component requires from the overall state
+      fromState: [
+        input_mod1: "method_output_mod1",
+        input_mod2: "method_output_mod2",
+        input_solution_mod1: "input_solution_mod1",
+        input_solution_mod2: "input_solution_mod2"
+      ],
+      // use 'toState' to publish that component's outputs to the overall state
+      toState: { id, output, state, comp ->
+        state + [
+          metric_id: comp.config.functionality.name,
+          metric_output: output.output
+        ]
+      }
     )
 
     // join all events into a new event where the new id is simply "output" and the new state consists of:
     //   - "input": a list of score h5ads
     //   - "output": the output argument of this workflow
     | joinStates{ ids, states ->
-        def new_id = "output"
-        def new_state = [
-            input: states.collect{it.metric_output},
-            output: states[0].output
-        ]
-        [new_id, new_state]
+      def new_id = "output"
+      def new_state = [
+        input: states.collect{it.metric_output},
+        _meta: states[0]._meta
+      ]
+      [new_id, new_state]
     }
 
     // convert to tsv and publish
     | extract_scores.run(
-        auto: [publish: true]
+      fromState: ["input"],
+      toState: ["output"]
     )
 
-    emit:
-    output_ch
+    | setState(["output", "_meta"])
 
-}
+  emit:
+  output_ch
 
-// store the trace log in the publish dir
-workflow.onComplete {
-    def publish_dir = getPublishDir()
-
-    writeJsontraces, file("$publish_dir/traces.json"))
-    // todo: add datasets logging
-    writeJsonmethods.collect{it.config}, file("$publish_dir/methods.json"))
-    writeJsonmetrics.collect{it.config}, file("$publish_dir/metrics.json"))
 }
 
 // inner workflow hook

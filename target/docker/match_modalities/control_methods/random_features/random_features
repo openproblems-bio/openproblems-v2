@@ -175,11 +175,23 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input_mod1"
   echo "        type: file, required parameter, file must exist"
-  echo "        example: resources_test/common/scicar_cell_lines/dataset_mod1.h5ad"
+  echo "        example:"
+  echo "resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad"
   echo ""
   echo "    --input_mod2"
   echo "        type: file, required parameter, file must exist"
-  echo "        example: resources_test/common/scicar_cell_lines/dataset_mod2.h5ad"
+  echo "        example:"
+  echo "resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad"
+  echo ""
+  echo "    --input_solution_mod1"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example:"
+  echo "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
+  echo ""
+  echo "    --input_solution_mod2"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example:"
+  echo "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
   echo ""
   echo "    --output_mod1"
   echo "        type: file, required parameter, output, file must exist"
@@ -416,9 +428,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/control_methods random_features"
-LABEL org.opencontainers.image.created="2023-10-11T18:33:14Z"
+LABEL org.opencontainers.image.created="2023-10-12T11:41:34Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
+LABEL org.opencontainers.image.revision="3ee9310b7ad6621174be81431888fcbeb9e9af33"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -595,6 +607,28 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_INPUT_MOD2=$(ViashRemoveFlags "$1")
             shift 1
             ;;
+        --input_solution_mod1)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD1" ] && ViashError Bad arguments for option \'--input_solution_mod1\': \'$VIASH_PAR_INPUT_SOLUTION_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD1="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_solution_mod1. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --input_solution_mod1=*)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD1" ] && ViashError Bad arguments for option \'--input_solution_mod1=*\': \'$VIASH_PAR_INPUT_SOLUTION_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD1=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --input_solution_mod2)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD2" ] && ViashError Bad arguments for option \'--input_solution_mod2\': \'$VIASH_PAR_INPUT_SOLUTION_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD2="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_solution_mod2. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --input_solution_mod2=*)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD2" ] && ViashError Bad arguments for option \'--input_solution_mod2=*\': \'$VIASH_PAR_INPUT_SOLUTION_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD2=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
         --output_mod1)
             [ -n "$VIASH_PAR_OUTPUT_MOD1" ] && ViashError Bad arguments for option \'--output_mod1\': \'$VIASH_PAR_OUTPUT_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_OUTPUT_MOD1="$2"
@@ -743,6 +777,14 @@ if [ -z ${VIASH_PAR_INPUT_MOD2+x} ]; then
   ViashError '--input_mod2' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
+if [ -z ${VIASH_PAR_INPUT_SOLUTION_MOD1+x} ]; then
+  ViashError '--input_solution_mod1' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_INPUT_SOLUTION_MOD2+x} ]; then
+  ViashError '--input_solution_mod2' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
 if [ -z ${VIASH_PAR_OUTPUT_MOD1+x} ]; then
   ViashError '--output_mod1' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
@@ -779,6 +821,14 @@ if [ ! -z "$VIASH_PAR_INPUT_MOD1" ] && [ ! -e "$VIASH_PAR_INPUT_MOD1" ]; then
 fi
 if [ ! -z "$VIASH_PAR_INPUT_MOD2" ] && [ ! -e "$VIASH_PAR_INPUT_MOD2" ]; then
   ViashError "Input file '$VIASH_PAR_INPUT_MOD2' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD1" ] && [ ! -e "$VIASH_PAR_INPUT_SOLUTION_MOD1" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_SOLUTION_MOD1' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD2" ] && [ ! -e "$VIASH_PAR_INPUT_SOLUTION_MOD2" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_SOLUTION_MOD2' does not exist."
   exit 1
 fi
 
@@ -843,6 +893,14 @@ fi
 if [ ! -z "$VIASH_PAR_INPUT_MOD2" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_MOD2")" )
   VIASH_PAR_INPUT_MOD2=$(ViashAutodetectMount "$VIASH_PAR_INPUT_MOD2")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD1" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_SOLUTION_MOD1")" )
+  VIASH_PAR_INPUT_SOLUTION_MOD1=$(ViashAutodetectMount "$VIASH_PAR_INPUT_SOLUTION_MOD1")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD2" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_SOLUTION_MOD2")" )
+  VIASH_PAR_INPUT_SOLUTION_MOD2=$(ViashAutodetectMount "$VIASH_PAR_INPUT_SOLUTION_MOD2")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT_MOD1" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT_MOD1")" )
@@ -919,6 +977,8 @@ import numpy as np
 par = {
   'input_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD1//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'input_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD2//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_solution_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD1//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_solution_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD2//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output_mod1': $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD1+x} ]; then echo "r'${VIASH_PAR_OUTPUT_MOD1//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output_mod2': $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_OUTPUT_MOD2//\'/\'\"\'\"r\'}'"; else echo None; fi )
 }
@@ -947,6 +1007,7 @@ adata_mod1 = ad.read_h5ad(par["input_mod1"])
 adata_mod2 = ad.read_h5ad(par["input_mod2"])
 
 print("Generating random features", flush=True)
+# todo: do we actually need to permute this once more
 adata_mod1.obsm["integrated"] = adata_mod1.obsm["X_svd"][np.random.permutation(np.arange(adata_mod1.shape[0]))]
 adata_mod2.obsm["integrated"] = adata_mod1.obsm["X_svd"][np.random.permutation(np.arange(adata_mod1.shape[0]))]
 
@@ -968,6 +1029,12 @@ if [ ! -z "$VIASH_PAR_INPUT_MOD1" ]; then
 fi
 if [ ! -z "$VIASH_PAR_INPUT_MOD2" ]; then
   VIASH_PAR_INPUT_MOD2=$(ViashStripAutomount "$VIASH_PAR_INPUT_MOD2")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD1" ]; then
+  VIASH_PAR_INPUT_SOLUTION_MOD1=$(ViashStripAutomount "$VIASH_PAR_INPUT_SOLUTION_MOD1")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD2" ]; then
+  VIASH_PAR_INPUT_SOLUTION_MOD2=$(ViashStripAutomount "$VIASH_PAR_INPUT_SOLUTION_MOD2")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT_MOD1" ]; then
   VIASH_PAR_OUTPUT_MOD1=$(ViashStripAutomount "$VIASH_PAR_OUTPUT_MOD1")

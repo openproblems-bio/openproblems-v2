@@ -3106,7 +3106,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3128,7 +3128,7 @@ meta = [
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+          "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -3152,10 +3152,10 @@ meta = [
       "config" : {
         "labels" : {
           "lowmem" : "memory = 20.Gb",
-          "lowcpu" : "cpus = 5",
           "midmem" : "memory = 50.Gb",
-          "midcpu" : "cpus = 15",
           "highmem" : "memory = 100.Gb",
+          "lowcpu" : "cpus = 5",
+          "midcpu" : "cpus = 15",
           "highcpu" : "cpus = 30",
           "lowtime" : "time = 1.h",
           "midtime" : "time = 4.h",
@@ -3174,7 +3174,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

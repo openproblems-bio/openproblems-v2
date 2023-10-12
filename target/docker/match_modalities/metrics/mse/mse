@@ -173,19 +173,29 @@ function ViashHelp {
   echo "mse main_build"
   echo ""
   echo "Arguments:"
-  echo "    --input_mod1"
+  echo "    --input_integrated_mod1"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
   echo "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
   echo ""
-  echo "    --input_mod2"
+  echo "    --input_integrated_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
+  echo "resources_test/match_modalities/scicar_cell_lines/integrated_mod2.h5ad"
+  echo ""
+  echo "    --input_solution_mod1"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example:"
+  echo "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
+  echo ""
+  echo "    --input_solution_mod2"
+  echo "        type: file, required parameter, file must exist"
+  echo "        example:"
+  echo "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
-  echo "        example: resources_test/match_modalities/score.h5ad"
+  echo "        example: resources_test/match_modalities/scicar_cell_lines/score.h5ad"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -409,12 +419,12 @@ ENTRYPOINT []
 
  
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "numpy" "scipy" "scprep"
+  pip install --upgrade --no-cache-dir "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/metrics mse"
-LABEL org.opencontainers.image.created="2023-10-11T18:33:16Z"
+LABEL org.opencontainers.image.created="2023-10-12T11:41:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f"
+LABEL org.opencontainers.image.revision="3ee9310b7ad6621174be81431888fcbeb9e9af33"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -569,26 +579,48 @@ while [[ $# -gt 0 ]]; do
             echo "mse main_build"
             exit
             ;;
-        --input_mod1)
-            [ -n "$VIASH_PAR_INPUT_MOD1" ] && ViashError Bad arguments for option \'--input_mod1\': \'$VIASH_PAR_INPUT_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_MOD1="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_mod1. Use "--help" to get more information on the parameters. && exit 1
+        --input_integrated_mod1)
+            [ -n "$VIASH_PAR_INPUT_INTEGRATED_MOD1" ] && ViashError Bad arguments for option \'--input_integrated_mod1\': \'$VIASH_PAR_INPUT_INTEGRATED_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_INTEGRATED_MOD1="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_integrated_mod1. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --input_mod1=*)
-            [ -n "$VIASH_PAR_INPUT_MOD1" ] && ViashError Bad arguments for option \'--input_mod1=*\': \'$VIASH_PAR_INPUT_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_MOD1=$(ViashRemoveFlags "$1")
+        --input_integrated_mod1=*)
+            [ -n "$VIASH_PAR_INPUT_INTEGRATED_MOD1" ] && ViashError Bad arguments for option \'--input_integrated_mod1=*\': \'$VIASH_PAR_INPUT_INTEGRATED_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_INTEGRATED_MOD1=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --input_mod2)
-            [ -n "$VIASH_PAR_INPUT_MOD2" ] && ViashError Bad arguments for option \'--input_mod2\': \'$VIASH_PAR_INPUT_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_MOD2="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_mod2. Use "--help" to get more information on the parameters. && exit 1
+        --input_integrated_mod2)
+            [ -n "$VIASH_PAR_INPUT_INTEGRATED_MOD2" ] && ViashError Bad arguments for option \'--input_integrated_mod2\': \'$VIASH_PAR_INPUT_INTEGRATED_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_INTEGRATED_MOD2="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_integrated_mod2. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --input_mod2=*)
-            [ -n "$VIASH_PAR_INPUT_MOD2" ] && ViashError Bad arguments for option \'--input_mod2=*\': \'$VIASH_PAR_INPUT_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_MOD2=$(ViashRemoveFlags "$1")
+        --input_integrated_mod2=*)
+            [ -n "$VIASH_PAR_INPUT_INTEGRATED_MOD2" ] && ViashError Bad arguments for option \'--input_integrated_mod2=*\': \'$VIASH_PAR_INPUT_INTEGRATED_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_INTEGRATED_MOD2=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --input_solution_mod1)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD1" ] && ViashError Bad arguments for option \'--input_solution_mod1\': \'$VIASH_PAR_INPUT_SOLUTION_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD1="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_solution_mod1. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --input_solution_mod1=*)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD1" ] && ViashError Bad arguments for option \'--input_solution_mod1=*\': \'$VIASH_PAR_INPUT_SOLUTION_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD1=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --input_solution_mod2)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD2" ] && ViashError Bad arguments for option \'--input_solution_mod2\': \'$VIASH_PAR_INPUT_SOLUTION_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD2="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_solution_mod2. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --input_solution_mod2=*)
+            [ -n "$VIASH_PAR_INPUT_SOLUTION_MOD2" ] && ViashError Bad arguments for option \'--input_solution_mod2=*\': \'$VIASH_PAR_INPUT_SOLUTION_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_SOLUTION_MOD2=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --output)
@@ -720,12 +752,20 @@ fi
 
 
 # check whether required parameters exist
-if [ -z ${VIASH_PAR_INPUT_MOD1+x} ]; then
-  ViashError '--input_mod1' is a required argument. Use "--help" to get more information on the parameters.
+if [ -z ${VIASH_PAR_INPUT_INTEGRATED_MOD1+x} ]; then
+  ViashError '--input_integrated_mod1' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
-if [ -z ${VIASH_PAR_INPUT_MOD2+x} ]; then
-  ViashError '--input_mod2' is a required argument. Use "--help" to get more information on the parameters.
+if [ -z ${VIASH_PAR_INPUT_INTEGRATED_MOD2+x} ]; then
+  ViashError '--input_integrated_mod2' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_INPUT_SOLUTION_MOD1+x} ]; then
+  ViashError '--input_solution_mod1' is a required argument. Use "--help" to get more information on the parameters.
+  exit 1
+fi
+if [ -z ${VIASH_PAR_INPUT_SOLUTION_MOD2+x} ]; then
+  ViashError '--input_solution_mod2' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
 if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
@@ -754,12 +794,20 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
 fi
 
 # check whether required files exist
-if [ ! -z "$VIASH_PAR_INPUT_MOD1" ] && [ ! -e "$VIASH_PAR_INPUT_MOD1" ]; then
-  ViashError "Input file '$VIASH_PAR_INPUT_MOD1' does not exist."
+if [ ! -z "$VIASH_PAR_INPUT_INTEGRATED_MOD1" ] && [ ! -e "$VIASH_PAR_INPUT_INTEGRATED_MOD1" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_INTEGRATED_MOD1' does not exist."
   exit 1
 fi
-if [ ! -z "$VIASH_PAR_INPUT_MOD2" ] && [ ! -e "$VIASH_PAR_INPUT_MOD2" ]; then
-  ViashError "Input file '$VIASH_PAR_INPUT_MOD2' does not exist."
+if [ ! -z "$VIASH_PAR_INPUT_INTEGRATED_MOD2" ] && [ ! -e "$VIASH_PAR_INPUT_INTEGRATED_MOD2" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_INTEGRATED_MOD2' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD1" ] && [ ! -e "$VIASH_PAR_INPUT_SOLUTION_MOD1" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_SOLUTION_MOD1' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD2" ] && [ ! -e "$VIASH_PAR_INPUT_SOLUTION_MOD2" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_SOLUTION_MOD2' does not exist."
   exit 1
 fi
 
@@ -814,13 +862,21 @@ fi
 
 # detect volumes from file arguments
 VIASH_CHOWN_VARS=()
-if [ ! -z "$VIASH_PAR_INPUT_MOD1" ]; then
-  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_MOD1")" )
-  VIASH_PAR_INPUT_MOD1=$(ViashAutodetectMount "$VIASH_PAR_INPUT_MOD1")
+if [ ! -z "$VIASH_PAR_INPUT_INTEGRATED_MOD1" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_INTEGRATED_MOD1")" )
+  VIASH_PAR_INPUT_INTEGRATED_MOD1=$(ViashAutodetectMount "$VIASH_PAR_INPUT_INTEGRATED_MOD1")
 fi
-if [ ! -z "$VIASH_PAR_INPUT_MOD2" ]; then
-  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_MOD2")" )
-  VIASH_PAR_INPUT_MOD2=$(ViashAutodetectMount "$VIASH_PAR_INPUT_MOD2")
+if [ ! -z "$VIASH_PAR_INPUT_INTEGRATED_MOD2" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_INTEGRATED_MOD2")" )
+  VIASH_PAR_INPUT_INTEGRATED_MOD2=$(ViashAutodetectMount "$VIASH_PAR_INPUT_INTEGRATED_MOD2")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD1" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_SOLUTION_MOD1")" )
+  VIASH_PAR_INPUT_SOLUTION_MOD1=$(ViashAutodetectMount "$VIASH_PAR_INPUT_SOLUTION_MOD1")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD2" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_SOLUTION_MOD2")" )
+  VIASH_PAR_INPUT_SOLUTION_MOD2=$(ViashAutodetectMount "$VIASH_PAR_INPUT_SOLUTION_MOD2")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT")" )
@@ -885,15 +941,16 @@ trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
 import anndata as ad
-import scprep
 import numpy as np
 from scipy import sparse
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'input_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD1//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'input_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD2//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_integrated_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_INTEGRATED_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_INTEGRATED_MOD1//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_integrated_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_INTEGRATED_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_INTEGRATED_MOD2//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_solution_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD1//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'input_solution_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD2//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi )
 }
 meta = {
@@ -917,8 +974,11 @@ dep = {
 ## VIASH END
 
 print("Reading adata file", flush=True)
-adata_mod1 = ad.read_h5ad(par["input_mod1"])
-adata_mod2 = ad.read_h5ad(par["input_mod2"])
+input_solution_mod1 = ad.read_h5ad(par["input_solution_mod1"])
+input_solution_mod2 = ad.read_h5ad(par["input_solution_mod2"])
+
+input_integrated_mod1 = ad.read_h5ad(par["input_integrated_mod1"])[input_solution_mod1.obs["permutation_indices"]]
+input_integrated_mod2 = ad.read_h5ad(par["input_integrated_mod2"])[input_solution_mod2.obs["permutation_indices"]]
 
 print("Computing MSE", flush=True)
 def _square(X):
@@ -926,29 +986,29 @@ def _square(X):
 		X.data = X.data ** 2
 		return X
 	else:
-		return scprep.utils.toarray(X) ** 2
+		return X ** 2
 
-X = scprep.utils.toarray(adata_mod1.obsm["integrated"])
-Y = scprep.utils.toarray(adata_mod2.obsm["integrated"])
+
+X = input_integrated_mod1.obsm["integrated"].toarray()
+Y = input_integrated_mod2.obsm["integrated"].toarray()
 
 X_shuffled = X[np.random.permutation(np.arange(X.shape[0])), :]
 error_random = np.mean(np.sum(_square(X_shuffled - Y)))
 error_abs = np.mean(np.sum(_square(X - Y)))
-metric_value = error_abs / error_random
+metric_value = (error_abs / error_random).item()
 
+print("Store metric value", flush=True)
+uns = {
+  "dataset_id": input_solution_mod1.uns["dataset_id"],
+  "normalization_id": input_solution_mod1.uns["normalization_id"],
+  "method_id": input_integrated_mod1.uns["method_id"],
+  "metric_ids": "mse",
+  "metric_values": metric_value
+}
 output_metric = ad.AnnData(
-	layers={},
-	obs=adata_mod1.obs[[]],
-	var=adata_mod1.var[[]],
-	uns={}
+  shape=(0,0),
+  uns=uns
 )
-
-for key in adata_mod1.uns_keys():
-    output_metric.uns[key] = adata_mod1.uns[key]
-
-print("Store metic value", flush=True)
-output_metric.uns["metric_ids"] = meta["functionality_name"]
-output_metric.uns["metric_values"] = metric_value
 
 print("Writing adata to file", flush=True)
 output_metric.write_h5ad(par["output"], compression = "gzip")
@@ -960,11 +1020,17 @@ VIASHEOF
 
 
 # strip viash automount from file paths
-if [ ! -z "$VIASH_PAR_INPUT_MOD1" ]; then
-  VIASH_PAR_INPUT_MOD1=$(ViashStripAutomount "$VIASH_PAR_INPUT_MOD1")
+if [ ! -z "$VIASH_PAR_INPUT_INTEGRATED_MOD1" ]; then
+  VIASH_PAR_INPUT_INTEGRATED_MOD1=$(ViashStripAutomount "$VIASH_PAR_INPUT_INTEGRATED_MOD1")
 fi
-if [ ! -z "$VIASH_PAR_INPUT_MOD2" ]; then
-  VIASH_PAR_INPUT_MOD2=$(ViashStripAutomount "$VIASH_PAR_INPUT_MOD2")
+if [ ! -z "$VIASH_PAR_INPUT_INTEGRATED_MOD2" ]; then
+  VIASH_PAR_INPUT_INTEGRATED_MOD2=$(ViashStripAutomount "$VIASH_PAR_INPUT_INTEGRATED_MOD2")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD1" ]; then
+  VIASH_PAR_INPUT_SOLUTION_MOD1=$(ViashStripAutomount "$VIASH_PAR_INPUT_SOLUTION_MOD1")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_SOLUTION_MOD2" ]; then
+  VIASH_PAR_INPUT_SOLUTION_MOD2=$(ViashStripAutomount "$VIASH_PAR_INPUT_SOLUTION_MOD2")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
   VIASH_PAR_OUTPUT=$(ViashStripAutomount "$VIASH_PAR_OUTPUT")

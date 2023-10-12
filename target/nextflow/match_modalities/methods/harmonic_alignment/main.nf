@@ -2745,7 +2745,7 @@ meta = [
         "name" : "--input_mod1",
         "info" : {
           "label" : "Modality 1",
-          "summary" : "The first modality of a multimodal dataset.",
+          "summary" : "The first modality of a multimodal dataset. The cells of this dataset are randomly permuted.",
           "slots" : {
             "layers" : [
               {
@@ -2758,20 +2758,6 @@ meta = [
                 "type" : "double",
                 "name" : "normalized",
                 "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -2800,7 +2786,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/scicar_cell_lines/dataset_mod1.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2815,7 +2801,7 @@ meta = [
         "name" : "--input_mod2",
         "info" : {
           "label" : "Modality 2",
-          "summary" : "The second modality of a multimodal dataset.",
+          "summary" : "The second modality of a multimodal dataset. The cells of this dataset are randomly permuted.",
           "slots" : {
             "layers" : [
               {
@@ -2828,20 +2814,6 @@ meta = [
                 "type" : "double",
                 "name" : "normalized",
                 "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -2870,7 +2842,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/scicar_cell_lines/dataset_mod2.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2884,48 +2856,14 @@ meta = [
         "type" : "file",
         "name" : "--output_mod1",
         "info" : {
-          "label" : "Integrated",
-          "summary" : "The integrated data",
+          "label" : "Integrated mod1",
+          "summary" : "The integrated embedding for the first modality",
           "slots" : {
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_svd",
-                "description" : "The resulting SVD PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "integrated",
-                "description" : "The resulting integrated embedding.",
+                "description" : "An integrated embedding.",
                 "required" : true
               }
             ],
@@ -2966,48 +2904,14 @@ meta = [
         "type" : "file",
         "name" : "--output_mod2",
         "info" : {
-          "label" : "Integrated",
-          "summary" : "The integrated data",
+          "label" : "Integrated mod2",
+          "summary" : "The integrated embedding for the second modality",
           "slots" : {
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_svd",
-                "description" : "The resulting SVD PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "integrated",
-                "description" : "The resulting integrated embedding.",
+                "description" : "An integrated embedding.",
                 "required" : true
               }
             ],
@@ -3082,8 +2986,8 @@ meta = [
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "resources_test/common/scicar_cell_lines",
-        "dest" : "resources_test/common/scicar_cell_lines",
+        "path" : "resources_test/match_modalities/scicar_cell_lines",
+        "dest" : "resources_test/match_modalities/scicar_cell_lines",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3174,10 +3078,10 @@ meta = [
       "config" : {
         "labels" : {
           "lowmem" : "memory = 20.Gb",
-          "lowcpu" : "cpus = 5",
           "midmem" : "memory = 50.Gb",
-          "midcpu" : "cpus = 15",
           "highmem" : "memory = 100.Gb",
+          "lowcpu" : "cpus = 5",
+          "midcpu" : "cpus = 15",
           "highcpu" : "cpus = 30",
           "lowtime" : "time = 1.h",
           "midtime" : "time = 4.h",
@@ -3196,7 +3100,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/harmonic_alignment",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -2742,50 +2742,16 @@ meta = [
     "arguments" : [
       {
         "type" : "file",
-        "name" : "--input_mod1",
+        "name" : "--input_integrated_mod1",
         "info" : {
-          "label" : "Integrated",
-          "summary" : "The integrated data",
+          "label" : "Integrated mod1",
+          "summary" : "The integrated embedding for the first modality",
           "slots" : {
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_svd",
-                "description" : "The resulting SVD PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "integrated",
-                "description" : "The resulting integrated embedding.",
+                "description" : "An integrated embedding.",
                 "required" : true
               }
             ],
@@ -2824,50 +2790,16 @@ meta = [
       },
       {
         "type" : "file",
-        "name" : "--input_mod2",
+        "name" : "--input_integrated_mod2",
         "info" : {
-          "label" : "Integrated",
-          "summary" : "The integrated data",
+          "label" : "Integrated mod2",
+          "summary" : "The integrated embedding for the second modality",
           "slots" : {
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_svd",
-                "description" : "The resulting SVD PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "integrated",
-                "description" : "The resulting integrated embedding.",
+                "description" : "An integrated embedding.",
                 "required" : true
               }
             ],
@@ -2894,7 +2826,135 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/integrated_mod2.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--input_solution_mod1",
+        "info" : {
+          "label" : "Solution mod1",
+          "summary" : "The ground truth information for the first modality",
+          "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized counts",
+                "required" : true
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "integer",
+                "name" : "permutation_indices",
+                "description" : "Indices with which to revert the permutation of the cells",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--input_solution_mod2",
+        "info" : {
+          "label" : "Solution mod1",
+          "summary" : "The ground truth information for the second modality",
+          "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized counts",
+                "required" : true
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "integer",
+                "name" : "permutation_indices",
+                "description" : "Indices with which to revert the permutation of the cells",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2948,7 +3008,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/match_modalities/score.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/score.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3076,10 +3136,10 @@ meta = [
       "config" : {
         "labels" : {
           "lowmem" : "memory = 20.Gb",
-          "lowcpu" : "cpus = 5",
           "midmem" : "memory = 50.Gb",
-          "midcpu" : "cpus = 15",
           "highmem" : "memory = 100.Gb",
+          "lowcpu" : "cpus = 5",
+          "midcpu" : "cpus = 15",
           "highcpu" : "cpus = 30",
           "lowtime" : "time = 1.h",
           "midtime" : "time = 4.h",
@@ -3098,7 +3158,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3121,8 +3181,10 @@ import sklearn.neighbors
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
-  'input_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'input_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_integrated_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_INTEGRATED_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_INTEGRATED_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_integrated_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_INTEGRATED_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_INTEGRATED_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_solution_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_solution_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'proportion_neighbors': $( if [ ! -z ${VIASH_PAR_PROPORTION_NEIGHBORS+x} ]; then echo "float(r'${VIASH_PAR_PROPORTION_NEIGHBORS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
@@ -3147,30 +3209,31 @@ dep = {
 ## VIASH END
 
 print("Reading adata file", flush=True)
-adata_mod1 = ad.read_h5ad(par["input_mod1"])
-adata_mod2 = ad.read_h5ad(par["input_mod2"])
+input_solution_mod1 = ad.read_h5ad(par["input_solution_mod1"])
+input_solution_mod2 = ad.read_h5ad(par["input_solution_mod2"])
+
+input_integrated_mod1 = ad.read_h5ad(par["input_integrated_mod1"])[input_solution_mod1.obs["permutation_indices"]]
+input_integrated_mod2 = ad.read_h5ad(par["input_integrated_mod2"])[input_solution_mod2.obs["permutation_indices"]]
 
 print("Checking parameters", flush=True)
-n_neighbors = int(np.ceil(par["proportion_neighbors"] * adata_mod1.layers["normalized"].shape[0]))
+n_neighbors = int(np.ceil(par["proportion_neighbors"] * input_solution_mod1.n_obs))
 
 print("Compute KNN on PCA", flush=True)
 _, indices_true = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
-    .fit(adata_mod1.obsm["X_svd"])
-    .kneighbors(adata_mod1.obsm["X_svd"])
+    .fit(input_solution_mod1.obsm["X_svd"])
+    .kneighbors(input_solution_mod2.obsm["X_svd"])
 )
 
-print("Compute KNN on integrated matrix", flush=True)
 _, indices_pred = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
-    .fit(adata_mod1.obsm["integrated"])
-    .kneighbors(adata_mod2.obsm["integrated"])
+    .fit(input_integrated_mod1.obsm["integrated"])
+    .kneighbors(input_integrated_mod2.obsm["integrated"])
 )
 
 print("Check which neighbours match", flush=True)
-print("Check which neighbours match", flush=True)
 neighbors_match = np.zeros(n_neighbors, dtype=int)
-for i in range(adata_mod1.layers["normalized"].shape[0]):
+for i in range(input_solution_mod1.n_obs):
     _, pred_matches, true_matches = np.intersect1d(
         indices_pred[i], indices_true[i], return_indices=True
     )
@@ -3181,25 +3244,23 @@ for i in range(adata_mod1.layers["normalized"].shape[0]):
     )
 
 print("Compute area under neighbours match curve", flush=True)
-print("Compute area under neighbours match curve", flush=True)
 neighbors_match_curve = neighbors_match / (
-    np.arange(1, n_neighbors + 1) * adata_mod1.layers["normalized"].shape[0]
+    np.arange(1, n_neighbors + 1) * input_solution_mod1.n_obs
 )
 area_under_curve = np.mean(neighbors_match_curve)
 
-print("Store metic value", flush=True)
+print("Store metric value", flush=True)
+uns = {
+  "dataset_id": input_solution_mod1.uns["dataset_id"],
+  "normalization_id": input_solution_mod1.uns["normalization_id"],
+  "method_id": input_integrated_mod1.uns["method_id"],
+  "metric_ids": "knn_auc",
+  "metric_values": area_under_curve
+}
 output_metric = ad.AnnData(
-    layers={},
-    obs=adata_mod1.obs[[]],
-    var=adata_mod1.var[[]],
-    uns={},
+  shape=(0,0),
+  uns=uns
 )
-
-for key in adata_mod1.uns_keys():
-    output_metric.uns[key] = adata_mod1.uns[key]
-
-output_metric.uns["metric_ids"] = meta["functionality_name"]
-output_metric.uns["metric_values"] = area_under_curve
 
 print("Writing adata to file", flush=True)
 output_metric.write_h5ad(par["output"], compression = "gzip")

@@ -2745,7 +2745,7 @@ meta = [
         "name" : "--input_mod1",
         "info" : {
           "label" : "Modality 1",
-          "summary" : "The first modality of a multimodal dataset.",
+          "summary" : "The first modality of a multimodal dataset. The cells of this dataset are randomly permuted.",
           "slots" : {
             "layers" : [
               {
@@ -2758,20 +2758,6 @@ meta = [
                 "type" : "double",
                 "name" : "normalized",
                 "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -2800,7 +2786,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/scicar_cell_lines/dataset_mod1.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2815,7 +2801,7 @@ meta = [
         "name" : "--input_mod2",
         "info" : {
           "label" : "Modality 2",
-          "summary" : "The second modality of a multimodal dataset.",
+          "summary" : "The second modality of a multimodal dataset. The cells of this dataset are randomly permuted.",
           "slots" : {
             "layers" : [
               {
@@ -2828,20 +2814,6 @@ meta = [
                 "type" : "double",
                 "name" : "normalized",
                 "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -2870,7 +2842,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/scicar_cell_lines/dataset_mod2.h5ad"
+          "resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2882,10 +2854,10 @@ meta = [
       },
       {
         "type" : "file",
-        "name" : "--output_mod1",
+        "name" : "--input_solution_mod1",
         "info" : {
-          "label" : "Integrated",
-          "summary" : "The integrated data",
+          "label" : "Solution mod1",
+          "summary" : "The ground truth information for the first modality",
           "slots" : {
             "layers" : [
               {
@@ -2901,17 +2873,11 @@ meta = [
                 "required" : true
               }
             ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
+            "obs" : [
               {
                 "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
+                "name" : "permutation_indices",
+                "description" : "Indices with which to revert the permutation of the cells",
                 "required" : true
               }
             ],
@@ -2921,11 +2887,111 @@ meta = [
                 "name" : "X_svd",
                 "description" : "The resulting SVD PCA embedding.",
                 "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--input_solution_mod2",
+        "info" : {
+          "label" : "Solution mod1",
+          "summary" : "The ground truth information for the second modality",
+          "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
               },
               {
                 "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized counts",
+                "required" : true
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "integer",
+                "name" : "permutation_indices",
+                "description" : "Indices with which to revert the permutation of the cells",
+                "required" : true
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_svd",
+                "description" : "The resulting SVD PCA embedding.",
+                "required" : true
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--output_mod1",
+        "info" : {
+          "label" : "Integrated mod1",
+          "summary" : "The integrated embedding for the first modality",
+          "slots" : {
+            "obsm" : [
+              {
+                "type" : "double",
                 "name" : "integrated",
-                "description" : "The resulting integrated embedding.",
+                "description" : "An integrated embedding.",
                 "required" : true
               }
             ],
@@ -2966,48 +3032,14 @@ meta = [
         "type" : "file",
         "name" : "--output_mod2",
         "info" : {
-          "label" : "Integrated",
-          "summary" : "The integrated data",
+          "label" : "Integrated mod2",
+          "summary" : "The integrated embedding for the second modality",
           "slots" : {
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized counts",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_svd",
-                "description" : "The resulting SVD PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "integrated",
-                "description" : "The resulting integrated embedding.",
+                "description" : "An integrated embedding.",
                 "required" : true
               }
             ],
@@ -3056,8 +3088,8 @@ meta = [
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "resources_test/common/scicar_cell_lines",
-        "dest" : "resources_test/common/scicar_cell_lines",
+        "path" : "resources_test/match_modalities/scicar_cell_lines",
+        "dest" : "resources_test/match_modalities/scicar_cell_lines",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3135,10 +3167,10 @@ meta = [
       "config" : {
         "labels" : {
           "lowmem" : "memory = 20.Gb",
-          "lowcpu" : "cpus = 5",
           "midmem" : "memory = 50.Gb",
-          "midcpu" : "cpus = 15",
           "highmem" : "memory = 100.Gb",
+          "lowcpu" : "cpus = 5",
+          "midcpu" : "cpus = 15",
           "highcpu" : "cpus = 30",
           "lowtime" : "time = 1.h",
           "midtime" : "time = 4.h",
@@ -3157,7 +3189,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "0c7d3f78deff2ffa8ae1957aa473a5fcc6ba866f",
+    "git_commit" : "3ee9310b7ad6621174be81431888fcbeb9e9af33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3179,6 +3211,8 @@ import anndata as ad
 par = {
   'input_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_solution_mod1': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD1+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_solution_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output_mod1': $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD1+x} ]; then echo "r'${VIASH_PAR_OUTPUT_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output_mod2': $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_OUTPUT_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
@@ -3207,14 +3241,34 @@ adata_mod1 = ad.read_h5ad(par["input_mod1"])
 adata_mod2 = ad.read_h5ad(par["input_mod2"])
 
 print("Storing true features", flush=True)
-adata_mod1.obsm["integrated"] = adata_mod1.obsm["X_svd"]
-adata_mod2.obsm["integrated"] = adata_mod1.obsm["X_svd"]
+output_mod1 = ad.AnnData(
+  obs=adata_mod1.obs[[]],
+  var=adata_mod1.var[[]],
+  obsm={
+    "integrated": adata_mod1.obsm["X_svd"]
+  },
+  uns={
+    "dataset_id": adata_mod1.uns["dataset_id"],
+    "normalization_id": adata_mod1.uns["normalization_id"],
+    "method_id": meta["functionality_name"]
+  }
+)
+output_mod2 = ad.AnnData(
+  obs=adata_mod2.obs[[]],
+  var=adata_mod2.var[[]],
+  obsm={
+    "integrated": adata_mod2.obsm["X_svd"]
+  },
+  uns={
+    "dataset_id": adata_mod2.uns["dataset_id"],
+    "normalization_id": adata_mod2.uns["normalization_id"],
+    "method_id": meta["functionality_name"]
+  }
+)
 
 print("Write output to file", flush=True)
-adata_mod1.uns["method_id"] = meta["functionality_name"]
-adata_mod2.uns["method_id"] = meta["functionality_name"]
-adata_mod1.write_h5ad(par["output_mod1"], compression="gzip")
-adata_mod2.write_h5ad(par["output_mod2"], compression="gzip")
+output_mod1.write_h5ad(par["output_mod1"], compression="gzip")
+output_mod2.write_h5ad(par["output_mod2"], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"
 '''
