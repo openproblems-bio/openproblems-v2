@@ -430,9 +430,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common check_dataset_schema"
-LABEL org.opencontainers.image.created="2023-10-12T14:07:41Z"
+LABEL org.opencontainers.image.created="2023-10-12T15:09:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4d7d9f6e8adfbc47655b10b09a8bce4257c2e633"
+LABEL org.opencontainers.image.revision="cd8f679a458f5560d901ae6b0a4d3b259cac2601"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -992,7 +992,7 @@ dep = {
 def check_structure(slot_info, adata_slot):
   missing = []
   for obj in slot_info:
-    if 'required' in obj and obj['required'] and obj['name'] not in adata_slot:
+    if obj.get('required') and obj['name'] not in adata_slot:
       missing.append(obj['name'])
   return missing
 
