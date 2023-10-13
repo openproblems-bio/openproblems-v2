@@ -1,0 +1,19 @@
+functionality:
+  name: save_file
+  namespace: common
+  arguments:
+    - type: string
+      name: "--input"
+      required: true
+      direction: input
+    - type: file
+      name: "--output"
+      required: true
+      direction: output
+  resources:
+    - type: python_script
+      path: script.py
+platforms: 
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
+  - type: nextflow

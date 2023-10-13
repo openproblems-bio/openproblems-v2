@@ -58,9 +58,11 @@ workflow run_wf {
 
     // extract the dataset metadata
     | check_dataset_schema.run(
+      key: "extract_dataset_uns",
       fromState: [input: "input_dataset"],
       toState: { id, output, state ->
-        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        state + [dataset_uns: dataset_uns]
       }
     )
 
@@ -71,7 +73,7 @@ workflow run_wf {
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
-        def norm = state.normalization_id
+        def norm = state.dataset_uns.normalization_id
         def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
@@ -146,25 +148,66 @@ workflow run_wf {
       }
     )
 
-  // join all events into a new event where the new id is simply "output" and the new state consists of:
-  //   - "input": a list of score h5ads
-  //   - "output": the output argument of this workflow
+  // TODO: can we store everything below in a separate helper function?
+  
+  | check_dataset_schema.run(
+    key: "extract_scores",
+    fromState: [input: "metric_output"],
+    toState: { id, output, state ->
+      def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+      state + [score_uns: score_uns]
+    }
+  )
+  
   | joinStates{ ids, states ->
     def new_id = "output"
     def new_state = [
-      input: states.collect{it.metric_output},
+      score_uns: states.collect{it.score_uns},
       _meta: states[0]._meta
     ]
     [new_id, new_state]
   }
 
-  // convert to tsv and publish
-  | extract_scores.run(
-    fromState: ["input"],
-    toState: ["output"]
+  | save_file.run(
+    key: "save_score_uns",
+    fromState: { id, state ->
+      [
+        input: toYamlBlob(state.score_uns),
+        output: '$id.$key.score.yaml'
+      ]
+    },
+    toState: ["output_scores": "output"]
   )
+  | save_file.run(
+    key: "save_method_configs",
+    fromState: { id, state ->
+      // TODO: filter methods
+      [
+        input: toYamlBlob(methods.collect{it.config}),
+        output: '$id.$key.method_configs.yaml'
+      ]
+    },
+    toState: ["output_method_configs": "output"]
+  )
+  | save_file.run(
+    key: "save_metric_configs",
+    fromState: { id, state ->
+      // TODO: filter metrics
+      [
+        input: toYamlBlob(metrics.collect{it.config}),
+        output: '$id.$key.metric_configs.yaml'
+      ]
+    },
+    toState: ["output_metric_configs": "output"]
+  )
+  // TODO: can we also store the trace log?
 
-  | setState(["output", "_meta"])
+  | setState([
+    "output_scores",
+    "output_method_configs",
+    "output_metric_configs",
+    "_meta"
+  ])
 
   emit:
   output_ch

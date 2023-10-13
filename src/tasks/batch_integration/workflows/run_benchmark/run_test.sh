@@ -26,4 +26,5 @@ nextflow run . \
   --input_states "$DATASETS_DIR/**/state.yaml" \
   --rename_keys 'input_dataset:output_dataset,input_solution:output_solution' \
   --settings '{"output": "scores.tsv"}' \
-  --publish_dir "$OUTPUT_DIR"
+  --publish_dir "$OUTPUT_DIR" \
+  --output_state "state.yaml"
