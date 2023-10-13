@@ -1,0 +1,92 @@
+functionality:
+  name: cellxgene_census
+  namespace: "query"
+  description: "Query CellxGene Census or user-specified TileDBSoma object, and eventually fetch cell and gene metadata or/and expression counts."
+  authors:
+    - __merge__: ../../authors/matthias_beyens.yaml
+    - __merge__: ../../authors/dries_de_maeyer.yaml
+      roles: [ author ]
+  argument_groups:
+    - name: Inputs
+      description: "Arguments related to the input (aka query) dataset."
+      arguments:
+        # TODO: add user-provided release of census, e.g. TileDBSoma
+        - name: "--input_database"
+          type: string
+          description: "Full input database S3 prefix URL. Default: CellxGene Census"
+          required: false
+          example: "s3://"
+          default: "CellxGene"
+        - name: "--modality"
+          description: "Which modality to store the output in."
+          type: string
+          default: "rna"
+          required: false
+        - name: "--cellxgene_release"
+          description: "CellxGene Census release date. More information: https://chanzuckerberg.github.io/cellxgene-census/cellxgene_census_docsite_data_release_info.html"
+          type: string
+          default: "2023-05-15"
+          required: false
+    - name: Query
+      description: Arguments related to the query.
+      arguments:
+        - name: "--species"
+          type: string
+          description: "Specie(s) of interest. If not specified, Homo Sapiens will be queried."
+          required: false
+          example: "homo_sapiens"
+          default: "homo_sapiens"
+          choices: ["homo_sapiens", "mus_musculus"]
+          multiple: false
+        - name: "--cell_query"
+          type: string
+          description: "The query for selecting the cells as defined by the cellxgene census schema."
+          required: false
+          example: "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'"
+        - name: "--cells_filter_columns"
+          type: string
+          description: "The query for selecting the cells as defined by the cellxgene census schema."
+          required: false
+          example: ["dataset_id", "tissue", "assay", "disease", "cell_type"]
+          multiple: true
+        - name: "--min_cells_filter_columns"
+          type: double
+          description: "Minimum of amount of summed cells_filter_columns cells"
+          required: false
+          example: 100
+    - name: Outputs
+      description: Output arguments.
+      arguments:
+        - name: "--output"
+          type: file
+          description: Output h5mu file.
+          direction: output
+          required: true
+          example: output.h5mu
+        - name: "--output_compression"
+          type: string
+          choices: ["gzip", "lzf"]
+          required: false
+          example: "gzip"
+  resources:
+    - type: python_script
+      path: script.py
+    - path: /src/utils/setup_logger.py
+  test_resources:
+    - type: python_script
+      path: test.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    setup:
+      - type: python
+        packages:
+          - cellxgene-census~=1.2.0
+          - obonet~=1.0.0
+    test_setup:
+      - type: python
+        packages:
+          - viashpy==0.5.0
+  - type: nextflow
+    directives:
+      label: [midtime, highmem, midcpu]
