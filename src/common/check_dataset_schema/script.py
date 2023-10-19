@@ -7,7 +7,7 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  'input': 'work/0c/ec18cd8ccce095dd43bd386e94c078/pancreas.combat_f2e_e2g.lisi.extract_scores.output.h5ad',
+  'input': 'work/84/29c5c3dc92a276d08d4d0cae419290/pancreas.bbknn.isolated_label_f1.extract_scores.output.h5ad',
   'schema': None,
   'stop_on_error': False,
   'checks': 'output/error.json',
@@ -24,7 +24,7 @@ def check_structure(slot_info, adata_slot):
   return missing
 
 print('Load data', flush=True)
-adata = ad.read_h5ad(par['input']).copy()
+adata = ad.read_h5ad(par['input'], backed='r')
 
 # create data structure
 out = {
@@ -36,27 +36,47 @@ out = {
 def is_atomic(obj):
   return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool) or isinstance(obj, float)
 
+def to_atomic(obj):
+  if isinstance(obj, np.float64):
+    return float(obj)
+  elif isinstance(obj, np.int64):
+    return int(obj)
+  elif isinstance(obj, np.bool_):
+    return bool(obj)
+  elif isinstance(obj, np.str_):
+    return str(obj)
+  return obj
+
 def is_list_of_atomics(obj):
   if not isinstance(obj, (list,pd.core.series.Series,np.ndarray)):
     return False
   return all(is_atomic(elem) for elem in obj)
+
+def to_list_of_atomics(obj):
+  if isinstance(obj, pd.core.series.Series):
+    obj = obj.to_numpy()
+  if isinstance(obj, np.ndarray):
+    obj = obj.tolist()
+  return [to_atomic(elem) for elem in obj]
 
 def is_dict_of_atomics(obj):
   if not isinstance(obj, dict):
     return False
   return all(is_atomic(elem) for _, elem in obj.items())
 
+def to_dict_of_atomics(obj):
+  return {k: to_atomic(v) for k, v in obj.items()}
 
 if par['meta'] is not None:
   print("Extract metadata from object", flush=True)
   uns = {}
   for key, val in adata.uns.items():
     if is_atomic(val):
-      uns[key] = val
+      uns[key] = to_atomic(val)
     elif is_list_of_atomics(val):
-      uns[key] = list(val)
+      uns[key] = to_list_of_atomics(val)
     elif is_dict_of_atomics(val):
-      uns[key] = {k: v for k, v in val.items()}
+      uns[key] = to_dict_of_atomics(val)
   structure = {
     struct: list(getattr(adata, struct).keys())
     for struct
