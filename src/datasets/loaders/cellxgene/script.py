@@ -7,7 +7,7 @@ import anndata as ad
 par = {
     "input_database": "CellxGene",
     "modality": "rna",
-    "cellxgene_release": "2023-05-15",
+    "cellxgene_release": "2023-07-25",
     "species": "homo_sapiens",
     "cell_query": "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'",
     "cells_filter_columns": ["dataset_id", "tissue", "assay", "disease", "cell_type"],
@@ -16,7 +16,7 @@ par = {
     "output_compression": "gzip",
 }
 
-meta = {'resources_dir': os.path.abspath('./src/query/cellxgene_census/')}
+meta = {}
 ### VIASH END
 
 def connect_census(input_database, release):
@@ -71,35 +71,57 @@ def write_mudata(mdata, output_location, compression):
         )
 
 
-census_connection = connect_census(
-    par["input_database"],
-    par["cellxgene_release"]
-    ) 
 
-query_data = get_anndata(
-    census_connection,
-    par["cell_query"],
-    par["species"]
-    )
+census = connect_census(par["input_database"], par["cellxgene_release"])
 
-query_data.obs = add_cellcensus_metadata_obs(
-    census_connection,
-    query_data
-    )
+human = census["census_data"]["homo_sapiens"]
+human_rna = human.ms["RNA"]
 
-census_connection.close()
-del census_connection
+datasets_df = census["census_info"]["datasets"].read().concat().to_pandas()
+print(datasets_df)
 
-if par["cells_filter_columns"]:
-    if not par["min_cells_filter_columns"]:
-        raise NotImplementedError(
-        "You specified cells_filter_columns, thus add min_cells_filter_columns!"
-        )
-    query_data = cellcensus_cell_filter(
-        query_data,
-        par["cells_filter_columns"],
-        par["min_cells_filter_columns"]
-        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+# census_connection = connect_census(
+#     par["input_database"],
+#     par["cellxgene_release"]
+#     ) 
+
+# query_data = get_anndata(
+#     census_connection,
+#     par["cell_query"],
+#     par["species"]
+#     )
+
+# query_data.obs = add_cellcensus_metadata_obs(
+#     census_connection,
+#     query_data
+#     )
+
+# census_connection.close()
+# del census_connection
+
+# if par["cells_filter_columns"]:
+#     if not par["min_cells_filter_columns"]:
+#         raise NotImplementedError(
+#         "You specified cells_filter_columns, thus add min_cells_filter_columns!"
+#         )
+#     query_data = cellcensus_cell_filter(
+#         query_data,
+#         par["cells_filter_columns"],
+#         par["min_cells_filter_columns"]
+#         )
     
-query_data.var_names = query_data.var["feature_id"]
-query_data.var["gene_symbol"] = query_data.var["feature_name"]
+# query_data.var_names = query_data.var["feature_id"]
+# query_data.var["gene_symbol"] = query_data.var["feature_name"]

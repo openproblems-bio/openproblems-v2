@@ -2,15 +2,10 @@ functionality:
   name: cellxgene_census
   namespace: "query"
   description: "Query CellxGene Census or user-specified TileDBSoma object, and eventually fetch cell and gene metadata or/and expression counts."
-  authors:
-    - __merge__: ../../authors/matthias_beyens.yaml
-    - __merge__: ../../authors/dries_de_maeyer.yaml
-      roles: [ author ]
   argument_groups:
     - name: Inputs
       description: "Arguments related to the input (aka query) dataset."
       arguments:
-        # TODO: add user-provided release of census, e.g. TileDBSoma
         - name: "--input_database"
           type: string
           description: "Full input database S3 prefix URL. Default: CellxGene Census"
@@ -25,7 +20,7 @@ functionality:
         - name: "--cellxgene_release"
           description: "CellxGene Census release date. More information: https://chanzuckerberg.github.io/cellxgene-census/cellxgene_census_docsite_data_release_info.html"
           type: string
-          default: "2023-05-15"
+          default: "2023-07-25"
           required: false
     - name: Query
       description: Arguments related to the query.
@@ -59,10 +54,10 @@ functionality:
       arguments:
         - name: "--output"
           type: file
-          description: Output h5mu file.
+          description: Output h5ad file.
           direction: output
           required: true
-          example: output.h5mu
+          example: output.h5ad
         - name: "--output_compression"
           type: string
           choices: ["gzip", "lzf"]
@@ -71,7 +66,6 @@ functionality:
   resources:
     - type: python_script
       path: script.py
-    - path: /src/utils/setup_logger.py
   test_resources:
     - type: python_script
       path: test.py
