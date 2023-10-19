@@ -158,10 +158,11 @@ workflow run_wf {
 
   // TODO: can we store everything below in a separate helper function?
   
-  | extract_scores.run(
+  | check_dataset_schema.run(
+    key: "extract_scores",
     fromState: [input: "metric_output"],
     toState: { id, output, state ->
-      def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.output))
+      def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
       state + [score_uns: score_uns]
     }
   )
