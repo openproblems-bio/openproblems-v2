@@ -7,8 +7,8 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  'input': 'resources_test/common/pancreas/dataset.h5ad',
-  'schema': 'src/tasks/denoising/api/file_common_dataset.yaml',
+  'input': 'work/0c/ec18cd8ccce095dd43bd386e94c078/pancreas.combat_f2e_e2g.lisi.extract_scores.output.h5ad',
+  'schema': None,
   'stop_on_error': False,
   'checks': 'output/error.json',
   'output': 'output/output.h5ad',
@@ -34,7 +34,7 @@ out = {
 }
 
 def is_atomic(obj):
-  return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool)
+  return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool) or isinstance(obj, float)
 
 def is_list_of_atomics(obj):
   if not isinstance(obj, (list,pd.core.series.Series,np.ndarray)):
