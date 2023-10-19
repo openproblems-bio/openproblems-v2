@@ -58,7 +58,6 @@ workflow run_wf {
 
     // extract the dataset metadata
     | check_dataset_schema.run(
-      key: "extract_dataset_uns",
       fromState: [input: "input_dataset"],
       toState: { id, output, state ->
         def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
@@ -103,6 +102,9 @@ workflow run_wf {
   method_out_ch2 = method_out_ch1
     | runEach(
       components: feature_to_embed,
+      id: { id, state, comp ->
+        id + "_f2e"
+      },
       filter: { id, state, comp -> state.method_subtype == "feature"},
       fromState: [ input: "method_output" ],
       toState: { id, output, state, comp ->
@@ -118,6 +120,9 @@ workflow run_wf {
   method_out_ch3 = method_out_ch2
     | runEach(
       components: embed_to_graph,
+      id: { id, state, comp ->
+        id + "_e2g"
+      },
       filter: { id, state, comp -> state.method_subtype == "embedding"},
       fromState: [ input: "method_output" ],
       toState: { id, output, state, comp ->
@@ -133,6 +138,9 @@ workflow run_wf {
   output_ch = method_out_ch3
     | runEach(
       components: metrics,
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
+      },
       filter: { id, state, comp ->
         state.method_subtype == comp.config.functionality.info.subtype
       },
@@ -150,64 +158,52 @@ workflow run_wf {
 
   // TODO: can we store everything below in a separate helper function?
   
-  | check_dataset_schema.run(
-    key: "extract_scores",
+  | extract_scores.run(
     fromState: [input: "metric_output"],
     toState: { id, output, state ->
-      def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+      def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.output))
       state + [score_uns: score_uns]
     }
   )
   
   | joinStates{ ids, states ->
     def new_id = "output"
+
+    // store the dataset uns
+    def dataset_uns = states.collect{it.dataset_uns}
+    def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
+    def dataset_uns_file = tempFile("dataset_uns.yaml")
+    dataset_uns_file.write(dataset_uns_yaml_blob)
+
+    // store the scores in a separate file
+    def score_uns = states.collect{it.score_uns}
+    def score_uns_yaml_blob = toYamlBlob(score_uns)
+    def score_uns_file = tempFile("score_uns.yaml")
+    score_uns_file.write(score_uns_yaml_blob)
+
+    // store the method configs in a separate file
+    def method_configs = methods.collect{it.config}
+    def method_configs_yaml_blob = toYamlBlob(method_configs)
+    def method_configs_file = tempFile("method_configs.yaml")
+    method_configs_file.write(method_configs_yaml_blob)
+
+    // store the metric configs in a separate file
+    def metric_configs = metrics.collect{it.config}
+    def metric_configs_yaml_blob = toYamlBlob(metric_configs)
+    def metric_configs_file = tempFile("metric_configs.yaml")
+    metric_configs_file.write(metric_configs_yaml_blob)
+
     def new_state = [
-      score_uns: states.collect{it.score_uns},
+      // todo: add task info?
+      // todo: add trace log?
+      output_dataset_info: dataset_uns_file,
+      output_scores: score_uns_file,
+      output_method_configs: method_configs_file,
+      output_metric_configs: metric_configs_file,
       _meta: states[0]._meta
     ]
     [new_id, new_state]
   }
-
-  | save_file.run(
-    key: "save_score_uns",
-    fromState: { id, state ->
-      [
-        input: toYamlBlob(state.score_uns),
-        output: '$id.$key.score.yaml'
-      ]
-    },
-    toState: ["output_scores": "output"]
-  )
-  | save_file.run(
-    key: "save_method_configs",
-    fromState: { id, state ->
-      // TODO: filter methods
-      [
-        input: toYamlBlob(methods.collect{it.config}),
-        output: '$id.$key.method_configs.yaml'
-      ]
-    },
-    toState: ["output_method_configs": "output"]
-  )
-  | save_file.run(
-    key: "save_metric_configs",
-    fromState: { id, state ->
-      // TODO: filter metrics
-      [
-        input: toYamlBlob(metrics.collect{it.config}),
-        output: '$id.$key.metric_configs.yaml'
-      ]
-    },
-    toState: ["output_metric_configs": "output"]
-  )
-  // TODO: can we also store the trace log?
-
-  | setState([
-    "output_scores",
-    "output_method_configs",
-    "output_metric_configs",
-    "_meta"
-  ])
 
   emit:
   output_ch

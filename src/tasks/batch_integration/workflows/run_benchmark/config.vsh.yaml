@@ -19,7 +19,7 @@ functionality:
           required: true
           direction: output
           description: A yaml file containing the scores of each of the methods
-          example: scores.yaml
+          example: score_uns.yaml
         - name: "--output_method_configs"
           type: file
           required: true
@@ -30,6 +30,11 @@ functionality:
           required: true
           direction: output
           example: metric_configs.yaml
+        - name: "--output_dataset_info"
+          type: file
+          required: true
+          direction: output
+          example: dataset_uns.yaml
   resources:
     - type: nextflow_script
       path: main.nf
