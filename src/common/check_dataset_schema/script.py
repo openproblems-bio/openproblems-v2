@@ -2,6 +2,8 @@ import anndata as ad
 import yaml
 import shutil
 import json
+import numpy as np
+import pandas as pd
 
 ## VIASH START
 par = {
@@ -35,23 +37,26 @@ def is_atomic(obj):
   return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool)
 
 def is_list_of_atomics(obj):
-  if not isinstance(obj, list):
+  if not isinstance(obj, (list,pd.core.series.Series,np.ndarray)):
     return False
   return all(is_atomic(elem) for elem in obj)
 
 def is_dict_of_atomics(obj):
   if not isinstance(obj, dict):
     return False
-  return all(is_atomic(elem) for key, elem in obj.items())
+  return all(is_atomic(elem) for _, elem in obj.items())
 
 
 if par['meta'] is not None:
   print("Extract metadata from object", flush=True)
-  uns = {
-    key: val
-    for key, val in adata.uns.items()
-    if is_atomic(val) or is_list_of_atomics(val) or is_dict_of_atomics(val)
-  }
+  uns = {}
+  for key, val in adata.uns.items():
+    if is_atomic(val):
+      uns[key] = val
+    elif is_list_of_atomics(val):
+      uns[key] = list(val)
+    elif is_dict_of_atomics(val):
+      uns[key] = {k: v for k, v in val.items()}
   structure = {
     struct: list(getattr(adata, struct).keys())
     for struct
