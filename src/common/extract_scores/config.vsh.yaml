@@ -2,7 +2,7 @@ functionality:
   name: "extract_scores"
   namespace: "common"
   version: "dev"
-  description: "Extract evaluation data frame on output"
+  description: "Extract score columns from a list of AnnDatas and store as a yaml"
   arguments:
     - name: "--input"
       alternatives: ["-i"]
@@ -19,8 +19,8 @@ functionality:
       alternatives: ["-o"]
       type: "file"
       direction: "output"
-      default: "output.tsv"
-      description: "Output tsv"
+      default: "output.yaml"
+      description: "Output yaml"
   resources:
     - type: r_script
       path: script.R

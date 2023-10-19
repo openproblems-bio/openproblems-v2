@@ -7,13 +7,13 @@ library(assertthat)
 ## VIASH START
 par <- list(
   input = "resources_test/label_projection/pancreas/knn_accuracy.h5ad",
-  output = "scores.tsv"
+  output = "scores.yaml"
 )
 inp <- par$input[[1]]
 ## VIASH END
 
 cat("Reading input h5ad files\n")
-scores <- map_df(par$input, function(inp) {
+scores <- map(par$input, function(inp) {
   cat("Reading '", inp, "'\n", sep = "")
   ad <- read_h5ad(inp)
 
@@ -24,7 +24,7 @@ scores <- map_df(par$input, function(inp) {
     )
   }
 
-  data.frame(ad$uns[par$column_names])
+  ad$uns[par$column_names]
 })
 
-write_tsv(scores, par$output)
+yaml::write_yaml(scores, par$output)
