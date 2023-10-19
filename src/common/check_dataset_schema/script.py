@@ -7,8 +7,8 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  'input': 'work/84/29c5c3dc92a276d08d4d0cae419290/pancreas.bbknn.isolated_label_f1.extract_scores.output.h5ad',
-  'schema': None,
+  'input': 'resources_test/common/pancreas/dataset.h5ad',
+  'schema': 'src/tasks/denoising/api/file_common_dataset.yaml',
   'stop_on_error': False,
   'checks': 'output/error.json',
   'output': 'output/output.h5ad',
