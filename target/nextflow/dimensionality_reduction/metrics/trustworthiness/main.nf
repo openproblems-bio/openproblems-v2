@@ -2990,7 +2990,7 @@ meta = [
       "directives" : {
         "label" : [
           "midtime",
-          "midmem",
+          "highmem",
           "lowcpu"
         ],
         "tag" : "$id"
@@ -3026,7 +3026,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness",
     "viash_version" : "0.8.0-RC6",
-    "git_commit" : "747d93918c3ac5aea4ae76f3f1128d7dc4dae94d",
+    "git_commit" : "6c73b94b2d4f4e85e3b4fcf78e761f67814e575f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3450,7 +3450,7 @@ meta["defaults"] = [
   },
   "label" : [
     "midtime",
-    "midmem",
+    "highmem",
     "lowcpu"
   ],
   "tag" : "$id"
