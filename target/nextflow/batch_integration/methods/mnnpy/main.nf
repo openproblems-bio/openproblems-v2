@@ -3097,7 +3097,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnnpy",
     "viash_version" : "0.8.0",
-    "git_commit" : "a4f08ec4b561d1272de5461c5719835c1d57f6e8",
+    "git_commit" : "a21897a1ffe8c8742af46da9fcab60d8ffef2410",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

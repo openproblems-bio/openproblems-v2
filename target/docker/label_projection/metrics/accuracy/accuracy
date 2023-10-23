@@ -410,9 +410,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/metrics accuracy"
-LABEL org.opencontainers.image.created="2023-10-23T21:52:33Z"
+LABEL org.opencontainers.image.created="2023-10-23T21:59:47Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a4f08ec4b561d1272de5461c5719835c1d57f6e8"
+LABEL org.opencontainers.image.revision="a21897a1ffe8c8742af46da9fcab60d8ffef2410"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
