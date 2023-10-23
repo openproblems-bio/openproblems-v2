@@ -6,12 +6,12 @@ import re
 
 ## VIASH START
 par = {
-  "task": "denoising",
+  "task": "label_projection",
   "type": "method",
   "language": "python",
-  "name": "new_comp",
-  "output": "src/tasks/denoising/methods/new_comp",
-  "api_file": "src/tasks/denoising/api/comp_method.yaml",
+  "name": "test_method",
+  "output": "src/tasks/denoising/methods/test_method",
+  "api_file": "src/tasks/label_projection/api/comp_method.yaml",
   "viash_yaml": "_viash.yaml"
 }
 ## VIASH END
@@ -429,8 +429,12 @@ def main(par):
   
   ## READ API FILE
   print("Read API file", flush=True)
+  print(f"api_file: {api_file}", flush=True)
   api = read_and_merge_yaml(api_file)
+  print(f"api: {api}", flush=True)
   comp_type = api.get("functionality", {}).get("info", {}).get("type", {})
+  print(f"comp_type: {comp_type}", flush=True)
+  
   if not comp_type:
     sys.exit(strip_margin(f"""\
       |Error: API file is incorrectly formatted.
