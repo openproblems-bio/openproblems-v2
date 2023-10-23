@@ -61,7 +61,7 @@ functionality:
       dest: openproblems-v2/_viash.yaml
 platforms:
   - type: docker
-    image: python:3.10-slim
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
     setup:
       - type: python
         pypi: ruamel.yaml
