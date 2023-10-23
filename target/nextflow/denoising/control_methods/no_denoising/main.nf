@@ -2957,7 +2957,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising",
     "viash_version" : "0.8.0",
-    "git_commit" : "db4e821066d235e1b39a2071f84de5315ddc7fe1",
+    "git_commit" : "a4f08ec4b561d1272de5461c5719835c1d57f6e8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

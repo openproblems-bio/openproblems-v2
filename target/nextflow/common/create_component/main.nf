@@ -2877,7 +2877,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "python:3.10-slim",
+      "image" : "python:3.10-slim-bullseye",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -2937,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component",
     "viash_version" : "0.8.0",
-    "git_commit" : "db4e821066d235e1b39a2071f84de5315ddc7fe1",
+    "git_commit" : "a4f08ec4b561d1272de5461c5719835c1d57f6e8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
