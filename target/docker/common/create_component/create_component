@@ -440,18 +440,18 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.2
+FROM python:3.10-slim
 
 ENTRYPOINT []
 
  
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "ruamel.yaml"
+  pip install --upgrade --no-cache-dir "ruamel.yaml<0.18"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2023-10-23T22:00:02Z"
+LABEL org.opencontainers.image.created="2023-10-24T05:40:23Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a21897a1ffe8c8742af46da9fcab60d8ffef2410"
+LABEL org.opencontainers.image.revision="7a7c58fe73821e2ac90ec6804252bfe2dfa5aa7b"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1395,11 +1395,14 @@ def create_r_script(par, api_spec, type):
 
 def main(par):
   ####### CHECK INPUTS #######
+  print("Check inputs", flush=True)
   assert re.match("[a-z][a-z0-9_]*", par["name"]), "Name should match the regular expression '[a-z][a-z0-9_]*'. Example: 'my_component'."
   assert len(par['name']) <= 50, "Method name should be at most 50 characters."
 
   pretty_name = re.sub("_", " ", par['name']).title()
 
+  ####### CHECK LANGUAGE #######
+  print("Check language", flush=True)
   # check language and determine script path
   if par["language"] == "python":
     script_path = "script.py"
@@ -1409,6 +1412,7 @@ def main(par):
     sys.exit(f"Unrecognized language parameter '{par['language']}'.")
 
   ## CHECK API FILE
+  print("Check API file", flush=True)
   api_file = Path(par["api_file"])
   viash_yaml = Path(par["viash_yaml"])
   project_dir = viash_yaml.parent
@@ -1421,6 +1425,7 @@ def main(par):
       |  Possible values for --type: {', '.join(comp_types)}."""))
   
   ## READ API FILE
+  print("Read API file", flush=True)
   api = read_and_merge_yaml(api_file)
   comp_type = api.get("functionality", {}).get("info", {}).get("type", {})
   if not comp_type:
@@ -1430,10 +1435,12 @@ def main(par):
       |  Please fix the formatting of the API file."""))
 
   ####### CREATE OUTPUT DIR #######
+  print("Create output dir", flush=True)
   out_dir = Path(par["output"])
   out_dir.mkdir(exist_ok=True)
 
   ####### CREATE CONFIG #######
+  print("Create config", flush=True)
   config_file = out_dir / "config.vsh.yaml"
 
   # get config template
@@ -1443,6 +1450,7 @@ def main(par):
     f.write(config_str)
 
   ####### CREATE SCRIPT #######
+  print("Create script", flush=True)
   script_file = out_dir / script_path
 
   # set reasonable values
@@ -1457,6 +1465,8 @@ def main(par):
   # write script
   with open(script_file, "w") as f:
     f.write(script_out)
+
+  print("Done!", flush=True)
 
 
 if __name__ == "__main__":

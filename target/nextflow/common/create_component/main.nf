@@ -2877,7 +2877,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "python:3.10-slim",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -2890,7 +2890,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "pypi" : [
-            "ruamel.yaml"
+            "ruamel.yaml<0.18"
           ],
           "upgrade" : true
         }
@@ -2937,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component",
     "viash_version" : "0.8.0",
-    "git_commit" : "a21897a1ffe8c8742af46da9fcab60d8ffef2410",
+    "git_commit" : "7a7c58fe73821e2ac90ec6804252bfe2dfa5aa7b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3371,11 +3371,14 @@ cat("Reading input files\\\\\\\\n")
 
 def main(par):
   ####### CHECK INPUTS #######
+  print("Check inputs", flush=True)
   assert re.match("[a-z][a-z0-9_]*", par["name"]), "Name should match the regular expression '[a-z][a-z0-9_]*'. Example: 'my_component'."
   assert len(par['name']) <= 50, "Method name should be at most 50 characters."
 
   pretty_name = re.sub("_", " ", par['name']).title()
 
+  ####### CHECK LANGUAGE #######
+  print("Check language", flush=True)
   # check language and determine script path
   if par["language"] == "python":
     script_path = "script.py"
@@ -3385,6 +3388,7 @@ def main(par):
     sys.exit(f"Unrecognized language parameter '{par['language']}'.")
 
   ## CHECK API FILE
+  print("Check API file", flush=True)
   api_file = Path(par["api_file"])
   viash_yaml = Path(par["viash_yaml"])
   project_dir = viash_yaml.parent
@@ -3397,6 +3401,7 @@ Error: Invalid --type argument.
   Possible values for --type: {', '.join(comp_types)}."""))
   
   ## READ API FILE
+  print("Read API file", flush=True)
   api = read_and_merge_yaml(api_file)
   comp_type = api.get("functionality", {}).get("info", {}).get("type", {})
   if not comp_type:
@@ -3406,10 +3411,12 @@ Error: API file is incorrectly formatted.
   Please fix the formatting of the API file."""))
 
   ####### CREATE OUTPUT DIR #######
+  print("Create output dir", flush=True)
   out_dir = Path(par["output"])
   out_dir.mkdir(exist_ok=True)
 
   ####### CREATE CONFIG #######
+  print("Create config", flush=True)
   config_file = out_dir / "config.vsh.yaml"
 
   # get config template
@@ -3419,6 +3426,7 @@ Error: API file is incorrectly formatted.
     f.write(config_str)
 
   ####### CREATE SCRIPT #######
+  print("Create script", flush=True)
   script_file = out_dir / script_path
 
   # set reasonable values
@@ -3433,6 +3441,8 @@ Error: API file is incorrectly formatted.
   # write script
   with open(script_file, "w") as f:
     f.write(script_out)
+
+  print("Done!", flush=True)
 
 
 if __name__ == "__main__":

@@ -118,7 +118,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "python:3.10-slim"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -130,7 +130,7 @@ platforms:
   - type: "python"
     user: false
     pypi:
-    - "ruamel.yaml"
+    - "ruamel.yaml<0.18"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -166,5 +166,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component/create_component"
   viash_version: "0.8.0"
-  git_commit: "a21897a1ffe8c8742af46da9fcab60d8ffef2410"
+  git_commit: "7a7c58fe73821e2ac90ec6804252bfe2dfa5aa7b"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
