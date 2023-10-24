@@ -61,7 +61,7 @@ functionality:
       dest: openproblems-v2/_viash.yaml
 platforms:
   - type: docker
-    image: python:3.10.12-slim
+    image: python:3.10-slim@sha256:7b03387c44da8695400590becc6430d8a811b6e97838a740e56f58448f437ec0
     setup:
       - type: python
         pypi: ruamel.yaml
