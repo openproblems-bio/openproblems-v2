@@ -9,8 +9,12 @@ def read_and_merge_yaml(path):
     path -- Path to the Viash YAML"""
     import ruamel.yaml as yaml
     print("imported ruayaml", flush=True)
-    with open(path, 'r') as stream:
-        data = yaml.safe_load(stream)
+    # check if path is pathlib.Path
+    if hasattr(path, 'read_text'):
+        data = yaml.safe_load(path.read_text())
+    else:
+        with open(path, 'r') as stream:
+            data = yaml.safe_load(stream)
     print("loaded yaml", flush=True)
     return _ram_process_merge(data, path)
 
