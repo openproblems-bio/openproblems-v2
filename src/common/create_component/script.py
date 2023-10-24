@@ -430,7 +430,7 @@ def main(par):
   ## READ API FILE
   print("Read API file", flush=True)
   print(f"api_file: {api_file}", flush=True)
-  api = read_and_merge_yaml(api_file)
+  api = read_and_merge_yaml(str(api_file))
   print(f"api: {api}", flush=True)
   comp_type = api.get("functionality", {}).get("info", {}).get("type", {})
   print(f"comp_type: {comp_type}", flush=True)
