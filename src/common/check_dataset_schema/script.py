@@ -24,7 +24,7 @@ def check_structure(slot_info, adata_slot):
   return missing
 
 print('Load data', flush=True)
-adata = ad.read_h5ad(par['input'], backed='r')
+adata = ad.read_h5ad(par['input']).copy()
 
 # create data structure
 out = {
