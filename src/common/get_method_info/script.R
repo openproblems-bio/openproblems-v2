@@ -4,18 +4,13 @@ library(rlang, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
-  input = ".",
+  input = "output/temp/method_configs.yaml",
   task_id = "label_projection",
   output = "output/method_info.json"
 )
 ## VIASH END
 
-ns_list <- processx::run(
-  "viash",
-  c("ns", "list", "-q", "methods", "--src", paste("src/tasks", par$task_id, sep = "/")),
-  wd = par$input
-)
-configs <- yaml::yaml.load(ns_list$stdout)
+configs <- yaml::yaml.load_file(par$input)
 
 out <- map(configs, function(config) {
   if (length(config$functionality$status) > 0 && config$functionality$status == "disabled") return(NULL)

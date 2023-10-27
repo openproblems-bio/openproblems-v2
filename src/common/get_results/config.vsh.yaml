@@ -11,6 +11,10 @@ functionality:
       type: "file"
       example: resources/label_projection/benchmarks/openproblems_v1/nextflow_log.tsv
       description: "Nextflow log file"
+    - name: "--task_id"
+      type: "string"
+      example: "label_projection"
+      description: "Task id"
     - name: "--output"
       type: "file"
       direction: "output"

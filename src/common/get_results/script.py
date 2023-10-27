@@ -35,6 +35,7 @@ def organise_score (scores):
             score["metric_values"] = [None] * len(score["metric_ids"])
         comb_metric = zip(score["metric_ids"], score["metric_values"])
         score["metric_values"] = dict(comb_metric)
+        score["task_id"] = par["task_id"]
         del score["metric_ids"]
         if score_temp.get(score_id) is None:
             score_temp[score_id] = score
