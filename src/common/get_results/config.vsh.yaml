@@ -5,12 +5,10 @@ functionality:
   arguments:
     - name: "--input_scores"
       type: "file"
-      multiple: true
       example: resources/label_projection/benchmarks/openproblems_v1/combined.extract_scores.output.tsv
       description: "Scores file"
     - name: "--input_execution"
       type: "file"
-      multiple: true
       example: resources/label_projection/benchmarks/openproblems_v1/nextflow_log.tsv
       description: "Nextflow log file"
     - name: "--output"
@@ -19,13 +17,10 @@ functionality:
       default: "output.json"
       description: "Output json"
   resources:
-    - type: r_script
-      path: script.R
+    - type: python_script
+      path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.2
-    setup:
-      - type: r
-        cran: [ tidyverse ]
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
   - type: nextflow
   - type: native
