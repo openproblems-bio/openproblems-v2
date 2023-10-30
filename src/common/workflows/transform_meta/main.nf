@@ -12,10 +12,6 @@ workflow run_wf {
     main:
     output_ch = input_ch
         
-        | view{ id, state ->
-            state
-        }
-
         | get_results.run(
             fromState: [ 
                 "input_scores": "input_scores",
@@ -27,9 +23,6 @@ workflow run_wf {
                 state + [output_results: output.output]
                 }
         )
-
-        | view
-
 
         | get_method_info.run(
             fromState: [ 
