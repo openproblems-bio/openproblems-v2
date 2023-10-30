@@ -22,10 +22,10 @@ nextflow run . \
   -resume \
   -c src/wf_utils/labels_ci.config \
   -entry auto \
-  --input_states "$DATASETS_DIR/**/state.yaml" \
+  --input_states "$RAW_DATA/**/state.yaml" \
   --rename_keys 'input_dataset:output_dataset,input_solution:output_solution' \
   --settings '{"output_scores": "scores.yaml", "output_dataset_info": "dataset_info.yaml", "output_method_configs": "method_configs.yaml", "output_metric_configs": "metric_configs.yaml"}' \
-  --publish_dir "$OUTPUT_DIR" \
+  --publish_dir "$DATASET_DIR" \
   --output_state "state.yaml"
 # output_state should be moved to settings once workaround is solved
 
