@@ -1,6 +1,9 @@
 functionality:
-  name: get_results
+  name: transform_meta
   namespace: common/workflows
+  description: >-
+    This workflow transforms the meta information of the results into a format
+    that can be used by the website.
   argument_groups:
     - name: Inputs
       arguments:
@@ -76,6 +79,6 @@ functionality:
     - name: common/get_results
     - name: common/get_method_info
     - name: common/get_metric_info
-    - name: common/get_info
+    - name: common/yaml_to_json
 platforms:
   - type: nextflow
