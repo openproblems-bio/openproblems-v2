@@ -22,6 +22,7 @@ nextflow run . \
   -main-script target/nextflow/batch_integration/workflows/run_benchmark/main.nf \
   -profile docker \
   -resume \
+  -c src/wf_utils/labels_ci.config \
   -entry auto \
   --input_states "$DATASETS_DIR/**/state.yaml" \
   --rename_keys 'input_dataset:output_dataset,input_solution:output_solution' \
