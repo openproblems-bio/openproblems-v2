@@ -1,5 +1,5 @@
 functionality:
-  name: "get_execution_info"
+  name: "get_results"
   namespace: "common"
   description: "Extract execution info"
   arguments:
