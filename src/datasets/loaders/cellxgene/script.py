@@ -64,64 +64,39 @@ def cellcensus_cell_filter(query_data, cells_filter_columns, min_cells_filter_co
     return query_data
 
 
-def write_mudata(mdata, output_location, compression):
-    mdata.write_h5mu(
-        output_location,
-        compression=compression
+census_connection = connect_census(
+    par["input_database"],
+    par["cellxgene_release"]
+    ) 
+
+query_data = get_anndata(
+    census_connection,
+    par["cell_query"],
+    par["species"]
+    )
+
+query_data.obs = add_cellcensus_metadata_obs(
+    census_connection,
+    query_data
+    )
+
+census_connection.close()
+del census_connection
+
+if par["cells_filter_columns"]:
+    if not par["min_cells_filter_columns"]:
+        raise NotImplementedError(
+        "You specified cells_filter_columns, thus add min_cells_filter_columns!"
         )
-
-
-
-census = connect_census(par["input_database"], par["cellxgene_release"])
-
-human = census["census_data"]["homo_sapiens"]
-human_rna = human.ms["RNA"]
-
-datasets_df = census["census_info"]["datasets"].read().concat().to_pandas()
-print(datasets_df)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# census_connection = connect_census(
-#     par["input_database"],
-#     par["cellxgene_release"]
-#     ) 
-
-# query_data = get_anndata(
-#     census_connection,
-#     par["cell_query"],
-#     par["species"]
-#     )
-
-# query_data.obs = add_cellcensus_metadata_obs(
-#     census_connection,
-#     query_data
-#     )
-
-# census_connection.close()
-# del census_connection
-
-# if par["cells_filter_columns"]:
-#     if not par["min_cells_filter_columns"]:
-#         raise NotImplementedError(
-#         "You specified cells_filter_columns, thus add min_cells_filter_columns!"
-#         )
-#     query_data = cellcensus_cell_filter(
-#         query_data,
-#         par["cells_filter_columns"],
-#         par["min_cells_filter_columns"]
-#         )
+    query_data = cellcensus_cell_filter(
+        query_data,
+        par["cells_filter_columns"],
+        par["min_cells_filter_columns"]
+        )
     
-# query_data.var_names = query_data.var["feature_id"]
-# query_data.var["gene_symbol"] = query_data.var["feature_name"]
+query_data.var_names = query_data.var["feature_id"]
+query_data.var["gene_symbol"] = query_data.var["feature_name"]
+
+
+with open(par["output"], 'w') as f:
+    query_data.write_h5ad(par['output'], compression='gzip')
