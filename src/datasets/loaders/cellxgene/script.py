@@ -10,10 +10,7 @@ par = {
     "cellxgene_release": "2023-07-25",
     "species": "homo_sapiens",
     "cell_query": "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'",
-    "cells_filter_columns": ["dataset_id", "tissue", "assay", "disease", "cell_type"],
-    "min_cells_filter_columns": 100,
-    "output": "output.h5mu",
-    "output_compression": "gzip",
+    "output": "output.h5ad",
 }
 
 meta = {}

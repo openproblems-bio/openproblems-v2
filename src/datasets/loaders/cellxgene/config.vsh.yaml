@@ -58,11 +58,6 @@ functionality:
           direction: output
           required: true
           example: output.h5ad
-        - name: "--output_compression"
-          type: string
-          choices: ["gzip", "lzf"]
-          required: false
-          example: "gzip"
   resources:
     - type: python_script
       path: script.py
