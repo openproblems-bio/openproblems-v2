@@ -25,6 +25,11 @@ functionality:
     - name: Query
       description: Arguments related to the query.
       arguments:
+        - name: "--dataset_id"
+          type: string
+          description: "Dataset ID(s) of interest."
+          required: false
+          multiple: true
         - name: "--species"
           type: string
           description: "Specie(s) of interest. If not specified, Homo Sapiens will be queried."

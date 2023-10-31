@@ -1,12 +1,8 @@
-import sys
-import os
 import cellxgene_census
-import anndata as ad
 
 ## VIASH START
 par = {
     "input_database": "CellxGene",
-    "modality": "rna",
     "cellxgene_release": "2023-07-25",
     "species": "homo_sapiens",
     "cell_query": "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'",
@@ -35,7 +31,6 @@ def get_anndata(census_connection, cell_query, species):
         obs_value_filter = cell_query,
         organism = species
     )
-
 
 def add_cellcensus_metadata_obs(census_connection, query_data):
     census_datasets = census_connection["census_info"]["datasets"].read().concat().to_pandas()
