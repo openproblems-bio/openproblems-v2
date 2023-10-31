@@ -17,7 +17,7 @@ functionality:
     reference: "haghverdi2018batch"
     repository_url: "https://code.bioconductor.org/browse/batchelor/"
     documentation_url: "https://bioconductor.org/packages/batchelor/"
-    preferred_normalization: log_cpm
+    preferred_normalization: log_cp10k
     v1:
       path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/fastmnn.py
       commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
@@ -26,7 +26,7 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.1
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
     setup:
       # - type: r
       #   bioc: batchelor
@@ -38,4 +38,4 @@ platforms:
           - remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")
   - type: nextflow
     directives:
-      label: [ lowcpu, highmem ]
+      label: [ "midtime", lowcpu, highmem ]

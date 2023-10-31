@@ -6,9 +6,13 @@ functionality:
   resources:
     - type: r_script
       path: script.R
+  test_resources:
+    - type: file
+      path: /resources_test/common/task_metadata/metric_configs.yaml
+      dest: test_file.yaml
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.1
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
     setup:
       - type: r
         cran: [ purrr, dplyr, yaml, rlang, processx ]

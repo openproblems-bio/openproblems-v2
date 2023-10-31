@@ -5,31 +5,166 @@ functionality:
   argument_groups:
   - name: "Inputs"
     arguments:
-    - type: "string"
-      name: "--id"
-      description: "The ID of the dataset"
-      info: null
+    - type: "file"
+      name: "--input_mod1"
+      info:
+        label: "Modality 1"
+        summary: "The first modality of a multimodal dataset. The cells of this dataset\
+          \ are randomly permuted."
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_svd"
+            description: "The resulting SVD PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad"
+      must_exist: true
+      create_parent: true
       required: true
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "file"
-      name: "--input_mod1"
-      info: null
+      name: "--input_mod2"
+      info:
+        label: "Modality 2"
+        summary: "The second modality of a multimodal dataset. The cells of this dataset\
+          \ are randomly permuted."
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_svd"
+            description: "The resulting SVD PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad"
       must_exist: true
       create_parent: true
-      required: false
+      required: true
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
     - type: "file"
-      name: "--input_mod2"
-      info: null
+      name: "--input_solution_mod1"
+      info:
+        label: "Solution mod1"
+        summary: "The ground truth information for the first modality"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obs:
+          - type: "integer"
+            name: "permutation_indices"
+            description: "Indices with which to revert the permutation of the cells"
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_svd"
+            description: "The resulting SVD PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad"
       must_exist: true
       create_parent: true
-      required: false
+      required: true
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--input_solution_mod2"
+      info:
+        label: "Solution mod1"
+        summary: "The ground truth information for the second modality"
+        slots:
+          layers:
+          - type: "integer"
+            name: "counts"
+            description: "Raw counts"
+            required: true
+          - type: "double"
+            name: "normalized"
+            description: "Normalized counts"
+            required: true
+          obs:
+          - type: "integer"
+            name: "permutation_indices"
+            description: "Indices with which to revert the permutation of the cells"
+            required: true
+          obsm:
+          - type: "double"
+            name: "X_svd"
+            description: "The resulting SVD PCA embedding."
+            required: true
+          uns:
+          - type: "string"
+            name: "dataset_id"
+            description: "A unique identifier for the dataset"
+            required: true
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
+      example:
+      - "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad"
+      must_exist: true
+      create_parent: true
+      required: true
       direction: "input"
       multiple: false
       multiple_sep: ":"
@@ -38,10 +173,13 @@ functionality:
     arguments:
     - type: "file"
       name: "--output"
+      description: "A TSV file containing the scores of each of the methods"
       info: null
+      example:
+      - "output.tsv"
       must_exist: true
       create_parent: true
-      required: false
+      required: true
       direction: "output"
       multiple: false
       multiple_sep: ":"
@@ -50,8 +188,190 @@ functionality:
   - type: "nextflow_script"
     path: "main.nf"
     is_executable: true
+    entrypoint: "run_wf"
   info: null
   status: "enabled"
+  dependencies:
+  - name: "common/check_dataset_schema"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml"
+    configInfo:
+      functionalityName: "check_dataset_schema"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml"
+      functionalityNamespace: "common"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/common/check_dataset_schema/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+  - name: "common/extract_scores"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml"
+    configInfo:
+      functionalityName: "extract_scores"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml"
+      functionalityNamespace: "common"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/common/extract_scores/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
+  - name: "match_modalities/control_methods/random_features"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/control_methods/random_features/config.vsh.yaml"
+    configInfo:
+      functionalityName: "random_features"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/control_methods/random_features/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/control_methods"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/control_methods/random_features/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/random_features"
+  - name: "match_modalities/control_methods/true_features"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/control_methods/true_features/config.vsh.yaml"
+    configInfo:
+      functionalityName: "true_features"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/control_methods/true_features/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/control_methods"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/control_methods/true_features/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features"
+  - name: "match_modalities/methods/fastmnn"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/fastmnn/config.vsh.yaml"
+    configInfo:
+      functionalityName: "fastmnn"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/fastmnn/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/methods"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/methods/fastmnn/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn"
+  - name: "match_modalities/methods/scot"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/scot/config.vsh.yaml"
+    configInfo:
+      functionalityName: "scot"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/scot/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/methods"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/methods/scot/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot"
+  - name: "match_modalities/methods/harmonic_alignment"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/harmonic_alignment/config.vsh.yaml"
+    configInfo:
+      functionalityName: "harmonic_alignment"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/harmonic_alignment/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/methods"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/methods/harmonic_alignment/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/harmonic_alignment"
+  - name: "match_modalities/methods/procrustes"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/procrustes/config.vsh.yaml"
+    configInfo:
+      functionalityName: "procrustes"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/procrustes/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/methods"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/methods/procrustes/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/procrustes"
+  - name: "match_modalities/metrics/knn_auc"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/metrics/knn_auc/config.vsh.yaml"
+    configInfo:
+      functionalityName: "knn_auc"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/metrics/knn_auc/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/metrics"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/metrics/knn_auc/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc"
+  - name: "match_modalities/metrics/mse"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/metrics/mse/config.vsh.yaml"
+    configInfo:
+      functionalityName: "mse"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/metrics/mse/config.vsh.yaml"
+      functionalityNamespace: "match_modalities/metrics"
+      output: ""
+      platform: ""
+      git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
+      executable: "/nextflow/match_modalities/metrics/mse/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse"
   set_wd_to_resources_dir: false
 platforms:
 - type: "nextflow"
@@ -65,43 +385,24 @@ platforms:
     publish: false
   config:
     labels:
-      mem1gb: "memory = 1.GB"
-      mem2gb: "memory = 2.GB"
-      mem4gb: "memory = 4.GB"
-      mem8gb: "memory = 8.GB"
-      mem16gb: "memory = 16.GB"
-      mem32gb: "memory = 32.GB"
-      mem64gb: "memory = 64.GB"
-      mem128gb: "memory = 128.GB"
-      mem256gb: "memory = 256.GB"
-      mem512gb: "memory = 512.GB"
-      mem1tb: "memory = 1.TB"
-      mem2tb: "memory = 2.TB"
-      mem4tb: "memory = 4.TB"
-      mem8tb: "memory = 8.TB"
-      mem16tb: "memory = 16.TB"
-      mem32tb: "memory = 32.TB"
-      mem64tb: "memory = 64.TB"
-      mem128tb: "memory = 128.TB"
-      mem256tb: "memory = 256.TB"
-      mem512tb: "memory = 512.TB"
-      cpu1: "cpus = 1"
-      cpu2: "cpus = 2"
-      cpu5: "cpus = 5"
-      cpu10: "cpus = 10"
-      cpu20: "cpus = 20"
-      cpu50: "cpus = 50"
-      cpu100: "cpus = 100"
-      cpu200: "cpus = 200"
-      cpu500: "cpus = 500"
-      cpu1000: "cpus = 1000"
+      lowmem: "memory = 20.Gb"
+      midmem: "memory = 50.Gb"
+      highmem: "memory = 100.Gb"
+      lowcpu: "cpus = 5"
+      midcpu: "cpus = 15"
+      highcpu: "cpus = 30"
+      lowtime: "time = 1.h"
+      midtime: "time = 4.h"
+      hightime: "time = 8.h"
+    script:
+    - "process.errorStrategy = 'ignore'"
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/workflows/run/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/workflows/run_benchmark/config.vsh.yaml"
   platform: "nextflow"
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark/run_benchmark"
-  viash_version: "0.7.5"
-  git_commit: "1e75a50865ef0f5ebb16509d0282d1ff5cea1304"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark/main.nf"
+  viash_version: "0.8.0"
+  git_commit: "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

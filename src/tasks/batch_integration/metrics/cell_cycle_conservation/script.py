@@ -1,5 +1,6 @@
 import anndata as ad
 from scib.metrics import cell_cycle
+import numpy as np
 
 ## VIASH START
 par = {
@@ -19,17 +20,21 @@ input_solution.X = input_solution.layers['normalized']
 
 translator = {
     "homo_sapiens": "human",
-    "mus_musculus": "mouse"
+    "mus_musculus": "mouse",
 }
 
 print('compute score', flush=True)
-score = cell_cycle(
-    input_solution,
-    input_integrated,
-    batch_key='batch',
-    embed='X_emb',
-    organism=translator[input_solution.uns['dataset_organism']]
-)
+if input_solution.uns['dataset_organism'] not in translator:
+    score = np.nan
+else:
+    organism = translator[input_solution.uns['dataset_organism']]
+    score = cell_cycle(
+        input_solution,
+        input_integrated,
+        batch_key='batch',
+        embed='X_emb',
+        organism=organism,
+    )
 
 print('Create output AnnData object', flush=True)
 output = ad.AnnData(

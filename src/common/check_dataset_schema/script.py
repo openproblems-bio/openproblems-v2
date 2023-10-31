@@ -2,6 +2,8 @@ import anndata as ad
 import yaml
 import shutil
 import json
+import numpy as np
+import pandas as pd
 
 ## VIASH START
 par = {
@@ -17,7 +19,7 @@ par = {
 def check_structure(slot_info, adata_slot):
   missing = []
   for obj in slot_info:
-    if obj['name'] not in adata_slot:
+    if obj.get('required') and obj['name'] not in adata_slot:
       missing.append(obj['name'])
   return missing
 
@@ -32,26 +34,49 @@ out = {
 }
 
 def is_atomic(obj):
-  return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool)
+  return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool) or isinstance(obj, float)
+
+def to_atomic(obj):
+  if isinstance(obj, np.float64):
+    return float(obj)
+  elif isinstance(obj, np.int64):
+    return int(obj)
+  elif isinstance(obj, np.bool_):
+    return bool(obj)
+  elif isinstance(obj, np.str_):
+    return str(obj)
+  return obj
 
 def is_list_of_atomics(obj):
-  if not isinstance(obj, list):
+  if not isinstance(obj, (list,pd.core.series.Series,np.ndarray)):
     return False
   return all(is_atomic(elem) for elem in obj)
+
+def to_list_of_atomics(obj):
+  if isinstance(obj, pd.core.series.Series):
+    obj = obj.to_numpy()
+  if isinstance(obj, np.ndarray):
+    obj = obj.tolist()
+  return [to_atomic(elem) for elem in obj]
 
 def is_dict_of_atomics(obj):
   if not isinstance(obj, dict):
     return False
-  return all(is_atomic(elem) for key, elem in obj.items())
+  return all(is_atomic(elem) for _, elem in obj.items())
 
+def to_dict_of_atomics(obj):
+  return {k: to_atomic(v) for k, v in obj.items()}
 
 if par['meta'] is not None:
   print("Extract metadata from object", flush=True)
-  uns = {
-    key: val
-    for key, val in adata.uns.items()
-    if is_atomic(val) or is_list_of_atomics(val) or is_dict_of_atomics(val)
-  }
+  uns = {}
+  for key, val in adata.uns.items():
+    if is_atomic(val):
+      uns[key] = to_atomic(val)
+    elif is_list_of_atomics(val):
+      uns[key] = to_list_of_atomics(val)
+    elif is_dict_of_atomics(val):
+      uns[key] = to_dict_of_atomics(val)
   structure = {
     struct: list(getattr(adata, struct).keys())
     for struct
@@ -68,8 +93,16 @@ if par['schema'] is not None:
 
   def_slots = data_struct['info']['slots']
 
+  missing= []
   for slot in def_slots:
+    missing_x = False
+    if slot == "X":
+      if adata.X is None:
+        missing_x = True
+      continue
     missing = check_structure(def_slots[slot], getattr(adata, slot))
+    if missing_x:
+      missing.append("X")
     if missing:
       out['exit_code'] = 1
       out['data_schema'] = 'not ok'
