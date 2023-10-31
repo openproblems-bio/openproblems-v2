@@ -16,6 +16,7 @@ functionality:
   test_resources: 
     - type: python_script
       path: /src/common/comp_tests/check_get_info.py
-    - type: file
-      path: /src/common/comp_tests/get_info.yaml
-      dest: test_file.yaml
+    - path: /src
+      dest: openproblems-v2/src
+    - path: /_viash.yaml
+      dest: openproblems-v2/_viash.yaml

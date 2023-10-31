@@ -6,6 +6,10 @@ functionality:
   resources:
     - type: python_script
       path: script.py
+  test_resources:
+    - type: file
+      path: /resources_test/common/task_metadata/dataset_info.yaml
+      dest: test_file.yaml
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.2
