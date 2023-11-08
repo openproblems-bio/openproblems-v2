@@ -2857,6 +2857,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "lowmem",
+          "lowtime",
+          "lowcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -2890,7 +2895,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "5e9c7b7d74a5b43c44709a40ddc3acdb50714a2f",
+    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3319,6 +3324,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/common/get_metric_info",
     "tag" : "integration_build"
   },
+  "label" : [
+    "lowmem",
+    "lowtime",
+    "lowcpu"
+  ],
   "tag" : "$id"
 }'''),
 
