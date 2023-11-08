@@ -21,3 +21,5 @@ platforms:
       - type: docker
         run: "curl -fsSL dl.viash.io | bash && mv viash /usr/bin/viash"
   - type: nextflow
+    directives:
+      label: [lowmem, lowtime, lowcpu]
