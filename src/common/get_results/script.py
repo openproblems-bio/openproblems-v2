@@ -10,6 +10,8 @@ import numpy as np
 par = {
     'input_scores': 'output/v2/batch_integration/output.run_benchmark.output_scores.yaml',
     'input_execution': 'output/v2/batch_integration/trace.txt',
+    'methods_meta': 'output/get_info/method_info.json',
+    'metrics_meta': 'output/get_info/metric_info.json',
     'task_id': 'batch_integration',
     'output': 'output/temp/results.json'
 }
@@ -19,12 +21,24 @@ meta = {
 
 ## VIASH END
 
-print('Loading scores', flush=True)
-with open(par['input_scores'], 'r') as f:
-    scores = yaml.safe_load(f)
+def load_meta (meta_file):
+    '''
+        Load the meta information
+    '''
+    with open(meta_file, 'r') as f:
+        meta = json.load(f)
+    return meta
 
-print('Loading execution trace', flush=True)
-execution = read_csv(par['input_execution'], sep='\t')
+def get_info (id, type,meta_info):
+    '''
+        Get the information of the method or metric
+    '''
+    key = type + "_id"
+    for info in meta_info:
+        if info.get(key) == id:
+            return info
+
+
 
 def organise_score (scores):
     '''
@@ -50,6 +64,48 @@ def organise_score (scores):
     
     return score_temp
 
+def normalize_scores (scores, method_info, metric_info):
+    """
+        Normalize the scores
+    """
+    per_dataset = {}
+    metric_names=[]
+    baseline_methods = [method["method_id"] for method in method_info if method["is_baseline"] ]
+    metric_not_maximize = [metric["metric_id"] for metric in metric_info if not metric["maximize"]]
+    print(baseline_methods)
+
+    for id, score in scores.items():
+        if per_dataset.get(score["dataset_id"]) is None:
+            per_dataset[score["dataset_id"]] = []
+            metric_names = list(list(score["metric_values"].keys()))
+        per_dataset[score["dataset_id"]].append(score)
+
+    for dataset_results in per_dataset.values():            
+        for metric_name in metric_names:
+            metric_values = []
+            for result in dataset_results:
+                metric_values.append(result["metric_values"][metric_name])
+            metric_values = np.array(metric_values)
+
+            baseline_values = []
+            for baseline in baseline_methods:
+                for result in dataset_results:
+                    if result["method_id"] in baseline:
+                        baseline_values.append(result["metric_values"][metric_name])
+            baseline_values = np.array(baseline_values)
+            baseline_min = np.nanmin(baseline_values)
+            baseline_range = np.nanmax(baseline_values) - baseline_min
+            metric_values -= baseline_min
+            metric_values /= np.where(baseline_range != 0, baseline_range, 1)
+            
+            if metric_name in metric_not_maximize:
+                metric_values = 1 - metric_values
+            
+
+            # min_value = min(metric_values)
+            # max_value = max(metric_values)
+            # for result in dataset_results:
+            #     result["metric_values"][metric_name] = (result["metric_values"][metric_name] - min_value) / (max_value - min_value)
 
 def convert_size (df, col):
     '''
@@ -118,6 +174,13 @@ def join_trace (trace, result):
             }
     return result
 
+print('Loading inputs', flush=True)
+with open(par['input_scores'], 'r') as f:
+    scores = yaml.safe_load(f)
+execution = read_csv(par['input_execution'], sep='\t')
+method_info = load_meta(par['methods_meta'])
+metric_info = load_meta(par['metrics_meta'])
+
 print('Organising scores', flush=True)
 org_scores = organise_score(scores)
 
@@ -133,10 +196,12 @@ traces = execution.to_dict(orient="records")
 for trace in traces:
     org_scores = join_trace(trace, org_scores)
 
-print('Writing results', flush=True)
-result = []
-for id in org_scores:
-        result.append(org_scores[id])
+org_scores = normalize_scores(org_scores, method_info, metric_info)
 
-with open (par['output'], 'w') as f:
-    json.dump(result, f, indent=4)
+# print('Writing results', flush=True)
+# result = []
+# for id in org_scores:
+#         result.append(org_scores[id])
+
+# with open (par['output'], 'w') as f:
+#     json.dump(result, f, indent=4)
