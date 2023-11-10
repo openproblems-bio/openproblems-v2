@@ -3,12 +3,14 @@ import json
 from pandas import read_csv
 from datetime import timedelta
 import re
+import numpy as np
 
 ## VIASH START
 
 par = {
-    'input_scores': 'output/temp/scores.yaml',
-    'input_execution': 'output/temp/trace.txt',
+    'input_scores': 'output/v2/batch_integration/output.run_benchmark.output_scores.yaml',
+    'input_execution': 'output/v2/batch_integration/trace.txt',
+    'task_id': 'batch_integration',
     'output': 'output/temp/results.json'
 }
 
@@ -31,8 +33,12 @@ def organise_score (scores):
     score_temp = {}
     for score in scores:
         score_id = score["dataset_id"] + "_" + score["method_id"] + "_" + score["normalization_id"]
+        
         if score.get("metric_values") is None:
             score["metric_values"] = [None] * len(score["metric_ids"])
+        for i, value in enumerate(score["metric_values"]):
+            if np.isnan(value):
+                score["metric_values"][i] = None
         comb_metric = zip(score["metric_ids"], score["metric_values"])
         score["metric_values"] = dict(comb_metric)
         score["task_id"] = par["task_id"]
