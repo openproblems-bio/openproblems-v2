@@ -411,9 +411,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scprep"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/metrics poisson"
-LABEL org.opencontainers.image.created="2023-11-15T12:48:24Z"
+LABEL org.opencontainers.image.created="2023-11-15T13:02:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b7be1d787738731cf68e524c9df23d30ca217131"
+LABEL org.opencontainers.image.revision="005bd558d9cf905a9b9b40a40cc96b4ad3b6f327"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
