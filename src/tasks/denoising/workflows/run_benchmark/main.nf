@@ -48,9 +48,18 @@ workflow run_wf {
     | runEach(
       components: methods,
 
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      filter: { id, state, comp ->
+        def norm = state.normalization_id
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        (norm == "log_cp10k" && pref == "counts") || norm == pref
+      },
+
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
-        id + "." + comp.functionality.name
+        id + "." + comp.config.functionality.name
       },
 
       // use 'fromState' to fetch the arguments the component requires from the overall state
@@ -63,7 +72,7 @@ workflow run_wf {
       // use 'toState' to publish that component's outputs to the overall state
       toState: { id, output, state, comp ->
         state + [
-          method_id: comp.functionality.name,
+          method_id: comp.config.functionality.name,
           method_output: output.output
         ]
       }
@@ -80,7 +89,7 @@ workflow run_wf {
       // use 'toState' to publish that component's outputs to the overall state
       toState: { id, output, state, comp ->
         state + [
-          metric_id: comp.functionality.name,
+          metric_id: comp.config.functionality.name,
           metric_output: output.output
         ]
       }
@@ -93,7 +102,7 @@ workflow run_wf {
       def new_id = "output"
       def new_state = [
         input: states.collect{it.metric_output},
-        output: states[0].output
+        _meta: states[0]._meta
       ]
       [new_id, new_state]
     }
