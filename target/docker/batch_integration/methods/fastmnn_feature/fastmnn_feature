@@ -403,16 +403,13 @@ FROM ghcr.io/openproblems-bio/base_r:1.0.2
 ENTRYPOINT []
 
  
-RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y git && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN Rscript -e 'remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")'
+RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")' && \
+  Rscript -e 'if (!requireNamespace("batchelor", quietly = TRUE)) BiocManager::install("batchelor")'
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods fastmnn_feature"
-LABEL org.opencontainers.image.created="2023-10-24T05:40:22Z"
+LABEL org.opencontainers.image.created="2023-11-15T12:47:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="7a7c58fe73821e2ac90ec6804252bfe2dfa5aa7b"
+LABEL org.opencontainers.image.revision="35c3a656a1fa41fb52474cd0fca43c5fea254962"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

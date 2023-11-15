@@ -3026,16 +3026,9 @@ meta = [
       "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
       "setup" : [
         {
-          "type" : "apt",
-          "packages" : [
-            "git"
-          ],
-          "interactive" : false
-        },
-        {
           "type" : "r",
-          "script" : [
-            "remotes::install_bioc(\\"3.18/batchelor\\", upgrade = \\"always\\", type = \\"source\\")"
+          "bioc" : [
+            "batchelor"
           ],
           "bioc_force_install" : false
         }
@@ -3083,7 +3076,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_feature",
     "viash_version" : "0.8.0",
-    "git_commit" : "7a7c58fe73821e2ac90ec6804252bfe2dfa5aa7b",
+    "git_commit" : "35c3a656a1fa41fb52474cd0fca43c5fea254962",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
