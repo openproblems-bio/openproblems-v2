@@ -1,0 +1,39 @@
+functionality:
+  name: cellcensus_source
+  namespace: datasets/loaders
+  description: "Download source h5ad file from CellxGene Census."
+  argument_groups:
+    - name: "Inputs"
+      description: "Arguments related to the input (aka query) dataset."
+      arguments:
+        - name: "--dataset_id"
+          description: "Dataset ID(s) of interest."
+          required: true
+          multiple: true
+        - name: "--cellxgene_release"
+          description: "CellxGene Census release date. More information: https://chanzuckerberg.github.io/cellxgene-census/cellxgene_census_docsite_data_release_info.html. default: 2023-07-25"
+          default: "2023-07-25"
+          required: false
+          example: "2023-07-25"
+    - name: 'Outputs'
+      description: "Output arguments."
+      arguments:
+        - name: "--output"
+          description: "The h5ad output file."
+          required: true
+          example: "output.h5ad"
+  resources:
+    - type: pyhton_script
+      path: script.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    setup:
+      - type: python
+        packages:
+          - cellxgene-census~=1.2.0
+          - obonet~=1.0.0
+  - type: nextflow
+    directives:
+      label: [midtime, highmem, midcpu]
+
