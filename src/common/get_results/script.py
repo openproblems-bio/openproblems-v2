@@ -167,31 +167,37 @@ def convert_duration(duration_str):
     duration = timedelta(hours=hours, minutes=minutes, seconds=seconds).total_seconds()
     return duration
 
-def join_trace (trace, result):
+def join_trace (traces, result):
     '''
         Join the Seqera (nextflow) trace with the scores
     '''
-    id = trace["name"]
-    dataset_id = None
-    method_id = None
-    match = re.search(r'\((.*?)\)', id)
-    id_split = id.split(":")
-    if len(id_split)>4:
-        method_id = id_split[4]
-    if match:
-        group = match.group(1)
-        split_group = group.split(".")
-        if len(split_group)>1:
-            dataset_id = split_group[0]
+    trace_dict = {}
+    for trace in traces:
+        id = trace["name"]
+        dataset_id = None
+        method_id = None
+        match = re.search(r'\((.*?)\)', id)
+        id_split = id.split(":")
+        if len(id_split)>4:
+            method_id = id_split[4]
+        if match:
+            group = match.group(1)
+            split_group = group.split(".")
+            if len(split_group)>1:
+                dataset_id = split_group[0]
+        if dataset_id is not None and method_id is not None:
+            dict_id = method_id + "_" + dataset_id
+            trace_dict[dict_id] = {
+                    "duration_sec": trace["realtime"],
+                    "cpu_pct": trace["%cpu"],
+                    "peak_memory_mb": trace["peak_vmem"],
+                    "disk_read_mb": trace["rchar"],
+                    "disk_write_mb": trace["wchar"]
+                }
     for score in result:
-        if method_id and method_id == result[score]["method_id"] and dataset_id in result[score]["dataset_id"]:
-            result[score]["resources"] = {
-                "duration_sec": trace["realtime"],
-                "cpu_pct": trace["%cpu"],
-                "peak_memory_mb": trace["peak_vmem"],
-                "disk_read_mb": trace["rchar"],
-                "disk_write_mb": trace["wchar"]
-            }
+        search_id = result[score]["method_id"] + "_" + result[score]["dataset_id"]+ "/" + result[score]["normalization_id"]
+        if search_id in trace_dict:
+            result[score]["resources"] = trace_dict[search_id]
     return result
 
 print('Loading inputs', flush=True)
@@ -213,8 +219,7 @@ execution["realtime"] = execution["realtime"].apply(convert_duration)
 
 print('Joining traces and scores', flush=True)
 traces = execution.to_dict(orient="records")
-for trace in traces:
-    org_scores = join_trace(trace, org_scores)
+org_scores = join_trace(traces, org_scores)
 
 print('Normalizing scores', flush=True)
 org_scores = normalize_scores(org_scores, method_info, metric_info)
