@@ -44,6 +44,17 @@ def fix_values_scaled(metric_result):
             metric_result[i] = 0.0
     return metric_result
 
+def fix_nan (metrics):
+    for metric in metrics:
+        if np.isnan(metrics[metric]):
+            metrics[metric] = "NaN"
+        elif np.isneginf(metrics[metric]):
+            metrics[metric] = "-Inf"
+        elif np.isinf(metrics[metric]):
+            metrics[metric] = "Inf"
+
+    return metrics
+
 def organise_score (scores):
     '''
     combine all the metric values into one dictionary per method, dataset and normalization
@@ -205,7 +216,13 @@ traces = execution.to_dict(orient="records")
 for trace in traces:
     org_scores = join_trace(trace, org_scores)
 
+print('Normalizing scores', flush=True)
 org_scores = normalize_scores(org_scores, method_info, metric_info)
+# fix NaN en inf
+for dataset in org_scores.values():
+    for scores in dataset:
+        scores["metric_values"] = fix_nan(scores["metric_values"])
+        scores["scaled_metrics"] = fix_nan(scores["scaled_metrics"])
 
 print('Writing results', flush=True)
 result = []

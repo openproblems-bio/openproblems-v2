@@ -11,18 +11,6 @@ workflow run_wf {
 
     main:
     output_ch = input_ch
-        
-        | get_results.run(
-            fromState: [ 
-                "input_scores": "input_scores",
-                "input_execution" : "input_execution",
-                "task_id" : "task_id",
-                "output": "output_scores"
-            ],
-            toState: { id, output, state ->
-                state + [output_results: output.output]
-                }
-        )
 
         | get_method_info.run(
             fromState: [ 
@@ -65,6 +53,20 @@ workflow run_wf {
                 ],
             toState: { id, output, state ->
                 state + [output_task: output.output]
+                }
+        )
+
+        | get_results.run(
+            fromState: [ 
+                "input_scores": "input_scores",
+                "input_execution" : "input_execution",
+                "methods_meta": "output_method",
+                "metrics_meta": "output_metric",
+                "task_id" : "task_id",
+                "output": "output_scores"
+            ],
+            toState: { id, output, state ->
+                state + [output_results: output.output]
                 }
         )
 
