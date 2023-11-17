@@ -38,7 +38,11 @@ def get_info (id, type,meta_info):
         if info.get(key) == id:
             return info
 
-
+def fix_values_scaled(metric_result):
+    for i, value in enumerate(metric_result):
+        if np.isnan(value):
+            metric_result[i] = 0.0
+    return metric_result
 
 def organise_score (scores):
     '''
@@ -50,9 +54,9 @@ def organise_score (scores):
         
         if score.get("metric_values") is None:
             score["metric_values"] = [None] * len(score["metric_ids"])
-        for i, value in enumerate(score["metric_values"]):
-            if np.isnan(value):
-                score["metric_values"][i] = None
+        # for i, value in enumerate(score["metric_values"]):
+            # if np.isnan(value):
+            #     score["metric_values"][i] = None
         comb_metric = zip(score["metric_ids"], score["metric_values"])
         score["metric_values"] = dict(comb_metric)
         score["task_id"] = par["task_id"]
@@ -68,44 +72,49 @@ def normalize_scores (scores, method_info, metric_info):
     """
         Normalize the scores
     """
-    per_dataset = {}
-    metric_names=[]
+    
+    metric_names=list(set([metric["metric_id"] for metric in metric_info]))
+
     baseline_methods = [method["method_id"] for method in method_info if method["is_baseline"] ]
     metric_not_maximize = [metric["metric_id"] for metric in metric_info if not metric["maximize"]]
-    print(baseline_methods)
-
+    per_dataset = {}
     for id, score in scores.items():
         if per_dataset.get(score["dataset_id"]) is None:
             per_dataset[score["dataset_id"]] = []
-            metric_names = list(list(score["metric_values"].keys()))
+            
         per_dataset[score["dataset_id"]].append(score)
 
-    for dataset_results in per_dataset.values():            
+    for id, dataset_results in per_dataset.items():
+        for result in dataset_results:
+            result["scaled_metrics"] = result["metric_values"].copy()
+
         for metric_name in metric_names:
             metric_values = []
-            for result in dataset_results:
-                metric_values.append(result["metric_values"][metric_name])
-            metric_values = np.array(metric_values)
-
             baseline_values = []
-            for baseline in baseline_methods:
-                for result in dataset_results:
-                    if result["method_id"] in baseline:
+            for result in dataset_results:
+                if metric_name in result["metric_values"]:
+                    metric_values.append(result["metric_values"][metric_name])
+                else:
+                    result["metric_values"][metric_name]= float("nan")
+                    metric_values.append(0.0)
+                if result["method_id"] in baseline_methods:
+                    if metric_name in result["metric_values"]:
                         baseline_values.append(result["metric_values"][metric_name])
+                    
+            baseline_values = fix_values_scaled(baseline_values)
             baseline_values = np.array(baseline_values)
             baseline_min = np.nanmin(baseline_values)
             baseline_range = np.nanmax(baseline_values) - baseline_min
+            metric_values = np.array(metric_values)
             metric_values -= baseline_min
             metric_values /= np.where(baseline_range != 0, baseline_range, 1)
             
             if metric_name in metric_not_maximize:
                 metric_values = 1 - metric_values
+            for result, score in zip(dataset_results,metric_values):
+                result["scaled_metrics"][metric_name] = score
             
-
-            # min_value = min(metric_values)
-            # max_value = max(metric_values)
-            # for result in dataset_results:
-            #     result["metric_values"][metric_name] = (result["metric_values"][metric_name] - min_value) / (max_value - min_value)
+    return per_dataset
 
 def convert_size (df, col):
     '''
@@ -149,7 +158,7 @@ def convert_duration(duration_str):
 
 def join_trace (trace, result):
     '''
-        Join the Seqera trace with the scores
+        Join the Seqera (nextflow) trace with the scores
     '''
     id = trace["name"]
     dataset_id = None
@@ -198,10 +207,10 @@ for trace in traces:
 
 org_scores = normalize_scores(org_scores, method_info, metric_info)
 
-# print('Writing results', flush=True)
-# result = []
-# for id in org_scores:
-#         result.append(org_scores[id])
+print('Writing results', flush=True)
+result = []
+for id in org_scores:
+        result.append(org_scores[id])
 
-# with open (par['output'], 'w') as f:
-#     json.dump(result, f, indent=4)
+with open (par['output'], 'w') as f:
+    json.dump(result, f, indent=4)
