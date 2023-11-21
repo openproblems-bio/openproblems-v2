@@ -36,5 +36,7 @@ def test_cellxgene_extract_metadata_expression(run_component):
     assert "feature_id" in var.columns
     assert component_data.n_obs
 
+# TODO: add unit test for 'cells_filter_columns' and 'min_cells_filter_columns' args.
+
 if __name__ == '__main__':
     sys.exit(pytest.main([__file__]))
