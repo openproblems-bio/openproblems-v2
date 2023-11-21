@@ -44,6 +44,13 @@ def fix_values_scaled(metric_result):
             metric_result[i] = 0.0
     return metric_result
 
+def fix_nan_scaled(metrics):
+    for metric in metrics:
+        if np.isnan(metrics[metric]) or np.isinf(metrics[metric]):
+            metrics[metric] = 0
+
+    return metrics
+
 def fix_nan (metrics):
     for metric in metrics:
         if np.isnan(metrics[metric]):
@@ -97,7 +104,7 @@ def normalize_scores (scores, method_info, metric_info):
 
     for id, dataset_results in per_dataset.items():
         for result in dataset_results:
-            result["scaled_metrics"] = result["metric_values"].copy()
+            result["scaled_scores"] = result["metric_values"].copy()
 
         for metric_name in metric_names:
             metric_values = []
@@ -123,7 +130,7 @@ def normalize_scores (scores, method_info, metric_info):
             if metric_name in metric_not_maximize:
                 metric_values = 1 - metric_values
             for result, score in zip(dataset_results,metric_values):
-                result["scaled_metrics"][metric_name] = score
+                result["scaled_scores"][metric_name] = score
             
     return per_dataset
 
@@ -227,12 +234,13 @@ org_scores = normalize_scores(org_scores, method_info, metric_info)
 for dataset in org_scores.values():
     for scores in dataset:
         scores["metric_values"] = fix_nan(scores["metric_values"])
-        scores["scaled_metrics"] = fix_nan(scores["scaled_metrics"])
+        scores["scaled_scores"] = fix_nan_scaled(scores["scaled_scores"])
+        scores["mean_score"] = np.array(list(scores["scaled_scores"].values())).mean()
 
 print('Writing results', flush=True)
-result = []
-for id in org_scores:
-        result.append(org_scores[id])
+result = [org_scores[id] for id in org_scores]
+
+result = list(np.concatenate(result).flat)
 
 with open (par['output'], 'w') as f:
     json.dump(result, f, indent=4)
