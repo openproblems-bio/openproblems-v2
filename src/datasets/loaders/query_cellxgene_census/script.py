@@ -2,7 +2,6 @@ import cellxgene_census
 
 ## VIASH START
 par = {
-    "input_database": "CellxGene",
     "cellxgene_release": "2023-07-25",
     "species": "homo_sapiens",
     "cell_query": "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'",
@@ -11,78 +10,60 @@ par = {
 meta = {}
 ### VIASH END
 
+with cellxgene_census.open_soma(census_version=par["cellxgene_release"]) as conn:
 
-def connect_census(input_database, release):
-    """
-    Connect to CellxGene Census or user-provided TileDBSoma object
-    """
-    if input_database != "CellxGene":
-        raise NotImplementedError("Custom census database is not implemented yet!")
-    return cellxgene_census.open_soma(census_version=release)
-
-
-def get_anndata(census_connection, cell_query, species):
-    return cellxgene_census.get_anndata(
-        census=census_connection, obs_value_filter=cell_query, organism=species
+    # fetch counts data using query
+    query_data = cellxgene_census.get_anndata(
+        census=conn,
+        obs_value_filter=par["cell_query"],
+        organism=par["species"]
     )
 
-
-def add_cellcensus_metadata_obs(census_connection, query_data):
-    census_datasets = (
-        census_connection["census_info"]["datasets"].read().concat().to_pandas()
-    )
-
+    # turn into categorical
     query_data.obs.dataset_id = query_data.obs.dataset_id.astype("category")
 
+    # fetch dataset metadata
+    # TODO: fetch only info from the dataset ids in query_data
     dataset_info = (
-        census_datasets[
-            census_datasets.dataset_id.isin(query_data.obs.dataset_id.cat.categories)
-        ][
-            [
-                "collection_id",
-                "collection_name",
-                "collection_doi",
-                "dataset_id",
-                "dataset_title",
-            ]
+        conn["census_info"]["datasets"].read().concat().to_pandas()
+    )
+
+# subset dataset info
+dataset_info = (
+    dataset_info[
+        dataset_info.dataset_id.isin(query_data.obs.dataset_id.cat.categories)
+    ][
+        [
+            "collection_id",
+            "collection_name",
+            "collection_doi",
+            "dataset_id",
+            "dataset_title",
         ]
-        .reset_index(drop=True)
-        .apply(lambda x: x.astype("category"))
-    )
-
-    return query_data.obs.merge(dataset_info, on="dataset_id", how="left")
-
-
-def cellcensus_cell_filter(query_data, cells_filter_columns, min_cells_filter_columns):
-    t0 = query_data.shape
-    query_data = query_data[
-        query_data.obs.groupby(cells_filter_columns)["soma_joinid"].transform("count")
-        >= min_cells_filter_columns
     ]
-    t1 = query_data.shape
-    return query_data
+    .reset_index(drop=True)
+    .apply(lambda x: x.astype("category"))
+)
 
+# join dataset info to query data
+query_data.obs = query_data.obs.merge(dataset_info, on="dataset_id", how="left")
 
-census_connection = connect_census(par["input_database"], par["cellxgene_release"])
-
-query_data = get_anndata(census_connection, par["cell_query"], par["species"])
-
-query_data.obs = add_cellcensus_metadata_obs(census_connection, query_data)
-
-census_connection.close()
-del census_connection
-
-if par["cells_filter_columns"]:
-    if not par["min_cells_filter_columns"]:
-        raise NotImplementedError(
-            "You specified cells_filter_columns, thus add min_cells_filter_columns!"
-        )
-    query_data = cellcensus_cell_filter(
-        query_data, par["cells_filter_columns"], par["min_cells_filter_columns"]
+# check arguments
+if (par["cells_filter_columns"] is None) != (par["min_cells_filter_columns"]):
+    raise ValueError(
+        "If --cell_filter_columns is specified, then also --min_cells_filter_columns must be specified, and vice versa."
     )
 
-query_data.var_names = query_data.var["feature_id"]
-query_data.var["gene_symbol"] = query_data.var["feature_name"]
+# filter cells if there are too few cells per group
+if par["cells_filter_columns"] is not None:
+    cells_per_group = query_data.obs.groupby(par["cells_filter_columns"])["soma_joinid"].transform("count")
+    query_data = query_data[
+        cells_per_group >= par["min_cells_filter_columns"]
+    ]
 
+# use feature id as the var_names
+query_data.var_names = query_data.var["feature_id"]
+
+# write to file
 with open(par["output"], "w") as f:
     query_data.write_h5ad(par["output"], compression="gzip")
