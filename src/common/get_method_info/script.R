@@ -22,6 +22,8 @@ out <- map(configs, function(config) {
   info$method_id <- config$functionality$name
   info$namespace <- config$functionality$namespace
   info$is_baseline <- grepl("control", info$type)
+  info$commit_sha <- config$info$git_commit %||% "missing-sha"
+  info$code_version <- "missing-version"
 
   # rename fields to v1 format
   info$method_name <- info$label
