@@ -2810,9 +2810,33 @@ meta = [
                     "required" : true
                   },
                   {
+                    "name" : "dataset_name",
                     "type" : "string",
-                    "name" : "normalization_id",
-                    "description" : "Which normalization was used",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "data_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "data_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
                     "required" : true
                   },
                   {
@@ -2820,6 +2844,12 @@ meta = [
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
                   },
                   {
                     "type" : "object",
@@ -3038,9 +3068,33 @@ meta = [
                     "required" : true
                   },
                   {
+                    "name" : "dataset_name",
                     "type" : "string",
-                    "name" : "normalization_id",
-                    "description" : "Which normalization was used",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "data_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "data_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
                     "required" : true
                   },
                   {
@@ -3048,6 +3102,12 @@ meta = [
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
                   },
                   {
                     "type" : "object",
@@ -3100,7 +3160,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "005bd558d9cf905a9b9b40a40cc96b4ad3b6f327",
+          "git_commit" : "7745486ea58f060890727881ace8590efb0307df",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3122,7 +3182,7 @@ meta = [
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "005bd558d9cf905a9b9b40a40cc96b4ad3b6f327",
+          "git_commit" : "7745486ea58f060890727881ace8590efb0307df",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -3168,7 +3228,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "005bd558d9cf905a9b9b40a40cc96b4ad3b6f327",
+    "git_commit" : "7745486ea58f060890727881ace8590efb0307df",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

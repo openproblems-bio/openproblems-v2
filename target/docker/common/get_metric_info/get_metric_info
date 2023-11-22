@@ -177,8 +177,7 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input"
   echo "        type: file, file must exist"
-  echo "        example: ../openproblems-v2"
-  echo "        the root repo"
+  echo "        A yaml file"
   echo ""
   echo "    --task_id"
   echo "        type: string"
@@ -420,9 +419,9 @@ RUN apt-get update && \
 
 RUN curl -fsSL dl.viash.io | bash && mv viash /usr/bin/viash
 LABEL org.opencontainers.image.description="Companion container for running component common get_metric_info"
-LABEL org.opencontainers.image.created="2023-11-15T13:02:37Z"
+LABEL org.opencontainers.image.created="2023-11-22T14:44:42Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="005bd558d9cf905a9b9b40a40cc96b4ad3b6f327"
+LABEL org.opencontainers.image.revision="7745486ea58f060890727881ace8590efb0307df"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -916,12 +915,7 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-ns_list <- processx::run(
-  "viash",
-  c("ns", "list", "-q", "metrics", "--src", paste("src/tasks", par\$task_id, sep = "/")),
-  wd = par\$input
-)
-configs <- yaml::yaml.load(ns_list\$stdout)
+configs <- yaml::yaml.load_file(par\$input)
 
 df <- map_df(configs, function(config) {
   if (length(config\$functionality\$status) > 0 && config\$functionality\$status == "disabled") return(NULL)

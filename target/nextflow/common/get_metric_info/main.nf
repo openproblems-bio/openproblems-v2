@@ -2737,10 +2737,7 @@ meta = [
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "the root repo",
-        "example" : [
-          "../openproblems-v2"
-        ],
+        "description" : "A yaml file",
         "must_exist" : true,
         "create_parent" : true,
         "required" : false,
@@ -2789,6 +2786,12 @@ meta = [
     "description" : "Extract metric info",
     "test_resources" : [
       {
+        "type" : "python_script",
+        "path" : "src/common/comp_tests/check_get_info.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
         "type" : "file",
         "path" : "src",
         "dest" : "openproblems-v2/src",
@@ -2801,9 +2804,9 @@ meta = [
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
-        "type" : "python_script",
-        "path" : "src/common/comp_tests/check_get_info.py",
-        "is_executable" : true,
+        "type" : "file",
+        "path" : "resources_test/common/task_metadata/metric_configs.yaml",
+        "dest" : "test_file.yaml",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -2854,6 +2857,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "lowmem",
+          "lowtime",
+          "lowcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -2887,7 +2895,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "005bd558d9cf905a9b9b40a40cc96b4ad3b6f327",
+    "git_commit" : "7745486ea58f060890727881ace8590efb0307df",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2941,12 +2949,7 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-ns_list <- processx::run(
-  "viash",
-  c("ns", "list", "-q", "metrics", "--src", paste("src/tasks", par\\$task_id, sep = "/")),
-  wd = par\\$input
-)
-configs <- yaml::yaml.load(ns_list\\$stdout)
+configs <- yaml::yaml.load_file(par\\$input)
 
 df <- map_df(configs, function(config) {
   if (length(config\\$functionality\\$status) > 0 && config\\$functionality\\$status == "disabled") return(NULL)
@@ -3321,6 +3324,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/common/get_metric_info",
     "tag" : "main_build"
   },
+  "label" : [
+    "lowmem",
+    "lowtime",
+    "lowcpu"
+  ],
   "tag" : "$id"
 }'''),
 

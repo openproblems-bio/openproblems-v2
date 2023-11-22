@@ -2737,10 +2737,7 @@ meta = [
       {
         "type" : "file",
         "name" : "--input",
-        "description" : "the root repo",
-        "example" : [
-          "../openproblems-v2"
-        ],
+        "description" : "A yaml file",
         "must_exist" : true,
         "create_parent" : true,
         "required" : false,
@@ -2789,6 +2786,12 @@ meta = [
     "description" : "Extract method info",
     "test_resources" : [
       {
+        "type" : "python_script",
+        "path" : "src/common/comp_tests/check_get_info.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
         "type" : "file",
         "path" : "src",
         "dest" : "openproblems-v2/src",
@@ -2801,9 +2804,9 @@ meta = [
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
-        "type" : "python_script",
-        "path" : "src/common/comp_tests/check_get_info.py",
-        "is_executable" : true,
+        "type" : "file",
+        "path" : "resources_test/common/task_metadata/method_configs.yaml",
+        "dest" : "test_file.yaml",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -2854,6 +2857,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "lowmem",
+          "lowtime",
+          "lowcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -2887,7 +2895,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_method_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "005bd558d9cf905a9b9b40a40cc96b4ad3b6f327",
+    "git_commit" : "7745486ea58f060890727881ace8590efb0307df",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2941,12 +2949,7 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-ns_list <- processx::run(
-  "viash",
-  c("ns", "list", "-q", "methods", "--src", paste("src/tasks", par\\$task_id, sep = "/")),
-  wd = par\\$input
-)
-configs <- yaml::yaml.load(ns_list\\$stdout)
+configs <- yaml::yaml.load_file(par\\$input)
 
 out <- map(configs, function(config) {
   if (length(config\\$functionality\\$status) > 0 && config\\$functionality\\$status == "disabled") return(NULL)
@@ -2958,6 +2961,8 @@ out <- map(configs, function(config) {
   info\\$method_id <- config\\$functionality\\$name
   info\\$namespace <- config\\$functionality\\$namespace
   info\\$is_baseline <- grepl("control", info\\$type)
+  info\\$commit_sha <- config\\$info\\$git_commit %||% "missing-sha"
+  info\\$code_version <- "missing-version"
 
   # rename fields to v1 format
   info\\$method_name <- info\\$label
@@ -2970,6 +2975,23 @@ out <- map(configs, function(config) {
   info\\$reference <- NULL
   info\\$code_url <- info\\$repository_url
   info\\$repository_url <- NULL
+  info\\$v1.path <- info\\$v1\\$path
+  info\\$v1\\$path <- NULL
+  info\\$v1.commit <- info\\$v1\\$commit
+  info\\$v1\\$commit <- NULL
+  info\\$v1 <- NULL
+  info\\$type_info.label <- info\\$type_info\\$label
+  info\\$type_info\\$label <- NULL
+  info\\$type_info.summary <- info\\$type_info\\$summary
+  info\\$type_info\\$summary <- NULL
+  info\\$type_info.description <- info\\$type_info\\$description
+  info\\$type_info\\$description <- NULL
+  info\\$type_info <- NULL
+  if (length(info\\$variants) > 0) {
+    info\\$variants <- NULL
+  }
+
+
 
   # todo: show warning when certain data is missing and return null?
 
@@ -3334,6 +3356,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/common/get_method_info",
     "tag" : "main_build"
   },
+  "label" : [
+    "lowmem",
+    "lowtime",
+    "lowcpu"
+  ],
   "tag" : "$id"
 }'''),
 

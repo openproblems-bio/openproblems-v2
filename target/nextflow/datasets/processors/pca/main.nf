@@ -2823,6 +2823,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -2916,6 +2922,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               },
               {
                 "type" : "double",
@@ -3114,7 +3126,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca",
     "viash_version" : "0.8.0",
-    "git_commit" : "005bd558d9cf905a9b9b40a40cc96b4ad3b6f327",
+    "git_commit" : "7745486ea58f060890727881ace8590efb0307df",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
