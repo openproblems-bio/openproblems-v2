@@ -24,7 +24,7 @@ nextflow run . \
   --settings '{"output_dataset": "$id/dataset.h5ad", "output_solution": "$id/solution.h5ad"}' \
   --publish_dir "$DATASET_DIR" \
   --output_state '$id/state.yaml'
-output_state should be moved to settings once workaround is solved
+# output_state should be moved to settings once workaround is solved
 
 echo Running BBKNN
 viash run src/tasks/batch_integration/methods/bbknn/config.vsh.yaml -- \
