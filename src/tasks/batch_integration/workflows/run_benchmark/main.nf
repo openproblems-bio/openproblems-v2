@@ -53,7 +53,7 @@ workflow run_wf {
 
     // extract the dataset metadata
     | check_dataset_schema.run(
-      fromState: [input: "input_dataset"],
+      fromState: [input: "input_solution"],
       toState: { id, output, state ->
         def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
         state + [dataset_uns: dataset_uns]
