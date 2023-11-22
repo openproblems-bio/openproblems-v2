@@ -48,19 +48,6 @@ dataset_info = (
 # join dataset info to query data
 query_data.obs = query_data.obs.merge(dataset_info, on="dataset_id", how="left")
 
-# check arguments
-if (par["cells_filter_columns"] is None) != (par["min_cells_filter_columns"]):
-    raise ValueError(
-        "If --cell_filter_columns is specified, then also --min_cells_filter_columns must be specified, and vice versa."
-    )
-
-# filter cells if there are too few cells per group
-if par["cells_filter_columns"] is not None:
-    cells_per_group = query_data.obs.groupby(par["cells_filter_columns"])["soma_joinid"].transform("count")
-    query_data = query_data[
-        cells_per_group >= par["min_cells_filter_columns"]
-    ]
-
 # use feature id as the var_names
 query_data.var_names = query_data.var["feature_id"]
 
