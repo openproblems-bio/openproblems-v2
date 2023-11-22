@@ -6,7 +6,7 @@ library(rlang, warn.conflicts = FALSE)
 par <- list(
   input = "output/temp/method_configs.yaml",
   task_id = "label_projection",
-  output = "output/method_info.json"
+  output = "output/test/method_info.json"
 )
 ## VIASH END
 
@@ -36,6 +36,23 @@ out <- map(configs, function(config) {
   info$reference <- NULL
   info$code_url <- info$repository_url
   info$repository_url <- NULL
+  info$v1.path <- info$v1$path
+  info$v1$path <- NULL
+  info$v1.commit <- info$v1$commit
+  info$v1$commit <- NULL
+  info$v1 <- NULL
+  info$type_info.label <- info$type_info$label
+  info$type_info$label <- NULL
+  info$type_info.summary <- info$type_info$summary
+  info$type_info$summary <- NULL
+  info$type_info.description <- info$type_info$description
+  info$type_info$description <- NULL
+  info$type_info <- NULL
+  if (length(info$variants) > 0) {
+    info$variants <- NULL
+  }
+
+
 
   # todo: show warning when certain data is missing and return null?
 
