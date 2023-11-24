@@ -434,9 +434,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("lmds", "ranger", "pbapply"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods random_forest"
-LABEL org.opencontainers.image.created="2023-11-24T11:58:47Z"
+LABEL org.opencontainers.image.created="2023-11-24T13:55:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3c9daec0dddf1ea20abb71b5e858baef17fa883b"
+LABEL org.opencontainers.image.revision="b487ec1b5bdfbce731775898f5bd455d5a985699"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

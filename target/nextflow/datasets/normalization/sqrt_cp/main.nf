@@ -3075,7 +3075,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp",
     "viash_version" : "0.8.0",
-    "git_commit" : "3c9daec0dddf1ea20abb71b5e858baef17fa883b",
+    "git_commit" : "b487ec1b5bdfbce731775898f5bd455d5a985699",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
