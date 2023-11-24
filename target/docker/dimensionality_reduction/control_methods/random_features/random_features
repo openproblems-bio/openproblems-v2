@@ -408,9 +408,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/control_methods random_features"
-LABEL org.opencontainers.image.created="2023-11-24T10:49:53Z"
+LABEL org.opencontainers.image.created="2023-11-24T11:58:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="db9dae406b88bc42665d32ddf676a965067af611"
+LABEL org.opencontainers.image.revision="3c9daec0dddf1ea20abb71b5e858baef17fa883b"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

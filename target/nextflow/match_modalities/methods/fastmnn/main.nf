@@ -2946,7 +2946,7 @@ meta = [
     "resources" : [
       {
         "type" : "r_script",
-        "path" : "./script.R",
+        "path" : "script.R",
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/match_modalities/methods/fastmnn/"
       }
@@ -3018,20 +3018,9 @@ meta = [
       "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
       "setup" : [
         {
-          "type" : "apt",
-          "packages" : [
-            "git"
-          ],
-          "interactive" : false
-        },
-        {
           "type" : "r",
-          "cran" : [
-            "Matrix",
-            "SingleCellExperiment"
-          ],
-          "script" : [
-            "remotes::install_bioc(\\"3.18/batchelor\\", upgrade = \\"always\\", type = \\"source\\")"
+          "bioc" : [
+            "batchelor"
           ],
           "bioc_force_install" : false
         }
@@ -3079,7 +3068,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn",
     "viash_version" : "0.8.0",
-    "git_commit" : "db9dae406b88bc42665d32ddf676a965067af611",
+    "git_commit" : "3c9daec0dddf1ea20abb71b5e858baef17fa883b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
