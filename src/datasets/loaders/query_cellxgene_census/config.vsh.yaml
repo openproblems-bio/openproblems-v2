@@ -1,6 +1,6 @@
 functionality:
   name: query_cellxgene_census
-  namespace: "loaders"
+  namespace: "datasets/loaders"
   description: "Query CellxGene Census or user-specified TileDBSoma object, and eventually fetch cell and gene metadata or/and expression counts."
   argument_groups:
     - name: Inputs
