@@ -419,9 +419,9 @@ RUN apt-get update && \
 
 RUN curl -fsSL dl.viash.io | bash && mv viash /usr/bin/viash
 LABEL org.opencontainers.image.description="Companion container for running component common get_metric_info"
-LABEL org.opencontainers.image.created="2023-11-24T10:19:53Z"
+LABEL org.opencontainers.image.created="2023-11-24T10:41:16Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="deb7899383ba38bc5f236dd148a454b9a71187ce"
+LABEL org.opencontainers.image.revision="8ce1dea4823dbf9c73066d0268ce8797fdfe505c"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

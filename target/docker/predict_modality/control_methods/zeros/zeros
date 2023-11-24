@@ -421,9 +421,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/control_methods zeros"
-LABEL org.opencontainers.image.created="2023-11-24T10:19:57Z"
+LABEL org.opencontainers.image.created="2023-11-24T10:41:19Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="deb7899383ba38bc5f236dd148a454b9a71187ce"
+LABEL org.opencontainers.image.revision="8ce1dea4823dbf9c73066d0268ce8797fdfe505c"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

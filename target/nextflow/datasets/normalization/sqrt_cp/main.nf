@@ -3075,7 +3075,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp",
     "viash_version" : "0.8.0",
-    "git_commit" : "deb7899383ba38bc5f236dd148a454b9a71187ce",
+    "git_commit" : "8ce1dea4823dbf9c73066d0268ce8797fdfe505c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3138,7 +3138,7 @@ lognorm = np.sqrt(norm['X'])
 print(">> Store output in adata", flush=True)
 adata.layers[par["layer_output"]] = lognorm
 adata.obs[par["obs_size_factors"]] = norm["norm_factor"]
-adata.uns["normalization_id"] = par.get("normalization_id", meta['functionality_name'])
+adata.uns["normalization_id"] = par["normalization_id"] or meta['functionality_name']
 
 print(">> Write data", flush=True)
 adata.write_h5ad(par['output'], compression="gzip")
