@@ -436,9 +436,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2023-11-24T13:55:29Z"
+LABEL org.opencontainers.image.created="2023-11-28T11:40:31Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b487ec1b5bdfbce731775898f5bd455d5a985699"
+LABEL org.opencontainers.image.revision="73470cbb48115d4a0bc8ea0392144dc61512647d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
