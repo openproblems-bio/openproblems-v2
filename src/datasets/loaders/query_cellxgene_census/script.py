@@ -93,7 +93,8 @@ def main():
     with connect_census(uri=par["input_uri"], census_version=par["census_version"]) as conn:
         query_data = get_anndata(conn, par["obs_value_filter"], par["species"])
 
-        query_data.obs = add_cellcensus_metadata_obs(conn, query_data)
+        if par["add_collection_metadata"]:
+            query_data.obs = add_cellcensus_metadata_obs(conn, query_data)
 
     if par["cell_filter_grouping"] is not None:
         query_data = cellcensus_cell_filter(
