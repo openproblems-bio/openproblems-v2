@@ -222,6 +222,7 @@ execution = convert_size(execution, "rchar")
 execution = convert_size(execution, "wchar")
 execution = convert_size(execution, "peak_vmem")
 execution["%cpu"].replace("%", "", regex=True, inplace=True)
+execution["%cpu"] = execution["%cpu"].astype(float)
 execution["realtime"] = execution["realtime"].apply(convert_duration)
 
 print('Joining traces and scores', flush=True)
