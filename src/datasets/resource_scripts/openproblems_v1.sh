@@ -19,7 +19,7 @@ params_file="/tmp/datasets_openproblems_v1_params.yaml"
 cat > "$params_file" << 'HERE'
 param_list:
   - id: allen_brain_atlas
-    obs_celltype: label
+    obs_cell_type: label
     layer_counts: counts
     dataset_name: Mouse Brain Atlas
     data_url: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE71585
@@ -29,7 +29,7 @@ param_list:
     dataset_organism: mus_musculus
 
   - id: cengen
-    obs_celltype: cell_type
+    obs_cell_type: cell_type
     obs_batch: experiment_code
     obs_tissue: tissue
     layer_counts: counts
@@ -41,7 +41,7 @@ param_list:
     dataset_organism: caenorhabditis_elegans
 
   - id: immune_cells
-    obs_celltype: final_annotation
+    obs_cell_type: final_annotation
     obs_batch: batch
     obs_tissue: tissue
     layer_counts: counts
@@ -53,7 +53,7 @@ param_list:
     dataset_organism: homo_sapiens
 
   - id: mouse_blood_olsson_labelled
-    obs_celltype: celltype
+    obs_cell_type: cell_type
     layer_counts: counts
     dataset_name: Mouse myeloid
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE70245
@@ -63,7 +63,7 @@ param_list:
     dataset_organism: mus_musculus
 
   - id: mouse_hspc_nestorowa2016
-    obs_celltype: cell_type_label
+    obs_cell_type: cell_type_label
     layer_counts: counts
     dataset_name: Mouse HSPC
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE81682
@@ -73,7 +73,7 @@ param_list:
     dataset_organism: mus_musculus
 
   - id: pancreas
-    obs_celltype: celltype
+    obs_cell_type: cell_type
     obs_batch: tech
     layer_counts: counts
     dataset_name: Human pancreas
@@ -85,7 +85,7 @@ param_list:
 
   # disabled as this is not working in openproblemsv1
   # - id: tabula_muris_senis_droplet_lung
-  #   obs_celltype: cell_type
+  #   obs_cell_type: cell_type
   #   obs_batch: donor_id
   #   layer_counts: counts
   #   dataset_name: Tabula Muris Senis Lung
@@ -114,7 +114,7 @@ param_list:
     dataset_organism: homo_sapiens
 
   - id: tnbc_wu2021
-    obs_celltype: celltype_minor
+    obs_cell_type: cell_type_minor
     layer_counts: counts
     dataset_name: Triple-Negative Breast Cancer
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE118389
@@ -124,7 +124,7 @@ param_list:
     dataset_organism: homo_sapiens
     
   - id: zebrafish
-    obs_celltype: cell_type
+    obs_cell_type: cell_type
     obs_batch: lab
     layer_counts: counts
     dataset_name: Zebrafish embryonic cells

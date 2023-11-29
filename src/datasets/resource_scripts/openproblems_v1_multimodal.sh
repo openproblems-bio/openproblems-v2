@@ -34,7 +34,7 @@ param_list:
     data_reference: cao2018joint
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117089
     dataset_organism: "[homo_sapiens, mus_musculus]"
-    obs_celltype: cell_name
+    obs_cell_type: cell_name
     layer_counts: counts
 
   - id: scicar_mouse_kidney
@@ -44,7 +44,7 @@ param_list:
     data_reference: cao2018joint
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117089
     dataset_organism: mus_musculus
-    obs_celltype: cell_name
+    obs_cell_type: cell_name
     obs_batch: replicate
     layer_counts: counts
 
