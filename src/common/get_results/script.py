@@ -1,6 +1,7 @@
 import yaml
 import json
-from pandas import read_csv
+
+from pandas import read_csv, to_numeric
 from datetime import timedelta
 import re
 import numpy as np
@@ -196,7 +197,7 @@ def join_trace (traces, result):
             dict_id = method_id + "_" + dataset_id
             trace_dict[dict_id] = {
                     "duration_sec": trace["realtime"],
-                    "cpu_pct": trace["%cpu"],
+                    "cpu_pct": float(trace["%cpu"]),
                     "peak_memory_mb": trace["peak_vmem"],
                     "disk_read_mb": trace["rchar"],
                     "disk_write_mb": trace["wchar"]
@@ -222,8 +223,8 @@ execution = convert_size(execution, "rchar")
 execution = convert_size(execution, "wchar")
 execution = convert_size(execution, "peak_vmem")
 execution["%cpu"].replace("%", "", regex=True, inplace=True)
-execution["%cpu"] = execution["%cpu"].astype(float)
 execution["realtime"] = execution["realtime"].apply(convert_duration)
+execution.replace("-", 0, inplace=True)
 
 print('Joining traces and scores', flush=True)
 traces = execution.to_dict(orient="records")
