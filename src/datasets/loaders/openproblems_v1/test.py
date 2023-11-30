@@ -4,7 +4,7 @@ import anndata as ad
 
 name = "pancreas"
 output = "dataset.h5ad"
-obs_cell_type = "cell_type"
+obs_cell_type = "celltype"
 obs_batch = "tech"
 
 print(">> Running script", flush=True)

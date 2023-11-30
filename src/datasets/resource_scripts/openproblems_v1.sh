@@ -53,7 +53,7 @@ param_list:
     dataset_organism: homo_sapiens
 
   - id: mouse_blood_olsson_labelled
-    obs_cell_type: cell_type
+    obs_cell_type: celltype
     layer_counts: counts
     dataset_name: Mouse myeloid
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE70245
@@ -73,7 +73,7 @@ param_list:
     dataset_organism: mus_musculus
 
   - id: pancreas
-    obs_cell_type: cell_type
+    obs_cell_type: celltype
     obs_batch: tech
     layer_counts: counts
     dataset_name: Human pancreas
@@ -114,7 +114,7 @@ param_list:
     dataset_organism: homo_sapiens
 
   - id: tnbc_wu2021
-    obs_cell_type: cell_type_minor
+    obs_cell_type: celltype_minor
     layer_counts: counts
     dataset_name: Triple-Negative Breast Cancer
     data_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE118389
