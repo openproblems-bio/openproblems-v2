@@ -2795,6 +2795,19 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
+          }
+        ]
+      },
+      {
+        "name" : "Arguments",
+        "description" : "Other arguments",
+        "arguments" : [
+          {
+            "type" : "boolean_true",
+            "name" : "--add_collection_metadata",
+            "description" : "Whether to add metadata to the obs related to the collection.",
+            "direction" : "input",
+            "dest" : "par"
           },
           {
             "type" : "string",
@@ -2965,7 +2978,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/query_cellxgene_census",
     "viash_version" : "0.8.0",
-    "git_commit" : "73470cbb48115d4a0bc8ea0392144dc61512647d",
+    "git_commit" : "af54964d2f16d0a8eb2f42a51ce9707abecb614d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2991,6 +3004,7 @@ par = {
   'census_version': $( if [ ! -z ${VIASH_PAR_CENSUS_VERSION+x} ]; then echo "r'${VIASH_PAR_CENSUS_VERSION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'species': $( if [ ! -z ${VIASH_PAR_SPECIES+x} ]; then echo "r'${VIASH_PAR_SPECIES//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obs_value_filter': $( if [ ! -z ${VIASH_PAR_OBS_VALUE_FILTER+x} ]; then echo "r'${VIASH_PAR_OBS_VALUE_FILTER//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'add_collection_metadata': $( if [ ! -z ${VIASH_PAR_ADD_COLLECTION_METADATA+x} ]; then echo "r'${VIASH_PAR_ADD_COLLECTION_METADATA//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
   'cell_filter_grouping': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_GROUPING+x} ]; then echo "r'${VIASH_PAR_CELL_FILTER_GROUPING//\\'/\\'\\"\\'\\"r\\'}'.split(':')"; else echo None; fi ),
   'cell_filter_minimum_count': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_MINIMUM_COUNT+x} ]; then echo "float(r'${VIASH_PAR_CELL_FILTER_MINIMUM_COUNT//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3082,6 +3096,27 @@ def write_anndata(query_data, path, compression):
 
     query_data.write_h5ad(path, compression=compression)
 
+def print_unique(adata, column):
+    formatted = "', '".join(adata.obs[column].unique())
+    logger.info(f"Unique {column}: ['{formatted}']")
+
+def print_summary(query_data):
+    logger.info(f"Resulting dataset: {query_data}")
+
+    logger.info("Summary of dataset:")
+    print_unique(query_data, "assay")
+    print_unique(query_data, "assay_ontology_term_id")
+    print_unique(query_data, "cell_type")
+    print_unique(query_data, "cell_type_ontology_term_id")
+    print_unique(query_data, "dataset_id")
+    print_unique(query_data, "development_stage")
+    print_unique(query_data, "development_stage_ontology_term_id")
+    print_unique(query_data, "disease")
+    print_unique(query_data, "disease_ontology_term_id")
+    print_unique(query_data, "tissue")
+    print_unique(query_data, "tissue_ontology_term_id")
+    print_unique(query_data, "tissue_general")
+    print_unique(query_data, "tissue_general_ontology_term_id")
 
 def main():
     # check arguments
@@ -3093,7 +3128,8 @@ def main():
     with connect_census(uri=par["input_uri"], census_version=par["census_version"]) as conn:
         query_data = get_anndata(conn, par["obs_value_filter"], par["species"])
 
-        query_data.obs = add_cellcensus_metadata_obs(conn, query_data)
+        if par["add_collection_metadata"]:
+            query_data.obs = add_cellcensus_metadata_obs(conn, query_data)
 
     if par["cell_filter_grouping"] is not None:
         query_data = cellcensus_cell_filter(
@@ -3104,6 +3140,9 @@ def main():
 
     # use feature_id as var_names
     query_data.var_names = query_data.var["feature_id"]
+
+    # print summary
+    print_summary(query_data)
 
     # write output to file
     write_anndata(query_data, par["output"], par["output_compression"])
