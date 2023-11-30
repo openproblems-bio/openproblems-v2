@@ -3,19 +3,17 @@ library(tidyr, warn.conflicts = FALSE)
 library(tibble, warn.conflicts = FALSE)
 library(ontologyIndex, warn.conflicts = FALSE)
 
-# february 2023 release is used
-# https://github.com/obophenotype/cell-ontology/releases/download/v2023-02-15/cl.obo
-
 ## VIASH START
 par <- list(
-  input = "dataset_cxg2.h5ad",
-  ontology = "cl.obo",
+  input = "resources_test/common/cellxgene_census/dataset.h5ad",
+  ontology = "resources_test/common/cellxgene_census/cl.obo",
   input_term = "cell_type_ontology_term_id",
   struct = "obs",
   output = "output.h5ad",
   output_term = "cell_type_ontology_term_id",
   output_name = "cell_type",
-  output_obsolete = "cell_type_ontology_obsolete"
+  output_obsolete = "cell_type_ontology_obsolete",
+  obsolete_as_na = TRUE
 )
 ## VIASH END
 
@@ -40,15 +38,26 @@ unique_term_ids <- as.character(unique(term_ids))
 cat("Look for obsolete or replaced terms\n")
 ont_map <- ont_tib %>%
   slice(match(unique_term_ids, id)) %>%
-  transmute(orig_id = id, id = ifelse(replaced_by != "", replaced_by, id)) %>%
+  transmute(
+    orig_id = id,
+    id = case_when(
+      !obsolete ~ id,
+      replaced_by != "" ~ replaced_by,
+      rep(par$obsolete_as_na, length(id)) ~ rep(NA_character_, length(id)),
+      TRUE ~ id
+    )
+  ) %>%
   left_join(ont_tib %>% select(id, name, obsolete), by = "id")
 
 cat("Store new columns in data structure\n")
 new_data <- ont_map %>% slice(match(term_ids, orig_id))
 adata[[par$struct]][[par$output_term]] <- new_data$id
 adata[[par$struct]][[par$output_name]] <- new_data$name
-adata[[par$struct]][[par$output_obsolete]] <- new_data$obsolete
+adata[[par$struct]][[par$output_obsolete]] <- ifelse(
+  !is.na(new_data$obsolete),
+  new_data$obsolete,
+  TRUE
+)
 
 cat("Write to file\n")
-# anndata::write_h5ad(adata, par$output, compression = "gzip")
 anndata::write_h5ad(adata, par$output)
