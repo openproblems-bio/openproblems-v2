@@ -25,7 +25,7 @@ nextflow run . \
   -profile docker \
   -resume \
   --id pancreas \
-  --obs_cell_type "cell_type" \
+  --obs_cell_type "celltype" \
   --obs_batch "tech" \
   --layer_counts "counts" \
   --dataset_name "Human pancreas" \
