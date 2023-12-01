@@ -117,7 +117,7 @@ del mod2.X
 
 print("Add metadata to uns", flush=True)
 metadata_fields = [
-    "dataset_id", "dataset_name", "data_url", "data_reference",
+    "dataset_id", "dataset_name", "dataset_url", "dataset_reference",
     "dataset_summary", "dataset_description" "dataset_organism"
 ]
 uns_metadata = {
