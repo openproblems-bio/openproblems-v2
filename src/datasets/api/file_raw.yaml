@@ -15,11 +15,6 @@ info:
         required: true
     obs:
       - type: string
-        name: soma_joinid
-        description: If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.
-        required: false
-
-      - type: string
         name: dataset_id
         description: Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.
         required: false
@@ -141,6 +136,26 @@ info:
       - type: string
         name: batch
         description: A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.
+        required: false
+
+      - type: integer
+        name: soma_joinid
+        description: If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.
+        required: false
+    var:
+      - type: string
+        name: feature_id
+        description: Unique identifier for the feature, usually a ENSEMBL gene id.
+        required: false
+      
+      - type: string
+        name: feature_name
+        description: A human-readable name for the feature, usually a gene symbol.
+        required: false
+
+      - type: integer
+        name: soma_joinid
+        description: If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.
         required: false
     uns:
       - type: string
