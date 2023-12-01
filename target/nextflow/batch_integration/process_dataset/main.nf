@@ -2758,7 +2758,7 @@ meta = [
             "obs" : [
               {
                 "type" : "string",
-                "name" : "celltype",
+                "name" : "cell_type",
                 "description" : "Cell type information",
                 "required" : true
               },
@@ -2814,12 +2814,12 @@ meta = [
               },
               {
                 "type" : "string",
-                "name" : "data_url",
+                "name" : "dataset_url",
                 "description" : "Link to the original source of the dataset.",
                 "required" : false
               },
               {
-                "name" : "data_reference",
+                "name" : "dataset_reference",
                 "type" : "string",
                 "description" : "Bibtex reference of the paper in which the dataset was published.",
                 "required" : false
@@ -3052,12 +3052,12 @@ meta = [
               },
               {
                 "type" : "string",
-                "name" : "data_url",
+                "name" : "dataset_url",
                 "description" : "Link to the original source of the dataset.",
                 "required" : false
               },
               {
-                "name" : "data_reference",
+                "name" : "dataset_reference",
                 "type" : "string",
                 "description" : "Bibtex reference of the paper in which the dataset was published.",
                 "required" : false
@@ -3111,7 +3111,7 @@ meta = [
         "name" : "--obs_label",
         "description" : "Which .obs slot to use as label.",
         "default" : [
-          "celltype"
+          "cell_type"
         ],
         "required" : false,
         "direction" : "input",
@@ -3258,7 +3258,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "af54964d2f16d0a8eb2f42a51ce9707abecb614d",
+    "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
