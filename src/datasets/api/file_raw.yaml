@@ -160,20 +160,21 @@ info:
     uns:
       - type: string
         name: dataset_id
-        description: "A unique identifier for the dataset"
+        description: A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.
         required: true
       - name: dataset_name
         type: string
-        description: Nicely formatted name.
+        description: A human-readable name for the dataset.
         required: true
       - type: string
-        name: data_url
+        name: dataset_url
         description: Link to the original source of the dataset.
         required: false
-      - name: data_reference
+      - name: dataset_reference
         type: string
         description: Bibtex reference of the paper in which the dataset was published.
         required: false
+        multiple: true
       - name: dataset_summary
         type: string
         description: Short description of the dataset.
@@ -186,3 +187,4 @@ info:
         type: string
         description: The organism of the sample in the dataset.
         required: false
+        multiple: true
