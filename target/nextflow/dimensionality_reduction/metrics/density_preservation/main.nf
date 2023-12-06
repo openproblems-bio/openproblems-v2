@@ -3046,7 +3046,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation",
     "viash_version" : "0.8.0",
-    "git_commit" : "2089322a7a3c6059cdebffde5854b4f58e2a2333",
+    "git_commit" : "a84c731b07ec0cfeb218a471ff4c61bf9f88c81c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
