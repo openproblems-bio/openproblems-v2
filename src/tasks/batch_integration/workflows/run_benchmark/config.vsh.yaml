@@ -71,6 +71,7 @@ functionality:
     - name: batch_integration/metrics/isolated_label_asw
     - name: batch_integration/metrics/isolated_label_f1
     - name: batch_integration/metrics/kbet
+    - name: batch_integration/metrics/lisi
     - name: batch_integration/metrics/pcr
 platforms:
   - type: nextflow
