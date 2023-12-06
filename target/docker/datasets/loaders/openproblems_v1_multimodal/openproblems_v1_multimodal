@@ -179,7 +179,7 @@ function ViashHelp {
   echo "        type: string, required parameter"
   echo "        The ID of the dataset"
   echo ""
-  echo "    --obs_celltype"
+  echo "    --obs_cell_type"
   echo "        type: string"
   echo "        Location of where to find the observation cell types."
   echo ""
@@ -206,11 +206,11 @@ function ViashHelp {
   echo "        type: string, required parameter"
   echo "        Nicely formatted name."
   echo ""
-  echo "    --data_url"
+  echo "    --dataset_url"
   echo "        type: string"
   echo "        Link to the original source of the dataset."
   echo ""
-  echo "    --data_reference"
+  echo "    --dataset_reference"
   echo "        type: string"
   echo "        Bibtex reference of the paper in which the dataset was published."
   echo ""
@@ -465,9 +465,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1_multimodal"
-LABEL org.opencontainers.image.created="2023-11-08T13:33:40Z"
+LABEL org.opencontainers.image.created="2023-12-06T13:34:50Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e86f970553e0cabff69be78e1424d3e055d7a104"
+LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -633,15 +633,15 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_DATASET_ID=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --obs_celltype)
-            [ -n "$VIASH_PAR_OBS_CELLTYPE" ] && ViashError Bad arguments for option \'--obs_celltype\': \'$VIASH_PAR_OBS_CELLTYPE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OBS_CELLTYPE="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --obs_celltype. Use "--help" to get more information on the parameters. && exit 1
+        --obs_cell_type)
+            [ -n "$VIASH_PAR_OBS_CELL_TYPE" ] && ViashError Bad arguments for option \'--obs_cell_type\': \'$VIASH_PAR_OBS_CELL_TYPE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OBS_CELL_TYPE="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --obs_cell_type. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --obs_celltype=*)
-            [ -n "$VIASH_PAR_OBS_CELLTYPE" ] && ViashError Bad arguments for option \'--obs_celltype=*\': \'$VIASH_PAR_OBS_CELLTYPE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OBS_CELLTYPE=$(ViashRemoveFlags "$1")
+        --obs_cell_type=*)
+            [ -n "$VIASH_PAR_OBS_CELL_TYPE" ] && ViashError Bad arguments for option \'--obs_cell_type=*\': \'$VIASH_PAR_OBS_CELL_TYPE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OBS_CELL_TYPE=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --obs_batch)
@@ -699,26 +699,26 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_DATASET_NAME=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --data_url)
-            [ -n "$VIASH_PAR_DATA_URL" ] && ViashError Bad arguments for option \'--data_url\': \'$VIASH_PAR_DATA_URL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_DATA_URL="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --data_url. Use "--help" to get more information on the parameters. && exit 1
+        --dataset_url)
+            [ -n "$VIASH_PAR_DATASET_URL" ] && ViashError Bad arguments for option \'--dataset_url\': \'$VIASH_PAR_DATASET_URL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DATASET_URL="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --dataset_url. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --data_url=*)
-            [ -n "$VIASH_PAR_DATA_URL" ] && ViashError Bad arguments for option \'--data_url=*\': \'$VIASH_PAR_DATA_URL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_DATA_URL=$(ViashRemoveFlags "$1")
+        --dataset_url=*)
+            [ -n "$VIASH_PAR_DATASET_URL" ] && ViashError Bad arguments for option \'--dataset_url=*\': \'$VIASH_PAR_DATASET_URL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DATASET_URL=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --data_reference)
-            [ -n "$VIASH_PAR_DATA_REFERENCE" ] && ViashError Bad arguments for option \'--data_reference\': \'$VIASH_PAR_DATA_REFERENCE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_DATA_REFERENCE="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --data_reference. Use "--help" to get more information on the parameters. && exit 1
+        --dataset_reference)
+            [ -n "$VIASH_PAR_DATASET_REFERENCE" ] && ViashError Bad arguments for option \'--dataset_reference\': \'$VIASH_PAR_DATASET_REFERENCE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DATASET_REFERENCE="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --dataset_reference. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --data_reference=*)
-            [ -n "$VIASH_PAR_DATA_REFERENCE" ] && ViashError Bad arguments for option \'--data_reference=*\': \'$VIASH_PAR_DATA_REFERENCE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_DATA_REFERENCE=$(ViashRemoveFlags "$1")
+        --dataset_reference=*)
+            [ -n "$VIASH_PAR_DATASET_REFERENCE" ] && ViashError Bad arguments for option \'--dataset_reference=*\': \'$VIASH_PAR_DATASET_REFERENCE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DATASET_REFERENCE=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --dataset_summary)
@@ -1073,14 +1073,14 @@ import pandas as pd
 # The following code has been auto-generated by Viash.
 par = {
   'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'obs_celltype': $( if [ ! -z ${VIASH_PAR_OBS_CELLTYPE+x} ]; then echo "r'${VIASH_PAR_OBS_CELLTYPE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'obs_cell_type': $( if [ ! -z ${VIASH_PAR_OBS_CELL_TYPE+x} ]; then echo "r'${VIASH_PAR_OBS_CELL_TYPE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'sparse': $( if [ ! -z ${VIASH_PAR_SPARSE+x} ]; then echo "r'${VIASH_PAR_SPARSE//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi ),
   'dataset_name': $( if [ ! -z ${VIASH_PAR_DATASET_NAME+x} ]; then echo "r'${VIASH_PAR_DATASET_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'data_url': $( if [ ! -z ${VIASH_PAR_DATA_URL+x} ]; then echo "r'${VIASH_PAR_DATA_URL//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'data_reference': $( if [ ! -z ${VIASH_PAR_DATA_REFERENCE+x} ]; then echo "r'${VIASH_PAR_DATA_REFERENCE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'dataset_url': $( if [ ! -z ${VIASH_PAR_DATASET_URL+x} ]; then echo "r'${VIASH_PAR_DATASET_URL//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'dataset_reference': $( if [ ! -z ${VIASH_PAR_DATASET_REFERENCE+x} ]; then echo "r'${VIASH_PAR_DATASET_REFERENCE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_summary': $( if [ ! -z ${VIASH_PAR_DATASET_SUMMARY+x} ]; then echo "r'${VIASH_PAR_DATASET_SUMMARY//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_description': $( if [ ! -z ${VIASH_PAR_DATASET_DESCRIPTION+x} ]; then echo "r'${VIASH_PAR_DATASET_DESCRIPTION//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_organism': $( if [ ! -z ${VIASH_PAR_DATASET_ORGANISM+x} ]; then echo "r'${VIASH_PAR_DATASET_ORGANISM//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -1156,13 +1156,13 @@ for key, value in dataset_fun.metadata.items():
     mod1.uns[key] = value
     mod2.uns[key] = value
 
-print("Setting .obs['celltype']", flush=True)
-if par["obs_celltype"]:
-    if par["obs_celltype"] in mod1.obs:
-        mod1.obs["celltype"] = mod1.obs[par["obs_celltype"]]
-        mod2.obs["celltype"] = mod2.obs[par["obs_celltype"]]
+print("Setting .obs['cell_type']", flush=True)
+if par["obs_cell_type"]:
+    if par["obs_cell_type"] in mod1.obs:
+        mod1.obs["cell_type"] = mod1.obs[par["obs_cell_type"]]
+        mod2.obs["cell_type"] = mod2.obs[par["obs_cell_type"]]
     else:
-        print(f"Warning: key '{par['obs_celltype']}' could not be found in adata.obs.", flush=True)
+        print(f"Warning: key '{par['obs_cell_type']}' could not be found in adata.obs.", flush=True)
 
 print("Setting .obs['batch']", flush=True)
 if par["obs_batch"]:
@@ -1206,7 +1206,7 @@ del mod2.X
 
 print("Add metadata to uns", flush=True)
 metadata_fields = [
-    "dataset_id", "dataset_name", "data_url", "data_reference",
+    "dataset_id", "dataset_name", "dataset_url", "dataset_reference",
     "dataset_summary", "dataset_description" "dataset_organism"
 ]
 uns_metadata = {

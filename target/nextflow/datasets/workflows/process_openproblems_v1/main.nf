@@ -2749,7 +2749,7 @@ meta = [
           },
           {
             "type" : "string",
-            "name" : "--obs_celltype",
+            "name" : "--obs_cell_type",
             "description" : "Location of where to find the observation cell types.",
             "required" : false,
             "direction" : "input",
@@ -2820,7 +2820,7 @@ meta = [
           },
           {
             "type" : "string",
-            "name" : "--data_url",
+            "name" : "--dataset_url",
             "description" : "Link to the original source of the dataset.",
             "required" : false,
             "direction" : "input",
@@ -2830,7 +2830,7 @@ meta = [
           },
           {
             "type" : "string",
-            "name" : "--data_reference",
+            "name" : "--dataset_reference",
             "description" : "Bibtex reference of the paper in which the dataset was published.",
             "required" : false,
             "direction" : "input",
@@ -2924,7 +2924,7 @@ meta = [
           },
           {
             "type" : "string",
-            "name" : "--keep_celltype_categories",
+            "name" : "--keep_cell_type_categories",
             "description" : "Categories indexes to be selected",
             "required" : false,
             "direction" : "input",
@@ -3023,26 +3023,27 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
                     "name" : "dataset_name",
                     "type" : "string",
-                    "description" : "Nicely formatted name.",
+                    "description" : "A human-readable name for the dataset.",
                     "required" : true
                   },
                   {
                     "type" : "string",
-                    "name" : "data_url",
+                    "name" : "dataset_url",
                     "description" : "Link to the original source of the dataset.",
                     "required" : false
                   },
                   {
-                    "name" : "data_reference",
+                    "name" : "dataset_reference",
                     "type" : "string",
                     "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   },
                   {
                     "name" : "dataset_summary",
@@ -3060,7 +3061,14 @@ meta = [
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
                   },
                   {
                     "type" : "double",
@@ -3076,6 +3084,24 @@ meta = [
                   }
                 ],
                 "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  },
                   {
                     "type" : "boolean",
                     "name" : "hvg",
@@ -3122,20 +3148,134 @@ meta = [
                 "obs" : [
                   {
                     "type" : "string",
-                    "name" : "celltype",
-                    "description" : "Cell type information",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
                     "required" : false
                   },
                   {
                     "type" : "string",
-                    "name" : "batch",
-                    "description" : "Batch information",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
                     "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "tissue",
-                    "description" : "Tissue information",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
                     "required" : false
                   },
                   {
@@ -3179,6 +3319,7 @@ meta = [
             "info" : {
               "label" : "Raw dataset",
               "summary" : "An unprocessed dataset as output by a dataset loader.",
+              "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n",
               "slots" : {
                 "layers" : [
                   {
@@ -3191,20 +3332,154 @@ meta = [
                 "obs" : [
                   {
                     "type" : "string",
-                    "name" : "celltype",
-                    "description" : "Cell type information",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
                     "required" : false
                   },
                   {
                     "type" : "string",
-                    "name" : "batch",
-                    "description" : "Batch information",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
                     "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "tissue",
-                    "description" : "Tissue information",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
                     "required" : false
                   }
                 ],
@@ -3212,26 +3487,27 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
                     "name" : "dataset_name",
                     "type" : "string",
-                    "description" : "Nicely formatted name.",
+                    "description" : "A human-readable name for the dataset.",
                     "required" : true
                   },
                   {
                     "type" : "string",
-                    "name" : "data_url",
+                    "name" : "dataset_url",
                     "description" : "Link to the original source of the dataset.",
                     "required" : false
                   },
                   {
-                    "name" : "data_reference",
+                    "name" : "dataset_reference",
                     "type" : "string",
                     "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   },
                   {
                     "name" : "dataset_summary",
@@ -3249,7 +3525,8 @@ meta = [
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   }
                 ]
               }
@@ -3289,20 +3566,134 @@ meta = [
                 "obs" : [
                   {
                     "type" : "string",
-                    "name" : "celltype",
-                    "description" : "Cell type information",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
                     "required" : false
                   },
                   {
                     "type" : "string",
-                    "name" : "batch",
-                    "description" : "Batch information",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
                     "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "tissue",
-                    "description" : "Tissue information",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
                     "required" : false
                   },
                   {
@@ -3316,26 +3707,27 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
                     "name" : "dataset_name",
                     "type" : "string",
-                    "description" : "Nicely formatted name.",
+                    "description" : "A human-readable name for the dataset.",
                     "required" : true
                   },
                   {
                     "type" : "string",
-                    "name" : "data_url",
+                    "name" : "dataset_url",
                     "description" : "Link to the original source of the dataset.",
                     "required" : false
                   },
                   {
-                    "name" : "data_reference",
+                    "name" : "dataset_reference",
                     "type" : "string",
                     "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   },
                   {
                     "name" : "dataset_summary",
@@ -3353,10 +3745,38 @@ meta = [
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
                     "required" : false
                   }
                 ]
-              }
+              },
+              "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
             },
             "example" : [
               "resources_test/common/pancreas/normalized.h5ad"
@@ -3396,26 +3816,27 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
                     "name" : "dataset_name",
                     "type" : "string",
-                    "description" : "Nicely formatted name.",
+                    "description" : "A human-readable name for the dataset.",
                     "required" : true
                   },
                   {
                     "type" : "string",
-                    "name" : "data_url",
+                    "name" : "dataset_url",
                     "description" : "Link to the original source of the dataset.",
                     "required" : false
                   },
                   {
-                    "name" : "data_reference",
+                    "name" : "dataset_reference",
                     "type" : "string",
                     "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   },
                   {
                     "name" : "dataset_summary",
@@ -3433,7 +3854,14 @@ meta = [
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
                   },
                   {
                     "type" : "double",
@@ -3459,20 +3887,134 @@ meta = [
                 "obs" : [
                   {
                     "type" : "string",
-                    "name" : "celltype",
-                    "description" : "Cell type information",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
                     "required" : false
                   },
                   {
                     "type" : "string",
-                    "name" : "batch",
-                    "description" : "Batch information",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
                     "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "tissue",
-                    "description" : "Tissue information",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
                     "required" : false
                   },
                   {
@@ -3481,8 +4023,29 @@ meta = [
                     "description" : "The size factors created by the normalisation method, if any.",
                     "required" : false
                   }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  }
                 ]
-              }
+              },
+              "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
             },
             "example" : [
               "resources_test/common/pancreas/pca.h5ad"
@@ -3503,6 +4066,24 @@ meta = [
               "summary" : "A normalised dataset with a PCA embedding and HVG selection.",
               "slots" : {
                 "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  },
                   {
                     "type" : "boolean",
                     "name" : "hvg",
@@ -3536,26 +4117,27 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset",
+                    ''' + '''"description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
                     "name" : "dataset_name",
                     "type" : "string",
-                    "description" : "Nicely formatted name.",
+                    "description" : "A human-readable name for the dataset.",
                     "required" : true
                   },
                   {
                     "type" : "string",
-                    "name" : "data_url",
+                    "name" : "dataset_url",
                     "description" : "Link to the original source of the dataset.",
                     "required" : false
                   },
                   {
-                    "name" : "data_reference",
+                    "name" : "dataset_reference",
                     "type" : "string",
                     "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   },
                   {
                     "name" : "dataset_summary",
@@ -3573,7 +4155,14 @@ meta = [
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
                   },
                   {
                     "type" : "double",
@@ -3599,20 +4188,134 @@ meta = [
                 "obs" : [
                   {
                     "type" : "string",
-                    "name" : "celltype",
-                    "description" : "Cell type information",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
                     "required" : false
                   },
                   {
                     "type" : "string",
-                    "name" : "batch",
-                    "description" : "Batch information",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
                     "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "tissue",
-                    "description" : "Tissue information",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
                     "required" : false
                   },
                   {
@@ -3622,7 +4325,8 @@ meta = [
                     "required" : false
                   }
                 ]
-              }
+              },
+              "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
             },
             "example" : [
               "resources_test/common/pancreas/hvg.h5ad"
@@ -3660,26 +4364,27 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
                     "name" : "dataset_name",
                     "type" : "string",
-                    "description" : "Nicely formatted name.",
+                    "description" : "A human-readable name for the dataset.",
                     "required" : true
                   },
                   {
                     "type" : "string",
-                    "name" : "data_url",
+                    "name" : "dataset_url",
                     "description" : "Link to the original source of the dataset.",
                     "required" : false
                   },
                   {
-                    "name" : "data_reference",
+                    "name" : "dataset_reference",
                     "type" : "string",
                     "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
                   },
                   {
                     "name" : "dataset_summary",
@@ -3697,7 +4402,14 @@ meta = [
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
-                    "required" : false
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
                   },
                   {
                     "type" : "double",
@@ -3713,6 +4425,24 @@ meta = [
                   }
                 ],
                 "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  },
                   {
                     "type" : "boolean",
                     "name" : "hvg",
@@ -3759,20 +4489,134 @@ meta = [
                 "obs" : [
                   {
                     "type" : "string",
-                    "name" : "celltype",
-                    "description" : "Cell type information",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
                     "required" : false
                   },
                   {
                     "type" : "string",
-                    "name" : "batch",
-                    "description" : "Batch information",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
                     "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "tissue",
-                    "description" : "Tissue information",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
                     "required" : false
                   },
                   {
@@ -3782,7 +4626,8 @@ meta = [
                     "required" : false
                   }
                 ]
-              }
+              },
+              "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
             },
             "example" : [
               "resources_test/common/pancreas/knn.h5ad"
@@ -3827,7 +4672,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1"
@@ -3849,7 +4694,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3871,7 +4716,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -3893,7 +4738,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -3915,7 +4760,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -3937,7 +4782,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -3959,7 +4804,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -3981,7 +4826,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4003,7 +4848,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -4025,7 +4870,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -4071,7 +4916,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.8.0",
-    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -4137,14 +4982,14 @@ workflow run_wf {
     | openproblems_v1.run(
       fromState: [
         "dataset_id": "id",
-        "obs_celltype": "obs_celltype",
+        "obs_cell_type": "obs_cell_type",
         "obs_batch": "obs_batch",
         "obs_tissue": "obs_tissue",
         "layer_counts": "layer_counts",
         "sparse": "sparse",
         "dataset_name": "dataset_name",
-        "data_url": "data_url",
-        "data_reference": "data_reference",
+        "dataset_url": "dataset_url",
+        "dataset_reference": "dataset_reference",
         "dataset_summary": "dataset_summary",
         "dataset_description": "dataset_description",
         "dataset_organism": "dataset_organism",
@@ -4160,7 +5005,7 @@ workflow run_wf {
         "n_obs": "n_obs",
         "n_vars": "n_vars",
         "keep_features": "keep_features",
-        "keep_celltype_categories": "keep_celltype_categories",
+        "keep_cell_type_categories": "keep_cell_type_categories",
         "keep_batch_categories": "keep_batch_categories",
         "even": "even",
         "seed": "seed"

@@ -44,7 +44,6 @@ workflow run_wf {
     isolated_label_asw,
     isolated_label_f1,
     kbet,
-    lisi,
     pcr
   ]
 
@@ -53,7 +52,7 @@ workflow run_wf {
 
     // extract the dataset metadata
     | check_dataset_schema.run(
-      fromState: [input: "input_dataset"],
+      fromState: [input: "input_solution"],
       toState: { id, output, state ->
         def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
         state + [dataset_uns: dataset_uns]
@@ -155,9 +154,19 @@ workflow run_wf {
 
   // extract the dataset metadata
   dataset_meta_ch = dataset_ch
+
+    // only keep one of the normalization methods
+    | filter{ id, state ->
+      state.dataset_uns.normalization_id == "log_cp10k"
+    }
+
     | joinStates { ids, states ->
       // store the dataset metadata in a file
-      def dataset_uns = states.collect{it.dataset_uns}
+      def dataset_uns = states.collect{state ->
+        def uns = state.dataset_uns.clone()
+        uns.remove("normalization_id")
+        uns
+      }
       def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
       def dataset_uns_file = tempFile("dataset_uns.yaml")
       dataset_uns_file.write(dataset_uns_yaml_blob)

@@ -2942,7 +2942,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/common/get_results/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_results"
@@ -2964,7 +2964,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/common/get_method_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_method_info"
@@ -2986,7 +2986,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/common/get_metric_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info"
@@ -3008,7 +3008,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+          "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
           "executable" : "/nextflow/common/yaml_to_json/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/yaml_to_json"
@@ -3054,7 +3054,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/workflows/transform_meta",
     "viash_version" : "0.8.0",
-    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3077,87 +3077,84 @@ include { yaml_to_json } from "${meta.resources_dir}/../../../../nextflow/common
 // }
 
 workflow run_wf {
-    take:
-    input_ch
+  take:
+  input_ch
 
-    main:
-    output_ch = input_ch
-        
-        | get_results.run(
-            fromState: [ 
-                "input_scores": "input_scores",
-                "input_execution" : "input_execution",
-                "task_id" : "task_id",
-                "output": "output_scores"
-            ],
-            toState: { id, output, state ->
-                state + [output_results: output.output]
-                }
-        )
+  main:
+  output_ch = input_ch
 
-        | get_method_info.run(
-            fromState: [ 
-                "input": "input_method_configs",
-                "task_id" : "task_id",
-                "output": "output_method_info"
-                ],
-            toState: { id, output, state ->
-                state + [output_method: output.output]
-                }
-        )
+    | get_method_info.run(
+      fromState: [ 
+        "input": "input_method_configs",
+        "task_id" : "task_id",
+        "output": "output_method_info"
+      ],
+      toState: { id, output, state ->
+        state + [output_method: output.output]
+      }
+    )
 
-        | get_metric_info.run(
-            fromState: [ 
-                "input": "input_metric_configs",
-                "task_id" : "task_id",
-                "output": "output_metric_info"
-                ],
-            toState: { id, output, state ->
-                state + [output_metric: output.output]
-                }
-        )
+    | get_metric_info.run(
+      fromState: [ 
+        "input": "input_metric_configs",
+        "task_id" : "task_id",
+        "output": "output_metric_info"
+      ],
+      toState: { id, output, state ->
+        state + [output_metric: output.output]
+      }
+    )
 
-        | yaml_to_json.run(
-            key: "dataset_info",
-            fromState: [ 
-                "input": "input_dataset_info",
-                "output": "output_dataset_info"
-                ],
-            toState: { id, output, state ->
-                state + [output_dataset: output.output]
-                }
-        )
+    | yaml_to_json.run(
+      key: "dataset_info",
+      fromState: [ 
+        "input": "input_dataset_info",
+        "output": "output_dataset_info"
+      ],
+      toState: { id, output, state ->
+        state + [output_dataset: output.output]
+      }
+    )
 
-        | yaml_to_json.run(
-            key: "task_info",
-            fromState: [ 
-                "input": "input_task_info",
-                "output": "output_task_info"
-                ],
-            toState: { id, output, state ->
-                state + [output_task: output.output]
-                }
-        )
+    | yaml_to_json.run(
+      key: "task_info",
+      fromState: [ 
+        "input": "input_task_info",
+        "output": "output_task_info"
+      ],
+      toState: { id, output, state ->
+        state + [output_task: output.output]
+      }
+    )
 
-        | map{ id, state ->
+    | get_results.run(
+      fromState: [ 
+        "input_scores": "input_scores",
+        "input_execution" : "input_execution",
+        "output": "output_scores"
+      ],
+      toState: { id, output, state ->
+        state + [output_results: output.output]
+      }
+    )
 
-            def _meta = [join_id: id]
+    | map{ id, state ->
+      def _meta = [join_id: id]
 
-            def new_state = [
-                output_scores: state.output_results,
-                output_method_info: state.output_method,
-                output_metric_info: state.output_metric,
-                output_dataset_info: state.output_dataset,
-                output_task_info: state.output_task,
-                _meta: _meta
-            ]
+      def new_state = [
+        output_scores: state.output_results,
+        output_method_info: state.output_method,
+        output_metric_info: state.output_metric,
+        output_dataset_info: state.output_dataset,
+        output_task_info: state.output_task,
+        _meta: _meta
+      ]
 
-            ["output", new_state]
+      ["output", new_state]
+    }
 
-        }
-
-    emit:
-    output_ch
+  emit:
+  output_ch
 }
 
 // inner workflow hook

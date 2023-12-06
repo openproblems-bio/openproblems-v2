@@ -2758,7 +2758,7 @@ meta = [
             "obs" : [
               {
                 "type" : "string",
-                "name" : "celltype",
+                "name" : "cell_type",
                 "description" : "Cell type information",
                 "required" : true
               },
@@ -2807,9 +2807,33 @@ meta = [
                 "required" : true
               },
               {
+                "name" : "dataset_name",
                 "type" : "string",
-                "name" : "normalization_id",
-                "description" : "Which normalization was used",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "dataset_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
                 "required" : true
               },
               {
@@ -2817,6 +2841,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               },
               {
                 "type" : "object",
@@ -3015,9 +3045,33 @@ meta = [
                 "required" : true
               },
               {
+                "name" : "dataset_name",
                 "type" : "string",
-                "name" : "normalization_id",
-                "description" : "Which normalization was used",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "dataset_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
                 "required" : true
               },
               {
@@ -3025,6 +3079,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               },
               {
                 "type" : "object",
@@ -3051,7 +3111,7 @@ meta = [
         "name" : "--obs_label",
         "description" : "Which .obs slot to use as label.",
         "default" : [
-          "celltype"
+          "cell_type"
         ],
         "required" : false,
         "direction" : "input",
@@ -3165,6 +3225,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "highmem",
+          "midcpu",
+          "midtime"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -3198,7 +3263,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3214,7 +3279,6 @@ def innerWorkflowFactory(args) {
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 import sys
-import scib
 import anndata as ad
 
 ## VIASH START
@@ -3248,9 +3312,6 @@ dep = {
 
 ## VIASH END
 
-# Remove this after upgrading to Viash 0.7.5
-sys.dont_write_bytecode = True
-
 # import helper functions
 sys.path.append(meta['resources_dir'])
 from subset_anndata import read_config_slots_info, subset_anndata
@@ -3264,6 +3325,7 @@ def compute_batched_hvg(adata, n_hvgs):
     if n_hvgs > adata.n_vars or n_hvgs <= 0:
         hvg_list = adata.var_names.tolist()
     else:
+        import scib
         hvg_list = scib.pp.hvg_batch(
             adata,
             batch_key='batch',
@@ -3649,6 +3711,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/batch_integration/process_dataset",
     "tag" : "integration_build"
   },
+  "label" : [
+    "highmem",
+    "midcpu",
+    "midtime"
+  ],
   "tag" : "$id"
 }'''),
 

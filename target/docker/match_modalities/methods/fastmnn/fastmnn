@@ -414,18 +414,13 @@ FROM ghcr.io/openproblems-bio/base_r:1.0.2
 ENTRYPOINT []
 
  
-RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y git && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("Matrix", "SingleCellExperiment"), repos = "https://cran.rstudio.com")' && \
-  Rscript -e 'remotes::install_bioc("3.18/batchelor", upgrade = "always", type = "source")'
+RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocManager")' && \
+  Rscript -e 'if (!requireNamespace("batchelor", quietly = TRUE)) BiocManager::install("batchelor")'
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/methods fastmnn"
-LABEL org.opencontainers.image.created="2023-11-08T13:33:41Z"
+LABEL org.opencontainers.image.created="2023-12-06T13:34:45Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e86f970553e0cabff69be78e1424d3e055d7a104"
+LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

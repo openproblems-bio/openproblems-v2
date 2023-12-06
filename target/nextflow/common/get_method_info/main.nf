@@ -2895,7 +2895,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_method_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2961,6 +2961,8 @@ out <- map(configs, function(config) {
   info\\$method_id <- config\\$functionality\\$name
   info\\$namespace <- config\\$functionality\\$namespace
   info\\$is_baseline <- grepl("control", info\\$type)
+  info\\$commit_sha <- config\\$info\\$git_commit %||% "missing-sha"
+  info\\$code_version <- "missing-version"
 
   # rename fields to v1 format
   info\\$method_name <- info\\$label
@@ -2973,6 +2975,23 @@ out <- map(configs, function(config) {
   info\\$reference <- NULL
   info\\$code_url <- info\\$repository_url
   info\\$repository_url <- NULL
+  info\\$v1.path <- info\\$v1\\$path
+  info\\$v1\\$path <- NULL
+  info\\$v1.commit <- info\\$v1\\$commit
+  info\\$v1\\$commit <- NULL
+  info\\$v1 <- NULL
+  info\\$type_info.label <- info\\$type_info\\$label
+  info\\$type_info\\$label <- NULL
+  info\\$type_info.summary <- info\\$type_info\\$summary
+  info\\$type_info\\$summary <- NULL
+  info\\$type_info.description <- info\\$type_info\\$description
+  info\\$type_info\\$description <- NULL
+  info\\$type_info <- NULL
+  if (length(info\\$variants) > 0) {
+    info\\$variants <- NULL
+  }
+
+
 
   # todo: show warning when certain data is missing and return null?
 

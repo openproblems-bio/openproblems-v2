@@ -189,7 +189,7 @@ function ViashHelp {
   echo ""
   echo "    --obs_label"
   echo "        type: string"
-  echo "        default: celltype"
+  echo "        default: cell_type"
   echo "        Which .obs slot to use as label."
   echo ""
   echo "    --obs_batch"
@@ -432,9 +432,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.3"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration process_dataset"
-LABEL org.opencontainers.image.created="2023-11-08T13:33:36Z"
+LABEL org.opencontainers.image.created="2023-12-06T13:34:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e86f970553e0cabff69be78e1424d3e055d7a104"
+LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -819,7 +819,7 @@ fi
 
 # filling in defaults
 if [ -z ${VIASH_PAR_OBS_LABEL+x} ]; then
-  VIASH_PAR_OBS_LABEL="celltype"
+  VIASH_PAR_OBS_LABEL="cell_type"
 fi
 if [ -z ${VIASH_PAR_OBS_BATCH+x} ]; then
   VIASH_PAR_OBS_BATCH="batch"
@@ -975,7 +975,6 @@ trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
 import sys
-import scib
 import anndata as ad
 
 ## VIASH START
@@ -1009,9 +1008,6 @@ dep = {
 
 ## VIASH END
 
-# Remove this after upgrading to Viash 0.7.5
-sys.dont_write_bytecode = True
-
 # import helper functions
 sys.path.append(meta['resources_dir'])
 from subset_anndata import read_config_slots_info, subset_anndata
@@ -1025,6 +1021,7 @@ def compute_batched_hvg(adata, n_hvgs):
     if n_hvgs > adata.n_vars or n_hvgs <= 0:
         hvg_list = adata.var_names.tolist()
     else:
+        import scib
         hvg_list = scib.pp.hvg_batch(
             adata,
             batch_key='batch',

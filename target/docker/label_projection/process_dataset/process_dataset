@@ -197,7 +197,7 @@ function ViashHelp {
   echo ""
   echo "    --obs_label"
   echo "        type: string"
-  echo "        default: celltype"
+  echo "        default: cell_type"
   echo "        Which .obs slot to use as label."
   echo ""
   echo "    --obs_batch"
@@ -433,9 +433,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component label_projection process_dataset"
-LABEL org.opencontainers.image.created="2023-11-08T13:33:40Z"
+LABEL org.opencontainers.image.created="2023-12-06T13:34:43Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e86f970553e0cabff69be78e1424d3e055d7a104"
+LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -838,7 +838,7 @@ if [ -z ${VIASH_PAR_METHOD+x} ]; then
   VIASH_PAR_METHOD="batch"
 fi
 if [ -z ${VIASH_PAR_OBS_LABEL+x} ]; then
-  VIASH_PAR_OBS_LABEL="celltype"
+  VIASH_PAR_OBS_LABEL="cell_type"
 fi
 if [ -z ${VIASH_PAR_OBS_BATCH+x} ]; then
   VIASH_PAR_OBS_BATCH="batch"

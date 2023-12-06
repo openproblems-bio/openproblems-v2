@@ -426,9 +426,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization log_cp"
-LABEL org.opencontainers.image.created="2023-11-08T13:33:38Z"
+LABEL org.opencontainers.image.created="2023-12-06T13:34:49Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e86f970553e0cabff69be78e1424d3e055d7a104"
+LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -983,7 +983,7 @@ lognorm = sc.pp.log1p(norm["X"])
 print(">> Store output in adata", flush=True)
 adata.layers[par["layer_output"]] = lognorm
 adata.obs[par["obs_size_factors"]] = norm["norm_factor"]
-adata.uns["normalization_id"] = par.get("normalization_id", meta['functionality_name'])
+adata.uns["normalization_id"] = par["normalization_id"] or meta['functionality_name']
 
 print(">> Write data", flush=True)
 adata.write_h5ad(par['output'], compression="gzip")

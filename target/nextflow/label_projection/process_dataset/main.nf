@@ -2758,7 +2758,7 @@ meta = [
             "obs" : [
               {
                 "type" : "string",
-                "name" : "celltype",
+                "name" : "cell_type",
                 "description" : "Cell type information",
                 "required" : true
               },
@@ -3086,7 +3086,7 @@ meta = [
         "name" : "--obs_label",
         "description" : "Which .obs slot to use as label.",
         "default" : [
-          "celltype"
+          "cell_type"
         ],
         "required" : false,
         "direction" : "input",
@@ -3176,6 +3176,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "highmem",
+          "midcpu",
+          "midtime"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -3209,7 +3214,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3668,6 +3673,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/label_projection/process_dataset",
     "tag" : "integration_build"
   },
+  "label" : [
+    "highmem",
+    "midcpu",
+    "midtime"
+  ],
   "tag" : "$id"
 }'''),
 

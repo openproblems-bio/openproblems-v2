@@ -5,27 +5,26 @@ functionality:
   arguments:
     - name: "--input_scores"
       type: "file"
-      example: resources/label_projection/benchmarks/openproblems_v1/combined.extract_scores.output.tsv
+      example: resources/label_projection/benchmarks/openproblems_v1/combined.extract_scores.output.yaml
       description: "Scores file"
     - name: "--input_execution"
       type: "file"
-      example: resources/label_projection/benchmarks/openproblems_v1/nextflow_log.tsv
+      example: resources/label_projection/benchmarks/openproblems_v1/trace.txt
       description: "Nextflow log file"
-    - name: "--task_id"
-      type: "string"
-      example: "label_projection"
-      description: "Task id"
     - name: "--output"
       type: "file"
       direction: "output"
       default: "output.json"
       description: "Output json"
   resources:
-    - type: python_script
-      path: script.py
+    - type: r_script
+      path: script.R
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
+    setup:
+      - type: r
+        cran: [tidyverse, dynutils]
   - type: nextflow
     directives:
       label: [lowmem, lowtime, lowcpu]

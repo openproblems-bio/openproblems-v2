@@ -3032,10 +3032,8 @@ meta = [
           "type" : "r",
           "cran" : [
             "proxyC",
-            "testthat"
-          ],
-          "github" : [
-            "dynverse/dynutils"
+            "testthat",
+            "dynutils"
           ],
           "bioc_force_install" : false
         }
@@ -3083,7 +3081,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "e86f970553e0cabff69be78e1424d3e055d7a104",
+    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

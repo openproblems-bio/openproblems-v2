@@ -207,7 +207,7 @@ function ViashHelp {
   echo "        type: string, multiple values allowed"
   echo "        A list of genes to keep."
   echo ""
-  echo "    --keep_celltype_categories"
+  echo "    --keep_cell_type_categories"
   echo "        type: string, multiple values allowed"
   echo "        Categories indexes to be selected"
   echo ""
@@ -447,9 +447,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors subsample"
-LABEL org.opencontainers.image.created="2023-11-08T13:33:39Z"
+LABEL org.opencontainers.image.created="2023-12-06T13:34:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e86f970553e0cabff69be78e1424d3e055d7a104"
+LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -687,20 +687,20 @@ while [[ $# -gt 0 ]]; do
             fi
             shift 1
             ;;
-        --keep_celltype_categories)
-            if [ -z "$VIASH_PAR_KEEP_CELLTYPE_CATEGORIES" ]; then
-              VIASH_PAR_KEEP_CELLTYPE_CATEGORIES="$2"
+        --keep_cell_type_categories)
+            if [ -z "$VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES" ]; then
+              VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES="$2"
             else
-              VIASH_PAR_KEEP_CELLTYPE_CATEGORIES="$VIASH_PAR_KEEP_CELLTYPE_CATEGORIES:""$2"
+              VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES="$VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES:""$2"
             fi
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --keep_celltype_categories. Use "--help" to get more information on the parameters. && exit 1
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --keep_cell_type_categories. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --keep_celltype_categories=*)
-            if [ -z "$VIASH_PAR_KEEP_CELLTYPE_CATEGORIES" ]; then
-              VIASH_PAR_KEEP_CELLTYPE_CATEGORIES=$(ViashRemoveFlags "$1")
+        --keep_cell_type_categories=*)
+            if [ -z "$VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES" ]; then
+              VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES=$(ViashRemoveFlags "$1")
             else
-              VIASH_PAR_KEEP_CELLTYPE_CATEGORIES="$VIASH_PAR_KEEP_CELLTYPE_CATEGORIES:"$(ViashRemoveFlags "$1")
+              VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES="$VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES:"$(ViashRemoveFlags "$1")
             fi
             shift 1
             ;;
@@ -1072,7 +1072,7 @@ par = {
   'n_obs': $( if [ ! -z ${VIASH_PAR_N_OBS+x} ]; then echo "int(r'${VIASH_PAR_N_OBS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
   'n_vars': $( if [ ! -z ${VIASH_PAR_N_VARS+x} ]; then echo "int(r'${VIASH_PAR_N_VARS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
   'keep_features': $( if [ ! -z ${VIASH_PAR_KEEP_FEATURES+x} ]; then echo "r'${VIASH_PAR_KEEP_FEATURES//\'/\'\"\'\"r\'}'.split(':')"; else echo None; fi ),
-  'keep_celltype_categories': $( if [ ! -z ${VIASH_PAR_KEEP_CELLTYPE_CATEGORIES+x} ]; then echo "r'${VIASH_PAR_KEEP_CELLTYPE_CATEGORIES//\'/\'\"\'\"r\'}'.split(':')"; else echo None; fi ),
+  'keep_cell_type_categories': $( if [ ! -z ${VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES+x} ]; then echo "r'${VIASH_PAR_KEEP_CELL_TYPE_CATEGORIES//\'/\'\"\'\"r\'}'.split(':')"; else echo None; fi ),
   'keep_batch_categories': $( if [ ! -z ${VIASH_PAR_KEEP_BATCH_CATEGORIES+x} ]; then echo "r'${VIASH_PAR_KEEP_BATCH_CATEGORIES//\'/\'\"\'\"r\'}'.split(':')"; else echo None; fi ),
   'even': $( if [ ! -z ${VIASH_PAR_EVEN+x} ]; then echo "r'${VIASH_PAR_EVEN//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi ),
   'seed': $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo "int(r'${VIASH_PAR_SEED//\'/\'\"\'\"r\'}')"; else echo None; fi )
@@ -1126,14 +1126,14 @@ n_vars = min(min_vars_list)
 print(">> Subsampling the observations", flush=True)
 obs_filt = np.ones(dtype=np.bool_, shape=adata_input.n_obs)
 
-# subset by celltype
-if par.get("keep_celltype_categories"):
-    print(f">> Selecting celltype_categories {par['keep_celltype_categories']}")
-    obs_filt = obs_filt & adata_input.obs["celltype"].isin(par["keep_celltype_categories"])
+# subset by cell_type
+if par.get("keep_cell_type_categories"):
+    print(f">> Selecting cell_type_categories {par['keep_cell_type_categories']}")
+    obs_filt = obs_filt & adata_input.obs["cell_type"].isin(par["keep_cell_type_categories"])
 
 # subset by batch
 if par.get("keep_batch_categories"):
-    print(f">> Selecting celltype_categories {par['keep_batch_categories']}")
+    print(f">> Selecting cell_type_categories {par['keep_batch_categories']}")
     obs_filt = obs_filt & adata_input.obs["batch"].isin(par["keep_batch_categories"])
 
 # subsample evenly across batches or not
