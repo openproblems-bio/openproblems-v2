@@ -30,43 +30,6 @@ functionality:
     multiple_sep: ":"
     dest: "par"
   - type: "file"
-    name: "--methods_meta"
-    description: "File containing methods metadata"
-    info: null
-    example:
-    - "meta_methods.json"
-    must_exist: true
-    create_parent: true
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "file"
-    name: "--metrics_meta"
-    description: "File containing metrics metadata"
-    info: null
-    example:
-    - "meta_metrics.json"
-    must_exist: true
-    create_parent: true
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "string"
-    name: "--task_id"
-    description: "Task id"
-    info: null
-    example:
-    - "label_projection"
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "file"
     name: "--output"
     description: "Output json"
     info: null
@@ -80,8 +43,8 @@ functionality:
     multiple_sep: ":"
     dest: "par"
   resources:
-  - type: "python_script"
-    path: "script.py"
+  - type: "r_script"
+    path: "script.R"
     is_executable: true
   description: "Extract execution info"
   info: null
@@ -90,7 +53,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.2"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -98,6 +61,12 @@ platforms:
   chown: true
   setup_strategy: "ifneedbepullelsecachedbuild"
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
+  setup:
+  - type: "r"
+    cran:
+    - "tidyverse"
+    - "dynutils"
+    bioc_force_install: false
   entrypoint: []
   cmd: null
 - type: "nextflow"
@@ -136,5 +105,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_results"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_results/get_results"
   viash_version: "0.8.0"
-  git_commit: "7cebf6e90d76777f49d193cc30d8beab083233ba"
+  git_commit: "2089322a7a3c6059cdebffde5854b4f58e2a2333"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

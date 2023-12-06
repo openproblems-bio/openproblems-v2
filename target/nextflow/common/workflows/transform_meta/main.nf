@@ -2942,7 +2942,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
+          "git_commit" : "2089322a7a3c6059cdebffde5854b4f58e2a2333",
           "executable" : "/nextflow/common/get_results/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_results"
@@ -2964,7 +2964,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
+          "git_commit" : "2089322a7a3c6059cdebffde5854b4f58e2a2333",
           "executable" : "/nextflow/common/get_method_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_method_info"
@@ -2986,7 +2986,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
+          "git_commit" : "2089322a7a3c6059cdebffde5854b4f58e2a2333",
           "executable" : "/nextflow/common/get_metric_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info"
@@ -3008,7 +3008,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
+          "git_commit" : "2089322a7a3c6059cdebffde5854b4f58e2a2333",
           "executable" : "/nextflow/common/yaml_to_json/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/yaml_to_json"
@@ -3054,7 +3054,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/workflows/transform_meta",
     "viash_version" : "0.8.0",
-    "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
+    "git_commit" : "2089322a7a3c6059cdebffde5854b4f58e2a2333",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3131,9 +3131,6 @@ workflow run_wf {
       fromState: [ 
         "input_scores": "input_scores",
         "input_execution" : "input_execution",
-        "methods_meta": "output_method",
-        "metrics_meta": "output_metric",
-        "task_id" : "task_id",
         "output": "output_scores"
       ],
       toState: { id, output, state ->
