@@ -37,6 +37,11 @@ def get_anndata(census_connection, obs_value_filter, species):
         census=census_connection, obs_value_filter=obs_value_filter, organism=species
     )
 
+def move_x_to_layers(adata):
+    logger.info("Move .X to .layers['counts']")
+    adata.layers["counts"] = adata.X
+    adata.X = None
+
 def add_batch_to_obs(adata, par):
     logger.info("Add batch to the AnnData object.")
     if par["obs_batch"]:
@@ -114,6 +119,10 @@ def main():
     # use feature_id as var_names
     adata.var_names = adata.var["feature_id"]
 
+    # move .X to .layers["counts"]
+    move_x_to_layers(adata)
+
+    # add batch to obs
     add_batch_to_obs(adata, par)
 
     # add metadata to uns
