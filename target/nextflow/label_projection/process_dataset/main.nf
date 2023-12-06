@@ -3176,6 +3176,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "highmem",
+          "midcpu",
+          "midtime"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -3209,7 +3214,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "a84c731b07ec0cfeb218a471ff4c61bf9f88c81c",
+    "git_commit" : "6ed72c793ae04eb3a14a7346fbf9cf3a96d0e585",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3668,6 +3673,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/label_projection/process_dataset",
     "tag" : "main_build"
   },
+  "label" : [
+    "highmem",
+    "midcpu",
+    "midtime"
+  ],
   "tag" : "$id"
 }'''),
 
