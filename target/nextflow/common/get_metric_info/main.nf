@@ -2895,7 +2895,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "7cebf6e90d76777f49d193cc30d8beab083233ba",
+    "git_commit" : "fea5797c0f86d2ce18fec014ddff1aa17c916e7c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2965,6 +2965,12 @@ df <- map_df(configs, function(config) {
     metric_name = label,
     metric_summary = description,
     paper_reference = reference,
+  ) %>%
+  group_by(across(-paper_reference)
+  ) %>%
+  summarise(
+    paper_reference = paste(paper_reference, collapse = ", "),
+    .groups = "drop"
   )
 
 jsonlite::write_json(
