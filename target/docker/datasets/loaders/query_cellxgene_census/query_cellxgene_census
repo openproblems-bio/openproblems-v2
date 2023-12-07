@@ -470,9 +470,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "cellxgene-census~=1.2.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders query_cellxgene_census"
-LABEL org.opencontainers.image.created="2023-12-07T08:05:27Z"
+LABEL org.opencontainers.image.created="2023-12-07T10:05:11Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="a57dec7aca987081abeeb88f34ff47d83728e35b"
+LABEL org.opencontainers.image.revision="37824b7c1e01c9b06ba76fa7dce483d21a589208"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

@@ -3190,7 +3190,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest",
     "viash_version" : "0.8.0",
-    "git_commit" : "a57dec7aca987081abeeb88f34ff47d83728e35b",
+    "git_commit" : "37824b7c1e01c9b06ba76fa7dce483d21a589208",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
