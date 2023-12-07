@@ -79,6 +79,7 @@ functionality:
     - name: common/get_results
     - name: common/get_method_info
     - name: common/get_metric_info
+    - name: common/get_dataset_info
     - name: common/yaml_to_json
 platforms:
   - type: nextflow
