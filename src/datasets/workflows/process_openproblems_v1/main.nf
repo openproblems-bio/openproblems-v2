@@ -118,7 +118,9 @@ workflow run_wf {
 
     // TODO: remove this filter if we're sure the mismatch issue no longer occurs
     | filter{ id, state ->
-      def uns = (new org.yaml.snakeyaml.Yaml().load(state.output_meta)).uns
+      def loaderOptions = new org.yaml.snakeyaml.LoaderOptions()
+      loaderOptions.setCodePointLimit(5*1024*1024)
+      def uns = (new org.yaml.snakeyaml.Yaml(loaderOptions).load(state.output_meta)).uns
       def expected_id = state.normalization_methods.size() > 1 ?
         "${uns.dataset_id}/${uns.normalization_id}" :
         uns.dataset_id
