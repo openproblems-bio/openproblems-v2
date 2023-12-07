@@ -2870,18 +2870,6 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
-          },
-          {
-            "type" : "file",
-            "name" : "--dataset_schema",
-            "description" : "The schema of the dataset to validate against",
-            "must_exist" : true,
-            "create_parent" : true,
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
           }
         ]
       },
@@ -3162,7 +3150,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "fe78bef5bce20f9f630fe9e3c934c8d7008c0a48",
+          "git_commit" : "594081a84d8e905860eca8947c38c4f249becf66",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3184,7 +3172,7 @@ meta = [
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "fe78bef5bce20f9f630fe9e3c934c8d7008c0a48",
+          "git_commit" : "594081a84d8e905860eca8947c38c4f249becf66",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -3230,7 +3218,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "fe78bef5bce20f9f630fe9e3c934c8d7008c0a48",
+    "git_commit" : "594081a84d8e905860eca8947c38c4f249becf66",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
