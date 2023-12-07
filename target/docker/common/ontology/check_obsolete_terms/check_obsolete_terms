@@ -448,9 +448,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("dplyr", "tidyr", "tibble", "ontologyIndex", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/ontology check_obsolete_terms"
-LABEL org.opencontainers.image.created="2023-12-06T13:34:47Z"
+LABEL org.opencontainers.image.created="2023-12-07T08:05:24Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="429a3c74822222a1d8b69c49b955b70529892a8f"
+LABEL org.opencontainers.image.revision="a57dec7aca987081abeeb88f34ff47d83728e35b"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

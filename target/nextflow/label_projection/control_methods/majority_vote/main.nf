@@ -3131,7 +3131,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote",
     "viash_version" : "0.8.0",
-    "git_commit" : "429a3c74822222a1d8b69c49b955b70529892a8f",
+    "git_commit" : "a57dec7aca987081abeeb88f34ff47d83728e35b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
