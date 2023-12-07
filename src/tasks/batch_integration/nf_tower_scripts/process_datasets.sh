@@ -5,7 +5,7 @@ id: batch_integration_process_datasets
 input_states: s3://openproblems-nextflow/resources/datasets/openproblems_v1/**/state.yaml
 rename_keys: 'input:output_dataset'
 settings: '{"output_dataset": "dataset.h5ad", "output_solution": "solution.h5ad"}'
-publish_dir: s3://openproblems-nextflow/resources/
+publish_dir: s3://openproblems-nextflow/resources/batch_integration/datasets/openproblems_v1
 HERE
 
 cat > /tmp/nextflow.config << HERE
