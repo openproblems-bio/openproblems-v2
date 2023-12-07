@@ -430,9 +430,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common check_dataset_schema"
-LABEL org.opencontainers.image.created="2023-12-06T14:30:38Z"
+LABEL org.opencontainers.image.created="2023-12-07T22:25:12Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="6ed72c793ae04eb3a14a7346fbf9cf3a96d0e585"
+LABEL org.opencontainers.image.revision="82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1048,9 +1048,9 @@ if par['meta'] is not None:
   for key, val in adata.uns.items():
     if is_atomic(val):
       uns[key] = to_atomic(val)
-    elif is_list_of_atomics(val):
+    elif is_list_of_atomics(val) and len(val) <= 10:
       uns[key] = to_list_of_atomics(val)
-    elif is_dict_of_atomics(val):
+    elif is_dict_of_atomics(val) and len(val) <= 10:
       uns[key] = to_dict_of_atomics(val)
   structure = {
     struct: list(getattr(adata, struct).keys())

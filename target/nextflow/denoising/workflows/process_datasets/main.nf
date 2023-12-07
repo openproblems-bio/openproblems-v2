@@ -2776,26 +2776,6 @@ meta = [
         ]
       },
       {
-        "name" : "Schemas",
-        "arguments" : [
-          {
-            "type" : "file",
-            "name" : "--dataset_schema",
-            "description" : "The schema of the dataset to validate against",
-            "default" : [
-              "src/tasks/denoising/api/file_common_dataset.yaml"
-            ],
-            "must_exist" : true,
-            "create_parent" : true,
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          }
-        ]
-      },
-      {
         "name" : "Outputs",
         "arguments" : [
           {
@@ -2880,6 +2860,11 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/workflows/process_datasets/",
         "entrypoint" : "run_wf"
+      },
+      {
+        "type" : "file",
+        "path" : "src/tasks/denoising/api/file_common_dataset.yaml",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "status" : "enabled",
@@ -2901,7 +2886,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6ed72c793ae04eb3a14a7346fbf9cf3a96d0e585",
+          "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2923,7 +2908,7 @@ meta = [
           "functionalityNamespace" : "denoising",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6ed72c793ae04eb3a14a7346fbf9cf3a96d0e585",
+          "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
           "executable" : "/nextflow/denoising/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset"
@@ -2969,7 +2954,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "6ed72c793ae04eb3a14a7346fbf9cf3a96d0e585",
+    "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2999,10 +2984,13 @@ workflow run_wf {
     // TODO: check schema based on the values in `config`
     // instead of having to provide a separate schema file
     | check_dataset_schema.run(
-      fromState: [
-        "input": "input",
-        "schema": "dataset_schema"
-      ],
+      fromState: { id, state ->
+        // as a resource
+        [
+          "input": state.input,
+          "schema": meta.resources_dir.resolve("file_common_dataset.yaml")
+        ]
+      },
       args: [
         "stop_on_error": false
       ],

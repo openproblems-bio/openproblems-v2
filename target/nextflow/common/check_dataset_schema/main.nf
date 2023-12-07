@@ -2922,7 +2922,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema",
     "viash_version" : "0.8.0",
-    "git_commit" : "6ed72c793ae04eb3a14a7346fbf9cf3a96d0e585",
+    "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3031,9 +3031,9 @@ if par['meta'] is not None:
   for key, val in adata.uns.items():
     if is_atomic(val):
       uns[key] = to_atomic(val)
-    elif is_list_of_atomics(val):
+    elif is_list_of_atomics(val) and len(val) <= 10:
       uns[key] = to_list_of_atomics(val)
-    elif is_dict_of_atomics(val):
+    elif is_dict_of_atomics(val) and len(val) <= 10:
       uns[key] = to_dict_of_atomics(val)
   structure = {
     struct: list(getattr(adata, struct).keys())
