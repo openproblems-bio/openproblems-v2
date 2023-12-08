@@ -1,22 +1,6 @@
 #!/bin/bash
 
-# get the root of the directory
-REPO_ROOT=$(git rev-parse --show-toplevel)
-
-# ensure that the command below is run from the root of the repository
-cd "$REPO_ROOT"
-
-export TOWER_WORKSPACE_ID=53907369739130
-
-OUTPUT_DIR="resources/datasets/cellxgene_census"
-
-if [ ! -d "$OUTPUT_DIR" ]; then
-  mkdir -p "$OUTPUT_DIR"
-fi
-
-params_file="/tmp/datasets_cellxgene_census_params.yaml"
-
-cat > "$params_file" << 'HERE'
+cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: cxg_mm_pancreas_atlas
     obs_value_filter: "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'"
@@ -39,12 +23,20 @@ output_hvg: force_null
 output_knn: force_null
 HERE
 
-export NXF_VER=23.04.2
-nextflow run . \
-  -main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
-  -profile docker \
-  -resume \
-  -params-file "$params_file" \
-  --publish_dir "$OUTPUT_DIR"
-  
-  # -with-tower
+cat > /tmp/nextflow.config << HERE
+process {
+  executor = 'awsbatch'
+  withName: '.*query_cellxgene_census_process' {
+    memory = "256.GB"
+  }
+}
+HERE
+
+tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+  --revision main_build \
+  --pull-latest \
+  --main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
+  --workspace 53907369739130 \
+  --compute-env 7IkB9ckC81O0dgNemcPJTD \
+  --params-file "/tmp/params.yaml" \
+  --config /tmp/nextflow.config
