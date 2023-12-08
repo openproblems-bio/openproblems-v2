@@ -210,9 +210,7 @@ function ViashHelp {
   echo "        Filter for selecting the \`obs\` metadata (i.e. cells). Value is a filter"
   echo "        query written in the SOMA \`value_filter\` syntax."
   echo ""
-  echo "Cell filter:"
-  echo "    Filter the cells based on a minimum cell count per specified group"
-  echo ""
+  echo "Filter cells by grouping:"
   echo "    --cell_filter_grouping"
   echo "        type: string, multiple values allowed"
   echo "        example: dataset_id:tissue:assay:disease:cell_type"
@@ -222,11 +220,34 @@ function ViashHelp {
   echo "        bias against cells with more fine-grained ontology annotations."
   echo ""
   echo "    --cell_filter_minimum_count"
-  echo "        type: double"
-  echo "        example: 100.0"
+  echo "        type: integer"
+  echo "        example: 100"
   echo "        A minimum number of cells per group to retain. If"
   echo "        \`--cell_filter_grouping\`"
   echo "        is defined, this parameter should also be provided and vice versa."
+  echo ""
+  echo "Count filtering:"
+  echo "    Arguments related to filtering cells and genes by counts."
+  echo ""
+  echo "    --cell_filter_min_genes"
+  echo "        type: integer"
+  echo "        default: 50"
+  echo "        Remove cells with less than this number of genes."
+  echo ""
+  echo "    --cell_filter_min_counts"
+  echo "        type: integer"
+  echo "        default: 0"
+  echo "        Remove cells with less than this number of counts."
+  echo ""
+  echo "    --gene_filter_min_cells"
+  echo "        type: integer"
+  echo "        default: 5"
+  echo "        Remove genes expressed in less than this number of cells."
+  echo ""
+  echo "    --gene_filter_min_counts"
+  echo "        type: integer"
+  echo "        default: 0"
+  echo "        Remove genes with less than this number of counts."
   echo ""
   echo "Cell metadata:"
   echo "    Cell metadata arguments"
@@ -512,12 +533,12 @@ ENTRYPOINT []
 
  
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "cellxgene-census~=1.2.0"
+  pip install --upgrade --no-cache-dir "cellxgene-census~=1.2.0" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders query_cellxgene_census"
-LABEL org.opencontainers.image.created="2023-12-08T08:07:46Z"
+LABEL org.opencontainers.image.created="2023-12-08T09:52:59Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d2258f3b4613d48f3445779e74a1c4d64c55afd7"
+LABEL org.opencontainers.image.revision="2d188caeec765a88bf9c3be3e1bcbc2fb091c726"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -742,6 +763,50 @@ while [[ $# -gt 0 ]]; do
         --cell_filter_minimum_count=*)
             [ -n "$VIASH_PAR_CELL_FILTER_MINIMUM_COUNT" ] && ViashError Bad arguments for option \'--cell_filter_minimum_count=*\': \'$VIASH_PAR_CELL_FILTER_MINIMUM_COUNT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_CELL_FILTER_MINIMUM_COUNT=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --cell_filter_min_genes)
+            [ -n "$VIASH_PAR_CELL_FILTER_MIN_GENES" ] && ViashError Bad arguments for option \'--cell_filter_min_genes\': \'$VIASH_PAR_CELL_FILTER_MIN_GENES\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_CELL_FILTER_MIN_GENES="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --cell_filter_min_genes. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --cell_filter_min_genes=*)
+            [ -n "$VIASH_PAR_CELL_FILTER_MIN_GENES" ] && ViashError Bad arguments for option \'--cell_filter_min_genes=*\': \'$VIASH_PAR_CELL_FILTER_MIN_GENES\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_CELL_FILTER_MIN_GENES=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --cell_filter_min_counts)
+            [ -n "$VIASH_PAR_CELL_FILTER_MIN_COUNTS" ] && ViashError Bad arguments for option \'--cell_filter_min_counts\': \'$VIASH_PAR_CELL_FILTER_MIN_COUNTS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_CELL_FILTER_MIN_COUNTS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --cell_filter_min_counts. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --cell_filter_min_counts=*)
+            [ -n "$VIASH_PAR_CELL_FILTER_MIN_COUNTS" ] && ViashError Bad arguments for option \'--cell_filter_min_counts=*\': \'$VIASH_PAR_CELL_FILTER_MIN_COUNTS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_CELL_FILTER_MIN_COUNTS=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --gene_filter_min_cells)
+            [ -n "$VIASH_PAR_GENE_FILTER_MIN_CELLS" ] && ViashError Bad arguments for option \'--gene_filter_min_cells\': \'$VIASH_PAR_GENE_FILTER_MIN_CELLS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_GENE_FILTER_MIN_CELLS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --gene_filter_min_cells. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --gene_filter_min_cells=*)
+            [ -n "$VIASH_PAR_GENE_FILTER_MIN_CELLS" ] && ViashError Bad arguments for option \'--gene_filter_min_cells=*\': \'$VIASH_PAR_GENE_FILTER_MIN_CELLS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_GENE_FILTER_MIN_CELLS=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --gene_filter_min_counts)
+            [ -n "$VIASH_PAR_GENE_FILTER_MIN_COUNTS" ] && ViashError Bad arguments for option \'--gene_filter_min_counts\': \'$VIASH_PAR_GENE_FILTER_MIN_COUNTS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_GENE_FILTER_MIN_COUNTS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --gene_filter_min_counts. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --gene_filter_min_counts=*)
+            [ -n "$VIASH_PAR_GENE_FILTER_MIN_COUNTS" ] && ViashError Bad arguments for option \'--gene_filter_min_counts=*\': \'$VIASH_PAR_GENE_FILTER_MIN_COUNTS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_GENE_FILTER_MIN_COUNTS=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --obs_batch)
@@ -1038,14 +1103,50 @@ fi
 if [ -z ${VIASH_PAR_SPECIES+x} ]; then
   VIASH_PAR_SPECIES="homo_sapiens"
 fi
+if [ -z ${VIASH_PAR_CELL_FILTER_MIN_GENES+x} ]; then
+  VIASH_PAR_CELL_FILTER_MIN_GENES="50"
+fi
+if [ -z ${VIASH_PAR_CELL_FILTER_MIN_COUNTS+x} ]; then
+  VIASH_PAR_CELL_FILTER_MIN_COUNTS="0"
+fi
+if [ -z ${VIASH_PAR_GENE_FILTER_MIN_CELLS+x} ]; then
+  VIASH_PAR_GENE_FILTER_MIN_CELLS="5"
+fi
+if [ -z ${VIASH_PAR_GENE_FILTER_MIN_COUNTS+x} ]; then
+  VIASH_PAR_GENE_FILTER_MIN_COUNTS="0"
+fi
 if [ -z ${VIASH_PAR_OBS_BATCH_SEPARATOR+x} ]; then
   VIASH_PAR_OBS_BATCH_SEPARATOR="+"
 fi
 
 # check whether parameters values are of the right type
 if [[ -n "$VIASH_PAR_CELL_FILTER_MINIMUM_COUNT" ]]; then
-  if ! [[ "$VIASH_PAR_CELL_FILTER_MINIMUM_COUNT" =~ ^[-+]?(\.[0-9]+|[0-9]+(\.[0-9]*)?)([eE][-+]?[0-9]+)?$ ]]; then
-    ViashError '--cell_filter_minimum_count' has to be a double. Use "--help" to get more information on the parameters.
+  if ! [[ "$VIASH_PAR_CELL_FILTER_MINIMUM_COUNT" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--cell_filter_minimum_count' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_CELL_FILTER_MIN_GENES" ]]; then
+  if ! [[ "$VIASH_PAR_CELL_FILTER_MIN_GENES" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--cell_filter_min_genes' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_CELL_FILTER_MIN_COUNTS" ]]; then
+  if ! [[ "$VIASH_PAR_CELL_FILTER_MIN_COUNTS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--cell_filter_min_counts' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_GENE_FILTER_MIN_CELLS" ]]; then
+  if ! [[ "$VIASH_PAR_GENE_FILTER_MIN_CELLS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--gene_filter_min_cells' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_GENE_FILTER_MIN_COUNTS" ]]; then
+  if ! [[ "$VIASH_PAR_GENE_FILTER_MIN_COUNTS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--gene_filter_min_counts' has to be an integer. Use "--help" to get more information on the parameters.
     exit 1
   fi
 fi
@@ -1174,9 +1275,9 @@ function interrupt {
 trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
-import os
 import sys
 import cellxgene_census
+import scanpy as sc
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
@@ -1186,7 +1287,11 @@ par = {
   'species': $( if [ ! -z ${VIASH_PAR_SPECIES+x} ]; then echo "r'${VIASH_PAR_SPECIES//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'obs_value_filter': $( if [ ! -z ${VIASH_PAR_OBS_VALUE_FILTER+x} ]; then echo "r'${VIASH_PAR_OBS_VALUE_FILTER//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'cell_filter_grouping': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_GROUPING+x} ]; then echo "r'${VIASH_PAR_CELL_FILTER_GROUPING//\'/\'\"\'\"r\'}'.split(':')"; else echo None; fi ),
-  'cell_filter_minimum_count': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_MINIMUM_COUNT+x} ]; then echo "float(r'${VIASH_PAR_CELL_FILTER_MINIMUM_COUNT//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'cell_filter_minimum_count': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_MINIMUM_COUNT+x} ]; then echo "int(r'${VIASH_PAR_CELL_FILTER_MINIMUM_COUNT//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'cell_filter_min_genes': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_MIN_GENES+x} ]; then echo "int(r'${VIASH_PAR_CELL_FILTER_MIN_GENES//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'cell_filter_min_counts': $( if [ ! -z ${VIASH_PAR_CELL_FILTER_MIN_COUNTS+x} ]; then echo "int(r'${VIASH_PAR_CELL_FILTER_MIN_COUNTS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'gene_filter_min_cells': $( if [ ! -z ${VIASH_PAR_GENE_FILTER_MIN_CELLS+x} ]; then echo "int(r'${VIASH_PAR_GENE_FILTER_MIN_CELLS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'gene_filter_min_counts': $( if [ ! -z ${VIASH_PAR_GENE_FILTER_MIN_COUNTS+x} ]; then echo "int(r'${VIASH_PAR_GENE_FILTER_MIN_COUNTS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
   'obs_batch': $( if [ ! -z ${VIASH_PAR_OBS_BATCH+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH//\'/\'\"\'\"r\'}'.split(',')"; else echo None; fi ),
   'obs_batch_separator': $( if [ ! -z ${VIASH_PAR_OBS_BATCH_SEPARATOR+x} ]; then echo "r'${VIASH_PAR_OBS_BATCH_SEPARATOR//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -1232,11 +1337,42 @@ def connect_census(uri, census_version):
     logger.info("Connecting to CellxGene Census at %s", f"'{uri}'" if uri else f"version '{ver}'")
     return cellxgene_census.open_soma(uri=uri, census_version=ver)
 
-def get_anndata(census_connection, obs_value_filter, species):
-    logger.info("Getting gene expression data based on %s query.", obs_value_filter)
+def get_anndata(census_connection, par):
+    logger.info("Getting gene expression data based on %s query.", par["obs_value_filter"])
     return cellxgene_census.get_anndata(
-        census=census_connection, obs_value_filter=obs_value_filter, organism=species
+        census=census_connection,
+        obs_value_filter=par["obs_value_filter"],
+        organism=par["species"]
     )
+
+def filter_min_cells_per_group(adata, par):
+    t0 = adata.shape
+    cell_count = adata.obs \\
+        .groupby(par["cell_filter_grouping"])["soma_joinid"] \\
+        .transform("count") \\
+        
+    adata = adata[cell_count >= par["cell_filter_minimum_count"]]
+    t1 = adata.shape
+    logger.info(
+        "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
+        % ((t0[0] - t1[0]), par["cell_filter_minimum_count"], par["cell_filter_grouping"])
+    )
+    return adata
+
+def filter_by_counts(adata, par):
+    logger.info("Remove cells with few counts and genes with few counts.")
+    t0 = adata.shape
+    # remove cells with few counts and genes with few counts
+    if par["cell_filter_min_counts"]:
+        sc.pp.filter_cells(adata, min_counts=par["cell_filter_min_counts"])
+    if par["cell_filter_min_genes"]:
+        sc.pp.filter_cells(adata, min_genes=par["cell_filter_min_genes"])
+    if par["gene_filter_min_counts"]:
+        sc.pp.filter_genes(adata, min_counts=par["gene_filter_min_counts"])
+    if par["gene_filter_min_cells"]:
+        sc.pp.filter_genes(adata, min_cells=par["gene_filter_min_cells"])
+    t1 = adata.shape
+    logger.info("Removed %s cells and %s genes.", (t0[0] - t1[0]), (t0[1] - t1[1]))
 
 def move_x_to_layers(adata):
     logger.info("Move .X to .layers['counts']")
@@ -1260,24 +1396,6 @@ def add_metadata_to_uns(adata, par):
     for key in ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]:
         adata.uns[key] = par[key]
 
-def cellcensus_cell_filter(adata, cell_filter_grouping, cell_filter_minimum_count):
-    t0 = adata.shape
-    adata = adata[
-        adata.obs.groupby(cell_filter_grouping)["soma_joinid"].transform("count")
-        >= cell_filter_minimum_count
-    ]
-    t1 = adata.shape
-    logger.info(
-        "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
-        % ((t0[0] - t1[0]), cell_filter_minimum_count, cell_filter_grouping)
-    )
-    return adata
-
-def write_anndata(adata, path, compression):
-    logger.info("Writing AnnData object to '%s'", path)
-
-    adata.write_h5ad(path, compression=compression)
-
 def print_unique(adata, column):
     formatted = "', '".join(adata.obs[column].unique())
     logger.info(f"Unique {column}: ['{formatted}']")
@@ -1300,7 +1418,12 @@ def print_summary(adata):
     print_unique(adata, "tissue_general")
     print_unique(adata, "tissue_general_ontology_term_id")
 
-def main():
+def write_anndata(adata, par):
+    logger.info("Writing AnnData object to '%s'", par["output"])
+
+    adata.write_h5ad(par["output"], compression=par["output_compression"])
+
+def main(par, meta):
     # check arguments
     if (par["cell_filter_grouping"] is None) != (par["cell_filter_minimum_count"] is None):
         raise NotImplementedError(
@@ -1308,14 +1431,13 @@ def main():
         )
     
     with connect_census(uri=par["input_uri"], census_version=par["census_version"]) as conn:
-        adata = get_anndata(conn, par["obs_value_filter"], par["species"])
+        adata = get_anndata(conn, par)
 
     if par["cell_filter_grouping"] is not None:
-        adata = cellcensus_cell_filter(
-            adata,
-            par["cell_filter_grouping"],
-            par["cell_filter_minimum_count"]
-        )
+        adata = filter_min_cells_per_group(adata, par)
+
+    # remove cells with few counts and genes with few counts
+    filter_by_counts(adata, par)
 
     # use feature_id as var_names
     adata.var_names = adata.var["feature_id"]
@@ -1333,11 +1455,11 @@ def main():
     print_summary(adata)
 
     # write output to file
-    write_anndata(adata, par["output"], par["output_compression"])
+    write_anndata(adata, par)
 
 
 if __name__ == "__main__":
-    main()
+    main(par, meta)
 VIASHMAIN
 python -B "\$tempscript" &
 wait "\$!"

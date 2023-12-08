@@ -410,9 +410,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "xgboost"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods xgboost"
-LABEL org.opencontainers.image.created="2023-12-08T08:07:41Z"
+LABEL org.opencontainers.image.created="2023-12-08T09:52:53Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d2258f3b4613d48f3445779e74a1c4d64c55afd7"
+LABEL org.opencontainers.image.revision="2d188caeec765a88bf9c3be3e1bcbc2fb091c726"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

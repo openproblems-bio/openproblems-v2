@@ -1,6 +1,6 @@
-import os
 import sys
 import cellxgene_census
+import scanpy as sc
 
 ## VIASH START
 par = {
@@ -31,11 +31,42 @@ def connect_census(uri, census_version):
     logger.info("Connecting to CellxGene Census at %s", f"'{uri}'" if uri else f"version '{ver}'")
     return cellxgene_census.open_soma(uri=uri, census_version=ver)
 
-def get_anndata(census_connection, obs_value_filter, species):
-    logger.info("Getting gene expression data based on %s query.", obs_value_filter)
+def get_anndata(census_connection, par):
+    logger.info("Getting gene expression data based on %s query.", par["obs_value_filter"])
     return cellxgene_census.get_anndata(
-        census=census_connection, obs_value_filter=obs_value_filter, organism=species
+        census=census_connection,
+        obs_value_filter=par["obs_value_filter"],
+        organism=par["species"]
     )
+
+def filter_min_cells_per_group(adata, par):
+    t0 = adata.shape
+    cell_count = adata.obs \
+        .groupby(par["cell_filter_grouping"])["soma_joinid"] \
+        .transform("count") \
+        
+    adata = adata[cell_count >= par["cell_filter_minimum_count"]]
+    t1 = adata.shape
+    logger.info(
+        "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
+        % ((t0[0] - t1[0]), par["cell_filter_minimum_count"], par["cell_filter_grouping"])
+    )
+    return adata
+
+def filter_by_counts(adata, par):
+    logger.info("Remove cells with few counts and genes with few counts.")
+    t0 = adata.shape
+    # remove cells with few counts and genes with few counts
+    if par["cell_filter_min_counts"]:
+        sc.pp.filter_cells(adata, min_counts=par["cell_filter_min_counts"])
+    if par["cell_filter_min_genes"]:
+        sc.pp.filter_cells(adata, min_genes=par["cell_filter_min_genes"])
+    if par["gene_filter_min_counts"]:
+        sc.pp.filter_genes(adata, min_counts=par["gene_filter_min_counts"])
+    if par["gene_filter_min_cells"]:
+        sc.pp.filter_genes(adata, min_cells=par["gene_filter_min_cells"])
+    t1 = adata.shape
+    logger.info("Removed %s cells and %s genes.", (t0[0] - t1[0]), (t0[1] - t1[1]))
 
 def move_x_to_layers(adata):
     logger.info("Move .X to .layers['counts']")
@@ -59,24 +90,6 @@ def add_metadata_to_uns(adata, par):
     for key in ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]:
         adata.uns[key] = par[key]
 
-def cellcensus_cell_filter(adata, cell_filter_grouping, cell_filter_minimum_count):
-    t0 = adata.shape
-    adata = adata[
-        adata.obs.groupby(cell_filter_grouping)["soma_joinid"].transform("count")
-        >= cell_filter_minimum_count
-    ]
-    t1 = adata.shape
-    logger.info(
-        "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
-        % ((t0[0] - t1[0]), cell_filter_minimum_count, cell_filter_grouping)
-    )
-    return adata
-
-def write_anndata(adata, path, compression):
-    logger.info("Writing AnnData object to '%s'", path)
-
-    adata.write_h5ad(path, compression=compression)
-
 def print_unique(adata, column):
     formatted = "', '".join(adata.obs[column].unique())
     logger.info(f"Unique {column}: ['{formatted}']")
@@ -99,7 +112,12 @@ def print_summary(adata):
     print_unique(adata, "tissue_general")
     print_unique(adata, "tissue_general_ontology_term_id")
 
-def main():
+def write_anndata(adata, par):
+    logger.info("Writing AnnData object to '%s'", par["output"])
+
+    adata.write_h5ad(par["output"], compression=par["output_compression"])
+
+def main(par, meta):
     # check arguments
     if (par["cell_filter_grouping"] is None) != (par["cell_filter_minimum_count"] is None):
         raise NotImplementedError(
@@ -107,14 +125,13 @@ def main():
         )
     
     with connect_census(uri=par["input_uri"], census_version=par["census_version"]) as conn:
-        adata = get_anndata(conn, par["obs_value_filter"], par["species"])
+        adata = get_anndata(conn, par)
 
     if par["cell_filter_grouping"] is not None:
-        adata = cellcensus_cell_filter(
-            adata,
-            par["cell_filter_grouping"],
-            par["cell_filter_minimum_count"]
-        )
+        adata = filter_min_cells_per_group(adata, par)
+
+    # remove cells with few counts and genes with few counts
+    filter_by_counts(adata, par)
 
     # use feature_id as var_names
     adata.var_names = adata.var["feature_id"]
@@ -132,8 +149,8 @@ def main():
     print_summary(adata)
 
     # write output to file
-    write_anndata(adata, par["output"], par["output_compression"])
+    write_anndata(adata, par)
 
 
 if __name__ == "__main__":
-    main()
+    main(par, meta)
