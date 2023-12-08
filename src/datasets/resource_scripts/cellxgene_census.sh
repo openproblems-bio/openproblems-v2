@@ -3,6 +3,7 @@
 cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: cxg_mm_pancreas_atlas
+    census_version: 2023-07-25
     obs_value_filter: "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'"
     obs_batch: donor_id
     dataset_name: Mouse pancreatic islet atlas
