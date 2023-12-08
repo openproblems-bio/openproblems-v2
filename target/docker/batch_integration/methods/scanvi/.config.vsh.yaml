@@ -247,5 +247,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/scanvi"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/scanvi/scanvi"
   viash_version: "0.8.0"
-  git_commit: "594081a84d8e905860eca8947c38c4f249becf66"
+  git_commit: "d2258f3b4613d48f3445779e74a1c4d64c55afd7"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

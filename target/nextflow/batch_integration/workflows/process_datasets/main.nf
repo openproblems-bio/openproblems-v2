@@ -2870,6 +2870,21 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--dataset_schema",
+            "description" : "The schema of the dataset to validate against",
+            "default" : [
+              "src/tasks/batch_integration/api/file_common_dataset.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
           }
         ]
       },
@@ -3124,11 +3139,6 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/workflows/process_datasets/",
         "entrypoint" : "run_wf"
-      },
-      {
-        "type" : "file",
-        "path" : "src/tasks/batch_integration/api/file_common_dataset.yaml",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "status" : "enabled",
@@ -3150,7 +3160,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "594081a84d8e905860eca8947c38c4f249becf66",
+          "git_commit" : "d2258f3b4613d48f3445779e74a1c4d64c55afd7",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3172,7 +3182,7 @@ meta = [
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "594081a84d8e905860eca8947c38c4f249becf66",
+          "git_commit" : "d2258f3b4613d48f3445779e74a1c4d64c55afd7",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -3218,7 +3228,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "594081a84d8e905860eca8947c38c4f249becf66",
+    "git_commit" : "d2258f3b4613d48f3445779e74a1c4d64c55afd7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3248,13 +3258,10 @@ workflow run_wf {
     // TODO: check schema based on the values in `config`
     // instead of having to provide a separate schema file
     | check_dataset_schema.run(
-      fromState: { id, state ->
-        // as a resource
-        [
-          "input": state.input,
-          "schema": meta.resources_dir.resolve("file_common_dataset.yaml")
-        ]
-      },
+      fromState: [
+        "input": "input",
+        "schema": "dataset_schema"
+      ],
       args: [
         "stop_on_error": false
       ],
