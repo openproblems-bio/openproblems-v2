@@ -1,5 +1,6 @@
 import sys
 import cellxgene_census
+import scanpy as sc
 
 ## VIASH START
 par = {
@@ -44,13 +45,28 @@ def filter_min_cells_per_group(adata, par):
         .groupby(par["cell_filter_grouping"])["soma_joinid"] \
         .transform("count") \
         
-    adata = adata[cell_count >= par["cell_filter_minimum_count"]].copy()
+    adata = adata[cell_count >= par["cell_filter_minimum_count"]]
     t1 = adata.shape
     logger.info(
         "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
         % ((t0[0] - t1[0]), par["cell_filter_minimum_count"], par["cell_filter_grouping"])
     )
     return adata
+
+def filter_by_counts(adata, par):
+    logger.info("Remove cells with few counts and genes with few counts.")
+    t0 = adata.shape
+    # remove cells with few counts and genes with few counts
+    if par["cell_filter_min_counts"]:
+        sc.pp.filter_cells(adata, min_counts=par["cell_filter_min_counts"])
+    if par["cell_filter_min_genes"]:
+        sc.pp.filter_cells(adata, min_genes=par["cell_filter_min_genes"])
+    if par["gene_filter_min_counts"]:
+        sc.pp.filter_genes(adata, min_counts=par["gene_filter_min_counts"])
+    if par["gene_filter_min_cells"]:
+        sc.pp.filter_genes(adata, min_cells=par["gene_filter_min_cells"])
+    t1 = adata.shape
+    logger.info("Removed %s cells and %s genes.", (t0[0] - t1[0]), (t0[1] - t1[1]))
 
 def move_x_to_layers(adata):
     logger.info("Move .X to .layers['counts']")
@@ -99,7 +115,7 @@ def print_summary(adata):
 def write_anndata(adata, par):
     logger.info("Writing AnnData object to '%s'", par["output"])
 
-    adata.write_h5ad(par["output"], compression=par["compression"])
+    adata.write_h5ad(par["output"], compression=par["output_compression"])
 
 def main(par, meta):
     # check arguments
@@ -113,6 +129,9 @@ def main(par, meta):
 
     if par["cell_filter_grouping"] is not None:
         adata = filter_min_cells_per_group(adata, par)
+
+    # remove cells with few counts and genes with few counts
+    filter_by_counts(adata, par)
 
     # use feature_id as var_names
     adata.var_names = adata.var["feature_id"]
