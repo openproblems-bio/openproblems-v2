@@ -87,7 +87,7 @@ Format:
 <div class="small">
 
     AnnData object
-     obs: 'celltype', 'batch'
+     obs: 'cell_type', 'batch'
      var: 'hvg', 'hvg_score'
      obsm: 'X_pca'
      layers: 'counts', 'normalized'
@@ -101,7 +101,7 @@ Slot description:
 
 | Slot                      | Type      | Description                                                              |
 |:--------------------------|:----------|:-------------------------------------------------------------------------|
-| `obs["celltype"]`         | `string`  | Cell type information.                                                   |
+| `obs["cell_type"]`        | `string`  | Cell type information.                                                   |
 | `obs["batch"]`            | `string`  | Batch information.                                                       |
 | `var["hvg"]`              | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
 | `var["hvg_score"]`        | `integer` | A ranking of the features by hvg.                                        |
@@ -350,8 +350,7 @@ Slot description:
 
 Metric score file
 
-Example file:
-`resources_test/label_projection/pancreas/score.h5ad`
+Example file: `resources_test/label_projection/pancreas/score.h5ad`
 
 Description:
 

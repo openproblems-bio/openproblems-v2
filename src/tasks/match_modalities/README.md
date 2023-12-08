@@ -153,7 +153,7 @@ The first modality of a multimodal dataset. The cells of this dataset
 are randomly permuted.
 
 Example file:
-`resources_test/common/scicar_cell_lines/dataset_mod1.h5ad`
+`resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad`
 
 Description:
 
@@ -190,7 +190,7 @@ The second modality of a multimodal dataset. The cells of this dataset
 are randomly permuted.
 
 Example file:
-`resources_test/common/scicar_cell_lines/dataset_mod2.h5ad`
+`resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad`
 
 Description:
 
@@ -226,7 +226,7 @@ Slot description:
 The ground truth information for the first modality
 
 Example file:
-`resources_test/common/scicar_cell_lines/solution_mod1.h5ad`
+`resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad`
 
 Description:
 
@@ -264,7 +264,7 @@ Slot description:
 The ground truth information for the second modality
 
 Example file:
-`resources_test/common/scicar_cell_lines/solution_mod2.h5ad`
+`resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad`
 
 Description:
 
@@ -432,7 +432,8 @@ Slot description:
 
 Metric score file
 
-Example file: `resources_test/match_modalities/score.h5ad`
+Example file:
+`resources_test/match_modalities/scicar_cell_lines/score.h5ad`
 
 Description:
 
