@@ -130,7 +130,7 @@ def main(par, meta):
     print_summary(adata)
 
     # write output to file
-    write_anndata(adata, par["output"], par["output_compression"])
+    write_anndata(adata, par)
 
 
 if __name__ == "__main__":
