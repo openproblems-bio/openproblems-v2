@@ -410,9 +410,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics trustworthiness"
-LABEL org.opencontainers.image.created="2023-12-07T22:25:15Z"
+LABEL org.opencontainers.image.created="2023-12-11T13:41:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33"
+LABEL org.opencontainers.image.revision="cc1fd42875335d5ad3e7d799a513c3a2408fa2d2"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

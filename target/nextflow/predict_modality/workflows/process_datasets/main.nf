@@ -2787,6 +2787,42 @@ meta = [
                     "required" : true
                   },
                   {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
                     "type" : "string",
                     "name" : "gene_activity_var_names",
                     "description" : "Names of the gene activity matrix",
@@ -2882,36 +2918,6 @@ meta = [
             },
             "example" : [
               "resources_test/common/bmmc_cite_starter/dataset_adt.h5ad"
-            ],
-            "must_exist" : true,
-            "create_parent" : true,
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          },
-          {
-            "type" : "file",
-            "name" : "--dataset_schema_rna",
-            "description" : "The schema of the dataset to validate against",
-            "default" : [
-              "src/tasks/predict_modality/api/file_common_dataset_rna.yaml"
-            ],
-            "must_exist" : true,
-            "create_parent" : true,
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          },
-          {
-            "type" : "file",
-            "name" : "--dataset_schema_other_mod",
-            "description" : "The schema of the dataset to validate against",
-            "default" : [
-              "src/tasks/predict_modality/api/file_common_dataset_other_mod.yaml"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3145,6 +3151,36 @@ meta = [
                     "required" : true
                   },
                   {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
@@ -3229,6 +3265,36 @@ meta = [
                     "required" : true
                   },
                   {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
@@ -3272,6 +3338,16 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/workflows/process_datasets/",
         "entrypoint" : "run_wf"
+      },
+      {
+        "type" : "file",
+        "path" : "src/tasks/predict_modality/api/file_common_dataset_rna.yaml",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/tasks/predict_modality/api/file_common_dataset_other_mod.yaml",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "status" : "enabled",
@@ -3293,7 +3369,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
+          "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3315,7 +3391,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
+          "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3361,7 +3437,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
+    "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3392,10 +3468,13 @@ workflow run_wf {
     // instead of having to provide a separate schema file
     | check_dataset_schema.run(
       key: "check_dataset_schema_rna",
-      fromState: [
-        "input": "input_rna",
-        "schema": "dataset_schema_rna"
-      ],
+            fromState: { id, state ->
+        // as a resource
+        [
+          "input": state.input,
+          "schema": meta.resources_dir.resolve("file_common_dataset_rna.yaml")
+        ]
+      },
       args: [
         "stop_on_error": false
       ],
@@ -3407,10 +3486,13 @@ workflow run_wf {
 
     | check_dataset_schema.run(
       key: "check_dataset_schema_other_mod",
-      fromState: [
-        "input": "input_other_mod",
-        "schema": "dataset_schema_other_mod"
-      ],
+            fromState: { id, state ->
+        // as a resource
+        [
+          "input": state.input,
+          "schema": meta.resources_dir.resolve("file_common_dataset_other_mod.yaml")
+        ]
+      },
       args: [
         "stop_on_error": false
       ],

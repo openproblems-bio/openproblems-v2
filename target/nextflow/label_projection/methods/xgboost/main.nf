@@ -3075,7 +3075,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost",
     "viash_version" : "0.8.0",
-    "git_commit" : "82a6a4d06e69baf39df703e6ee0cbcfd9fa35c33",
+    "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
