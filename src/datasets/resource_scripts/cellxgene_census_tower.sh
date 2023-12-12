@@ -3,6 +3,7 @@
 cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: cxg_mm_pancreas_atlas
+    species: mus_musculus
     census_version: "2023-07-25"
     obs_value_filter: "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'"
     obs_batch: donor_id
@@ -22,18 +23,23 @@ output_normalized: force_null
 output_pca: force_null
 output_hvg: force_null
 output_knn: force_null
-publish_dir: output/temp
+publish_dir: s3://openproblems-nextflow/resources/datasets/cellxgene_census
 HERE
 
 cat > /tmp/nextflow.config << HERE
 process {
+  executor = 'awsbatch'
   withName: '.*query_cellxgene_census_process' {
-    memory = 101.Gb
+    memory = 256.Gb
   }
 }
 HERE
 
-nextflow run . \
-  -main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
-  -profile docker \
-  -params-file "/tmp/params.yaml"
+tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+  --revision 62e5f2edeb833e3c932d8ceb89842af79ea3dc1a \
+  --pull-latest \
+  --main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
+  --workspace 53907369739130 \
+  --compute-env 7IkB9ckC81O0dgNemcPJTD \
+  --params-file "/tmp/params.yaml" \
+  --config /tmp/nextflow.config
