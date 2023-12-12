@@ -410,9 +410,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/metrics mse"
-LABEL org.opencontainers.image.created="2023-12-12T16:59:18Z"
+LABEL org.opencontainers.image.created="2023-12-12T21:17:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd"
+LABEL org.opencontainers.image.revision="dbf67c52d073310cf4f2f5fdc9c4fbb1effa9579"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

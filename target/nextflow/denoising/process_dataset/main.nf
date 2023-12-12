@@ -3291,7 +3291,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
+    "git_commit" : "dbf67c52d073310cf4f2f5fdc9c4fbb1effa9579",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3377,11 +3377,12 @@ output_train = ad.AnnData(
     var=adata.var[[]],
     uns={"dataset_id": adata.uns["dataset_id"]}
 )
+test_uns_keys = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
 output_test = ad.AnnData(
     layers={"counts": X_test.astype(float)},
     obs=adata.obs[[]],
     var=adata.var[[]],
-    uns={"dataset_id": adata.uns["dataset_id"]}
+    uns={key: adata.uns[key] for key in test_uns_keys}
 )
 
 # Remove no cells that do not have enough reads
