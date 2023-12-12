@@ -3424,7 +3424,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
+    "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3583,15 +3583,13 @@ del mod2.X
 print("Add metadata to uns", flush=True)
 metadata_fields = [
     "dataset_id", "dataset_name", "dataset_url", "dataset_reference",
-    "dataset_summary", "dataset_description" "dataset_organism"
+    "dataset_summary", "dataset_description", "dataset_organism"
 ]
-uns_metadata = {
-    id: par[id]
-    for id in metadata_fields
-    if id in par
-}
-mod1.uns.update(uns_metadata)
-mod2.uns.update(uns_metadata)
+for key in metadata_fields:
+    if key in par:
+        print(f"  Setting .uns['{key}']", flush=True)
+        mod1.uns[key] = par[key]
+        mod2.uns[key] = par[key]
 
 print("Writing adata to file", flush=True)
 mod1.write_h5ad(par["output_mod1"], compression="gzip")

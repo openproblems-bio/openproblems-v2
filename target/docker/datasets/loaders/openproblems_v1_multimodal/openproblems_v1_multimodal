@@ -465,9 +465,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1_multimodal"
-LABEL org.opencontainers.image.created="2023-12-11T13:41:55Z"
+LABEL org.opencontainers.image.created="2023-12-12T16:59:21Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cc1fd42875335d5ad3e7d799a513c3a2408fa2d2"
+LABEL org.opencontainers.image.revision="f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1207,15 +1207,13 @@ del mod2.X
 print("Add metadata to uns", flush=True)
 metadata_fields = [
     "dataset_id", "dataset_name", "dataset_url", "dataset_reference",
-    "dataset_summary", "dataset_description" "dataset_organism"
+    "dataset_summary", "dataset_description", "dataset_organism"
 ]
-uns_metadata = {
-    id: par[id]
-    for id in metadata_fields
-    if id in par
-}
-mod1.uns.update(uns_metadata)
-mod2.uns.update(uns_metadata)
+for key in metadata_fields:
+    if key in par:
+        print(f"  Setting .uns['{key}']", flush=True)
+        mod1.uns[key] = par[key]
+        mod2.uns[key] = par[key]
 
 print("Writing adata to file", flush=True)
 mod1.write_h5ad(par["output_mod1"], compression="gzip")

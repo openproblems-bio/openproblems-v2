@@ -2942,7 +2942,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
+          "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
           "executable" : "/nextflow/common/get_results/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_results"
@@ -2964,7 +2964,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
+          "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
           "executable" : "/nextflow/common/get_method_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_method_info"
@@ -2986,7 +2986,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
+          "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
           "executable" : "/nextflow/common/get_metric_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/get_metric_info"
@@ -3008,7 +3008,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
+          "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
           "executable" : "/nextflow/common/yaml_to_json/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/yaml_to_json"
@@ -3054,7 +3054,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/workflows/transform_meta",
     "viash_version" : "0.8.0",
-    "git_commit" : "cc1fd42875335d5ad3e7d799a513c3a2408fa2d2",
+    "git_commit" : "f4c9eca860cf9ee58fa51fef4b7bf05ac058f0bd",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
