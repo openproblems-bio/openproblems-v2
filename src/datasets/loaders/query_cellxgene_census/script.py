@@ -1,17 +1,24 @@
 import sys
 import cellxgene_census
 import scanpy as sc
+import tiledbsoma as soma
 
 ## VIASH START
 par = {
     "input_uri": None,
     "census_version": "stable",
-    "species": "homo_sapiens",
-    "obs_value_filter": "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'",
-    "cell_filter_grouping": ["dataset_id", "tissue", "assay", "disease", "cell_type"],
-    "cell_filter_minimum_count": 100,
-    "obs_batch": [ "batch" ],
+    "species": "mus_musculus",
+    "obs_value_filter": "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'",
+    "cell_filter_grouping": None,
+    "cell_filter_minimum_count": None,
+    "obs_batch": [ "donor_id" ],
     "obs_batch_separator": "+",
+    "dataset_name": "pretty name",
+    "dataset_url": "url",
+    "dataset_reference": "ref",
+    "dataset_summary": "summ",
+    "dataset_description": "desc",
+    "dataset_organism": "mus_musculus",
     "output": "output.h5ad",
     "output_compression": "gzip",
 }
@@ -33,10 +40,41 @@ def connect_census(uri, census_version):
 
 def get_anndata(census_connection, par):
     logger.info("Getting gene expression data based on %s query.", par["obs_value_filter"])
-    return cellxgene_census.get_anndata(
-        census=census_connection,
-        obs_value_filter=par["obs_value_filter"],
-        organism=par["species"]
+    # workaround for https://github.com/chanzuckerberg/cellxgene-census/issues/891
+    # return cellxgene_census.get_anndata(
+    #     census=census_connection,
+    #     obs_value_filter=par["obs_value_filter"],
+    #     organism=par["species"]
+    # )
+
+    exp = census_connection["census_data"][par["species"]]
+    query = exp.axis_query(
+        "RNA",
+        obs_query=soma.AxisQuery(value_filter=par["obs_value_filter"]),
+        var_query=soma.AxisQuery(),
+    )
+
+    n_obs = query.n_obs
+    n_vars = query.n_vars
+    logger.info(f"Query yields {n_obs} cells and {n_vars} genes.")
+
+    logger.info("Fetching obs.")
+    obs = query.obs().concat().to_pandas()
+
+    logger.info("Fetching var.")
+    var = query.var().concat().to_pandas()
+
+    logger.info("Fetching X.")
+    X = query.X("raw")
+    Xcoo = X.coos().concat()
+    Xcoos = Xcoo.to_scipy().tocsr()
+    Xcoos_subset = Xcoos[obs["soma_joinid"]]
+
+    logger.info("Creating AnnData object.")
+    return ad.AnnData(
+        layers={"counts": Xcoos_subset},
+        obs=obs,
+        var=var
     )
 
 def filter_min_cells_per_group(adata, par):
@@ -136,8 +174,9 @@ def main(par, meta):
     # use feature_id as var_names
     adata.var_names = adata.var["feature_id"]
 
-    # move .X to .layers["counts"]
-    move_x_to_layers(adata)
+    # not needed as long as we have our own implementation of `get_anndata`
+    # # move .X to .layers["counts"]
+    # move_x_to_layers(adata)
 
     # add batch to obs
     add_batch_to_obs(adata, par)
