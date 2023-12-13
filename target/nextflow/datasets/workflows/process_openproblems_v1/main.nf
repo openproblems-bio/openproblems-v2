@@ -3214,6 +3214,18 @@ meta = [
                   },
                   {
                     "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
                     "name" : "self_reported_ethnicity",
                     "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
                     "required" : false
@@ -3394,6 +3406,18 @@ meta = [
                     "type" : "boolean",
                     "name" : "is_primary_data",
                     "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
                     "required" : false
                   },
                   {
@@ -3628,6 +3652,18 @@ meta = [
                     "type" : "boolean",
                     "name" : "is_primary_data",
                     "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
                     "required" : false
                   },
                   {
@@ -3953,6 +3989,18 @@ meta = [
                   },
                   {
                     "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
                     "name" : "self_reported_ethnicity",
                     "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
                     "required" : false
@@ -4047,7 +4095,7 @@ meta = [
               },
               "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
             },
-            "example" : [
+    ''' + '''        "example" : [
               "resources_test/common/pancreas/pca.h5ad"
             ],
             "must_exist" : true,
@@ -4117,7 +4165,7 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "dataset_id",
-                    "descri''' + '''ption" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
                     "required" : true
                   },
                   {
@@ -4250,6 +4298,18 @@ meta = [
                     "type" : "boolean",
                     "name" : "is_primary_data",
                     "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
                     "required" : false
                   },
                   {
@@ -4555,6 +4615,18 @@ meta = [
                   },
                   {
                     "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
                     "name" : "self_reported_ethnicity",
                     "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
                     "required" : false
@@ -4672,7 +4744,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1"
@@ -4694,7 +4766,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -4716,7 +4788,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -4738,7 +4810,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -4760,7 +4832,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -4782,7 +4854,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -4804,7 +4876,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -4826,7 +4898,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4848,7 +4920,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -4870,7 +4942,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+          "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -4916,7 +4988,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.8.0",
-    "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+    "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -4937,6 +5009,13 @@ include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflo
 
 // inner workflow
 // user-provided Nextflow code
+workflow auto {
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
+}
+
 workflow run_wf {
   take:
   input_ch
@@ -5054,23 +5133,6 @@ workflow run_wf {
       fromState: ["input": "output_knn"],
       toState: ["output_dataset": "output", "output_meta": "meta"]
     )
-
-    // TODO: remove this filter if we're sure the mismatch issue no longer occurs
-    | filter{ id, state ->
-      def uns = (new org.yaml.snakeyaml.Yaml().load(state.output_meta)).uns
-      def expected_id = state.normalization_methods.size() > 1 ?
-        "${uns.dataset_id}/${uns.normalization_id}" :
-        uns.dataset_id
-      expected_id = expected_id.replaceAll("_subsample", "")
-      
-      def is_ok = id == expected_id
-      
-      if (!is_ok) {
-        println("DETECTED ID MISMATCH: $id != $expected_id.\nTuple:\n${toYamlBlob([id, state])}\n")
-      }
-
-      is_ok
-    }
 
     // only output the files for which an output file was specified
     | setState([

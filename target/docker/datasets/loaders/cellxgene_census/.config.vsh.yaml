@@ -1,5 +1,5 @@
 functionality:
-  name: "query_cellxgene_census"
+  name: "cellxgene_census"
   namespace: "datasets/loaders"
   version: "main_build"
   argument_groups:
@@ -31,16 +31,16 @@ functionality:
       multiple: false
       multiple_sep: ":"
       dest: "par"
-  - name: "Query"
+  - name: "Cell query"
     description: "Arguments related to the query."
     arguments:
     - type: "string"
       name: "--species"
       description: "The organism to query, usually one of `Homo sapiens` or `Mus musculus`."
       info: null
-      default:
+      example:
       - "homo_sapiens"
-      required: false
+      required: true
       direction: "input"
       multiple: false
       multiple_sep: ":"
@@ -53,20 +53,13 @@ functionality:
       example:
       - "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136',\
         \ 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'"
-      required: false
+      required: true
       direction: "input"
       multiple: false
       multiple_sep: ":"
       dest: "par"
-  - name: "Arguments"
-    description: "Other arguments"
+  - name: "Filter cells by grouping"
     arguments:
-    - type: "boolean_true"
-      name: "--add_collection_metadata"
-      description: "Whether to add metadata to the obs related to the collection."
-      info: null
-      direction: "input"
-      dest: "par"
     - type: "string"
       name: "--cell_filter_grouping"
       description: "A subset of 'obs' columns by which to group the cells for filtering.\n\
@@ -85,14 +78,158 @@ functionality:
       multiple: true
       multiple_sep: ":"
       dest: "par"
-    - type: "double"
+    - type: "integer"
       name: "--cell_filter_minimum_count"
       description: "A minimum number of cells per group to retain. If `--cell_filter_grouping`\n\
         is defined, this parameter should also be provided and vice versa.\n"
       info: null
       example:
-      - 100.0
+      - 100
       required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  - name: "Count filtering"
+    description: "Arguments related to filtering cells and genes by counts."
+    arguments:
+    - type: "integer"
+      name: "--cell_filter_min_genes"
+      description: "Remove cells with less than this number of genes."
+      info: null
+      default:
+      - 50
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "integer"
+      name: "--cell_filter_min_counts"
+      description: "Remove cells with less than this number of counts."
+      info: null
+      default:
+      - 0
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "integer"
+      name: "--gene_filter_min_cells"
+      description: "Remove genes expressed in less than this number of cells."
+      info: null
+      default:
+      - 5
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "integer"
+      name: "--gene_filter_min_counts"
+      description: "Remove genes with less than this number of counts."
+      info: null
+      default:
+      - 0
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  - name: "Cell metadata"
+    description: "Cell metadata arguments"
+    arguments:
+    - type: "string"
+      name: "--obs_batch"
+      description: "Location of where to find the observation batch IDs.  \n\n* If\
+        \ not specified, the `.obs[\"batch\"]` field will not be included.\n* If one\
+        \ or more values are specified, the `.obs[\"batch\"]` field will be \n  set\
+        \ to the concatenated values of the specified fields, separated by\n  the\
+        \ `obs_batch_separator`.\n"
+      info: null
+      example:
+      - "batch"
+      required: false
+      direction: "input"
+      multiple: true
+      multiple_sep: ","
+      dest: "par"
+    - type: "string"
+      name: "--obs_batch_separator"
+      description: "Separator to use when concatenating the values of the `--obs_batch`\
+        \ fields."
+      info: null
+      default:
+      - "+"
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  - name: "Dataset metadata"
+    description: "Information about the dataset that will be stored in the `.uns`\
+      \ slot."
+    arguments:
+    - type: "string"
+      name: "--dataset_id"
+      description: "Unique identifier of the dataset."
+      info: null
+      required: true
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_name"
+      description: "Nicely formatted name."
+      info: null
+      required: true
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_url"
+      description: "Link to the original source of the dataset."
+      info: null
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_reference"
+      description: "Bibtex reference of the paper in which the dataset was published."
+      info: null
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_summary"
+      description: "Short description of the dataset."
+      info: null
+      required: true
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_description"
+      description: "Long description of the dataset."
+      info: null
+      required: true
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--dataset_organism"
+      description: "The organism of the dataset."
+      info: null
+      required: true
       direction: "input"
       multiple: false
       multiple_sep: ":"
@@ -146,7 +283,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "python:3.11"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -158,7 +295,8 @@ platforms:
   - type: "python"
     user: false
     packages:
-    - "cellxgene-census~=1.2.0"
+    - "cellxgene-census"
+    - "scanpy"
     upgrade: true
   test_setup:
   - type: "python"
@@ -196,10 +334,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/loaders/query_cellxgene_census/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/loaders/cellxgene_census/config.vsh.yaml"
   platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/query_cellxgene_census"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/query_cellxgene_census/query_cellxgene_census"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/cellxgene_census"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/loaders/cellxgene_census/cellxgene_census"
   viash_version: "0.8.0"
-  git_commit: "ccb90caaabb195dbba0110f33e2cc8b86e35cfec"
+  git_commit: "d79099404f0212aa29901bf0c727783efd5e8a42"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -2951,6 +2951,18 @@ meta = [
               },
               {
                 "type" : "string",
+                "name" : "organism",
+                "description" : "Organism from which the cell sample is obtained.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "organism_ontology_term_id",
+                "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                "required" : false
+              },
+              {
+                "type" : "string",
                 "name" : "self_reported_ethnicity",
                 "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
                 "required" : false
@@ -3248,6 +3260,18 @@ meta = [
                 "type" : "boolean",
                 "name" : "is_primary_data",
                 "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "organism",
+                "description" : "Organism from which the cell sample is obtained.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "organism_ontology_term_id",
+                "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
                 "required" : false
               },
               {
@@ -3553,6 +3577,18 @@ meta = [
               },
               {
                 "type" : "string",
+                "name" : "organism",
+                "description" : "Organism from which the cell sample is obtained.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "organism_ontology_term_id",
+                "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                "required" : false
+              },
+              {
+                "type" : "string",
                 "name" : "self_reported_ethnicity",
                 "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
                 "required" : false
@@ -3854,6 +3890,18 @@ meta = [
               },
               {
                 "type" : "string",
+                "name" : "organism",
+                "description" : "Organism from which the cell sample is obtained.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "organism_ontology_term_id",
+                "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                "required" : false
+              },
+              {
+                "type" : "string",
                 "name" : "self_reported_ethnicity",
                 "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
                 "required" : false
@@ -4088,9 +4136,9 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
+          "midtime",
           "highmem",
-          "midcpu",
-          "midtime"
+          "midcpu"
         ],
         "tag" : "$id"
       },
@@ -4125,7 +4173,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample",
     "viash_version" : "0.8.0",
-    "git_commit" : "ccb90caaabb195dbba0110f33e2cc8b86e35cfec",
+    "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -4654,9 +4702,9 @@ meta["defaults"] = [
     "tag" : "main_build"
   },
   "label" : [
+    "midtime",
     "highmem",
-    "midcpu",
-    "midtime"
+    "midcpu"
   ],
   "tag" : "$id"
 }'''),
