@@ -222,7 +222,7 @@ Format:
 
     AnnData object
      layers: 'counts'
-     uns: 'dataset_id'
+     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism'
 
 </div>
 
@@ -230,10 +230,16 @@ Slot description:
 
 <div class="small">
 
-| Slot                | Type      | Description                          |
-|:--------------------|:----------|:-------------------------------------|
-| `layers["counts"]`  | `integer` | Raw counts.                          |
-| `uns["dataset_id"]` | `string`  | A unique identifier for the dataset. |
+| Slot                         | Type      | Description                                                                    |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------------|
+| `layers["counts"]`           | `integer` | Raw counts.                                                                    |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                           |
+| `uns["dataset_name"]`        | `string`  | Nicely formatted name.                                                         |
+| `uns["dataset_url"]`         | `string`  | (*Optional*) Link to the original source of the dataset.                       |
+| `uns["dataset_reference"]`   | `string`  | (*Optional*) Bibtex reference of the paper in which the dataset was published. |
+| `uns["dataset_summary"]`     | `string`  | Short description of the dataset.                                              |
+| `uns["dataset_description"]` | `string`  | Long description of the dataset.                                               |
+| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
 
 </div>
 

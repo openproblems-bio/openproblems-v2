@@ -221,7 +221,7 @@ Format:
     AnnData object
      var: 'hvg_score'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'normalization_id'
+     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'normalization_id'
 
 </div>
 
@@ -229,13 +229,19 @@ Slot description:
 
 <div class="small">
 
-| Slot                      | Type      | Description                                                                          |
-|:--------------------------|:----------|:-------------------------------------------------------------------------------------|
-| `var["hvg_score"]`        | `double`  | High variability gene score (normalized dispersion). The greater, the more variable. |
-| `layers["counts"]`        | `integer` | Raw counts.                                                                          |
-| `layers["normalized"]`    | `double`  | Normalized expression values.                                                        |
-| `uns["dataset_id"]`       | `string`  | A unique identifier for the dataset.                                                 |
-| `uns["normalization_id"]` | `string`  | Which normalization was used.                                                        |
+| Slot                         | Type      | Description                                                                          |
+|:-----------------------------|:----------|:-------------------------------------------------------------------------------------|
+| `var["hvg_score"]`           | `double`  | High variability gene score (normalized dispersion). The greater, the more variable. |
+| `layers["counts"]`           | `integer` | Raw counts.                                                                          |
+| `layers["normalized"]`       | `double`  | Normalized expression values.                                                        |
+| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                                 |
+| `uns["dataset_name"]`        | `string`  | Nicely formatted name.                                                               |
+| `uns["dataset_url"]`         | `string`  | (*Optional*) Link to the original source of the dataset.                             |
+| `uns["dataset_reference"]`   | `string`  | (*Optional*) Bibtex reference of the paper in which the dataset was published.       |
+| `uns["dataset_summary"]`     | `string`  | Short description of the dataset.                                                    |
+| `uns["dataset_description"]` | `string`  | Long description of the dataset.                                                     |
+| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                              |
+| `uns["normalization_id"]`    | `string`  | Which normalization was used.                                                        |
 
 </div>
 
