@@ -3056,7 +3056,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness",
     "viash_version" : "0.8.0",
-    "git_commit" : "d79099404f0212aa29901bf0c727783efd5e8a42",
+    "git_commit" : "c48ebd53c75809fe4df3a83589cca14ddfbc1616",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
