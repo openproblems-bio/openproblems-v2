@@ -429,9 +429,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/KrishnaswamyLab/harmonic-alignment#subdirectory=python"
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/methods harmonic_alignment"
-LABEL org.opencontainers.image.created="2023-12-13T06:01:25Z"
+LABEL org.opencontainers.image.created="2023-12-13T12:38:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f7086b1feaaf0f1f2a0cf26e8105e6f86c4bca5c"
+LABEL org.opencontainers.image.revision="451f48e4b55edf8412092553f40dd2f665195bcc"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
