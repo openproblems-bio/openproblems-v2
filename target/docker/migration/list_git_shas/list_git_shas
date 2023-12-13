@@ -419,9 +419,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component migration list_git_shas"
-LABEL org.opencontainers.image.created="2023-12-13T12:38:26Z"
+LABEL org.opencontainers.image.created="2023-12-13T13:14:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="451f48e4b55edf8412092553f40dd2f665195bcc"
+LABEL org.opencontainers.image.revision="ccb90caaabb195dbba0110f33e2cc8b86e35cfec"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods random_embed_cell"
-LABEL org.opencontainers.image.created="2023-12-13T12:38:30Z"
+LABEL org.opencontainers.image.created="2023-12-13T13:14:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="451f48e4b55edf8412092553f40dd2f665195bcc"
+LABEL org.opencontainers.image.revision="ccb90caaabb195dbba0110f33e2cc8b86e35cfec"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
