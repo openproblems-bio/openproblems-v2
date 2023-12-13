@@ -7,8 +7,8 @@ import numpy as np
 ## VIASH START
 meta = {
     'resources_dir': './resources_test/',
-    'executable': './target/docker/query/cellxgene_census',
-    'config': '/home/di/code/openpipeline/src/query/cellxgene_census/config.vsh.yaml'
+    'executable': './target/docker/datasets/loaders/cellxgene_census_from_source_h5ad/cellxgene_census_from_source_h5ad',
+    'config': 'src/query/cellxgene_census/config.vsh.yaml'
 }
 ## VIASH END
 
@@ -16,10 +16,9 @@ def test_cellxgene_extract_metadata_expression(run_component, tmp_path):
     output_file = tmp_path / "output.h5ad"
 
     run_component([
-        "--species", "mus_musculus",
-        "--obs_value_filter", "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'",
+        "--input_id", "0895c838-e550-48a3-a777-dbcd35d30272",
         "--output", output_file,
-        "--obs_batch", "sex,sex",
+        "--obs_batch", "donor_id",
         "--dataset_id", "test_dataset_id",
         "--dataset_name", "test_dataset_name",
         "--dataset_url", "https://test_dataset_url.com",
@@ -37,15 +36,13 @@ def test_cellxgene_extract_metadata_expression(run_component, tmp_path):
     # check obs
     assert not adata.obs.empty, ".obs should not be empty"
     assert "is_primary_data" in adata.obs.columns
-    assert np.all(adata.obs["is_primary_data"] == True)
     assert "cell_type_ontology_term_id" in adata.obs.columns
     assert "disease" in adata.obs.columns
     assert adata.n_obs > 10
-    assert np.all([x in ["male+male", "female+female"] for x in adata.obs["batch"]])
+    assert np.all([x in ["C41", "C58", "C70", "C72"] for x in adata.obs["batch"]])
 
     # check var
-    assert "soma_joinid" in adata.var.columns
-    assert "feature_id" in adata.var.columns
+    assert "feature_name" in adata.var.columns
 
     # check uns
     assert adata.uns["dataset_id"] == "test_dataset_id", "Incorrect .uns['dataset_id']"

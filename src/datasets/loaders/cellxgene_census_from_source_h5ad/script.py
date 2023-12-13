@@ -1,16 +1,11 @@
 import sys
 import cellxgene_census
 import scanpy as sc
-import tiledbsoma as soma
+import tempfile
 
 ## VIASH START
 par = {
-    "input_uri": None,
-    "census_version": "stable",
-    "species": "mus_musculus",
-    "obs_value_filter": "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'",
-    "cell_filter_grouping": None,
-    "cell_filter_minimum_count": None,
+    "input_id": "0895c838-e550-48a3-a777-dbcd35d30272",
     "obs_batch": [ "donor_id" ],
     "obs_batch_separator": "+",
     "dataset_name": "pretty name",
@@ -30,66 +25,12 @@ sys.path.append(meta["resources_dir"])
 from setup_logger import setup_logger
 logger = setup_logger()
 
-def connect_census(uri, census_version):
-    """
-    Connect to CellxGene Census or user-provided TileDBSoma object
-    """
-    ver = census_version or "stable"
-    logger.info("Connecting to CellxGene Census at %s", f"'{uri}'" if uri else f"version '{ver}'")
-    return cellxgene_census.open_soma(uri=uri, census_version=ver)
-
-def get_anndata(census_connection, par):
-    logger.info("Getting gene expression data based on `%s` query.", par["obs_value_filter"])
-    # workaround for https://github.com/chanzuckerberg/cellxgene-census/issues/891
-    return cellxgene_census.get_anndata(
-        census=census_connection,
-        obs_value_filter=par["obs_value_filter"],
-        organism=par["species"]
-    )
-
-    # exp = census_connection["census_data"][par["species"]]
-    # query = exp.axis_query(
-    #     "RNA",
-    #     obs_query=soma.AxisQuery(value_filter=par["obs_value_filter"]),
-    #     var_query=soma.AxisQuery(),
-    # )
-
-    # n_obs = query.n_obs
-    # n_vars = query.n_vars
-    # logger.info(f"Query yields {n_obs} cells and {n_vars} genes.")
-
-    # logger.info("Fetching obs.")
-    # obs = query.obs().concat().to_pandas()
-
-    # logger.info("Fetching var.")
-    # var = query.var().concat().to_pandas()
-
-    # logger.info("Fetching X.")
-    # X = query.X("raw")
-    # Xcoo = X.coos().concat()
-    # Xcoos = Xcoo.to_scipy().tocsr()
-    # Xcoos_subset = Xcoos[obs["soma_joinid"]]
-
-    # logger.info("Creating AnnData object.")
-    # return sc.AnnData(
-    #     layers={"counts": Xcoos_subset},
-    #     obs=obs,
-    #     var=var
-    # )
-
-def filter_min_cells_per_group(adata, par):
-    t0 = adata.shape
-    cell_count = adata.obs \
-        .groupby(par["cell_filter_grouping"])["soma_joinid"] \
-        .transform("count") \
-        
-    adata = adata[cell_count >= par["cell_filter_minimum_count"]]
-    t1 = adata.shape
-    logger.info(
-        "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
-        % ((t0[0] - t1[0]), par["cell_filter_minimum_count"], par["cell_filter_grouping"])
-    )
-    return adata
+def get_anndata(par):
+    with tempfile.TemporaryDirectory() as tmp:
+        path = tmp + "/source.h5ad"
+        logger.info("Downloading source h5ad for dataset '%s' to '%s'.", par["input_id"], path)
+        cellxgene_census.download_source_h5ad(par["input_id"], path)
+        return sc.read_h5ad(path)
 
 def filter_by_counts(adata, par):
     logger.info("Remove cells with few counts and genes with few counts.")
@@ -129,6 +70,9 @@ def add_metadata_to_uns(adata, par):
         adata.uns[key] = par[key]
 
 def print_unique(adata, column):
+    if column not in adata.obs.columns:
+        logger.info(f"Column {column} not found in obs")
+        return
     formatted = "', '".join(adata.obs[column].unique())
     logger.info(f"Unique {column}: ['{formatted}']")
 
@@ -156,30 +100,17 @@ def write_anndata(adata, par):
     adata.write_h5ad(par["output"], compression=par["output_compression"])
 
 def main(par, meta):
-    # check arguments
-    if (par["cell_filter_grouping"] is None) != (par["cell_filter_minimum_count"] is None):
-        raise NotImplementedError(
-            "You need to specify either both or none of the following parameters: cell_filter_grouping, cell_filter_minimum_count"
-        )
-    
-    with connect_census(uri=par["input_uri"], census_version=par["census_version"]) as conn:
-        adata = get_anndata(conn, par)
-    
-    print(f"AnnData: {adata}", flush=True)
+    adata = get_anndata(par)
 
-    if par["cell_filter_grouping"] is not None:
-        adata = filter_min_cells_per_group(adata, par)
+    logger.info("AnnData: %s", str(adata))
 
     # remove cells with few counts and genes with few counts
     filter_by_counts(adata, par)
 
-    # logger.log(f"Filtered AnnData: {adata}")
-    print(f"Filtered AnnData: {adata}", flush=True)
+    # this is not needed in source h5ads
+    # # use feature_id as var_names
+    # adata.var_names = adata.var["feature_id"]
 
-    # use feature_id as var_names
-    adata.var_names = adata.var["feature_id"]
-
-    # not needed as long as we have our own implementation of `get_anndata`
     # move .X to .layers["counts"]
     move_x_to_layers(adata)
 
