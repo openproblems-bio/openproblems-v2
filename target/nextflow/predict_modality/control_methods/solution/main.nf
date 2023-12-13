@@ -3271,7 +3271,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution",
     "viash_version" : "0.8.0",
-    "git_commit" : "d13f642ed11524ad1e283baed941a9952bdddbfe",
+    "git_commit" : "f7086b1feaaf0f1f2a0cf26e8105e6f86c4bca5c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
