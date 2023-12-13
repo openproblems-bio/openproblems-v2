@@ -1,5 +1,5 @@
 functionality:
-  name: query_cellxgene_census
+  name: cellxgene_census
   namespace: datasets/loaders
   description: |
     Query cells from a CellxGene Census or custom TileDBSoma object.

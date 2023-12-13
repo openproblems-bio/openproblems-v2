@@ -182,7 +182,7 @@ functionality:
       path: main.nf
       entrypoint: run_wf
   dependencies: 
-    - name: datasets/loaders/query_cellxgene_census
+    - name: datasets/loaders/cellxgene_census
     - name: datasets/normalization/log_cp
     - name: datasets/normalization/log_scran_pooling
     - name: datasets/normalization/sqrt_cp

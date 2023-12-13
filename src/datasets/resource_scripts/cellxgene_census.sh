@@ -25,14 +25,6 @@ output_knn: force_null
 publish_dir: output/temp
 HERE
 
-cat > /tmp/nextflow.config << HERE
-process {
-  withName: '.*query_cellxgene_census_process' {
-    memory = 101.Gb
-  }
-}
-HERE
-
 nextflow run . \
   -main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
   -profile docker \

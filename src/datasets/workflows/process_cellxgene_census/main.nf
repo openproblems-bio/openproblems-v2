@@ -40,7 +40,7 @@ workflow run_wf {
     }
 
     // fetch data from legacy openproblems
-    | query_cellxgene_census.run(
+    | cellxgene_census.run(
       fromState: [
         "input_uri": "input_uri",
         "census_version": "census_version",

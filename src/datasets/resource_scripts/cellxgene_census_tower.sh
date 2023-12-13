@@ -29,9 +29,6 @@ HERE
 cat > /tmp/nextflow.config << HERE
 process {
   executor = 'awsbatch'
-  withName: '.*query_cellxgene_census_process' {
-    memory = 256.Gb
-  }
 }
 HERE
 
