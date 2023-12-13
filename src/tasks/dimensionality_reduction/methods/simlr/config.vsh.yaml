@@ -1,0 +1,86 @@
+# The API specifies which type of component this is.
+# It contains specifications for:
+#   - The input/output files
+#   - Common parameters
+#   - A unit test
+__merge__: ../../api/comp_method.yaml
+
+functionality:
+  # A unique identifier for your component (required).
+  # Can contain only lowercase letters or underscores.
+  name: simlr
+
+  # Metadata for your component
+  info:
+    # A relatively short label, used when rendering visualisarions (required)
+    label: SIMLR
+    # A one sentence summary of how this method works (required). Used when 
+    # rendering summary tables.
+    summary: Multikernal-based learning of distance metrics from gene expression data for dimension reduction, clustering and visulaization.
+    # A multi-line description of how this component works (required). Used
+    # when rendering reference documentation.
+    description: |
+      FILL IN: A (multi-line) description of how this method works.
+    # Which normalisation method this component prefers to use (required).
+    preferred_normalization: log_cp10k
+    # A reference key from the bibtex library at src/common/library.bib (required).
+    reference: bibtex_reference_key
+    # URL to the documentation for this method (required).
+    documentation_url: https://www.bioconductor.org/packages/release/bioc/html/SIMLR.html
+    # URL to the code repository for this method (required).
+    repository_url: https://github.com/BatzoglouLabSU/SIMLR
+
+  # Component-specific parameters (optional)
+  arguments:
+    - name: "--n_dim"
+      type: integer
+      default: 50
+      description: Number of dimensions.
+    - name: "--n_clusters"
+      type: integer
+      # default: 2
+      description: Number of clusters to be estimated over the input dataset.
+    - name: "--tuning_param"
+      type: integer
+      default: 10
+      description: Number of dimensions.
+    - name: "--impute"
+      type: boolean
+      default: false
+      description: Should the input data be transposed?
+    - name: "--normalize"
+      type: boolean
+      default: false
+      description: Should the input data be normalized?
+    - name: "--cores_ratio"
+      type: integer
+      default: 1
+      description: Ratio of the number of cores to be used when computing the multi-kernel.
+
+  # Resources required to run the component
+  resources:
+    # The script of your component (required)
+    - type: r_script
+      path: script.R
+    # Additional resources your script needs (optional)
+    # - type: file
+    #   path: weights.pt
+
+platforms:
+  # Specifications for the Docker image for this component.
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
+    # Add custom dependencies here (optional). For more information, see
+    # https://viash.io/reference/config/platforms/docker/#setup .
+    setup:
+      - type: r
+        packages: [ grDevices ]
+        cran: [ Matrix, parallel, Rcpp, pracma, RcppAnnoy, RSpectra, igraph ]
+        bioc: [ SIMLR ]
+
+  # This platform allows running the component natively
+  - type: native
+  # Allows turning the component into a Nextflow module / pipeline.
+  - type: nextflow
+    directives:
+      label: [ "midtime", midmem, midcpu ]
