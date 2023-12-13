@@ -3381,7 +3381,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling",
     "viash_version" : "0.8.0",
-    "git_commit" : "c48ebd53c75809fe4df3a83589cca14ddfbc1616",
+    "git_commit" : "e897ba9d6edcd1c10aea849765f7c181dd653cdb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
