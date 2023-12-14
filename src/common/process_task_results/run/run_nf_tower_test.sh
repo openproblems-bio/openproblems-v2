@@ -1,9 +1,9 @@
 #!/bin/bash
 
-DATASETS_DIR="s3://openproblems-nextflow/output/v2/batch_integration"
+DATASETS_DIR="s3://openproblems-data/resources/batch_integration/results/"
 
 # try running on nf tower
-cat > /tmp/params.yaml << HERE
+cat > /tmp/params.yaml << 'HERE'
 id: batch_integration_transform
 input_scores: "$DATASETS_DIR/scores.yaml"
 input_dataset_info: "$DATASETS_DIR/dataset_info.yaml"
