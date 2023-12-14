@@ -2942,7 +2942,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e897ba9d6edcd1c10aea849765f7c181dd653cdb",
+          "git_commit" : "6cdba41787f894aa4d1ff6f4b8d00d866fefb62e",
           "executable" : "/nextflow/common/process_task_results/get_results/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results"
@@ -2964,7 +2964,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e897ba9d6edcd1c10aea849765f7c181dd653cdb",
+          "git_commit" : "6cdba41787f894aa4d1ff6f4b8d00d866fefb62e",
           "executable" : "/nextflow/common/process_task_results/get_method_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_method_info"
@@ -2986,7 +2986,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e897ba9d6edcd1c10aea849765f7c181dd653cdb",
+          "git_commit" : "6cdba41787f894aa4d1ff6f4b8d00d866fefb62e",
           "executable" : "/nextflow/common/process_task_results/get_metric_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_metric_info"
@@ -3008,7 +3008,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e897ba9d6edcd1c10aea849765f7c181dd653cdb",
+          "git_commit" : "6cdba41787f894aa4d1ff6f4b8d00d866fefb62e",
           "executable" : "/nextflow/common/process_task_results/yaml_to_json/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/yaml_to_json"
@@ -3054,7 +3054,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/run",
     "viash_version" : "0.8.0",
-    "git_commit" : "e897ba9d6edcd1c10aea849765f7c181dd653cdb",
+    "git_commit" : "6cdba41787f894aa4d1ff6f4b8d00d866fefb62e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
