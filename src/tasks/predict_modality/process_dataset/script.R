@@ -42,8 +42,6 @@ new_dataset_id <- paste0(ad1$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", to
 # determine new uns
 ad1_uns <- ad2_uns <- list(
   dataset_id = new_dataset_id,
-  # TODO: this should already be part of the source dataset
-  dataset_organism = "homo_sapiens"
 )
 ad1_uns$modality <- ad1_mod
 ad2_uns$modality <- ad2_mod

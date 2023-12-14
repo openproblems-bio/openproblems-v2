@@ -7,7 +7,7 @@ import pandas as pd
 par = {
   "input": "resources/datasets/multimodal/cite_BMMC_processed.h5ad",
   "mod1": "GEX",
-  "mod2": "ATAC",
+  "mod2": "ADT",
   "dataset_name": "BMMC (CITE-seq)",
   "dataset_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE194122",
   "dataset_reference": "Neurips",
@@ -24,6 +24,20 @@ meta = {
 
 ## VIASH END
 
+def remove_other_mod_col (df, mod):
+
+  df.drop(list(df.filter(like=mod)), axis=1, inplace=True)
+
+  return df
+
+def remove_mod_prefix (df, mod):
+
+  suffix = f"{mod}_"
+  df.columns = df.columns.str.removeprefix(suffix)
+
+  return df
+
+
 print("load dataset file", flush=True)
 adata= ad.read_h5ad(par["input"])
 
@@ -31,58 +45,49 @@ adata= ad.read_h5ad(par["input"])
 adata.var_names_make_unique()
 
 # Construct Modality datasets
-print("Construct Mod datasets")
-def extract_mod(adata, mod_name):
-  
-  adata_mod = ad.AnnData(
-    X = adata.X,
-    var={key.replace(f"{mod_name}_", ""): value for key, value in adata.var.items() if key.startswith(mod_name)},
-    obs={key.replace(f"{mod_name}_", ""): value for key, value in adata.obs.items() if key.startswith(mod_name)},
-    uns={key.replace(f"{mod_name}_", ""): value for key, value in adata.uns.items() if key.startswith(mod_name)},
-    layers=adata.layers
-  )
+print("Construct Mod datasets", flush=True)
 
-  if mod_name == "ATAC":
-      adata_mod.obsm = {key.replace(f"{mod_name}_", ""): value for key, value in adata.obsm.items() if key.startswith(mod_name)}
-
-  return adata_mod
-
-adata_mod1= extract_mod(adata, par["mod1"])
-adata_mod2= extract_mod(adata, par["mod2"])
-
-# Add none mod specific data
-mod_obs_data = {
-    key: adata.obs[key]
-    for key in adata.obs.keys()
-    if not key.startswith(par['mod1']) and not key.startswith(par['mod2'])
-}
-
-for key, value in mod_obs_data.items():
-    adata_mod1.obs[key] = value
-    adata_mod2.obs[key] = value
-
-mod_var_data = {
-    key: adata.var[key]
-    for key in adata.var.keys()
-    if not key.startswith(par['mod1']) and not key.startswith(par['mod2'])
-}
-
-for key, value in mod_var_data.items():
-    adata_mod1.var[key] = value
-    adata_mod2.var[key] = value
-
-mod_uns_data = {
-    key: adata.uns[key]
-    for key in adata.uns.keys()
-    if not key.startswith(par['mod1']) and not key.startswith(par['mod2'])
-}
-
-for key, value in mod_uns_data.items():
-    adata_mod1.uns[key] = value
-    adata_mod2.uns[key] = value
+mask_mod1 = adata.var['feature_types'] == par["mod1"]
+mask_mod2 = adata.var['feature_types'] == par["mod2"]
 
 
+adata_mod1 = adata[:, mask_mod1]
+adata_mod2 = adata[:, mask_mod2]
+
+# Remove other modality data from obs and var
+mod1_var = pd.DataFrame(adata_mod1.var)
+mod1_var = remove_other_mod_col(mod1_var, par["mod2"])
+mod1_var = remove_mod_prefix(mod1_var, par["mod1"])
+
+mod1_obs = pd.DataFrame(adata_mod1.obs)
+mod1_obs = remove_other_mod_col(mod1_obs, par["mod2"])
+mod1_obs = remove_mod_prefix(mod1_obs, par["mod1"])
+
+adata_mod1.var = mod1_var
+adata_mod1.obs = mod1_obs
+
+adata_mod1.uns = { key.replace(f"{par['mod1']}_", ""): value for key, value in adata.uns.items() if not key.startswith(par['mod2'])}
+del adata_mod1.obsm
 del adata_mod1.X
+
+mod2_var = pd.DataFrame(adata_mod2.var)
+mod2_var = remove_other_mod_col(mod2_var, par["mod1"])
+mod2_var = remove_mod_prefix(mod2_var, par["mod2"])
+
+mod2_obs = pd.DataFrame(adata_mod2.obs)
+mod2_obs = remove_other_mod_col(mod2_obs, par["mod1"])
+mod2_obs = remove_mod_prefix(mod2_obs, par["mod2"])
+
+adata_mod2.var = mod2_var
+adata_mod2.obs = mod2_obs
+
+adata_mod2.uns = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata.uns.items() if not key.startswith(par['mod1'])}
+if par["mod2"] == "ATAC":
+  adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.uns.items() if key.startswith(par['mod2'])}
+else:
+   del adata_mod2.obsm
+
+
 del adata_mod2.X
 
 print("Add metadata to uns", flush=True)
@@ -97,6 +102,5 @@ for key in metadata_fields:
         adata_mod2.uns[key] = par[key]
 
 print("Writing adata to file", flush=True)
-print(adata_mod2)
 adata_mod1.write_h5ad(par["output_mod1"], compression="gzip")
 adata_mod2.write_h5ad(par["output_mod2"], compression="gzip")
