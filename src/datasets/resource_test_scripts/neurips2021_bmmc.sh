@@ -39,11 +39,11 @@ nextflow run . \
   --seed 123 \
   --normalization_methods log_cp10k \
   --output_rna '$id/dataset_rna.h5ad' \
-  --output_dataset_other_mod '$id/dataset_other_mod.h5ad' \
+  --output_other_mod '$id/dataset_other_mod.h5ad' \
   --output_meta_rna '$id/dataset_metadata_rna.yaml' \
   --output_meta_other_mod '$id/dataset_metadata_other_mod.yaml' \
   --output_state '$id/state.yaml' \
   --publish_dir "$DATASET_DIR"
 
 # run task process dataset components
-# src/tasks/match_modalities/resources_test_scripts/scicar_cell_lines.sh
+src/tasks/predict_modality/resources_test_scripts/neurips2021_bmmc.sh
