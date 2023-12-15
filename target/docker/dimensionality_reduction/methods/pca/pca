@@ -411,9 +411,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods pca"
-LABEL org.opencontainers.image.created="2023-12-08T09:52:58Z"
+LABEL org.opencontainers.image.created="2023-12-15T13:15:03Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2d188caeec765a88bf9c3be3e1bcbc2fb091c726"
+LABEL org.opencontainers.image.revision="6927fe99856d245de7d393f112a59e02c9c4bce9"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

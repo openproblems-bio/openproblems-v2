@@ -436,9 +436,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2023-12-08T09:52:58Z"
+LABEL org.opencontainers.image.created="2023-12-15T13:14:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2d188caeec765a88bf9c3be3e1bcbc2fb091c726"
+LABEL org.opencontainers.image.revision="6927fe99856d245de7d393f112a59e02c9c4bce9"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1078,11 +1078,8 @@ ad2_mod <- unique(ad2\$var[["feature_types"]])
 new_dataset_id <- paste0(ad1\$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
 
 # determine new uns
-ad1_uns <- ad2_uns <- list(
-  dataset_id = new_dataset_id,
-  # TODO: this should already be part of the source dataset
-  dataset_organism = "homo_sapiens"
-)
+uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism")
+ad1_uns <- ad2_uns <- ad1\$uns[uns_vars]
 ad1_uns\$modality <- ad1_mod
 ad2_uns\$modality <- ad2_mod
 

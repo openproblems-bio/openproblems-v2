@@ -3431,6 +3431,11 @@ meta = [
       "type" : "nextflow",
       "id" : "nextflow",
       "directives" : {
+        "label" : [
+          "midtime",
+          "highmem",
+          "midcpu"
+        ],
         "tag" : "$id"
       },
       "auto" : {
@@ -3464,7 +3469,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn",
     "viash_version" : "0.8.0",
-    "git_commit" : "2d188caeec765a88bf9c3be3e1bcbc2fb091c726",
+    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3880,6 +3885,11 @@ meta["defaults"] = [
     "image" : "openproblems-bio/datasets/processors/knn",
     "tag" : "integration_build"
   },
+  "label" : [
+    "midtime",
+    "highmem",
+    "midcpu"
+  ],
   "tag" : "$id"
 }'''),
 

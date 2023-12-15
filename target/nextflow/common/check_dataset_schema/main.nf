@@ -2886,8 +2886,8 @@ meta = [
       "directives" : {
         "label" : [
           "midtime",
-          "lowmem",
-          "lowcpu"
+          "midmem",
+          "midcpu"
         ],
         "tag" : "$id"
       },
@@ -2922,7 +2922,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema",
     "viash_version" : "0.8.0",
-    "git_commit" : "2d188caeec765a88bf9c3be3e1bcbc2fb091c726",
+    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3031,9 +3031,9 @@ if par['meta'] is not None:
   for key, val in adata.uns.items():
     if is_atomic(val):
       uns[key] = to_atomic(val)
-    elif is_list_of_atomics(val):
+    elif is_list_of_atomics(val) and len(val) <= 10:
       uns[key] = to_list_of_atomics(val)
-    elif is_dict_of_atomics(val):
+    elif is_dict_of_atomics(val) and len(val) <= 10:
       uns[key] = to_dict_of_atomics(val)
   structure = {
     struct: list(getattr(adata, struct).keys())
@@ -3428,8 +3428,8 @@ meta["defaults"] = [
   },
   "label" : [
     "midtime",
-    "lowmem",
-    "lowcpu"
+    "midmem",
+    "midcpu"
   ],
   "tag" : "$id"
 }'''),

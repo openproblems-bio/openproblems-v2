@@ -2953,6 +2953,36 @@ meta = [
                 "required" : true
               },
               {
+                "name" : "dataset_name",
+                "type" : "string",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "dataset_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
@@ -3099,11 +3129,6 @@ meta = [
         "type" : "file",
         "path" : "src/common/library.bib",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
-      },
-      {
-        "type" : "file",
-        "path" : "src/common/api",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
@@ -3190,7 +3215,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r",
     "viash_version" : "0.8.0",
-    "git_commit" : "2d188caeec765a88bf9c3be3e1bcbc2fb091c726",
+    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
