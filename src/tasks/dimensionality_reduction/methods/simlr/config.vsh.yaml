@@ -12,7 +12,7 @@ functionality:
       Dimension reduction is achieved by the stochastic neighbor embedding methodology with the learned similarities as input. 
     preferred_normalization: log_cp10k
     reference: "wang2017visualization"
-    documentation_url: https://www.bioconductor.org/packages/release/bioc/html/SIMLR.html
+    documentation_url: https://github.com/BatzoglouLabSU/SIMLR/blob/SIMLR/README.md
     repository_url: https://github.com/BatzoglouLabSU/SIMLR
 
   arguments:
