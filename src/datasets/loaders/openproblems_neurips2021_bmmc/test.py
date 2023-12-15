@@ -2,7 +2,7 @@ from os import path
 import subprocess
 import anndata as ad
 
-input = "resources/datasets/multimodal/multiome_BMMC_processed.h5ad"
+input = meta["resources_dir"] + "neurips2021_bmmc_cite.h5ad"
 mod1 = "GEX"
 mod2 = "ADT"
 
