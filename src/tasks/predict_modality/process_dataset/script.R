@@ -4,12 +4,12 @@ library(Matrix, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
-  input_rna = "resources_test/common/bmmc_cite_starter/dataset_rna.h5ad",
-  input_other_mod = "resources_test/common/bmmc_cite_starter/dataset_adt.h5ad.h5ad",
-  output_train_mod1 = "resources_test/predict_modality/bmmc_cite_starter/train_mod1.h5ad",
-  output_train_mod2 = "resources_test/predict_modality/bmmc_cite_starter/train_mod2.h5ad",
-  output_test_mod1 = "resources_test/predict_modality/bmmc_cite_starter/test_mod1.h5ad",
-  output_test_mod2 = "resources_test/predict_modality/bmmc_cite_starter/test_mod2.h5ad",
+  input_rna = "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad",
+  input_other_mod = "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad",
+  output_train_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad",
+  output_train_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad",
+  output_test_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad",
+  output_test_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad",
   swap = TRUE,
   seed = 1L
 )
@@ -75,8 +75,8 @@ if (ad2_mod == "ATAC") {
 }
 
 cat("Creating train/test split\n")
-is_train <- which(ad1$obs[["is_train"]])
-is_test <- which(!ad1$obs[["is_train"]])
+is_train <- which(ad1$obs[["is_train"]] == "train")
+is_test <- which(!ad1$obs[["is_train"]] == "train")
 
 # sample cells
 if (length(is_test) > 1000) {
