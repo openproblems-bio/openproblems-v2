@@ -1,38 +1,84 @@
 functionality:
-  name: process_openproblems_v1
+  name: process_cellxgene_census
   namespace: datasets/workflows
   description: |
-    Fetch and process legacy OpenProblems v1 datasets
+    Fetch and process datasets originating from the CELLxGENE census.
   argument_groups:
-    - name: Inputs
+    - name: Input database
+      description: "Open CellxGene Census by version or URI."
+      arguments:
+        - name: "--input_uri"
+          type: string
+          description: "If specified, a URI containing the Census SOMA objects. If specified, will take precedence over the `--census_version` argument."
+          required: false
+          example: "s3://bucket/path"
+        - name: "--census_version"
+          description: "Which release of CellxGene census to use. Possible values are \"latest\", \"stable\", or the date of one of the releases (e.g. \"2023-07-25\"). For more information, check the documentation on [Census data releases](https://chanzuckerberg.github.io/cellxgene-census/cellxgene_census_docsite_data_release_info.html)."
+          type: string
+          example: "stable"
+          required: false
+    - name: Cell query
+      description: Arguments related to the query.
+      arguments:
+        - name: "--species"
+          type: string
+          description: The organism to query, usually one of `Homo sapiens` or `Mus musculus`.
+          required: false
+          default: "homo_sapiens"
+          multiple: false
+        - name: "--obs_value_filter"
+          type: string
+          description: "Filter for selecting the `obs` metadata (i.e. cells). Value is a filter query written in the SOMA `value_filter` syntax."
+          required: false
+          example: "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'"
+    - name: Cell filter
+      description: Filter the cells based on a minimum cell count per specified group
+      arguments:
+        - name: "--cell_filter_grouping"
+          type: string
+          description: |
+            A subset of 'obs' columns by which to group the cells for filtering.
+            Only groups surpassing or equal to the `--cell_filter_minimum_count`
+            threshold will be retained. Take care not to introduce a selection
+            bias against cells with more fine-grained ontology annotations.
+          required: false
+          example: ["dataset_id", "tissue", "assay", "disease", "cell_type"]
+          multiple: true
+        - name: "--cell_filter_minimum_count"
+          type: double
+          description: |
+            A minimum number of cells per group to retain. If `--cell_filter_grouping`
+            is defined, this parameter should also be provided and vice versa.
+          required: false
+          example: 100
+    - name: Cell metadata
+      description: Cell metadata arguments
+      arguments:
+        - name: "--obs_batch"
+          type: string
+          description: |
+            Location of where to find the observation batch IDs.  
+            
+            * If not specified, the `.obs["batch"]` field will not be included.
+            * If one or more values are specified, the `.obs["batch"]` field will be 
+              set to the concatenated values of the specified fields, separated by
+              the `obs_batch_separator`.
+          required: false
+          multiple: true
+          multiple_sep: ","
+          example: ["batch"]
+        - name: "--obs_batch_separator"
+          type: string
+          description: Separator to use when concatenating the values of the `--obs_batch` fields.
+          required: false
+          default: "+"
+    - name: Dataset metadata
+      description: Information about the dataset that will be stored in the `.uns` slot.
       arguments:
         - name: "--id"
           type: string
-          description: Unique identifier of the dataset.
+          description: Nicely formatted name.
           required: true
-        - name: "--input_id"
-          type: "string"
-          description: "The ID of the dataset in OpenProblems v1"
-          required: true
-        - name: "--obs_cell_type"
-          type: "string"
-          description: "Location of where to find the observation cell types."
-        - name: "--obs_batch"
-          type: "string"
-          description: "Location of where to find the observation batch IDs."
-        - name: "--obs_tissue"
-          type: "string"
-          description: "Location of where to find the observation tissue information."
-        - name: "--layer_counts"
-          type: "string"
-          description: "In which layer to find the counts matrix. Leave undefined to use `.X`."
-          example: counts
-        - name: "--sparse"
-          type: boolean
-          default: true
-          description: Convert layers to a sparse CSR format.
-    - name: Metadata
-      arguments:
         - name: "--dataset_name"
           type: string
           description: Nicely formatted name.
@@ -56,7 +102,7 @@ functionality:
         - name: "--dataset_organism"
           type: string
           description: The organism of the dataset.
-          required: false
+          required: true
     - name: Sampling options
       arguments:
         - name: "--do_subsample"
@@ -136,7 +182,7 @@ functionality:
       path: main.nf
       entrypoint: run_wf
   dependencies: 
-    - name: datasets/loaders/openproblems_v1
+    - name: datasets/loaders/cellxgene_census
     - name: datasets/normalization/log_cp
     - name: datasets/normalization/log_scran_pooling
     - name: datasets/normalization/sqrt_cp
