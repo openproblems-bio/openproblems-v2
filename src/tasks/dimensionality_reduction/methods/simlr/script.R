@@ -1,5 +1,5 @@
-library(anndata)
-library(SIMLR)
+requireNamespace("anndata", quietly = TRUE)
+requireNamespace("SIMLR", quietly = TRUE)
 
 ## VIASH START
 par <- list(
@@ -24,7 +24,7 @@ if (is.null(par$n_clusters)) {
   cat("Estimating the number of clusters\n")
   set.seed(1)
   NUMC = 2:5
-  estimates <- SIMLR_Estimate_Number_of_Clusters(
+  estimates <- SIMLR::SIMLR_Estimate_Number_of_Clusters(
     X = as.matrix(input$layers[["normalized"]]), 
     NUMC = NUMC, 
     cores.ratio = par$cores_ratio
@@ -41,7 +41,7 @@ if (is.null(par$n_dim)) {
 }
 
 cat("Running SIMLR\n")
-simlr_result <- SIMLR(
+simlr_result <- SIMLR::SIMLR(
   X = as.matrix(input$layers[["normalized"]]), 
   c = n_clusters, 
   no.dim = n_dim, 
@@ -64,4 +64,4 @@ output <- anndata::AnnData(
   ), 
   shape = input$shape
 )
-write_h5ad(output, par$output, compression = "gzip")
+output$write_h5ad(par$output, compression = "gzip")
