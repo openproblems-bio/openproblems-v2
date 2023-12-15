@@ -1,11 +1,15 @@
 #!/bin/bash
 
-wget "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE194122&format=file&file=GSE194122%5Fopenproblems%5Fneurips2021%5Fcite%5FBMMC%5Fprocessed%2Eh5ad%2Egz" \
-  -O "/tmp/neurips2021_bmmc_cite.h5ad.gz"
-  
-gunzip "/tmp/neurips2021_bmmc_cite.h5ad.gz"
-
 DATASET_DIR="resources_test/common"
+
+
+
+mkdir -p "$DATASET_DIR/openproblems_neurips2021"
+
+wget "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE194122&format=file&file=GSE194122%5Fopenproblems%5Fneurips2021%5Fcite%5FBMMC%5Fprocessed%2Eh5ad%2Egz" \
+  -O "$DATASET_DIR/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad.gz"
+  
+gunzip "$DATASET_DIR/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad.gz"
 
 SUBDIR="$DATASET_DIR/neurips2021_bmmc_cite"
 mkdir -p "$SUBDIR"
@@ -30,7 +34,7 @@ nextflow run . \
   -c src/wf_utils/labels_ci.config \
   -resume \
   --id neurips2021_bmmc_cite \
-  --input "/tmp/neurips2021_bmmc_cite.h5ad" \
+  --input "$DATASET_DIR/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad" \
   --mod1 "GEX" \
   --mod2 "ADT" \
   --dataset_name "bmcc (CITE-Seq)" \
