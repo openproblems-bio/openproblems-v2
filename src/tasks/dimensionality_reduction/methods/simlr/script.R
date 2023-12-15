@@ -18,26 +18,26 @@ meta <- list(
 ## VIASH END
 
 cat("Reading input files\n")
-input <- anndata::read_h5ad(par[["input"]])
+input <- anndata::read_h5ad(par$input)
 
-if (is.null(par[["n_clusters"]])) {
+if (is.null(par$n_clusters)) {
   cat("Estimating the number of clusters\n")
   set.seed(1)
   NUMC = 2:5
   estimates <- SIMLR_Estimate_Number_of_Clusters(
     X = as.matrix(input$layers[["normalized"]]), 
     NUMC = NUMC, 
-    cores.ratio = par[["cores_ratio"]]
+    cores.ratio = par$cores_ratio
   )
   n_clusters <- NUMC[which.min(estimates$K2)]
 } else {
-  n_clusters <- par[["n_clusters"]]
+  n_clusters <- par$n_clusters
 }
 
-if (is.null(par[["n_dim"]])) {
+if (is.null(par$n_dim)) {
   n_dim <- NA
 } else {
-  n_dim <- par[["n_dim"]]
+  n_dim <- par$n_dim
 }
 
 cat("Running SIMLR\n")
@@ -45,10 +45,10 @@ simlr_result <- SIMLR(
   X = as.matrix(input$layers[["normalized"]]), 
   c = n_clusters, 
   no.dim = n_dim, 
-  k = par[["tuning_param"]], 
-  if.impute = par[["impute"]], 
-  normalize = par[["normalize"]], 
-  cores.ratio = par[["cores_ratio"]]
+  k = par$tuning_param, 
+  if.impute = par$impute, 
+  normalize = par$normalize, 
+  cores.ratio = par$cores_ratio
 )
 obsm_X_emb <- simlr_result$ydata
 
@@ -56,7 +56,7 @@ cat("Write output AnnData to file\n")
 output <- anndata::AnnData(
   uns = list(
     dataset_id = input$uns[["dataset_id"]],
-    method_id = meta[["functionality_name"]],
+    method_id = meta$functionality_name,
     normalization_id = input$uns[["normalization_id"]]
   ),
   obsm = list(
@@ -64,4 +64,4 @@ output <- anndata::AnnData(
   ), 
   shape = input$shape
 )
-write_h5ad(output, par[["output"]], compression = "gzip")
+write_h5ad(output, par$output, compression = "gzip")
