@@ -20,7 +20,7 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --pull-latest \
   --main-script target/nextflow/denoising/workflows/process_datasets/main.nf \
   --workspace 53907369739130 \
-  --compute-env 7IkB9ckC81O0dgNemcPJTD \
+  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
   --params-file /tmp/params.yaml \
   --entry-name auto \
   --config /tmp/nextflow.config
