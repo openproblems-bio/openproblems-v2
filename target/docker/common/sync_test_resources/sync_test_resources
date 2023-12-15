@@ -432,9 +432,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common sync_test_resources"
-LABEL org.opencontainers.image.created="2023-12-14T09:06:19Z"
+LABEL org.opencontainers.image.created="2023-12-15T08:52:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="6cdba41787f894aa4d1ff6f4b8d00d866fefb62e"
+LABEL org.opencontainers.image.revision="298dcb15c19827bbd567d3cd251b38a3bad12946"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
