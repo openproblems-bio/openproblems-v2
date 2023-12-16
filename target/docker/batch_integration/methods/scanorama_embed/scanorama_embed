@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanorama" "scib==1.1.3"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scanorama_embed"
-LABEL org.opencontainers.image.created="2023-12-16T08:31:48Z"
+LABEL org.opencontainers.image.created="2023-12-16T08:41:00Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="bdbf261c9f70b98c6ceb7b6f0805e617aaf3c394"
+LABEL org.opencontainers.image.revision="35e065d0368c191db84031a67d6c06656832a549"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
