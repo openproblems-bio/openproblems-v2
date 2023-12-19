@@ -54,7 +54,7 @@ workflow run_wf {
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
-        def norm = state.normalization_id
+        def norm = state.dataset_uns.normalization_id
         def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
