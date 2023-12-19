@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-# try running on nf tower
 cat > /tmp/params.yaml << 'HERE'
 input_states: s3://openproblems-data/resources/batch_integration/datasets/**/state.yaml
 rename_keys: 'input_dataset:output_dataset,input_solution:output_solution'
