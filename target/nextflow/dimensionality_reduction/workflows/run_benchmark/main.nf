@@ -2892,9 +2892,66 @@ meta = [
         "arguments" : [
           {
             "type" : "file",
-            "name" : "--output",
+            "name" : "--output_scores",
+            "description" : "A yaml file containing the scores of each of the methods",
             "example" : [
-              "output.tsv"
+              "score_uns.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_method_configs",
+            "example" : [
+              "method_configs.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_metric_configs",
+            "example" : [
+              "metric_configs.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_dataset_info",
+            "example" : [
+              "dataset_uns.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_task_info",
+            "example" : [
+              "task_info.yaml"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2914,6 +2971,11 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/workflows/run_benchmark/",
         "entrypoint" : "run_wf"
+      },
+      {
+        "type" : "file",
+        "path" : "src/tasks/label_projection/api/task_info.yaml",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "status" : "enabled",
@@ -2935,7 +2997,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2957,7 +3019,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -2979,7 +3041,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/random_features"
@@ -3001,7 +3063,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/true_features"
@@ -3023,7 +3085,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/methods/densmap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/densmap"
@@ -3045,7 +3107,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/methods/neuralee/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/neuralee"
@@ -3067,7 +3129,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/methods/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca"
@@ -3089,7 +3151,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/methods/phate/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/phate"
@@ -3111,7 +3173,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/methods/tsne/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/tsne"
@@ -3133,7 +3195,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/methods/umap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/umap"
@@ -3155,7 +3217,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/metrics/coranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/coranking"
@@ -3177,7 +3239,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/metrics/density_preservation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation"
@@ -3199,7 +3261,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/metrics/distance_correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation"
@@ -3221,7 +3283,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
           "executable" : "/nextflow/dimensionality_reduction/metrics/trustworthiness/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness"
@@ -3267,7 +3329,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+    "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3334,9 +3396,10 @@ workflow run_wf {
 
     // extract the dataset metadata
     | check_dataset_schema.run(
-      fromState: [input: "input_dataset"],
+      fromState: [input: "input_solution"],
       toState: { id, output, state ->
-        state + (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        state + [dataset_uns: dataset_uns]
       }
     )
 
@@ -3346,7 +3409,7 @@ workflow run_wf {
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
-        def norm = state.normalization_id
+        def norm = state.dataset_uns.normalization_id
         def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
@@ -3397,25 +3460,68 @@ workflow run_wf {
       }
     )
 
-    // join all events into a new event where the new id is simply "output" and the new state consists of:
-    //   - "input": a list of score h5ads
-    //   - "output": the output argument of this workflow
-    | joinStates{ ids, states ->
-      def new_id = "output"
-      def new_state = [
-        input: states.collect{it.metric_output},
-        _meta: states[0]._meta
-      ]
-      [new_id, new_state]
+    // extract the dataset metadata
+    // only keep one of the normalization methods
+    | filter{ id, state ->
+      state.dataset_uns.normalization_id == "log_cp10k"
     }
 
-  // convert to tsv and publish
-  | extract_scores.run(
-    fromState: ["input"],
-    toState: ["output"]
-  )
+    // extract the scores
+    | check_dataset_schema.run(
+      key: "extract_scores",
+      fromState: [input: "metric_output"],
+      toState: { id, output, state ->
+        def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        state + [score_uns: score_uns]
+      }
+    )
 
-  | setState(["output", "_meta"])
+    | joinStates { ids, states ->
+
+      // store the dataset metadata in a file
+      def dataset_uns = states.collect{state ->
+        def uns = state.dataset_uns.clone()
+        uns.remove("normalization_id")
+        uns
+      }
+      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
+      def dataset_uns_file = tempFile("dataset_uns.yaml")
+      dataset_uns_file.write(dataset_uns_yaml_blob)
+
+      // store the scores in a file
+      def score_uns = states.collect{it.score_uns}
+      def score_uns_yaml_blob = toYamlBlob(score_uns)
+      def score_uns_file = tempFile("score_uns.yaml")
+      score_uns_file.write(score_uns_yaml_blob)
+
+      ["output", [output_scores: score_uns_file, output_dataset_info: dataset_uns_file, _meta: states[0]._meta]]
+    }
+
+    // store the method and metric configs
+    | map{ id, state ->
+
+      // store the method configs in a file
+      def method_configs = methods.collect{it.config}
+      def method_configs_yaml_blob = toYamlBlob(method_configs)
+      def method_configs_file = tempFile("method_configs.yaml")
+      method_configs_file.write(method_configs_yaml_blob)
+
+      // store the metric configs in a file
+      def metric_configs = metrics.collect{it.config}
+      def metric_configs_yaml_blob = toYamlBlob(metric_configs)
+      def metric_configs_file = tempFile("metric_configs.yaml")
+      metric_configs_file.write(metric_configs_yaml_blob)
+
+      def task_info_file = meta.resources_dir.resolve("task_info.yaml")
+
+      def new_state = [
+        output_method_configs: method_configs_file,
+        output_metric_configs: metric_configs_file,
+        output_task_info: task_info_file
+      ]
+      
+      ["output", state + new_state]
+    }
 
   emit:
   output_ch

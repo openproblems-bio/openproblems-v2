@@ -272,11 +272,59 @@ functionality:
   - name: "Outputs"
     arguments:
     - type: "file"
-      name: "--output"
-      description: "A TSV file containing the scores of each of the methods"
+      name: "--output_scores"
+      description: "A yaml file containing the scores of each of the methods"
       info: null
       example:
-      - "scores.tsv"
+      - "score_uns.yaml"
+      must_exist: true
+      create_parent: true
+      required: true
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_method_configs"
+      info: null
+      example:
+      - "method_configs.yaml"
+      must_exist: true
+      create_parent: true
+      required: true
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_metric_configs"
+      info: null
+      example:
+      - "metric_configs.yaml"
+      must_exist: true
+      create_parent: true
+      required: true
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_dataset_info"
+      info: null
+      example:
+      - "dataset_uns.yaml"
+      must_exist: true
+      create_parent: true
+      required: true
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--output_task_info"
+      info: null
+      example:
+      - "task_info.yaml"
       must_exist: true
       create_parent: true
       required: true
@@ -289,6 +337,8 @@ functionality:
     path: "main.nf"
     is_executable: true
     entrypoint: "run_wf"
+  - type: "file"
+    path: "src/tasks/predict_modality/api/task_info.yaml"
   info: null
   status: "enabled"
   dependencies:
@@ -307,7 +357,7 @@ functionality:
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/common/check_dataset_schema/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
   - name: "common/extract_scores"
@@ -325,7 +375,7 @@ functionality:
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/common/extract_scores/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
   - name: "predict_modality/control_methods/mean_per_gene"
@@ -343,7 +393,7 @@ functionality:
       functionalityNamespace: "predict_modality/control_methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
   - name: "predict_modality/control_methods/random_predict"
@@ -361,7 +411,7 @@ functionality:
       functionalityNamespace: "predict_modality/control_methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/control_methods/random_predict/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
   - name: "predict_modality/control_methods/zeros"
@@ -379,7 +429,7 @@ functionality:
       functionalityNamespace: "predict_modality/control_methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/control_methods/zeros/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
   - name: "predict_modality/control_methods/solution"
@@ -397,7 +447,7 @@ functionality:
       functionalityNamespace: "predict_modality/control_methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/control_methods/solution/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
   - name: "predict_modality/methods/knnr_py"
@@ -415,7 +465,7 @@ functionality:
       functionalityNamespace: "predict_modality/methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/methods/knnr_py/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
   - name: "predict_modality/methods/knnr_r"
@@ -433,7 +483,7 @@ functionality:
       functionalityNamespace: "predict_modality/methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/methods/knnr_r/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
   - name: "predict_modality/methods/lm"
@@ -451,7 +501,7 @@ functionality:
       functionalityNamespace: "predict_modality/methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/methods/lm/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
   - name: "predict_modality/methods/newwave_knnr"
@@ -469,7 +519,7 @@ functionality:
       functionalityNamespace: "predict_modality/methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
   - name: "predict_modality/methods/random_forest"
@@ -487,7 +537,7 @@ functionality:
       functionalityNamespace: "predict_modality/methods"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/methods/random_forest/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
   - name: "predict_modality/metrics/correlation"
@@ -505,7 +555,7 @@ functionality:
       functionalityNamespace: "predict_modality/metrics"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/metrics/correlation/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
   - name: "predict_modality/metrics/mse"
@@ -523,7 +573,7 @@ functionality:
       functionalityNamespace: "predict_modality/metrics"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/predict_modality/metrics/mse/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
   set_wd_to_resources_dir: false
@@ -558,5 +608,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark/main.nf"
   viash_version: "0.8.0"
-  git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+  git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

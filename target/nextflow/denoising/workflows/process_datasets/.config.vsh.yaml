@@ -45,6 +45,10 @@ functionality:
             type: "string"
             description: "The organism of the sample in the dataset."
             required: false
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
       example:
       - "dataset.h5ad"
       must_exist: true
@@ -121,6 +125,10 @@ functionality:
             type: "string"
             description: "The organism of the sample in the dataset."
             required: false
+          - type: "string"
+            name: "normalization_id"
+            description: "Which normalization was used"
+            required: true
       example:
       - "resources_test/denoising/pancreas/test.h5ad"
       must_exist: true
@@ -155,7 +163,7 @@ functionality:
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/common/check_dataset_schema/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
   - name: "denoising/process_dataset"
@@ -173,7 +181,7 @@ functionality:
       functionalityNamespace: "denoising"
       output: ""
       platform: ""
-      git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+      git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
       executable: "/nextflow/denoising/process_dataset/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset"
   set_wd_to_resources_dir: false
@@ -208,5 +216,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/process_datasets"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/process_datasets/main.nf"
   viash_version: "0.8.0"
-  git_commit: "e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+  git_commit: "0a228033b6520e9404d0c84b1c8a149ed7c7787f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

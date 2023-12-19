@@ -2827,6 +2827,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "normalization_id",
+                "description" : "Which normalization was used",
+                "required" : true
               }
             ]
           }
@@ -2993,7 +2999,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising",
     "viash_version" : "0.8.0",
-    "git_commit" : "e233515629e8ec6ad10fbdffc55bcf33b25fa92a",
+    "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

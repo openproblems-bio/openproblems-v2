@@ -432,9 +432,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising process_dataset"
-LABEL org.opencontainers.image.created="2023-12-19T11:55:15Z"
+LABEL org.opencontainers.image.created="2023-12-19T12:05:34Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e233515629e8ec6ad10fbdffc55bcf33b25fa92a"
+LABEL org.opencontainers.image.revision="0a228033b6520e9404d0c84b1c8a149ed7c7787f"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1041,7 +1041,7 @@ output_train = ad.AnnData(
     var=adata.var[[]],
     uns={"dataset_id": adata.uns["dataset_id"]}
 )
-test_uns_keys = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
+test_uns_keys = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id"]
 output_test = ad.AnnData(
     layers={"counts": X_test.astype(float)},
     obs=adata.obs[[]],
