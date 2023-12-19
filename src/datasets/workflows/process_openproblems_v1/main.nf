@@ -1,3 +1,10 @@
+workflow auto {
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
+}
+
 workflow run_wf {
   take:
   input_ch
@@ -42,12 +49,13 @@ workflow run_wf {
     // fetch data from legacy openproblems
     | openproblems_v1.run(
       fromState: [
-        "dataset_id": "id",
+        "input_id": "input_id",
         "obs_cell_type": "obs_cell_type",
         "obs_batch": "obs_batch",
         "obs_tissue": "obs_tissue",
         "layer_counts": "layer_counts",
         "sparse": "sparse",
+        "dataset_id": "id",
         "dataset_name": "dataset_name",
         "dataset_url": "dataset_url",
         "dataset_reference": "dataset_reference",
@@ -115,23 +123,6 @@ workflow run_wf {
       fromState: ["input": "output_knn"],
       toState: ["output_dataset": "output", "output_meta": "meta"]
     )
-
-    // TODO: remove this filter if we're sure the mismatch issue no longer occurs
-    | filter{ id, state ->
-      def uns = (new org.yaml.snakeyaml.Yaml().load(state.output_meta)).uns
-      def expected_id = state.normalization_methods.size() > 1 ?
-        "${uns.dataset_id}/${uns.normalization_id}" :
-        uns.dataset_id
-      expected_id = expected_id.replaceAll("_subsample", "")
-      
-      def is_ok = id == expected_id
-      
-      if (!is_ok) {
-        println("DETECTED ID MISMATCH: $id != $expected_id.\nTuple:\n${toYamlBlob([id, state])}\n")
-      }
-
-      is_ok
-    }
 
     // only output the files for which an output file was specified
     | setState([
