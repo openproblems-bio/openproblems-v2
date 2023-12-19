@@ -2,18 +2,6 @@
 
 DATASET_DIR="resources_test/common"
 
-
-
-mkdir -p "$DATASET_DIR/openproblems_neurips2021"
-
-wget "https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE194122&format=file&file=GSE194122%5Fopenproblems%5Fneurips2021%5Fcite%5FBMMC%5Fprocessed%2Eh5ad%2Egz" \
-  -O "$DATASET_DIR/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad.gz"
-  
-gunzip "$DATASET_DIR/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad.gz"
-
-SUBDIR="$DATASET_DIR/neurips2021_bmmc_cite"
-mkdir -p "$SUBDIR"
-
 #make sure the following command has been executed
 #viash ns build -q 'datasets|common' --parallel --setup cb
 
@@ -25,7 +13,19 @@ cd "$REPO_ROOT"
 
 set -e
 
-mkdir -p $DATASET_DIR
+# download full dataset as temp file
+mkdir -p "$DATASET_DIR/neurips2021_bmmc_cite"
+
+INPUT="$DATASET_DIR/neurips2021_bmmc_cite/temp_neurips2021_bmmc_cite.h5ad"
+INPUT_URL="https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE194122&format=file&file=GSE194122%5Fopenproblems%5Fneurips2021%5Fcite%5FBMMC%5Fprocessed%2Eh5ad%2Egz"
+if [ ! -f "$INPUT" ]; then
+  echo "Downloading neurips2021_bmmc_cite dataset"
+  
+  wget "$INPUT_URL" -O "${INPUT}.gz"
+    
+  gunzip "${INPUT}.gz"
+fi
+
 
 # download dataset
 nextflow run . \
@@ -34,7 +34,7 @@ nextflow run . \
   -c src/wf_utils/labels_ci.config \
   -resume \
   --id neurips2021_bmmc_cite \
-  --input "$DATASET_DIR/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad" \
+  --input "$INPUT" \
   --mod1 "GEX" \
   --mod2 "ADT" \
   --dataset_name "bmcc (CITE-Seq)" \
