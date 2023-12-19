@@ -1,7 +1,6 @@
 __merge__: ../api/get_info.yaml
 functionality:
-  name: "get_datast_info"
-  namespace: "common"
+  name: "get_dataset_info"
   description: "Extract dataset info and convert to expected format for website results"
   resources:
     - type: r_script
@@ -16,10 +15,6 @@ platforms:
     setup:
       - type: r
         cran: [ purrr, dplyr, yaml, rlang, processx ]
-      - type: apt
-        packages: [ curl, default-jdk ]
-      - type: docker
-        run: "curl -fsSL dl.viash.io | bash && mv viash /usr/bin/viash"
   - type: nextflow
     directives:
       label: [lowmem, lowtime, lowcpu]
