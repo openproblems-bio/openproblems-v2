@@ -4816,7 +4816,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/loaders/cellxgene_census/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/cellxgene_census"
@@ -4838,7 +4838,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -4860,7 +4860,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -4882,7 +4882,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -4904,7 +4904,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -4926,7 +4926,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -4948,7 +4948,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -4970,7 +4970,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4992,7 +4992,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -5014,7 +5014,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -5060,7 +5060,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_cellxgene_census",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+    "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

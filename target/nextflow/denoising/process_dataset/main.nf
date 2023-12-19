@@ -3140,12 +3140,6 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "normalization_id",
-                "description" : "Which normalization was used",
-                "required" : true
               }
             ]
           }
@@ -3309,7 +3303,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+    "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3395,7 +3389,7 @@ output_train = ad.AnnData(
     var=adata.var[[]],
     uns={"dataset_id": adata.uns["dataset_id"]}
 )
-test_uns_keys = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id"]
+test_uns_keys = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
 output_test = ad.AnnData(
     layers={"counts": X_test.astype(float)},
     obs=adata.obs[[]],

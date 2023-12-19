@@ -2830,12 +2830,6 @@ meta = [
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
-                  },
-                  {
-                    "type" : "string",
-                    "name" : "normalization_id",
-                    "description" : "Which normalization was used",
-                    "required" : true
                   }
                 ]
               }
@@ -2963,7 +2957,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2985,7 +2979,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -3007,7 +3001,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/control_methods/no_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising"
@@ -3029,7 +3023,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/control_methods/perfect_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising"
@@ -3051,7 +3045,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/methods/alra/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra"
@@ -3073,7 +3067,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/methods/dca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca"
@@ -3095,7 +3089,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/methods/knn_smoothing/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/knn_smoothing"
@@ -3117,7 +3111,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/methods/magic/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
@@ -3139,7 +3133,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse"
@@ -3161,7 +3155,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+          "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
           "executable" : "/nextflow/denoising/metrics/poisson/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson"
@@ -3207,7 +3201,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b7c0851a806685feb2599fb77a917c03663d43b",
+    "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3275,15 +3269,6 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, comp ->
-        def norm = state.dataset_uns.normalization_id
-        def pref = comp.config.functionality.info.preferred_normalization
-        // if the preferred normalisation is none at all,
-        // we can pass whichever dataset we want
-        (norm == "log_cp10k" && pref == "counts") || norm == pref
-      },
-
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
         id + "." + comp.config.functionality.name
@@ -3322,12 +3307,6 @@ workflow run_wf {
       }
     )
 
-    // extract the dataset metadata
-    // only keep one of the normalization methods
-    | filter{ id, state ->
-      state.dataset_uns.normalization_id == "log_cp10k"
-    }
-
     // extract the scores
     | check_dataset_schema.run(
       key: "extract_scores",
@@ -3342,9 +3321,7 @@ workflow run_wf {
 
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
-        def uns = state.dataset_uns.clone()
-        uns.remove("normalization_id")
-        uns
+        state.dataset_uns.clone()
       }
       def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
       def dataset_uns_file = tempFile("dataset_uns.yaml")
