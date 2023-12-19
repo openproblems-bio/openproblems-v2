@@ -16,7 +16,7 @@ df <- map_df(datasets, function(dataset) {
 }) %>%
   rename(
     data_url = dataset_url,
-    data_reference = datast_reference,
+    data_reference = dataset_reference,
     dataset_summary = description,
     paper_reference = reference,
   )
