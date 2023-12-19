@@ -4,7 +4,7 @@ library(rlang, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
-  input = "output/temp/dataset_info.yaml",
+  input = "resources_test/common/task_metadata/dataset_info.yaml",
   output = "output/metric_info.json"
 )
 ## VIASH END
@@ -16,9 +16,7 @@ df <- map_df(datasets, function(dataset) {
 }) %>%
   rename(
     data_url = dataset_url,
-    data_reference = dataset_reference,
-    dataset_summary = dataset_description,
-    paper_reference = dataset_reference,
+    data_reference = dataset_reference
   )
 
 
