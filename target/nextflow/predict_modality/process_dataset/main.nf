@@ -2741,93 +2741,17 @@ meta = [
           "label" : "Raw dataset RNA",
           "summary" : "The RNA modality of the raw dataset.",
           "slots" : {
-            "X" : {
-              "type" : "double",
-              "description" : "Normalized expression values",
-              "required" : true
-            },
             "layers" : [
               {
                 "type" : "integer",
                 "name" : "counts",
                 "description" : "Raw counts",
                 "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
               },
               {
                 "type" : "double",
-                "name" : "size_factors",
-                "description" : "The size factors of the cells prior to normalization.",
-                "required" : false
-              }
-            ],
-            "var" : [
-              {
-                "type" : "string",
-                "name" : "gene_ids",
-                "description" : "The gene identifiers (if available)",
-                "required" : false
-              }
-            ],
-            "uns" : [
-              {
-                "type" : "string",
-                "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "gene_activity_var_names",
-                "description" : "Names of the gene activity matrix",
-                "required" : false
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "gene_activity",
-                "description" : "ATAC gene activity",
-                "required" : false
-              }
-            ]
-          }
-        },
-        "example" : [
-          "resources_test/common/bmmc_cite_starter/dataset_rna.h5ad"
-        ],
-        "must_exist" : true,
-        "create_parent" : true,
-        "required" : true,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
-        "type" : "file",
-        "name" : "--input_other_mod",
-        "info" : {
-          "label" : "Raw dataset mod2",
-          "summary" : "The second modality of the raw dataset. Must be an ADT or an ATAC dataset",
-          "slots" : {
-            "X" : {
-              "type" : "double",
-              "description" : "Normalized expression values",
-              "required" : true
-            },
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
+                "name" : "normalized",
+                "description" : "Normalized expression values",
                 "required" : true
               }
             ],
@@ -2914,7 +2838,121 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/bmmc_cite_starter/dataset_adt.h5ad"
+          "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : true,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--input_other_mod",
+        "info" : {
+          "label" : "Raw dataset mod2",
+          "summary" : "The second modality of the raw dataset. Must be an ADT or an ATAC dataset",
+          "slots" : {
+            "layers" : [
+              {
+                "type" : "integer",
+                "name" : "counts",
+                "description" : "Raw counts",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "normalized",
+                "description" : "Normalized expression values",
+                "required" : true
+              }
+            ],
+            "obs" : [
+              {
+                "type" : "string",
+                "name" : "batch",
+                "description" : "Batch information",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "size_factors",
+                "description" : "The size factors of the cells prior to normalization.",
+                "required" : false
+              }
+            ],
+            "var" : [
+              {
+                "type" : "string",
+                "name" : "gene_ids",
+                "description" : "The gene identifiers (if available)",
+                "required" : false
+              }
+            ],
+            "uns" : [
+              {
+                "type" : "string",
+                "name" : "dataset_id",
+                "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "name" : "dataset_name",
+                "type" : "string",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "dataset_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "gene_activity_var_names",
+                "description" : "Names of the gene activity matrix",
+                "required" : false
+              }
+            ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "gene_activity",
+                "description" : "ATAC gene activity",
+                "required" : false
+              }
+            ]
+          }
+        },
+        "example" : [
+          "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3364,8 +3402,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/common/bmmc_cite_starter",
-        "dest" : "resources_test/common/bmmc_cite_starter",
+        "path" : "resources_test/common/neurips2021_bmmc_cite",
+        "dest" : "resources_test/common/neurips2021_bmmc_cite",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -3444,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "35e065d0368c191db84031a67d6c06656832a549",
+    "git_commit" : "cef0e5132b2d313a68f804480d77f8954a5bc495",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3531,7 +3569,9 @@ ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids")), drop = FAL
 ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
-  ad1\\$X@x <- (ad1\\$X@x > 0) + 0
+  # binarize features
+  ad1\\$layers[["normalized"]]@x <- (ad1\\$layers[["normalized"]]@x > 0) + 0
+
   # copy gene activity in new object
   ad1_uns\\$gene_activity_var_names <- ad1\\$uns\\$gene_activity_var_names
   ad1_obsm\\$gene_activity <- as(ad1\\$obsm\\$gene_activity, "CsparseMatrix")
@@ -3540,12 +3580,14 @@ if (ad1_mod == "ATAC") {
 if (ad2_mod == "ATAC") {
   # subset to make the task computationally feasible
   if (ncol(ad2) > 10000) {
-    poss_ix <- which(Matrix::colSums(ad2\\$X) > 0)
+    poss_ix <- which(Matrix::colSums(ad2\\$layers[["normalized"]]) > 0)
     sel_ix <- sort(sample(poss_ix, 10000))
     ad2 <- ad2[, sel_ix]\\$copy()
     ad2_var <- ad2_var[sel_ix, , drop = FALSE]
   }
-  ad2\\$X@x <- (ad2\\$X@x > 0) + 0
+
+  # binarize features
+  ad2\\$layers[["normalized"]]@x <- (ad2\\$layers[["normalized"]]@x > 0) + 0
 
   # copy gene activity in new object
   ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
@@ -3553,8 +3595,8 @@ if (ad2_mod == "ATAC") {
 }
 
 cat("Creating train/test split\\\\n")
-is_train <- which(ad1\\$obs[["is_train"]])
-is_test <- which(!ad1\\$obs[["is_train"]])
+is_train <- which(ad1\\$obs[["is_train"]] == "train")
+is_test <- which(!ad1\\$obs[["is_train"]] == "train")
 
 # sample cells
 if (length(is_test) > 1000) {
@@ -3576,14 +3618,14 @@ subset_mats <- function(li, obs_filt) {
 
 cat("Create train objects\\\\n")
 output_train_mod1 <- anndata::AnnData(
-  layers = subset_mats(list(counts = ad1\\$layers[["counts"]], normalized = ad1\\$X), is_train),
+  layers = subset_mats(list(counts = ad1\\$layers[["counts"]], normalized = ad1\\$layers[["normalized"]]), is_train),
   obsm = subset_mats(ad1_obsm, is_train),
   obs = train_obs,
   var = ad1_var,
   uns = ad1_uns
 )
 output_train_mod2 <- anndata::AnnData(
-  layers = subset_mats(list(counts = ad2\\$layers[["counts"]], normalized = ad2\\$X), is_train),
+  layers = subset_mats(list(counts = ad2\\$layers[["counts"]], normalized = ad2\\$layers[["normalized"]]), is_train),
   obsm = subset_mats(ad2_obsm, is_train),
   obs = train_obs,
   var = ad2_var,
@@ -3592,14 +3634,14 @@ output_train_mod2 <- anndata::AnnData(
 
 cat("Create test objects\\\\n")
 output_test_mod1 <- anndata::AnnData(
-  layers = subset_mats(list(counts = ad1\\$layers[["counts"]], normalized = ad1\\$X), is_test),
+  layers = subset_mats(list(counts = ad1\\$layers[["counts"]], normalized = ad1\\$layers[["normalized"]]), is_test),
   obsm = subset_mats(ad1_obsm, is_test),
   obs = test_obs,
   var = ad1_var,
   uns = ad1_uns
 )
 output_test_mod2 <- anndata::AnnData(
-  layers = subset_mats(list(counts = ad2\\$layers[["counts"]], normalized = ad2\\$X), is_test),
+  layers = subset_mats(list(counts = ad2\\$layers[["counts"]], normalized = ad2\\$layers[["normalized"]]), is_test),
   obsm = subset_mats(ad2_obsm, is_test),
   obs = test_obs,
   var = ad2_var,

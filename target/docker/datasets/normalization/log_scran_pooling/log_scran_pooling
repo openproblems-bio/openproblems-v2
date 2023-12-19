@@ -426,9 +426,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization log_scran_pooling"
-LABEL org.opencontainers.image.created="2023-12-16T08:41:00Z"
+LABEL org.opencontainers.image.created="2023-12-19T10:50:16Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="35e065d0368c191db84031a67d6c06656832a549"
+LABEL org.opencontainers.image.revision="cef0e5132b2d313a68f804480d77f8954a5bc495"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
