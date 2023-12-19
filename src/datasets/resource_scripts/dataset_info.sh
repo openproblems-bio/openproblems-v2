@@ -51,4 +51,4 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
 #   --task_id "common" \
 #   --output "dataset_info.json" \
 #   --output_state: state.yaml \
-#   --publish_dir "../documentation/reference/datasets/data/"
+#   --publish_dir "../website/documentation/reference/datasets/data/"
