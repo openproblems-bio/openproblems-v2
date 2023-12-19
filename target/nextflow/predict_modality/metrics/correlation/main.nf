@@ -2766,7 +2766,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/bmmc_cite_starter/prediction.h5ad"
+          "resources_test/predict_modality/neurips2021_bmmc_cite/prediction.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2880,7 +2880,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/bmmc_cite_starter/test_mod2.h5ad"
+          "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2928,7 +2928,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/bmmc_cite_starter/score.h5ad"
+          "resources_test/predict_modality/neurips2021_bmmc_cite/score.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2962,8 +2962,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/predict_modality/bmmc_cite_starter",
-        "dest" : "resources_test/predict_modality/bmmc_cite_starter",
+        "path" : "resources_test/predict_modality/neurips2021_bmmc_cite",
+        "dest" : "resources_test/predict_modality/neurips2021_bmmc_cite",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3111,7 +3111,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "1930eb147b0844cd964dee4119279ea264878e69",
+    "git_commit" : "2cf2a7352e6a0ebd36a4cfbc39bbdf6dedf4ae86",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

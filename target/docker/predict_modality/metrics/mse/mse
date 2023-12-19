@@ -176,16 +176,17 @@ function ViashHelp {
   echo "    --input_prediction"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/bmmc_cite_starter/prediction.h5ad"
+  echo "resources_test/predict_modality/neurips2021_bmmc_cite/prediction.h5ad"
   echo ""
   echo "    --input_test_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/bmmc_cite_starter/test_mod2.h5ad"
+  echo "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
-  echo "        example: resources_test/predict_modality/bmmc_cite_starter/score.h5ad"
+  echo "        example:"
+  echo "resources_test/predict_modality/neurips2021_bmmc_cite/score.h5ad"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -410,9 +411,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/metrics mse"
-LABEL org.opencontainers.image.created="2023-12-19T19:23:07Z"
+LABEL org.opencontainers.image.created="2023-12-19T19:41:22Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1930eb147b0844cd964dee4119279ea264878e69"
+LABEL org.opencontainers.image.revision="2cf2a7352e6a0ebd36a4cfbc39bbdf6dedf4ae86"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
