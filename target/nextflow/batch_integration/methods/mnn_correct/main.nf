@@ -3072,7 +3072,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnn_correct",
     "viash_version" : "0.8.0",
-    "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
+    "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

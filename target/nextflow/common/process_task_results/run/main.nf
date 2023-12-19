@@ -2942,7 +2942,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
+          "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
           "executable" : "/nextflow/common/process_task_results/get_results/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results"
@@ -2964,7 +2964,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
+          "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
           "executable" : "/nextflow/common/process_task_results/get_method_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_method_info"
@@ -2986,10 +2986,32 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
+          "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
           "executable" : "/nextflow/common/process_task_results/get_metric_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_metric_info"
+      },
+      {
+        "name" : "common/process_task_results/get_dataset_info",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/get_dataset_info/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "get_dataset_info",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/get_dataset_info/config.vsh.yaml",
+          "functionalityNamespace" : "common/process_task_results",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
+          "executable" : "/nextflow/common/process_task_results/get_dataset_info/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_dataset_info"
       },
       {
         "name" : "common/process_task_results/yaml_to_json",
@@ -3008,7 +3030,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
+          "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
           "executable" : "/nextflow/common/process_task_results/yaml_to_json/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/yaml_to_json"
@@ -3054,7 +3076,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/run",
     "viash_version" : "0.8.0",
-    "git_commit" : "0a228033b6520e9404d0c84b1c8a149ed7c7787f",
+    "git_commit" : "17cc7cfd9310912351e02a4da6495881dad1e678",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3065,6 +3087,7 @@ meta["root_dir"] = getRootDir()
 include { get_results } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_results/main.nf"
 include { get_method_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_method_info/main.nf"
 include { get_metric_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_metric_info/main.nf"
+include { get_dataset_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_dataset_info/main.nf"
 include { yaml_to_json } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/yaml_to_json/main.nf"
 
 // inner workflow
@@ -3105,8 +3128,7 @@ workflow run_wf {
       }
     )
 
-    | yaml_to_json.run(
-      key: "dataset_info",
+    | get_dataset_info.run(
       fromState: [ 
         "input": "input_dataset_info",
         "output": "output_dataset_info"
