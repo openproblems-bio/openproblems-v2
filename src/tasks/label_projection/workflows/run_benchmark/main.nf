@@ -33,6 +33,10 @@ workflow run_wf {
 
   output_ch = input_ch
 
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
+
     // extract the dataset metadata
     | check_dataset_schema.run(
       fromState: [ "input": "input_solution" ],
@@ -105,6 +109,16 @@ workflow run_wf {
       state.dataset_uns.normalization_id == "log_cp10k"
     }
 
+    // extract the scores
+    | check_dataset_schema.run(
+      key: "extract_scores",
+      fromState: [input: "metric_output"],
+      toState: { id, output, state ->
+        def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        state + [score_uns: score_uns]
+      }
+    )
+
     | joinStates { ids, states ->
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
@@ -116,31 +130,16 @@ workflow run_wf {
       def dataset_uns_file = tempFile("dataset_uns.yaml")
       dataset_uns_file.write(dataset_uns_yaml_blob)
 
-      ["output", [output_dataset_info: dataset_uns_file]]
-    }
-
-    // extract the scores
-    | check_dataset_schema.run(
-      key: "extract_scores",
-      fromState: [input: "metric_output"],
-      toState: { id, output, state ->
-        def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        state + [score_uns: score_uns]
-      }
-    )
-    | joinStates { ids, states ->
       // store the scores in a file
       def score_uns = states.collect{it.score_uns}
       def score_uns_yaml_blob = toYamlBlob(score_uns)
       def score_uns_file = tempFile("score_uns.yaml")
       score_uns_file.write(score_uns_yaml_blob)
 
-      ["output", [output_scores: score_uns_file]]
+      ["output", [output_dataset_info: dataset_uns_file, output_scores: score_uns_file, _meta: states[0]._meta]]
     }
 
     | map{ id, state ->
-      // store original id for later use
-      def _meta = [join_id: id]
 
       // store the method configs in a file
       def method_configs = methods.collect{it.config}
@@ -159,10 +158,9 @@ workflow run_wf {
       def new_state = [
         output_method_configs: method_configs_file,
         output_metric_configs: metric_configs_file,
-        output_task_info: task_info_file,
-        _meta: _meta
+        output_task_info: task_info_file
       ]
-      ["output", new_state]
+      ["output", state + new_state]
     }
 
 
