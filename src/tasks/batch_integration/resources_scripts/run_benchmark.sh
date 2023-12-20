@@ -1,18 +1,24 @@
 #!/bin/bash
 
+run_date=$(date +%Y%m%d)
+publish_dir="s3://openproblems-data/resources/batch_integration/results/${run_date}"
 
-# try running on nf tower
-cat > /tmp/params.yaml << 'HERE'
+cat > /tmp/params.yaml << HERE
 input_states: s3://openproblems-data/resources/batch_integration/datasets/**/state.yaml
 rename_keys: 'input_dataset:output_dataset,input_solution:output_solution'
-settings: '{"output": "scores.tsv"}'
 output_state: "state.yaml"
-publish_dir: s3://openproblems-data/resources/batch_integration/results
+publish_dir: "$publish_dir"
 HERE
 
 cat > /tmp/nextflow.config << HERE
 process {
   executor = 'awsbatch'
+}
+
+trace {
+    enabled = true
+    overwrite = true
+    file    = "$publish_dir/trace.txt"
 }
 HERE
 
@@ -24,4 +30,5 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --compute-env 1pK56PjjzeraOOC2LDZvN2 \
   --params-file /tmp/params.yaml \
   --entry-name auto \
-  --config /tmp/nextflow.config
+  --config /tmp/nextflow.config \
+  --labels batch_integration,full
