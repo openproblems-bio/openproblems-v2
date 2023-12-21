@@ -1,7 +1,7 @@
 #!/bin/bash
 
-run_date=$(date +%Y%m%d)
-publish_dir="s3://openproblems-data/resources/denoising/results/${run_date}"
+RUN_ID="run_$(date +%Y-%m-%d_%H-%M-%S)"
+publish_dir="s3://openproblems-data/resources/denoising/results/${RUN_ID}"
 
 # make sure only log_cp10k is used
 cat > /tmp/params.yaml << HERE
