@@ -3,8 +3,9 @@
 run_date=$(date +%Y%m%d)
 publish_dir="s3://openproblems-data/resources/denoising/results/${run_date}"
 
+# make sure only log_cp10k is used
 cat > /tmp/params.yaml << HERE
-input_states: s3://openproblems-data/resources/denoising/datasets/**/state.yaml
+input_states: s3://openproblems-data/resources/denoising/datasets/**/log_cp10k/state.yaml
 rename_keys: 'input_train:output_train,input_test:output_test'
 output_state: "state.yaml"
 publish_dir: "$publish_dir"
