@@ -13,7 +13,7 @@ param_list:
   - id: openproblems_v1/allen_brain_atlas
     obs_cell_type: label
     layer_counts: counts
-    dataset_id: allen_brain_atlas
+    input_id: allen_brain_atlas
     dataset_name: Mouse Brain Atlas
     dataset_url: http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE71585
     dataset_reference: tasic2016adult
@@ -26,7 +26,7 @@ param_list:
     obs_batch: experiment_code
     obs_tissue: tissue
     layer_counts: counts
-    dataset_id: cengen
+    input_id: cengen
     dataset_name: CeNGEN
     dataset_url: https://www.cengen.org
     dataset_reference: hammarlund2018cengen
@@ -39,7 +39,7 @@ param_list:
     obs_batch: batch
     obs_tissue: tissue
     layer_counts: counts
-    dataset_id: immune_cells
+    input_id: immune_cells
     dataset_name: Human immune
     dataset_url: https://theislab.github.io/scib-reproducibility/dataset_immune_cell_hum.html
     dataset_reference: luecken2022benchmarking
@@ -50,7 +50,7 @@ param_list:
   - id: openproblems_v1/mouse_blood_olsson_labelled
     obs_cell_type: celltype
     layer_counts: counts
-    dataset_id: mouse_blood_olsson_labelled
+    input_id: mouse_blood_olsson_labelled
     dataset_name: Mouse myeloid
     dataset_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE70245
     dataset_reference: olsson2016single
@@ -61,7 +61,7 @@ param_list:
   - id: openproblems_v1/mouse_hspc_nestorowa2016
     obs_cell_type: cell_type_label
     layer_counts: counts
-    dataset_id: mouse_hspc_nestorowa2016
+    input_id: mouse_hspc_nestorowa2016
     dataset_name: Mouse HSPC
     dataset_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE81682
     dataset_reference: nestorowa2016single
@@ -73,7 +73,7 @@ param_list:
     obs_cell_type: celltype
     obs_batch: tech
     layer_counts: counts
-    dataset_id: pancreas
+    input_id: pancreas
     dataset_name: Human pancreas
     dataset_url: https://theislab.github.io/scib-reproducibility/dataset_pancreas.html
     dataset_reference: luecken2022benchmarking
@@ -86,7 +86,7 @@ param_list:
   #   obs_cell_type: cell_type
   #   obs_batch: donor_id
   #   layer_counts: counts
-  #   dataset_id: tabula_muris_senis_droplet_lung
+  #   input_id: tabula_muris_senis_droplet_lung
   #   dataset_name: Tabula Muris Senis Lung
   #   dataset_url: https://tabula-muris-senis.ds.czbiohub.org
   #   dataset_reference: tabula2020single
@@ -96,7 +96,7 @@ param_list:
 
   - id: openproblems_v1/tenx_1k_pbmc
     layer_counts: counts
-    dataset_id: tenx_1k_pbmc
+    input_id: tenx_1k_pbmc
     dataset_name: 1k PBMCs
     dataset_url: https://www.10xgenomics.com/resources/datasets/1-k-pbm-cs-from-a-healthy-donor-v-3-chemistry-3-standard-3-0-0
     dataset_reference: 10x2018pbmc
@@ -106,7 +106,7 @@ param_list:
 
   - id: openproblems_v1/tenx_5k_pbmc
     layer_counts: counts
-    dataset_id: tenx_5k_pbmc
+    input_id: tenx_5k_pbmc
     dataset_name: 5k PBMCs
     dataset_url: https://www.10xgenomics.com/resources/datasets/5-k-peripheral-blood-mononuclear-cells-pbm-cs-from-a-healthy-donor-with-cell-surface-proteins-v-3-chemistry-3-1-standard-3-1-0
     dataset_reference: 10x2019pbmc
@@ -117,7 +117,7 @@ param_list:
   - id: openproblems_v1/tnbc_wu2021
     obs_cell_type: celltype_minor
     layer_counts: counts
-    dataset_id: tnbc_wu2021
+    input_id: tnbc_wu2021
     dataset_name: Triple-Negative Breast Cancer
     dataset_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE118389
     dataset_reference: wu2021single
@@ -129,7 +129,7 @@ param_list:
     obs_cell_type: cell_type
     obs_batch: lab
     layer_counts: counts
-    dataset_id: zebrafish
+    input_id: zebrafish
     dataset_name: Zebrafish embryonic cells
     dataset_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE112294
     dataset_reference: wagner2018single
@@ -160,6 +160,6 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --pull-latest \
   --main-script target/nextflow/datasets/workflows/process_openproblems_v1/main.nf \
   --workspace 53907369739130 \
-  --compute-env 7IkB9ckC81O0dgNemcPJTD \
+  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
   --params-file "$params_file" \
   --config /tmp/nextflow.config

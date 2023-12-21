@@ -2821,18 +2821,6 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
-          },
-          {
-            "type" : "string",
-            "name" : "--task_id",
-            "example" : [
-              "batch_integration"
-            ],
-            "required" : true,
-            "direction" : "input",
-            "multiple" : false,
-            "multiple_sep" : ":",
-            "dest" : "par"
           }
         ]
       },
@@ -2843,7 +2831,7 @@ meta = [
             "type" : "file",
             "name" : "--output_scores",
             "description" : "A yaml file containing the scores of each of the methods",
-            "example" : [
+            "default" : [
               "results.json"
             ],
             "must_exist" : true,
@@ -2857,7 +2845,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_method_info",
-            "example" : [
+            "default" : [
               "method_info.json"
             ],
             "must_exist" : true,
@@ -2871,7 +2859,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_metric_info",
-            "example" : [
+            "default" : [
               "metric_info.json"
             ],
             "must_exist" : true,
@@ -2885,7 +2873,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_dataset_info",
-            "example" : [
+            "default" : [
               "dataset_info.json"
             ],
             "must_exist" : true,
@@ -2899,8 +2887,22 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_task_info",
-            "example" : [
+            "default" : [
               "task_info.json"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_qc",
+            "default" : [
+              "quality_control.json"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2942,7 +2944,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/process_task_results/get_results/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results"
@@ -2964,7 +2966,7 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/process_task_results/get_method_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_method_info"
@@ -2986,32 +2988,76 @@ meta = [
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/process_task_results/get_metric_info/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_metric_info"
       },
       {
-        "name" : "common/process_task_results/yaml_to_json",
+        "name" : "common/process_task_results/get_dataset_info",
         "repository" : {
           "type" : "local",
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/yaml_to_json/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/get_dataset_info/config.vsh.yaml",
         "configInfo" : {
-          "functionalityName" : "yaml_to_json",
+          "functionalityName" : "get_dataset_info",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/yaml_to_json/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/get_dataset_info/config.vsh.yaml",
           "functionalityNamespace" : "common/process_task_results",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
-          "executable" : "/nextflow/common/process_task_results/yaml_to_json/main.nf"
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "executable" : "/nextflow/common/process_task_results/get_dataset_info/main.nf"
         },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/yaml_to_json"
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_dataset_info"
+      },
+      {
+        "name" : "common/process_task_results/get_task_info",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/get_task_info/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "get_task_info",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/get_task_info/config.vsh.yaml",
+          "functionalityNamespace" : "common/process_task_results",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "executable" : "/nextflow/common/process_task_results/get_task_info/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_task_info"
+      },
+      {
+        "name" : "common/process_task_results/generate_qc",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/generate_qc/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "generate_qc",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/process_task_results/generate_qc/config.vsh.yaml",
+          "functionalityNamespace" : "common/process_task_results",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "executable" : "/nextflow/common/process_task_results/generate_qc/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/generate_qc"
       }
     ],
     "set_wd_to_resources_dir" : false
@@ -3054,7 +3100,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/run",
     "viash_version" : "0.8.0",
-    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3065,7 +3111,9 @@ meta["root_dir"] = getRootDir()
 include { get_results } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_results/main.nf"
 include { get_method_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_method_info/main.nf"
 include { get_metric_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_metric_info/main.nf"
-include { yaml_to_json } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/yaml_to_json/main.nf"
+include { get_dataset_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_dataset_info/main.nf"
+include { get_task_info } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/get_task_info/main.nf"
+include { generate_qc } from "${meta.resources_dir}/../../../../nextflow/common/process_task_results/generate_qc/main.nf"
 
 // inner workflow
 // user-provided Nextflow code
@@ -3083,74 +3131,75 @@ workflow run_wf {
   main:
   output_ch = input_ch
 
+    | get_task_info.run(
+      key: "task_info",
+      fromState: [ 
+        "input": "input_task_info"
+      ],
+      toState: ["output_task": "output"]
+    )
+
+    // extract task id from task info
+    | map { id, state ->
+      def task_id = readJson(state.output_task).task_id
+      [id, state + ["task_id": task_id]]
+    }
+
     | get_method_info.run(
       fromState: [ 
         "input": "input_method_configs",
-        "task_id" : "task_id",
-        "output": "output_method_info"
+        "task_id" : "task_id"
       ],
-      toState: { id, output, state ->
-        state + [output_method: output.output]
-      }
+      toState: ["output_method": "output"]
     )
 
     | get_metric_info.run(
       fromState: [ 
         "input": "input_metric_configs",
+        "task_id" : "task_id"
+      ],
+      toState: ["output_metric": "output"]
+    )
+
+    | get_dataset_info.run(
+      fromState: [
         "task_id" : "task_id",
-        "output": "output_metric_info"
-      ],
-      toState: { id, output, state ->
-        state + [output_metric: output.output]
-      }
-    )
-
-    | yaml_to_json.run(
-      key: "dataset_info",
-      fromState: [ 
         "input": "input_dataset_info",
-        "output": "output_dataset_info"
       ],
-      toState: { id, output, state ->
-        state + [output_dataset: output.output]
-      }
-    )
-
-    | yaml_to_json.run(
-      key: "task_info",
-      fromState: [ 
-        "input": "input_task_info",
-        "output": "output_task_info"
-      ],
-      toState: { id, output, state ->
-        state + [output_task: output.output]
-      }
+      toState: ["output_dataset": "output"]
     )
 
     | get_results.run(
       fromState: [ 
+        "task_id": "task_id",
         "input_scores": "input_scores",
-        "input_execution" : "input_execution",
-        "output": "output_scores"
+        "input_execution" : "input_execution"
       ],
-      toState: { id, output, state ->
-        state + [output_results: output.output]
-      }
+      toState: ["output_results": "output"]
+    )
+
+    | generate_qc.run(
+      fromState: [
+        "task_info": "output_task",
+        "method_info": "output_method",
+        "metric_info": "output_metric",
+        "dataset_info": "output_dataset",
+        "results": "output_results"
+      ],
+      toState: ["output_qc": "output"]
     )
 
     | map{ id, state ->
-      def _meta = [join_id: id]
-
       def new_state = [
         output_scores: state.output_results,
         output_method_info: state.output_method,
         output_metric_info: state.output_metric,
         output_dataset_info: state.output_dataset,
         output_task_info: state.output_task,
-        _meta: _meta
+        output_qc: state.output_qc
       ]
 
-      ["output", new_state]
+      [id, new_state]
     }
 
   emit:

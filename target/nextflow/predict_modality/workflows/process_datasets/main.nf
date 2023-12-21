@@ -2744,16 +2744,17 @@ meta = [
               "label" : "Raw dataset RNA",
               "summary" : "The RNA modality of the raw dataset.",
               "slots" : {
-                "X" : {
-                  "type" : "double",
-                  "description" : "Normalized expression values",
-                  "required" : true
-                },
                 "layers" : [
                   {
                     "type" : "integer",
                     "name" : "counts",
                     "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
                     "required" : true
                   }
                 ],
@@ -2840,7 +2841,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/common/bmmc_cite_starter/dataset_rna.h5ad"
+              "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2857,16 +2858,17 @@ meta = [
               "label" : "Raw dataset mod2",
               "summary" : "The second modality of the raw dataset. Must be an ADT or an ATAC dataset",
               "slots" : {
-                "X" : {
-                  "type" : "double",
-                  "description" : "Normalized expression values",
-                  "required" : true
-                },
                 "layers" : [
                   {
                     "type" : "integer",
                     "name" : "counts",
                     "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalized expression values",
                     "required" : true
                   }
                 ],
@@ -2900,6 +2902,42 @@ meta = [
                     "required" : true
                   },
                   {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
                     "type" : "string",
                     "name" : "gene_activity_var_names",
                     "description" : "Names of the gene activity matrix",
@@ -2917,7 +2955,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/common/bmmc_cite_starter/dataset_adt.h5ad"
+              "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3006,7 +3044,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/bmmc_cite_starter/train_mod1.h5ad"
+              "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3090,7 +3128,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/bmmc_cite_starter/train_mod2.h5ad"
+              "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3204,7 +3242,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/bmmc_cite_starter/test_mod1.h5ad"
+              "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3318,7 +3356,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/bmmc_cite_starter/test_mod2.h5ad"
+              "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3369,7 +3407,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3391,7 +3429,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3437,7 +3475,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

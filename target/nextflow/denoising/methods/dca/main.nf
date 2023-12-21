@@ -2952,7 +2952,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca",
     "viash_version" : "0.8.0",
-    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3002,14 +3002,14 @@ print("load input data", flush=True)
 input_train = ad.read_h5ad(par['input_train'])
 
 print("move layer to X", flush=True)
-input_train.X = input_train.layers["counts"]
+input_dca = ad.AnnData(X=input_train.layers["counts"])
+del input_train.X
 
 print("running dca", flush=True)
-dca(input_train, epochs=par["epochs"])
+dca(input_dca, epochs=par["epochs"])
 
 print("moving X back to layer", flush=True)
-input_train.layers["denoised"] = scipy.sparse.csr_matrix(input_train.X)
-del input_train.X
+input_train.layers["denoised"] = scipy.sparse.csr_matrix(input_dca.X)
 
 print("Writing data", flush=True)
 input_train.uns["method_id"] = meta["functionality_name"]

@@ -2852,10 +2852,66 @@ meta = [
         "arguments" : [
           {
             "type" : "file",
-            "name" : "--output",
-            "description" : "A TSV file containing the scores of each of the methods",
-            "example" : [
-              "scores.tsv"
+            "name" : "--output_scores",
+            "description" : "A yaml file containing the scores of each of the methods",
+            "default" : [
+              "score_uns.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_method_configs",
+            "default" : [
+              "method_configs.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_metric_configs",
+            "default" : [
+              "metric_configs.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_dataset_info",
+            "default" : [
+              "dataset_uns.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : true,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--output_task_info",
+            "default" : [
+              "task_info.yaml"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2875,6 +2931,11 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/workflows/run_benchmark/",
         "entrypoint" : "run_wf"
+      },
+      {
+        "type" : "file",
+        "path" : "../../api/task_info.yaml",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/workflows/run_benchmark/"
       }
     ],
     "status" : "enabled",
@@ -2896,7 +2957,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2918,7 +2979,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -2940,7 +3001,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/control_methods/no_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising"
@@ -2962,7 +3023,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/control_methods/perfect_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising"
@@ -2984,7 +3045,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/methods/alra/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra"
@@ -3006,7 +3067,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/methods/dca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca"
@@ -3028,7 +3089,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/methods/knn_smoothing/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/knn_smoothing"
@@ -3050,7 +3111,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/methods/magic/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
@@ -3072,7 +3133,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse"
@@ -3094,7 +3155,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/denoising/metrics/poisson/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson"
@@ -3140,7 +3201,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3173,7 +3234,8 @@ workflow run_wf {
   input_ch
 
   main:
-  // construct a map of methods (id -> method_module)
+
+  // construct list of methods
   methods = [
     no_denoising,
     perfect_denoising,
@@ -3183,55 +3245,47 @@ workflow run_wf {
     magic
   ]
 
+  // construct list of metrics
   metrics = [
     mse,
     poisson
   ]
-  
 
-  output_ch = input_ch
-    
-    // store original id for later use
-    | map{ id, state ->
-      [id, state + [_meta: [join_id: id]]]
+  /****************************
+   * EXTRACT DATASET METADATA *
+   ****************************/
+  dataset_ch = input_ch
+    // store join id
+    | map{ id, state -> 
+      [id, state + ["_meta": [join_id: id]]]
     }
-
-    // extract the dataset metadata
+    // extract dataset metadata
     | check_dataset_schema.run(
-      fromState: [ "input": "input_train" ],
+      fromState: [ "input": "input_test" ],
       toState: { id, output, state ->
         // load output yaml file
-        def metadata = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        // add metadata from file to state
-        state + metadata
+        def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        state + [dataset_uns: dataset_uns]
       }
     )
+    
+  /***************************
+   * RUN METHODS AND METRICS *
+   ***************************/
+  score_ch = dataset_ch
 
     // run all methods
     | runEach(
       components: methods,
-
-      // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, comp ->
-        def norm = state.normalization_id
-        def pref = comp.config.functionality.info.preferred_normalization
-        // if the preferred normalisation is none at all,
-        // we can pass whichever dataset we want
-        (norm == "log_cp10k" && pref == "counts") || norm == pref
-      },
-
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
         id + "." + comp.config.functionality.name
       },
-
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
-          input_train: "input_train",
-          input_test: "input_test"
-        ],
-
-
+        input_train: "input_train",
+        input_test: "input_test"
+      ],
       // use 'toState' to publish that component's outputs to the overall state
       toState: { id, output, state, comp ->
         state + [
@@ -3244,6 +3298,9 @@ workflow run_wf {
     // run all metrics
     | runEach(
       components: metrics,
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
+      },
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
         input_test: "input_test", 
@@ -3258,25 +3315,83 @@ workflow run_wf {
       }
     )
 
-    // join all events into a new event where the new id is simply "output" and the new state consists of:
-    //   - "input": a list of score h5ads
-    //   - "output": the output argument of this workflow
-    | joinStates{ ids, states ->
-      def new_id = "output"
+  /******************************
+   * GENERATE OUTPUT YAML FILES *
+   ******************************/
+  // TODO: can we store everything below in a separate helper function?
+  // NOTE: the 'denoising' task doesn't use normalized data,
+  // so code related to normalization_ids is commented out
+
+  // extract the dataset metadata
+  dataset_meta_ch = dataset_ch
+    // // only keep one of the normalization methods
+    // | filter{ id, state ->
+    //   state.dataset_uns.normalization_id == "log_cp10k"
+    // }
+    | joinStates { ids, states ->
+      // store the dataset metadata in a file
+      def dataset_uns = states.collect{state ->
+        def uns = state.dataset_uns.clone()
+        // uns.remove("normalization_id")
+        uns
+      }
+      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
+      def dataset_uns_file = tempFile("dataset_uns.yaml")
+      dataset_uns_file.write(dataset_uns_yaml_blob)
+
+      ["output", [output_dataset_info: dataset_uns_file]]
+    }
+
+  output_ch = score_ch
+
+    // extract the scores
+    | check_dataset_schema.run(
+      key: "extract_scores",
+      fromState: [input: "metric_output"],
+      toState: { id, output, state ->
+        def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
+        state + [score_uns: score_uns]
+      }
+    )
+
+    | joinStates { ids, states ->
+      // store the method configs in a file
+      def method_configs = methods.collect{it.config}
+      def method_configs_yaml_blob = toYamlBlob(method_configs)
+      def method_configs_file = tempFile("method_configs.yaml")
+      method_configs_file.write(method_configs_yaml_blob)
+
+      // store the metric configs in a file
+      def metric_configs = metrics.collect{it.config}
+      def metric_configs_yaml_blob = toYamlBlob(metric_configs)
+      def metric_configs_file = tempFile("metric_configs.yaml")
+      metric_configs_file.write(metric_configs_yaml_blob)
+
+      def task_info_file = meta.resources_dir.resolve("task_info.yaml")
+
+      // store the scores in a file
+      def score_uns = states.collect{it.score_uns}
+      def score_uns_yaml_blob = toYamlBlob(score_uns)
+      def score_uns_file = tempFile("score_uns.yaml")
+      score_uns_file.write(score_uns_yaml_blob)
+
       def new_state = [
-        input: states.collect{it.metric_output},
+        output_method_configs: method_configs_file,
+        output_metric_configs: metric_configs_file,
+        output_task_info: task_info_file,
+        output_scores: score_uns_file,
         _meta: states[0]._meta
       ]
-      [new_id, new_state]
-    }
-    
-    // convert to tsv and publish
-  | extract_scores.run(
-    fromState: ["input"],
-    toState: ["output"]
-  )
 
-  | setState(["output", "_meta"])
+      ["output", new_state]
+    }
+
+    // merge all of the output data 
+    | mix(dataset_meta_ch)
+    | joinStates{ ids, states ->
+      def mergedStates = states.inject([:]) { acc, m -> acc + m }
+      [ids[0], mergedStates]
+    }
 
   emit:
   output_ch

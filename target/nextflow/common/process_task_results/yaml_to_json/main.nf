@@ -2867,7 +2867,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/yaml_to_json",
     "viash_version" : "0.8.0",
-    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2882,7 +2882,6 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-from os import path
 import yaml
 import json
 
@@ -2915,7 +2914,6 @@ dep = {
 
 with open(par["input"], "r") as f:
     yaml_file = yaml.safe_load(f)
-
 
 with open(par["output"], "w") as out:
     json.dump(yaml_file, out, indent=2)

@@ -2984,7 +2984,7 @@ meta = [
             "type" : "file",
             "name" : "--output_scores",
             "description" : "A yaml file containing the scores of each of the methods",
-            "example" : [
+            "default" : [
               "score_uns.yaml"
             ],
             "must_exist" : true,
@@ -2998,7 +2998,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_method_configs",
-            "example" : [
+            "default" : [
               "method_configs.yaml"
             ],
             "must_exist" : true,
@@ -3012,7 +3012,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_metric_configs",
-            "example" : [
+            "default" : [
               "metric_configs.yaml"
             ],
             "must_exist" : true,
@@ -3026,7 +3026,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_dataset_info",
-            "example" : [
+            "default" : [
               "dataset_uns.yaml"
             ],
             "must_exist" : true,
@@ -3040,7 +3040,7 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_task_info",
-            "example" : [
+            "default" : [
               "task_info.yaml"
             ],
             "must_exist" : true,
@@ -3064,8 +3064,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "src/tasks/batch_integration/api/task_info.yaml",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+        "path" : "../../api/task_info.yaml",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/workflows/run_benchmark/"
       }
     ],
     "status" : "enabled",
@@ -3087,7 +3087,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3109,7 +3109,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -3131,7 +3131,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/bbknn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/bbknn"
@@ -3153,7 +3153,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/combat/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/combat"
@@ -3175,7 +3175,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/fastmnn_embedding/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_embedding"
@@ -3197,7 +3197,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/fastmnn_feature/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_feature"
@@ -3219,7 +3219,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/liger/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/liger"
@@ -3241,7 +3241,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/mnn_correct/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnn_correct"
@@ -3263,7 +3263,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/mnnpy/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnnpy"
@@ -3285,7 +3285,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/pyliger/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/pyliger"
@@ -3307,7 +3307,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/scalex_embed/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_embed"
@@ -3329,7 +3329,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/scalex_feature/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_feature"
@@ -3351,7 +3351,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/scanorama_embed/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_embed"
@@ -3373,7 +3373,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/scanorama_feature/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_feature"
@@ -3395,7 +3395,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/scanvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanvi"
@@ -3417,7 +3417,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/methods/scvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scvi"
@@ -3439,7 +3439,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/control_methods/no_integration_batch/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/no_integration_batch"
@@ -3461,7 +3461,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/control_methods/random_embed_cell/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_embed_cell"
@@ -3483,7 +3483,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/control_methods/random_embed_cell_jitter/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_embed_cell_jitter"
@@ -3505,7 +3505,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/control_methods/random_integration/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_integration"
@@ -3527,7 +3527,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/transformers",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/transformers/feature_to_embed/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/feature_to_embed"
@@ -3549,7 +3549,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/transformers",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/transformers/embed_to_graph/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph"
@@ -3571,7 +3571,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/asw_batch/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_batch"
@@ -3593,7 +3593,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/asw_label/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label"
@@ -3615,7 +3615,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/cell_cycle_conservation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/cell_cycle_conservation"
@@ -3637,7 +3637,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/clustering_overlap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/clustering_overlap"
@@ -3659,7 +3659,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/graph_connectivity/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/graph_connectivity"
@@ -3681,7 +3681,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/hvg_overlap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/hvg_overlap"
@@ -3703,7 +3703,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/isolated_label_asw/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/isolated_label_asw"
@@ -3725,7 +3725,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/isolated_label_f1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/isolated_label_f1"
@@ -3747,7 +3747,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/kbet/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/kbet"
@@ -3769,7 +3769,7 @@ meta = [
           "functionalityNamespace" : "batch_integration/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
           "executable" : "/nextflow/batch_integration/metrics/pcr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/pcr"
@@ -3815,7 +3815,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "6927fe99856d245de7d393f112a59e02c9c4bce9",
+    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3871,7 +3871,7 @@ workflow run_wf {
 
   main:
 
-  // collect method list
+  // construct list of methods
   methods = [
     bbknn,
     combat,
@@ -3893,7 +3893,7 @@ workflow run_wf {
     random_integration
   ]
 
-  // collect metric list
+  // construct list of metrics
   metrics = [
     asw_batch,
     asw_label,
@@ -3907,10 +3907,15 @@ workflow run_wf {
     pcr
   ]
 
-  // process input parameter channel
+  /****************************
+   * EXTRACT DATASET METADATA *
+   ****************************/
   dataset_ch = input_ch
-
-    // extract the dataset metadata
+    // store join id
+    | map{ id, state -> 
+      [id, state + ["_meta": [join_id: id]]]
+    }
+    // extract dataset metadata
     | check_dataset_schema.run(
       fromState: [input: "input_solution"],
       toState: { id, output, state ->
@@ -3919,6 +3924,9 @@ workflow run_wf {
       }
     )
 
+  /***************************
+   * RUN METHODS AND METRICS *
+   ***************************/
   // run all methods
   method_out_ch1 = dataset_ch
     | runEach(
@@ -4010,16 +4018,18 @@ workflow run_wf {
       }
     )
 
+
+  /******************************
+   * GENERATE OUTPUT YAML FILES *
+   ******************************/
   // TODO: can we store everything below in a separate helper function?
 
   // extract the dataset metadata
   dataset_meta_ch = dataset_ch
-
     // only keep one of the normalization methods
     | filter{ id, state ->
       state.dataset_uns.normalization_id == "log_cp10k"
     }
-
     | joinStates { ids, states ->
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
@@ -4034,8 +4044,8 @@ workflow run_wf {
       ["output", [output_dataset_info: dataset_uns_file]]
     }
 
-  // extract the scores
-  metric_uns_ch = score_ch
+  output_ch = score_ch
+    // extract scores
     | check_dataset_schema.run(
       key: "extract_scores",
       fromState: [input: "metric_output"],
@@ -4044,22 +4054,8 @@ workflow run_wf {
         state + [score_uns: score_uns]
       }
     )
+
     | joinStates { ids, states ->
-      // store the scores in a file
-      def score_uns = states.collect{it.score_uns}
-      def score_uns_yaml_blob = toYamlBlob(score_uns)
-      def score_uns_file = tempFile("score_uns.yaml")
-      score_uns_file.write(score_uns_yaml_blob)
-
-      ["output", [output_scores: score_uns_file]]
-    }
-
-  // store the method and metric configs
-  comp_config_ch = input_ch
-    | map{ id, state ->
-      // store original id for later use
-      def _meta = [join_id: id]
-
       // store the method configs in a file
       def method_configs = methods.collect{it.config}
       def method_configs_yaml_blob = toYamlBlob(method_configs)
@@ -4072,23 +4068,29 @@ workflow run_wf {
       def metric_configs_file = tempFile("metric_configs.yaml")
       metric_configs_file.write(metric_configs_yaml_blob)
 
+      // store the task info in a file
       def task_info_file = meta.resources_dir.resolve("task_info.yaml")
 
+      // store the scores in a file
+      def score_uns = states.collect{it.score_uns}
+      def score_uns_yaml_blob = toYamlBlob(score_uns)
+      def score_uns_file = tempFile("score_uns.yaml")
+      score_uns_file.write(score_uns_yaml_blob)
+
+      // create state
       def new_state = [
         output_method_configs: method_configs_file,
         output_metric_configs: metric_configs_file,
         output_task_info: task_info_file,
-        _meta: _meta
+        output_scores: score_uns_file,
+        _meta: states[0]._meta
       ]
+
       ["output", new_state]
     }
 
-  // merge all of the output data 
-  // todo: add task info?
-
-  // todo: add trace log?
-  output_ch = comp_config_ch
-    | mix(metric_uns_ch, dataset_meta_ch)
+    // merge all of the output data 
+    | mix(dataset_meta_ch)
     | joinStates{ ids, states ->
       def mergedStates = states.inject([:]) { acc, m -> acc + m }
       [ids[0], mergedStates]
