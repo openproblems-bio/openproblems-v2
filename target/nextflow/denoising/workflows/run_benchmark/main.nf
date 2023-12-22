@@ -2934,8 +2934,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "src/tasks/denoising/api/task_info.yaml",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+        "path" : "../../api/task_info.yaml",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/denoising/workflows/run_benchmark/"
       }
     ],
     "status" : "enabled",
@@ -2957,7 +2957,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2979,7 +2979,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -3001,7 +3001,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/control_methods/no_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising"
@@ -3023,7 +3023,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/control_methods/perfect_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising"
@@ -3045,7 +3045,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/methods/alra/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra"
@@ -3067,7 +3067,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/methods/dca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca"
@@ -3089,7 +3089,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/methods/knn_smoothing/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/knn_smoothing"
@@ -3111,7 +3111,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/methods/magic/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
@@ -3133,7 +3133,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse"
@@ -3155,7 +3155,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/denoising/metrics/poisson/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson"
@@ -3201,7 +3201,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+    "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3234,7 +3234,8 @@ workflow run_wf {
   input_ch
 
   main:
-  // construct a map of methods (id -> method_module)
+
+  // construct list of methods
   methods = [
     no_denoising,
     perfect_denoising,
@@ -3244,18 +3245,21 @@ workflow run_wf {
     magic
   ]
 
+  // construct list of metrics
   metrics = [
     mse,
     poisson
   ]
-  
 
-  output_ch = input_ch
-
-    | map{ id, state ->
-      [id, state + [_meta: [join_id: id]]]
+  /****************************
+   * EXTRACT DATASET METADATA *
+   ****************************/
+  dataset_ch = input_ch
+    // store join id
+    | map{ id, state -> 
+      [id, state + ["_meta": [join_id: id]]]
     }
-    // extract the dataset metadata
+    // extract dataset metadata
     | check_dataset_schema.run(
       fromState: [ "input": "input_test" ],
       toState: { id, output, state ->
@@ -3264,23 +3268,24 @@ workflow run_wf {
         state + [dataset_uns: dataset_uns]
       }
     )
+    
+  /***************************
+   * RUN METHODS AND METRICS *
+   ***************************/
+  score_ch = dataset_ch
 
     // run all methods
     | runEach(
       components: methods,
-
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
         id + "." + comp.config.functionality.name
       },
-
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
-          input_train: "input_train",
-          input_test: "input_test"
-        ],
-
-
+        input_train: "input_train",
+        input_test: "input_test"
+      ],
       // use 'toState' to publish that component's outputs to the overall state
       toState: { id, output, state, comp ->
         state + [
@@ -3293,6 +3298,9 @@ workflow run_wf {
     // run all metrics
     | runEach(
       components: metrics,
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
+      },
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
         input_test: "input_test", 
@@ -3307,6 +3315,35 @@ workflow run_wf {
       }
     )
 
+  /******************************
+   * GENERATE OUTPUT YAML FILES *
+   ******************************/
+  // TODO: can we store everything below in a separate helper function?
+  // NOTE: the 'denoising' task doesn't use normalized data,
+  // so code related to normalization_ids is commented out
+
+  // extract the dataset metadata
+  dataset_meta_ch = dataset_ch
+    // // only keep one of the normalization methods
+    // | filter{ id, state ->
+    //   state.dataset_uns.normalization_id == "log_cp10k"
+    // }
+    | joinStates { ids, states ->
+      // store the dataset metadata in a file
+      def dataset_uns = states.collect{state ->
+        def uns = state.dataset_uns.clone()
+        // uns.remove("normalization_id")
+        uns
+      }
+      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
+      def dataset_uns_file = tempFile("dataset_uns.yaml")
+      dataset_uns_file.write(dataset_uns_yaml_blob)
+
+      ["output", [output_dataset_info: dataset_uns_file]]
+    }
+
+  output_ch = score_ch
+
     // extract the scores
     | check_dataset_schema.run(
       key: "extract_scores",
@@ -3318,27 +3355,6 @@ workflow run_wf {
     )
 
     | joinStates { ids, states ->
-
-      // store the dataset metadata in a file
-      def dataset_uns = states.collect{state ->
-        state.dataset_uns.clone()
-      }
-      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
-      def dataset_uns_file = tempFile("dataset_uns.yaml")
-      dataset_uns_file.write(dataset_uns_yaml_blob)
-
-      // store the scores in a file
-      def score_uns = states.collect{it.score_uns}
-      def score_uns_yaml_blob = toYamlBlob(score_uns)
-      def score_uns_file = tempFile("score_uns.yaml")
-      score_uns_file.write(score_uns_yaml_blob)
-
-      ["output", [output_scores: score_uns_file, output_dataset_info: dataset_uns_file, _meta: states[0]._meta]]
-    }
-
-    // store the method and metric configs
-    | map{ id, state ->
-
       // store the method configs in a file
       def method_configs = methods.collect{it.config}
       def method_configs_yaml_blob = toYamlBlob(method_configs)
@@ -3353,13 +3369,28 @@ workflow run_wf {
 
       def task_info_file = meta.resources_dir.resolve("task_info.yaml")
 
+      // store the scores in a file
+      def score_uns = states.collect{it.score_uns}
+      def score_uns_yaml_blob = toYamlBlob(score_uns)
+      def score_uns_file = tempFile("score_uns.yaml")
+      score_uns_file.write(score_uns_yaml_blob)
+
       def new_state = [
         output_method_configs: method_configs_file,
         output_metric_configs: metric_configs_file,
-        output_task_info: task_info_file
+        output_task_info: task_info_file,
+        output_scores: score_uns_file,
+        _meta: states[0]._meta
       ]
-      
-      ["output", state + new_state]
+
+      ["output", new_state]
+    }
+
+    // merge all of the output data 
+    | mix(dataset_meta_ch)
+    | joinStates{ ids, states ->
+      def mergedStates = states.inject([:]) { acc, m -> acc + m }
+      [ids[0], mergedStates]
     }
 
   emit:

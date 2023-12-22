@@ -3084,7 +3084,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scalex_feature",
     "viash_version" : "0.8.0",
-    "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+    "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

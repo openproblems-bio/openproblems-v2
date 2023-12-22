@@ -2974,8 +2974,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "src/tasks/label_projection/api/task_info.yaml",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+        "path" : "../../api/task_info.yaml",
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/workflows/run_benchmark/"
       }
     ],
     "status" : "enabled",
@@ -2997,7 +2997,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3019,7 +3019,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/common/extract_scores/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
@@ -3041,7 +3041,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/random_features"
@@ -3063,7 +3063,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/true_features"
@@ -3085,7 +3085,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/methods/densmap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/densmap"
@@ -3107,7 +3107,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/methods/neuralee/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/neuralee"
@@ -3129,7 +3129,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/methods/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca"
@@ -3151,10 +3151,32 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/methods/phate/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/phate"
+      },
+      {
+        "name" : "dimensionality_reduction/methods/simlr",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/simlr/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "simlr",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/simlr/config.vsh.yaml",
+          "functionalityNamespace" : "dimensionality_reduction/methods",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
+          "executable" : "/nextflow/dimensionality_reduction/methods/simlr/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/simlr"
       },
       {
         "name" : "dimensionality_reduction/methods/tsne",
@@ -3173,7 +3195,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/methods/tsne/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/tsne"
@@ -3195,7 +3217,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/methods/umap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/umap"
@@ -3217,7 +3239,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/coranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/coranking"
@@ -3239,7 +3261,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/density_preservation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation"
@@ -3261,7 +3283,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/distance_correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation"
@@ -3283,7 +3305,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+          "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
           "executable" : "/nextflow/dimensionality_reduction/metrics/trustworthiness/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness"
@@ -3329,7 +3351,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+    "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3345,6 +3367,7 @@ include { densmap } from "${meta.resources_dir}/../../../../nextflow/dimensional
 include { neuralee } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/methods/neuralee/main.nf"
 include { pca } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/methods/pca/main.nf"
 include { phate } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/methods/phate/main.nf"
+include { simlr } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/methods/simlr/main.nf"
 include { tsne } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/methods/tsne/main.nf"
 include { umap } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/methods/umap/main.nf"
 include { coranking } from "${meta.resources_dir}/../../../../nextflow/dimensionality_reduction/metrics/coranking/main.nf"
@@ -3367,7 +3390,7 @@ workflow run_wf {
 
   main:
 
-  // collect method list
+  // construct list of methods
   methods = [
     random_features,
     true_features,
@@ -3375,11 +3398,12 @@ workflow run_wf {
     neuralee,
     pca,
     phate,
+    simlr,
     tsne,
     umap
   ]
 
-  // collect metric list
+  // construct list of metrics
   metrics = [
     coranking,
     density_preservation,
@@ -3387,13 +3411,15 @@ workflow run_wf {
     trustworthiness
   ]
 
-  output_ch = input_ch
 
-    // store original id for later use
-    | map{ id, state ->
-      [id, state + [_meta: [join_id: id]]]
+  /****************************
+   * EXTRACT DATASET METADATA *
+   ****************************/
+  dataset_ch = input_ch
+    // store join id
+    | map{ id, state -> 
+      [id, state + ["_meta": [join_id: id]]]
     }
-
     // extract the dataset metadata
     | check_dataset_schema.run(
       fromState: [input: "input_solution"],
@@ -3402,6 +3428,11 @@ workflow run_wf {
         state + [dataset_uns: dataset_uns]
       }
     )
+
+  /***************************
+   * RUN METHODS AND METRICS *
+   ***************************/
+  score_ch = dataset_ch
 
     // run all methods
     | runEach(
@@ -3444,6 +3475,9 @@ workflow run_wf {
     // run all metrics
     | runEach(
       components: metrics,
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
+      },
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: { id, state, comp ->
         [
@@ -3460,11 +3494,32 @@ workflow run_wf {
       }
     )
 
-    // extract the dataset metadata
+  /******************************
+   * GENERATE OUTPUT YAML FILES *
+   ******************************/
+  // TODO: can we store everything below in a separate helper function?
+
+  // extract the dataset metadata
+  dataset_meta_ch = dataset_ch
     // only keep one of the normalization methods
     | filter{ id, state ->
       state.dataset_uns.normalization_id == "log_cp10k"
     }
+    | joinStates { ids, states ->
+      // store the dataset metadata in a file
+      def dataset_uns = states.collect{state ->
+        def uns = state.dataset_uns.clone()
+        uns.remove("normalization_id")
+        uns
+      }
+      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
+      def dataset_uns_file = tempFile("dataset_uns.yaml")
+      dataset_uns_file.write(dataset_uns_yaml_blob)
+
+      ["output", [output_dataset_info: dataset_uns_file]]
+    }
+
+  output_ch = score_ch
 
     // extract the scores
     | check_dataset_schema.run(
@@ -3477,29 +3532,6 @@ workflow run_wf {
     )
 
     | joinStates { ids, states ->
-
-      // store the dataset metadata in a file
-      def dataset_uns = states.collect{state ->
-        def uns = state.dataset_uns.clone()
-        uns.remove("normalization_id")
-        uns
-      }
-      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
-      def dataset_uns_file = tempFile("dataset_uns.yaml")
-      dataset_uns_file.write(dataset_uns_yaml_blob)
-
-      // store the scores in a file
-      def score_uns = states.collect{it.score_uns}
-      def score_uns_yaml_blob = toYamlBlob(score_uns)
-      def score_uns_file = tempFile("score_uns.yaml")
-      score_uns_file.write(score_uns_yaml_blob)
-
-      ["output", [output_scores: score_uns_file, output_dataset_info: dataset_uns_file, _meta: states[0]._meta]]
-    }
-
-    // store the method and metric configs
-    | map{ id, state ->
-
       // store the method configs in a file
       def method_configs = methods.collect{it.config}
       def method_configs_yaml_blob = toYamlBlob(method_configs)
@@ -3514,13 +3546,28 @@ workflow run_wf {
 
       def task_info_file = meta.resources_dir.resolve("task_info.yaml")
 
+      // store the scores in a file
+      def score_uns = states.collect{it.score_uns}
+      def score_uns_yaml_blob = toYamlBlob(score_uns)
+      def score_uns_file = tempFile("score_uns.yaml")
+      score_uns_file.write(score_uns_yaml_blob)
+
       def new_state = [
         output_method_configs: method_configs_file,
         output_metric_configs: metric_configs_file,
-        output_task_info: task_info_file
+        output_task_info: task_info_file,
+        output_scores: score_uns_file,
+        _meta: states[0]._meta
       ]
-      
-      ["output", state + new_state]
+
+      ["output", new_state]
+    }
+
+    // merge all of the output data 
+    | mix(dataset_meta_ch)
+    | joinStates{ ids, states ->
+      def mergedStates = states.inject([:]) { acc, m -> acc + m }
+      [ids[0], mergedStates]
     }
 
   emit:

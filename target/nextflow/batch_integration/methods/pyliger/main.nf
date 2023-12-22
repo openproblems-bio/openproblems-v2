@@ -2993,7 +2993,7 @@ meta = [
       "label" : "pyliger",
       "summary" : "Python implementation of LIGER (Linked Inference of Genomic Experimental Relationships",
       "description" : "LIGER (installed as rliger) is a package for integrating and analyzing multiple \nsingle-cell datasets, developed by the Macosko lab and maintained/extended by the \nWelch lab. It relies on integrative non-negative matrix factorization to identify \nshared and dataset-specific factors.\n",
-      "reference" : "welch2019",
+      "reference" : "welch2019single",
       "repository_url" : "https://github.com/welch-lab/pyliger",
       "documentation_url" : "https://github.com/welch-lab/pyliger",
       "preferred_normalization" : "log_cp10k",
@@ -3079,7 +3079,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/pyliger",
     "viash_version" : "0.8.0",
-    "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+    "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

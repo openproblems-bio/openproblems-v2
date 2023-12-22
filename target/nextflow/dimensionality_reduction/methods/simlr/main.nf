@@ -2946,8 +2946,8 @@ meta = [
     ],
     "info" : {
       "label" : "SIMLR",
-      "summary" : "Multikernal-based learning of distance metrics from gene expression data for dimension reduction, clustering and visulaization.",
-      "description" : "Single-cell interpretation via multikernel learning (SIMLR) learns cell-to-cell similarity measures from single-cell RNA-seq data in using Gaussian kernels with various hyperparameters in order to perform dimension reduction, clustering and visualization. \nSIMLR assumes that if C separable populations exist among the N cells, then the similarity matrix should have an approximate block-diagonal structure with C blocks whereby cells have larger similarities to other cells within the same subpopulations. Learned similarity between two cells should be small if the Euclidean distance between them is large. The cell-to-cell similarity is computed using an optimization framework over an N x N similarity matrix, a low-dimensional auxilary matrix enforcing low rank constraint on the similarity matrix, and the kernel weights. \nDimension reduction is achieved by the stochastic neighbor embedding methodology with the learned similarities as input. \n",
+      "summary" : "Multikernel-based learning of distance metrics from gene expression data for dimension reduction, clustering and visulaization.",
+      "description" : "Single-cell Interpretation via Multikernel LeaRning (SIMLR) learns cell-to-cell similarity measures from single-cell RNA-seq data in using Gaussian kernels with various hyperparameters in order to perform dimension reduction, clustering and visualization. \nSIMLR assumes that if C separable populations exist among the N cells, then the similarity matrix should have an approximate block-diagonal structure with C blocks whereby cells have larger similarities to other cells within the same subpopulations. Learned similarity between two cells should be small if the Euclidean distance between them is large. The cell-to-cell similarity is computed using an optimization framework over an N x N similarity matrix, a low-dimensional auxilary matrix enforcing low rank constraint on the similarity matrix, and the kernel weights. \nDimension reduction is achieved by the stochastic neighbor embedding methodology with the learned similarities as input. \n",
       "preferred_normalization" : "log_cp10k",
       "reference" : "wang2017visualization",
       "documentation_url" : "https://github.com/BatzoglouLabSU/SIMLR/blob/SIMLR/README.md",
@@ -3042,7 +3042,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/simlr",
     "viash_version" : "0.8.0",
-    "git_commit" : "6f6acccfdb7068a6c198b41e0d67d47552488b3b",
+    "git_commit" : "791546c6ce527177f6246e86e6218c0dd85b113b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
