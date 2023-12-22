@@ -4,14 +4,15 @@ import shutil
 import json
 import numpy as np
 import pandas as pd
+import scipy
 
 ## VIASH START
 par = {
-  'input': 'resources_test/common/pancreas/dataset.h5ad',
-  'schema': 'src/tasks/denoising/api/file_common_dataset.yaml',
+  'input': 'resources_test/common/bmmc_multiome_starter/dataset_rna.h5ad',
+  'schema': None,
   'stop_on_error': False,
-  'checks': 'output/error.json',
-  'output': 'output/output.h5ad',
+  'checks': None,
+  'output': None,
   'meta': 'output/meta.json',
 }
 ## VIASH END
@@ -67,6 +68,66 @@ def is_dict_of_atomics(obj):
 def to_dict_of_atomics(obj):
   return {k: to_atomic(v) for k, v in obj.items()}
 
+def get_structure_shape(obj) -> list:
+  if isinstance(obj, np.ndarray):
+    return list(obj.shape)
+  elif scipy.sparse.issparse(obj):
+    return list(obj.shape)
+  elif isinstance(obj, pd.core.frame.DataFrame):
+    return list(obj.shape)
+  elif isinstance(obj, pd.core.series.Series):
+    return list(obj.shape)
+  elif isinstance(obj, list):
+    return list(len(obj))
+  elif isinstance(obj, dict):
+    return list(len(obj))
+  elif is_atomic(obj):
+    return [1]
+  return None
+
+def get_structure_type(obj) -> str:
+  # return one of: atomic, dataFrame, vector, dict, denseMatrix, sparseMatrix
+  if is_atomic(obj):
+    return "atomic"
+  elif isinstance(obj, (list,pd.core.series.Series)):
+    return "vector"
+  elif isinstance(obj, dict):
+    return "dict"
+  elif isinstance(obj, pd.core.frame.DataFrame):
+    return "dataframe"
+  elif scipy.sparse.issparse(obj):
+    return "sparsematrix"
+  elif isinstance(obj, np.ndarray):
+    return "densematrix"
+  return "other: " + str(type(obj))
+
+def get_structure_dtype(obj) -> str:
+  if isinstance(obj, np.ndarray):
+    return obj.dtype.name
+  elif isinstance(obj, pd.core.series.Series):
+    return obj.dtype.name
+  elif isinstance(obj, pd.core.frame.DataFrame):
+    return [dtype.name for dtype in obj.dtypes]
+  elif scipy.sparse.issparse(obj):
+    return obj.dtype.name
+  elif is_atomic(obj):
+    return type(obj).__name__
+  return None
+
+def get_structure(adata, struct):
+  adata_struct = getattr(adata, struct)
+  if (struct == "X"):
+    adata_struct = {"X": adata_struct} if adata_struct is not None else {}
+  return [
+    {
+      "name": key,
+      "type": get_structure_type(value),
+      "shape": get_structure_shape(value),
+      "dtype": get_structure_dtype(value),
+    }
+    for key, value in adata_struct.items()
+  ]
+
 if par['meta'] is not None:
   print("Extract metadata from object", flush=True)
   uns = {}
@@ -78,9 +139,9 @@ if par['meta'] is not None:
     elif is_dict_of_atomics(val) and len(val) <= 10:
       uns[key] = to_dict_of_atomics(val)
   structure = {
-    struct: list(getattr(adata, struct).keys())
+    struct: get_structure(adata, struct)
     for struct
-    in ["obs", "var", "obsp", "varp", "obsm", "varm", "layers", "uns"]
+    in ["X", "obs", "var", "obsp", "varp", "obsm", "varm", "layers", "uns"]
   }
   meta = {"uns": uns, "structure": structure}
   with open(par["meta"], "w") as f:
