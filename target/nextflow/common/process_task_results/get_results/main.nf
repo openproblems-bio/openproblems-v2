@@ -2877,7 +2877,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "da928eba398fb3998c2961bbf1628709c1ec56a2",
+    "git_commit" : "c0dd4c4faae485938cadf7d9ca5635712b27c1dd",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2939,11 +2939,17 @@ rm(.viash_orig_warn)
 ## VIASH END
 
 # read scores
-raw_scores <- yaml::yaml.load_file(par\\$input_scores) %>%
+raw_scores <-
+  yaml::yaml.load_file(par\\$input_scores) %>%
   map_df(function(x) {
-    as_tibble(as.data.frame(
-      x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
-    ))
+    tryCatch({
+      as_tibble(as.data.frame(
+        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
+      ))
+    }, error = function(e) {
+      message("Encountered error while reading scores: ", e\\$message)
+      NULL
+    })
   })
 
 # scale scores
