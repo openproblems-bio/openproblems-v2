@@ -3069,7 +3069,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_embed_cell",
     "viash_version" : "0.8.0",
-    "git_commit" : "c0dd4c4faae485938cadf7d9ca5635712b27c1dd",
+    "git_commit" : "ed44af5f1c12e7cea7712a0db5a18ee36b0ce2e4",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -2880,7 +2880,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_task_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "c0dd4c4faae485938cadf7d9ca5635712b27c1dd",
+    "git_commit" : "ed44af5f1c12e7cea7712a0db5a18ee36b0ce2e4",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2944,7 +2944,7 @@ out <- list(
   commit_sha = NA_character_,
   task_name = info\\$label,
   task_summary = info\\$summary,
-  task_description = info\\$description,
+  task_description = paste0(info\\$motivation, "\\\\n\\\\n", info\\$description),
   repo = "openproblems-bio/openproblems-v2"
 )
 
