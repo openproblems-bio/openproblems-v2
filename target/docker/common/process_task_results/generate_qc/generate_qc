@@ -428,9 +428,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results generate_qc"
-LABEL org.opencontainers.image.created="2024-01-08T10:56:08Z"
+LABEL org.opencontainers.image.created="2024-01-09T09:37:02Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ed44af5f1c12e7cea7712a0db5a18ee36b0ce2e4"
+LABEL org.opencontainers.image.revision="164e45ab38ac201dae9d6797f14b1b9a5b84d811"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1034,7 +1034,14 @@ def create_quality_control(task_info, dataset_info, method_info, metric_info, re
         })
     
     def percent_missing(list_of_dicts, field):
-        are_missing = [0.0 if field in item and item[field] is not None else 1.0 for item in list_of_dicts]
+        are_missing = []
+        for item in list_of_dicts:
+            if field == 'paper_reference' and item.get('is_baseline', False):
+                are_missing.append(0.0)
+            elif field in item and item[field] is not None:
+                are_missing.append(0.0)
+            else:
+                are_missing.append(1.0)
         return np.mean(are_missing)
     
     # check task_info

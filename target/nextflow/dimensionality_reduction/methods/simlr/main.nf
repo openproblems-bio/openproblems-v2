@@ -3006,7 +3006,7 @@ meta = [
       "directives" : {
         "label" : [
           "midtime",
-          "midmem",
+          "highmem",
           "midcpu"
         ],
         "tag" : "$id"
@@ -3042,7 +3042,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/simlr",
     "viash_version" : "0.8.0",
-    "git_commit" : "ed44af5f1c12e7cea7712a0db5a18ee36b0ce2e4",
+    "git_commit" : "164e45ab38ac201dae9d6797f14b1b9a5b84d811",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3501,7 +3501,7 @@ meta["defaults"] = [
   },
   "label" : [
     "midtime",
-    "midmem",
+    "highmem",
     "midcpu"
   ],
   "tag" : "$id"
