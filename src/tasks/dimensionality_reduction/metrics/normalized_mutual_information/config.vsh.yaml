@@ -1,0 +1,53 @@
+__merge__: ../../api/comp_metric.yaml
+
+functionality:
+  name: normalized_mutual_information
+  info:
+    metrics:
+      - name: normalized_mutual_information
+        label: Normalized Mutual Information
+        summary: Measure of the concordance between clustering obtained from the original and reduced-dimensional representations.
+        description: |
+          The Normalized Mutual Information (NMI) is a measure of the similarity between cluster labels obtained from the k-means clustering of the original dataset and the dimensionality reduction embedding. It is a normalization of the Mutual Information (MI) score to scale the results between 0 (no mutual information) and 1 (perfect correlation). 
+          Mutual Information quantifies the "amount of information" obtained about one random variable by observing the other random variable. Assuming two label assignments X and Y, it is given by: 
+            MI(X,Y) = ∑x∈X ∑y∈Y p(x,y).log[p(x,y)/(p(y).p(x,y))], 
+          where p(x,y) is the joint probability mass function of X and Y, and p(x), p(y) are the marginal probability mass functions of X and Y respectively. The mutual information is normalized by some generalized mean of H(X) and H(Y). Therefore, Normalized Mutual Information can be defined as: 
+            NMI(X,Y) = MI(X,Y)/mean(H(x),H(Y)), 
+          where H(X) and H(Y) are the entropies of X and Y respectively. Higher NMI score suggests that the method is effective in preserving relevant information.
+        reference: emmons2016analysis
+        documentation_url: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html
+        repository_url: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html
+        min: 0
+        max: 1
+        maximize: true
+
+  # Component-specific parameters
+  arguments:
+    - name: "--n_clusters"
+      type: integer
+      default: 10
+      description: Number of clusters to use for KMeans clustering.
+    - name: "--seed"
+      type: integer
+      default: 42
+      description: Determines random number generation for centroid initialization while performing KMeans clustering.
+    - name: "--nmi_avg_method"
+      type: string
+      default: arithmetic
+      description: Method to compute normalizer in the denominator for normalized mutual information score calculation. 
+      choices: [ min, geometric, arithmetic, max ]
+
+  resources:
+    - type: python_script
+      path: script.py
+
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    setup:
+      - type: python
+        packages: scikit-learn
+  - type: native
+  - type: nextflow
+    directives:
+      label: [ "midtime", midmem, midcpu]

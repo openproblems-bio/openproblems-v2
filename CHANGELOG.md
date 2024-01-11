@@ -309,6 +309,8 @@
 
 * `methods/simlr`: Added new SIMLR method.
 
+* `metrics/normalized_mutual_information`: Added new metric Normalized Mutual Information.
+
 
 ## match_modalities (PR #201)
 
