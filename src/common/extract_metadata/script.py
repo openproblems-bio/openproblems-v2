@@ -14,12 +14,14 @@ par = {
 ## VIASH END
 
 # Get file size in bytes
-file_size = os.path.getsize(par['input']) / (1024 ** 3)
+file_size = os.path.getsize(par['input'])
 
 # Get file creation time
 creation_time = os.path.getctime(par['input'])
 # Convert creation time from seconds since epoch to a readable timestamp
 creation_time = datetime.datetime.fromtimestamp(creation_time)
+# Format the datetime object as 'DD-MM-YYYY'
+creation_time = creation_time.strftime('%d-%m-%Y')
 
 print('Load data', flush=True)
 adata = ad.read_h5ad(par['input']).copy()
