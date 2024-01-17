@@ -426,9 +426,9 @@ RUN apt-get update && \
 
 RUN cd /opt && git clone --depth 1 https://github.com/rsinghlab/SCOT.git && cd SCOT && pip install -r requirements.txt
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/methods scot"
-LABEL org.opencontainers.image.created="2024-01-17T16:06:31Z"
+LABEL org.opencontainers.image.created="2024-01-17T21:37:38Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3a21a29a11985fc63821496ae64b3d44fdfc9ed6"
+LABEL org.opencontainers.image.revision="dd7ec7738a2bba1db6543465d371cb0fe398edfc"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
