@@ -1,0 +1,39 @@
+__merge__: ../../api/comp_method.yaml
+functionality:
+  name: novel
+  info:
+    label: Novel
+    summary: Task solved with an encoder-decoder MLP model, using ATAC/GEX data via LSI and raw ADT data. Hyperparameters optimized via Optuna.
+    description: The task is solved via training encoder-decoder MLP model with one output neuron per component in the target. As an input, the encoders use representations obtained from ATAC and GEX data via LSI transform and raw ADT data. The hyperparameters of the models were found via broad hyperparameter search using the Optuna framework.
+    documentation_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel#readme
+    repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
+    reference: pmlr-v176-lance22a
+    preferred_normalization: counts
+  arguments:
+    - name: "--input_test_mod2"
+      type: "file"
+      example: "dataset_mod2.h5ad"
+      description: Censored dataset, test cells.
+      required: true
+    - name: "--pretrain"
+      type: "string"
+      example: "pretrain_model"
+      description: Path to a pretrained model.
+      required: true
+  resources:
+    - path: script.py
+      type: python_script
+    - path: helper_functions.py
+platforms:
+  - type: docker
+    image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"
+    setup:
+      - type: python
+        packages:
+          - anndata~=0.8.0
+          - scikit-learn
+          - networkx
+  - type: nextflow
+    directives:
+      label: [lowmem, lowtime, lowcpu]
+  
