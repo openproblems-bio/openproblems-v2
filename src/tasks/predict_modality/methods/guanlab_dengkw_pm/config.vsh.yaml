@@ -1,0 +1,49 @@
+# The API specifies which type of component this is.
+__merge__: ../../api/comp_method.yaml
+
+functionality:
+
+  name: guanlab_dengkw_pm
+
+  info:
+    label: Guanlab-dengkw
+    summary: "FILL IN: A one sentence summary of this method."
+    description: |
+      FILL IN: A (multi-line) description of how this method works.
+    preferred_normalization: log_cp10k
+    reference: bibtex_reference_key
+    documentation_url: https://url.to/the/documentation
+    repository_url: https://github.com/organisation/repository
+
+  # Component-specific parameters (optional)
+  arguments:
+    - name: "--distance_method"
+      type: "string"
+      default: "minkowski"
+      description: The distance metric to use. Possible values include `euclidean` and `minkowski`.
+      choices: [euclidean, minkowski]
+    - name: "--n_pcs"
+      type: "integer"
+      default: 50
+      description: Number of components to use for dimensionality reduction.
+
+  resources:
+    - type: python_script
+      path: script.py
+
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    setup:
+      - type: python
+        packages: 
+          - scikit-learn
+          - pandas
+          - numpy
+          - scanpy
+
+  - type: native
+
+  - type: nextflow
+    directives:
+      label: [ "hightime", highmem, highcpu]
