@@ -1,7 +1,6 @@
 import anndata as ad
 import logging
 import numpy as np
-import pandas as pd
 from scipy.sparse import csr_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.gaussian_process.kernels import RBF
@@ -55,16 +54,16 @@ mod1_type = mod1_type.upper()
 mod2_type = input_train_mod2.uns["modality"]
 mod2_type = mod2_type.upper()
 n_comp_dict = {
-        ("GEX", "ADT"): (300, 70, 10, 0.2),
-        ("ADT", "GEX"): (None, 50, 10, 0.2),
-        ("GEX", "ATAC"): (1000, 50, 10, 0.1),
-        ("ATAC", "GEX"): (100, 70, 10, 0.1)
-        }
+                ("GEX", "ADT"): (300, 70, 10, 0.2),
+                ("ADT", "GEX"): (None, 50, 10, 0.2),
+                ("GEX", "ATAC"): (1000, 50, 10, 0.1),
+                ("ATAC", "GEX"): (100, 70, 10, 0.1)
+              }
 logging.info(f"{mod1_type}, {mod2_type}")
 n_mod1, n_mod2, scale, alpha = n_comp_dict[(mod1_type, mod2_type)]
 logging.info(f"{n_mod1}, {n_mod2}, {scale}, {alpha}")
 
-# Do PCA on the input data
+# Perform PCA on the input data
 logging.info('Models using the Truncated SVD to reduce the dimension')
 
 if n_mod1 is not None and n_mod1 < input_train.shape[1]:
@@ -121,19 +120,19 @@ if mod2_type == "ATAC":
 
 y_pred /= 10
 
-# Store as sparse matrix to be efficient. Note that this might require
-# different classifiers/embedders before-hand. Not every class is able
-# to support such data structures.
+# Store as sparse matrix to be efficient. 
+# Note that this might require different classifiers/embedders before-hand. 
+# Not every class is able to support such data structures.
 y_pred = csr_matrix(y_pred)
 
 print("Write output AnnData to file", flush=True)
 output = ad.AnnData(
-  layers={
+  layers = {
     'normalized': y_pred
   },
-  obs=obs,
-  var=var,
-  uns={
+  obs = obs,
+  var = var,
+  uns = {
     'dataset_id': input_train_mod1.uns['dataset_id'],
     'method_id': meta['functionality_name']
   }
