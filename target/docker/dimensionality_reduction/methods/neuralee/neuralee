@@ -421,9 +421,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "torch" "git+https://github.com/michalk8/neuralee@8946abf"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods neuralee"
-LABEL org.opencontainers.image.created="2024-01-17T15:38:16Z"
+LABEL org.opencontainers.image.created="2024-01-17T16:06:11Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="27fa512d096c45c0d154bee5a76bcb6109769bf2"
+LABEL org.opencontainers.image.revision="f4773e880a9f052245db70425efdc1bc64cbf176"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
