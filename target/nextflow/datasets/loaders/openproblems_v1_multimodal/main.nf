@@ -3458,7 +3458,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "f4773e880a9f052245db70425efdc1bc64cbf176",
+    "git_commit" : "3a21a29a11985fc63821496ae64b3d44fdfc9ed6",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
