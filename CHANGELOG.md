@@ -309,7 +309,7 @@
 
 * `methods/simlr`: Added new SIMLR method.
 
-* `metrics/normalized_mutual_information`: Added new metric Normalized Mutual Information.
+* `metrics/clustering_performance`: Added new metric to assess clustering on the reduced dimensional embeddings using NMI and ARI.
 
 
 ## match_modalities (PR #201)
