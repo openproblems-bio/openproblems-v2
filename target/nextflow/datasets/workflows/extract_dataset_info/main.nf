@@ -3046,7 +3046,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "112bcbf57ced16d81b3e6212776897d6a5621536",
+          "git_commit" : "cb7f74f2a8e85d66de8e9c1c70cf909dea5135a4",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3092,7 +3092,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/extract_dataset_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "112bcbf57ced16d81b3e6212776897d6a5621536",
+    "git_commit" : "cb7f74f2a8e85d66de8e9c1c70cf909dea5135a4",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
