@@ -1,7 +1,7 @@
 import sys
 import cellxgene_census
 import scanpy as sc
-import tiledbsoma as soma
+# import tiledbsoma as soma
 
 ## VIASH START
 par = {
@@ -179,7 +179,6 @@ def main(par, meta):
     # use feature_id as var_names
     adata.var_names = adata.var["feature_id"]
 
-    # not needed as long as we have our own implementation of `get_anndata`
     # move .X to .layers["counts"]
     move_x_to_layers(adata)
 
