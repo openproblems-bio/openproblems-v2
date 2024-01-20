@@ -421,9 +421,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "dplyr", "tidyr", "readr", "lubridate", "dynutils", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_results"
-LABEL org.opencontainers.image.created="2023-12-21T14:31:25Z"
+LABEL org.opencontainers.image.created="2024-01-20T21:41:49Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8764f1b41d62bfa6bc55d4d7be710d8589e16513"
+LABEL org.opencontainers.image.revision="b1f94affa624131d09fa5fdbee9f7b58a9846dc0"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -944,11 +944,17 @@ rm(.viash_orig_warn)
 ## VIASH END
 
 # read scores
-raw_scores <- yaml::yaml.load_file(par\$input_scores) %>%
+raw_scores <-
+  yaml::yaml.load_file(par\$input_scores) %>%
   map_df(function(x) {
-    as_tibble(as.data.frame(
-      x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
-    ))
+    tryCatch({
+      as_tibble(as.data.frame(
+        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
+      ))
+    }, error = function(e) {
+      message("Encountered error while reading scores: ", e\$message)
+      NULL
+    })
   })
 
 # scale scores

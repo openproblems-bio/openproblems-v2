@@ -3032,6 +3032,7 @@ meta = [
             "umap-learn",
             "scikit-learn",
             "numpy",
+            "pynndescent~=0.5.11",
             "scipy"
           ],
           "upgrade" : true
@@ -3080,7 +3081,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+    "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3150,7 +3151,7 @@ X_emb = input_embedding.obsm["X_emb"]
 print("Compute NNLS residual after SVD", flush=True)
 n_svd = 500
 svd_emb = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(high_dim)
-dist_corr = _distance_correlation(svd_emb, X_emb)
+dist_corr = _distance_correlation(svd_emb, X_emb).correlation
 
 #! Explicitly not changing it to use diffusion map method as this will have a positive effect on the diffusion map method for this specific metric.
 print("Compute NLSS residual after spectral embedding", flush=True)
@@ -3159,7 +3160,7 @@ umap_graph = umap.UMAP(transform_mode="graph").fit_transform(high_dim)
 spectral_emb = umap.spectral.spectral_layout(
     high_dim, umap_graph, n_comps, random_state=np.random.default_rng()
 )
-dist_corr_spectral = _distance_correlation(spectral_emb, X_emb)
+dist_corr_spectral = _distance_correlation(spectral_emb, X_emb).correlation
 
 print("Create output AnnData object", flush=True)
 output = ad.AnnData(
@@ -3167,7 +3168,7 @@ output = ad.AnnData(
         "dataset_id": input_solution.uns["dataset_id"],
         "normalization_id": input_solution.uns["normalization_id"],
         "method_id": input_embedding.uns["method_id"],
-        "metric_ids": [ "distance correlation", "distance_correlation_spectral" ],
+        "metric_ids": [ "distance_correlation", "distance_correlation_spectral" ],
         "metric_values": [ dist_corr, dist_corr_spectral ]
     }
 )

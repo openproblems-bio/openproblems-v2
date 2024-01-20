@@ -3034,7 +3034,8 @@ meta = [
           "packages" : [
             "scipy",
             "numpy",
-            "umap-learn"
+            "umap-learn",
+            "pynndescent~=0.5.11"
           ],
           "upgrade" : true
         }
@@ -3082,7 +3083,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation",
     "viash_version" : "0.8.0",
-    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+    "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -2892,7 +2892,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/generate_qc",
     "viash_version" : "0.8.0",
-    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+    "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2991,7 +2991,14 @@ def create_quality_control(task_info, dataset_info, method_info, metric_info, re
         })
     
     def percent_missing(list_of_dicts, field):
-        are_missing = [0.0 if field in item and item[field] is not None else 1.0 for item in list_of_dicts]
+        are_missing = []
+        for item in list_of_dicts:
+            if field == 'paper_reference' and item.get('is_baseline', False):
+                are_missing.append(0.0)
+            elif field in item and item[field] is not None:
+                are_missing.append(0.0)
+            else:
+                are_missing.append(1.0)
         return np.mean(are_missing)
     
     # check task_info

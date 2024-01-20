@@ -3069,7 +3069,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/loaders/openproblems_neurips2021_bmmc/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_neurips2021_bmmc"
@@ -3091,7 +3091,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3113,7 +3113,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -3135,7 +3135,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -3157,7 +3157,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -3179,7 +3179,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -3201,7 +3201,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/processors/svd/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/svd"
@@ -3223,7 +3223,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -3245,10 +3245,32 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+      },
+      {
+        "name" : "common/decompress_gzip",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/decompress_gzip/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "decompress_gzip",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/decompress_gzip/config.vsh.yaml",
+          "functionalityNamespace" : "common",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
+          "executable" : "/nextflow/common/decompress_gzip/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/decompress_gzip"
       }
     ],
     "set_wd_to_resources_dir" : false
@@ -3291,7 +3313,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_neurips2021_bmmc",
     "viash_version" : "0.8.0",
-    "git_commit" : "8764f1b41d62bfa6bc55d4d7be710d8589e16513",
+    "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3308,6 +3330,7 @@ include { subsample } from "${meta.resources_dir}/../../../../nextflow/datasets/
 include { svd } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/svd/main.nf"
 include { hvg } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/hvg/main.nf"
 include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
+include { decompress_gzip } from "${meta.resources_dir}/../../../../nextflow/common/decompress_gzip/main.nf"
 
 // inner workflow
 // user-provided Nextflow code
@@ -3352,10 +3375,15 @@ workflow run_wf {
       [id, state + [_meta: [join_id: id]]]
     }
 
+    | decompress_gzip.run(
+      fromState: ["input": "input"],
+      toState: ["input_decompressed": "output"]
+    )
+
     // process neurips downloaded dataset
     | openproblems_neurips2021_bmmc.run(
       fromState: [
-        "input": "input",
+        "input": "input_decompressed",
         "mod1": "mod1",
         "mod2": "mod2",
         "dataset_name": "dataset_name",
@@ -3414,11 +3442,18 @@ workflow run_wf {
     )
 
     // run normalization methods on second modality
-    | runEach(
-      components: normalization_methods,
-      filter: { id, state, comp ->
-        comp.name == state.normalization_id
-      },
+    // TODO: change this normalization method
+    | log_cp.run(
+      key: "log_cp10k_adt",
+      runIf: { id, state -> state.mod2 == "ADT" },
+      args: [normalization_id: "log_cp10k", n_cp: 10000],
+      fromState: ["input": "raw_other_mod"],
+      toState: ["normalized_other_mod": "output"]
+    )
+    | log_cp.run(
+      key: "log_cp10k_atac",
+      runIf: { id, state -> state.mod2 == "ATAC" },
+      args: [normalization_id: "log_cp10k", n_cp: 10000],
       fromState: ["input": "raw_other_mod"],
       toState: ["normalized_other_mod": "output"]
     )
@@ -3439,7 +3474,9 @@ workflow run_wf {
       toState: [ "hvg_rna": "output" ]
     )
 
+    // TODO: should this only run on ATAC? or even not at all?s
     | hvg.run(
+      key: "hvg_other_mod",
       fromState: [ "input": "svd_other_mod" ],
       toState: [ "hvg_other_mod": "output" ]
     )
@@ -3458,6 +3495,7 @@ workflow run_wf {
     )
 
     | check_dataset_schema.run(
+      key: "check_dataset_schema_other_mod",
       fromState: { id, state ->
         [
           "input": state.hvg_other_mod,
