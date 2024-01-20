@@ -3,7 +3,7 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  "input": "bmmc_multiome.decompress_gzip.h5ad",
+  "input": "resources_test/common/neurips2021_bmmc_cite/temp_neurips2021_bmmc_cite.h5ad",
   "mod1": "GEX",
   "mod2": "ATAC",
   "dataset_name": "BMMC (CITE-seq)",
@@ -76,7 +76,7 @@ adata_mod2.obs = mod2_obs
 
 adata_mod2.uns = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata.uns.items() if not key.startswith(par['mod1'])}
 if par["mod2"] == "ATAC":
-  adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.uns.items() if key.startswith(par['mod2'])}
+  adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.obsm.items() if key.startswith(par['mod2'])}
 else:
    del adata_mod2.obsm
 
