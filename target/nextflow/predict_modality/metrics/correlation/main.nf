@@ -3111,7 +3111,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "b1f94affa624131d09fa5fdbee9f7b58a9846dc0",
+    "git_commit" : "29df5730754463ccb207fa11001290a2cb43b632",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
