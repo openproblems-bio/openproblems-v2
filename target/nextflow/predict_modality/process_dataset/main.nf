@@ -3482,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "29df5730754463ccb207fa11001290a2cb43b632",
+    "git_commit" : "5e4f6977dc233549c10a18aef6c3c7700d8fc9ee",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3565,8 +3565,8 @@ ad2_uns\\$modality <- ad2_mod
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids")), drop = FALSE]
+ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_symbol")), drop = FALSE]
+ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_symbol")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features
@@ -3618,7 +3618,6 @@ subset_mats <- function(li, obs_filt) {
 
 cat("Create train objects\\\\n")
 output_train_mod1 <- anndata::AnnData(
-  shape = dim(ad1\\$layers[["counts"]][is_train, , drop = FALSE]),
   layers = subset_mats(list(counts = ad1\\$layers[["counts"]], normalized = ad1\\$layers[["normalized"]]), is_train),
   obsm = subset_mats(ad1_obsm, is_train),
   obs = train_obs,
@@ -3626,7 +3625,6 @@ output_train_mod1 <- anndata::AnnData(
   uns = ad1_uns
 )
 output_train_mod2 <- anndata::AnnData(
-  shape = dim(ad2\\$layers[["counts"]][is_train, , drop = FALSE]),
   layers = subset_mats(list(counts = ad2\\$layers[["counts"]], normalized = ad2\\$layers[["normalized"]]), is_train),
   obsm = subset_mats(ad2_obsm, is_train),
   obs = train_obs,
@@ -3636,7 +3634,6 @@ output_train_mod2 <- anndata::AnnData(
 
 cat("Create test objects\\\\n")
 output_test_mod1 <- anndata::AnnData(
-  shape = dim(ad1\\$layers[["counts"]][is_test, , drop = FALSE]),
   layers = subset_mats(list(counts = ad1\\$layers[["counts"]], normalized = ad1\\$layers[["normalized"]]), is_test),
   obsm = subset_mats(ad1_obsm, is_test),
   obs = test_obs,
@@ -3644,7 +3641,6 @@ output_test_mod1 <- anndata::AnnData(
   uns = ad1_uns
 )
 output_test_mod2 <- anndata::AnnData(
-  shape = dim(ad2\\$layers[["counts"]][is_test, , drop = FALSE]),
   layers = subset_mats(list(counts = ad2\\$layers[["counts"]], normalized = ad2\\$layers[["normalized"]]), is_test),
   obsm = subset_mats(ad2_obsm, is_test),
   obs = test_obs,

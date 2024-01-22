@@ -44,9 +44,7 @@ adata_mod2 = adata[:, mask_mod2]
 mod1_var = pd.DataFrame(adata_mod1.var)
 remove_other_mod_col(mod1_var, par["mod2"])
 remove_mod_prefix(mod1_var, par["mod1"])
-mod1_var.index.name = "gene_symbol"
-mod1_var.reset_index("gene_symbol", inplace=True)
-mod1_var.set_index("gene_id", inplace=True)
+mod1_var.gene_ids = mod1_var.index.values
 
 mod1_obs = pd.DataFrame(adata_mod1.obs)
 remove_other_mod_col(mod1_obs, par["mod2"])
@@ -62,10 +60,7 @@ del adata_mod1.X
 mod2_var = pd.DataFrame(adata_mod2.var)
 remove_other_mod_col(mod2_var, par["mod1"])
 remove_mod_prefix(mod2_var, par["mod2"])
-mod2_var.gene_id = mod2_var.index.values
-mod2_var.index.name = "gene_symbol"
-mod2_var.reset_index("gene_symbol", inplace=True)
-mod2_var.set_index("gene_id", inplace=True)
+mod2_var.gene_ids = mod2_var.index.values
 
 mod2_obs = pd.DataFrame(adata_mod2.obs)
 remove_other_mod_col(mod2_obs, par["mod1"])
