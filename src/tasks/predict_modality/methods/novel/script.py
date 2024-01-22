@@ -45,10 +45,15 @@ input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
 input_test_mod2 = ad.read_h5ad(par['input_test_mod2'])
 
-mod1 = input_train_mod1.var['feature_types'][0]
-mod2 = input_train_mod2.var['feature_types'][0]
+mod1 = input_train_mod1.uns['modality']
+mod2 = input_train_mod2.uns['modality']
 
 model_fp = meta['resources_dir'] + '/' + par['pretrain']
+
+input_train_mod1.X = input_train_mod2.layers['counts']
+input_train_mod2.X = input_train_mod1.layers['counts']
+input_test_mod1.X = input_test_mod1.layers['counts']
+input_test_mod2.X = input_test_mod2.layers['counts']
 
 print("Start train", flush=True)
 if mod1 != "ADT":
