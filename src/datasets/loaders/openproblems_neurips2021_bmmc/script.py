@@ -81,7 +81,7 @@ adata_mod2.uns = { key.replace(f"{par['mod2']}_", ""): value for key, value in a
 if par["mod2"] == "ATAC":
   adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.obsm.items() if key.startswith(par['mod2'])}
 else:
-   del adata_mod2.obsm
+  del adata_mod2.obsm
 
 
 del adata_mod2.X
