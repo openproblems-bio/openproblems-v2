@@ -3482,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "5e4f6977dc233549c10a18aef6c3c7700d8fc9ee",
+    "git_commit" : "eaae8f7aa66d0a128827f063022a4baedc6d8866",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3565,8 +3565,8 @@ ad2_uns\\$modality <- ad2_mod
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_symbol")), drop = FALSE]
-ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_symbol")), drop = FALSE]
+ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("feature_id")), drop = FALSE]
+ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("feature_id")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features

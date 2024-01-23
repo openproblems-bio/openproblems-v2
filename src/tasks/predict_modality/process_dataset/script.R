@@ -3,26 +3,26 @@ library(anndata, warn.conflicts = FALSE)
 library(Matrix, warn.conflicts = FALSE)
 
 ## VIASH START
-par <- list(
-  input_rna = "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad",
-  input_other_mod = "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad",
-  output_train_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad",
-  output_train_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad",
-  output_test_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad",
-  output_test_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad",
-  swap = TRUE,
-  seed = 1L
-)
 # par <- list(
-#   input_rna = "resources_test/predict_modality/neurips2021_bmmc_mutliome/output_rna.h5ad",
-#   input_other_mod = "resources_test/predict_modality/neurips2021_bmmc_mutliome/output_atac.h5ad",
-#   output_train_mod1 = "resources_test/predict_modality/neurips2021_bmmc_mutliome/train_mod1.h5ad",
-#   output_train_mod2 = "resources_test/predict_modality/neurips2021_bmmc_mutliome/train_mod2.h5ad",
-#   output_test_mod1 = "resources_test/predict_modality/neurips2021_bmmc_mutliome/test_mod1.h5ad",
-#   output_test_mod2 = "resources_test/predict_modality/neurips2021_bmmc_mutliome/test_mod2.h5ad",
+#   input_rna = "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad",
+#   input_other_mod = "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad",
+#   output_train_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad",
+#   output_train_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad",
+#   output_test_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad",
+#   output_test_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad",
 #   swap = TRUE,
 #   seed = 1L
 # )
+par <- list(
+  input_rna = "resources_test/common/openproblems_neurips2021/bmmc_multiome/dataset_rna.h5ad",
+  input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_multiome/dataset_other_mod.h5ad",
+  output_train_mod1 = "resources_test/predict_modality/bmmc_multiome/train_mod1.h5ad",
+  output_train_mod2 = "resources_test/predict_modality/bmmc_multiome/train_mod2.h5ad",
+  output_test_mod1 = "resources_test/predict_modality/bmmc_multiome/test_mod1.h5ad",
+  output_test_mod2 = "resources_test/predict_modality/bmmc_multiome/test_mod2.h5ad",
+  swap = FALSE,
+  seed = 1L
+)
 ## VIASH END
 
 cat("Using seed ", par$seed, "\n", sep = "")
@@ -49,8 +49,8 @@ ad2_uns$modality <- ad2_mod
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("gene_symbol")), drop = FALSE]
-ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_symbol")), drop = FALSE]
+ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("feature_id")), drop = FALSE]
+ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("feature_id")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features

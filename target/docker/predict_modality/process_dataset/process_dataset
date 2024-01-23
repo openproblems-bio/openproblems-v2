@@ -437,9 +437,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-01-22T15:07:49Z"
+LABEL org.opencontainers.image.created="2024-01-23T14:58:33Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="5e4f6977dc233549c10a18aef6c3c7700d8fc9ee"
+LABEL org.opencontainers.image.revision="eaae8f7aa66d0a128827f063022a4baedc6d8866"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1088,8 +1088,8 @@ ad2_uns\$modality <- ad2_mod
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1\$var[, intersect(colnames(ad1\$var), c("gene_symbol")), drop = FALSE]
-ad2_var <- ad2\$var[, intersect(colnames(ad2\$var), c("gene_symbol")), drop = FALSE]
+ad1_var <- ad1\$var[, intersect(colnames(ad1\$var), c("feature_id")), drop = FALSE]
+ad2_var <- ad2\$var[, intersect(colnames(ad2\$var), c("feature_id")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features

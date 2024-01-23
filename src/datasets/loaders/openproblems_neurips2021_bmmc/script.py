@@ -3,7 +3,7 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  "input": "resources_test/common/neurips2021_bmmc_cite/temp_neurips2021_bmmc_cite.h5ad",
+  "input": "GSE194122_openproblems_neurips2021_cite_BMMC_processed.h5ad",
   "mod1": "GEX",
   "mod2": "ATAC",
   "dataset_name": "BMMC (CITE-seq)",
@@ -44,7 +44,11 @@ adata_mod2 = adata[:, mask_mod2]
 mod1_var = pd.DataFrame(adata_mod1.var)
 remove_other_mod_col(mod1_var, par["mod2"])
 remove_mod_prefix(mod1_var, par["mod1"])
-mod1_var.gene_ids = mod1_var.index.values
+mod1_var.index.name = "feature_name"
+mod1_var.reset_index("feature_name", inplace=True)
+mod1_var["feature_id"] = mod1_var.gene_id
+mod1_var.drop("gene_id", axis=1, inplace=True)
+mod1_var.set_index("feature_id", drop=False, inplace=True)
 
 mod1_obs = pd.DataFrame(adata_mod1.obs)
 remove_other_mod_col(mod1_obs, par["mod2"])
@@ -60,7 +64,11 @@ del adata_mod1.X
 mod2_var = pd.DataFrame(adata_mod2.var)
 remove_other_mod_col(mod2_var, par["mod1"])
 remove_mod_prefix(mod2_var, par["mod2"])
-mod2_var.gene_ids = mod2_var.index.values
+mod2_var.index.name = "feature_name"
+mod2_var.reset_index("feature_name", inplace=True)
+mod2_var["feature_id"] = mod2_var.gene_id
+mod2_var.drop("gene_id", axis=1, inplace=True)
+mod2_var.set_index("feature_id", drop=False, inplace=True)
 
 mod2_obs = pd.DataFrame(adata_mod2.obs)
 remove_other_mod_col(mod2_obs, par["mod1"])
@@ -73,7 +81,7 @@ adata_mod2.uns = { key.replace(f"{par['mod2']}_", ""): value for key, value in a
 if par["mod2"] == "ATAC":
   adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.obsm.items() if key.startswith(par['mod2'])}
 else:
-   del adata_mod2.obsm
+  del adata_mod2.obsm
 
 
 del adata_mod2.X
