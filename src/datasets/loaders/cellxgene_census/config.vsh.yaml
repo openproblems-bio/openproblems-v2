@@ -34,7 +34,7 @@ functionality:
           required: true
           example: "is_primary_data == True and cell_type_ontology_term_id in ['CL:0000136', 'CL:1000311', 'CL:0002616'] and suspension_type == 'cell'"
     - name: Filter cells by grouping
-      description: 
+      description: "Filter groups with fewer than X number of cells."
       arguments:
         - name: "--cell_filter_grouping"
           type: string
