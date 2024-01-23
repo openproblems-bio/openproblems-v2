@@ -8,22 +8,16 @@ functionality:
     documentation_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel#readme
     repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
     reference: pmlr-v176-lance22a
-    preferred_normalization: counts
   arguments:
-    - name: "--input_test_mod2"
-      type: "file"
-      example: "dataset_mod2.h5ad"
-      description: Censored dataset, test cells.
-      required: true
     - name: "--pretrain"
       type: "string"
       example: "pretrain_model"
       description: Path to a pretrained model.
       required: true
   resources:
-    - path: script.py
-      type: python_script
-    - path: helper_functions.py
+    - type: python_script
+      path: script.py
+    - path: /src/tasks/predict_modality/train_methods/novel/helper_functions.py
 platforms:
   - type: docker
     image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"

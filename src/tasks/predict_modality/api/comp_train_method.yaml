@@ -1,0 +1,39 @@
+functionality:
+  namespace: "predict_modality/train_methods"
+  info:
+    type: train_method
+    preferred_normalization: counts # there is currently only one type of normalization
+    type_info:
+      label: train method
+      summary: A training method.
+      description: |
+        A training method to train a regression method to predict the expression of one modality from another.
+  arguments:
+    - name: "--input_train_mod1"
+      __merge__: file_train_mod1.yaml
+      direction: input
+      required: true
+    - name: "--input_train_mod2"
+      __merge__: file_train_mod2.yaml
+      direction: input
+      required: true
+    - name: "--input_test_mod1"
+      __merge__: file_test_mod1.yaml
+      direction: input
+      required: true
+    - name: "--input_test_mod2"
+      __merge__: file_test_mod2.yaml
+      direction: input
+      required: true
+    - name: "--output"
+      description: A trained model.
+      example: model.pt
+      direction: output
+      required: true
+  # test_resources:
+  #   - type: python_script
+  #     path: /src/common/comp_tests/check_method_config.py
+  #   - type: python_script
+  #     path: /src/common/comp_tests/run_and_check_adata.py
+  #   - path: /resources_test/common/openproblems_neurips2021/bmmc_cite
+  #     dest: resources_test/common/openproblems_neurips2021/bmmc_cite
