@@ -35,7 +35,7 @@ output_other_mod: '$id/dataset_other_mod.h5ad'
 output_meta_rna: '$id/dataset_metadata_rna.yaml'
 output_meta_other_mod: '$id/dataset_metadata_other_mod.yaml'
 output_state: '$id/state.yaml'
-publish_dir: s3://openproblems-data/resources-test/common/neurips2021_bmmc
+publish_dir: s3://openproblems-data/resources_test/common
 HERE
 
 cat > /tmp/nextflow.config << HERE
@@ -49,12 +49,13 @@ HERE
 
 
 tw launch https://github.com/openproblems-bio/openproblems-v2.git \
-  --revision integration_build \
+  --revision main_build \
   --main-script target/nextflow/datasets/workflows/process_openproblems_neurips2021_bmmc/main.nf \
   --workspace 53907369739130 \
   --compute-env 1pK56PjjzeraOOC2LDZvN2 \
   --params-file "$params_file" \
-  --config /tmp/nextflow.config
+  --config /tmp/nextflow.config \
+  --labels predict_modality
 
 # run task process dataset components
-src/tasks/predict_modality/resources_test_scripts/neurips2021_bmmc.sh
+# src/tasks/predict_modality/resources_test_scripts/neurips2021_bmmc.sh
