@@ -3081,7 +3081,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "99fb3cce873533c810ed95a4ed60cb9ee7813961",
+    "git_commit" : "90c008aaf825950cf666a2c2758309652781a129",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
