@@ -27,7 +27,7 @@ n = 20
 resolutions = [2 * x / n for x in range(1, n + 1)]
 score_max = 0
 res_max = resolutions[0]
-clustering = None
+key_max = None
 score_all = []
 
 if "neighbors" not in input_embedding.uns:
