@@ -10,11 +10,6 @@ import pickle
 import numpy as np
 from scipy.sparse import csc_matrix
 
-sys.path.append(meta['resources_dir'])
-from helper_functions import train_and_valid, lsiTransformer, ModalityMatchingDataset
-from helper_functions import ModelRegressionAtac2Gex, ModelRegressionAdt2Gex, ModelRegressionGex2Adt, ModelRegressionGex2Atac
-
-
 #check gpu available
 if (torch.cuda.is_available()):
     device = 'cuda:0' #switch to current device
@@ -39,6 +34,9 @@ meta = {
 }
 ## VIASH END
 
+sys.path.append(meta['resources_dir'])
+from helper_functions import train_and_valid, lsiTransformer, ModalityMatchingDataset
+from helper_functions import ModelRegressionAtac2Gex, ModelRegressionAdt2Gex, ModelRegressionGex2Adt, ModelRegressionGex2Atac
 
 print("Load data", flush=True)
 

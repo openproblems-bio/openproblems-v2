@@ -26,6 +26,7 @@ functionality:
       direction: input
       required: true
     - name: "--output"
+      type: file
       description: A trained model.
       example: model.pt
       direction: output

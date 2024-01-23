@@ -13,15 +13,15 @@ functionality:
       type: python_script
     - path: helper_functions.py
       type: python_script
-  platforms:
-    - type: docker
-      image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"
-      setup:
-        - type: python
-          packages:
-            - anndata~=0.8.0
-            - scikit-learn
-            - networkx
-    - type: nextflow
-      directives:
-        label: [lowmem, lowtime, lowcpu]
+platforms:
+  - type: docker
+    image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"
+    setup:
+      - type: python
+        packages:
+          - anndata~=0.8.0
+          - scikit-learn
+          - networkx
+  - type: nextflow
+    directives:
+      label: [lowmem, lowtime, lowcpu]
