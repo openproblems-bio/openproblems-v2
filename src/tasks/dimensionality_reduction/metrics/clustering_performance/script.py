@@ -30,10 +30,7 @@ res_max = resolutions[0]
 clustering = None
 score_all = []
 
-try:
-  input_embedding.uns["neighbors"]
-except KeyError:
-  print("Computing KNN")
+if "neighbors" not in input_embedding.uns:
   sc.pp.neighbors(input_embedding, use_rep="X_emb")
 
 for res in resolutions:
