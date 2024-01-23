@@ -43,8 +43,6 @@ for res in resolutions:
     res_max = res
     key_max = key_added
 
-input_embedding.obs["leiden"] = clustering
-
 # Compute NMI scores
 nmi = normalized_mutual_info_score(input_solution.obs["cell_type"], input_embedding.obs[key_max], average_method = par['nmi_avg_method'])
 
