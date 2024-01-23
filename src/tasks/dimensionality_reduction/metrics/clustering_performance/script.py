@@ -41,7 +41,7 @@ for res in resolutions:
   if score_max < score:
     score_max = score
     res_max = res
-    clustering = input_embedding.obs["leiden"]
+    key_max = key_added
 
 input_embedding.obs["leiden"] = clustering
 
