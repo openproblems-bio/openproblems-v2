@@ -12,7 +12,7 @@ par = {
   'nmi_avg_method': 'arithmetic'
 }
 meta = {
-  'functionality_name': 'clustering_perfrmance'
+  'functionality_name': 'clustering_performance'
 }
 ## VIASH END
 
