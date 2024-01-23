@@ -46,10 +46,10 @@ for res in resolutions:
 input_embedding.obs["leiden"] = clustering
 
 # Compute NMI scores
-nmi = normalized_mutual_info_score(input_solution.obs["cell_type"], input_embedding.obs["leiden"], average_method = par['nmi_avg_method'])
+nmi = normalized_mutual_info_score(input_solution.obs["cell_type"], input_embedding.obs[key_max], average_method = par['nmi_avg_method'])
 
 # Compute ARI scores
-ari = adjusted_rand_score(input_solution.obs["cell_type"], input_embedding.obs["leiden"])
+ari = adjusted_rand_score(input_solution.obs["cell_type"], input_embedding.obs[key_max])
 
 print("Write output AnnData to file", flush=True)
 output = ad.AnnData(
