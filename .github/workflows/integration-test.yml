@@ -132,7 +132,7 @@ jobs:
 
     - uses: viash-io/viash-actions/setup@v4
 
-    - uses: nf-core/setup-nextflow@v1.4.0
+    - uses: nf-core/setup-nextflow@v1.5.0
 
     # build target dir
     # use containers from integration_build branch, hopefully these are available
@@ -144,7 +144,7 @@ jobs:
 
     # use cache
     - name: Cache resources data
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       timeout-minutes: 5
       with:
         path: resources_test

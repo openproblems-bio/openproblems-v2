@@ -32,23 +32,12 @@ output_other_mod: '$id/dataset_other_mod.h5ad'
 output_meta_rna: '$id/dataset_metadata_rna.yaml'
 output_meta_other_mod: '$id/dataset_metadata_other_mod.yaml'
 output_state: '$id/state.yaml'
-publish_dir: s3://openproblems-data/resources/datasets
+publish_dir: resources/datasets/openproblems_neurips2021
 HERE
 
-cat > /tmp/nextflow.config << HERE
-process {
-  withName:'.*publishStatesProc' {
-    memory = '16GB'
-    disk = '100GB'
-  }
-}
-HERE
-
-tw launch https://github.com/openproblems-bio/openproblems-v2.git \
-  --revision main_build \
-  --pull-latest \
-  --main-script target/nextflow/datasets/workflows/process_openproblems_neurips2021_bmmc/main.nf \
-  --workspace 53907369739130 \
-  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
-  --params-file "$params_file" \
-  --config /tmp/nextflow.config
+export NXF_VER=23.10.1
+nextflow run . \
+  -main-script target/nextflow/datasets/workflows/process_openproblems_neurips2021_bmmc/main.nf \
+  -profile docker \
+  -resume \
+  -params-file "$params_file"
