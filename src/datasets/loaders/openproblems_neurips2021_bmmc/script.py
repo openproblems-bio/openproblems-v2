@@ -46,7 +46,7 @@ remove_other_mod_col(mod1_var, par["mod2"])
 remove_mod_prefix(mod1_var, par["mod1"])
 mod1_var.index.name = "feature_name"
 mod1_var.reset_index("feature_name", inplace=True)
-mod1_var.feature_id = mod1_var.gene_id
+mod1_var["feature_id"] = mod1_var.gene_id
 mod1_var.drop("gene_id", axis=1, inplace=True)
 mod1_var.set_index("feature_id", drop=False, inplace=True)
 
@@ -66,7 +66,7 @@ remove_other_mod_col(mod2_var, par["mod1"])
 remove_mod_prefix(mod2_var, par["mod2"])
 mod2_var.index.name = "feature_name"
 mod2_var.reset_index("feature_name", inplace=True)
-mod2_var.feature_id = mod2_var.gene_id
+mod2_var["feature_id"] = mod2_var.gene_id
 mod2_var.drop("gene_id", axis=1, inplace=True)
 mod2_var.set_index("feature_id", drop=False, inplace=True)
 
