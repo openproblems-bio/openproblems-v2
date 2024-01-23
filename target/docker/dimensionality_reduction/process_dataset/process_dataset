@@ -408,9 +408,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction process_dataset"
-LABEL org.opencontainers.image.created="2024-01-23T14:24:19Z"
+LABEL org.opencontainers.image.created="2024-01-23T14:24:37Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8ede5332243d2491ff8d68e96a2c14446329e601"
+LABEL org.opencontainers.image.revision="4e516f11dc3ed253f78d839f2b479a061e9c66a9"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
