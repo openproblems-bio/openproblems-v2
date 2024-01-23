@@ -34,6 +34,7 @@ if "neighbors" not in input_embedding.uns:
   sc.pp.neighbors(input_embedding, use_rep="X_emb")
 
 for res in resolutions:
+  key_added = f"X_emb_leiden_{res}"
   sc.tl.leiden(input_embedding, resolution=res)
   score = normalized_mutual_info_score(input_solution.obs["cell_type"], input_embedding.obs["leiden"], average_method = par['nmi_avg_method'])
   score_all.append(score)
