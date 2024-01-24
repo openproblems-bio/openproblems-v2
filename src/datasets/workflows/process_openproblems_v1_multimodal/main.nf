@@ -142,30 +142,24 @@ workflow run_wf {
       toState: [ "hvg_mod2": "output" ]
     )
 
-    | check_dataset_schema.run(
-      fromState: { id, state ->
-        [
-          "input": state.hvg_mod1,
-          "checks": null
-        ]
-      },
-      toState: [
-        "output_dataset_mod1": "output",
-        "output_meta_mod1": "meta"
-      ]
+    // add synonyms
+    | map{ id, state ->
+      [id, state + [
+        "output_dataset_mod1": state.hvg_mod1,
+        "output_dataset_mod2": state.hvg_mod2
+      ]]
+    }
+
+    | extract_metadata.run(
+      key: "extract_metadata_mod1"
+      fromState: ["input": "output_dataset_mod1"],
+      toState: ["output_meta_mod1": "output"]
     )
 
-    | check_dataset_schema.run(
-      fromState: { id, state ->
-        [
-          "input": state.hvg_mod2,
-          "checks": null
-        ]
-      },
-      toState: [
-        "output_dataset_mod2": "output",
-        "output_meta_mod2": "meta"
-      ]
+    | extract_metadata.run(
+      key: "extract_metadata_mod2"
+      fromState: ["input": "output_dataset_mod2"],
+      toState: ["output_meta_mod2": "output"]
     )
 
     // only output the files for which an output file was specified

@@ -126,7 +126,7 @@ functionality:
     - name: datasets/processors/subsample
     - name: datasets/processors/svd
     - name: datasets/processors/hvg
-    - name: common/check_dataset_schema
+    - name: common/extract_metadata
   # test_resources:
   #   - type: nextflow_script
   #     path: main.nf
