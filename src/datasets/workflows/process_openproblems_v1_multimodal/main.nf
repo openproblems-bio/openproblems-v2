@@ -151,13 +151,13 @@ workflow run_wf {
     }
 
     | extract_metadata.run(
-      key: "extract_metadata_mod1"
+      key: "extract_metadata_mod1",
       fromState: ["input": "output_dataset_mod1"],
       toState: ["output_meta_mod1": "output"]
     )
 
     | extract_metadata.run(
-      key: "extract_metadata_mod2"
+      key: "extract_metadata_mod2",
       fromState: ["input": "output_dataset_mod2"],
       toState: ["output_meta_mod2": "output"]
     )

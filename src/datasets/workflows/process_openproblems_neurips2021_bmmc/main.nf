@@ -137,13 +137,13 @@ workflow run_wf {
     }
 
     | extract_metadata.run(
-      key: "extract_metadata_rna"
+      key: "extract_metadata_rna",
       fromState: ["input": "output_rna"],
       toState: ["output_rna_meta": "output"]
     )
 
     | extract_metadata.run(
-      key: "extract_metadata_other_mod"
+      key: "extract_metadata_other_mod",
       fromState: ["input": "output_other_mod"],
       toState: ["output_other_mod_meta": "output"]
     )
