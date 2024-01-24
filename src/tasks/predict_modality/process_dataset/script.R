@@ -3,26 +3,26 @@ library(anndata, warn.conflicts = FALSE)
 library(Matrix, warn.conflicts = FALSE)
 
 ## VIASH START
-# par <- list(
-#   input_rna = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad",
-#   input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad",
-#   output_train_mod1 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/train_mod1.h5ad",
-#   output_train_mod2 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/train_mod2.h5ad",
-#   output_test_mod1 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/test_mod1.h5ad",
-#   output_test_mod2 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/test_mod2.h5ad",
-#   swap = FALSE,
-#   seed = 1L
-# )
 par <- list(
-  input_rna = "resources_test/common/openproblems_neurips2021/bmmc_multiome/dataset_rna.h5ad",
-  input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_multiome/dataset_other_mod.h5ad",
-  output_train_mod1 = "resources_test/predict_modality/bmmc_multiome/train_mod1.h5ad",
-  output_train_mod2 = "resources_test/predict_modality/bmmc_multiome/train_mod2.h5ad",
-  output_test_mod1 = "resources_test/predict_modality/bmmc_multiome/test_mod1.h5ad",
-  output_test_mod2 = "resources_test/predict_modality/bmmc_multiome/test_mod2.h5ad",
+  input_rna = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad",
+  input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad",
+  output_train_mod1 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/train_mod1.h5ad",
+  output_train_mod2 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/train_mod2.h5ad",
+  output_test_mod1 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/test_mod1.h5ad",
+  output_test_mod2 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/test_mod2.h5ad",
   swap = FALSE,
   seed = 1L
 )
+# par <- list(
+#   input_rna = "resources_test/common/openproblems_neurips2021/bmmc_multiome/dataset_rna.h5ad",
+#   input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_multiome/dataset_other_mod.h5ad",
+#   output_train_mod1 = "resources_test/predict_modality/bmmc_multiome/train_mod1.h5ad",
+#   output_train_mod2 = "resources_test/predict_modality/bmmc_multiome/train_mod2.h5ad",
+#   output_test_mod1 = "resources_test/predict_modality/bmmc_multiome/test_mod1.h5ad",
+#   output_test_mod2 = "resources_test/predict_modality/bmmc_multiome/test_mod2.h5ad",
+#   swap = FALSE,
+#   seed = 1L
+# )
 ## VIASH END
 
 cat("Using seed ", par$seed, "\n", sep = "")
@@ -87,8 +87,9 @@ if (ad2_mod == "ATAC") {
 }
 
 cat("Creating train/test split\n")
-is_train <- which(ad1$obs[["is_train"]] == "train")
-is_test <- which(!ad1$obs[["is_train"]] == "train")
+
+is_train  <- sample(1:ad1$n_obs, size = round(ad1$n_obs * 0.7))
+is_test <- setdiff(1:nrow(ad1$obs), is_train)
 
 # sample cells
 if (length(is_test) > 1000) {
