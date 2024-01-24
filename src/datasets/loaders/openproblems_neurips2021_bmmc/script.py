@@ -1,5 +1,6 @@
 import anndata as ad
 import pandas as pd
+import random
 
 ## VIASH START
 par = {
@@ -31,6 +32,15 @@ def remove_mod_prefix(df, mod):
 
 print("load dataset file", flush=True)
 adata = ad.read_h5ad(par["input"])
+
+# Add is_train to obs
+if "is_train" not in adata.obs.columns:
+  batch_info = adata.obs["batch"]
+  batch_categories = batch_info.dtype.categories
+  # train = random.sample(list(batch_categories), round(len(batch_categories)*0.66))
+  train = ["s1d1", "s2d1", "s2d4", "s3d6", "s3d1"]
+  adata.obs["is_train"] = [ x in train for x in batch_info ]
+  adata.obs["is_train"].replace([True, False], ["train", "test"])
 
 # Construct Modality datasets
 print("Construct Mod datasets", flush=True)
