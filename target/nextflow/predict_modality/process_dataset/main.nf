@@ -3482,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "33bae39eda0b4e679a380a674197de92ebecc9b3",
+    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3565,8 +3565,8 @@ ad2_uns\\$modality <- ad2_mod
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("feature_id")), drop = FALSE]
-ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("feature_id")), drop = FALSE]
+ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids")), drop = FALSE]
+ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features
@@ -3574,10 +3574,6 @@ if (ad1_mod == "ATAC") {
 
   # copy gene activity in new object
   ad1_uns\\$gene_activity_var_names <- ad1\\$uns\\$gene_activity_var_names
-  # workaround for error message:
-  # Error in validObject(x) : 
-  #   invalid class “dgCMatrix” object: 'i' slot is not increasing within columns
-  ad1\\$.__enclos_env__\\$private\\$.anndata\\$obsm\\$get("gene_activity")\\$sort_indices()
   ad1_obsm\\$gene_activity <- as(ad1\\$obsm\\$gene_activity, "CsparseMatrix")
 }
 
@@ -3595,10 +3591,6 @@ if (ad2_mod == "ATAC") {
 
   # copy gene activity in new object
   ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
-  # workaround for error message:
-  # Error in validObject(x) : 
-  #   invalid class “dgCMatrix” object: 'i' slot is not increasing within columns
-  ad2\\$.__enclos_env__\\$private\\$.anndata\\$obsm\\$get("gene_activity")\\$sort_indices()
   ad2_obsm\\$gene_activity <- as(ad2\\$obsm\\$gene_activity, "CsparseMatrix")
 }
 

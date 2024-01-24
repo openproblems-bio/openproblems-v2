@@ -2974,7 +2974,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca",
     "viash_version" : "0.8.0",
-    "git_commit" : "33bae39eda0b4e679a380a674197de92ebecc9b3",
+    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
