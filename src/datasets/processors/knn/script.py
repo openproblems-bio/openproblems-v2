@@ -14,9 +14,6 @@ par = {
 print(">> Load data", flush=True)
 adata = sc.read(par['input'])
 
-print(">> Look for layer", flush=True)
-adata.X = adata.layers[par['input_layer']]
-
 print(">> Run kNN", flush=True)
 sc.pp.neighbors(
     adata,
@@ -24,8 +21,6 @@ sc.pp.neighbors(
     key_added=par['key_added'],
     n_neighbors=par['num_neighbors']
 )
-
-del adata.X
 
 print(">> Writing data", flush=True)
 adata.write_h5ad(par['output'])
