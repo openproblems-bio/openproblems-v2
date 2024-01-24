@@ -1,3 +1,5 @@
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow run_wf {
   take:
   input_ch
@@ -152,14 +154,34 @@ workflow run_wf {
 
     | extract_metadata.run(
       key: "extract_metadata_rna",
-      fromState: ["input": "output_rna"],
-      toState: ["output_rna_meta": "output"]
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "output_dataset_rna")
+        // workaround: convert GString to String
+        schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
+        [
+          "input": state.output_dataset_mod1,
+          "schema": schemaYaml
+        ]
+      },
+      toState: ["output_meta_rna": "output"]
     )
 
     | extract_metadata.run(
       key: "extract_metadata_other_mod",
-      fromState: ["input": "output_other_mod"],
-      toState: ["output_other_mod_meta": "output"]
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "output_dataset_other_mod")
+        // workaround: convert GString to String
+        schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
+        [
+          "input": state.output_dataset_mod2,
+          "schema": schemaYaml
+        ]
+      },
+      toState: ["output_meta_other_mod": "output"]
     )
 
     // only output the files for which an output file was specified

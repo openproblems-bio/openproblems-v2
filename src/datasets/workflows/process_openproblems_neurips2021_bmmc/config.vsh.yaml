@@ -117,6 +117,7 @@ functionality:
     - type: nextflow_script
       path: main.nf
       entrypoint: run_wf
+    - path: /src/wf_utils/helper.nf
   dependencies:
     - name: datasets/loaders/openproblems_neurips2021_bmmc
     - name: datasets/normalization/log_cp
