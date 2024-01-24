@@ -2901,13 +2901,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3205,13 +3205,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3373,7 +3373,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp",
     "viash_version" : "0.8.0",
-    "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+    "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

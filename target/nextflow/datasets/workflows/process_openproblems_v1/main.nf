@@ -3098,13 +3098,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3502,13 +3502,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3806,13 +3806,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -4087,21 +4087,21 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
                     "name" : "soma_joinid",
                     "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
                     "required" : false
-              ''' + '''    }
-                ]
+                  }
+  ''' + '''              ]
               },
               "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
             },
@@ -4128,13 +4128,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -4499,13 +4499,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -4754,7 +4754,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1"
@@ -4776,7 +4776,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -4798,7 +4798,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -4820,7 +4820,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -4842,7 +4842,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -4864,7 +4864,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -4886,7 +4886,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -4908,7 +4908,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4930,7 +4930,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -4952,7 +4952,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+          "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -4998,7 +4998,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.8.0",
-    "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+    "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

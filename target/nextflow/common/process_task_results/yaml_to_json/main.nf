@@ -2867,7 +2867,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/yaml_to_json",
     "viash_version" : "0.8.0",
-    "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+    "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

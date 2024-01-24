@@ -3015,13 +3015,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3256,13 +3256,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3413,7 +3413,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_neurips2021_bmmc",
     "viash_version" : "0.8.0",
-    "git_commit" : "4e516f11dc3ed253f78d839f2b479a061e9c66a9",
+    "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3477,6 +3477,14 @@ def remove_mod_prefix(df, mod):
 print("load dataset file", flush=True)
 adata = ad.read_h5ad(par["input"])
 
+# Add is_train to obs
+if "is_train" not in adata.obs.columns:
+  batch_info = adata.obs["batch"]
+  batch_categories = batch_info.dtype.categories
+  train = ["s1d1", "s2d1", "s2d4", "s3d6", "s3d1"]
+  adata.obs["is_train"] = [ x in train for x in batch_info ]
+  adata.obs["is_train"].replace([True, False], ["train", "test"])
+
 # Construct Modality datasets
 print("Construct Mod datasets", flush=True)
 mask_mod1 = adata.var['feature_types'] == par["mod1"]
@@ -3489,9 +3497,12 @@ adata_mod2 = adata[:, mask_mod2]
 mod1_var = pd.DataFrame(adata_mod1.var)
 remove_other_mod_col(mod1_var, par["mod2"])
 remove_mod_prefix(mod1_var, par["mod1"])
-mod1_var.index.name = "gene_symbol"
-mod1_var.reset_index("gene_symbol", inplace=True)
-mod1_var.set_index("gene_id", inplace=True)
+mod1_var.index.name = "feature_name"
+mod1_var["feature_id"] = mod1_var.gene_id
+mod1_var.drop("gene_id", axis=1, inplace=True)
+if not mod1_var.feature_id.hasnans:
+  mod1_var.reset_index("feature_name", inplace=True)
+  mod1_var.set_index("feature_id", drop=False, inplace=True)
 
 mod1_obs = pd.DataFrame(adata_mod1.obs)
 remove_other_mod_col(mod1_obs, par["mod2"])
@@ -3507,10 +3518,12 @@ del adata_mod1.X
 mod2_var = pd.DataFrame(adata_mod2.var)
 remove_other_mod_col(mod2_var, par["mod1"])
 remove_mod_prefix(mod2_var, par["mod2"])
-mod2_var.gene_id = mod2_var.index.values
-mod2_var.index.name = "gene_symbol"
-mod2_var.reset_index("gene_symbol", inplace=True)
-mod2_var.set_index("gene_id", inplace=True)
+mod2_var.index.name = "feature_name"
+mod2_var["feature_id"] = mod2_var.gene_id
+mod2_var.drop("gene_id", axis=1, inplace=True)
+if not mod2_var.feature_id.hasnans:
+  mod2_var.reset_index("feature_name", inplace=True)
+  mod2_var.set_index("feature_id", drop=False, inplace=True)
 
 mod2_obs = pd.DataFrame(adata_mod2.obs)
 remove_other_mod_col(mod2_obs, par["mod1"])
@@ -3521,9 +3534,9 @@ adata_mod2.obs = mod2_obs
 
 adata_mod2.uns = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata.uns.items() if not key.startswith(par['mod1'])}
 if par["mod2"] == "ATAC":
-  adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.uns.items() if key.startswith(par['mod2'])}
+  adata_mod2.obsm = { key.replace(f"{par['mod2']}_", ""): value for key, value in adata_mod2.obsm.items() if key.startswith(par['mod2'])}
 else:
-   del adata_mod2.obsm
+  del adata_mod2.obsm
 
 
 del adata_mod2.X
