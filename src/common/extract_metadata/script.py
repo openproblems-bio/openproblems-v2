@@ -9,24 +9,24 @@ import datetime
 ## VIASH START
 par = {
   'input': 'resources_test/common/pancreas/dataset.h5ad',
-  'output': 'output/meta.yaml'
+  'schema': 'src/datasets/api/file_raw.yaml',
+  'output': 'output/meta.yaml',
 }
 ## VIASH END
-
-# Get file size in bytes
-file_size = os.path.getsize(par['input'])
-
-# Get file creation time
-creation_time = os.path.getctime(par['input'])
-# Convert creation time from seconds since epoch to a readable timestamp
-creation_time = datetime.datetime.fromtimestamp(creation_time)
-# Format the datetime object as 'DD-MM-YYYY'
-creation_time = creation_time.strftime('%d-%m-%Y')
 
 print('Load data', flush=True)
 adata = ad.read_h5ad(par['input']).copy()
 
-# create data structure
+if par["schema"]:
+  print("Load schema", flush=True)
+  with open(par["schema"], "r") as f:
+    schema = yaml.safe_load(f)
+else:
+  schema = None
+
+####################################################################################################
+## Helper functions for extracting the dataset metadata in uns                                    ##
+####################################################################################################
 def is_atomic(obj):
   return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool) or isinstance(obj, float)
 
@@ -61,6 +61,10 @@ def is_dict_of_atomics(obj):
 def to_dict_of_atomics(obj):
   return {k: to_atomic(v) for k, v in obj.items()}
 
+
+####################################################################################################
+## Helper functions for extracting metadata about the used data structures                        ##
+####################################################################################################
 def get_structure_shape(obj) -> list:
   if isinstance(obj, np.ndarray):
     return list(obj.shape)
@@ -107,22 +111,74 @@ def get_structure_dtype(obj) -> str:
     return type(obj).__name__
   return None
 
+def get_structure_schema_info(struct, key) -> dict:
+  if schema is None:
+    return {}
+  struct_args = schema.get("info").get("slots").get(struct)
+  if struct_args is None:
+    return {}
+  if struct == "X":
+    return struct_args
+  
+  # look for item with the correct name
+  struct_results = [x for x in struct_args if x.get("name") == key]
+
+  # return None if no match is found
+  if len(struct_results) != 1:
+    return {}
+
+  return struct_results[0]
+
 def get_structure(adata, struct):
   adata_struct = getattr(adata, struct)
+
+  # turn `adata_struct` into a dict for `X`
   if (struct == "X"):
     adata_struct = {"X": adata_struct} if adata_struct is not None else {}
-  return [
-    {
+
+  output = []
+
+  for key, value in adata_struct.items():
+    out = {
       "name": key,
       "type": get_structure_type(value),
       "shape": get_structure_shape(value),
       "dtype": get_structure_dtype(value),
     }
-    for key, value in adata_struct.items()
-  ]
+
+    # see if the schema has information about this struct
+    schema_info = get_structure_schema_info(struct, key)
+
+    if schema_info.get("description"):
+      out["description"] = schema_info.get("description")
+    if schema_info.get("type"):
+      out["schema_type"] = schema_info.get("schema_type")
+
+    output.append(out)
+  
+  return output
+
+####################################################################################################
+## Other helper functions                                                                         ##
+####################################################################################################
+
+def get_file_size(path: str) -> int:
+  """Get the file size in bytes of the file at the given path."""
+  return os.path.getsize(path)
+
+def get_file_creation_time(path: str) -> str:
+  """Get the creation time of the file at the given path."""
+  # Get file creation time
+  creation_time = os.path.getctime(path)
+  # Convert creation time from seconds since epoch to a readable timestamp
+  creation_time = datetime.datetime.fromtimestamp(creation_time)
+  # Format the datetime object as 'DD-MM-YYYY'
+  creation_time = creation_time.strftime('%d-%m-%Y')
+  return str(creation_time)
 
 
 print("Extract metadata from object", flush=True)
+# Extract metadata about the adata object
 uns = {}
 for key, val in adata.uns.items():
   if is_atomic(val):
@@ -132,13 +188,17 @@ for key, val in adata.uns.items():
   elif is_dict_of_atomics(val) and len(val) <= 10:
     uns[key] = to_dict_of_atomics(val)
 
-uns["file_size"] = file_size
-uns["date_created"] = str(creation_time)
+uns["file_size"] = get_file_size(par["input"])
+uns["date_created"] = get_file_creation_time(par["input"])
+
+# Extract metadata about the data structures
 structure = {
   struct: get_structure(adata, struct)
   for struct
   in ["X", "obs", "var", "obsp", "varp", "obsm", "varm", "layers", "uns"]
 }
+
+# ¢reate metadata object
 meta = {"uns": uns, "structure": structure}
 
 print("Write metadata to file", flush=True)

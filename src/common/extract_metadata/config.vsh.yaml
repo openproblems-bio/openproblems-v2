@@ -9,6 +9,10 @@ functionality:
           type: file
           required: true
           description: A h5ad file.
+        - name: --schema
+          type: file
+          required: false
+          description: An optional schema with which to annotate the output
     - name: Output
       arguments:
         - name: --output
@@ -22,6 +26,7 @@ functionality:
       path: script.py
   test_resources:
     - path: /resources_test/common/pancreas
+    - path: /src/datasets/api/file_raw.yaml
     - type: python_script
       path: test.py
 platforms:
