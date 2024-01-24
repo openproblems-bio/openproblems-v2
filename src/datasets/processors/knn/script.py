@@ -4,7 +4,7 @@ import scanpy as sc
 ### VIASH START
 par = {
   'input': 'work/ca/0751ff85df6f9478cb7bda5a705cad/zebrafish.sqrt_cpm.pca.output.h5ad',
-  'layer_input': 'normalized',
+  'input_layer': 'normalized',
   'output': 'dataset.h5ad',
   'key_added': 'knn',
   'n_neighbors': 15
@@ -15,7 +15,7 @@ print(">> Load data", flush=True)
 adata = sc.read(par['input'])
 
 print(">> Look for layer", flush=True)
-adata.X = adata.layers[par['layer_input']]
+adata.X = adata.layers[par['input_layer']]
 
 print(">> Run kNN", flush=True)
 sc.pp.neighbors(
