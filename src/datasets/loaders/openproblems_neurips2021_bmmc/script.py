@@ -45,10 +45,11 @@ mod1_var = pd.DataFrame(adata_mod1.var)
 remove_other_mod_col(mod1_var, par["mod2"])
 remove_mod_prefix(mod1_var, par["mod1"])
 mod1_var.index.name = "feature_name"
-mod1_var.reset_index("feature_name", inplace=True)
 mod1_var["feature_id"] = mod1_var.gene_id
 mod1_var.drop("gene_id", axis=1, inplace=True)
-mod1_var.set_index("feature_id", drop=False, inplace=True)
+if not mod1_var.feature_id.hasnans:
+  mod1_var.reset_index("feature_name", inplace=True)
+  mod1_var.set_index("feature_id", drop=False, inplace=True)
 
 mod1_obs = pd.DataFrame(adata_mod1.obs)
 remove_other_mod_col(mod1_obs, par["mod2"])
@@ -65,10 +66,11 @@ mod2_var = pd.DataFrame(adata_mod2.var)
 remove_other_mod_col(mod2_var, par["mod1"])
 remove_mod_prefix(mod2_var, par["mod2"])
 mod2_var.index.name = "feature_name"
-mod2_var.reset_index("feature_name", inplace=True)
 mod2_var["feature_id"] = mod2_var.gene_id
 mod2_var.drop("gene_id", axis=1, inplace=True)
-mod2_var.set_index("feature_id", drop=False, inplace=True)
+if not mod2_var.feature_id.hasnans:
+  mod2_var.reset_index("feature_name", inplace=True)
+  mod2_var.set_index("feature_id", drop=False, inplace=True)
 
 mod2_obs = pd.DataFrame(adata_mod2.obs)
 remove_other_mod_col(mod2_obs, par["mod1"])
