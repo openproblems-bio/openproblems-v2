@@ -4,13 +4,13 @@ library(Matrix, warn.conflicts = FALSE)
 
 ## VIASH START
 # par <- list(
-#   input_rna = "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad",
-#   input_other_mod = "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad",
-#   output_train_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad",
-#   output_train_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad",
-#   output_test_mod1 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad",
-#   output_test_mod2 = "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad",
-#   swap = TRUE,
+#   input_rna = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad",
+#   input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad",
+#   output_train_mod1 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/train_mod1.h5ad",
+#   output_train_mod2 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/train_mod2.h5ad",
+#   output_test_mod1 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/test_mod1.h5ad",
+#   output_test_mod2 = "resources_test/predict_modality/nopenproblems_neurips2021/bmmc_cite/test_mod2.h5ad",
+#   swap = FALSE,
 #   seed = 1L
 # )
 par <- list(
@@ -75,6 +75,10 @@ if (ad2_mod == "ATAC") {
 
   # copy gene activity in new object
   ad2_uns$gene_activity_var_names <- ad2$uns$gene_activity_var_names
+  # workaround for error message:
+  # Error in validObject(x) : 
+  #   invalid class “dgCMatrix” object: 'i' slot is not increasing within columns
+  ad2$.__enclos_env__$private$.anndata$obsm$get("gene_activity")$sort_indices()
   ad2_obsm$gene_activity <- as(ad2$obsm$gene_activity, "CsparseMatrix")
 }
 
