@@ -5,30 +5,12 @@ workflow run_wf {
   main:
   output_ch = input_ch
 
-    | niceView()
-
-    | map { id, state ->
-      def dataset_id = (new org.yaml.snakeyaml.Yaml().load(state.input)).uns.dataset_id
-      [id, state + ["file_name": dataset_id]]
-    }
-
     | yaml_to_json.run(
-      fromState: { id, state -> [
-        "input": state.input,
-        "output": state.file_name + ".json"
-      ]
-      },
+      fromState: ["input"],
       toState: ["output"]
-    
     )
 
-    
-
-    | setState({id ,state -> [
-      "output": state.output
-    ]
-
-    })
+    | setState(["output"])
 
     emit:
     output_ch
