@@ -3482,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "de692b54645cf744c46a501e868d95edf1fe86a8",
+    "git_commit" : "c431554a4fab64b9e34dbe11691b4d0b3fe8a535",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3591,6 +3591,10 @@ if (ad2_mod == "ATAC") {
 
   # copy gene activity in new object
   ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
+  # workaround for error message:
+  # Error in validObject(x) : 
+  #   invalid class “dgCMatrix” object: 'i' slot is not increasing within columns
+  ad2\\$.__enclos_env__\\$private\\$.anndata\\$obsm\\$get("gene_activity")\\$sort_indices()
   ad2_obsm\\$gene_activity <- as(ad2\\$obsm\\$gene_activity, "CsparseMatrix")
 }
 
