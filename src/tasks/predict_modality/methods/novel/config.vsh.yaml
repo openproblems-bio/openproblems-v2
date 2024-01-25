@@ -9,11 +9,15 @@ functionality:
     repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
     reference: pmlr-v176-lance22a
   arguments:
-    - name: "--model"
+    - name: "--input_model"
       type: file
       example: "model.pt"
       description: Path to a pretrained model.
       required: true
+    - name: --input_transformer
+      type: file
+      example: "transformer.pickle"
+      description: Path to the transformer file
   resources:
     - type: python_script
       path: script.py
