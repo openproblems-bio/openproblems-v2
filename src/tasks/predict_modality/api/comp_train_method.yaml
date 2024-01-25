@@ -20,17 +20,11 @@ functionality:
     - name: "--input_test_mod1"
       __merge__: file_test_mod1.yaml
       direction: input
-      required: true
+      required: false
     - name: "--input_test_mod2"
       __merge__: file_test_mod2.yaml
       direction: input
-      required: true
-    - name: "--output"
-      type: file
-      description: A trained model.
-      example: model.pt
-      direction: output
-      required: true
+      required: false
   # test_resources:
   #   - type: python_script
   #     path: /src/common/comp_tests/check_method_config.py
