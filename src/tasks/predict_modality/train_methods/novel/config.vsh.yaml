@@ -13,6 +13,11 @@ functionality:
       type: python_script
     - path: helper_functions.py
       type: python_script
+  arguments:
+    - name: --output_transformer
+      type: file
+      description: Path to the transformer file
+      default: transformer.pickle
 platforms:
   - type: docker
     image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"
