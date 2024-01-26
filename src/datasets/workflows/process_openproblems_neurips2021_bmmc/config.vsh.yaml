@@ -97,12 +97,10 @@ functionality:
       arguments:
         - name: "--output_rna"
           direction: "output"
-          type: file
-          example: "dataset_rna.h5ad"
+          __merge__: /src/datasets/api/file_multimodal_dataset.yaml
         - name: "--output_other_mod"
           direction: "output"
-          type: file
-          example: "dataset_other_mod.h5ad"
+          __merge__: /src/datasets/api/file_multimodal_dataset.yaml
         - name: "--output_meta_rna"
           direction: "output"
           type: file

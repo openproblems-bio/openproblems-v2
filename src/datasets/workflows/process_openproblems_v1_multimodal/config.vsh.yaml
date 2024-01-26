@@ -104,10 +104,10 @@ functionality:
       arguments:
         - name: "--output_dataset_mod1"
           direction: "output"
-          __merge__: /src/src/datasets/api/file_multimodal_dataset.yaml
+          __merge__: /src/datasets/api/file_multimodal_dataset.yaml
         - name: "--output_dataset_mod2"
           direction: "output"
-          __merge__: /src/src/datasets/api/file_multimodal_dataset.yaml
+          __merge__: /src/datasets/api/file_multimodal_dataset.yaml
         - name: "--output_meta_mod1"
           direction: "output"
           type: file
