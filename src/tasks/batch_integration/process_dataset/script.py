@@ -57,10 +57,6 @@ slot_mapping = {
 }
 slot_info = read_config_slots_info(meta["config"], slot_mapping)
 
-print(">> Set gene names for Census datasets", flush=True)
-if "feature_name" not in adata.var.columns:
-    adata.var["feature_name"] = adata.var_names
-
 print(">> Create output object", flush=True)
 output_dataset = subset_anndata(adata_with_hvg, slot_info["output_dataset"])
 output_solution = subset_anndata(adata_with_hvg, slot_info["output_solution"])
