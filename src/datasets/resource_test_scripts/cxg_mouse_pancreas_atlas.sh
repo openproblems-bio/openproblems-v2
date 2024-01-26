@@ -1,8 +1,10 @@
 #!/bin/bash
 
+set -e
+
 cat > "/tmp/params.yaml" << 'HERE'
 param_list:
-  - id: cellxgene_census/mouse_pancreas_atlas
+  - id: cxg_mouse_pancreas_atlas
     species: mus_musculus
     census_version: "2023-07-25"
     obs_value_filter: "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'"
@@ -14,7 +16,7 @@ param_list:
     dataset_reference: hrovatin2023delineating
     dataset_organism: mus_musculus
 
-normalization_methods: [log_cp10k, sqrt_cp10k, l1_sqrt]
+normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
 output_meta: '$id/dataset_metadata.yaml'
 output_state: '$id/state.yaml'
@@ -24,10 +26,12 @@ output_pca: force_null
 output_hvg: force_null
 output_knn: force_null
 publish_dir: resources_test/common
+do_subsample: true
 HERE
 
 nextflow run . \
   -main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
   -profile docker \
-  -c src/wf_utils/labels_ci.config \
   -params-file "/tmp/params.yaml"
+
+src/tasks/batch_integration/resources_test_scripts/process.sh
