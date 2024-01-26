@@ -104,12 +104,10 @@ functionality:
       arguments:
         - name: "--output_dataset_mod1"
           direction: "output"
-          type: file
-          example: "dataset_mod1.h5ad"
+          __merge__: /src/src/datasets/api/file_multimodal_dataset.yaml
         - name: "--output_dataset_mod2"
           direction: "output"
-          type: file
-          example: "dataset_mod2.h5ad"
+          __merge__: /src/src/datasets/api/file_multimodal_dataset.yaml
         - name: "--output_meta_mod1"
           direction: "output"
           type: file
