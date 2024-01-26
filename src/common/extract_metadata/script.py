@@ -152,7 +152,7 @@ def get_structure(adata, struct):
     if schema_info.get("description"):
       out["description"] = schema_info.get("description")
     if schema_info.get("type"):
-      out["schema_type"] = schema_info.get("schema_type")
+      out["schema_type"] = schema_info.get("type")
 
     output.append(out)
   
