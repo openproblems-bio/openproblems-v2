@@ -114,7 +114,7 @@ def get_structure_dtype(obj) -> str:
 def get_structure_schema_info(struct, key) -> dict:
   if schema is None:
     return {}
-  struct_args = schema.get("info").get("slots").get(struct)
+  struct_args = schema.get("info", {}).get("slots", {}).get(struct, {})
   if struct_args is None:
     return {}
   if struct == "X":
