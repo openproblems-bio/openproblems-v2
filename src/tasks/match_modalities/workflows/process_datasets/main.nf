@@ -29,7 +29,7 @@ workflow run_wf {
         // read the output to see if dataset passed the qc
         def checks = readYaml(output.output)
         state + [
-          "dataset_mod1": checks["exit_code"] == 0 ? state.input : null,
+          "dataset_mod1": checks["exit_code"] == 0 ? state.input_mod1 : null,
         ]
       }
     )
@@ -49,7 +49,7 @@ workflow run_wf {
         // read the output to see if dataset passed the qc
         def checks = readYaml(output.output)
         state + [
-          "dataset_mod2": checks["exit_code"] == 0 ? state.input : null,
+          "dataset_mod2": checks["exit_code"] == 0 ? state.input_mod2 : null,
         ]
       }
     )
