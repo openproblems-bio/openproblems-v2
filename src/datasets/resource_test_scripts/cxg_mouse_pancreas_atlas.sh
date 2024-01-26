@@ -7,7 +7,7 @@ param_list:
   - id: cxg_mouse_pancreas_atlas
     species: mus_musculus
     census_version: "2023-07-25"
-    obs_value_filter: "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8'"
+    obs_value_filter: "dataset_id == '49e4ffcc-5444-406d-bdee-577127404ba8' and donor_id in ['mouse_pancreatic_islet_atlas_Hrovatin__Fltp_2y__MUC13974', 'mouse_pancreatic_islet_atlas_Hrovatin__Fltp_2y__MUC13975', 'mouse_pancreatic_islet_atlas_Hrovatin__Fltp_2y__MUC13976']"
     obs_batch: donor_id
     dataset_name: Mouse Pancreatic Islet Atlas
     dataset_summary: Mouse pancreatic islet scRNA-seq atlas across sexes, ages, and stress conditions including diabetes
@@ -34,4 +34,4 @@ nextflow run . \
   -profile docker \
   -params-file "/tmp/params.yaml"
 
-src/tasks/batch_integration/resources_test_scripts/process.sh
+# src/tasks/batch_integration/resources_test_scripts/process.sh
