@@ -24,9 +24,14 @@ info:
         required: false
     var:
       - type: string
-        name: gene_ids
-        description: The gene identifiers (if available)
-        required: false
+        name: feature_id
+        description: Unique identifier for the feature, usually a ENSEMBL gene id.
+        required: true
+      
+      - type: string
+        name: feature_name
+        description: A human-readable name for the feature, usually a gene symbol.
+        required: true
     uns:
       - type: string
         name: dataset_id

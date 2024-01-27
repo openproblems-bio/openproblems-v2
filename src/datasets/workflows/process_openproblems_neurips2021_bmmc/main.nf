@@ -155,13 +155,13 @@ workflow run_wf {
     | extract_metadata.run(
       key: "extract_metadata_rna",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "output_dataset_rna")
+        def schema = findArgumentSchema(meta.config, "output_rna")
         // workaround: convert GString to String
         schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.output_dataset_mod1,
+          "input": state.output_rna,
           "schema": schemaYaml
         ]
       },
@@ -171,13 +171,13 @@ workflow run_wf {
     | extract_metadata.run(
       key: "extract_metadata_other_mod",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "output_dataset_other_mod")
+        def schema = findArgumentSchema(meta.config, "output_other_mod")
         // workaround: convert GString to String
         schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.output_dataset_mod2,
+          "input": state.output_other_mod,
           "schema": schemaYaml
         ]
       },

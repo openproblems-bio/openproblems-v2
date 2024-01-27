@@ -29,7 +29,7 @@ workflow run_wf {
         // read the output to see if dataset passed the qc
         def checks = readYaml(output.output)
         state + [
-          "dataset_rna": checks["exit_code"] == 0 ? state.input : null,
+          "dataset_rna": checks["exit_code"] == 0 ? state.input_rna : null,
         ]
       }
     )
@@ -49,10 +49,11 @@ workflow run_wf {
         // read the output to see if dataset passed the qc
         def checks = readYaml(output.output)
         state + [
-          "dataset_other_mod": checks["exit_code"] == 0 ? state.input : null,
+          "dataset_other_mod": checks["exit_code"] == 0 ? state.input_other_mod : null,
         ]
       }
     )
+    | view{"test: ${it}"}
 
     // remove datasets which didn't pass the schema check
     | filter { id, state ->
