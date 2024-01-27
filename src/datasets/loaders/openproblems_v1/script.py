@@ -102,9 +102,8 @@ uns_metadata = {
 }
 adata.uns.update(uns_metadata)
 
-print("Fix var formatting", flush=True)
-
-adata.index.name = "feature_name"
+# TODO: fix var annotation
+# - add feature_id and feature_name
 
 print("Writing adata to file", flush=True)
 adata.write_h5ad(par["output"], compression="gzip")
