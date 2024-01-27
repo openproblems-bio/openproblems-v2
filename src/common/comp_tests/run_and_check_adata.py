@@ -55,7 +55,7 @@ def run_and_check(arguments, cmd):
     print(">> Reading h5ad files and checking formats", flush=True)
     adatas = {}
     for arg in arguments:
-        if arg["type"] == "file":
+        if arg["type"] == "file" and "slots" in arg["info"]:
             print(f"Reading and checking {arg['clean_name']}", flush=True)
             adata = ad.read_h5ad(arg["value"])
 

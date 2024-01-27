@@ -11,17 +11,20 @@ par = {
 }
 ## VIASH END
 
-def check_structure(slot_info, adata_slot):
+def check_structure(slot, slot_info, adata_slot):
   missing = []
+  if slot == "X":
+    slot_info["name"] = "X"
+    slot_info = [slot_info]
   for obj in slot_info:
-    adata_data = adata_slot.get(obj['name']) if obj['name'] != 'X' else adata_slot
+    adata_data = adata_slot.get(obj['name']) if slot != 'X' else adata_slot
     if obj.get('required') and adata_data is None:
       missing.append(obj['name'])
     # todo: check types
   return missing
 
 print('Load data', flush=True)
-adata = ad.read_h5ad(par['input'], backed='r')
+adata = ad.read_h5ad(par['input'])
 
 # create data structure
 out = {
@@ -43,7 +46,7 @@ out = {
 }
 for slot in def_slots:
   print("Checking slot", slot, flush=True)
-  missing = check_structure(def_slots[slot], getattr(adata, slot))
+  missing = check_structure(slot, def_slots[slot], getattr(adata, slot))
   if missing:
     out['exit_code'] = 1
     out['data_schema'] = 'not ok'
