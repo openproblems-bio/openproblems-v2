@@ -10,11 +10,11 @@ functionality:
         A metric for evaluating batch corrected embeddings.
     test_setup:
       pancreas:
-        --input_integrated: resources_test/batch_integration/pancreas/integrated_embedding.h5ad
-        --input_solution: resources_test/batch_integration/pancreas/solution.h5ad
+        input_integrated: resources_test/batch_integration/pancreas/integrated_embedding.h5ad
+        input_solution: resources_test/batch_integration/pancreas/solution.h5ad
       cellxgene_census:
-        --input_integrated: resources_test/batch_integration/cellxgene_census/integrated_embedding.h5ad
-        --input_solution: resources_test/batch_integration/cellxgene_census/solution.h5ad
+        input_integrated: resources_test/batch_integration/cxg_mouse_pancreas_atlas/integrated_embedding.h5ad
+        input_solution: resources_test/batch_integration/cxg_mouse_pancreas_atlas/solution.h5ad
   arguments:
     - name: --input_integrated
       __merge__: file_integrated_embedding.yaml

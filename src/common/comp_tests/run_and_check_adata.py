@@ -93,22 +93,30 @@ for arg in config["functionality"]["arguments"]:
     
     arguments.append(new_arg)
 
-# construct command
-cmd = [ meta["executable"] ]
-for arg in arguments:
-    if arg["type"] == "file":
-        cmd.extend([arg["name"], arg["value"]])
 
-# run according to test setup
-if "test_setup" in config["functionality"]["info"]:
-    test_setup = config["functionality"]["info"]["test_setup"]
-    for name, test_instance in test_setup.items():
-        print(f">> Test setup for '{name}'...", flush=True)
-        for arg in arguments:
-            if arg["type"] == "file" and arg["direction"] == "input":
-                file_path = test_instance[arg["name"]]
-                arg["value"] = f"{meta['resources_dir']}/{file_path}"
-        run_and_check(arguments, cmd)
+if "test_setup" not in config["functionality"]["info"]:
+    argument_sets = {"run": arguments}
 else:
-    # run using only example files if no test setup is given
-    run_and_check(arguments, cmd)
+    test_setup = config["functionality"]["info"]["test_setup"]
+    argument_sets = {}
+    for name, test_instance in test_setup.items():
+        new_arguments = []
+        for arg in arguments:
+            new_arg = arg.copy()
+            if arg["clean_name"] in test_instance:
+                val = test_instance[arg["clean_name"]]
+                if new_arg["type"] == "file" and new_arg["direction"] == "input":
+                    val = f"{meta['resources_dir']}/{val}"
+                new_arg["value"] = val
+            new_arguments.append(new_arg)
+        argument_sets[name] = new_arguments
+
+for argset_name, argset_args in argument_sets.items():
+    print(f">> Running test '{argset_name}'", flush=True)
+    # construct command
+    cmd = [ meta["executable"] ]
+    for arg in argset_args:
+        if arg["type"] == "file":
+            cmd.extend([arg["name"], arg["value"]])
+
+    run_and_check(argset_args, cmd)
