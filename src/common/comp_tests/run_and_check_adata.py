@@ -13,11 +13,11 @@ meta = {
 ## VIASH END
 
 # helper functions
-def check_slots(adata, slot_metadata):
+def check_slots(adata, arg):
     """Check whether an AnnData file contains all for the required
     slots in the corresponding .info.slots field.
     """
-    for struc_name, slot_items in slot_metadata.items():
+    for struc_name, slot_items in arg["info"].get("slots", {}).items():
         struc_x = getattr(adata, struc_name)
         
         if struc_name == "X":
@@ -58,11 +58,10 @@ def run_and_check(arguments, cmd):
         if arg["type"] == "file":
             print(f"Reading and checking {arg['clean_name']}", flush=True)
             adata = ad.read_h5ad(arg["value"])
-            slots = arg["info"].get("slots") or {}
 
             print(f"  {adata}")
 
-            check_slots(adata, slots)
+            check_slots(adata, arg)
 
             adatas[arg["clean_name"]] = adata
 
@@ -92,6 +91,8 @@ for arg in config["functionality"]["arguments"]:
       new_arg["value"] = value
     
     arguments.append(new_arg)
+
+print(f"arguments: {arguments}")
 
 
 if "test_setup" not in config["functionality"]["info"]:
