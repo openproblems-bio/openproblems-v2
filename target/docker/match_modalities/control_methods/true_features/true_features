@@ -426,9 +426,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/control_methods true_features"
-LABEL org.opencontainers.image.created="2024-01-27T05:29:41Z"
+LABEL org.opencontainers.image.created="2024-01-27T06:18:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1ddceb95ff08d0b8fad7373939788f557a0cec0d"
+LABEL org.opencontainers.image.revision="279fe54b17b57a4c942a9972cbbf2cda358f8d8b"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
