@@ -32,7 +32,8 @@ info:
       - type: string
         name: feature_name
         description: A human-readable name for the feature, usually a gene symbol.
-        required: true
+        # TODO: make this required once the dataloader supports it
+        required: false
     uns:
       - type: string
         name: dataset_id
