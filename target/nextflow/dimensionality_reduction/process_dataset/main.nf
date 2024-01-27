@@ -2825,13 +2825,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3289,7 +3289,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

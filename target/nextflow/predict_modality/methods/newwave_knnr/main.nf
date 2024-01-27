@@ -2808,7 +2808,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2892,7 +2892,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3006,7 +3006,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3048,7 +3048,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/prediction.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3134,8 +3134,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/predict_modality/neurips2021_bmmc_cite",
-        "dest" : "resources_test/predict_modality/neurips2021_bmmc_cite",
+        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite",
+        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3241,7 +3241,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr",
     "viash_version" : "0.8.0",
-    "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

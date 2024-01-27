@@ -29,8 +29,13 @@ functionality:
           required: false
         var:
         - type: "string"
-          name: "gene_ids"
-          description: "The gene identifiers (if available)"
+          name: "feature_id"
+          description: "Unique identifier for the feature, usually a ENSEMBL gene\
+            \ id."
+          required: true
+        - type: "string"
+          name: "feature_name"
+          description: "A human-readable name for the feature, usually a gene symbol."
           required: false
         uns:
         - type: "string"
@@ -71,7 +76,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad"
+    - "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -106,8 +111,13 @@ functionality:
           required: false
         var:
         - type: "string"
-          name: "gene_ids"
-          description: "The gene identifiers (if available)"
+          name: "feature_id"
+          description: "Unique identifier for the feature, usually a ENSEMBL gene\
+            \ id."
+          required: true
+        - type: "string"
+          name: "feature_name"
+          description: "A human-readable name for the feature, usually a gene symbol."
           required: false
         uns:
         - type: "string"
@@ -148,7 +158,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad"
+    - "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -204,7 +214,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -260,7 +270,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -336,7 +346,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -412,7 +422,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -451,8 +461,8 @@ functionality:
     path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   - type: "file"
-    path: "resources_test/common/neurips2021_bmmc_cite"
-    dest: "resources_test/common/neurips2021_bmmc_cite"
+    path: "resources_test/common/openproblems_neurips2021/bmmc_cite"
+    dest: "resources_test/common/openproblems_neurips2021/bmmc_cite"
   info:
     type: "process_dataset"
     type_info:
@@ -477,6 +487,8 @@ platforms:
   - type: "r"
     cran:
     - "bit64"
+    github:
+    - "rstudio/reticulate"
     bioc_force_install: false
   entrypoint: []
   cmd: null
@@ -514,5 +526,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset/process_dataset"
   viash_version: "0.8.0"
-  git_commit: "279fe54b17b57a4c942a9972cbbf2cda358f8d8b"
+  git_commit: "40257613e2a45dba9e2b6afbdad5dd4915843068"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

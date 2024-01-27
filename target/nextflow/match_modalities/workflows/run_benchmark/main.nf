@@ -3161,32 +3161,32 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
       },
       {
-        "name" : "common/extract_scores",
+        "name" : "common/extract_metadata",
         "repository" : {
           "type" : "local",
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
         "configInfo" : {
-          "functionalityName" : "extract_scores",
+          "functionalityName" : "extract_metadata",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
-          "executable" : "/nextflow/common/extract_scores/main.nf"
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
       },
       {
         "name" : "match_modalities/control_methods/random_features",
@@ -3205,7 +3205,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/random_features"
@@ -3227,7 +3227,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features"
@@ -3249,7 +3249,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/methods/fastmnn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn"
@@ -3271,7 +3271,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/methods/scot/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot"
@@ -3293,7 +3293,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/methods/harmonic_alignment/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/harmonic_alignment"
@@ -3315,7 +3315,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/methods/procrustes/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/procrustes"
@@ -3337,7 +3337,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/metrics/knn_auc/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc"
@@ -3359,7 +3359,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
           "executable" : "/nextflow/match_modalities/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse"
@@ -3405,7 +3405,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3414,7 +3414,7 @@ meta = [
 // resolve dependencies dependencies (if any)
 meta["root_dir"] = getRootDir()
 include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
-include { extract_scores } from "${meta.resources_dir}/../../../../nextflow/common/extract_scores/main.nf"
+include { extract_metadata } from "${meta.resources_dir}/../../../../nextflow/common/extract_metadata/main.nf"
 include { random_features } from "${meta.resources_dir}/../../../../nextflow/match_modalities/control_methods/random_features/main.nf"
 include { true_features } from "${meta.resources_dir}/../../../../nextflow/match_modalities/control_methods/true_features/main.nf"
 include { fastmnn } from "${meta.resources_dir}/../../../../nextflow/match_modalities/methods/fastmnn/main.nf"
@@ -3463,13 +3463,12 @@ workflow run_wf {
     }
 
     // extract the dataset metadata
-    | check_dataset_schema.run(
-      fromState: [ "input": "input_solution_mod1" ],
+    | extract_metadata.run(
+      fromState: [input: "input_solution_mod1"],
       toState: { id, output, state ->
-        // load output yaml file
-        def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        // add metadata from file to state
-        state + [dataset_uns: dataset_uns]
+        state + [
+          dataset_uns: readYaml(output.output).uns
+        ]
       }
     )
 
@@ -3540,12 +3539,13 @@ workflow run_wf {
     }
 
     // extract the scores
-    | check_dataset_schema.run(
+    | extract_metadata.run(
       key: "extract_scores",
       fromState: [input: "metric_output"],
       toState: { id, output, state ->
-        def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        state + [score_uns: score_uns]
+        state + [
+          score_uns: readYaml(output.output).uns
+        ]
       }
     )
 

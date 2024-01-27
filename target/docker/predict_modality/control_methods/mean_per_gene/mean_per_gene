@@ -176,27 +176,27 @@ function ViashHelp {
   echo "    --input_train_mod1"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
   echo ""
   echo "    --input_train_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
   echo ""
   echo "    --input_test_mod1"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
   echo ""
   echo "    --input_test_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/prediction.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -421,9 +421,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/control_methods mean_per_gene"
-LABEL org.opencontainers.image.created="2024-01-27T06:18:39Z"
+LABEL org.opencontainers.image.created="2024-01-27T06:29:07Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="279fe54b17b57a4c942a9972cbbf2cda358f8d8b"
+LABEL org.opencontainers.image.revision="40257613e2a45dba9e2b6afbdad5dd4915843068"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -3024,7 +3024,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson",
     "viash_version" : "0.8.0",
-    "git_commit" : "279fe54b17b57a4c942a9972cbbf2cda358f8d8b",
+    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
