@@ -92,8 +92,6 @@ for arg in config["functionality"]["arguments"]:
     
     arguments.append(new_arg)
 
-print(f"arguments: {arguments}")
-
 
 if "test_setup" not in config["functionality"]["info"]:
     argument_sets = {"run": arguments}
