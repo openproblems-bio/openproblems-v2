@@ -3250,7 +3250,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features",
     "viash_version" : "0.8.0",
-    "git_commit" : "8ac4d2583dd5d47e8925bc33f04850658a99da36",
+    "git_commit" : "1ddceb95ff08d0b8fad7373939788f557a0cec0d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
