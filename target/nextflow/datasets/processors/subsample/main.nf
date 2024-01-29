@@ -2825,13 +2825,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3138,13 +3138,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3451,13 +3451,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3764,13 +3764,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -4173,7 +4173,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

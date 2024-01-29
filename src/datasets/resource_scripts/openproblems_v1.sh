@@ -156,7 +156,7 @@ process {
 HERE
 
 tw launch https://github.com/openproblems-bio/openproblems-v2.git \
-  --revision integration_build \
+  --revision main_build \
   --pull-latest \
   --main-script target/nextflow/datasets/workflows/process_openproblems_v1/main.nf \
   --workspace 53907369739130 \

@@ -175,32 +175,33 @@ function ViashHelp {
   echo "Arguments:"
   echo "    --input_rna"
   echo "        type: file, required parameter, file must exist"
-  echo "        example: resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad"
+  echo "        example:"
+  echo "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
   echo ""
   echo "    --input_other_mod"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad"
+  echo "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
   echo ""
   echo "    --output_train_mod1"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
   echo ""
   echo "    --output_train_mod2"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
   echo ""
   echo "    --output_test_mod1"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
   echo ""
   echo "    --output_test_mod2"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
   echo ""
   echo "    --seed"
   echo "        type: integer"
@@ -434,12 +435,13 @@ ENTRYPOINT []
 
  
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")'
+  Rscript -e 'remotes::install_cran(c("bit64"), repos = "https://cran.rstudio.com")' && \
+  Rscript -e 'remotes::install_github(c("rstudio/reticulate"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-01-24T20:20:24Z"
+LABEL org.opencontainers.image.created="2024-01-29T09:09:13Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c14a411ac8e5d10587fa6f1855de6f1630c84b28"
+LABEL org.opencontainers.image.revision="d5b83affd36c215deecfb91e8536eab9a467f8a5"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

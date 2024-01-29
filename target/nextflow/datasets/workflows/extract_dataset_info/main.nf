@@ -2904,13 +2904,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -3030,26 +3030,26 @@ meta = [
     "status" : "enabled",
     "dependencies" : [
       {
-        "name" : "common/check_dataset_schema",
+        "name" : "common/extract_metadata",
         "repository" : {
           "type" : "local",
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
         "configInfo" : {
-          "functionalityName" : "check_dataset_schema",
+          "functionalityName" : "extract_metadata",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
-          "executable" : "/nextflow/common/check_dataset_schema/main.nf"
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
+          "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
       }
     ],
     "set_wd_to_resources_dir" : false
@@ -3092,7 +3092,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/extract_dataset_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3100,7 +3100,7 @@ meta = [
 
 // resolve dependencies dependencies (if any)
 meta["root_dir"] = getRootDir()
-include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
+include { extract_metadata } from "${meta.resources_dir}/../../../../nextflow/common/extract_metadata/main.nf"
 
 // inner workflow
 // user-provided Nextflow code
@@ -3119,11 +3119,12 @@ workflow run_wf {
   output_ch = input_ch
 
     // extract the dataset metadata
-    | check_dataset_schema.run(
+    | extract_metadata.run(
       fromState: [input: "input"],
       toState: { id, output, state ->
-        def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        state + [dataset_uns: dataset_uns]
+        state + [
+          dataset_uns: readYaml(output.output).uns
+        ]
       }
     )
 

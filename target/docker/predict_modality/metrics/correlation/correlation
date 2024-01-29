@@ -176,17 +176,17 @@ function ViashHelp {
   echo "    --input_prediction"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/prediction.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
   echo ""
   echo "    --input_test_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/neurips2021_bmmc_cite/score.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/score.h5ad"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -413,9 +413,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("proxyC", "testthat", "dynutils"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/metrics correlation"
-LABEL org.opencontainers.image.created="2024-01-24T20:20:27Z"
+LABEL org.opencontainers.image.created="2024-01-29T09:09:12Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c14a411ac8e5d10587fa6f1855de6f1630c84b28"
+LABEL org.opencontainers.image.revision="d5b83affd36c215deecfb91e8536eab9a467f8a5"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

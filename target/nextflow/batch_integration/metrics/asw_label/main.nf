@@ -3051,14 +3051,8 @@ meta = [
     "test_resources" : [
       {
         "type" : "file",
-        "path" : "resources_test/batch_integration/pancreas",
-        "dest" : "resources_test/batch_integration/pancreas",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
-      },
-      {
-        "type" : "python_script",
-        "path" : "src/common/comp_tests/check_metric_config.py",
-        "is_executable" : true,
+        "path" : "resources_test/batch_integration/",
+        "dest" : "resources_test/batch_integration/",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3096,6 +3090,16 @@ meta = [
         "label" : "Metric (embedding)",
         "summary" : "A batch integration embedding metric.",
         "description" : "A metric for evaluating batch corrected embeddings.\n"
+      },
+      "test_setup" : {
+        "pancreas" : {
+          "input_integrated" : "resources_test/batch_integration/pancreas/integrated_embedding.h5ad",
+          "input_solution" : "resources_test/batch_integration/pancreas/solution.h5ad"
+        },
+        "cellxgene_census" : {
+          "input_integrated" : "resources_test/batch_integration/cxg_mouse_pancreas_atlas/integrated_embedding.h5ad",
+          "input_solution" : "resources_test/batch_integration/cxg_mouse_pancreas_atlas/solution.h5ad"
+        }
       }
     },
     "status" : "enabled",
@@ -3166,7 +3170,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

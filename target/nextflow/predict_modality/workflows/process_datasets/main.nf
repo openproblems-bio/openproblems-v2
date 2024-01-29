@@ -2775,8 +2775,14 @@ meta = [
                 "var" : [
                   {
                     "type" : "string",
-                    "name" : "gene_ids",
-                    "description" : "The gene identifiers (if available)",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
                     "required" : false
                   }
                 ],
@@ -2841,7 +2847,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad"
+              "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2889,8 +2895,14 @@ meta = [
                 "var" : [
                   {
                     "type" : "string",
-                    "name" : "gene_ids",
-                    "description" : "The gene identifiers (if available)",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
                     "required" : false
                   }
                 ],
@@ -2955,7 +2967,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad"
+              "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3044,7 +3056,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3128,7 +3140,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3242,7 +3254,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3356,7 +3368,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3379,12 +3391,7 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "src/tasks/predict_modality/api/file_common_dataset_rna.yaml",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
-      },
-      {
-        "type" : "file",
-        "path" : "src/tasks/predict_modality/api/file_common_dataset_other_mod.yaml",
+        "path" : "src/wf_utils/helper.nf",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -3407,7 +3414,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3429,7 +3436,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3475,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3488,6 +3495,8 @@ include { process_dataset } from "${meta.resources_dir}/../../../../nextflow/pre
 
 // inner workflow
 // user-provided Nextflow code
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
@@ -3502,43 +3511,46 @@ workflow run_wf {
   main:
   output_ch = input_ch
 
-    // TODO: check schema based on the values in `config`
-    // instead of having to provide a separate schema file
     | check_dataset_schema.run(
       key: "check_dataset_schema_rna",
-            fromState: { id, state ->
-        // as a resource
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "input_rna")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
           "input": state.input_rna,
-          "schema": meta.resources_dir.resolve("file_common_dataset_rna.yaml")
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset_rna": "output",
-        "dataset_checks": "checks"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset_rna": checks["exit_code"] == 0 ? state.input_rna : null,
+        ]
+      }
     )
 
     | check_dataset_schema.run(
       key: "check_dataset_schema_other_mod",
-            fromState: { id, state ->
-        // as a resource
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "input_other_mod")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
           "input": state.input_other_mod,
-          "schema": meta.resources_dir.resolve("file_common_dataset_other_mod.yaml")
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset_other_mod": "output",
-        "dataset_checks": "checks"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset_other_mod": checks["exit_code"] == 0 ? state.input_other_mod : null,
+        ]
+      }
     )
+    | view{"test: ${it}"}
 
     // remove datasets which didn't pass the schema check
     | filter { id, state ->

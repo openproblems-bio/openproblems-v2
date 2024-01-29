@@ -136,7 +136,7 @@ functionality:
     is_executable: true
     entrypoint: "run_wf"
   - type: "file"
-    path: "src/tasks/denoising/api/file_common_dataset.yaml"
+    path: "src/wf_utils/helper.nf"
   info: null
   status: "enabled"
   dependencies:
@@ -155,7 +155,7 @@ functionality:
       functionalityNamespace: "common"
       output: ""
       platform: ""
-      git_commit: "c14a411ac8e5d10587fa6f1855de6f1630c84b28"
+      git_commit: "d5b83affd36c215deecfb91e8536eab9a467f8a5"
       executable: "/nextflow/common/check_dataset_schema/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
   - name: "denoising/process_dataset"
@@ -173,7 +173,7 @@ functionality:
       functionalityNamespace: "denoising"
       output: ""
       platform: ""
-      git_commit: "c14a411ac8e5d10587fa6f1855de6f1630c84b28"
+      git_commit: "d5b83affd36c215deecfb91e8536eab9a467f8a5"
       executable: "/nextflow/denoising/process_dataset/main.nf"
     writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset"
   set_wd_to_resources_dir: false
@@ -208,5 +208,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/process_datasets"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/process_datasets/main.nf"
   viash_version: "0.8.0"
-  git_commit: "c14a411ac8e5d10587fa6f1855de6f1630c84b28"
+  git_commit: "d5b83affd36c215deecfb91e8536eab9a467f8a5"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

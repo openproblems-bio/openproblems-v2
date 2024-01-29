@@ -3010,8 +3010,273 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_dataset_mod1",
+            "info" : {
+              "label" : "Common dataset",
+              "summary" : "A dataset processed by the common dataset processing pipeline.",
+              "description" : "This dataset contains both raw counts and normalized data matrices,\nas well as a SVD embedding and a HVG selection.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalised expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "size_factors",
+                    "description" : "The size factors created by the normalisation method, if any.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_svd",
+                    "description" : "The resulting SVD embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "A human-readable name for the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
             "example" : [
-              "dataset_mod1.h5ad"
+              "resources_test/common/pancreas/dataset.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3024,8 +3289,273 @@ meta = [
           {
             "type" : "file",
             "name" : "--output_dataset_mod2",
+            "info" : {
+              "label" : "Common dataset",
+              "summary" : "A dataset processed by the common dataset processing pipeline.",
+              "description" : "This dataset contains both raw counts and normalized data matrices,\nas well as a SVD embedding and a HVG selection.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n",
+              "slots" : {
+                "layers" : [
+                  {
+                    "type" : "integer",
+                    "name" : "counts",
+                    "description" : "Raw counts",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "normalized",
+                    "description" : "Normalised expression values",
+                    "required" : true
+                  }
+                ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "Identifier for the dataset from which the cell data is derived, useful for tracking and referencing purposes.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay",
+                    "description" : "Type of assay used to generate the cell data, indicating the methodology or technique employed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "assay_ontology_term_id",
+                    "description" : "Experimental Factor Ontology (`EFO:`) term identifier for the assay, providing a standardized reference to the assay type.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "cell_type_ontology_term_id",
+                    "description" : "Cell Ontology (`CL:`) term identifier for the cell type, offering a standardized reference to the specific cell classification.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage",
+                    "description" : "Stage of development of the organism or tissue from which the cell is derived, indicating its maturity or developmental phase.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "development_stage_ontology_term_id",
+                    "description" : "Ontology term identifier for the developmental stage, providing a standardized reference to the organism's developmental phase.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Developmental Stages (`HsapDv:`) ontology is used.  \nIf the organism is mouse (`organism_ontology_term_id == 'NCBITaxon:10090'`), then the Mouse Developmental Stages (`MmusDv:`) ontology is used.\nOtherwise, the Uberon (`UBERON:`) ontology is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease",
+                    "description" : "Information on any disease or pathological condition associated with the cell or donor.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "disease_ontology_term_id",
+                    "description" : "Ontology term identifier for the disease, enabling standardized disease classification and referencing.\n\nMust be a term from the Mondo Disease Ontology (`MONDO:`) ontology term, or `PATO:0000461` from the Phenotype And Trait Ontology (`PATO:`).\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "donor_id",
+                    "description" : "Identifier for the donor from whom the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "is_primary_data",
+                    "description" : "Indicates whether the data is primary (directly obtained from experiments) or has been computationally derived from other primary data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism",
+                    "description" : "Organism from which the cell sample is obtained.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "organism_ontology_term_id",
+                    "description" : "Ontology term identifier for the organism, providing a standardized reference for the organism.\n\nMust be a term from the NCBI Taxonomy Ontology (`NCBITaxon:`) which is a child of `NCBITaxon:33208`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity",
+                    "description" : "Ethnicity of the donor as self-reported, relevant for studies considering genetic diversity and population-specific traits.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "self_reported_ethnicity_ontology_term_id",
+                    "description" : "Ontology term identifier for the self-reported ethnicity, providing a standardized reference for ethnic classifications.\n\nIf the organism is human (`organism_ontology_term_id == 'NCBITaxon:9606'`), then the Human Ancestry Ontology (`HANCESTRO:`) is used.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "sex_ontology_term_id",
+                    "description" : "Ontology term identifier for the biological sex, ensuring standardized classification of sex. Only `PATO:0000383`, `PATO:0000384` and `PATO:0001340` are allowed.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "suspension_type",
+                    "description" : "Type of suspension or medium in which the cells were stored or processed, important for understanding cell handling and conditions.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue",
+                    "description" : "Specific tissue from which the cells were derived, key for context and specificity in cell studies.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_ontology_term_id",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general",
+                    "description" : "General category or classification of the tissue, useful for broader grouping and comparison of cell data.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "tissue_general_ontology_term_id",
+                    "description" : "Ontology term identifier for the general tissue category, aiding in standardizing and grouping tissue types.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "batch",
+                    "description" : "A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "size_factors",
+                    "description" : "The size factors created by the normalisation method, if any.",
+                    "required" : false
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  }
+                ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_svd",
+                    "description" : "The resulting SVD embedding.",
+                    "required" : true
+                  }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "A human-readable name for the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
+                ]
+              }
+            },
             "example" : [
-              "dataset_mod2.h5ad"
+              "resources_test/common/pancreas/dataset.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3075,6 +3605,11 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/workflows/process_openproblems_v1_multimodal/",
         "entrypoint" : "run_wf"
+      },
+      {
+        "type" : "file",
+        "path" : "src/wf_utils/helper.nf",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "description" : "Fetch and process legacy OpenProblems v1 multimodal datasets\n",
@@ -3097,7 +3632,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1_multimodal/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal"
@@ -3119,7 +3654,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3141,7 +3676,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -3163,7 +3698,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -3185,7 +3720,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -3207,7 +3742,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -3229,7 +3764,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/svd/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/svd"
@@ -3251,32 +3786,32 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
       },
       {
-        "name" : "common/check_dataset_schema",
+        "name" : "common/extract_metadata",
         "repository" : {
           "type" : "local",
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
         "configInfo" : {
-          "functionalityName" : "check_dataset_schema",
+          "functionalityName" : "extract_metadata",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
-          "executable" : "/nextflow/common/check_dataset_schema/main.nf"
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
+          "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
       }
     ],
     "set_wd_to_resources_dir" : false
@@ -3319,7 +3854,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3335,10 +3870,12 @@ include { l1_sqrt } from "${meta.resources_dir}/../../../../nextflow/datasets/no
 include { subsample } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/subsample/main.nf"
 include { svd } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/svd/main.nf"
 include { hvg } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/hvg/main.nf"
-include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
+include { extract_metadata } from "${meta.resources_dir}/../../../../nextflow/common/extract_metadata/main.nf"
 
 // inner workflow
 // user-provided Nextflow code
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
@@ -3483,32 +4020,46 @@ workflow run_wf {
       toState: [ "hvg_mod2": "output" ]
     )
 
-    | check_dataset_schema.run(
+    // add synonyms
+    | map{ id, state ->
+      [id, state + [
+        "output_dataset_mod1": state.hvg_mod1,
+        "output_dataset_mod2": state.hvg_mod2
+      ]]
+    }
+
+    | extract_metadata.run(
+      key: "extract_metadata_mod1",
       fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "output_dataset_mod1")
+        // workaround: convert GString to String
+        schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
-          "input": state.hvg_mod1,
-          "checks": null
+          "input": state.output_dataset_mod1,
+          "schema": schemaYaml
         ]
       },
-      toState: [
-        "output_dataset_mod1": "output",
-        "output_meta_mod1": "meta"
-      ]
+      toState: ["output_meta_mod1": "output"]
     )
 
-    | check_dataset_schema.run(
+    | extract_metadata.run(
+      key: "extract_metadata_mod2",
       fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "output_dataset_mod2")
+        // workaround: convert GString to String
+        schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
-          "input": state.hvg_mod2,
-          "checks": null
+          "input": state.output_dataset_mod2,
+          "schema": schemaYaml
         ]
       },
-      toState: [
-        "output_dataset_mod2": "output",
-        "output_meta_mod2": "meta"
-      ]
+      toState: ["output_meta_mod2": "output"]
     )
-
+    
     // only output the files for which an output file was specified
     | setState([
       "output_dataset_mod1",

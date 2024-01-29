@@ -2772,8 +2772,14 @@ meta = [
             "var" : [
               {
                 "type" : "string",
-                "name" : "gene_ids",
-                "description" : "The gene identifiers (if available)",
+                "name" : "feature_id",
+                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
                 "required" : false
               }
             ],
@@ -2838,7 +2844,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad"
+          "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2886,8 +2892,14 @@ meta = [
             "var" : [
               {
                 "type" : "string",
-                "name" : "gene_ids",
-                "description" : "The gene identifiers (if available)",
+                "name" : "feature_id",
+                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
                 "required" : false
               }
             ],
@@ -2952,7 +2964,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad"
+          "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3036,7 +3048,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3120,7 +3132,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3234,7 +3246,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3348,7 +3360,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3402,8 +3414,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/common/neurips2021_bmmc_cite",
-        "dest" : "resources_test/common/neurips2021_bmmc_cite",
+        "path" : "resources_test/common/openproblems_neurips2021/bmmc_cite",
+        "dest" : "resources_test/common/openproblems_neurips2021/bmmc_cite",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -3435,6 +3447,9 @@ meta = [
           "type" : "r",
           "cran" : [
             "bit64"
+          ],
+          "github" : [
+            "rstudio/reticulate"
           ],
           "bioc_force_install" : false
         }
@@ -3482,7 +3497,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

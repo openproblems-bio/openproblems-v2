@@ -3253,12 +3253,7 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "src/tasks/match_modalities/api/file_common_dataset_mod1.yaml",
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
-      },
-      {
-        "type" : "file",
-        "path" : "src/tasks/match_modalities/api/file_common_dataset_mod2.yaml",
+        "path" : "src/wf_utils/helper.nf",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -3281,7 +3276,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3303,7 +3298,7 @@ meta = [
           "functionalityNamespace" : "match_modalities",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/match_modalities/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/process_dataset"
@@ -3349,7 +3344,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3362,6 +3357,8 @@ include { process_dataset } from "${meta.resources_dir}/../../../../nextflow/mat
 
 // inner workflow
 // user-provided Nextflow code
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
@@ -3375,42 +3372,47 @@ workflow run_wf {
 
   main:
   output_ch = input_ch
-    
-    // TODO: check schema based on the values in `config`
-    // instead of having to provide a separate schema file
+
     | check_dataset_schema.run(
       key: "check_dataset_schema_mod1",
       fromState: { id, state ->
-        // as a resource
+        def schema = findArgumentSchema(meta.config, "input_mod1")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
           "input": state.input_mod1,
-          "schema": meta.resources_dir.resolve("file_common_dataset_mod1.yaml")
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset_mod1": "output"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset_mod1": checks["exit_code"] == 0 ? state.input_mod1 : null,
+        ]
+      }
     )
+
     | check_dataset_schema.run(
       key: "check_dataset_schema_mod2",
       fromState: { id, state ->
-        // as a resource
+        def schema = findArgumentSchema(meta.config, "input_mod2")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
           "input": state.input_mod2,
-          "schema": meta.resources_dir.resolve("file_common_dataset_mod2.yaml")
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset_mod2": "output"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset_mod2": checks["exit_code"] == 0 ? state.input_mod2 : null,
+        ]
+      }
     )
-
+    
     // remove datasets which didn't pass the schema check
     | filter { id, state ->
       state.dataset_mod1 != null && state.dataset_mod2 != null

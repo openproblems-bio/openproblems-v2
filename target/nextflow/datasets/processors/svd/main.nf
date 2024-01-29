@@ -2964,13 +2964,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3223,13 +3223,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3254,7 +3254,7 @@ meta = [
       },
       {
         "type" : "string",
-        "name" : "--layer_input",
+        "name" : "--input_layer",
         "description" : "Which layer to use as input.",
         "default" : [
           "normalized"
@@ -3503,13 +3503,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3770,13 +3770,13 @@ meta = [
                 "type" : "string",
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
+                "required" : false
               },
               {
                 "type" : "integer",
@@ -3925,7 +3925,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/svd",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3949,7 +3949,7 @@ import sklearn.decomposition
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_mod2': $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_INPUT_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'layer_input': $( if [ ! -z ${VIASH_PAR_LAYER_INPUT+x} ]; then echo "r'${VIASH_PAR_LAYER_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'input_layer': $( if [ ! -z ${VIASH_PAR_INPUT_LAYER+x} ]; then echo "r'${VIASH_PAR_INPUT_LAYER//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output_mod2': $( if [ ! -z ${VIASH_PAR_OUTPUT_MOD2+x} ]; then echo "r'${VIASH_PAR_OUTPUT_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'obsm_embedding': $( if [ ! -z ${VIASH_PAR_OBSM_EMBEDDING+x} ]; then echo "r'${VIASH_PAR_OBSM_EMBEDDING//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3981,18 +3981,18 @@ if par["input_mod2"] is not None:
     adata2 = ad.read(par["input_mod2"])
 
 print(">> check parameters", flush=True)
-min_list = [par["num_components"], min(adata.layers[par["layer_input"]].shape) - 1]
+min_list = [par["num_components"], min(adata.layers[par["input_layer"]].shape) - 1]
 
 if par["input_mod2"] is not None:
-    min_list.append(min(adata2.layers[par["layer_input"]].shape) - 1)
+    min_list.append(min(adata2.layers[par["input_layer"]].shape) - 1)
 
 n_svd = min(min_list)
 
 
 print(">> Run SVD", flush=True)
-svd1 = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata.layers[par["layer_input"]])
+svd1 = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata.layers[par["input_layer"]])
 if par["input_mod2"] is not None:
-    svd2 = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata2.layers[par["layer_input"]])
+    svd2 = sklearn.decomposition.TruncatedSVD(n_svd).fit_transform(adata2.layers[par["input_layer"]])
 
 print(">> Storing output", flush=True)
 adata.obsm[par["obsm_embedding"]] = svd1

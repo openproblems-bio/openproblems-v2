@@ -2811,7 +2811,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2895,7 +2895,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3009,7 +3009,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3123,7 +3123,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3245,32 +3245,32 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
       },
       {
-        "name" : "common/extract_scores",
+        "name" : "common/extract_metadata",
         "repository" : {
           "type" : "local",
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
         "configInfo" : {
-          "functionalityName" : "extract_scores",
+          "functionalityName" : "extract_metadata",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_scores/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
-          "executable" : "/nextflow/common/extract_scores/main.nf"
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
+          "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_scores"
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
       },
       {
         "name" : "predict_modality/control_methods/mean_per_gene",
@@ -3289,7 +3289,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
@@ -3311,7 +3311,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/control_methods/random_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
@@ -3333,7 +3333,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/control_methods/zeros/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
@@ -3355,7 +3355,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/control_methods/solution/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
@@ -3377,7 +3377,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/methods/knnr_py/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
@@ -3399,7 +3399,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/methods/knnr_r/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
@@ -3421,7 +3421,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/methods/lm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
@@ -3443,7 +3443,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
@@ -3465,7 +3465,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/methods/random_forest/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
@@ -3487,7 +3487,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
@@ -3509,7 +3509,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/predict_modality/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
@@ -3555,7 +3555,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3564,7 +3564,7 @@ meta = [
 // resolve dependencies dependencies (if any)
 meta["root_dir"] = getRootDir()
 include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
-include { extract_scores } from "${meta.resources_dir}/../../../../nextflow/common/extract_scores/main.nf"
+include { extract_metadata } from "${meta.resources_dir}/../../../../nextflow/common/extract_metadata/main.nf"
 include { mean_per_gene } from "${meta.resources_dir}/../../../../nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
 include { random_predict } from "${meta.resources_dir}/../../../../nextflow/predict_modality/control_methods/random_predict/main.nf"
 include { zeros } from "${meta.resources_dir}/../../../../nextflow/predict_modality/control_methods/zeros/main.nf"
@@ -3619,11 +3619,12 @@ workflow run_wf {
     }
 
     // extract the dataset metadata
-    | check_dataset_schema.run(
-      fromState: [ "input": "input_train_mod1" ],
+    | extract_metadata.run(
+      fromState: [input: "input_train_mod1"],
       toState: { id, output, state ->
-        def dataset_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        state + [dataset_uns: dataset_uns]
+        state + [
+          dataset_uns: readYaml(output.output).uns
+        ]
       }
     )
 
@@ -3685,12 +3686,13 @@ workflow run_wf {
     )
 
     // extract the scores
-    | check_dataset_schema.run(
+    | extract_metadata.run(
       key: "extract_scores",
       fromState: [input: "metric_output"],
       toState: { id, output, state ->
-        def score_uns = (new org.yaml.snakeyaml.Yaml().load(output.meta)).uns
-        state + [score_uns: score_uns]
+        state + [
+          score_uns: readYaml(output.output).uns
+        ]
       }
     )
 

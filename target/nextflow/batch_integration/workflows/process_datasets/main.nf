@@ -3127,7 +3127,7 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "src/tasks/batch_integration/api/file_common_dataset.yaml",
+        "path" : "src/wf_utils/helper.nf",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
@@ -3150,7 +3150,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3172,7 +3172,7 @@ meta = [
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -3218,7 +3218,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3231,6 +3231,8 @@ include { process_dataset } from "${meta.resources_dir}/../../../../nextflow/bat
 
 // inner workflow
 // user-provided Nextflow code
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
@@ -3245,23 +3247,23 @@ workflow run_wf {
   main:
   output_ch = input_ch
 
-    // TODO: check schema based on the values in `config`
-    // instead of having to provide a separate schema file
     | check_dataset_schema.run(
       fromState: { id, state ->
-        // as a resource
+        def schema = findArgumentSchema(meta.config, "input")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
           "input": state.input,
-          "schema": meta.resources_dir.resolve("file_common_dataset.yaml")
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset": "output",
-        "dataset_checks": "checks"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset": checks["exit_code"] == 0 ? state.input : null,
+        ]
+      }
     )
 
     // remove datasets which didn't pass the schema check

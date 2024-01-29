@@ -3160,13 +3160,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -3564,13 +3564,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -3868,13 +3868,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -4110,7 +4110,7 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "tissue_ontology_term_id",
-                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tiss''' + '''ue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid o''' + '''r tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
                     "required" : false
                   },
                   {
@@ -4149,13 +4149,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -4190,13 +4190,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -4561,13 +4561,13 @@ meta = [
                     "type" : "string",
                     "name" : "feature_id",
                     "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : true
+                    "required" : false
                   },
                   {
                     "type" : "integer",
@@ -4794,6 +4794,11 @@ meta = [
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/datasets/workflows/process_cellxgene_census/",
         "entrypoint" : "run_wf"
+      },
+      {
+        "type" : "file",
+        "path" : "src/wf_utils/helper.nf",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "description" : "Fetch and process datasets originating from the CELLxGENE census.\n",
@@ -4816,7 +4821,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/loaders/cellxgene_census/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/cellxgene_census"
@@ -4838,7 +4843,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -4860,7 +4865,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -4882,7 +4887,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -4904,7 +4909,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -4926,7 +4931,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -4948,7 +4953,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -4970,7 +4975,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4992,32 +4997,32 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
       },
       {
-        "name" : "common/check_dataset_schema",
+        "name" : "common/extract_metadata",
         "repository" : {
           "type" : "local",
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
         "configInfo" : {
-          "functionalityName" : "check_dataset_schema",
+          "functionalityName" : "extract_metadata",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/check_dataset_schema/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
-          "executable" : "/nextflow/common/check_dataset_schema/main.nf"
+          "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
+          "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
       }
     ],
     "set_wd_to_resources_dir" : false
@@ -5060,7 +5065,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_cellxgene_census",
     "viash_version" : "0.8.0",
-    "git_commit" : "c14a411ac8e5d10587fa6f1855de6f1630c84b28",
+    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -5077,10 +5082,12 @@ include { subsample } from "${meta.resources_dir}/../../../../nextflow/datasets/
 include { pca } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/pca/main.nf"
 include { hvg } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/hvg/main.nf"
 include { knn } from "${meta.resources_dir}/../../../../nextflow/datasets/processors/knn/main.nf"
-include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
+include { extract_metadata } from "${meta.resources_dir}/../../../../nextflow/common/extract_metadata/main.nf"
 
 // inner workflow
 // user-provided Nextflow code
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
@@ -5189,24 +5196,39 @@ workflow run_wf {
       }
     )
 
-    | pca.run(
-      fromState: ["input": "output_normalized"],
-      toState: ["output_pca": "output" ]
-    )
-
     | hvg.run(
-      fromState: ["input": "output_pca"],
+      fromState: ["input": "output_normalized"],
       toState: ["output_hvg": "output"]
     )
 
-    | knn.run(
+    | pca.run(
       fromState: ["input": "output_hvg"],
+      toState: ["output_pca": "output" ]
+    )
+
+    | knn.run(
+      fromState: ["input": "output_pca"],
       toState: ["output_knn": "output"]
     )
 
-    | check_dataset_schema.run(
-      fromState: ["input": "output_knn"],
-      toState: ["output_dataset": "output", "output_meta": "meta"]
+    // add synonym
+    | map{ id, state ->
+      [id, state + [output_dataset: state.output_knn]]
+    }
+
+    | extract_metadata.run(
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "output_dataset")
+        // workaround: convert GString to String
+        schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
+        [
+          "input": state.output_dataset,
+          "schema": schemaYaml
+        ]
+      },
+      toState: ["output_meta": "output"]
     )
 
     // only output the files for which an output file was specified
