@@ -421,15 +421,15 @@ RUN apt-get update && \
   rm -rf /var/lib/apt/lists/*
 
 RUN release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest) && \
-  download_url=$(echo "$release_info" | jq -r '.assets[] | select(.name | test("quarto-.*-linux-amd64.deb")) | .browser_download_url') && \
+  download_url=$(printf "%s" "$release_info" | jq -r '.assets[] | select(.name | test("quarto-.*-linux-amd64.deb")) | .browser_download_url') && \
   curl -sL "$download_url" -o /opt/quarto.deb && \
   dpkg -i /opt/quarto.deb && \
   rm /opt/quarto.deb
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_task_readme"
-LABEL org.opencontainers.image.created="2024-01-30T09:25:05Z"
+LABEL org.opencontainers.image.created="2024-01-30T13:06:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c3396296636da7f5760ffc0167e8efe29413e02c"
+LABEL org.opencontainers.image.revision="66cb3b337719017642c035aae18acd64ebec4de1"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
