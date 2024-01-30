@@ -436,9 +436,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("Matrix", "parallel", "Rcpp", "pracma", "RcppAnnoy", "RSpectra", "igraph", "grDevices"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods simlr"
-LABEL org.opencontainers.image.created="2024-01-30T13:06:34Z"
+LABEL org.opencontainers.image.created="2024-01-30T14:02:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="66cb3b337719017642c035aae18acd64ebec4de1"
+LABEL org.opencontainers.image.revision="7dd18ad5f50b4a6a887eb700d03c117ea8850a0d"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

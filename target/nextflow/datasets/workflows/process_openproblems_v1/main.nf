@@ -2812,6 +2812,32 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--var_feature_id",
+            "description" : "Location of where to find the feature IDs. Can be set to index if the feature IDs are the index.",
+            "example" : [
+              "gene_ids"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--var_feature_name",
+            "description" : "Location of where to find the feature names. Can be set to index if the feature names are the index.",
+            "default" : [
+              "index"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
           }
         ]
       },
@@ -4079,7 +4105,7 @@ meta = [
                     "type" : "double",
                     "name" : "size_factors",
                     "description" : "The size factors created by the normalisation method, if any.",
-                    "required" : false
+             ''' + '''       "required" : false
                   }
                 ],
                 "var" : [
@@ -4100,7 +4126,7 @@ meta = [
                     "name" : "soma_joinid",
                     "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
                     "required" : false
-       ''' + '''           }
+                  }
                 ]
               },
               "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
@@ -4759,7 +4785,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1"
@@ -4781,7 +4807,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -4803,7 +4829,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -4825,7 +4851,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -4847,7 +4873,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -4869,7 +4895,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -4891,7 +4917,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -4913,7 +4939,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4935,7 +4961,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -4957,7 +4983,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+          "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -5003,7 +5029,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1",
     "viash_version" : "0.8.0",
-    "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

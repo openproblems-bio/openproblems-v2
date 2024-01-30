@@ -3408,7 +3408,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_neurips2021_bmmc",
     "viash_version" : "0.8.0",
-    "git_commit" : "66cb3b337719017642c035aae18acd64ebec4de1",
+    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
