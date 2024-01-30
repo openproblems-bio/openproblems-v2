@@ -121,26 +121,32 @@ del mod1.X
 del mod2.X
 
 print("Setting .var['feature_name']", flush=True)
-if par["var_feature_name"]:
-    if par["var_feature_name"] == "index":
-        mod1.var["feature_name"] = mod1.var.index
-        mod1.var["feature_name"] = mod1.var.index
-    elif par["var_feature_name"] in mod1.var:
-        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+if par["var_feature_name"] == "index":
+    mod1.var["feature_name"] = mod1.var.index
+    mod2.var["feature_name"] = mod2.var.index
+else: 
+    if par["var_feature_name"] in mod1.var:
+        mod1.var["feature_name"] = mod1.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod1.var.", flush=True)
+    if par["var_feature_name"] in mod2.var:
         mod2.var["feature_name"] = mod2.var[par["feature_name"]]
     else:
-        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod2.var.", flush=True)
 
 print("Setting .var['feature_id']", flush=True)
-if par["var_feature_id"]:
-    if par["var_feature_id"] == "index":
-        mod1.var["feature_id"] = mod1.var.index
-        mod1.var["feature_id"] = mod1.var.index
-    elif par["var_feature_id"] in mod1.var:
-        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+if par["var_feature_id"] == "index":
+    mod1.var["feature_id"] = mod1.var.index
+    mod2.var["feature_id"] = mod2.var.index
+else:
+    if par["var_feature_id"] in mod1.var:
+        mod1.var["feature_id"] = mod1.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod1.var.", flush=True)
+    if par["var_feature_id"] in mod2.var:
         mod2.var["feature_id"] = mod2.var[par["feature_id"]]
     else:
-        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod2.var.", flush=True)
 
 
 print("Add metadata to uns", flush=True)
