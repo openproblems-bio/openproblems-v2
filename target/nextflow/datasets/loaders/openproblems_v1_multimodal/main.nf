@@ -2802,6 +2802,32 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--var_feature_id",
+            "description" : "Location of where to find the feature IDs. Can be set to index if the feature IDs are the index.",
+            "example" : [
+              "gene_ids"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--var_feature_name",
+            "description" : "Location of where to find the feature names. Can be set to index if the feature names are the index.",
+            "default" : [
+              "index"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
           }
         ]
       },
@@ -3458,7 +3484,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "d5b83affd36c215deecfb91e8536eab9a467f8a5",
+    "git_commit" : "c3396296636da7f5760ffc0167e8efe29413e02c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3488,6 +3514,8 @@ par = {
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'sparse': $( if [ ! -z ${VIASH_PAR_SPARSE+x} ]; then echo "r'${VIASH_PAR_SPARSE//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
+  'var_feature_id': $( if [ ! -z ${VIASH_PAR_VAR_FEATURE_ID+x} ]; then echo "r'${VIASH_PAR_VAR_FEATURE_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'var_feature_name': $( if [ ! -z ${VIASH_PAR_VAR_FEATURE_NAME+x} ]; then echo "r'${VIASH_PAR_VAR_FEATURE_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_name': $( if [ ! -z ${VIASH_PAR_DATASET_NAME+x} ]; then echo "r'${VIASH_PAR_DATASET_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_url': $( if [ ! -z ${VIASH_PAR_DATASET_URL+x} ]; then echo "r'${VIASH_PAR_DATASET_URL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3614,6 +3642,29 @@ mod1.layers["counts"] = mod1_X
 # just in case
 del mod1.X
 del mod2.X
+
+print("Setting .var['feature_name']", flush=True)
+if par["var_feature_name"]:
+    if par["var_feature_name"] == "index":
+        mod1.var["feature_name"] = mod1.var.index
+        mod1.var["feature_name"] = mod1.var.index
+    elif par["var_feature_name"] in mod1.var:
+        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
+
+print("Setting .var['feature_id']", flush=True)
+if par["var_feature_id"]:
+    if par["var_feature_id"] == "index":
+        mod1.var["feature_id"] = mod1.var.index
+        mod1.var["feature_id"] = mod1.var.index
+    elif par["var_feature_id"] in mod1.var:
+        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
+
 
 print("Add metadata to uns", flush=True)
 metadata_fields = [

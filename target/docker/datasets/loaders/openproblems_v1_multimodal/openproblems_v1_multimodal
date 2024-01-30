@@ -201,6 +201,18 @@ function ViashHelp {
   echo "        default: true"
   echo "        Convert layers to a sparse CSR format."
   echo ""
+  echo "    --var_feature_id"
+  echo "        type: string"
+  echo "        example: gene_ids"
+  echo "        Location of where to find the feature IDs. Can be set to index if the"
+  echo "        feature IDs are the index."
+  echo ""
+  echo "    --var_feature_name"
+  echo "        type: string"
+  echo "        default: index"
+  echo "        Location of where to find the feature names. Can be set to index if the"
+  echo "        feature names are the index."
+  echo ""
   echo "Metadata:"
   echo "    --dataset_id"
   echo "        type: string, required parameter"
@@ -469,9 +481,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1_multimodal"
-LABEL org.opencontainers.image.created="2024-01-29T09:09:08Z"
+LABEL org.opencontainers.image.created="2024-01-30T09:25:04Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d5b83affd36c215deecfb91e8536eab9a467f8a5"
+LABEL org.opencontainers.image.revision="c3396296636da7f5760ffc0167e8efe29413e02c"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -690,6 +702,28 @@ while [[ $# -gt 0 ]]; do
         --sparse=*)
             [ -n "$VIASH_PAR_SPARSE" ] && ViashError Bad arguments for option \'--sparse=*\': \'$VIASH_PAR_SPARSE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_SPARSE=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --var_feature_id)
+            [ -n "$VIASH_PAR_VAR_FEATURE_ID" ] && ViashError Bad arguments for option \'--var_feature_id\': \'$VIASH_PAR_VAR_FEATURE_ID\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_VAR_FEATURE_ID="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --var_feature_id. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --var_feature_id=*)
+            [ -n "$VIASH_PAR_VAR_FEATURE_ID" ] && ViashError Bad arguments for option \'--var_feature_id=*\': \'$VIASH_PAR_VAR_FEATURE_ID\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_VAR_FEATURE_ID=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --var_feature_name)
+            [ -n "$VIASH_PAR_VAR_FEATURE_NAME" ] && ViashError Bad arguments for option \'--var_feature_name\': \'$VIASH_PAR_VAR_FEATURE_NAME\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_VAR_FEATURE_NAME="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --var_feature_name. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --var_feature_name=*)
+            [ -n "$VIASH_PAR_VAR_FEATURE_NAME" ] && ViashError Bad arguments for option \'--var_feature_name=*\': \'$VIASH_PAR_VAR_FEATURE_NAME\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_VAR_FEATURE_NAME=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --dataset_id)
@@ -954,6 +988,9 @@ fi
 if [ -z ${VIASH_PAR_SPARSE+x} ]; then
   VIASH_PAR_SPARSE="true"
 fi
+if [ -z ${VIASH_PAR_VAR_FEATURE_NAME+x} ]; then
+  VIASH_PAR_VAR_FEATURE_NAME="index"
+fi
 
 # check whether parameters values are of the right type
 if [[ -n "$VIASH_PAR_SPARSE" ]]; then
@@ -1097,6 +1134,8 @@ par = {
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'sparse': $( if [ ! -z ${VIASH_PAR_SPARSE+x} ]; then echo "r'${VIASH_PAR_SPARSE//\'/\'\"\'\"r\'}'.lower() == 'true'"; else echo None; fi ),
+  'var_feature_id': $( if [ ! -z ${VIASH_PAR_VAR_FEATURE_ID+x} ]; then echo "r'${VIASH_PAR_VAR_FEATURE_ID//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'var_feature_name': $( if [ ! -z ${VIASH_PAR_VAR_FEATURE_NAME+x} ]; then echo "r'${VIASH_PAR_VAR_FEATURE_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_name': $( if [ ! -z ${VIASH_PAR_DATASET_NAME+x} ]; then echo "r'${VIASH_PAR_DATASET_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'dataset_url': $( if [ ! -z ${VIASH_PAR_DATASET_URL+x} ]; then echo "r'${VIASH_PAR_DATASET_URL//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -1223,6 +1262,29 @@ mod1.layers["counts"] = mod1_X
 # just in case
 del mod1.X
 del mod2.X
+
+print("Setting .var['feature_name']", flush=True)
+if par["var_feature_name"]:
+    if par["var_feature_name"] == "index":
+        mod1.var["feature_name"] = mod1.var.index
+        mod1.var["feature_name"] = mod1.var.index
+    elif par["var_feature_name"] in mod1.var:
+        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
+
+print("Setting .var['feature_id']", flush=True)
+if par["var_feature_id"]:
+    if par["var_feature_id"] == "index":
+        mod1.var["feature_id"] = mod1.var.index
+        mod1.var["feature_id"] = mod1.var.index
+    elif par["var_feature_id"] in mod1.var:
+        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
+
 
 print("Add metadata to uns", flush=True)
 metadata_fields = [
