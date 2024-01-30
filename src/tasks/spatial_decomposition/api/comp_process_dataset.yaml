@@ -9,19 +9,19 @@ functionality:
         Prepare a common dataset for the spatial_decomposition task.
   arguments:
     - name: "--input"
-      __merge__: /src/datasets/api/anndata_common_dataset.yaml
+      __merge__: /src/datasets/api/file_common_dataset.yaml
       direction: input
       required: true
     - name: "--output_single_cell"
-      __merge__: anndata_single_cell.yaml
+      __merge__: file_single_cell.yaml
       direction: output
       required: true
     - name: "--output_spatial_masked"
-      __merge__: anndata_spatial_masked.yaml
+      __merge__: file_spatial_masked.yaml
       direction: output
       required: true
     - name: "--output_solution"
-      __merge__: anndata_solution.yaml
+      __merge__: file_solution.yaml
       direction: output
       required: true
   test_resources:

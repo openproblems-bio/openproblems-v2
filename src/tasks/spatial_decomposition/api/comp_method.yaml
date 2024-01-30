@@ -8,15 +8,15 @@ functionality:
       description: "Method to estimate cell type proportions from spatial and single cell data"
   arguments:
     - name: "--input_single_cell"
-      __merge__: anndata_single_cell.yaml
+      __merge__: file_single_cell.yaml
       direction: input
       required: true
     - name: "--input_spatial"
-      __merge__: anndata_spatial_masked.yaml
+      __merge__: file_spatial_masked.yaml
       direction: input
       required: true
     - name: "--output"
-      __merge__: anndata_output.yaml
+      __merge__: file_output.yaml
       direction: output
       required: true
   test_resources:
