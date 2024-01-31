@@ -1,7 +1,4 @@
 #!/bin/bash
-#
-#make sure the following command has been executed
-#viash_build -q 'label_projection|common'
 
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -25,6 +22,7 @@ nextflow run . \
   -profile docker \
   -resume \
   --id pancreas \
+  --input_id pancreas \
   --obs_cell_type "celltype" \
   --obs_batch "tech" \
   --layer_counts "counts" \
@@ -42,8 +40,8 @@ nextflow run . \
   --do_subsample true \
   --output_raw '$id/raw.h5ad' \
   --output_normalized '$id/normalized.h5ad' \
-  --output_pca '$id/pca.h5ad' \
   --output_hvg '$id/hvg.h5ad' \
+  --output_pca '$id/pca.h5ad' \
   --output_knn '$id/knn.h5ad' \
   --output_dataset '$id/dataset.h5ad' \
   --output_meta '$id/dataset_meta.yaml' \
@@ -53,7 +51,7 @@ nextflow run . \
 rm -r $DATASET_DIR/temp_*
 
 # run task process dataset components
-src/tasks/batch_integration/resources_test_scripts/pancreas.sh
+src/tasks/batch_integration/resources_test_scripts/process.sh
 src/tasks/denoising/resources_test_scripts/pancreas.sh
 src/tasks/dimensionality_reduction/resources_test_scripts/pancreas.sh
 src/tasks/label_projection/resources_test_scripts/pancreas.sh
