@@ -2,13 +2,12 @@
 
 DATASET_DIR=resources_test/common
 
-set -e
 
 mkdir -p $DATASET_DIR
 
-wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/g2m_genes_tirosh.txt -O $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt
-wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/s_genes_tirosh.txt -O $DATASET_DIR/temp_s_genes_tirosh_hm.txt
-KEEP_FEATURES=`cat $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt $DATASET_DIR/temp_s_genes_tirosh_hm.txt | paste -sd ":" -`
+wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/g2m_genes_tirosh.txt -O $DATASET_DIR/temp_g2m_genes_tirosh_mm.txt
+wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/s_genes_tirosh.txt -O $DATASET_DIR/temp_s_genes_tirosh_mm.txt
+KEEP_FEATURES=`cat $DATASET_DIR/temp_g2m_genes_tirosh_mm.txt $DATASET_DIR/temp_s_genes_tirosh_mm.txt | paste -sd ":" -`
 
 cat > "/tmp/params.yaml" << HERE
 param_list:
@@ -25,9 +24,9 @@ param_list:
     dataset_organism: mus_musculus
 
 normalization_methods: [log_cp10k]
-output_dataset: '$id/dataset.h5ad'
-output_meta: '$id/dataset_metadata.yaml'
-output_state: '$id/state.yaml'
+output_dataset: '\$id/dataset.h5ad'
+output_meta: '\$id/dataset_metadata.yaml'
+output_state: '\$id/state.yaml'
 output_raw: force_null
 output_normalized: force_null
 output_pca: force_null
@@ -35,7 +34,7 @@ output_hvg: force_null
 output_knn: force_null
 publish_dir: $DATASET_DIR
 do_subsample: true
-keep_features: $KEEP_FEATURES
+keep_features: '$KEEP_FEATURES'
 HERE
 
 nextflow run . \
