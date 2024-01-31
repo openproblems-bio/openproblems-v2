@@ -1,8 +1,16 @@
 #!/bin/bash
 
+DATASET_DIR=resources_test/common
+
 set -e
 
-cat > "/tmp/params.yaml" << 'HERE'
+mkdir -p $DATASET_DIR
+
+wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/g2m_genes_tirosh.txt -O $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt
+wget https://raw.githubusercontent.com/theislab/scib/c993ffd9ccc84ae0b1681928722ed21985fb91d1/scib/resources/s_genes_tirosh.txt -O $DATASET_DIR/temp_s_genes_tirosh_hm.txt
+KEEP_FEATURES=`cat $DATASET_DIR/temp_g2m_genes_tirosh_hm.txt $DATASET_DIR/temp_s_genes_tirosh_hm.txt | paste -sd ":" -`
+
+cat > "/tmp/params.yaml" << HERE
 param_list:
   - id: cxg_mouse_pancreas_atlas
     species: mus_musculus
@@ -25,13 +33,16 @@ output_normalized: force_null
 output_pca: force_null
 output_hvg: force_null
 output_knn: force_null
-publish_dir: resources_test/common
+publish_dir: $DATASET_DIR
 do_subsample: true
+keep_features: $KEEP_FEATURES
 HERE
 
 nextflow run . \
   -main-script target/nextflow/datasets/workflows/process_cellxgene_census/main.nf \
   -profile docker \
   -params-file "/tmp/params.yaml"
+
+rm -r $DATASET_DIR/temp_*
 
 # src/tasks/batch_integration/resources_test_scripts/process.sh
