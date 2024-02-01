@@ -2775,6 +2775,12 @@ meta = [
                 "name" : "hvg",
                 "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : true
               }
             ],
             "obsm" : [
@@ -2926,6 +2932,12 @@ meta = [
                 "name" : "hvg",
                 "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : true
               }
             ],
             "obsp" : [
@@ -3076,7 +3088,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_embedding",
     "viash_version" : "0.8.0",
-    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
+    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

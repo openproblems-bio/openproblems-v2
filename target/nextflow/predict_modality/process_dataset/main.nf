@@ -2736,7 +2736,7 @@ meta = [
     "arguments" : [
       {
         "type" : "file",
-        "name" : "--input_rna",
+        "name" : "--input_mod1",
         "info" : {
           "label" : "Raw dataset RNA",
           "summary" : "The RNA modality of the raw dataset.",
@@ -2780,7 +2780,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               }
             ],
             "uns" : [
@@ -2844,7 +2844,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
+          "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2856,7 +2856,7 @@ meta = [
       },
       {
         "type" : "file",
-        "name" : "--input_other_mod",
+        "name" : "--input_mod2",
         "info" : {
           "label" : "Raw dataset mod2",
           "summary" : "The second modality of the raw dataset. Must be an ADT or an ATAC dataset",
@@ -2900,7 +2900,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               }
             ],
             "uns" : [
@@ -2964,7 +2964,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
+          "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3497,7 +3497,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
+    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3522,8 +3522,8 @@ library(Matrix, warn.conflicts = FALSE)
 .viash_orig_warn <- options(warn = 2)
 
 par <- list(
-  "input_rna" = $( if [ ! -z ${VIASH_PAR_INPUT_RNA+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_RNA" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "input_other_mod" = $( if [ ! -z ${VIASH_PAR_INPUT_OTHER_MOD+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_OTHER_MOD" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_mod1" = $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_mod2" = $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_MOD2" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_train_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TRAIN_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TRAIN_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_train_mod2" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TRAIN_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TRAIN_MOD2" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_test_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -3560,8 +3560,8 @@ cat("Using seed ", par\\$seed, "\\\\n", sep = "")
 set.seed(par\\$seed)
 
 cat("Reading input data\\\\n")
-ad1 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_rna else par\\$input_other_mod)
-ad2 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_other_mod else par\\$input_rna)
+ad1 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_mod1 else par\\$input_mod2)
+ad2 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_mod2 else par\\$input_mod1)
 
 # figure out modality types
 ad1_mod <- unique(ad1\\$var[["feature_types"]])

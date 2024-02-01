@@ -2820,6 +2820,22 @@ meta = [
                 "required" : true
               }
             ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "string",
@@ -2831,7 +2847,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -2849,22 +2865,6 @@ meta = [
                 "type" : "integer",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
                 "required" : true
               }
             ],
@@ -3133,6 +3133,22 @@ meta = [
                 "required" : true
               }
             ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "string",
@@ -3144,7 +3160,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3162,22 +3178,6 @@ meta = [
                 "type" : "integer",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
                 "required" : true
               }
             ],
@@ -3446,6 +3446,22 @@ meta = [
                 "required" : true
               }
             ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "string",
@@ -3457,7 +3473,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3475,22 +3491,6 @@ meta = [
                 "type" : "integer",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
                 "required" : true
               }
             ],
@@ -3759,6 +3759,22 @@ meta = [
                 "required" : true
               }
             ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "string",
@@ -3770,7 +3786,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3788,22 +3804,6 @@ meta = [
                 "type" : "integer",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
                 "required" : true
               }
             ],
@@ -4173,7 +4173,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample",
     "viash_version" : "0.8.0",
-    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
+    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

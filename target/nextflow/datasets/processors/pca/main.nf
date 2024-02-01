@@ -2738,9 +2738,41 @@ meta = [
         "type" : "file",
         "name" : "--input",
         "info" : {
-          "label" : "Normalized dataset",
-          "summary" : "A normalized dataset",
+          "label" : "Dataset+HVG",
+          "summary" : "A normalised dataset with a PCA embedding and HVG selection.",
           "slots" : {
+            "var" : [
+              {
+                "type" : "string",
+                "name" : "feature_id",
+                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "soma_joinid",
+                "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              }
+            ],
             "layers" : [
               {
                 "type" : "integer",
@@ -2958,32 +2990,12 @@ meta = [
                 "description" : "Which normalization was used",
                 "required" : true
               }
-            ],
-            "var" : [
-              {
-                "type" : "string",
-                "name" : "feature_id",
-                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
-              },
-              {
-                "type" : "integer",
-                "name" : "soma_joinid",
-                "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
-                "required" : false
-              }
             ]
           },
           "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
         },
         "example" : [
-          "resources_test/common/pancreas/normalized.h5ad"
+          "resources_test/common/pancreas/hvg.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3023,7 +3035,7 @@ meta = [
         "type" : "file",
         "name" : "--output",
         "info" : {
-          "label" : "Dataset+PCA",
+          "label" : "Dataset+HVG+PCA",
           "summary" : "A normalised dataset with a PCA embedding",
           "slots" : {
             "obsm" : [
@@ -3100,6 +3112,38 @@ meta = [
                 "required" : true
               }
             ],
+            "var" : [
+              {
+                "type" : "string",
+                "name" : "feature_id",
+                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "soma_joinid",
+                "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              }
+            ],
             "layers" : [
               {
                 "type" : "integer",
@@ -3263,26 +3307,6 @@ meta = [
                 "type" : "double",
                 "name" : "size_factors",
                 "description" : "The size factors created by the normalisation method, if any.",
-                "required" : false
-              }
-            ],
-            "var" : [
-              {
-                "type" : "string",
-                "name" : "feature_id",
-                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
-              },
-              {
-                "type" : "integer",
-                "name" : "soma_joinid",
-                "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
                 "required" : false
               }
             ]
@@ -3442,7 +3466,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca",
     "viash_version" : "0.8.0",
-    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
+    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

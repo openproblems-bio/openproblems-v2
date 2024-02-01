@@ -3082,7 +3082,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3323,7 +3323,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3484,7 +3484,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "7dd18ad5f50b4a6a887eb700d03c117ea8850a0d",
+    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3644,26 +3644,32 @@ del mod1.X
 del mod2.X
 
 print("Setting .var['feature_name']", flush=True)
-if par["var_feature_name"]:
-    if par["var_feature_name"] == "index":
-        mod1.var["feature_name"] = mod1.var.index
-        mod1.var["feature_name"] = mod1.var.index
-    elif par["var_feature_name"] in mod1.var:
-        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+if par["var_feature_name"] == "index":
+    mod1.var["feature_name"] = mod1.var.index
+    mod2.var["feature_name"] = mod2.var.index
+else: 
+    if par["var_feature_name"] in mod1.var:
+        mod1.var["feature_name"] = mod1.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod1.var.", flush=True)
+    if par["var_feature_name"] in mod2.var:
         mod2.var["feature_name"] = mod2.var[par["feature_name"]]
     else:
-        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod2.var.", flush=True)
 
 print("Setting .var['feature_id']", flush=True)
-if par["var_feature_id"]:
-    if par["var_feature_id"] == "index":
-        mod1.var["feature_id"] = mod1.var.index
-        mod1.var["feature_id"] = mod1.var.index
-    elif par["var_feature_id"] in mod1.var:
-        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+if par["var_feature_id"] == "index":
+    mod1.var["feature_id"] = mod1.var.index
+    mod2.var["feature_id"] = mod2.var.index
+else:
+    if par["var_feature_id"] in mod1.var:
+        mod1.var["feature_id"] = mod1.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod1.var.", flush=True)
+    if par["var_feature_id"] in mod2.var:
         mod2.var["feature_id"] = mod2.var[par["feature_id"]]
     else:
-        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod2.var.", flush=True)
 
 
 print("Add metadata to uns", flush=True)
