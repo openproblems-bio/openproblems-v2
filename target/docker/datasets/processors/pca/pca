@@ -438,9 +438,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors pca"
-LABEL org.opencontainers.image.created="2024-02-01T12:59:20Z"
+LABEL org.opencontainers.image.created="2024-02-01T15:36:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c096137fda6e272a3a7bc98f2e37b287ebab0d9c"
+LABEL org.opencontainers.image.revision="2e2ed4ced20f802b5b51481ddff4d4a1cb1bf53f"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
