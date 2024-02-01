@@ -10,13 +10,17 @@ functionality:
         The resulting AnnData will contain an embedding in obsm, as well as optional loadings in 'varm'.
   arguments:
     - name: "--input"
-      __merge__: file_normalized.yaml
+      __merge__: file_hvg.yaml
       required: true
       direction: input
-    - name: "--layer_input"
+    - name: "--input_layer"
       type: string
       default: "normalized"
       description: Which layer to use as input.
+    - name: "--input_var_features"
+      type: string
+      description: Column name in .var matrix that will be used to select which genes to run the PCA on.
+      default: hvg
     - name: "--output"
       direction: output
       __merge__: file_pca.yaml

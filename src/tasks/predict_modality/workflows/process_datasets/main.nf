@@ -1,3 +1,5 @@
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
+
 workflow auto {
   findStates(params, meta.config)
     | meta.workflow.run(
@@ -12,54 +14,57 @@ workflow run_wf {
   main:
   output_ch = input_ch
 
-    // TODO: check schema based on the values in `config`
-    // instead of having to provide a separate schema file
     | check_dataset_schema.run(
-      key: "check_dataset_schema_rna",
-            fromState: { id, state ->
-        // as a resource
+      key: "check_dataset_schema_mod1",
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "input_mod1")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
-          "input": state.input_rna,
-          "schema": meta.resources_dir.resolve("file_common_dataset_rna.yaml")
+          "input": state.input_mod1,
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset_rna": "output",
-        "dataset_checks": "checks"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset_mod1": checks["exit_code"] == 0 ? state.input_mod1 : null,
+        ]
+      }
     )
 
     | check_dataset_schema.run(
-      key: "check_dataset_schema_other_mod",
-            fromState: { id, state ->
-        // as a resource
+      key: "check_dataset_schema_mod2",
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "input_mod2")
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
-          "input": state.input_other_mod,
-          "schema": meta.resources_dir.resolve("file_common_dataset_other_mod.yaml")
+          "input": state.input_mod2,
+          "schema": schemaYaml
         ]
       },
-      args: [
-        "stop_on_error": false
-      ],
-      toState: [
-        "dataset_other_mod": "output",
-        "dataset_checks": "checks"
-      ]
+      toState: { id, output, state ->
+        // read the output to see if dataset passed the qc
+        def checks = readYaml(output.output)
+        state + [
+          "dataset_mod2": checks["exit_code"] == 0 ? state.input_mod2 : null,
+        ]
+      }
     )
+    | view{"test: ${it}"}
 
     // remove datasets which didn't pass the schema check
     | filter { id, state ->
-      state.dataset_rna != null &&
-      state.dataset_other_mod != null
+      state.dataset_mod1 != null &&
+      state.dataset_mod2 != null
     }
 
     | process_dataset.run(
       fromState: [
-        input_rna: "dataset_rna",
-        input_other_mod: "dataset_other_mod",
+        input_mod1: "dataset_mod1",
+        input_mod2: "dataset_mod2",
         output_train_mod1: "output_train_mod1",
         output_train_mod2: "output_train_mod2",
         output_test_mod1: "output_test_mod1",
