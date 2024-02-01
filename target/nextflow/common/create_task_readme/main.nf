@@ -2865,7 +2865,7 @@ meta = [
         {
           "type" : "docker",
           "run" : [
-            "release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest) && \\\\\n  download_url=$(echo \\"$release_info\\" | jq -r '.assets[] | select(.name | test(\\"quarto-.*-linux-amd64.deb\\")) | .browser_download_url') && \\\\\n  curl -sL \\"$download_url\\" -o /opt/quarto.deb && \\\\\n  dpkg -i /opt/quarto.deb && \\\\\n  rm /opt/quarto.deb\n"
+            "release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest) && \\\\\n  download_url=$(printf \\"%s\\" \\"$release_info\\" | jq -r '.assets[] | select(.name | test(\\"quarto-.*-linux-amd64.deb\\")) | .browser_download_url') && \\\\\n  curl -sL \\"$download_url\\" -o /opt/quarto.deb && \\\\\n  dpkg -i /opt/quarto.deb && \\\\\n  rm /opt/quarto.deb\n"
           ]
         }
       ]
@@ -2916,7 +2916,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_task_readme",
     "viash_version" : "0.8.0",
-    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+    "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

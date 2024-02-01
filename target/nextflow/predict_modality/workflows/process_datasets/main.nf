@@ -2739,7 +2739,7 @@ meta = [
         "arguments" : [
           {
             "type" : "file",
-            "name" : "--input_rna",
+            "name" : "--input_mod1",
             "info" : {
               "label" : "Raw dataset RNA",
               "summary" : "The RNA modality of the raw dataset.",
@@ -2783,7 +2783,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   }
                 ],
                 "uns" : [
@@ -2847,7 +2847,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
+              "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2859,7 +2859,7 @@ meta = [
           },
           {
             "type" : "file",
-            "name" : "--input_other_mod",
+            "name" : "--input_mod2",
             "info" : {
               "label" : "Raw dataset mod2",
               "summary" : "The second modality of the raw dataset. Must be an ADT or an ATAC dataset",
@@ -2903,7 +2903,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   }
                 ],
                 "uns" : [
@@ -2967,7 +2967,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
+              "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3414,7 +3414,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3436,7 +3436,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3482,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+    "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3512,13 +3512,13 @@ workflow run_wf {
   output_ch = input_ch
 
     | check_dataset_schema.run(
-      key: "check_dataset_schema_rna",
+      key: "check_dataset_schema_mod1",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "input_rna")
+        def schema = findArgumentSchema(meta.config, "input_mod1")
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.input_rna,
+          "input": state.input_mod1,
           "schema": schemaYaml
         ]
       },
@@ -3526,19 +3526,19 @@ workflow run_wf {
         // read the output to see if dataset passed the qc
         def checks = readYaml(output.output)
         state + [
-          "dataset_rna": checks["exit_code"] == 0 ? state.input_rna : null,
+          "dataset_mod1": checks["exit_code"] == 0 ? state.input_mod1 : null,
         ]
       }
     )
 
     | check_dataset_schema.run(
-      key: "check_dataset_schema_other_mod",
+      key: "check_dataset_schema_mod2",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "input_other_mod")
+        def schema = findArgumentSchema(meta.config, "input_mod2")
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.input_other_mod,
+          "input": state.input_mod2,
           "schema": schemaYaml
         ]
       },
@@ -3546,7 +3546,7 @@ workflow run_wf {
         // read the output to see if dataset passed the qc
         def checks = readYaml(output.output)
         state + [
-          "dataset_other_mod": checks["exit_code"] == 0 ? state.input_other_mod : null,
+          "dataset_mod2": checks["exit_code"] == 0 ? state.input_mod2 : null,
         ]
       }
     )
@@ -3554,14 +3554,14 @@ workflow run_wf {
 
     // remove datasets which didn't pass the schema check
     | filter { id, state ->
-      state.dataset_rna != null &&
-      state.dataset_other_mod != null
+      state.dataset_mod1 != null &&
+      state.dataset_mod2 != null
     }
 
     | process_dataset.run(
       fromState: [
-        input_rna: "dataset_rna",
-        input_other_mod: "dataset_other_mod",
+        input_mod1: "dataset_mod1",
+        input_mod2: "dataset_mod2",
         output_train_mod1: "output_train_mod1",
         output_train_mod2: "output_train_mod2",
         output_test_mod1: "output_test_mod1",

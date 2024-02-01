@@ -2907,7 +2907,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3039,6 +3039,32 @@ meta = [
             "description" : "Convert layers to a sparse CSR format.",
             "default" : [
               true
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--var_feature_id",
+            "description" : "Location of where to find the feature IDs. Can be set to index if the feature IDs are the index.",
+            "example" : [
+              "gene_ids"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--var_feature_name",
+            "description" : "Location of where to find the feature names. Can be set to index if the feature names are the index.",
+            "default" : [
+              "index"
             ],
             "required" : false,
             "direction" : "input",
@@ -3222,7 +3248,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1",
     "viash_version" : "0.8.0",
-    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+    "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3252,6 +3278,8 @@ par = {
   'obs_tissue': $( if [ ! -z ${VIASH_PAR_OBS_TISSUE+x} ]; then echo "r'${VIASH_PAR_OBS_TISSUE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'layer_counts': $( if [ ! -z ${VIASH_PAR_LAYER_COUNTS+x} ]; then echo "r'${VIASH_PAR_LAYER_COUNTS//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'sparse': $( if [ ! -z ${VIASH_PAR_SPARSE+x} ]; then echo "r'${VIASH_PAR_SPARSE//\\'/\\'\\"\\'\\"r\\'}'.lower() == 'true'"; else echo None; fi ),
+  'var_feature_id': $( if [ ! -z ${VIASH_PAR_VAR_FEATURE_ID+x} ]; then echo "r'${VIASH_PAR_VAR_FEATURE_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'var_feature_name': $( if [ ! -z ${VIASH_PAR_VAR_FEATURE_NAME+x} ]; then echo "r'${VIASH_PAR_VAR_FEATURE_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_name': $( if [ ! -z ${VIASH_PAR_DATASET_NAME+x} ]; then echo "r'${VIASH_PAR_DATASET_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_url': $( if [ ! -z ${VIASH_PAR_DATASET_URL+x} ]; then echo "r'${VIASH_PAR_DATASET_URL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3364,8 +3392,23 @@ uns_metadata = {
 }
 adata.uns.update(uns_metadata)
 
-# TODO: fix var annotation
-# - add feature_id and feature_name
+print("Setting .var['feature_name']", flush=True)
+if par["var_feature_name"]:
+    if par["var_feature_name"] == "index":
+        adata.var["feature_name"] = adata.var.index
+    elif par["var_feature_name"] in adata.var:
+        adata.var["feature_name"] = adata.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
+
+print("Setting .var['feature_id']", flush=True)
+if par["var_feature_id"]:
+    if par["var_feature_id"] == "index":
+        adata.var["feature_id"] = adata.var.index
+    elif par["var_feature_id"] in adata.var:
+        adata.var["feature_id"] = adata.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
 
 print("Writing adata to file", flush=True)
 adata.write_h5ad(par["output"], compression="gzip")

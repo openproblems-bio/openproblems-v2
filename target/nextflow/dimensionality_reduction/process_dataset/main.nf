@@ -2820,6 +2820,22 @@ meta = [
                 "required" : true
               }
             ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "string",
@@ -2831,7 +2847,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -2849,22 +2865,6 @@ meta = [
                 "type" : "integer",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
                 "required" : true
               }
             ],
@@ -3289,7 +3289,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+    "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

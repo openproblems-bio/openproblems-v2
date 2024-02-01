@@ -3155,6 +3155,22 @@ meta = [
                     "required" : true
                   }
                 ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "varm" : [
+                  {
+                    "type" : "double",
+                    "name" : "pca_loadings",
+                    "description" : "The PCA loadings matrix.",
+                    "required" : true
+                  }
+                ],
                 "var" : [
                   {
                     "type" : "string",
@@ -3166,7 +3182,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3184,22 +3200,6 @@ meta = [
                     "type" : "integer",
                     "name" : "hvg_score",
                     "description" : "A ranking of the features by hvg.",
-                    "required" : true
-                  }
-                ],
-                "obsm" : [
-                  {
-                    "type" : "double",
-                    "name" : "X_pca",
-                    "description" : "The resulting PCA embedding.",
-                    "required" : true
-                  }
-                ],
-                "varm" : [
-                  {
-                    "type" : "double",
-                    "name" : "pca_loadings",
-                    "description" : "The PCA loadings matrix.",
                     "required" : true
                   }
                 ],
@@ -3570,7 +3570,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3874,7 +3874,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -3901,7 +3901,7 @@ meta = [
             "type" : "file",
             "name" : "--output_pca",
             "info" : {
-              "label" : "Dataset+PCA",
+              "label" : "Dataset+HVG+PCA",
               "summary" : "A normalised dataset with a PCA embedding",
               "slots" : {
                 "obsm" : [
@@ -3975,6 +3975,38 @@ meta = [
                     "type" : "double",
                     "name" : "pca_variance",
                     "description" : "The PCA variance objects.",
+                    "required" : true
+                  }
+                ],
+                "var" : [
+                  {
+                    "type" : "string",
+                    "name" : "feature_id",
+                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "feature_name",
+                    "description" : "A human-readable name for the feature, usually a gene symbol.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "soma_joinid",
+                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "boolean",
+                    "name" : "hvg",
+                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "integer",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
                     "required" : true
                   }
                 ],
@@ -4086,7 +4118,7 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "sex",
-                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-specific traits or conditions.",
+                    "description" : "Biological sex of the donor or source organism, crucial for studies involving sex-sp''' + '''ecific traits or conditions.",
                     "required" : false
                   },
                   {
@@ -4110,7 +4142,7 @@ meta = [
                   {
                     "type" : "string",
                     "name" : "tissue_ontology_term_id",
-                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissu''' + '''e samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
+                    "description" : "Ontology term identifier for the tissue, providing a standardized reference for the tissue type.\n\nFor organoid or tissue samples, the Uber-anatomy ontology (`UBERON:`) is used. The term ids must be a child term of `UBERON:0001062` (anatomical entity).\nFor cell cultures, the Cell Ontology (`CL:`) is used. The term ids cannot be `CL:0000255`, `CL:0000257` or `CL:0000548`.\n",
                     "required" : false
                   },
                   {
@@ -4143,26 +4175,6 @@ meta = [
                     "description" : "The size factors created by the normalisation method, if any.",
                     "required" : false
                   }
-                ],
-                "var" : [
-                  {
-                    "type" : "string",
-                    "name" : "feature_id",
-                    "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                    "required" : false
-                  },
-                  {
-                    "type" : "string",
-                    "name" : "feature_name",
-                    "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
-                  },
-                  {
-                    "type" : "integer",
-                    "name" : "soma_joinid",
-                    "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
-                    "required" : false
-                  }
                 ]
               },
               "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
@@ -4182,7 +4194,7 @@ meta = [
             "type" : "file",
             "name" : "--output_hvg",
             "info" : {
-              "label" : "Dataset+PCA+HVG",
+              "label" : "Dataset+HVG",
               "summary" : "A normalised dataset with a PCA embedding and HVG selection.",
               "slots" : {
                 "var" : [
@@ -4196,7 +4208,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -4214,80 +4226,6 @@ meta = [
                     "type" : "integer",
                     "name" : "hvg_score",
                     "description" : "A ranking of the features by hvg.",
-                    "required" : true
-                  }
-                ],
-                "obsm" : [
-                  {
-                    "type" : "double",
-                    "name" : "X_pca",
-                    "description" : "The resulting PCA embedding.",
-                    "required" : true
-                  }
-                ],
-                "varm" : [
-                  {
-                    "type" : "double",
-                    "name" : "pca_loadings",
-                    "description" : "The PCA loadings matrix.",
-                    "required" : true
-                  }
-                ],
-                "uns" : [
-                  {
-                    "type" : "string",
-                    "name" : "dataset_id",
-                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
-                    "required" : true
-                  },
-                  {
-                    "name" : "dataset_name",
-                    "type" : "string",
-                    "description" : "A human-readable name for the dataset.",
-                    "required" : true
-                  },
-                  {
-                    "type" : "string",
-                    "name" : "dataset_url",
-                    "description" : "Link to the original source of the dataset.",
-                    "required" : false
-                  },
-                  {
-                    "name" : "dataset_reference",
-                    "type" : "string",
-                    "description" : "Bibtex reference of the paper in which the dataset was published.",
-                    "required" : false,
-                    "multiple" : true
-                  },
-                  {
-                    "name" : "dataset_summary",
-                    "type" : "string",
-                    "description" : "Short description of the dataset.",
-                    "required" : true
-                  },
-                  {
-                    "name" : "dataset_description",
-                    "type" : "string",
-                    "description" : "Long description of the dataset.",
-                    "required" : true
-                  },
-                  {
-                    "name" : "dataset_organism",
-                    "type" : "string",
-                    "description" : "The organism of the sample in the dataset.",
-                    "required" : false,
-                    "multiple" : true
-                  },
-                  {
-                    "type" : "string",
-                    "name" : "normalization_id",
-                    "description" : "Which normalization was used",
-                    "required" : true
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "pca_variance",
-                    "description" : "The PCA variance objects.",
                     "required" : true
                   }
                 ],
@@ -4456,6 +4394,58 @@ meta = [
                     "description" : "The size factors created by the normalisation method, if any.",
                     "required" : false
                   }
+                ],
+                "uns" : [
+                  {
+                    "type" : "string",
+                    "name" : "dataset_id",
+                    "description" : "A unique identifier for the dataset. This is different from the `obs.dataset_id` field, which is the identifier for the dataset from which the cell data is derived.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "A human-readable name for the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false,
+                    "multiple" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
+                    "required" : true
+                  }
                 ]
               },
               "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
@@ -4475,7 +4465,7 @@ meta = [
             "type" : "file",
             "name" : "--output_knn",
             "info" : {
-              "label" : "Dataset+PCA+HVG+kNN",
+              "label" : "Dataset+HVG+PCA+kNN",
               "summary" : "A normalised data with a PCA embedding, HVG selection and a kNN graph",
               "slots" : {
                 "obsp" : [
@@ -4556,6 +4546,22 @@ meta = [
                     "required" : true
                   }
                 ],
+                "obsm" : [
+                  {
+                    "type" : "double",
+                    "name" : "X_pca",
+                    "description" : "The resulting PCA embedding.",
+                    "required" : true
+                  }
+                ],
+                "varm" : [
+                  {
+                    "type" : "double",
+                    "name" : "pca_loadings",
+                    "description" : "The PCA loadings matrix.",
+                    "required" : true
+                  }
+                ],
                 "var" : [
                   {
                     "type" : "string",
@@ -4567,7 +4573,7 @@ meta = [
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
-                    "required" : false
+                    "required" : true
                   },
                   {
                     "type" : "integer",
@@ -4585,22 +4591,6 @@ meta = [
                     "type" : "integer",
                     "name" : "hvg_score",
                     "description" : "A ranking of the features by hvg.",
-                    "required" : true
-                  }
-                ],
-                "obsm" : [
-                  {
-                    "type" : "double",
-                    "name" : "X_pca",
-                    "description" : "The resulting PCA embedding.",
-                    "required" : true
-                  }
-                ],
-                "varm" : [
-                  {
-                    "type" : "double",
-                    "name" : "pca_loadings",
-                    "description" : "The PCA loadings matrix.",
                     "required" : true
                   }
                 ],
@@ -4821,7 +4811,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/loaders/cellxgene_census/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/cellxgene_census"
@@ -4843,7 +4833,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -4865,7 +4855,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -4887,7 +4877,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -4909,7 +4899,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -4931,7 +4921,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -4953,7 +4943,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/processors/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/pca"
@@ -4975,7 +4965,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -4997,7 +4987,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/datasets/processors/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn"
@@ -5019,7 +5009,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+          "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -5065,7 +5055,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_cellxgene_census",
     "viash_version" : "0.8.0",
-    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+    "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -5197,17 +5187,17 @@ workflow run_wf {
     )
 
     | hvg.run(
-      fromState: ["input": "output_pca"],
+      fromState: ["input": "output_normalized"],
       toState: ["output_hvg": "output"]
     )
 
     | pca.run(
-      fromState: ["input": "output_normalized"],
+      fromState: ["input": "output_hvg"],
       toState: ["output_pca": "output" ]
     )
 
     | knn.run(
-      fromState: ["input": "output_hvg"],
+      fromState: ["input": "output_pca"],
       toState: ["output_knn": "output"]
     )
 

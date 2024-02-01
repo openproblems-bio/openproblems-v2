@@ -2738,41 +2738,9 @@ meta = [
         "type" : "file",
         "name" : "--input",
         "info" : {
-          "label" : "Dataset+PCA+HVG",
-          "summary" : "A normalised dataset with a PCA embedding and HVG selection.",
+          "label" : "Dataset+HVG+PCA",
+          "summary" : "A normalised dataset with a PCA embedding",
           "slots" : {
-            "var" : [
-              {
-                "type" : "string",
-                "name" : "feature_id",
-                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
-                "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
-              },
-              {
-                "type" : "integer",
-                "name" : "soma_joinid",
-                "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
-                "required" : false
-              },
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "integer",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
             "obsm" : [
               {
                 "type" : "double",
@@ -2844,6 +2812,38 @@ meta = [
                 "type" : "double",
                 "name" : "pca_variance",
                 "description" : "The PCA variance objects.",
+                "required" : true
+              }
+            ],
+            "var" : [
+              {
+                "type" : "string",
+                "name" : "feature_id",
+                "description" : "Unique identifier for the feature, usually a ENSEMBL gene id.",
+                "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "soma_joinid",
+                "description" : "If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the feature.",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "integer",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -3017,7 +3017,7 @@ meta = [
           "description" : "This dataset contains raw counts and metadata as output by a dataset loader.\n\nThe format of this file is derived from the [CELLxGENE schema v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
         },
         "example" : [
-          "resources_test/common/pancreas/hvg.h5ad"
+          "resources_test/common/pancreas/pca.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3044,7 +3044,7 @@ meta = [
         "type" : "file",
         "name" : "--output",
         "info" : {
-          "label" : "Dataset+PCA+HVG+kNN",
+          "label" : "Dataset+HVG+PCA+kNN",
           "summary" : "A normalised data with a PCA embedding, HVG selection and a kNN graph",
           "slots" : {
             "obsp" : [
@@ -3125,6 +3125,22 @@ meta = [
                 "required" : true
               }
             ],
+            "obsm" : [
+              {
+                "type" : "double",
+                "name" : "X_pca",
+                "description" : "The resulting PCA embedding.",
+                "required" : true
+              }
+            ],
+            "varm" : [
+              {
+                "type" : "double",
+                "name" : "pca_loadings",
+                "description" : "The PCA loadings matrix.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "string",
@@ -3136,7 +3152,7 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : false
+                "required" : true
               },
               {
                 "type" : "integer",
@@ -3154,22 +3170,6 @@ meta = [
                 "type" : "integer",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "varm" : [
-              {
-                "type" : "double",
-                "name" : "pca_loadings",
-                "description" : "The PCA loadings matrix.",
                 "required" : true
               }
             ],
@@ -3469,7 +3469,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/knn",
     "viash_version" : "0.8.0",
-    "git_commit" : "40257613e2a45dba9e2b6afbdad5dd4915843068",
+    "git_commit" : "3d286d04eff84565975975d5eabf654b3ba15809",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

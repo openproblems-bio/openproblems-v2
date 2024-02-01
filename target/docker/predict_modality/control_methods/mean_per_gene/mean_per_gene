@@ -421,9 +421,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/control_methods mean_per_gene"
-LABEL org.opencontainers.image.created="2024-01-27T06:29:07Z"
+LABEL org.opencontainers.image.created="2024-02-01T08:18:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="40257613e2a45dba9e2b6afbdad5dd4915843068"
+LABEL org.opencontainers.image.revision="3d286d04eff84565975975d5eabf654b3ba15809"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

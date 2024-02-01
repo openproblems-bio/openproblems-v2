@@ -6,60 +6,9 @@ functionality:
   - type: "file"
     name: "--input"
     info:
-      label: "Dataset+PCA"
-      summary: "A normalised dataset with a PCA embedding"
+      label: "Normalized dataset"
+      summary: "A normalized dataset"
       slots:
-        obsm:
-        - type: "double"
-          name: "X_pca"
-          description: "The resulting PCA embedding."
-          required: true
-        varm:
-        - type: "double"
-          name: "pca_loadings"
-          description: "The PCA loadings matrix."
-          required: true
-        uns:
-        - type: "string"
-          name: "dataset_id"
-          description: "A unique identifier for the dataset. This is different from\
-            \ the `obs.dataset_id` field, which is the identifier for the dataset\
-            \ from which the cell data is derived."
-          required: true
-        - name: "dataset_name"
-          type: "string"
-          description: "A human-readable name for the dataset."
-          required: true
-        - type: "string"
-          name: "dataset_url"
-          description: "Link to the original source of the dataset."
-          required: false
-        - name: "dataset_reference"
-          type: "string"
-          description: "Bibtex reference of the paper in which the dataset was published."
-          required: false
-          multiple: true
-        - name: "dataset_summary"
-          type: "string"
-          description: "Short description of the dataset."
-          required: true
-        - name: "dataset_description"
-          type: "string"
-          description: "Long description of the dataset."
-          required: true
-        - name: "dataset_organism"
-          type: "string"
-          description: "The organism of the sample in the dataset."
-          required: false
-          multiple: true
-        - type: "string"
-          name: "normalization_id"
-          description: "Which normalization was used"
-          required: true
-        - type: "double"
-          name: "pca_variance"
-          description: "The PCA variance objects."
-          required: true
         layers:
         - type: "integer"
           name: "counts"
@@ -212,6 +161,43 @@ functionality:
           name: "size_factors"
           description: "The size factors created by the normalisation method, if any."
           required: false
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset. This is different from\
+            \ the `obs.dataset_id` field, which is the identifier for the dataset\
+            \ from which the cell data is derived."
+          required: true
+        - name: "dataset_name"
+          type: "string"
+          description: "A human-readable name for the dataset."
+          required: true
+        - type: "string"
+          name: "dataset_url"
+          description: "Link to the original source of the dataset."
+          required: false
+        - name: "dataset_reference"
+          type: "string"
+          description: "Bibtex reference of the paper in which the dataset was published."
+          required: false
+          multiple: true
+        - name: "dataset_summary"
+          type: "string"
+          description: "Short description of the dataset."
+          required: true
+        - name: "dataset_description"
+          type: "string"
+          description: "Long description of the dataset."
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+          multiple: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
         var:
         - type: "string"
           name: "feature_id"
@@ -221,7 +207,7 @@ functionality:
         - type: "string"
           name: "feature_name"
           description: "A human-readable name for the feature, usually a gene symbol."
-          required: false
+          required: true
         - type: "integer"
           name: "soma_joinid"
           description: "If the dataset was retrieved from CELLxGENE census, this is\
@@ -231,7 +217,7 @@ functionality:
         \ loader.\n\nThe format of this file is derived from the [CELLxGENE schema\
         \ v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
     example:
-    - "resources_test/common/pancreas/pca.h5ad"
+    - "resources_test/common/pancreas/normalized.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -253,7 +239,7 @@ functionality:
   - type: "file"
     name: "--output"
     info:
-      label: "Dataset+PCA+HVG"
+      label: "Dataset+HVG"
       summary: "A normalised dataset with a PCA embedding and HVG selection."
       slots:
         var:
@@ -265,7 +251,7 @@ functionality:
         - type: "string"
           name: "feature_name"
           description: "A human-readable name for the feature, usually a gene symbol."
-          required: false
+          required: true
         - type: "integer"
           name: "soma_joinid"
           description: "If the dataset was retrieved from CELLxGENE census, this is\
@@ -279,57 +265,6 @@ functionality:
         - type: "integer"
           name: "hvg_score"
           description: "A ranking of the features by hvg."
-          required: true
-        obsm:
-        - type: "double"
-          name: "X_pca"
-          description: "The resulting PCA embedding."
-          required: true
-        varm:
-        - type: "double"
-          name: "pca_loadings"
-          description: "The PCA loadings matrix."
-          required: true
-        uns:
-        - type: "string"
-          name: "dataset_id"
-          description: "A unique identifier for the dataset. This is different from\
-            \ the `obs.dataset_id` field, which is the identifier for the dataset\
-            \ from which the cell data is derived."
-          required: true
-        - name: "dataset_name"
-          type: "string"
-          description: "A human-readable name for the dataset."
-          required: true
-        - type: "string"
-          name: "dataset_url"
-          description: "Link to the original source of the dataset."
-          required: false
-        - name: "dataset_reference"
-          type: "string"
-          description: "Bibtex reference of the paper in which the dataset was published."
-          required: false
-          multiple: true
-        - name: "dataset_summary"
-          type: "string"
-          description: "Short description of the dataset."
-          required: true
-        - name: "dataset_description"
-          type: "string"
-          description: "Long description of the dataset."
-          required: true
-        - name: "dataset_organism"
-          type: "string"
-          description: "The organism of the sample in the dataset."
-          required: false
-          multiple: true
-        - type: "string"
-          name: "normalization_id"
-          description: "Which normalization was used"
-          required: true
-        - type: "double"
-          name: "pca_variance"
-          description: "The PCA variance objects."
           required: true
         layers:
         - type: "integer"
@@ -483,6 +418,43 @@ functionality:
           name: "size_factors"
           description: "The size factors created by the normalisation method, if any."
           required: false
+        uns:
+        - type: "string"
+          name: "dataset_id"
+          description: "A unique identifier for the dataset. This is different from\
+            \ the `obs.dataset_id` field, which is the identifier for the dataset\
+            \ from which the cell data is derived."
+          required: true
+        - name: "dataset_name"
+          type: "string"
+          description: "A human-readable name for the dataset."
+          required: true
+        - type: "string"
+          name: "dataset_url"
+          description: "Link to the original source of the dataset."
+          required: false
+        - name: "dataset_reference"
+          type: "string"
+          description: "Bibtex reference of the paper in which the dataset was published."
+          required: false
+          multiple: true
+        - name: "dataset_summary"
+          type: "string"
+          description: "Short description of the dataset."
+          required: true
+        - name: "dataset_description"
+          type: "string"
+          description: "Long description of the dataset."
+          required: true
+        - name: "dataset_organism"
+          type: "string"
+          description: "The organism of the sample in the dataset."
+          required: false
+          multiple: true
+        - type: "string"
+          name: "normalization_id"
+          description: "Which normalization was used"
+          required: true
       description: "This dataset contains raw counts and metadata as output by a dataset\
         \ loader.\n\nThe format of this file is derived from the [CELLxGENE schema\
         \ v4.0.0](https://github.com/chanzuckerberg/single-cell-curation/blob/main/schema/4.0.0/schema.md).\n"
@@ -598,5 +570,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/hvg"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/datasets/processors/hvg/hvg"
   viash_version: "0.8.0"
-  git_commit: "40257613e2a45dba9e2b6afbdad5dd4915843068"
+  git_commit: "3d286d04eff84565975975d5eabf654b3ba15809"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

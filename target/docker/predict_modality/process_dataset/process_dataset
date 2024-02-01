@@ -173,15 +173,15 @@ function ViashHelp {
   echo "process_dataset main_build"
   echo ""
   echo "Arguments:"
-  echo "    --input_rna"
+  echo "    --input_mod1"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad"
+  echo "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad"
   echo ""
-  echo "    --input_other_mod"
+  echo "    --input_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad"
+  echo "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad"
   echo ""
   echo "    --output_train_mod1"
   echo "        type: file, required parameter, output, file must exist"
@@ -439,9 +439,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("rstudio/reticulate"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-01-27T06:29:06Z"
+LABEL org.opencontainers.image.created="2024-02-01T08:18:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="40257613e2a45dba9e2b6afbdad5dd4915843068"
+LABEL org.opencontainers.image.revision="3d286d04eff84565975975d5eabf654b3ba15809"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -596,26 +596,26 @@ while [[ $# -gt 0 ]]; do
             echo "process_dataset main_build"
             exit
             ;;
-        --input_rna)
-            [ -n "$VIASH_PAR_INPUT_RNA" ] && ViashError Bad arguments for option \'--input_rna\': \'$VIASH_PAR_INPUT_RNA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_RNA="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_rna. Use "--help" to get more information on the parameters. && exit 1
+        --input_mod1)
+            [ -n "$VIASH_PAR_INPUT_MOD1" ] && ViashError Bad arguments for option \'--input_mod1\': \'$VIASH_PAR_INPUT_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_MOD1="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_mod1. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --input_rna=*)
-            [ -n "$VIASH_PAR_INPUT_RNA" ] && ViashError Bad arguments for option \'--input_rna=*\': \'$VIASH_PAR_INPUT_RNA\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_RNA=$(ViashRemoveFlags "$1")
+        --input_mod1=*)
+            [ -n "$VIASH_PAR_INPUT_MOD1" ] && ViashError Bad arguments for option \'--input_mod1=*\': \'$VIASH_PAR_INPUT_MOD1\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_MOD1=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --input_other_mod)
-            [ -n "$VIASH_PAR_INPUT_OTHER_MOD" ] && ViashError Bad arguments for option \'--input_other_mod\': \'$VIASH_PAR_INPUT_OTHER_MOD\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_OTHER_MOD="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_other_mod. Use "--help" to get more information on the parameters. && exit 1
+        --input_mod2)
+            [ -n "$VIASH_PAR_INPUT_MOD2" ] && ViashError Bad arguments for option \'--input_mod2\': \'$VIASH_PAR_INPUT_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_MOD2="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_mod2. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --input_other_mod=*)
-            [ -n "$VIASH_PAR_INPUT_OTHER_MOD" ] && ViashError Bad arguments for option \'--input_other_mod=*\': \'$VIASH_PAR_INPUT_OTHER_MOD\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_INPUT_OTHER_MOD=$(ViashRemoveFlags "$1")
+        --input_mod2=*)
+            [ -n "$VIASH_PAR_INPUT_MOD2" ] && ViashError Bad arguments for option \'--input_mod2=*\': \'$VIASH_PAR_INPUT_MOD2\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_MOD2=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --output_train_mod1)
@@ -802,12 +802,12 @@ fi
 
 
 # check whether required parameters exist
-if [ -z ${VIASH_PAR_INPUT_RNA+x} ]; then
-  ViashError '--input_rna' is a required argument. Use "--help" to get more information on the parameters.
+if [ -z ${VIASH_PAR_INPUT_MOD1+x} ]; then
+  ViashError '--input_mod1' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
-if [ -z ${VIASH_PAR_INPUT_OTHER_MOD+x} ]; then
-  ViashError '--input_other_mod' is a required argument. Use "--help" to get more information on the parameters.
+if [ -z ${VIASH_PAR_INPUT_MOD2+x} ]; then
+  ViashError '--input_mod2' is a required argument. Use "--help" to get more information on the parameters.
   exit 1
 fi
 if [ -z ${VIASH_PAR_OUTPUT_TRAIN_MOD1+x} ]; then
@@ -856,12 +856,12 @@ if [ -z ${VIASH_PAR_SWAP+x} ]; then
 fi
 
 # check whether required files exist
-if [ ! -z "$VIASH_PAR_INPUT_RNA" ] && [ ! -e "$VIASH_PAR_INPUT_RNA" ]; then
-  ViashError "Input file '$VIASH_PAR_INPUT_RNA' does not exist."
+if [ ! -z "$VIASH_PAR_INPUT_MOD1" ] && [ ! -e "$VIASH_PAR_INPUT_MOD1" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_MOD1' does not exist."
   exit 1
 fi
-if [ ! -z "$VIASH_PAR_INPUT_OTHER_MOD" ] && [ ! -e "$VIASH_PAR_INPUT_OTHER_MOD" ]; then
-  ViashError "Input file '$VIASH_PAR_INPUT_OTHER_MOD' does not exist."
+if [ ! -z "$VIASH_PAR_INPUT_MOD2" ] && [ ! -e "$VIASH_PAR_INPUT_MOD2" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_MOD2' does not exist."
   exit 1
 fi
 
@@ -937,13 +937,13 @@ fi
 
 # detect volumes from file arguments
 VIASH_CHOWN_VARS=()
-if [ ! -z "$VIASH_PAR_INPUT_RNA" ]; then
-  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_RNA")" )
-  VIASH_PAR_INPUT_RNA=$(ViashAutodetectMount "$VIASH_PAR_INPUT_RNA")
+if [ ! -z "$VIASH_PAR_INPUT_MOD1" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_MOD1")" )
+  VIASH_PAR_INPUT_MOD1=$(ViashAutodetectMount "$VIASH_PAR_INPUT_MOD1")
 fi
-if [ ! -z "$VIASH_PAR_INPUT_OTHER_MOD" ]; then
-  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_OTHER_MOD")" )
-  VIASH_PAR_INPUT_OTHER_MOD=$(ViashAutodetectMount "$VIASH_PAR_INPUT_OTHER_MOD")
+if [ ! -z "$VIASH_PAR_INPUT_MOD2" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_MOD2")" )
+  VIASH_PAR_INPUT_MOD2=$(ViashAutodetectMount "$VIASH_PAR_INPUT_MOD2")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT_TRAIN_MOD1" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT_TRAIN_MOD1")" )
@@ -1032,8 +1032,8 @@ library(Matrix, warn.conflicts = FALSE)
 .viash_orig_warn <- options(warn = 2)
 
 par <- list(
-  "input_rna" = $( if [ ! -z ${VIASH_PAR_INPUT_RNA+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_RNA" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "input_other_mod" = $( if [ ! -z ${VIASH_PAR_INPUT_OTHER_MOD+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_OTHER_MOD" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_mod1" = $( if [ ! -z ${VIASH_PAR_INPUT_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_MOD1" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_mod2" = $( if [ ! -z ${VIASH_PAR_INPUT_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_MOD2" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_train_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TRAIN_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TRAIN_MOD1" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_train_mod2" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TRAIN_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TRAIN_MOD2" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_test_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD1" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -1070,8 +1070,8 @@ cat("Using seed ", par\$seed, "\\n", sep = "")
 set.seed(par\$seed)
 
 cat("Reading input data\\n")
-ad1 <- anndata::read_h5ad(if (!par\$swap) par\$input_rna else par\$input_other_mod)
-ad2 <- anndata::read_h5ad(if (!par\$swap) par\$input_other_mod else par\$input_rna)
+ad1 <- anndata::read_h5ad(if (!par\$swap) par\$input_mod1 else par\$input_mod2)
+ad2 <- anndata::read_h5ad(if (!par\$swap) par\$input_mod2 else par\$input_mod1)
 
 # figure out modality types
 ad1_mod <- unique(ad1\$var[["feature_types"]])
@@ -1186,11 +1186,11 @@ VIASHEOF
 
 
 # strip viash automount from file paths
-if [ ! -z "$VIASH_PAR_INPUT_RNA" ]; then
-  VIASH_PAR_INPUT_RNA=$(ViashStripAutomount "$VIASH_PAR_INPUT_RNA")
+if [ ! -z "$VIASH_PAR_INPUT_MOD1" ]; then
+  VIASH_PAR_INPUT_MOD1=$(ViashStripAutomount "$VIASH_PAR_INPUT_MOD1")
 fi
-if [ ! -z "$VIASH_PAR_INPUT_OTHER_MOD" ]; then
-  VIASH_PAR_INPUT_OTHER_MOD=$(ViashStripAutomount "$VIASH_PAR_INPUT_OTHER_MOD")
+if [ ! -z "$VIASH_PAR_INPUT_MOD2" ]; then
+  VIASH_PAR_INPUT_MOD2=$(ViashStripAutomount "$VIASH_PAR_INPUT_MOD2")
 fi
 if [ ! -z "$VIASH_PAR_OUTPUT_TRAIN_MOD1" ]; then
   VIASH_PAR_OUTPUT_TRAIN_MOD1=$(ViashStripAutomount "$VIASH_PAR_OUTPUT_TRAIN_MOD1")
