@@ -95,28 +95,27 @@ functionality:
           description: "Which normalization methods to run."
     - name: Outputs
       arguments:
-        - name: "--output_rna"
+        - name: "--output_mod1"
           direction: "output"
-          type: file
-          example: "dataset_rna.h5ad"
-        - name: "--output_other_mod"
+          __merge__: /src/datasets/api/file_multimodal_dataset.yaml
+        - name: "--output_mod2"
           direction: "output"
-          type: file
-          example: "dataset_other_mod.h5ad"
-        - name: "--output_meta_rna"
-          direction: "output"
-          type: file
-          description: "Dataset metadata"
-          example: "dataset_metadata_rna.yaml"
-        - name: "--output_meta_other_mod"
+          __merge__: /src/datasets/api/file_multimodal_dataset.yaml
+        - name: "--output_meta_mod1"
           direction: "output"
           type: file
           description: "Dataset metadata"
-          example: "dataset_metadata_other_mod.yaml"
+          example: "dataset_metadata_mod1.yaml"
+        - name: "--output_meta_mod2"
+          direction: "output"
+          type: file
+          description: "Dataset metadata"
+          example: "dataset_metadata_mod2.yaml"
   resources:
     - type: nextflow_script
       path: main.nf
       entrypoint: run_wf
+    - path: /src/wf_utils/helper.nf
   dependencies:
     - name: datasets/loaders/openproblems_neurips2021_bmmc
     - name: datasets/normalization/log_cp
@@ -126,7 +125,7 @@ functionality:
     - name: datasets/processors/subsample
     - name: datasets/processors/svd
     - name: datasets/processors/hvg
-    - name: common/check_dataset_schema
+    - name: common/extract_metadata
     - name: common/decompress_gzip
   # test_resources:
   #   - type: nextflow_script
