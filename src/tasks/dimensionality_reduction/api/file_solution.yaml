@@ -4,11 +4,6 @@ info:
   label: "Test data"
   summary: "The data for evaluating a dimensionality reduction."
   slots:
-    obs: 
-      - type: string
-        name: cell_type
-        description: Classification of the cell type based on its characteristics and function within the tissue or organism.
-        required: true
     layers: 
       - type: integer
         name: counts
@@ -17,6 +12,11 @@ info:
       - type: double
         name: normalized
         description: Normalized expression values
+        required: true
+    obs: 
+      - type: string
+        name: cell_type
+        description: Classification of the cell type based on its characteristics and function within the tissue or organism.
         required: true
     var:
       - type: double
