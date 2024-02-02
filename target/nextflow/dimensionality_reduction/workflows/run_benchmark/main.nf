@@ -2814,6 +2814,14 @@ meta = [
                     "required" : true
                   }
                 ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : true
+                  }
+                ],
                 "var" : [
                   {
                     "type" : "double",
@@ -2997,7 +3005,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3019,7 +3027,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3041,7 +3049,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/random_features"
@@ -3063,7 +3071,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/true_features"
@@ -3085,7 +3093,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/densmap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/densmap"
@@ -3107,7 +3115,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/neuralee/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/neuralee"
@@ -3129,7 +3137,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/pca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pca"
@@ -3151,7 +3159,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/phate/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/phate"
@@ -3173,7 +3181,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/simlr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/simlr"
@@ -3195,7 +3203,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/tsne/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/tsne"
@@ -3217,7 +3225,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/methods/umap/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/umap"
@@ -3239,7 +3247,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/metrics/coranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/coranking"
@@ -3261,7 +3269,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/metrics/density_preservation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/density_preservation"
@@ -3283,7 +3291,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/metrics/distance_correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation"
@@ -3305,7 +3313,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+          "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
           "executable" : "/nextflow/dimensionality_reduction/metrics/trustworthiness/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/trustworthiness"
@@ -3351,7 +3359,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+    "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

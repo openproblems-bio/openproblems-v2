@@ -3124,6 +3124,14 @@ meta = [
                 "required" : true
               }
             ],
+            "obs" : [
+              {
+                "type" : "string",
+                "name" : "cell_type",
+                "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                "required" : true
+              }
+            ],
             "var" : [
               {
                 "type" : "double",
@@ -3289,7 +3297,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "a87afdcc861d948217081e243a2657ca5f45e369",
+    "git_commit" : "d9e44545337b90926df41f2f383e165eda6ef6fb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
