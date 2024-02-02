@@ -432,9 +432,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods knnr_py"
-LABEL org.opencontainers.image.created="2024-02-01T15:36:34Z"
+LABEL org.opencontainers.image.created="2024-02-02T07:39:32Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2e2ed4ced20f802b5b51481ddff4d4a1cb1bf53f"
+LABEL org.opencontainers.image.revision="a87afdcc861d948217081e243a2657ca5f45e369"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
