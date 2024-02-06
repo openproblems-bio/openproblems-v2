@@ -3202,7 +3202,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm",
     "viash_version" : "0.8.0",
-    "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+    "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

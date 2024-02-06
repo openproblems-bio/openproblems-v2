@@ -3245,7 +3245,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3267,7 +3267,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3289,7 +3289,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
@@ -3311,7 +3311,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/control_methods/random_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
@@ -3333,7 +3333,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/control_methods/zeros/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
@@ -3355,7 +3355,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/control_methods/solution/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
@@ -3377,7 +3377,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/methods/knnr_py/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
@@ -3399,7 +3399,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/methods/knnr_r/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
@@ -3421,7 +3421,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/methods/lm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
@@ -3443,7 +3443,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
@@ -3465,7 +3465,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/methods/random_forest/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
@@ -3487,7 +3487,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
@@ -3509,7 +3509,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
@@ -3555,7 +3555,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+    "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3592,7 +3592,7 @@ workflow run_wf {
 
   main:
 
-  // collect method list
+  // construct list of methods
   methods = [
     mean_per_gene,
     random_predict,
@@ -3605,17 +3605,20 @@ workflow run_wf {
     random_forest
   ]
 
-  // collect metric list
+  // construct list of metrics
   metrics = [
     correlation,
     mse
   ]
 
-  output_ch = input_ch
+  /****************************
+   * EXTRACT DATASET METADATA *
+   ****************************/
+  dataset_ch = input_ch
 
     // store original id for later use
     | map{ id, state ->
-      [id, state + [_meta: [join_id: id]]]
+      [id, state + ["_meta": [join_id: id]]]
     }
 
     // extract the dataset metadata
@@ -3628,18 +3631,23 @@ workflow run_wf {
       }
     )
 
+  /***************************
+   * RUN METHODS AND METRICS *
+   ***************************/
+  score_ch = dataset_ch
+
     // run all methods
     | runEach(
       components: methods,
 
       // // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      // filter: { id, state, comp ->
-      //   def norm = state.normalization_id
-      //   def pref = comp.config.functionality.info.preferred_normalization
-      //   // if the preferred normalisation is none at all,
-      //   // we can pass whichever dataset we want
-      //   (norm == "log_cp10k" && pref == "counts") || norm == pref
-      // },
+      filter: { id, state, comp ->
+        def norm = state.dataset_uns.normalization_id
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        (norm == "log_cp10k" && pref == "counts") || norm == pref
+      },
 
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
@@ -3671,6 +3679,9 @@ workflow run_wf {
     // run all metrics
     | runEach(
       components: metrics,
+      id: { id, state, comp ->
+        id + "." + comp.config.functionality.name
+      },
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: [
         input_test_mod2: "input_test_mod2", 
@@ -3685,6 +3696,33 @@ workflow run_wf {
       }
     )
 
+  /******************************
+   * GENERATE OUTPUT YAML FILES *
+   ******************************/
+  // TODO: can we store everything below in a separate helper function?
+
+  // extract the dataset metadata
+  dataset_meta_ch = dataset_ch
+    // only keep one of the normalization methods
+    | filter{ id, state ->
+      state.dataset_uns.normalization_id == "log_cp10k"
+    }
+    | joinStates { ids, states ->
+      // store the dataset metadata in a file
+      def dataset_uns = states.collect{state ->
+        def uns = state.dataset_uns.clone()
+        uns.remove("normalization_id")
+        uns
+      }
+      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
+      def dataset_uns_file = tempFile("dataset_uns.yaml")
+      dataset_uns_file.write(dataset_uns_yaml_blob)
+
+      ["output", [output_dataset_info: dataset_uns_file]]
+    }
+
+  output_ch = score_ch
+
     // extract the scores
     | extract_metadata.run(
       key: "extract_scores",
@@ -3697,29 +3735,6 @@ workflow run_wf {
     )
 
     | joinStates { ids, states ->
-
-      // store the dataset metadata in a file
-      def dataset_uns = states.collect{state ->
-        def uns = state.dataset_uns.clone()
-        uns.remove("normalization_id")
-        uns
-      }
-      def dataset_uns_yaml_blob = toYamlBlob(dataset_uns)
-      def dataset_uns_file = tempFile("dataset_uns.yaml")
-      dataset_uns_file.write(dataset_uns_yaml_blob)
-
-      // store the scores in a file
-      def score_uns = states.collect{it.score_uns}
-      def score_uns_yaml_blob = toYamlBlob(score_uns)
-      def score_uns_file = tempFile("score_uns.yaml")
-      score_uns_file.write(score_uns_yaml_blob)
-
-      ["output", [output_scores: score_uns_file, output_dataset_info: dataset_uns_file, _meta: states[0]._meta]]
-    }
-
-    // store the method and metric configs
-    | map{ id, state ->
-
       // store the method configs in a file
       def method_configs = methods.collect{it.config}
       def method_configs_yaml_blob = toYamlBlob(method_configs)
@@ -3734,14 +3749,30 @@ workflow run_wf {
 
       def task_info_file = meta.resources_dir.resolve("task_info.yaml")
 
+      // store the scores in a file
+      def score_uns = states.collect{it.score_uns}
+      def score_uns_yaml_blob = toYamlBlob(score_uns)
+      def score_uns_file = tempFile("score_uns.yaml")
+      score_uns_file.write(score_uns_yaml_blob)
+
       def new_state = [
         output_method_configs: method_configs_file,
         output_metric_configs: metric_configs_file,
-        output_task_info: task_info_file
+        output_task_info: task_info_file,
+        output_scores: score_uns_file,
+        _meta: states[0]._meta
       ]
       
-      ["output", state + new_state]
+      ["output", new_state]
     }
+
+    // merge all of the output data 
+    | mix(dataset_meta_ch)
+    | joinStates{ ids, states ->
+      def mergedStates = states.inject([:]) { acc, m -> acc + m }
+      [ids[0], mergedStates]
+    }
+
   emit:
   output_ch
 }

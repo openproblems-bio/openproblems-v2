@@ -3414,7 +3414,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3436,7 +3436,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+          "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3482,7 +3482,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "2ebb7c01db18f3e3498c4d144020a7e6f4ce0f1a",
+    "git_commit" : "90f8643e4c7ea1402487955080537c0ce00d1b32",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3550,7 +3550,6 @@ workflow run_wf {
         ]
       }
     )
-    | view{"test: ${it}"}
 
     // remove datasets which didn't pass the schema check
     | filter { id, state ->
