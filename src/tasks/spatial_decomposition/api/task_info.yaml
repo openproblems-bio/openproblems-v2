@@ -20,7 +20,10 @@ description: |
 authors:
   - name: "Giovanni Palla"
     roles: [ author, maintainer ]
-    info: { github: giovp }
+    info: 
+      github: giovp
   - name: "Scott Gigante"
     roles: [ maintainer ]
-    info: { github: scottgigante, orcid: "0000-0002-4544-2764" }
+    info: 
+      github: scottgigante
+      orcid: "0000-0002-4544-2764"
