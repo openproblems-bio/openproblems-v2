@@ -2731,7 +2731,7 @@ meta = [
   "config": processConfig(readJsonBlob('''{
   "functionality" : {
     "name" : "diffusion_maps",
-    "namespace" : "dimensionality_reduction/control_methods",
+    "namespace" : "dimensionality_reduction/methods",
     "version" : "integration_build",
     "arguments" : [
       {
@@ -2781,98 +2781,6 @@ meta = [
         },
         "example" : [
           "resources_test/dimensionality_reduction/pancreas/dataset.h5ad"
-        ],
-        "must_exist" : true,
-        "create_parent" : true,
-        "required" : true,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
-        "type" : "file",
-        "name" : "--input_solution",
-        "info" : {
-          "label" : "Test data",
-          "summary" : "The data for evaluating a dimensionality reduction.",
-          "slots" : {
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "double",
-                "name" : "hvg_score",
-                "description" : "High variability gene score (normalized dispersion). The greater, the more variable.",
-                "required" : true
-              }
-            ],
-            "uns" : [
-              {
-                "type" : "string",
-                "name" : "dataset_id",
-                "description" : "A unique identifier for the dataset",
-                "required" : true
-              },
-              {
-                "name" : "dataset_name",
-                "type" : "string",
-                "description" : "Nicely formatted name.",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "dataset_url",
-                "description" : "Link to the original source of the dataset.",
-                "required" : false
-              },
-              {
-                "name" : "dataset_reference",
-                "type" : "string",
-                "description" : "Bibtex reference of the paper in which the dataset was published.",
-                "required" : false
-              },
-              {
-                "name" : "dataset_summary",
-                "type" : "string",
-                "description" : "Short description of the dataset.",
-                "required" : true
-              },
-              {
-                "name" : "dataset_description",
-                "type" : "string",
-                "description" : "Long description of the dataset.",
-                "required" : true
-              },
-              {
-                "name" : "dataset_organism",
-                "type" : "string",
-                "description" : "The organism of the sample in the dataset.",
-                "required" : false
-              },
-              {
-                "type" : "string",
-                "name" : "normalization_id",
-                "description" : "Which normalization was used",
-                "required" : true
-              }
-            ]
-          }
-        },
-        "example" : [
-          "resources_test/dimensionality_reduction/pancreas/solution.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2996,6 +2904,11 @@ meta = [
         "path" : "src/common/comp_tests/run_and_check_adata.py",
         "is_executable" : true,
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
+        "type" : "file",
+        "path" : "src/common/library.bib",
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "info" : {
@@ -3010,11 +2923,11 @@ meta = [
         "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
       "preferred_normalization" : "log_cp10k",
-      "type" : "control_method",
+      "type" : "method",
       "type_info" : {
-        "label" : "Control method",
-        "summary" : "Quality control methods for verifying the pipeline.",
-        "description" : "Control methods have the same interface as the regular methods\nbut also receive the solution object as input. It serves as a\nstarting point to test the relative accuracy of new methods in\nthe task, and also as a quality control for the metrics defined\nin the task.\n"
+        "label" : "Method",
+        "summary" : "A dimensionality reduction method.",
+        "description" : "A dimensionality reduction method to summarise the biological\ninformation in a dataset in as few dimensions as possible.\n"
       }
     },
     "status" : "enabled",
@@ -3085,9 +2998,9 @@ meta = [
   "info" : {
     "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/diffusion_map/config.vsh.yaml",
     "platform" : "nextflow",
-    "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/diffusion_maps",
+    "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/diffusion_maps",
     "viash_version" : "0.8.0",
-    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3109,7 +3022,6 @@ import umap
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'input_solution': $( if [ ! -z ${VIASH_PAR_INPUT_SOLUTION+x} ]; then echo "r'${VIASH_PAR_INPUT_SOLUTION//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'n_comps': $( if [ ! -z ${VIASH_PAR_N_COMPS+x} ]; then echo "int(r'${VIASH_PAR_N_COMPS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
   't': $( if [ ! -z ${VIASH_PAR_T+x} ]; then echo "int(r'${VIASH_PAR_T//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
@@ -3546,7 +3458,7 @@ meta["defaults"] = [
   directives: readJsonBlob('''{
   "container" : {
     "registry" : "ghcr.io",
-    "image" : "openproblems-bio/dimensionality_reduction/control_methods/diffusion_maps",
+    "image" : "openproblems-bio/dimensionality_reduction/methods/diffusion_maps",
     "tag" : "integration_build"
   },
   "label" : [

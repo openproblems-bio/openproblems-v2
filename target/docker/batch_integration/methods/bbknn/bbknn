@@ -406,9 +406,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.3" "bbknn"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods bbknn"
-LABEL org.opencontainers.image.created="2024-02-01T07:48:39Z"
+LABEL org.opencontainers.image.created="2024-02-06T12:34:06Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="232cd4a8bfe440cb50fc769a8f9de17535aca7b2"
+LABEL org.opencontainers.image.revision="e3c59971146b6d022bdf73d3c3ebe366c6a4144b"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

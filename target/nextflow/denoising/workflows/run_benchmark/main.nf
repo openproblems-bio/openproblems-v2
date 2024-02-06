@@ -2957,7 +2957,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -2979,7 +2979,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3001,7 +3001,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/control_methods/no_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/no_denoising"
@@ -3023,7 +3023,7 @@ meta = [
           "functionalityNamespace" : "denoising/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/control_methods/perfect_denoising/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising"
@@ -3045,7 +3045,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/methods/alra/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra"
@@ -3067,7 +3067,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/methods/dca/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/dca"
@@ -3089,7 +3089,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/methods/knn_smoothing/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/knn_smoothing"
@@ -3111,7 +3111,7 @@ meta = [
           "functionalityNamespace" : "denoising/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/methods/magic/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic"
@@ -3133,7 +3133,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/mse"
@@ -3155,7 +3155,7 @@ meta = [
           "functionalityNamespace" : "denoising/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/denoising/metrics/poisson/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson"
@@ -3201,7 +3201,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

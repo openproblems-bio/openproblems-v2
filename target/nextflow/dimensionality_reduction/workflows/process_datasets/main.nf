@@ -2758,6 +2758,14 @@ meta = [
                     "required" : true
                   }
                 ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : true
+                  }
+                ],
                 "var" : [
                   {
                     "type" : "double",
@@ -2911,6 +2919,14 @@ meta = [
                     "required" : true
                   }
                 ],
+                "obs" : [
+                  {
+                    "type" : "string",
+                    "name" : "cell_type",
+                    "description" : "Classification of the cell type based on its characteristics and function within the tissue or organism.",
+                    "required" : true
+                  }
+                ],
                 "var" : [
                   {
                     "type" : "double",
@@ -3018,7 +3034,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3040,7 +3056,7 @@ meta = [
           "functionalityNamespace" : "dimensionality_reduction",
           "output" : "",
           "platform" : "",
-          "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
           "executable" : "/nextflow/dimensionality_reduction/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/process_dataset"
@@ -3086,7 +3102,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "232cd4a8bfe440cb50fc769a8f9de17535aca7b2",
+    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
