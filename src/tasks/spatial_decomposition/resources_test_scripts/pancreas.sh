@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # make sure the following command has been executed
-# viash_build -q 'spatial_decomposition|common'
+# viash ns build -q 'spatial_decomposition|common'
 
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)
@@ -20,11 +20,13 @@ fi
 mkdir -p $DATASET_DIR
 
 # generate synthetic spatial data
-python3 src/spatial_decomposition/datasets/sample_datasets.py $RAW_DATA > $DATASET_DIR/dataset_synthetic.h5ad
+SYNTHETIC_DATA=$DATASET_DIR/dataset_synthetic.h5ad
+python3 src/tasks/spatial_decomposition/datasets/sample_datasets.py $RAW_DATA $SYNTHETIC_DATA
 
 # split dataset
 viash run src/tasks/label_projection/process_dataset/config.vsh.yaml -- \
-    --input $DATASET_DIR/dataset_synthetic.h5ad \
+    --input $SYNTHETIC_DATA \
     --output_spatial $DATASET_DIR/spatial.h5ad \
     --output_single_cell $DATASET_DIR/single_cell_ref.h5ad \
     --output_solution $DATASET_DIR/solution.h5ad \
+
