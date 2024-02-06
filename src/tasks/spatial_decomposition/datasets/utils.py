@@ -67,7 +67,7 @@ def generate_synthetic_dataset(
     # get single cell expression data
     counts = adata.layers['counts']
     # get cell annotations/labels
-    labels = adata.obs['celltype'].values
+    labels = adata.obs['cell_type'].values
     # get unique labels
     uni_labs = np.unique(labels)
     # count number of labels
@@ -135,7 +135,7 @@ def generate_synthetic_dataset(
     )
 
     # fake coordinates
-    adata_spatial.obsm["spatial"] = rng.random((adata_spatial.shape[0], 2))
+    adata_spatial.obsm["coordinates"] = rng.random((adata_spatial.shape[0], 2))
     adata_spatial.obsm["proportions_true"] = sp_p
     adata_spatial.obs["n_cells"] = n_cells
     adata_spatial.obsm["n_cells"] = sp_c
@@ -150,12 +150,13 @@ def generate_synthetic_dataset(
     )
     adata_merged.X[adata_merged.X == np.inf] = adata_merged.X.max()  # remove inf
     adata_merged.layers["counts"] = adata_merged.X
+    adata_merged.uns["cell_type_names"] = uni_labs
     return adata_merged
 
 def filter_celltypes(adata, min_cells=CELLTYPE_MIN_CELLS):
     """Filter rare celltypes from an AnnData"""
-    celltype_counts = adata.obs["celltype"].value_counts() >= min_cells
-    keep_cells = np.isin(adata.obs["celltype"], celltype_counts.index[celltype_counts])
+    celltype_counts = adata.obs["cell_type"].value_counts() >= min_cells
+    keep_cells = np.isin(adata.obs["cell_type"], celltype_counts.index[celltype_counts])
     return adata[adata.obs.index[keep_cells]].copy()
 
 def filter_genes_cells(adata):
