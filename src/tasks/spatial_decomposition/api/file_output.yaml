@@ -16,7 +16,7 @@ info:
         description: XY coordinates for each spot
         required: true
       - type: double
-        name: proportions
+        name: proportions_pred
         description: Estimated cell type proportions for each spot
         required: true
     uns:

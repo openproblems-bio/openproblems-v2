@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatial_decomposition/pancreas/anndata_spatial_masked.h5ad"
+example: "resources_test/spatial_decomposition/pancreas/spatial_masked.h5ad"
 info:
   label: "Masked"
   summary: "The masked spatial data file"

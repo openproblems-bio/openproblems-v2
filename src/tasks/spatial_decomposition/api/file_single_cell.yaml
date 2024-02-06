@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatial_decomposition/pancreas/anndata_single_cell.h5ad"
+example: "resources_test/spatial_decomposition/pancreas/single_cell_ref.h5ad"
 info:
   label: "Single cell data"
   summary: "The single cell data file"
@@ -11,13 +11,13 @@ info:
         required: true
     obs:
       - type: integer
-        name: label
+        name: cell_type
         description: Cell type label IDs
         required: true
     uns:
       - type: string
         name: cell_type_names
-        description: Cell type names corresponding to values in `label`
+        description: Cell type names corresponding to values in `celltype`
         required: true
       - type: string
         name: dataset_id
