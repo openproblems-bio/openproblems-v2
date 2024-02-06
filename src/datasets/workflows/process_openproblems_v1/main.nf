@@ -1,40 +1,10 @@
-nextflow.enable.dsl=2
+include { findArgumentSchema } from "${meta.resources_dir}/helper.nf"
 
-sourceDir = params.rootDir + "/src"
-targetDir = params.rootDir + "/target/nextflow"
-
-// dataset loaders
-include { openproblems_v1 } from "$targetDir/datasets/loaders/openproblems_v1/main.nf"
-
-// normalization methods
-include { log_cpm } from "$targetDir/datasets/normalization/log_cp/main.nf"
-include { log_scran_pooling } from "$targetDir/datasets/normalization/log_scran_pooling/main.nf"
-include { sqrt_cpm } from "$targetDir/datasets/normalization/sqrt_cp/main.nf"
-include { l1_sqrt } from "$targetDir/datasets/normalization/l1_sqrt/main.nf"
-
-// dataset processors
-include { pca } from "$targetDir/datasets/processors/pca/main.nf"
-include { hvg } from "$targetDir/datasets/processors/hvg/main.nf"
-include { knn } from "$targetDir/datasets/processors/knn/main.nf"
-include { check_dataset_schema } from "$targetDir/common/check_dataset_schema/main.nf"
-
-// helper functions
-include { readConfig; helpMessage; channelFromParams; preprocessInputs } from sourceDir + "/wf_utils/WorkflowHelper.nf"
-include { run_components; join_states; initialize_tracer; write_json; get_publish_dir } from sourceDir + "/wf_utils/BenchmarkHelper.nf"
-
-config = readConfig("$projectDir/config.vsh.yaml")
-
-// add custom tracer to nextflow to capture exit codes, memory usage, cpu usage, etc.
-traces = initialize_tracer()
-
-// normalization_methods = [log_cp, log_scran_pooling, sqrt_cp, l1_sqrt
-normalization_methods = [log_cp, sqrt_cp, l1_sqrt]
-
-workflow {
-  helpMessage(config)
-
-  channelFromParams(params, config)
-    | run_wf
+workflow auto {
+  findStates(params, meta.config)
+    | meta.workflow.run(
+      auto: [publish: "state"]
+    )
 }
 
 workflow run_wf {
@@ -42,70 +12,147 @@ workflow run_wf {
   input_ch
 
   main:
+
+  // create different normalization methods by overriding the defaults
+  normalization_methods = [
+    log_cp.run(
+      key: "log_cp10k",
+      args: [normalization_id: "log_cp10k", n_cp: 10000],
+    ),
+    log_cp.run(
+      key: "log_cpm",
+      args: [normalization_id: "log_cpm", n_cp: 1000000],
+    ),
+    sqrt_cp.run(
+      key: "sqrt_cp10k",
+      args: [normalization_id: "sqrt_cp10k", n_cp: 10000],
+    ),
+    sqrt_cp.run(
+      key: "sqrt_cpm",
+      args: [normalization_id: "sqrt_cpm", n_cp: 1000000],
+    ),
+    l1_sqrt.run(
+      key: "l1_sqrt",
+      args: [normalization_id: "l1_sqrt"],
+    ),
+    log_scran_pooling.run(
+      key: "log_scran_pooling",
+      args: [normalization_id: "log_scran_pooling"],
+    )
+  ]
+
   output_ch = input_ch
-    | preprocessInputs(config: config)
+
+    // store original id for later use
+    | map{ id, state ->
+      [id, state + [_meta: [join_id: id]]]
+    }
 
     // fetch data from legacy openproblems
-    | run_components(
-      components: openproblems_v1,
-      from_state: [
-        "dataset_id", "obs_celltype", "obs_batch", "obs_tissue", "layer_counts", "sparse",
-        "dataset_name", "data_url", "data_reference", "dataset_summary", "dataset_description", "dataset_organism"
+    | openproblems_v1.run(
+      fromState: [
+        "input_id": "input_id",
+        "obs_cell_type": "obs_cell_type",
+        "obs_batch": "obs_batch",
+        "obs_tissue": "obs_tissue",
+        "layer_counts": "layer_counts",
+        "sparse": "sparse",
+        "dataset_id": "id",
+        "dataset_name": "dataset_name",
+        "dataset_url": "dataset_url",
+        "dataset_reference": "dataset_reference",
+        "dataset_summary": "dataset_summary",
+        "dataset_description": "dataset_description",
+        "dataset_organism": "dataset_organism",
       ],
-      to_state: [ dataset: "output" ]
+      toState: ["output_raw": "output"]
+    )
+    
+    // subsample if so desired
+    | subsample.run(
+      runIf: { id, state -> state.do_subsample },
+      fromState: [
+        "input": "output_raw",
+        "n_obs": "n_obs",
+        "n_vars": "n_vars",
+        "keep_features": "keep_features",
+        "keep_cell_type_categories": "keep_cell_type_categories",
+        "keep_batch_categories": "keep_batch_categories",
+        "even": "even",
+        "seed": "seed"
+      ],
+      args: [output_mod2: null],
+      toState: ["output_raw": "output"]
     )
 
-    // run normalization methods
-    | run_components(
+    | runEach(
       components: normalization_methods,
-      id: { id, state, config -> id + "/" + config.functionality.name },
-      from_state: [ input: "dataset" ],
-      to_state: [
-        normalization_id: config.functionality.name,
-        output_normalization: "output"
-      ]
+      id: { id, state, comp ->
+        if (state.normalization_methods.size() > 1) {
+          id + "/" + comp.name
+        } else {
+          id
+        }
+      },
+      filter: { id, state, comp ->
+        comp.name in state.normalization_methods
+      },
+      fromState: ["input": "output_raw"],
+      toState: { id, output, state, comp ->
+        state + [
+          output_normalized: output.output,
+          normalization_id: comp.name
+        ]
+      }
     )
 
-    | run_components(
-      components: pca,
-      from_state: [ input: "output_normalization" ],
-      to_state: [ pca: "output" ]
+    | hvg.run(
+      fromState: ["input": "output_normalized"],
+      toState: ["output_hvg": "output"]
     )
 
-    | run_components(
-      components: hvg,
-      from_state: [ input: "pca" ],
-      to_state: [ hvg: "output" ]
+    | pca.run(
+      fromState: ["input": "output_hvg"],
+      toState: ["output_pca": "output" ]
     )
 
-    | run_components(
-      components: knn,
-      from_state: [ input: "hvg" ],
-      to_state: [ knn: "output" ]
+    | knn.run(
+      fromState: ["input": "output_pca"],
+      toState: ["output_knn": "output"]
     )
 
-    | run_components(
-      components: check_dataset_schema,
-      from_state: {id, state, config ->
+    // add synonym
+    | map{ id, state ->
+      [id, state + [output_dataset: state.output_knn]]
+    }
+
+    | extract_metadata.run(
+      fromState: { id, state ->
+        def schema = findArgumentSchema(meta.config, "output_dataset")
+        // workaround: convert GString to String
+        schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
+        def schemaYaml = tempFile("schema.yaml")
+        writeYaml(schema, schemaYaml)
         [
-          input: state.knn,
-          meta: state.output_meta,
-          output: state.output_dataset,
-          checks: null
+          "input": state.output_dataset,
+          "schema": schemaYaml
         ]
       },
-      to_state: [],
-      auto: [publish: true]
+      toState: ["output_meta": "output"]
     )
+
+    // only output the files for which an output file was specified
+    | setState([
+      "output_dataset",
+      "output_meta",
+      "output_raw",
+      "output_normalized",
+      "output_pca",
+      "output_hvg",
+      "output_knn",
+      "_meta"
+    ])
 
   emit:
   output_ch
-}
-
-// store the trace log in the publish dir
-workflow.onComplete {
-  def publish_dir = get_publish_dir()
-
-  write_json(traces, file("$publish_dir/traces.json"))
-  write_json(normalization_methods.collect{it.config}, file("$publish_dir/normalization_methods.json"))
 }

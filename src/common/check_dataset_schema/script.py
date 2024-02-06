@@ -1,24 +1,26 @@
 import anndata as ad
 import yaml
-import shutil
 import json
 
 ## VIASH START
 par = {
-  'input': 'resources_test/common/pancreas/dataset.h5ad',
-  'schema': 'src/tasks/denoising/api/file_common_dataset.yaml',
+  'input': 'work/d4/f4fabc8aa4f2308841d4ab57bcff62/_viash_par/input_1/dataset.h5ad',
+  'schema': 'work/d4/f4fabc8aa4f2308841d4ab57bcff62/_viash_par/schema_1/schema.yaml',
   'stop_on_error': False,
-  'checks': 'output/error.json',
-  'output': 'output/output.h5ad',
-  'meta': 'output/meta.json',
+  'output': 'work/d4/f4fabc8aa4f2308841d4ab57bcff62/out.yaml',
 }
 ## VIASH END
 
-def check_structure(slot_info, adata_slot):
+def check_structure(slot, slot_info, adata_slot):
   missing = []
+  if slot == "X":
+    slot_info["name"] = "X"
+    slot_info = [slot_info]
   for obj in slot_info:
-    if obj['name'] not in adata_slot:
+    adata_data = adata_slot.get(obj['name']) if slot != 'X' else adata_slot
+    if obj.get('required') and adata_data is None:
       missing.append(obj['name'])
+    # todo: check types
   return missing
 
 print('Load data', flush=True)
@@ -27,55 +29,31 @@ adata = ad.read_h5ad(par['input'])
 # create data structure
 out = {
   "exit_code": 0,
-  "error": {}
+  "error": {},
+  "data_schema": "ok"
 }
 
-def is_atomic(obj):
-  return isinstance(obj, str) or isinstance(obj, int) or isinstance(obj, bool)
+print("Check AnnData against schema", flush=True)
+with open(par["schema"], "r") as f:
+  data_struct = yaml.safe_load(f)
 
-def is_list_of_atomics(obj):
-  if not isinstance(obj, list):
-    return False
-  return all(is_atomic(elem) for elem in obj)
+def_slots = data_struct['info']['slots']
 
-def is_dict_of_atomics(obj):
-  if not isinstance(obj, dict):
-    return False
-  return all(is_atomic(elem) for key, elem in obj.items())
+out = {
+  "exit_code": 0,
+  "error": {},
+  "data_schema": "ok"
+}
+for slot in def_slots:
+  print("Checking slot", slot, flush=True)
+  missing = check_structure(slot, def_slots[slot], getattr(adata, slot))
+  if missing:
+    out['exit_code'] = 1
+    out['data_schema'] = 'not ok'
+    out['error'][slot] = missing
 
-
-if par['meta'] is not None:
-  print("Extract metadata from object", flush=True)
-  meta = {
-    key: val
-    for key, val in adata.uns.items()
-    if is_atomic(val) or is_list_of_atomics(val) or is_dict_of_atomics(val)
-  }
-  with open(par["meta"], "w") as f:
-    yaml.dump(meta, f, indent=2)
-
-if par['schema'] is not None:
-  print("Check AnnData against schema", flush=True)
-  with open(par["schema"], "r") as f:
-    data_struct = yaml.safe_load(f)
-
-  def_slots = data_struct['info']['slots']
-
-  out["data_schema"] = "ok"
-
-  for slot in def_slots:
-    check = check_structure(def_slots[slot], getattr(adata, slot))
-    if bool(check):
-      out['exit_code'] = 1
-      out['data_schema'] = 'not ok'
-      out['error'][slot] = check
-
-  if par['checks'] is not None:
-    with open(par["checks"], "w") as f:
-      json.dump(out, f, indent=2)
-
-if par['output'] is not None:
-  shutil.copyfile(par["input"], par["output"])
+with open(par["output"], "w") as f:
+  json.dump(out, f, indent=2)
 
 if par['stop_on_error']:
   exit(out['exit_code'])  

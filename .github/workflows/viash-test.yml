@@ -37,13 +37,13 @@ jobs:
       cache_key: ${{ steps.cache.outputs.cache_key }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0 
 
-    - uses: viash-io/viash-actions/setup@v4
+    - uses: viash-io/viash-actions/setup@v5
 
-    - uses: viash-io/viash-actions/project/sync-and-cache-s3@v4
+    - uses: viash-io/viash-actions/project/sync-and-cache-s3@v5
       id: cache
       with:
         s3_bucket: $s3_bucket
@@ -52,19 +52,19 @@ jobs:
 
     - name: Get changed files
       id: changed-files
-      uses: tj-actions/changed-files@v38
+      uses: tj-actions/changed-files@v42
       with:
         separator: ";"
         diff_relative: true
 
     - id: ns_list
-      uses: viash-io/viash-actions/ns-list@v4
+      uses: viash-io/viash-actions/ns-list@v5
       with:
         platform: docker
         format: json
 
     - id: ns_list_filtered
-      uses: viash-io/viash-actions/project/detect-changed-components@v4
+      uses: viash-io/viash-actions/project/detect-changed-components@v5
       with:
         input_file: "${{ steps.ns_list.outputs.output_file }}"
 
@@ -92,13 +92,13 @@ jobs:
     # Remove unnecessary files to free up space. Otherwise, we get 'no space left on device.'
     - uses: data-intuitive/reclaim-the-bytes@v2
     
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: viash-io/viash-actions/setup@v4
+    - uses: viash-io/viash-actions/setup@v5
 
     # use cache
     - name: Cache resources data
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       timeout-minutes: 10
       with:
         path: resources_test

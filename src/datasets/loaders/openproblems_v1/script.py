@@ -5,8 +5,9 @@ import scipy
 
 ## VIASH START
 par = {
+    "input_id": "pancreas",
     "dataset_id": "pancreas",
-    "obs_celltype": "celltype",
+    "obs_cell_type": "cell_type",
     "obs_batch": "tech",
     "obs_tissue": "tissue",
     "layer_counts": "counts",
@@ -38,7 +39,7 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
 }
 
 # fetch dataset
-dataset_fun, kwargs = dataset_funs[par["dataset_id"]]
+dataset_fun, kwargs = dataset_funs[par["input_id"]]
 
 print("Fetch dataset", flush=True)
 adata = dataset_fun(**kwargs)
@@ -49,12 +50,12 @@ for key, value in dataset_fun.metadata.items():
     print(f"Setting .uns['{key}']", flush=True)
     adata.uns[key] = value
 
-print("Setting .obs['celltype']", flush=True)
-if par["obs_celltype"]:
-    if par["obs_celltype"] in adata.obs:
-        adata.obs["celltype"] = adata.obs[par["obs_celltype"]]
+print("Setting .obs['cell_type']", flush=True)
+if par["obs_cell_type"]:
+    if par["obs_cell_type"] in adata.obs:
+        adata.obs["cell_type"] = adata.obs[par["obs_cell_type"]]
     else:
-        print(f"Warning: key '{par['obs_celltype']}' could not be found in adata.obs.", flush=True)
+        print(f"Warning: key '{par['obs_cell_type']}' could not be found in adata.obs.", flush=True)
 
 print("Setting .obs['batch']", flush=True)
 if par["obs_batch"]:
@@ -91,7 +92,7 @@ del adata.X
 
 print("Add metadata to uns", flush=True)
 metadata_fields = [
-    "dataset_id", "dataset_name", "data_url", "data_reference",
+    "dataset_id", "dataset_name", "dataset_url", "dataset_reference",
     "dataset_summary", "dataset_description", "dataset_organism"
 ]
 uns_metadata = {
@@ -100,6 +101,24 @@ uns_metadata = {
     if id in par
 }
 adata.uns.update(uns_metadata)
+
+print("Setting .var['feature_name']", flush=True)
+if par["var_feature_name"]:
+    if par["var_feature_name"] == "index":
+        adata.var["feature_name"] = adata.var.index
+    elif par["var_feature_name"] in adata.var:
+        adata.var["feature_name"] = adata.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
+
+print("Setting .var['feature_id']", flush=True)
+if par["var_feature_id"]:
+    if par["var_feature_id"] == "index":
+        adata.var["feature_id"] = adata.var.index
+    elif par["var_feature_id"] in adata.var:
+        adata.var["feature_id"] = adata.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
 
 print("Writing adata to file", flush=True)
 adata.write_h5ad(par["output"], compression="gzip")

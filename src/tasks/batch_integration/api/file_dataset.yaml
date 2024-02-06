@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/batch_integration/pancreas/unintegrated.h5ad"
+example: "resources_test/batch_integration/pancreas/dataset.h5ad"
 info:
   label: "Dataset"
   summary: Unintegrated AnnData HDF5 file.
@@ -26,6 +26,10 @@ info:
       - type: boolean
         name: hvg
         description: Whether or not the feature is considered to be a 'highly variable gene'
+        required: true
+      - type: string
+        name: feature_name
+        description: A human-readable name for the feature, usually a gene symbol.
         required: true
     obsm:
       - type: double

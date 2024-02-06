@@ -7,11 +7,16 @@ import pandas as pd
 ## VIASH START
 par = {
     "dataset_id": "scicar_mouse_kidney",
-    "obs_celltype": "celltype",
-    "obs_batch": "replicate",
-    "obs_tissue": None,
+    "obs_tissue": "source",
+    "obs_cell_type": "cell_type",
     "layer_counts": "counts",
     "output": "test_data.h5ad",
+    "dataset_name": "name",
+    "dataset_url": "https://some.url",
+    "dataset_reference": "reference",
+    "dataset_summary": "summary",
+    "dataset_description": "description",
+    "dataset_organism": "[homo_sapiens, mus_musculus]",
 }
 meta = {
     "resources_dir": "src/datasets/loaders/openproblems_v1/"
@@ -28,7 +33,7 @@ dataset_funs: Dict[str, Tuple[Callable, Dict[str, Any]]] = {
 }
 
 # fetch dataset
-dataset_fun, kwargs = dataset_funs[par["dataset_id"]]
+dataset_fun, kwargs = dataset_funs[par["input_id"]]
 
 print("Fetch dataset", flush=True)
 adata = dataset_fun(**kwargs)
@@ -67,13 +72,13 @@ for key, value in dataset_fun.metadata.items():
     mod1.uns[key] = value
     mod2.uns[key] = value
 
-print("Setting .obs['celltype']", flush=True)
-if par["obs_celltype"]:
-    if par["obs_celltype"] in mod1.obs:
-        mod1.obs["celltype"] = mod1.obs[par["obs_celltype"]]
-        mod2.obs["celltype"] = mod2.obs[par["obs_celltype"]]
+print("Setting .obs['cell_type']", flush=True)
+if par["obs_cell_type"]:
+    if par["obs_cell_type"] in mod1.obs:
+        mod1.obs["cell_type"] = mod1.obs[par["obs_cell_type"]]
+        mod2.obs["cell_type"] = mod2.obs[par["obs_cell_type"]]
     else:
-        print(f"Warning: key '{par['obs_celltype']}' could not be found in adata.obs.", flush=True)
+        print(f"Warning: key '{par['obs_cell_type']}' could not be found in adata.obs.", flush=True)
 
 print("Setting .obs['batch']", flush=True)
 if par["obs_batch"]:
@@ -115,18 +120,45 @@ mod1.layers["counts"] = mod1_X
 del mod1.X
 del mod2.X
 
+print("Setting .var['feature_name']", flush=True)
+if par["var_feature_name"] == "index":
+    mod1.var["feature_name"] = mod1.var.index
+    mod2.var["feature_name"] = mod2.var.index
+else: 
+    if par["var_feature_name"] in mod1.var:
+        mod1.var["feature_name"] = mod1.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod1.var.", flush=True)
+    if par["var_feature_name"] in mod2.var:
+        mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+    else:
+        print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod2.var.", flush=True)
+
+print("Setting .var['feature_id']", flush=True)
+if par["var_feature_id"] == "index":
+    mod1.var["feature_id"] = mod1.var.index
+    mod2.var["feature_id"] = mod2.var.index
+else:
+    if par["var_feature_id"] in mod1.var:
+        mod1.var["feature_id"] = mod1.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod1.var.", flush=True)
+    if par["var_feature_id"] in mod2.var:
+        mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+    else:
+        print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod2.var.", flush=True)
+
+
 print("Add metadata to uns", flush=True)
 metadata_fields = [
-    "dataset_id", "dataset_name", "data_url", "data_reference",
-    "dataset_summary", "dataset_description" "dataset_organism"
+    "dataset_id", "dataset_name", "dataset_url", "dataset_reference",
+    "dataset_summary", "dataset_description", "dataset_organism"
 ]
-uns_metadata = {
-    id: par[id]
-    for id in metadata_fields
-    if id in par
-}
-mod1.uns.update(uns_metadata)
-mod2.uns.update(uns_metadata)
+for key in metadata_fields:
+    if key in par:
+        print(f"  Setting .uns['{key}']", flush=True)
+        mod1.uns[key] = par[key]
+        mod2.uns[key] = par[key]
 
 print("Writing adata to file", flush=True)
 mod1.write_h5ad(par["output_mod1"], compression="gzip")

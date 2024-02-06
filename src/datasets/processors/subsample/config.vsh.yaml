@@ -15,7 +15,7 @@ functionality:
       type: string
       multiple: true
       description: A list of genes to keep.
-    - name: "--keep_celltype_categories"
+    - name: "--keep_cell_type_categories"
       type: "string"
       multiple: true
       description: "Categories indexes to be selected"
@@ -41,9 +41,11 @@ functionality:
     - path: /resources_test/common/pancreas
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
     test_setup:
       - type: python
         packages:
           - viashpy
   - type: nextflow
+    directives:
+      label: [ midtime, highmem, midcpu ]

@@ -33,7 +33,7 @@ functionality:
       dest: openproblems-v2/_viash.yaml
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.1
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
     setup:
       - type: r
         packages: [dplyr, purrr, rlang, glue, yaml, fs, cli, igraph, rmarkdown, bit64]
@@ -43,12 +43,12 @@ platforms:
         # download and install quarto-*-linux-amd64.deb from latest release
         run: |
           release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest) && \
-            download_url=$(echo "$release_info" | jq -r '.assets[] | select(.name | test("quarto-.*-linux-amd64.deb")) | .browser_download_url') && \
+            download_url=$(printf "%s" "$release_info" | jq -r '.assets[] | select(.name | test("quarto-.*-linux-amd64.deb")) | .browser_download_url') && \
             curl -sL "$download_url" -o /opt/quarto.deb && \
             dpkg -i /opt/quarto.deb && \
             rm /opt/quarto.deb
   - type: native
   - type: nextflow
     directives: 
-      label: [ lowmem, lowcpu ]
+      label: [ "midtime", lowmem, lowcpu ]
 

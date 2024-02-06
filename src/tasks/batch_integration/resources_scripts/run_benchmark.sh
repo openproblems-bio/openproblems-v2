@@ -1,66 +1,34 @@
 #!/bin/bash
 
-# get the root of the directory
-REPO_ROOT=$(git rev-parse --show-toplevel)
+RUN_ID="run_$(date +%Y-%m-%d_%H-%M-%S)"
+publish_dir="s3://openproblems-data/resources/batch_integration/results/${RUN_ID}"
 
-# ensure that the command below is run from the root of the repository
-cd "$REPO_ROOT"
+cat > /tmp/params.yaml << HERE
+input_states: s3://openproblems-data/resources/batch_integration/datasets/**/state.yaml
+rename_keys: 'input_dataset:output_dataset,input_solution:output_solution'
+output_state: "state.yaml"
+publish_dir: "$publish_dir"
+HERE
 
-set -e
-
-export TOWER_WORKSPACE_ID=53907369739130
-
-DATASETS_DIR="resources/batch_integration/datasets/openproblems_v1"
-OUTPUT_DIR="resources/batch_integration/benchmarks/openproblems_v1"
-
-if [ ! -d "$OUTPUT_DIR" ]; then
-  mkdir -p "$OUTPUT_DIR"
-fi
-
-params_file="$OUTPUT_DIR/params.yaml"
-
-if [ ! -f $params_file ]; then
-  python << HERE
-import anndata as ad
-import glob
-import yaml
-
-h5ad_files = glob.glob("$DATASETS_DIR/**/*.h5ad", recursive=True)
-
-# figure out where dataset files are stored
-param_list = []
-
-for h5ad_file in h5ad_files:
-  print(f"Checking {h5ad_file}")
-  adata = ad.read_h5ad(h5ad_file, backed=True)
-
-  dataset_id = adata.uns["dataset_id"].replace("/", ".")
-  normalization_id = adata.uns["normalization_id"]
-  id = dataset_id + "." + normalization_id
-
-  obj = {
-    'id': id,
-    'input': h5ad_file, 
-    # 'dataset_id': dataset_id,
-    # 'normalization_id': normalization_id
-  }
-  param_list.append(obj)
-
-# write as output file
-output = {
-  "param_list": param_list,
+cat > /tmp/nextflow.config << HERE
+process {
+  executor = 'awsbatch'
 }
 
-with open("$params_file", "w") as file:
-  yaml.dump(output, file)
+trace {
+    enabled = true
+    overwrite = true
+    file    = "$publish_dir/trace.txt"
+}
 HERE
-fi
 
-export NXF_VER=22.04.5
-nextflow \
-  run . \
-  -main-script src/tasks/batch_integration/workflows/run/main.nf \
-  -profile docker \
-  -resume \
-  -params-file "$params_file" \
-  --publish_dir "$OUTPUT_DIR"
+tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+  --revision main_build \
+  --pull-latest \
+  --main-script target/nextflow/batch_integration/workflows/run_benchmark/main.nf \
+  --workspace 53907369739130 \
+  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+  --params-file /tmp/params.yaml \
+  --entry-name auto \
+  --config /tmp/nextflow.config \
+  --labels batch_integration,full

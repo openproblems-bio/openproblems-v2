@@ -3,7 +3,7 @@ __merge__: ../../api/comp_method_feature.yaml
 functionality:
   name: scanorama_feature
   info:
-    label: Scanorama
+    label: Scanorama (feature)
     summary: "Efficient integration of heterogeneous single-cell
       transcriptomes using Scanorama"
     description: |
@@ -24,7 +24,7 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.1
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
     setup:
       - type: python
         pypi:
@@ -32,4 +32,4 @@ platforms:
           - scib==1.1.3
   - type: nextflow
     directives: 
-      label: [ midmem, lowcpu ]
+      label: [ "midtime", midmem, lowcpu ]

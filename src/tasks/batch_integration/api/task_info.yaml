@@ -4,6 +4,7 @@ v1:
   path: openproblems/tasks/batch_integration/README.md
   commit: 637163fba7d74ab5393c2adbee5354dcf4d46f85
 summary: Remove unwanted batch effects from scRNA data while retaining biologically meaningful variation.
+image: thumbnail.svg
 motivation: |
   As single-cell technologies advance, single-cell datasets are growing both in size and complexity.
   Especially in consortia such as the Human Cell Atlas, individual studies combine data from multiple labs, each sequencing multiple individuals possibly with different technologies.
@@ -18,7 +19,7 @@ description: |
   As input, methods require either normalised or unnormalised data with multiple batches and consistent cell type labels.
   The batch integrated output can be a feature matrix, a low dimensional embedding and/or a neighbourhood graph.
   The respective batch-integrated representation is then evaluated using sets of metrics that capture how well batch effects are removed and whether biological variance is conserved.
-  We have based this particular task on the latest, and most extensive benchmark of single-cell data integration methods [@luecken2022benchmarking].
+  We have based this particular task on the latest, and most extensive benchmark of single-cell data integration methods.
 authors:
   - name: Michaela Mueller
     roles: [ maintainer, author ]
@@ -28,6 +29,7 @@ authors:
     roles: [ contributor ]
     info:
       github: KaiWaldrant
+      orcid: "0009-0003-8555-1361"
   - name: Robrecht Cannoodt
     roles: [ contributor ]
     info:
