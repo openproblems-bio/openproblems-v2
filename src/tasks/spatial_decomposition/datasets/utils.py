@@ -1,15 +1,17 @@
-from ..api import CELLTYPE_MIN_CELLS
-from ..utils import merge_sc_and_sp
 from typing import Sequence
 from typing import Union
 
 import anndata as ad
 import numpy as np
+import scanpy as sc
 
-
+CELLTYPE_MIN_CELLS = 25
+cell_lb = 10,
+cell_ub = 30,
+umi_lb = 1000,
+umi_ub = 5000,
 def generate_synthetic_dataset(
     adata: ad.AnnData,
-    type_column: str = "label",
     alpha: Union[float, Sequence] = 1.0,
     n_obs: int = 1000,
     cell_lb: int = 10,
@@ -17,7 +19,6 @@ def generate_synthetic_dataset(
     umi_lb: int = 1000,
     umi_ub: int = 5000,
     seed: int = 42,
-    test: bool = False,
 ) -> ad.AnnData:
     """Create cell-aggregate samples for ground-truth spatial decomposition task.
 
@@ -26,7 +27,7 @@ def generate_synthetic_dataset(
     adata: AnnData
         Anndata object.
     type_column: str
-        name of column in `adata.obs` where cell type labels are gives
+        name of column in `adata.obs` where cell type labels are given
     alpha: Union[float,Sequence]
         alpha value in dirichlet distribution. If single number then all alpha_i values
         will be set to this value. Default value is 1.
@@ -46,7 +47,7 @@ def generate_synthetic_dataset(
     Returns
     -------
     AnnData with:
-        - `adata_spatial.X`: simulated counts (aggregate of sc dataset).
+        - `adata_spatial.counts`: simulated counts (aggregate of sc dataset).
         - `adata_spatial.uns["sc_reference"]`: original sc adata for reference.
         - `adata_spatial.obsm["proportions_true"]`: true proportion values.
         - `adata_spatial.obsm["n_cells"]`: number of cells from each type at
@@ -56,6 +57,7 @@ def generate_synthetic_dataset(
 
     The cell type labels are stored in adata_sc.obs["label"].
     """
+    
     # remove rare celltypes
     adata = filter_celltypes(adata)
 
@@ -63,9 +65,9 @@ def generate_synthetic_dataset(
     rng = np.random.default_rng(seed)
 
     # get single cell expression data
-    X = adata.X
+    counts = adata.layers['counts']
     # get cell annotations/labels
-    labels = adata.obs[type_column].values
+    labels = adata.obs['celltype'].values
     # get unique labels
     uni_labs = np.unique(labels)
     # count number of labels
@@ -115,7 +117,7 @@ def generate_synthetic_dataset(
             # get indices of cells from which transcripts should be added
             idx_sl = rng.choice(label_indices[uni_labs[lab]], size=n)
             # add molecules to pool
-            pool_s += X[idx_sl, :].sum(axis=0).A.flatten()
+            pool_s += counts[idx_sl, :].sum(axis=0).A.flatten()
 
         # number of UMIs at spot s
         n_umis = rng.integers(umi_lb, umi_ub)
@@ -137,15 +139,29 @@ def generate_synthetic_dataset(
     adata_spatial.obsm["proportions_true"] = sp_p
     adata_spatial.obs["n_cells"] = n_cells
     adata_spatial.obsm["n_cells"] = sp_c
-    #adata_merged = merge_sc_and_sp(adata, adata_spatial, test=test)
-    adata_spatial.X[adata_spatial.X == np.inf] = adata_spatial.X.max()  # remove inf
-    adata_spatial.layers["counts"] = adata_spatial.X
-
-    return adata, adata_spatial
-
+    
+    adata_merged = ad.concat(
+        {"sc": adata, "sp": adata_spatial}, 
+        label="modality",
+        join="outer", 
+        index_unique=None, 
+        merge="unique", 
+        uns_merge="unique"
+    )
+    adata_merged.X[adata_merged.X == np.inf] = adata_merged.X.max()  # remove inf
+    adata_merged.layers["counts"] = adata_merged.X
+    return adata_merged
 
 def filter_celltypes(adata, min_cells=CELLTYPE_MIN_CELLS):
     """Filter rare celltypes from an AnnData"""
-    celltype_counts = adata.obs["label"].value_counts() >= min_cells
-    keep_cells = np.isin(adata.obs["label"], celltype_counts.index[celltype_counts])
+    celltype_counts = adata.obs["celltype"].value_counts() >= min_cells
+    keep_cells = np.isin(adata.obs["celltype"], celltype_counts.index[celltype_counts])
     return adata[adata.obs.index[keep_cells]].copy()
+
+def filter_genes_cells(adata):
+    """Remove empty cells and genes."""
+    if "var_names_all" not in adata.uns:
+        # fill in original var names before filtering
+        adata.uns["var_names_all"] = adata.var.index.to_numpy()
+    sc.pp.filter_genes(adata, min_cells=1)
+    sc.pp.filter_cells(adata, min_counts=2)
