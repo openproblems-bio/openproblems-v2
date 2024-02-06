@@ -16,3 +16,9 @@ Closes #xxxx (Replace xxxx with the GitHub issue number)
 - [ ] Proposed changes are described in the CHANGELOG.md
 
 - [ ] CI Tests succeed and look good!
+
+## Requirements after merging
+
+- [ ] Regenerate test resources of task: e.g. all or batch_integration
+
+- [ ] Regenerate dataset resources of task: e.g. all or batch_integration
