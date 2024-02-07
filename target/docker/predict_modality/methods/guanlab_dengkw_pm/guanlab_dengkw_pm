@@ -430,9 +430,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "pandas" "numpy" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods guanlab_dengkw_pm"
-LABEL org.opencontainers.image.created="2024-02-06T16:18:32Z"
+LABEL org.opencontainers.image.created="2024-02-07T08:05:51Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="90f8643e4c7ea1402487955080537c0ce00d1b32"
+LABEL org.opencontainers.image.revision="3a811a7417ca8d97b531710dd83529b1d2ab27b4"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
