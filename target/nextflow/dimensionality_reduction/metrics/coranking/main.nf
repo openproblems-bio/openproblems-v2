@@ -3167,7 +3167,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/coranking",
     "viash_version" : "0.8.0",
-    "git_commit" : "df58d9643171d6bb73367735399c0493d87b9db8",
+    "git_commit" : "3a63454fd651fdd13db86963f8892faedee17404",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
