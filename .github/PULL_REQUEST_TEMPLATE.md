@@ -19,6 +19,6 @@ Closes #xxxx (Replace xxxx with the GitHub issue number)
 
 ## Requirements after merging
 
-- [ ] Regenerate test resources of task: e.g. all or batch_integration
+- [ ] Need to regenerate `common/` resources
 
-- [ ] Regenerate dataset resources of task: e.g. all or batch_integration
+- [ ] Need to regenerate task-specific resources. Specify: <all or ...>
