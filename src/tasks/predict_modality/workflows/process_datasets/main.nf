@@ -67,7 +67,8 @@ workflow run_wf {
         output_train_mod1: "output_train_mod1",
         output_train_mod2: "output_train_mod2",
         output_test_mod1: "output_test_mod1",
-        output_test_mod2: "output_test_mod2"
+        output_test_mod2: "output_test_mod2",
+        swap: "swap"
       ],
       toState: [
         "output_train_mod1",
@@ -77,12 +78,40 @@ workflow run_wf {
       ]
     )
 
+    // extract the dataset metadata
+    | extract_metadata.run(
+      key: "extract_metadata_mod1",
+      fromState: [input: "output_train_mod1"],
+      toState: { id, output, state ->
+        state + [
+          modality_mod1: readYaml(output.output).uns.modality
+        ]
+      }
+    )
+
+    // extract the dataset metadata
+    | extract_metadata.run(
+      key: "extract_metadata_mod2",
+      fromState: [input: "output_train_mod2"],
+      toState: { id, output, state ->
+        state + [
+          modality_mod2: readYaml(output.output).uns.modality
+        ]
+      }
+    )
+
+    | map { id, state ->
+      def new_id = id + "_" + state.modality_mod1 + "2" + state.modality_mod2
+      [new_id, state + ["_meta": [join_id: id]]]
+    }
+
     // only output the files for which an output file was specified
     | setState ([
         "output_train_mod1",
         "output_train_mod2",
         "output_test_mod1",
-        "output_test_mod2"
+        "output_test_mod2",
+        "_meta"
       ])
 
   emit:
