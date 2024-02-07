@@ -24,9 +24,9 @@ SYNTHETIC_DATA=$DATASET_DIR/dataset_synthetic.h5ad
 python3 src/tasks/spatial_decomposition/datasets/sample_datasets.py $RAW_DATA $SYNTHETIC_DATA
 
 # split dataset
-viash run src/tasks/label_projection/process_dataset/config.vsh.yaml -- \
+viash run src/tasks/spatial_decomposition/process_dataset/config.vsh.yml -- \
     --input $SYNTHETIC_DATA \
-    --output_spatial $DATASET_DIR/spatial.h5ad \
+    --output_spatial_masked $DATASET_DIR/spatial_masked.h5ad \
     --output_single_cell $DATASET_DIR/single_cell_ref.h5ad \
     --output_solution $DATASET_DIR/solution.h5ad \
 

@@ -5,7 +5,7 @@ import sys
 par = {
     # "input": "resources_test/common/pancreas/dataset.h5ad",
     "input": "resources_test/spatial_decomposition/pancreas/dataset_synthetic.h5ad",
-    "output_spatial": "spatial_masked.h5ad",
+    "output_spatial_masked": "spatial_masked.h5ad",
     "output_single_cell": "single_cell_ref.h5ad",
     "output_solution": "solution.h5ad",
 }
@@ -31,13 +31,13 @@ adata_sp = adata[is_sp, :].copy()
 adata_sc = adata[~is_sp, :].copy()
 
 print(">> Create dataset for methods", flush=True)
-output_spatial = subset_anndata(adata_sp, slot_info['output_spatial_masked'])
+output_spatial_masked = subset_anndata(adata_sp, slot_info['output_spatial_masked'])
 output_single_cell = subset_anndata(adata_sc, slot_info['output_single_cell'])
 
 print(">> Create solution object for metrics", flush=True)
 output_solution = subset_anndata(adata_sp, slot_info['output_solution'])
 
 print(">> Write to disk", flush=True)
-output_spatial.write_h5ad(par["output_spatial"])
+output_spatial_masked.write_h5ad(par["output_spatial_masked"])
 output_single_cell.write_h5ad(par["output_single_cell"])
 output_solution.write_h5ad(par["output_solution"])
