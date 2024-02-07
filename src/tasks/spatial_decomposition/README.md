@@ -42,7 +42,7 @@ flowchart LR
   file_common_dataset("Common dataset")
   comp_process_dataset[/"Data processor"/]
   file_single_cell("Single cell data")
-  file_spatial_masked("Masked")
+  file_spatial_masked("Spatial masked")
   file_solution("Solution")
   comp_control_method[/"Control method"/]
   comp_method[/"Method"/]
@@ -201,7 +201,7 @@ Slot description:
 
 </div>
 
-## File format: Masked
+## File format: Spatial masked
 
 The masked spatial data file
 

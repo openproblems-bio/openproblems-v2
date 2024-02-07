@@ -1,7 +1,7 @@
 type: file
 example: "resources_test/spatial_decomposition/pancreas/spatial_masked.h5ad"
 info:
-  label: "Masked"
+  label: "Spatial masked"
   summary: "The masked spatial data file"
   slots:
     layers: 
