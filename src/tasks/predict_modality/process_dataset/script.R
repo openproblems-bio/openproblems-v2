@@ -132,6 +132,9 @@ output_test_mod2 <- anndata::AnnData(
   uns = ad2_uns
 )
 
+output_test_mod2$uns[["common_dataset_id"]] <- dataset_id
+new_dataset_id <- paste0(output_test_mod2$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
+
 cat("Saving output files as h5ad\n")
 zzz <- output_train_mod1$write_h5ad(par$output_train_mod1, compression = "gzip")
 zzz <- output_train_mod2$write_h5ad(par$output_train_mod2, compression = "gzip")

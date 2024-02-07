@@ -53,7 +53,7 @@ workflow run_wf {
 
     | extract_metadata.run(
       key: "metadata_mod2",
-      fromState: [input: "input_train_mod2"],
+      fromState: [input: "input_test_mod2"],
       toState: { id, output, state ->
         state + [
           dataset_uns_mod2: readYaml(output.output).uns
@@ -145,7 +145,7 @@ workflow run_wf {
     | joinStates { ids, states ->
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
-        def uns = state.dataset_uns_mod1.clone()
+        def uns = state.dataset_uns_mod2.clone()
         uns.remove("normalization_id")
         uns
       }
