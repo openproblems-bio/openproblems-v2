@@ -481,9 +481,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1_multimodal"
-LABEL org.opencontainers.image.created="2024-02-07T08:05:53Z"
+LABEL org.opencontainers.image.created="2024-02-07T08:06:17Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3a811a7417ca8d97b531710dd83529b1d2ab27b4"
+LABEL org.opencontainers.image.revision="df58d9643171d6bb73367735399c0493d87b9db8"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1270,10 +1270,12 @@ if par["var_feature_name"] == "index":
 else: 
     if par["var_feature_name"] in mod1.var:
         mod1.var["feature_name"] = mod1.var[par["feature_name"]]
+        del mod1.var[par["feature_name"]]
     else:
         print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod1.var.", flush=True)
     if par["var_feature_name"] in mod2.var:
         mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+        del mod2.var[par["feature_name"]]
     else:
         print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod2.var.", flush=True)
 
@@ -1284,10 +1286,12 @@ if par["var_feature_id"] == "index":
 else:
     if par["var_feature_id"] in mod1.var:
         mod1.var["feature_id"] = mod1.var[par["feature_id"]]
+        del mod1.var[par["feature_id"]]
     else:
         print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod1.var.", flush=True)
     if par["var_feature_id"] in mod2.var:
         mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+        del mod2.var[par["feature_id"]]
     else:
         print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod2.var.", flush=True)
 

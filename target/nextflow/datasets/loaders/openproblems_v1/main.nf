@@ -3248,7 +3248,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1",
     "viash_version" : "0.8.0",
-    "git_commit" : "3a811a7417ca8d97b531710dd83529b1d2ab27b4",
+    "git_commit" : "df58d9643171d6bb73367735399c0493d87b9db8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3393,20 +3393,24 @@ uns_metadata = {
 adata.uns.update(uns_metadata)
 
 print("Setting .var['feature_name']", flush=True)
-if par["var_feature_name"]:
-    if par["var_feature_name"] == "index":
-        adata.var["feature_name"] = adata.var.index
-    elif par["var_feature_name"] in adata.var:
+
+if par["var_feature_name"] == "index":
+    adata.var["feature_name"] = adata.var.index
+else:
+    if par["var_feature_name"] in adata.var:
         adata.var["feature_name"] = adata.var[par["feature_name"]]
+        del adata.var[par["feature_name"]]
     else:
         print(f"Warning: key '{par['var_feature_name']}' could not be found in adata.var.", flush=True)
 
 print("Setting .var['feature_id']", flush=True)
-if par["var_feature_id"]:
-    if par["var_feature_id"] == "index":
-        adata.var["feature_id"] = adata.var.index
-    elif par["var_feature_id"] in adata.var:
+
+if par["var_feature_id"] == "index":
+    adata.var["feature_id"] = adata.var.index
+else:
+    if par["var_feature_id"] in adata.var:
         adata.var["feature_id"] = adata.var[par["feature_id"]]
+        del adata.var[par["feature_id"]]
     else:
         print(f"Warning: key '{par['var_feature_id']}' could not be found in adata.var.", flush=True)
 

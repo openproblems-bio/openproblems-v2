@@ -3190,7 +3190,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/graph_connectivity",
     "viash_version" : "0.8.0",
-    "git_commit" : "3a811a7417ca8d97b531710dd83529b1d2ab27b4",
+    "git_commit" : "df58d9643171d6bb73367735399c0493d87b9db8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
