@@ -45,6 +45,10 @@ ad1_uns <- ad2_uns <- ad1$uns[uns_vars]
 ad1_uns$modality <- ad1_mod
 ad2_uns$modality <- ad2_mod
 
+ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns$dataset_id
+new_dataset_id <- paste0(ad1_uns$dataset_id, "_", ad1_mod, "2", ad2_mod)
+ad1_uns$dataset_id <- ad2_uns$dataset_id <- new_dataset_id
+
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
@@ -131,9 +135,6 @@ output_test_mod2 <- anndata::AnnData(
   var = ad2_var,
   uns = ad2_uns
 )
-
-output_test_mod2$uns[["common_dataset_id"]] <- dataset_id
-new_dataset_id <- paste0(output_test_mod2$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
 
 cat("Saving output files as h5ad\n")
 zzz <- output_train_mod1$write_h5ad(par$output_train_mod1, compression = "gzip")
