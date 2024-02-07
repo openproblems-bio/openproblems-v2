@@ -47,15 +47,11 @@ def generate_synthetic_dataset(
     Returns
     -------
     AnnData with:
-        - `adata_spatial.counts`: simulated counts (aggregate of sc dataset).
-        - `adata_spatial.uns["sc_reference"]`: original sc adata for reference.
-        - `adata_spatial.obsm["proportions_true"]`: true proportion values.
-        - `adata_spatial.obsm["n_cells"]`: number of cells from each type at
-           every location
-        - `adata_spatial.obs["proportions_true"]`:
-           total number of cells at each location
+        - `adata_merged.X`: simulated counts (aggregate of sc dataset).
+        - `adata_merged.obsm["proportions_true"]`: true proportion values.
+        - `adata_merged.obsm["coordinates"]`: coordinates of each spot.
+        - `adata_merged.obsm["n_cells"]`: number of cells from each type at every location.
 
-    The cell type labels are stored in adata_sc.obs["label"].
     """
     
     # remove rare celltypes
