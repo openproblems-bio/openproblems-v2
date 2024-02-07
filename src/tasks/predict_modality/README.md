@@ -50,7 +50,7 @@ the information about cellular state from one modality to the other.
 
 ``` mermaid
 flowchart LR
-  file_common_dataset_rna("Raw dataset RNA")
+  file_common_dataset_mod1("Raw dataset RNA")
   comp_process_dataset[/"Data processor"/]
   file_train_mod1("Train mod1")
   file_train_mod2("Train mod2")
@@ -61,8 +61,8 @@ flowchart LR
   comp_metric[/"Metric"/]
   file_prediction("Prediction")
   file_score("Score")
-  file_common_dataset_other_mod("Raw dataset mod2")
-  file_common_dataset_rna---comp_process_dataset
+  file_common_dataset_mod2("Raw dataset mod2")
+  file_common_dataset_mod1---comp_process_dataset
   comp_process_dataset-->file_train_mod1
   comp_process_dataset-->file_train_mod2
   comp_process_dataset-->file_test_mod1
@@ -79,7 +79,7 @@ flowchart LR
   comp_method-->file_prediction
   comp_metric-->file_score
   file_prediction---comp_metric
-  file_common_dataset_other_mod---comp_process_dataset
+  file_common_dataset_mod2---comp_process_dataset
 ```
 
 ## File format: Raw dataset RNA
@@ -87,7 +87,7 @@ flowchart LR
 The RNA modality of the raw dataset.
 
 Example file:
-`resources_test/common/neurips2021_bmmc_cite/dataset_rna.h5ad`
+`resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad`
 
 Description:
 
@@ -99,7 +99,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'size_factors'
-     var: 'gene_ids'
+     var: 'feature_id', 'feature_name'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
      uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
@@ -114,7 +114,8 @@ Slot description:
 |:---------------------------------|:----------|:-------------------------------------------------------------------------------|
 | `obs["batch"]`                   | `string`  | Batch information.                                                             |
 | `obs["size_factors"]`            | `double`  | (*Optional*) The size factors of the cells prior to normalization.             |
-| `var["gene_ids"]`                | `string`  | (*Optional*) The gene identifiers (if available).                              |
+| `var["feature_id"]`              | `string`  | Unique identifier for the feature, usually a ENSEMBL gene id.                  |
+| `var["feature_name"]`            | `string`  | A human-readable name for the feature, usually a gene symbol.                  |
 | `obsm["gene_activity"]`          | `double`  | (*Optional*) ATAC gene activity.                                               |
 | `layers["counts"]`               | `integer` | Raw counts.                                                                    |
 | `layers["normalized"]`           | `double`  | Normalized expression values.                                                  |
@@ -142,8 +143,8 @@ Arguments:
 
 | Name                  | Type      | Description                                                                |
 |:----------------------|:----------|:---------------------------------------------------------------------------|
-| `--input_rna`         | `file`    | The RNA modality of the raw dataset.                                       |
-| `--input_other_mod`   | `file`    | The second modality of the raw dataset. Must be an ADT or an ATAC dataset. |
+| `--input_mod1`        | `file`    | The RNA modality of the raw dataset.                                       |
+| `--input_mod2`        | `file`    | The second modality of the raw dataset. Must be an ADT or an ATAC dataset. |
 | `--output_train_mod1` | `file`    | (*Output*) The mod1 expression values of the train cells.                  |
 | `--output_train_mod2` | `file`    | (*Output*) The mod2 expression values of the train cells.                  |
 | `--output_test_mod1`  | `file`    | (*Output*) The mod1 expression values of the test cells.                   |
@@ -157,7 +158,7 @@ Arguments:
 The mod1 expression values of the train cells.
 
 Example file:
-`resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad`
+`resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad`
 
 Description:
 
@@ -199,7 +200,7 @@ Slot description:
 The mod2 expression values of the train cells.
 
 Example file:
-`resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad`
+`resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad`
 
 Description:
 
@@ -241,7 +242,7 @@ Slot description:
 The mod1 expression values of the test cells.
 
 Example file:
-`resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad`
+`resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad`
 
 Description:
 
@@ -288,7 +289,7 @@ Slot description:
 The mod2 expression values of the test cells.
 
 Example file:
-`resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad`
+`resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad`
 
 Description:
 
@@ -395,7 +396,7 @@ Arguments:
 A prediction of the mod2 expression values of the test cells
 
 Example file:
-`resources_test/predict_modality/neurips2021_bmmc_cite/prediction.h5ad`
+`resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad`
 
 Description:
 
@@ -428,7 +429,7 @@ Slot description:
 Metric score file
 
 Example file:
-`resources_test/predict_modality/neurips2021_bmmc_cite/score.h5ad`
+`resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/score.h5ad`
 
 Description:
 
@@ -462,7 +463,7 @@ The second modality of the raw dataset. Must be an ADT or an ATAC
 dataset
 
 Example file:
-`resources_test/common/neurips2021_bmmc_cite/dataset_other_mod.h5ad`
+`resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad`
 
 Description:
 
@@ -474,7 +475,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'size_factors'
-     var: 'gene_ids'
+     var: 'feature_id', 'feature_name'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
      uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
@@ -489,7 +490,8 @@ Slot description:
 |:---------------------------------|:----------|:-------------------------------------------------------------------------------|
 | `obs["batch"]`                   | `string`  | Batch information.                                                             |
 | `obs["size_factors"]`            | `double`  | (*Optional*) The size factors of the cells prior to normalization.             |
-| `var["gene_ids"]`                | `string`  | (*Optional*) The gene identifiers (if available).                              |
+| `var["feature_id"]`              | `string`  | Unique identifier for the feature, usually a ENSEMBL gene id.                  |
+| `var["feature_name"]`            | `string`  | A human-readable name for the feature, usually a gene symbol.                  |
 | `obsm["gene_activity"]`          | `double`  | (*Optional*) ATAC gene activity.                                               |
 | `layers["counts"]`               | `integer` | Raw counts.                                                                    |
 | `layers["normalized"]`           | `double`  | Normalized expression values.                                                  |
