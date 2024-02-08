@@ -17,6 +17,7 @@ functionality:
   arguments:
     - name: "--detection_alpha"
       type: double
+      default: 20.0
       description: Hyperparameter controlling normalisation of within-experiment variation in RNA detection.
     - name: "--n_cells_per_location"
       type: integer
