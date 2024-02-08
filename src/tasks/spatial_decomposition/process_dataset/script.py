@@ -3,8 +3,8 @@ import sys
 
 ## VIASH START
 par = {
-    # "input": "resources_test/common/pancreas/dataset.h5ad",
-    "input": "resources_test/spatial_decomposition/pancreas/dataset_synthetic.h5ad",
+    "input": "resources_test/common/pancreas/dataset.h5ad",
+    # "input": "resources_test/spatial_decomposition/pancreas/dataset_synthetic.h5ad",
     "output_spatial_masked": "spatial_masked.h5ad",
     "output_single_cell": "single_cell_ref.h5ad",
     "output_solution": "solution.h5ad",
