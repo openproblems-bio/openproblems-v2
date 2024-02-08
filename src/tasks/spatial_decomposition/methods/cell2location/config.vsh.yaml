@@ -61,7 +61,6 @@ platforms:
       - type: python
         packages: 
           - cell2location
-          - torch
 
   - type: native
   - type: nextflow
