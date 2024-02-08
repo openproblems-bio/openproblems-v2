@@ -5,6 +5,7 @@ functionality:
     - name: "--swap"
       type: "boolean"
       description: "Swap mod1 and mod2"
+      defualt: false
   resources:
     - type: r_script
       path: script.R
