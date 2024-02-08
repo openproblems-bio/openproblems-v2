@@ -2785,6 +2785,16 @@ meta = [
         "arguments" : [
           {
             "type" : "string",
+            "name" : "--dataset_id",
+            "description" : "A unique identifier for the dataset",
+            "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
             "name" : "--dataset_name",
             "description" : "Nicely formatted name.",
             "required" : true,
@@ -3408,7 +3418,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_neurips2021_bmmc",
     "viash_version" : "0.8.0",
-    "git_commit" : "8b91c8fe427ebf98f10d9c8dcb4a8dd0d3c594ca",
+    "git_commit" : "3e3fcd7e297ec9cd0cbe7ec478d4ec55b1a1ee6f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3433,6 +3443,7 @@ par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'mod1': $( if [ ! -z ${VIASH_PAR_MOD1+x} ]; then echo "r'${VIASH_PAR_MOD1//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'mod2': $( if [ ! -z ${VIASH_PAR_MOD2+x} ]; then echo "r'${VIASH_PAR_MOD2//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'dataset_id': $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo "r'${VIASH_PAR_DATASET_ID//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_name': $( if [ ! -z ${VIASH_PAR_DATASET_NAME+x} ]; then echo "r'${VIASH_PAR_DATASET_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_url': $( if [ ! -z ${VIASH_PAR_DATASET_URL+x} ]; then echo "r'${VIASH_PAR_DATASET_URL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'dataset_reference': $( if [ ! -z ${VIASH_PAR_DATASET_REFERENCE+x} ]; then echo "r'${VIASH_PAR_DATASET_REFERENCE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
