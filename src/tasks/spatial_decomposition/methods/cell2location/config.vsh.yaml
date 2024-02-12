@@ -7,8 +7,10 @@ functionality:
     label: Cell2Location
     summary: "Cell2location uses a Bayesian model to resolve cell types in spatial transcriptomic data and create comprehensive cellular maps of diverse tissues."
     description: |
-      Cell2location is a decomposition method based on Negative Binomial regression that is able to account for batch effects in estimating the single-cell gene expression signature used for the spatial decomposition step. Note that since batch information is unavailable in this task, here we use either a hard-coded reference, or a negative-binomial learned reference without batch labels. The parameter alpha refers to the detection efficiency prior."
-    preferred_normalization: log_cp10k
+      Cell2location is a decomposition method based on Negative Binomial regression that is able to account for batch effects in estimating the single-cell gene expression signature used for the spatial decomposition step. 
+    # Note that since batch information is unavailable in this task, here we use either a hard-coded reference, or a negative-binomial learned reference without batch labels. The parameter alpha refers to the detection efficiency prior.
+    # Requires raw data / un-normalized data
+    # preferred_normalization: log_cp10k
     reference: kleshchevnikov2022cell2location
     documentation_url: https://cell2location.readthedocs.io/en/latest/
     repository_url: https://github.com/BayraktarLab/cell2location
