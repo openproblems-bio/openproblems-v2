@@ -81,27 +81,17 @@ workflow run_wf {
     // extract the dataset metadata
     | extract_metadata.run(
       key: "extract_metadata_mod1",
-      fromState: [input: "output_train_mod1"],
+      fromState: [input: "output_test_mod2"],
       toState: { id, output, state ->
         state + [
-          modality_mod1: readYaml(output.output).uns.modality
+          dataset_id: readYaml(output.output).uns.dataset_id
         ]
       }
     )
 
-    // extract the dataset metadata
-    | extract_metadata.run(
-      key: "extract_metadata_mod2",
-      fromState: [input: "output_train_mod2"],
-      toState: { id, output, state ->
-        state + [
-          modality_mod2: readYaml(output.output).uns.modality
-        ]
-      }
-    )
 
     | map { id, state ->
-      def new_id = id + "_" + state.modality_mod1 + "2" + state.modality_mod2
+      def new_id = state.dataset_id
       [new_id, state + ["_meta": [join_id: id]]]
     }
 
