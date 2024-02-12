@@ -10,10 +10,14 @@ info:
         description: Raw counts
         required: true
     obs:
-      - type: integer
+      - type: string
         name: cell_type
         description: Cell type label IDs
         required: true
+      - type: string
+        name: batch
+        description: A batch identifier. This label is very context-dependent and may be a combination of the tissue, assay, donor, etc.
+        required: false
     uns:
       - type: string
         name: cell_type_names
