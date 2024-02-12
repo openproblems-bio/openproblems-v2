@@ -4,12 +4,11 @@ from cell2location.cluster_averages.cluster_averages import compute_cluster_aver
 from cell2location.models import Cell2location
 from cell2location.models import RegressionModel
 from torch.nn import ELU
-from scipy.sparse import csr_matrix
 
 ## VIASH START
 par = {
-  'input_single_cell': 'resources_test/spatial_decomposition/pancreas/single_cell_ref.h5ad',
-  'input_spatial': 'resources_test/spatial_decomposition/pancreas/spatial_masked.h5ad',
+  'input_single_cell': 'resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/single_cell_ref.h5ad',
+  'input_spatial': 'resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/spatial_masked.h5ad',
   'output': 'output.h5ad',
   'detection_alpha': 20.0,
   'n_cells_per_location': 20,
@@ -30,7 +29,7 @@ print('Reading input files', flush=True)
 input_single_cell = ad.read_h5ad(par['input_single_cell'])
 input_spatial = ad.read_h5ad(par['input_spatial'])
 
-input_single_cell.X = input_single_cell.layers["counts"]#.todense()
+input_single_cell.X = input_single_cell.layers["counts"]
 input_spatial.X = input_spatial.layers["counts"]
 
 if not par["hard_coded_reference"]:
@@ -149,3 +148,6 @@ output = ad.AnnData(
     'method_id': meta['functionality_name']
   }
 )
+
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
