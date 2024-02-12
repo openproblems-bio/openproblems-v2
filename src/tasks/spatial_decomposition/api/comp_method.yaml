@@ -24,5 +24,5 @@ functionality:
       path: /src/common/comp_tests/check_method_config.py
     - type: python_script
       path: /src/common/comp_tests/run_and_check_adata.py
-    - path: /resources_test/spatial_decomposition/pancreas
-      dest: resources_test/spatial_decomposition/pancreas
+    - path: /resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas
+      dest: resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas

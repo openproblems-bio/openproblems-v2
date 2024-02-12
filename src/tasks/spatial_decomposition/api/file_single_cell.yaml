@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatial_decomposition/pancreas/single_cell_ref.h5ad"
+example: "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/single_cell_ref.h5ad"
 info:
   label: "Single cell data"
   summary: "The single cell data file"

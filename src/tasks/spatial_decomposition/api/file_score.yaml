@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatial_decomposition/pancreas/anndata_score.h5ad"
+example: "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/score.h5ad"
 info:
   label: "Score"
   summary: Metric score file.

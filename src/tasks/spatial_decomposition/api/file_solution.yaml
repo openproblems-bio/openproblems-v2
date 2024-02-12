@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatial_decomposition/pancreas/solution.h5ad"
+example: "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/solution.h5ad"
 info:
   label: Solution
   summary: "The solution spatial data file"
