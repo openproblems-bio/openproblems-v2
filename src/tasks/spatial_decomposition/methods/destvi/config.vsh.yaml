@@ -9,7 +9,7 @@ functionality:
     description: |
       Deconvolution of Spatial Transcriptomics profiles using Variational Inference (DestVI) is a spatial decomposition method that leverages a conditional generative model of spatial transcriptomics down to the sub-cell-type variation level, which is then used to decompose the cell-type proportions determining the spatial organization of a tissue.
     preferred_normalization: log_cp10k
-    reference: lopez2022destvi
+    reference: "lopez2022destvi"
     documentation_url: https://docs.scvi-tools.org/en/stable/user_guide/models/destvi.html
     repository_url: https://github.com/scverse/scvi-tools
 
@@ -32,7 +32,10 @@ platforms:
     image: ghcr.io/openproblems-bio/base_python:1.0.2
     setup:
       - type: python
-        packages: scvi-tools
+        packages: 
+          - scvi-tools
+          - chex==0.1.85
+
   - type: native
   - type: nextflow
     directives:
