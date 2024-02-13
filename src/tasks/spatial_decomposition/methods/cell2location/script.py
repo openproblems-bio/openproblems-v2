@@ -131,7 +131,6 @@ input_spatial = st_model.export_posterior(
 input_spatial.obsm["proportions_pred"] = input_spatial.obsm["q05_cell_abundance_w_sf"].values
 input_spatial.obsm["proportions_pred"] /= input_spatial.obsm["proportions_pred"].sum(axis=1)[:, None]
 
-print("Write output AnnData to file", flush=True)
 output = ad.AnnData(
   obs=input_spatial.obs[[]],
   var=input_spatial.var[[]],
