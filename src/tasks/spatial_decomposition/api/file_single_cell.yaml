@@ -21,7 +21,7 @@ info:
     uns:
       - type: string
         name: cell_type_names
-        description: Cell type names corresponding to values in `celltype`
+        description: Cell type names corresponding to values in `cell_type`
         required: true
       - type: string
         name: dataset_id

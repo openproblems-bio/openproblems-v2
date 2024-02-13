@@ -17,7 +17,7 @@ info:
     uns:
       - type: string
         name: cell_type_names
-        description: Cell type names corresponding to columns of `proportions` in output
+        description: Cell type names corresponding to columns of `proportions_pred` in output
         required: true
       - type: string
         name: dataset_id
