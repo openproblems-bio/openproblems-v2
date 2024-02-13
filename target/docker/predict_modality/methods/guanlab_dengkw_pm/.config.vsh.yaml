@@ -37,10 +37,18 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "common_dataset_id"
+          description: "A common identifier for the dataset"
+          required: true
         - name: "dataset_organism"
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
+        - name: "normalization_id"
+          type: "string"
+          description: "The unique identifier of the normalization method used."
+          required: true
         - type: "string"
           name: "gene_activity_var_names"
           description: "Names of the gene activity matrix"
@@ -93,10 +101,18 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "common_dataset_id"
+          description: "A common identifier for the dataset"
+          required: true
         - name: "dataset_organism"
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
+        - name: "normalization_id"
+          type: "string"
+          description: "The unique identifier of the normalization method used."
+          required: true
         - type: "string"
           name: "gene_activity_var_names"
           description: "Names of the gene activity matrix"
@@ -149,6 +165,10 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "common_dataset_id"
+          description: "A common identifier for the dataset"
+          required: true
         - name: "dataset_name"
           type: "string"
           description: "Nicely formatted name."
@@ -173,6 +193,10 @@ functionality:
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
+        - name: "normalization_id"
+          type: "string"
+          description: "The unique identifier of the normalization method used."
+          required: true
         - type: "string"
           name: "gene_activity_var_names"
           description: "Names of the gene activity matrix"
@@ -343,5 +367,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/guanlab_dengkw_pm"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/guanlab_dengkw_pm/guanlab_dengkw_pm"
   viash_version: "0.8.0"
-  git_commit: "e06f0f8346c804cc9452fe2fb5531e6914370063"
+  git_commit: "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

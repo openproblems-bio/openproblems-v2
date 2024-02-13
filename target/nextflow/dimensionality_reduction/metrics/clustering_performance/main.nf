@@ -3097,7 +3097,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/clustering_performance",
     "viash_version" : "0.8.0",
-    "git_commit" : "e06f0f8346c804cc9452fe2fb5531e6914370063",
+    "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

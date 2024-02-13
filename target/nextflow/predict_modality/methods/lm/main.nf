@@ -2785,10 +2785,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : true
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -2869,10 +2881,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : true
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -2953,6 +2977,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : true
+              },
+              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -2987,6 +3017,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -3202,7 +3238,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm",
     "viash_version" : "0.8.0",
-    "git_commit" : "e06f0f8346c804cc9452fe2fb5531e6914370063",
+    "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

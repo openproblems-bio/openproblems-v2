@@ -2830,6 +2830,12 @@ meta = [
                     "required" : false
                   },
                   {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
+                  },
+                  {
                     "type" : "string",
                     "name" : "gene_activity_var_names",
                     "description" : "Names of the gene activity matrix",
@@ -2950,6 +2956,12 @@ meta = [
                     "required" : false
                   },
                   {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
+                  },
+                  {
                     "type" : "string",
                     "name" : "gene_activity_var_names",
                     "description" : "Names of the gene activity matrix",
@@ -2972,6 +2984,19 @@ meta = [
             "must_exist" : true,
             "create_parent" : true,
             "required" : true,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "boolean",
+            "name" : "--swap",
+            "description" : "Swap mod1 and mod2",
+            "default" : [
+              false
+            ],
+            "required" : false,
             "direction" : "input",
             "multiple" : false,
             "multiple_sep" : ":",
@@ -3033,10 +3058,22 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : true
+                  },
+                  {
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
                   },
                   {
                     "type" : "string",
@@ -3117,10 +3154,22 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : true
+                  },
+                  {
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
                   },
                   {
                     "type" : "string",
@@ -3201,6 +3250,12 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : true
+                  },
+                  {
                     "name" : "dataset_name",
                     "type" : "string",
                     "description" : "Nicely formatted name.",
@@ -3235,6 +3290,12 @@ meta = [
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
                   },
                   {
                     "type" : "string",
@@ -3312,6 +3373,12 @@ meta = [
                     "type" : "string",
                     "name" : "dataset_id",
                     "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
                     "required" : true
                   },
                   {
@@ -3414,10 +3481,32 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e06f0f8346c804cc9452fe2fb5531e6914370063",
+          "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+      },
+      {
+        "name" : "common/extract_metadata",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "extract_metadata",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/common/extract_metadata/config.vsh.yaml",
+          "functionalityNamespace" : "common",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
+          "executable" : "/nextflow/common/extract_metadata/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
       },
       {
         "name" : "predict_modality/process_dataset",
@@ -3436,7 +3525,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e06f0f8346c804cc9452fe2fb5531e6914370063",
+          "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3482,7 +3571,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "e06f0f8346c804cc9452fe2fb5531e6914370063",
+    "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3491,6 +3580,7 @@ meta = [
 // resolve dependencies dependencies (if any)
 meta["root_dir"] = getRootDir()
 include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
+include { extract_metadata } from "${meta.resources_dir}/../../../../nextflow/common/extract_metadata/main.nf"
 include { process_dataset } from "${meta.resources_dir}/../../../../nextflow/predict_modality/process_dataset/main.nf"
 
 // inner workflow
@@ -3564,7 +3654,8 @@ workflow run_wf {
         output_train_mod1: "output_train_mod1",
         output_train_mod2: "output_train_mod2",
         output_test_mod1: "output_test_mod1",
-        output_test_mod2: "output_test_mod2"
+        output_test_mod2: "output_test_mod2",
+        swap: "swap"
       ],
       toState: [
         "output_train_mod1",
@@ -3574,12 +3665,30 @@ workflow run_wf {
       ]
     )
 
+    // extract the dataset metadata
+    | extract_metadata.run(
+      key: "extract_metadata_mod1",
+      fromState: [input: "output_test_mod2"],
+      toState: { id, output, state ->
+        state + [
+          dataset_id: readYaml(output.output).uns.dataset_id
+        ]
+      }
+    )
+
+
+    | map { id, state ->
+      def new_id = state.dataset_id
+      [new_id, state + ["_meta": [join_id: id]]]
+    }
+
     // only output the files for which an output file was specified
     | setState ([
         "output_train_mod1",
         "output_train_mod2",
         "output_test_mod1",
-        "output_test_mod2"
+        "output_test_mod2",
+        "_meta"
       ])
 
   emit:

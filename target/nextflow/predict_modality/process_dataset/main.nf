@@ -2827,6 +2827,12 @@ meta = [
                 "required" : false
               },
               {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "gene_activity_var_names",
                 "description" : "Names of the gene activity matrix",
@@ -2947,6 +2953,12 @@ meta = [
                 "required" : false
               },
               {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "gene_activity_var_names",
                 "description" : "Names of the gene activity matrix",
@@ -3025,10 +3037,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : true
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -3109,10 +3133,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : true
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -3193,6 +3229,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : true
+              },
+              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -3227,6 +3269,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -3304,6 +3352,12 @@ meta = [
                 "type" : "string",
                 "name" : "dataset_id",
                 "description" : "A unique identifier for the dataset",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
                 "required" : true
               },
               {
@@ -3388,7 +3442,7 @@ meta = [
         "name" : "--swap",
         "description" : "Swap mod1 and mod2",
         "default" : [
-          true
+          false
         ],
         "required" : false,
         "direction" : "input",
@@ -3497,7 +3551,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e06f0f8346c804cc9452fe2fb5531e6914370063",
+    "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3567,14 +3621,19 @@ ad2 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_mod2 else par\\$input_mod
 ad1_mod <- unique(ad1\\$var[["feature_types"]])
 ad2_mod <- unique(ad2\\$var[["feature_types"]])
 
-# determine new dataset id
-new_dataset_id <- paste0(ad1\\$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
-
 # determine new uns
 uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id")
 ad1_uns <- ad2_uns <- ad1\\$uns[uns_vars]
 ad1_uns\\$modality <- ad1_mod
 ad2_uns\\$modality <- ad2_mod
+
+# Create new dataset id and name depending on the modality
+ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns\\$dataset_id
+new_dataset_id <- paste0(ad1_uns\\$dataset_id, "_", ad1_mod, "2", ad2_mod)
+ad1_uns\\$dataset_id <- ad2_uns\\$dataset_id <- new_dataset_id
+
+new_dataset_name <- paste0(ad1_uns\\$dataset_name, " (", ad1_mod, "2", ad2_mod, ")")
+ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name
 
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
