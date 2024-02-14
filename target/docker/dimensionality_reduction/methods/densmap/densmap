@@ -416,9 +416,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn" "pynndescent==0.5.11"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods densmap"
-LABEL org.opencontainers.image.created="2024-02-14T14:33:45Z"
+LABEL org.opencontainers.image.created="2024-02-14T17:07:43Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="fe7b02e7b8b35ed2d9a6dd20cbc983e5b0828a37"
+LABEL org.opencontainers.image.revision="e2cc44f636b954cd115e79d16d0a6983848c79a8"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

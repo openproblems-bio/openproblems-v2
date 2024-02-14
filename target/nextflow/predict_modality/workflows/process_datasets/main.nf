@@ -3093,7 +3093,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/train_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3189,7 +3189,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/train_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3315,7 +3315,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/test_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3435,7 +3435,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/test_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3481,7 +3481,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "fe7b02e7b8b35ed2d9a6dd20cbc983e5b0828a37",
+          "git_commit" : "e2cc44f636b954cd115e79d16d0a6983848c79a8",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3503,7 +3503,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "fe7b02e7b8b35ed2d9a6dd20cbc983e5b0828a37",
+          "git_commit" : "e2cc44f636b954cd115e79d16d0a6983848c79a8",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3525,7 +3525,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "fe7b02e7b8b35ed2d9a6dd20cbc983e5b0828a37",
+          "git_commit" : "e2cc44f636b954cd115e79d16d0a6983848c79a8",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3571,7 +3571,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "fe7b02e7b8b35ed2d9a6dd20cbc983e5b0828a37",
+    "git_commit" : "e2cc44f636b954cd115e79d16d0a6983848c79a8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
