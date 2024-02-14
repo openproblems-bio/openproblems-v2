@@ -3481,7 +3481,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
+          "git_commit" : "2f33516cb7de807a182698b89f0905e1dcdb6ef2",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3503,7 +3503,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
+          "git_commit" : "2f33516cb7de807a182698b89f0905e1dcdb6ef2",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3525,7 +3525,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
+          "git_commit" : "2f33516cb7de807a182698b89f0905e1dcdb6ef2",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3571,7 +3571,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9",
+    "git_commit" : "2f33516cb7de807a182698b89f0905e1dcdb6ef2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3668,17 +3668,27 @@ workflow run_wf {
     // extract the dataset metadata
     | extract_metadata.run(
       key: "extract_metadata_mod1",
-      fromState: [input: "output_test_mod2"],
+      fromState: [input: "output_train_mod1"],
       toState: { id, output, state ->
         state + [
-          dataset_id: readYaml(output.output).uns.dataset_id
+          modality_mod1: readYaml(output.output).uns.modality
         ]
       }
     )
 
+    // extract the dataset metadata
+    | extract_metadata.run(
+      key: "extract_metadata_mod2",
+      fromState: [input: "output_train_mod2"],
+      toState: { id, output, state ->
+        state + [
+          modality_mod2: readYaml(output.output).uns.modality
+        ]
+      }
+    )
 
     | map { id, state ->
-      def new_id = state.dataset_id
+      def new_id = id + "_" + state.modality_mod1 + "2" + state.modality_mod2
       [new_id, state + ["_meta": [join_id: id]]]
     }
 

@@ -408,9 +408,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component denoising/control_methods no_denoising"
-LABEL org.opencontainers.image.created="2024-02-13T16:17:05Z"
+LABEL org.opencontainers.image.created="2024-02-14T09:15:27Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="4e1c139810ed6b0c4f90c9daf976bff9c0c68ac9"
+LABEL org.opencontainers.image.revision="2f33516cb7de807a182698b89f0905e1dcdb6ef2"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
