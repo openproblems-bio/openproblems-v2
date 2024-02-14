@@ -115,7 +115,7 @@ Format:
 
     AnnData object
      obs: 'cell_type', 'batch'
-     var: 'hvg'
+     var: 'hvg', 'feature_name'
      obsm: 'X_pca'
      obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized'
@@ -132,6 +132,7 @@ Slot description:
 | `obs["cell_type"]`           | `string`  | Cell type information.                                                         |
 | `obs["batch"]`               | `string`  | Batch information.                                                             |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’.       |
+| `var["feature_name"]`        | `string`  | A human-readable name for the feature, usually a gene symbol.                  |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                                   |
 | `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                           |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                                     |
@@ -188,7 +189,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'label'
-     var: 'hvg'
+     var: 'hvg', 'feature_name'
      obsm: 'X_pca'
      obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized'
@@ -205,6 +206,7 @@ Slot description:
 | `obs["batch"]`               | `string`  | Batch information.                                                       |
 | `obs["label"]`               | `string`  | label information.                                                       |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `var["feature_name"]`        | `string`  | A human-readable name for the feature, usually a gene symbol.            |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
 | `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
@@ -233,7 +235,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'label'
-     var: 'hvg'
+     var: 'hvg', 'feature_name'
      obsm: 'X_pca'
      obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized'
@@ -250,6 +252,7 @@ Slot description:
 | `obs["batch"]`               | `string`  | Batch information.                                                             |
 | `obs["label"]`               | `string`  | label information.                                                             |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’.       |
+| `var["feature_name"]`        | `string`  | A human-readable name for the feature, usually a gene symbol.                  |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                                   |
 | `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                           |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                                     |
@@ -431,7 +434,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'label'
-     var: 'hvg'
+     var: 'hvg', 'feature_name'
      obsm: 'X_pca', 'X_emb'
      obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized'
@@ -448,6 +451,7 @@ Slot description:
 | `obs["batch"]`               | `string`  | Batch information.                                                       |
 | `obs["label"]`               | `string`  | label information.                                                       |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `var["feature_name"]`        | `string`  | A human-readable name for the feature, usually a gene symbol.            |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
 | `obsm["X_emb"]`              | `double`  | integration embedding prediction.                                        |
 | `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
@@ -479,7 +483,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'label'
-     var: 'hvg'
+     var: 'hvg', 'feature_name'
      obsm: 'X_pca'
      obsp: 'knn_distances', 'knn_connectivities', 'connectivities', 'distances'
      layers: 'counts', 'normalized'
@@ -496,6 +500,7 @@ Slot description:
 | `obs["batch"]`               | `string`  | Batch information.                                                       |
 | `obs["label"]`               | `string`  | label information.                                                       |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `var["feature_name"]`        | `string`  | A human-readable name for the feature, usually a gene symbol.            |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
 | `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
@@ -529,7 +534,7 @@ Format:
 
     AnnData object
      obs: 'batch', 'label'
-     var: 'hvg'
+     var: 'hvg', 'feature_name'
      obsm: 'X_pca'
      obsp: 'knn_distances', 'knn_connectivities'
      layers: 'counts', 'normalized', 'corrected_counts'
@@ -546,6 +551,7 @@ Slot description:
 | `obs["batch"]`               | `string`  | Batch information.                                                       |
 | `obs["label"]`               | `string`  | label information.                                                       |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
+| `var["feature_name"]`        | `string`  | A human-readable name for the feature, usually a gene symbol.            |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                             |
 | `obsp["knn_distances"]`      | `double`  | K nearest neighbors distance matrix.                                     |
 | `obsp["knn_connectivities"]` | `double`  | K nearest neighbors connectivities matrix.                               |
