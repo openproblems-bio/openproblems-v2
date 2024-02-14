@@ -3130,7 +3130,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches",
     "viash_version" : "0.8.0",
-    "git_commit" : "e4345be523e302ac9e54ddde32ad5064779ff19d",
+    "git_commit" : "fe7b02e7b8b35ed2d9a6dd20cbc983e5b0828a37",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
