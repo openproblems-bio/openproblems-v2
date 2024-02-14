@@ -452,9 +452,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_neurips2021_bmmc"
-LABEL org.opencontainers.image.created="2024-02-14T13:24:39Z"
+LABEL org.opencontainers.image.created="2024-02-14T13:40:25Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2e64019d05cb3ffb61a8c1261d2330857b462c6c"
+LABEL org.opencontainers.image.revision="2f33516cb7de807a182698b89f0905e1dcdb6ef2"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
