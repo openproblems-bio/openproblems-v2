@@ -89,10 +89,6 @@ The RNA modality of the raw dataset.
 Example file:
 `resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -161,10 +157,6 @@ The mod1 expression values of the train cells.
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -205,10 +197,6 @@ The mod2 expression values of the train cells.
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -248,10 +236,6 @@ The mod1 expression values of the test cells.
 
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -297,10 +281,6 @@ The mod2 expression values of the test cells.
 
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -406,10 +386,6 @@ A prediction of the mod2 expression values of the test cells
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -438,10 +414,6 @@ Metric score file
 
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/score.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -472,10 +444,6 @@ dataset
 
 Example file:
 `resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad`
-
-Description:
-
-NA
 
 Format:
 

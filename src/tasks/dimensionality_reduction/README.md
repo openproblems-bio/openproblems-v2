@@ -176,10 +176,6 @@ The dataset to pass to a method.
 Example file:
 `resources_test/dimensionality_reduction/pancreas/dataset.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -211,10 +207,6 @@ The data for evaluating a dimensionality reduction.
 
 Example file:
 `resources_test/dimensionality_reduction/pancreas/solution.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -312,10 +304,6 @@ A dataset with dimensionality reduction embedding.
 Example file:
 `resources_test/dimensionality_reduction/pancreas/embedding.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -345,10 +333,6 @@ Metric score file
 
 Example file:
 `resources_test/dimensionality_reduction/pancreas/score.h5ad`
-
-Description:
-
-NA
 
 Format:
 

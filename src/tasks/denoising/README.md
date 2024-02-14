@@ -183,10 +183,6 @@ The subset of molecules used for the training dataset
 
 Example file: `resources_test/denoising/pancreas/train.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -213,10 +209,6 @@ Slot description:
 The subset of molecules used for the test dataset
 
 Example file: `resources_test/denoising/pancreas/test.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -306,10 +298,6 @@ Arguments:
 A denoised dataset as output by a denoising method.
 
 Example file: `resources_test/denoising/pancreas/denoised.h5ad`
-
-Description:
-
-NA
 
 Format:
 

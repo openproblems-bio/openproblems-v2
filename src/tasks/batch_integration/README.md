@@ -105,10 +105,6 @@ A subset of the common dataset.
 
 Example file: `resources_test/common/pancreas/dataset.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -179,10 +175,6 @@ Unintegrated AnnData HDF5 file.
 
 Example file: `resources_test/batch_integration/pancreas/dataset.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -224,10 +216,6 @@ Slot description:
 Solution dataset
 
 Example file: `resources_test/batch_integration/pancreas/solution.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -424,10 +412,6 @@ An integrated AnnData HDF5 file.
 Example file:
 `resources_test/batch_integration/pancreas/integrated_embedding.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -472,10 +456,6 @@ Integrated AnnData HDF5 file.
 
 Example file:
 `resources_test/batch_integration/pancreas/integrated_graph.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -524,10 +504,6 @@ Integrated AnnData HDF5 file.
 Example file:
 `resources_test/batch_integration/pancreas/integrated_feature.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -571,10 +547,6 @@ Slot description:
 Metric score file
 
 Example file: `score.h5ad`
-
-Description:
-
-NA
 
 Format:
 
