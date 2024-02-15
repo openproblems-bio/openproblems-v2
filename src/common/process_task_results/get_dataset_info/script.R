@@ -28,7 +28,7 @@ outputs <- map(datasets, function(dataset) {
     "data_url" = dataset$dataset_url %||% NA_character_
   )
 
-  if (is.null(dataset[["common_dataset_id"]]) == FALSE) {
+  if (!is.null(dataset[["common_dataset_id"]])) {
     out[["common_dataset_id"]] <- dataset[["common_dataset_id"]]
   }
 
