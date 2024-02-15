@@ -15,7 +15,7 @@ print("Load input data", flush=True)
 input_train = ad.read_h5ad(par["input_train"], backed="r")
 
 print("Remove unneeded data", flush=True)
-X = input_train.layers["counts"].transpose()
+X = input_train.layers["counts"].astype(float).transpose().toarray()
 
 # Create output AnnData for later use
 output = ad.AnnData(
@@ -30,7 +30,7 @@ output = ad.AnnData(
 del input_train
 
 print("Run KNN smoothing", flush=True)
-X = knn_smooth.knn_smoothing(X.toarray(), k=10).transpose()
+X = knn_smooth.knn_smoothing(X, k=10).transpose()
 
 print("Process data", flush=True)
 output.layers["denoised"] = X
