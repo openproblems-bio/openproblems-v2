@@ -35,7 +35,7 @@ error = poisson_nll_loss(test_data, denoised_data)
 
 print("Store poisson value", flush=True)
 output = ad.AnnData(
-    uns=test_data.uns
+    uns={ key: val for key, val in input_test.uns.items() },
 )
 
 output.uns["method_id"] = input_denoised.uns["method_id"]
