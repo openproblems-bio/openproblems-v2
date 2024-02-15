@@ -418,9 +418,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/methods procrustes"
-LABEL org.opencontainers.image.created="2024-02-15T08:56:24Z"
+LABEL org.opencontainers.image.created="2024-02-15T14:52:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8d447db24ce90eae457ef0b54a9386243cd8e800"
+LABEL org.opencontainers.image.revision="5f3069e73d1941f1d8664f1e65dfe32201b6febe"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

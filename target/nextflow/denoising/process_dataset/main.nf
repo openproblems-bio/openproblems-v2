@@ -3303,7 +3303,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "8d447db24ce90eae457ef0b54a9386243cd8e800",
+    "git_commit" : "5f3069e73d1941f1d8664f1e65dfe32201b6febe",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
