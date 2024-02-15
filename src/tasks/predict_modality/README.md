@@ -89,10 +89,6 @@ The RNA modality of the raw dataset.
 Example file:
 `resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -102,7 +98,7 @@ Format:
      var: 'feature_id', 'feature_name'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
+     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'normalization_id', 'gene_activity_var_names'
 
 </div>
 
@@ -126,6 +122,7 @@ Slot description:
 | `uns["dataset_summary"]`         | `string`  | Short description of the dataset.                                              |
 | `uns["dataset_description"]`     | `string`  | Long description of the dataset.                                               |
 | `uns["dataset_organism"]`        | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
+| `uns["normalization_id"]`        | `string`  | The unique identifier of the normalization method used.                        |
 | `uns["gene_activity_var_names"]` | `string`  | (*Optional*) Names of the gene activity matrix.                                |
 
 </div>
@@ -160,10 +157,6 @@ The mod1 expression values of the train cells.
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -173,7 +166,7 @@ Format:
      var: 'gene_ids'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'dataset_organism', 'gene_activity_var_names'
+     uns: 'dataset_id', 'common_dataset_id', 'dataset_organism', 'normalization_id', 'gene_activity_var_names'
 
 </div>
 
@@ -190,7 +183,9 @@ Slot description:
 | `layers["counts"]`               | `integer` | Raw counts.                                                        |
 | `layers["normalized"]`           | `double`  | Normalized expression values.                                      |
 | `uns["dataset_id"]`              | `string`  | A unique identifier for the dataset.                               |
+| `uns["common_dataset_id"]`       | `string`  | A common identifier for the dataset.                               |
 | `uns["dataset_organism"]`        | `string`  | (*Optional*) The organism of the sample in the dataset.            |
+| `uns["normalization_id"]`        | `string`  | The unique identifier of the normalization method used.            |
 | `uns["gene_activity_var_names"]` | `string`  | (*Optional*) Names of the gene activity matrix.                    |
 
 </div>
@@ -202,10 +197,6 @@ The mod2 expression values of the train cells.
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -215,7 +206,7 @@ Format:
      var: 'gene_ids'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'dataset_organism', 'gene_activity_var_names'
+     uns: 'dataset_id', 'common_dataset_id', 'dataset_organism', 'normalization_id', 'gene_activity_var_names'
 
 </div>
 
@@ -232,7 +223,9 @@ Slot description:
 | `layers["counts"]`               | `integer` | Raw counts.                                                        |
 | `layers["normalized"]`           | `double`  | Normalized expression values.                                      |
 | `uns["dataset_id"]`              | `string`  | A unique identifier for the dataset.                               |
+| `uns["common_dataset_id"]`       | `string`  | A common identifier for the dataset.                               |
 | `uns["dataset_organism"]`        | `string`  | (*Optional*) The organism of the sample in the dataset.            |
+| `uns["normalization_id"]`        | `string`  | The unique identifier of the normalization method used.            |
 | `uns["gene_activity_var_names"]` | `string`  | (*Optional*) Names of the gene activity matrix.                    |
 
 </div>
@@ -244,10 +237,6 @@ The mod1 expression values of the test cells.
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -257,7 +246,7 @@ Format:
      var: 'gene_ids'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
+     uns: 'dataset_id', 'common_dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'normalization_id', 'gene_activity_var_names'
 
 </div>
 
@@ -274,12 +263,14 @@ Slot description:
 | `layers["counts"]`               | `integer` | Raw counts.                                                                    |
 | `layers["normalized"]`           | `double`  | Normalized expression values.                                                  |
 | `uns["dataset_id"]`              | `string`  | A unique identifier for the dataset.                                           |
+| `uns["common_dataset_id"]`       | `string`  | A common identifier for the dataset.                                           |
 | `uns["dataset_name"]`            | `string`  | Nicely formatted name.                                                         |
 | `uns["dataset_url"]`             | `string`  | (*Optional*) Link to the original source of the dataset.                       |
 | `uns["dataset_reference"]`       | `string`  | (*Optional*) Bibtex reference of the paper in which the dataset was published. |
 | `uns["dataset_summary"]`         | `string`  | Short description of the dataset.                                              |
 | `uns["dataset_description"]`     | `string`  | Long description of the dataset.                                               |
 | `uns["dataset_organism"]`        | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
+| `uns["normalization_id"]`        | `string`  | The unique identifier of the normalization method used.                        |
 | `uns["gene_activity_var_names"]` | `string`  | (*Optional*) Names of the gene activity matrix.                                |
 
 </div>
@@ -291,10 +282,6 @@ The mod2 expression values of the test cells.
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -304,7 +291,7 @@ Format:
      var: 'gene_ids'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
+     uns: 'dataset_id', 'common_dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
 
 </div>
 
@@ -321,6 +308,7 @@ Slot description:
 | `layers["counts"]`               | `integer` | Raw counts.                                                                    |
 | `layers["normalized"]`           | `double`  | Normalized expression values.                                                  |
 | `uns["dataset_id"]`              | `string`  | A unique identifier for the dataset.                                           |
+| `uns["common_dataset_id"]`       | `string`  | A common identifier for the dataset.                                           |
 | `uns["dataset_name"]`            | `string`  | Nicely formatted name.                                                         |
 | `uns["dataset_url"]`             | `string`  | (*Optional*) Link to the original source of the dataset.                       |
 | `uns["dataset_reference"]`       | `string`  | (*Optional*) Bibtex reference of the paper in which the dataset was published. |
@@ -398,10 +386,6 @@ A prediction of the mod2 expression values of the test cells
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -430,10 +414,6 @@ Metric score file
 
 Example file:
 `resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/score.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -465,10 +445,6 @@ dataset
 Example file:
 `resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -478,7 +454,7 @@ Format:
      var: 'feature_id', 'feature_name'
      obsm: 'gene_activity'
      layers: 'counts', 'normalized'
-     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'gene_activity_var_names'
+     uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism', 'normalization_id', 'gene_activity_var_names'
 
 </div>
 
@@ -502,6 +478,7 @@ Slot description:
 | `uns["dataset_summary"]`         | `string`  | Short description of the dataset.                                              |
 | `uns["dataset_description"]`     | `string`  | Long description of the dataset.                                               |
 | `uns["dataset_organism"]`        | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
+| `uns["normalization_id"]`        | `string`  | The unique identifier of the normalization method used.                        |
 | `uns["gene_activity_var_names"]` | `string`  | (*Optional*) Names of the gene activity matrix.                                |
 
 </div>
