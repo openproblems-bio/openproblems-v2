@@ -25,7 +25,7 @@ functionality:
       magic:
       magic_approx:
         solver: approximate
-      knn_naive:
+      magic_knn_naive:
         norm: log
         decay: none
         t: 1
