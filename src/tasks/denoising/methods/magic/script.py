@@ -20,7 +20,7 @@ meta = {
 ## VIASH END
 
 print("Load data", flush=True)
-input_train = ad.read_h5ad(par["input_train"])
+input_train = ad.read_h5ad(par["input_train"], backed="r")
 
 print("Set normalization method", flush=True)
 if par["norm"] == "sqrt":
@@ -30,9 +30,9 @@ elif par["norm"] == "log":
     norm_fn = np.log1p
     denorm_fn = np.expm1
 else:
-    raise ValueError("Unknown normalization method")
+    raise ValueError("Unknown normalization method: " + par["norm"] + ".")
 
-print("Clean memory", flush=True)
+print("Remove unneeded data", flush=True)
 X = input_train.layers["counts"]
 
 # Create output AnnData for later use
@@ -69,7 +69,7 @@ X = scprep.utils.matrix_transform(X, denorm_fn)
 X = scprep.utils.matrix_vector_elementwise_multiply(X, libsize, axis=0)
 
 print("Create output AnnData", flush=True)
-output.layers["denoised"] = scipy.sparse.csr_matrix(X)
+output.layers["denoised"] = X
 
 print("Write Data", flush=True)
 output.write_h5ad(par["output"], compression="gzip")

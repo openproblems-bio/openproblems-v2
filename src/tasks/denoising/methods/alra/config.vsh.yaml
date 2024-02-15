@@ -23,10 +23,11 @@ functionality:
       alra:
     preferred_normalization: counts
   arguments:
-    - name: "--epochs"
-      type: "integer"
-      default: 300
-      description: "Number of total epochs in training"
+    - name: "--norm"
+      type: string
+      choices: ["sqrt", "log"]
+      default: "log"
+      description: Normalization method
   resources:
     - type: r_script
       path: script.R
