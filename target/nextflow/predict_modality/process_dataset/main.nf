@@ -3551,7 +3551,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e2cc44f636b954cd115e79d16d0a6983848c79a8",
+    "git_commit" : "8d447db24ce90eae457ef0b54a9386243cd8e800",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3623,7 +3623,8 @@ ad2_mod <- unique(ad2\\$var[["feature_types"]])
 
 # determine new uns
 uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id")
-ad1_uns <- ad2_uns <- ad1\\$uns[uns_vars]
+ad1_uns <- ad1\\$uns[uns_vars]
+ad2_uns <- ad2\\$uns[uns_vars]
 ad1_uns\\$modality <- ad1_mod
 ad2_uns\\$modality <- ad2_mod
 
