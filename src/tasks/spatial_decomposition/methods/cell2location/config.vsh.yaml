@@ -62,8 +62,10 @@ platforms:
     setup:
       - type: python
         packages: 
+          - scvi-tools==1.0.4
           - cell2location
-          - chex==0.1.85
+          - jax==0.4.23
+          - jaxlib==0.4.23
 
   - type: native
   - type: nextflow
