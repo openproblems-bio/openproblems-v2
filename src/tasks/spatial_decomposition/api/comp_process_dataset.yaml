@@ -9,7 +9,7 @@ functionality:
         Prepare a common dataset for the spatial_decomposition task.
   arguments:
     - name: "--input"
-      __merge__: /src/datasets/api/file_common_dataset.yaml
+      __merge__: file_common_dataset.yaml
       direction: input
       required: true
     - name: "--output_single_cell"
