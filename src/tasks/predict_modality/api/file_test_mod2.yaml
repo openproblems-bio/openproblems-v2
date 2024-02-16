@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+example: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/test_mod2.h5ad"
 info:
   label: "Test mod2"
   summary: "The mod2 expression values of the test cells."
@@ -31,6 +31,10 @@ info:
       - type: string
         name: dataset_id
         description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: common_dataset_id
+        description: "A common identifier for the dataset"
         required: true
       - name: dataset_name
         type: string
