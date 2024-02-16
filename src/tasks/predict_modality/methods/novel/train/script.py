@@ -21,15 +21,10 @@ else:
 par = {
   'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad',
   'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad',
-  'input_test_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad',
-  'input_test_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad',
   'output': 'model.pt'
 }
-meta = {
-  'resources_dir': '.',
-  'functionality_name': '171129'
-}
 ## VIASH END
+
 
 sys.path.append(meta['resources_dir'])
 from helper_functions import train_and_valid, lsiTransformer, ModalityMatchingDataset
@@ -37,18 +32,24 @@ from helper_functions import ModelRegressionAtac2Gex, ModelRegressionAdt2Gex, Mo
 
 print("Load data", flush=True)
 
+# TODO: something went really wrong while refactoring this component,
+# because the train script is not supposed to get access to the test data.
+# see this version of the code to start:
+# https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/blob/dc7bd58dacbe804dcc7be047531d795b1b04741e/src/predict_modality/methods/novel/train/script.py#L27-L28
+
+
 input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
-input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
-input_test_mod2 = ad.read_h5ad(par['input_test_mod2'])
+# input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
+# input_test_mod2 = ad.read_h5ad(par['input_test_mod2'])
 
 mod1 = input_train_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
 
 input_train_mod1.X = input_train_mod2.layers['counts']
 input_train_mod2.X = input_train_mod1.layers['counts']
-input_test_mod1.X = input_test_mod1.layers['counts']
-input_test_mod2.X = input_test_mod2.layers['counts']
+# input_test_mod1.X = input_test_mod1.layers['counts']
+# input_test_mod2.X = input_test_mod2.layers['counts']
 
 print("Start train", flush=True)
 if mod1 != "ADT":
@@ -62,8 +63,8 @@ if mod1 != "ADT":
 else:
   train_mod1 = input_train_mod1.to_df()
   train_mod2 = input_train_mod2.to_df()
-  test_mod1 = input_test_mod1.to_df()
-  test_mod2 = input_test_mod2.to_df()
+  # test_mod1 = input_test_mod1.to_df()
+  # test_mod2 = input_test_mod2.to_df()
 
 
 if mod1 == 'ATAC' and mod2 == 'GEX':

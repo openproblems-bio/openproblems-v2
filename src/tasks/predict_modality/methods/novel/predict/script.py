@@ -19,10 +19,9 @@ else:
 ## VIASH START
 
 par = {
-    'input_train_mod1': 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad',
-    'input_train_mod2': 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad',
+    # 'input_train_mod1': 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad',
+    # 'input_train_mod2': 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad',
     'input_test_mod1': 'resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad',
-    'input_test_mod2': 'resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad',
     'input_model': 'resources_test/predict_modality/neurips2021_bmmc_cite/model.pt',
     'input_transformer': 'transformer.pickle'
 }
@@ -33,15 +32,15 @@ meta = {
 ## VIASH END
 
 sys.path.append(meta['resources_dir'])
-from helper_functions import ModelRegressionAtac2Gex, ModelRegressionAdt2Gex, ModelRegressionGex2Adt, ModelRegressionGex2Atac, ModalityMatchingDataset
+from tasks.predict_modality.methods.novel.helper_functions import ModelRegressionAtac2Gex, ModelRegressionAdt2Gex, ModelRegressionGex2Adt, ModelRegressionGex2Atac, ModalityMatchingDataset
 
 print("Load data", flush=True)
 
 input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
-input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
+# input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 
 mod1 = input_test_mod1.uns['modality']
-mod2 = input_train_mod2.uns['modality']
+# mod2 = input_train_mod2.uns['modality']
 
 model_fp = par['input_model']
 
