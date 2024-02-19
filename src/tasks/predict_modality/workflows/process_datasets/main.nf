@@ -101,7 +101,11 @@ workflow run_wf {
     )
 
     | map { id, state ->
-      def new_id = id + "_" + state.modality_mod1 + "2" + state.modality_mod2
+      def id_split = id.tokenize("/")
+      def new_id = id_split[0] + "/" + id_split[1] + "_" + state.modality_mod1 + "2" + state.modality_mod2
+      if (id_split[2]) {
+        new_id += "/" + id_split[2]
+      }
       [new_id, state + ["_meta": [join_id: id]]]
     }
 
