@@ -1,0 +1,34 @@
+type: file
+example: "resources_test/cell_cell_communication_source_target/pancreas/test.h5ad"
+info:
+  label: "Test data"
+  summary: "The test data"
+  slots:
+    layers: 
+      - type: integer
+        name: counts
+        description: Raw counts
+        required: true
+      - type: double
+        name: normalized
+        description: Normalized counts
+        required: true
+    obs:
+      - type: string
+        name: label
+        description: Cell type annotation.
+        required: true
+    var:
+      - type: double
+        name: hvg_score
+        description: A ranking of the features by hvg.
+        required: true
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
+      - type: string
+        name: normalization_id
+        description: "Which normalization was used"
+        required: true

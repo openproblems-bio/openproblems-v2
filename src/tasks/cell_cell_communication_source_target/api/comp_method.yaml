@@ -1,0 +1,30 @@
+functionality:
+  namespace: "cell_cell_communication_source_target/methods"
+  info:
+    type: method
+    type_info:
+      label: Method
+      summary: A Cell Cell Communication Source Target method.
+      description: |
+        A Cell Cell Communication Source Target method to predict interactions between spatially-adjacent source cell types and target cell types.
+  arguments:
+    - name: "--input_train"
+      __merge__: file_train.yaml
+      direction: input
+      required: true
+    - name: "--input_test"
+      __merge__: file_test.yaml
+      direction: input
+      required: true
+    - name: "--output"
+      __merge__: file_prediction.yaml
+      direction: output
+      required: true
+  test_resources:
+    - path: /resources_test/cell_cell_communication_source_target/pancreas
+      dest: resources_test/cell_cell_communication_source_target/pancreas
+    - type: python_script
+      path: /src/common/comp_tests/check_method_config.py
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+    - path: /src/common/library.bib
