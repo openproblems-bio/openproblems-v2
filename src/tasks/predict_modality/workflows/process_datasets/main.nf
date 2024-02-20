@@ -12,7 +12,19 @@ workflow run_wf {
   input_ch
 
   main:
+
+  direction = Channel.of("normal", "swap")
+
   output_ch = input_ch
+    | combine(direction)
+
+    // Add swap direction to the state
+    | map{id, state, dir -> 
+      // Set new id with direction
+      def new_id = id +"/" + dir
+      
+      [new_id, state + [direction: dir, "_meta": [join_id: id]]]
+    }
 
     | check_dataset_schema.run(
       key: "check_dataset_schema_mod1",
@@ -61,15 +73,17 @@ workflow run_wf {
     }
 
     | process_dataset.run(
-      fromState: [
-        input_mod1: "dataset_mod1",
-        input_mod2: "dataset_mod2",
-        output_train_mod1: "output_train_mod1",
-        output_train_mod2: "output_train_mod2",
-        output_test_mod1: "output_test_mod1",
-        output_test_mod2: "output_test_mod2",
-        swap: "swap"
-      ],
+      fromState: { id, state ->
+      def swap_state = state.direction == "swap" ? true : false
+      [
+        input_mod1: state.dataset_mod1,
+        input_mod2: state.dataset_mod2,
+        output_train_mod1: state.output_train_mod1,
+        output_train_mod2: state.output_train_mod2,
+        output_test_mod1: state.output_test_mod1,
+        output_test_mod2: state.output_test_mod2,
+        swap: swap_state
+      ]},
       toState: [
         "output_train_mod1",
         "output_train_mod2",
@@ -103,10 +117,10 @@ workflow run_wf {
     | map { id, state ->
       def id_split = id.tokenize("/")
       def new_id = id_split[0] + "/" + id_split[1] + "_" + state.modality_mod1 + "2" + state.modality_mod2
-      if (id_split[2]) {
+      if (id_split[2] && !id_split[2]==state.direction) {
         new_id += "/" + id_split[2]
       }
-      [new_id, state + ["_meta": [join_id: id]]]
+      [new_id, state]
     }
 
     // only output the files for which an output file was specified
