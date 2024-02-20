@@ -21,7 +21,9 @@ workflow run_wf {
     // Add swap direction to the state
     | map{id, state, dir -> 
       // Set new id with direction
-      def new_id = id +"/" + dir
+      def id_split = id.tokenize("/")
+      def norm = id_split.takeRight(1)[0]
+      def new_id = id_split.dropRight(1).join("/") + "_" + dir + "/" + norm
       
       [new_id, state + [direction: dir, "_meta": [join_id: id]]]
     }
@@ -113,15 +115,6 @@ workflow run_wf {
         ]
       }
     )
-
-    | map { id, state ->
-      def id_split = id.tokenize("/")
-      def new_id = id_split[0] + "/" + id_split[1] + "_" + state.modality_mod1 + "2" + state.modality_mod2
-      if (id_split[2] && !id_split[2]==state.direction) {
-        new_id += "/" + id_split[2]
-      }
-      [new_id, state]
-    }
 
     // only output the files for which an output file was specified
     | setState ([
