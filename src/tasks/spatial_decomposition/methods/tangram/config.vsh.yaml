@@ -16,11 +16,11 @@ functionality:
     - name: "--num_epochs"
       type: integer
       default: 1000
-      description: Number of neighbors to use.
+      description: Number of epochs to use while mapping single cells to spatial locations.
     - name: "--n_markers"
       type: integer
       default: 100
-      description: Number of neighbors to use.
+      description: Number of marker genes to use.
 
   resources:
     - type: python_script
