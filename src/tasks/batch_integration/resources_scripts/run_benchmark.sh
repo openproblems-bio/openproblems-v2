@@ -10,15 +10,13 @@ output_state: "state.yaml"
 publish_dir: "$publish_dir"
 HERE
 
-cat > /tmp/nextflow.config << HERE
-process {
-  executor = 'awsbatch'
-}
+cat src/wf_utils/labels_tw.config > /tmp/nextflow.config
 
+cat >> /tmp/nextflow.config << HERE
 trace {
     enabled = true
     overwrite = true
-    file    = "$publish_dir/trace.txt"
+    file = "$publish_dir/trace.txt"
 }
 HERE
 
