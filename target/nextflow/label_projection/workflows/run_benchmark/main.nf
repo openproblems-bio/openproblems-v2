@@ -3131,7 +3131,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3153,7 +3153,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3175,7 +3175,7 @@ meta = [
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/control_methods/true_labels/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/true_labels"
@@ -3197,7 +3197,7 @@ meta = [
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/control_methods/majority_vote/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/majority_vote"
@@ -3219,7 +3219,7 @@ meta = [
           "functionalityNamespace" : "label_projection/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/control_methods/random_labels/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels"
@@ -3241,7 +3241,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/methods/knn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/knn"
@@ -3263,7 +3263,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/methods/logistic_regression/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/logistic_regression"
@@ -3285,7 +3285,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/methods/mlp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp"
@@ -3307,7 +3307,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/methods/scanvi_scarches/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches"
@@ -3329,7 +3329,7 @@ meta = [
           "functionalityNamespace" : "label_projection/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/methods/xgboost/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/xgboost"
@@ -3351,7 +3351,7 @@ meta = [
           "functionalityNamespace" : "label_projection/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/metrics/accuracy/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/accuracy"
@@ -3373,7 +3373,7 @@ meta = [
           "functionalityNamespace" : "label_projection/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+          "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
           "executable" : "/nextflow/label_projection/metrics/f1/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/f1"
@@ -3419,7 +3419,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+    "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

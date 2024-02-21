@@ -2820,7 +2820,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/train_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2916,7 +2916,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/train_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3042,7 +3042,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/test_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3084,7 +3084,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/prediction.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/prediction.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3170,8 +3170,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT",
-        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT",
+        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap",
+        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3277,7 +3277,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr",
     "viash_version" : "0.8.0",
-    "git_commit" : "549152789a390af874d45737b7af1f918e2deb7f",
+    "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
