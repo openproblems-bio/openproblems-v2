@@ -414,7 +414,7 @@ ENTRYPOINT []
 
  
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("dplyr", "purrr", "rlang", "glue", "yaml", "fs", "cli", "igraph", "rmarkdown", "bit64"), repos = "https://cran.rstudio.com")'
+  Rscript -e 'remotes::install_cran(c("dplyr", "purrr", "rlang", "glue", "yaml", "fs", "cli", "igraph", "rmarkdown", "bit64", "processx"), repos = "https://cran.rstudio.com")'
 
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y jq curl && \
@@ -427,9 +427,9 @@ RUN release_info=$(curl -s https://api.github.com/repos/quarto-dev/quarto-cli/re
   rm /opt/quarto.deb
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_task_readme"
-LABEL org.opencontainers.image.created="2024-02-21T14:21:05Z"
+LABEL org.opencontainers.image.created="2024-02-21T14:26:01Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cd74c4bca8d153b36f66da85a01ec0e49aba6594"
+LABEL org.opencontainers.image.revision="38e8b477aef4bd47dbfe0716a6a39f63ea42ef4e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
