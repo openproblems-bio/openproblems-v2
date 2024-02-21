@@ -3140,6 +3140,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "train_sum",
+                "type" : "integer",
+                "description" : "The total number of counts in the training dataset.",
+                "required" : true
               }
             ]
           }
@@ -3303,7 +3309,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
+    "git_commit" : "94a696699e29d2fadd6292e56060beeec3062cbf",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3382,20 +3388,23 @@ X_test.data = test_data
 X_train.eliminate_zeros()
 X_test.eliminate_zeros()
 
-#   copy adata to train_set, test_set
+# copy adata to train_set, test_set
 output_train = ad.AnnData(
-    layers={"counts": X_train.astype(float)},
+    layers={"counts": X_train},
     obs=adata.obs[[]],
     var=adata.var[[]],
     uns={"dataset_id": adata.uns["dataset_id"]}
 )
 test_uns_keys = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
 output_test = ad.AnnData(
-    layers={"counts": X_test.astype(float)},
+    layers={"counts": X_test},
     obs=adata.obs[[]],
     var=adata.var[[]],
     uns={key: adata.uns[key] for key in test_uns_keys}
 )
+
+# add additional information for the train set
+output_test.uns["train_sum"] = X_train.sum()
 
 # Remove no cells that do not have enough reads
 is_missing = np.array(X_train.sum(axis=0) == 0)

@@ -2827,6 +2827,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "train_sum",
+                "type" : "integer",
+                "description" : "The total number of counts in the training dataset.",
+                "required" : true
               }
             ]
           }
@@ -2850,12 +2856,6 @@ meta = [
           "summary" : "A denoised dataset as output by a denoising method.",
           "slots" : {
             "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
               {
                 "type" : "integer",
                 "name" : "denoised",
@@ -2993,7 +2993,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/control_methods/perfect_denoising",
     "viash_version" : "0.8.0",
-    "git_commit" : "636e8917cad1c68cccdc76e6f057bdf78aca4712",
+    "git_commit" : "94a696699e29d2fadd6292e56060beeec3062cbf",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
