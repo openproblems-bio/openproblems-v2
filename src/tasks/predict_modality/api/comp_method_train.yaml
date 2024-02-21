@@ -20,7 +20,7 @@ functionality:
     - name: "--input_test_mod1"
       __merge__: file_test_mod1.yaml
       direction: input
-      required: true
+      required: false
     - name: "--output"
       type: file
       description: A trained model.
