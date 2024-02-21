@@ -54,8 +54,12 @@ input_train_mod2.X = input_train_mod1.layers['counts']
 input_train_mod2_df = input_train_mod2.to_df()
 
 print('Start train', flush=True)
+
+# select number of variables for LSI
+n_vars = input_train_mod1.n_vars -1 if input_train_mod1.n_vars < 256 else 256
+
 if mod1 != 'ADT':  
-  lsi_transformer_gex = lsiTransformer(n_components=256)
+  lsi_transformer_gex = lsiTransformer(n_components=n_vars)
   input_train_mod1_df = lsi_transformer_gex.fit_transform(input_train_mod1)
 else:
   input_train_mod1_df = input_train_mod1.to_df()
@@ -118,6 +122,6 @@ loss_fn = torch.nn.MSELoss()
 train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test, par['output'], device)
 
 if mod1 != 'ADT':
-    with open(par['output_pretrain'] + '/lsi_transformer.pickle', 'wb') as f:
+    with open(par['output_transform'], 'wb') as f:
         pickle.dump(lsi_transformer_gex, f)
 

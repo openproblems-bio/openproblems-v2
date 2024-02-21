@@ -1,6 +1,13 @@
 __merge__: ../../../api/comp_method_train.yaml
 functionality:
   name: novel_train
+  arguments:
+    - name: output_transform
+      type: file
+      description: "The output transform file"
+      required: false
+      default: "lsi_transformer.pickle"
+      direction: output
   resources:
     - path: script.py
       type: python_script
