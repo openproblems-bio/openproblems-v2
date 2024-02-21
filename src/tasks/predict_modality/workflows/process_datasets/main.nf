@@ -16,11 +16,15 @@ workflow run_wf {
   direction = Channel.of("normal", "swap")
 
   output_ch = input_ch
+  
     | combine(direction)
 
-    // Add swap direction to the state
+    // Add swap direction to the state and set new id
     | map{id, state, dir -> 
-      // Set new id with direction
+      // Add direction (normal / swap) to id  
+      // Note: this id is added before the normalisation id  
+      // Example old id: dataset_loader/dataset_id/normalization_id  
+      // Example new id: dataset_loader/dataset_id_direction/normalization_id
       def id_split = id.tokenize("/")
       def norm = id_split.takeRight(1)[0]
       def new_id = id_split.dropRight(1).join("/") + "_" + dir + "/" + norm
@@ -76,16 +80,17 @@ workflow run_wf {
 
     | process_dataset.run(
       fromState: { id, state ->
-      def swap_state = state.direction == "swap" ? true : false
-      [
-        input_mod1: state.dataset_mod1,
-        input_mod2: state.dataset_mod2,
-        output_train_mod1: state.output_train_mod1,
-        output_train_mod2: state.output_train_mod2,
-        output_test_mod1: state.output_test_mod1,
-        output_test_mod2: state.output_test_mod2,
-        swap: swap_state
-      ]},
+        def swap_state = state.direction == "swap" ? true : false
+        [
+          input_mod1: state.dataset_mod1,
+          input_mod2: state.dataset_mod2,
+          output_train_mod1: state.output_train_mod1,
+          output_train_mod2: state.output_train_mod2,
+          output_test_mod1: state.output_test_mod1,
+          output_test_mod2: state.output_test_mod2,
+          swap: swap_state
+        ]
+      },
       toState: [
         "output_train_mod1",
         "output_train_mod2",
