@@ -23,7 +23,7 @@ cat(">> Converting AnnData to Seurat\n")
 input_single_cell$X <- input_single_cell$layers[['counts']]
 input_spatial$X <- input_spatial$layers[['counts']]
 sce_sc <- AnnData2SCE(input_single_cell)
-sce_sp <- AnnData2SCE(input_spatial)
+sce_sp <- AnnData2SCE(input_spatial, obsm = FALSE)
 seurat_sc <- as.Seurat(sce_sc, counts = "X", data = NULL)
 seurat_sp <- as.Seurat(sce_sp, counts = "X", data = NULL)
 
