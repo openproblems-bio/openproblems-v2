@@ -83,8 +83,8 @@ workflow run_wf {
         // Note: this id is added before the normalisation id  
         // Example old id: dataset_loader/dataset_id/normalization_id  
         // Example new id: dataset_loader/dataset_id/direction/normalization_id
-        def left = id.replaceAll("/${state.normalization_id}$", "")
-        def right = new_id.replaceAll("^${left}", "")
+        def left = id.replaceAll("/${state.normalization_id}\$", "")
+        def right = id.replaceAll("^${left}", "")
         def new_id = left + "/" + dir + right
 
         [new_id, state + [direction: dir, "_meta": [join_id: id]]]
