@@ -62,11 +62,11 @@ trace <- readr::read_tsv(par$input_execution) %>%
     normalization_id = stringr::str_extract(id, id_regex, 3L),
     method_id = stringr::str_extract(id, id_regex, 4L),
     submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
-  )  %>%
+  ) %>%
   filter(process_id == method_id) %>%
-  arrange(submit) %>%
+  arrange(desc(submit)) %>%
   group_by(name) %>%
-  slice(n())
+  slice(1)
 # parse strings into numbers
 parse_exit <- function(x) {
   if (is.na(x) || x == "-") {
