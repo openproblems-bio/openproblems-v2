@@ -32,7 +32,6 @@ platforms:
     setup:
       - type: r
         cran: [Matrix, Seurat]
-        bioc: [zellkonverter]
 
   - type: native
   - type: nextflow

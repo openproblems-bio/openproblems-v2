@@ -1,6 +1,5 @@
 library(anndata)
 library(Seurat)
-library(zellkonverter)
 
 ## VIASH START
 par <- list(
@@ -20,17 +19,21 @@ input_single_cell <- anndata::read_h5ad(par$input_single_cell)
 input_spatial <- anndata::read_h5ad(par$input_spatial)
 
 cat(">> Converting AnnData to Seurat\n")
-input_single_cell$X <- input_single_cell$layers[['counts']]
-input_spatial$X <- input_spatial$layers[['counts']]
-sce_sc <- AnnData2SCE(input_single_cell)
-sce_sp <- AnnData2SCE(input_spatial, obsm = FALSE)
-seurat_sc <- as.Seurat(sce_sc, counts = "X", data = NULL)
-seurat_sp <- as.Seurat(sce_sp, counts = "X", data = NULL)
+anndataToSeurat <- function(adata, assay) {
+  obj <- SeuratObject::CreateSeuratObject(counts = as(Matrix::t(adata$layers[["counts"]]), "CsparseMatrix"), assay = assay)
+  obj <- SeuratObject::AddMetaData(object = obj, metadata = adata$obs)
+  obj
+}
+
+seurat_sc <- anndataToSeurat(input_single_cell, "RNA")
+seurat_sp <- anndataToSeurat(input_spatial, "spatial")
+
+cat(">> Generate predictions\n")
 
 # Normalize and do dimred for spatial data
 seurat_sp <- SCTransform(
   seurat_sp,
-  assay = "originalexp",
+  assay = "spatial",
   ncells = min(par$sctransform_n_cells, nrow(seurat_sp)),
   verbose = TRUE
 )
@@ -40,7 +43,7 @@ seurat_sp <- RunPCA(seurat_sp, assay = "SCT", verbose = FALSE, n_pcs = par$n_pcs
 # Normalize and do dimred for single cell data
 seurat_sc <- SCTransform(
   seurat_sc,
-  assay = "originalexp",
+  assay = "RNA",
   ncells = min(par$sctransform_n_cells, nrow(seurat_sc)),
   verbose = TRUE
 )
