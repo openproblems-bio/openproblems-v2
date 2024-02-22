@@ -421,9 +421,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "dplyr", "tidyr", "readr", "lubridate", "dynutils", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_results"
-LABEL org.opencontainers.image.created="2024-02-21T14:26:01Z"
+LABEL org.opencontainers.image.created="2024-02-22T12:18:36Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="38e8b477aef4bd47dbfe0716a6a39f63ea42ef4e"
+LABEL org.opencontainers.image.revision="5848fb4a569a89b0a30c176feac0b90dd32a323a"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -987,9 +987,12 @@ trace <- readr::read_tsv(par\$input_execution) %>%
     dataset_id = stringr::str_extract(id, id_regex, 2L),
     normalization_id = stringr::str_extract(id, id_regex, 3L),
     method_id = stringr::str_extract(id, id_regex, 4L),
+    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
   ) %>%
-  filter(process_id == method_id)
-
+  filter(process_id == method_id) %>%
+  arrange(desc(submit)) %>%
+  group_by(name) %>%
+  slice(1)
 # parse strings into numbers
 parse_exit <- function(x) {
   if (is.na(x) || x == "-") {
