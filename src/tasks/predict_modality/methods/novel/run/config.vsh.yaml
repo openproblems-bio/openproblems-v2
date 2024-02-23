@@ -1,4 +1,4 @@
-__merge__: ../../api/comp_train_method.yaml
+__merge__: ../../../api/comp_method_train.yaml
 functionality:
   name: novel
   info:
@@ -9,24 +9,11 @@ functionality:
     repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
     reference: pmlr-v176-lance22a
   resources:
-    - path: script.py
-      type: python_script
-    - path: helper_functions.py
-      type: python_script
-  arguments:
-    - name: --output_transformer
-      type: file
-      description: Path to the transformer file
-      default: transformer.pickle
+    - path: main.nf
+      type: nextflow_script
+      entrypoint: run
+  dependencies:
+    - name: predict_modality/methods/novel_train
+    - name: predict_modality/methods/novel_predict
 platforms:
-  - type: docker
-    image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"
-    setup:
-      - type: python
-        packages:
-          - anndata~=0.8.0
-          - scikit-learn
-          - networkx
   - type: nextflow
-    directives:
-      label: [lowmem, lowtime, lowcpu]
