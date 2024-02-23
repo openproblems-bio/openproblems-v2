@@ -421,9 +421,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/DmitryUlyanov/Multicore-TSNE"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods tsne"
-LABEL org.opencontainers.image.created="2024-02-23T11:51:17Z"
+LABEL org.opencontainers.image.created="2024-02-23T20:38:14Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="ee8003152036251011d69e804e995974c905523f"
+LABEL org.opencontainers.image.revision="c893d648a59409582b775234e4249f51c48d0dbd"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

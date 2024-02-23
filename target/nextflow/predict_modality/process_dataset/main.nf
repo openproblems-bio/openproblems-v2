@@ -3040,7 +3040,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_organism",
@@ -3136,7 +3136,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_organism",
@@ -3232,7 +3232,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_name",
@@ -3358,7 +3358,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_name",
@@ -3431,6 +3431,16 @@ meta = [
         "default" : [
           1
         ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "string",
+        "name" : "--dataset_id",
+        "description" : "New dataset ID",
         "required" : false,
         "direction" : "input",
         "multiple" : false,
@@ -3551,7 +3561,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "ee8003152036251011d69e804e995974c905523f",
+    "git_commit" : "c893d648a59409582b775234e4249f51c48d0dbd",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3583,6 +3593,7 @@ par <- list(
   "output_test_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_test_mod2" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD2" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "seed" = $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo -n "as.integer('"; echo -n "$VIASH_PAR_SEED" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "')"; else echo NULL; fi ),
+  "dataset_id" = $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_DATASET_ID" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "swap" = $( if [ ! -z ${VIASH_PAR_SWAP+x} ]; then echo -n "as.logical(toupper('"; echo -n "$VIASH_PAR_SWAP" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'))"; else echo NULL; fi )
 )
 meta <- list(
@@ -3629,9 +3640,10 @@ ad1_uns\\$modality <- ad1_mod
 ad2_uns\\$modality <- ad2_mod
 
 # Create new dataset id and name depending on the modality
-ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns\\$dataset_id
-new_dataset_id <- paste0(ad1_uns\\$dataset_id, "_", ad1_mod, "2", ad2_mod)
-ad1_uns\\$dataset_id <- ad2_uns\\$dataset_id <- new_dataset_id
+if (!is.null(par\\$dataset_id)) {
+  ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns\\$dataset_id
+  ad1_uns\\$dataset_id <- ad2_uns\\$dataset_id <- par\\$dataset_id
+}
 
 new_dataset_name <- paste0(ad1_uns\\$dataset_name, " (", ad1_mod, "2", ad2_mod, ")")
 ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name

@@ -2788,7 +2788,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_organism",
@@ -2884,7 +2884,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_organism",
@@ -2980,7 +2980,7 @@ meta = [
                 "type" : "string",
                 "name" : "common_dataset_id",
                 "description" : "A common identifier for the dataset",
-                "required" : true
+                "required" : false
               },
               {
                 "name" : "dataset_name",
@@ -3238,7 +3238,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm",
     "viash_version" : "0.8.0",
-    "git_commit" : "ee8003152036251011d69e804e995974c905523f",
+    "git_commit" : "c893d648a59409582b775234e4249f51c48d0dbd",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
