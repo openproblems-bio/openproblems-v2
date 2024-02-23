@@ -1,10 +1,26 @@
 __merge__: ../api/comp_process_dataset.yaml
 functionality:
   name: "process_dataset"
+  arguments:
+    - name: --generate_dataset
+      type: boolean
+      description: Should a synthetic spatial dataset be created?
+    - name: --alpha
+      type: double
+      description: Alpha value to use for generating synthetic dataset
+      example: 1
+    - name: --simulated_data
+      type: file
+      description: Simulated dataset
+      example: dataset_simulated.h5ad
   resources:
     - type: python_script
       path: script.py
     - path: /src/common/helper_functions/subset_anndata.py
+    - type: python_script
+      path: /src/tasks/spatial_decomposition/datasets/sample_datasets.py
+    - type: python_script
+      path: /src/tasks/spatial_decomposition/datasets/utils.py
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.2
