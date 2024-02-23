@@ -8,6 +8,17 @@ functionality:
           __merge__: "/src/tasks/spatial_decomposition/api/file_common_dataset.yaml"
           required: true
           direction: input
+        - name: "--generate_dataset"
+          type: boolean
+          description: Should a synthetic spatial dataset be created?
+          required: false
+          direction: input
+        - name: "--alpha"
+          type: double
+          description: Alpha value to use for generating synthetic dataset
+          example: 1
+          required: false
+          direction: input
     - name: Outputs
       arguments:
         - name: "--output_single_cell"
@@ -21,6 +32,12 @@ functionality:
         - name: "--output_solution"
           __merge__: /src/tasks/spatial_decomposition/api/file_solution.yaml
           required: true
+          direction: output
+        - name: "--simulated_data"
+          type: file
+          description: Simulated dataset
+          example: dataset_simulated.h5ad
+          required: false
           direction: output
   resources:
     - type: nextflow_script
