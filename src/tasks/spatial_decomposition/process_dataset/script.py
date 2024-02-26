@@ -1,6 +1,5 @@
 import anndata as ad
 import sys 
-import os
 
 ## VIASH START
 par = {
