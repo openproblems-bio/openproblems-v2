@@ -2780,12 +2780,6 @@ meta = [
             "layers" : [
               {
                 "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "integer",
                 "name" : "denoised",
                 "description" : "denoised data",
                 "required" : true
@@ -2819,13 +2813,17 @@ meta = [
         "dest" : "par"
       },
       {
-        "type" : "integer",
-        "name" : "--epochs",
-        "description" : "Number of total epochs in training",
+        "type" : "string",
+        "name" : "--norm",
+        "description" : "Normalization method",
         "default" : [
-          300
+          "log"
         ],
         "required" : false,
+        "choices" : [
+          "sqrt",
+          "log"
+        ],
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -2868,7 +2866,7 @@ meta = [
     "info" : {
       "label" : "ALRA",
       "summary" : "ALRA imputes missing values in scRNA-seq data by computing rank-k approximation, thresholding by gene, and rescaling the matrix.",
-      "description" : "\\"Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is a method for imputation of missing values in single cell RNA-sequencing data, \ndescribed in the preprint, \\"Zero-preserving imputation of scRNA-seq data using low-rank approximation\\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588). Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude of the most negative value of that gene. \nFinally, the matrix is rescaled.\\"\n",
+      "description" : "Adaptively-thresholded Low Rank Approximation (ALRA). \n\nALRA is a method for imputation of missing values in single cell RNA-sequencing data, \ndescribed in the preprint, \\"Zero-preserving imputation of scRNA-seq data using low-rank approximation\\" \navailable [here](https://www.biorxiv.org/content/early/2018/08/22/397588). Given a \nscRNA-seq expression matrix, ALRA first computes its rank-k approximation using randomized SVD. \nNext, each row (gene) is thresholded by the magnitude of the most negative value of that gene. \nFinally, the matrix is rescaled.\n",
       "reference" : "linderman2018zero",
       "repository_url" : "https://github.com/KlugerLab/ALRA",
       "documentation_url" : "https://github.com/KlugerLab/ALRA/blob/master/README.md",
@@ -2956,7 +2954,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2971,10 +2969,8 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-
 cat(">> Loading dependencies\\\\n")
 library(anndata, warn.conflicts = FALSE)
-library(Matrix, warn.conflicts = FALSE)
 library(ALRA, warn.conflicts = FALSE)
 
 ## VIASH START
@@ -2985,7 +2981,7 @@ library(ALRA, warn.conflicts = FALSE)
 par <- list(
   "input_train" = $( if [ ! -z ${VIASH_PAR_INPUT_TRAIN+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_TRAIN" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "epochs" = $( if [ ! -z ${VIASH_PAR_EPOCHS+x} ]; then echo -n "as.integer('"; echo -n "$VIASH_PAR_EPOCHS" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "')"; else echo NULL; fi )
+  "norm" = $( if [ ! -z ${VIASH_PAR_NORM+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_NORM" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
   "functionality_name" = $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo -n "'"; echo -n "$VIASH_META_FUNCTIONALITY_NAME" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -3013,20 +3009,43 @@ rm(.viash_orig_warn)
 ## VIASH END
 
 cat(">> Load input data\\\\n")
-adata <- read_h5ad(par\\$input_train)
+input_train <- read_h5ad(par\\$input_train, backed = "r")
 
-counts <- t(adata\\$layers[["counts"]])
+cat(">> Set normalization method\\\\n")
+if (par\\$norm == "sqrt") {
+  norm_fn <- sqrt
+  denorm_fn <- function(x) x^2
+} else if (par\\$norm == "log") {
+  norm_fn <- log1p
+  denorm_fn <- expm1
+} else {
+  stop("Unknown normalization method: ", par\\$norm)
+}
+
+cat(">> Normalize data\\\\n")
+data <- as.matrix(input_train\\$layers[["counts"]])
+totalPerCell <- rowSums(data)
+data <- sweep(data, 1, totalPerCell, "/")
+data <- norm_fn(data)
 
 cat(">> Run ALRA\\\\n")
-# alra doesn't work with sparce matrices
-out <- alra(as.matrix(counts))
+data <- alra(data)\\$A_norm_rank_k_cor_sc
+data <- denorm_fn(data)
+data <- sweep(data, 1, totalPerCell, "*")
 
 cat(">> Store output\\\\n")
-adata\\$layers[["denoised"]] <- as(t(out\\$A_norm_rank_k_cor_sc), "CsparseMatrix")
-adata\\$uns[["method_id"]] <- meta[["functionality_name"]]
+output <- AnnData(
+  layers = list(denoised = data),
+  obs = input_train\\$obs[, c(), drop = FALSE],
+  var = input_train\\$var[, c(), drop = FALSE],
+  uns = list(
+    dataset_id = input_train\\$uns[["dataset_id"]],
+    method_id = meta\\$functionality_name
+  )
+)
 
 cat(">> Write output to file\\\\n")
-adata\\$write_h5ad(par\\$output, compression = "gzip")
+output\\$write_h5ad(par\\$output, compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''

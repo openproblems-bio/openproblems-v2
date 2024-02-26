@@ -37,10 +37,18 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "common_dataset_id"
+          description: "A common identifier for the dataset"
+          required: false
         - name: "dataset_organism"
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
+        - name: "normalization_id"
+          type: "string"
+          description: "The unique identifier of the normalization method used."
+          required: true
         - type: "string"
           name: "gene_activity_var_names"
           description: "Names of the gene activity matrix"
@@ -51,7 +59,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -93,10 +101,18 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "common_dataset_id"
+          description: "A common identifier for the dataset"
+          required: false
         - name: "dataset_organism"
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
+        - name: "normalization_id"
+          type: "string"
+          description: "The unique identifier of the normalization method used."
+          required: true
         - type: "string"
           name: "gene_activity_var_names"
           description: "Names of the gene activity matrix"
@@ -107,7 +123,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -149,6 +165,10 @@ functionality:
           name: "dataset_id"
           description: "A unique identifier for the dataset"
           required: true
+        - type: "string"
+          name: "common_dataset_id"
+          description: "A common identifier for the dataset"
+          required: false
         - name: "dataset_name"
           type: "string"
           description: "Nicely formatted name."
@@ -173,6 +193,10 @@ functionality:
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
+        - name: "normalization_id"
+          type: "string"
+          description: "The unique identifier of the normalization method used."
+          required: true
         - type: "string"
           name: "gene_activity_var_names"
           description: "Names of the gene activity matrix"
@@ -183,7 +207,7 @@ functionality:
           description: "ATAC gene activity"
           required: false
     example:
-    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -212,7 +236,7 @@ functionality:
           description: "A unique identifier for the method"
           required: true
     example:
-    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
+    - "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/prediction.h5ad"
     must_exist: true
     create_parent: true
     required: true
@@ -266,8 +290,8 @@ functionality:
     path: "src/common/comp_tests/run_and_check_adata.py"
     is_executable: true
   - type: "file"
-    path: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite"
-    dest: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite"
+    path: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap"
+    dest: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap"
   - type: "file"
     path: "src/common/library.bib"
   info:
@@ -340,5 +364,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/knnr_r"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/knnr_r/knnr_r"
   viash_version: "0.8.0"
-  git_commit: "e3c59971146b6d022bdf73d3c3ebe366c6a4144b"
+  git_commit: "631077328123de89bfe95941faa6e1796d9d597c"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -2785,10 +2785,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -2808,7 +2820,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2869,10 +2881,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -2892,7 +2916,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2953,6 +2977,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -2989,6 +3019,12 @@ meta = [
                 "required" : false
               },
               {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "gene_activity_var_names",
                 "description" : "Names of the gene activity matrix",
@@ -3006,7 +3042,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3048,7 +3084,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/prediction.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3112,8 +3148,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite",
-        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite",
+        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap",
+        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3212,7 +3248,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/guanlab_dengkw_pm",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

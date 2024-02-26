@@ -2766,7 +2766,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/prediction.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2827,6 +2827,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -2880,7 +2886,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2928,7 +2934,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/score.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/score.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2962,8 +2968,8 @@ meta = [
       },
       {
         "type" : "file",
-        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite",
-        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite",
+        "path" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap",
+        "dest" : "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap",
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       },
       {
@@ -3111,7 +3117,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

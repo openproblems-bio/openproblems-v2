@@ -2850,7 +2850,8 @@ meta = [
             "cli",
             "igraph",
             "rmarkdown",
-            "bit64"
+            "bit64",
+            "processx"
           ],
           "bioc_force_install" : false
         },
@@ -2916,7 +2917,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_task_readme",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3051,13 +3052,13 @@ if (!dir.exists(meta\\$temp_dir)) {
 writeLines(qmd_content, qmd_file)
 
 cat("Render README.qmd to README.md\\\\n")
-md_content <- system(
-  paste0("quarto render ", qmd_file, " --output -"),
-  ignore.stderr = TRUE,
-  intern = TRUE
+out <- processx::run(
+  command = "quarto",
+  args = c("render", qmd_file, "--output", "-"),
+  echo = TRUE
 )
 
-writeLines(md_content, par\\$output)
+writeLines(out\\$stdout, par\\$output)
 VIASHMAIN
 Rscript "$tempscript"
 '''

@@ -2791,6 +2791,12 @@ meta = [
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "train_sum",
+                "type" : "integer",
+                "description" : "The total number of counts in the training dataset.",
+                "required" : true
               }
             ]
           }
@@ -2814,12 +2820,6 @@ meta = [
           "summary" : "A denoised dataset as output by a denoising method.",
           "slots" : {
             "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
               {
                 "type" : "integer",
                 "name" : "denoised",
@@ -2937,7 +2937,7 @@ meta = [
         {
           "name" : "poisson",
           "label" : "Poisson Loss",
-          "summary" : "The Poisson log lieklihood of the true counts observed in the distribution of denoised counts",
+          "summary" : "The Poisson log likelihood of the true counts observed in the distribution of denoised counts",
           "description" : "The Poisson log likelihood of observing the true counts of the test dataset given the distribution given in the denoised dataset.",
           "reference" : "batson2019molecular",
           "v1" : {
@@ -3024,7 +3024,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/metrics/poisson",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3071,15 +3071,15 @@ dep = {
 ## VIASH END
 
 print("Load Data", flush=True)
-input_denoised = ad.read_h5ad(par['input_denoised'])
-input_test = ad.read_h5ad(par['input_test'])
+input_denoised = ad.read_h5ad(par['input_denoised'], backed="r")
+input_test = ad.read_h5ad(par['input_test'], backed="r")
 
-test_data = input_test.layers["counts"].toarray()
-denoised_data = input_denoised.layers["denoised"].toarray()
+test_data = scprep.utils.toarray(input_test.layers["counts"])
+denoised_data = scprep.utils.toarray(input_denoised.layers["denoised"])
 
 print("Compute metric value", flush=True)
 # scaling
-initial_sum = input_denoised.layers["counts"].sum()
+initial_sum = input_test.uns["train_sum"]
 target_sum = test_data.sum()
 denoised_data = denoised_data * target_sum / initial_sum
 
@@ -3088,24 +3088,19 @@ denoised_data = denoised_data * target_sum / initial_sum
 def poisson_nll_loss(y_pred: np.ndarray, y_true: np.ndarray) -> float:
     return (y_pred - y_true * np.log(y_pred + 1e-6)).mean()
 
-error = poisson_nll_loss(scprep.utils.toarray(test_data), denoised_data)
+error = poisson_nll_loss(test_data, denoised_data)
 
 print("Store poisson value", flush=True)
-output_metric = ad.AnnData(
-    layers={},
-    obs=input_denoised.obs[[]],
-    var=input_denoised.var[[]],
-    uns={}
+output = ad.AnnData(
+    uns={ key: val for key, val in input_test.uns.items() },
 )
 
-for key in input_denoised.uns_keys():
-    output_metric.uns[key] = input_denoised.uns[key]
-    
-output_metric.uns["metric_ids"] = meta['functionality_name']
-output_metric.uns["metric_values"] = error
+output.uns["method_id"] = input_denoised.uns["method_id"]
+output.uns["metric_ids"] = meta['functionality_name']
+output.uns["metric_values"] = error
 
 print("Write adata to file", flush=True)
-output_metric.write_h5ad(par['output'], compression="gzip")
+output.write_h5ad(par['output'], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"
 '''

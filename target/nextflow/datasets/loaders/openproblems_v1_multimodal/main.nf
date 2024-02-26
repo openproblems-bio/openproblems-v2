@@ -3484,7 +3484,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3650,10 +3650,12 @@ if par["var_feature_name"] == "index":
 else: 
     if par["var_feature_name"] in mod1.var:
         mod1.var["feature_name"] = mod1.var[par["feature_name"]]
+        del mod1.var[par["feature_name"]]
     else:
         print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod1.var.", flush=True)
     if par["var_feature_name"] in mod2.var:
         mod2.var["feature_name"] = mod2.var[par["feature_name"]]
+        del mod2.var[par["feature_name"]]
     else:
         print(f"Warning: key '{par['var_feature_name']}' could not be found in adata_mod2.var.", flush=True)
 
@@ -3664,10 +3666,12 @@ if par["var_feature_id"] == "index":
 else:
     if par["var_feature_id"] in mod1.var:
         mod1.var["feature_id"] = mod1.var[par["feature_id"]]
+        del mod1.var[par["feature_id"]]
     else:
         print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod1.var.", flush=True)
     if par["var_feature_id"] in mod2.var:
         mod2.var["feature_id"] = mod2.var[par["feature_id"]]
+        del mod2.var[par["feature_id"]]
     else:
         print(f"Warning: key '{par['var_feature_id']}' could not be found in adata_mod2.var.", flush=True)
 

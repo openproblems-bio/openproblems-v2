@@ -2,10 +2,11 @@
 title: Contributing to OpenProblems
 format: gfm
 toc: true
+toc-depth: 2
 engine: knitr
 ---
 
-[OpenProblems](https://openproblems.bio) is a community effort, and everyone is welcome to contribute. This project is hosted on [github.com/openproblems-bio/openproblems-v2](https://github.com/openproblems-bio/openproblems-v2).
+[OpenProblems](https://openproblems.bio) is a community effort, and everyone is welcome to contribute. This project is hosted on [github.com/openproblems-bio/openproblems-v2](https://github.com/openproblems-bio/openproblems-v2).  You can find a full in depth guide on how to contribute to this project on the [OpenProblems website](https://openproblems.bio/documentation/).
 
 ## Code of conduct {#code-of-conduct}
 
@@ -167,26 +168,30 @@ functionality:
     # a short label of your method
     label: Foo
 
-    paper_doi: "10.1234/1234.5678.1234567890"
+    # A multiline description of your method.
+    description: "Todo: fill in"
 
-    # if you don't have a Doi, you can specify a name, url and year manually:
-    # paper_name: "Nearest neighbor pattern classification"
-    # paper_url: "https://doi.org/10.1109/TIT.1967.1053964"
-    # paper_year: 1967
-    
-    repository_url: "https://github.com/my_organisation/foo"
+    # A short summary of the method description.
+    summary: "Todo: fill in"
+
+    # Add the bibtex reference to the "src/common/library.bib" if it is not already there.
+    reference: "cover1967nearest"
+
+    repository_url: "https://github.com/openproblems-bio/openproblems-v2"
+    documentation_url: "https://openproblems.bio/documentation/"
+    preferred_normalization: log_cp10k
   resources:
     - type: python_script
       path: script.py
 platforms:
   - type: docker
-    image: "python:3.10"
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
     setup:
       - type: python
-        packages:
-          - anndata~=0.8.0
-          - scikit-learn
+        packages: [scikit-learn]
   - type: nextflow
+    directives:
+      label: [midtime, midmem, lowcpu]
 HERE
 
 cat > src/tasks/label_projection/methods/foo/script.py << HERE
@@ -239,6 +244,13 @@ You can view the interface of the executable by running the executable with the 
 
 ```{bash}
 viash run src/tasks/label_projection/methods/foo/config.vsh.yaml -- --help
+```
+
+Before running a new component, youy will need to create the docker container:
+
+```{bash}
+viash run src/tasks/label_projection/methods/foo/config.vsh.yaml -- ---setup cachedbuild
+
 ```
 
 You can **run the component** as follows:
@@ -348,3 +360,42 @@ The [Viash reference docs](https://viash.io/reference/config/) page provides inf
 ```{bash, echo=FALSE}
 rm -r src/tasks/label_projection/methods/foo target/docker/label_projection/methods/foo
 ```
+
+## Branch Naming Conventions
+
+### Category
+
+A git branch should start with a category. Pick one of these: feature, bugfix, hotfix, or test.
+
+* `feature` is for adding, refactoring or removing a feature
+* `bugfix` is for fixing a bug
+* `hotfix` is for changing code with a temporary solution and/or without following the usual process (usually because of an emergency)
+* `test` is for experimenting outside of an issue/ticket
+* `doc` is for adding, changing or removing documentation
+
+### Reference
+
+After the category, there should be a "`/`" followed by the reference of the issue/ticket/task you are working on. If there's no reference, just add no-ref. With task it is meant as benchmarking task e.g. batch_integration
+
+### Description
+
+After the reference, there should be another "`/`" followed by a description which sums up the purpose of this specific branch. This description should be short and "kebab-cased".
+
+By default, you can use the title of the issue/ticket you are working on. Just replace any special character by "`-`".
+
+### To sum up, follow this pattern when branching:
+
+```bash
+git branch <category/reference/description-in-kebab-case>
+```
+
+### Examples
+
+* You need to add, refactor or remove a feature: `git branch feature/issue-42/create-new-button-component`
+* You need to fix a bug: `git branch bugfix/issue-342/button-overlap-form-on-mobile`
+* You need to fix a bug really fast (possibly with a temporary solution): `git branch hotfix/no-ref/registration-form-not-working`
+* You need to experiment outside of an issue/ticket: `git branch test/no-ref/refactor-components-with-atomic-design`
+
+### References
+
+* [a-simplified-convention-for-naming-branches-and-commits-in-git](https://dev.to/varbsan/a-simplified-convention-for-naming-branches-and-commits-in-git-il4)

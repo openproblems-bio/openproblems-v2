@@ -37,6 +37,7 @@ functionality:
     - path: /src/wf_utils/helper.nf
   dependencies:
     - name: common/check_dataset_schema
+    - name: common/extract_metadata
     - name: predict_modality/process_dataset
 platforms:
   - type: nextflow

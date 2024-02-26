@@ -2780,12 +2780,6 @@ meta = [
             "layers" : [
               {
                 "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "integer",
                 "name" : "denoised",
                 "description" : "denoised data",
                 "required" : true
@@ -2840,7 +2834,7 @@ meta = [
         "name" : "--norm",
         "description" : "Normalization method",
         "default" : [
-          "sqrt"
+          "log"
         ],
         "required" : false,
         "choices" : [
@@ -2927,7 +2921,7 @@ meta = [
         "magic_approx" : {
           "solver" : "approximate"
         },
-        "knn_naive" : {
+        "magic_knn_naive" : {
           "norm" : "log",
           "decay" : "none",
           "t" : 1
@@ -3012,7 +3006,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/magic",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3064,39 +3058,60 @@ dep = {
 
 ## VIASH END
 
+print("Load data", flush=True)
+input_train = ad.read_h5ad(par["input_train"], backed="r")
 
-print("load data", flush=True)
-input_train = ad.read_h5ad(par['input_train'])
-
-normtype = par['norm']
-
-if normtype == "sqrt":
+print("Set normalization method", flush=True)
+if par["norm"] == "sqrt":
     norm_fn = np.sqrt
     denorm_fn = np.square
-elif normtype == "log":
+elif par["norm"] == "log":
     norm_fn = np.log1p
     denorm_fn = np.expm1
+else:
+    raise ValueError("Unknown normalization method: " + par["norm"] + ".")
 
-print("processing data", flush=True)
+print("Remove unneeded data", flush=True)
+X = input_train.layers["counts"]
 
+# Create output AnnData for later use
+output = ad.AnnData(
+    obs=input_train.obs[[]],
+    var=input_train.var[[]],
+    uns={
+        "dataset_id": input_train.uns["dataset_id"],
+        "method_id": meta["functionality_name"]
+    }
+)
+
+del input_train
+
+print("Normalize data", flush=True)
 X, libsize = scprep.normalize.library_size_normalize(
-    input_train.layers['counts'], rescale=1, return_library_size=True
+    X,
+    rescale=1,
+    return_library_size=True
 )
-
 X = scprep.utils.matrix_transform(X, norm_fn)
-Y = MAGIC(solver=par['solver'], verbose=False, decay=par['decay'], t=par['t']).fit_transform(
-    X, genes="all_genes"
+
+print("Run MAGIC", flush=True)
+magic = MAGIC(
+    solver=par["solver"],
+    decay=par["decay"],
+    t=par["t"],
+    verbose=False,
 )
+X = magic.fit_transform(X, genes="all_genes")
 
-Y = scprep.utils.matrix_transform(Y, denorm_fn)
-Y = scprep.utils.matrix_vector_elementwise_multiply(Y, libsize, axis=0)
+print("Denormalizing data", flush=True)
+X = scprep.utils.matrix_transform(X, denorm_fn)
+X = scprep.utils.matrix_vector_elementwise_multiply(X, libsize, axis=0)
 
-output_denoised = input_train.copy()
-output_denoised.uns["method_id"] = meta["functionality_name"]
-output_denoised.layers["denoised"] = scipy.sparse.csr_matrix(Y)
+print("Create output AnnData", flush=True)
+output.layers["denoised"] = X
 
-print("Writing Data", flush=True)
-output_denoised.write_h5ad(par['output'],compression="gzip")
+print("Write Data", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"
 '''

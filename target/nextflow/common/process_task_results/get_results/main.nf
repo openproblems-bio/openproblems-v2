@@ -2877,7 +2877,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2982,9 +2982,12 @@ trace <- readr::read_tsv(par\\$input_execution) %>%
     dataset_id = stringr::str_extract(id, id_regex, 2L),
     normalization_id = stringr::str_extract(id, id_regex, 3L),
     method_id = stringr::str_extract(id, id_regex, 4L),
+    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
   ) %>%
-  filter(process_id == method_id)
-
+  filter(process_id == method_id) %>%
+  arrange(desc(submit)) %>%
+  group_by(name) %>%
+  slice(1)
 # parse strings into numbers
 parse_exit <- function(x) {
   if (is.na(x) || x == "-") {

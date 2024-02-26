@@ -2788,10 +2788,22 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : false
+                  },
+                  {
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
                   },
                   {
                     "type" : "string",
@@ -2811,7 +2823,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2872,10 +2884,22 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : false
+                  },
+                  {
                     "name" : "dataset_organism",
                     "type" : "string",
                     "description" : "The organism of the sample in the dataset.",
                     "required" : false
+                  },
+                  {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
                   },
                   {
                     "type" : "string",
@@ -2895,7 +2919,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -2956,6 +2980,12 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : false
+                  },
+                  {
                     "name" : "dataset_name",
                     "type" : "string",
                     "description" : "Nicely formatted name.",
@@ -2992,6 +3022,12 @@ meta = [
                     "required" : false
                   },
                   {
+                    "name" : "normalization_id",
+                    "type" : "string",
+                    "description" : "The unique identifier of the normalization method used.",
+                    "required" : true
+                  },
+                  {
                     "type" : "string",
                     "name" : "gene_activity_var_names",
                     "description" : "Names of the gene activity matrix",
@@ -3009,7 +3045,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3070,6 +3106,12 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "string",
+                    "name" : "common_dataset_id",
+                    "description" : "A common identifier for the dataset",
+                    "required" : false
+                  },
+                  {
                     "name" : "dataset_name",
                     "type" : "string",
                     "description" : "Nicely formatted name.",
@@ -3123,7 +3165,7 @@ meta = [
               }
             },
             "example" : [
-              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+              "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod2.h5ad"
             ],
             "must_exist" : true,
             "create_parent" : true,
@@ -3245,7 +3287,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3267,7 +3309,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3289,7 +3331,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
@@ -3311,7 +3353,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/control_methods/random_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
@@ -3333,7 +3375,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/control_methods/zeros/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
@@ -3355,7 +3397,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/control_methods/solution/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
@@ -3377,7 +3419,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/methods/knnr_py/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
@@ -3399,7 +3441,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/methods/knnr_r/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
@@ -3421,7 +3463,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/methods/lm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
@@ -3443,7 +3485,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
@@ -3465,7 +3507,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/methods/random_forest/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
@@ -3487,7 +3529,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
@@ -3509,7 +3551,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+          "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
           "executable" : "/nextflow/predict_modality/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
@@ -3555,7 +3597,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3623,13 +3665,29 @@ workflow run_wf {
 
     // extract the dataset metadata
     | extract_metadata.run(
+      key: "metadata_mod1",
       fromState: [input: "input_train_mod1"],
       toState: { id, output, state ->
         state + [
-          dataset_uns: readYaml(output.output).uns
+          dataset_uns_mod1: readYaml(output.output).uns
         ]
       }
     )
+
+    | extract_metadata.run(
+      key: "metadata_mod2",
+      fromState: [input: "input_test_mod2"],
+      toState: { id, output, state ->
+        state + [
+          dataset_uns_mod2: readYaml(output.output).uns
+        ]
+      }
+    )
+
+    | map{ id, state ->
+      def rna_norm = state.dataset_uns_mod1.modality == "GEX" ? state.dataset_uns_mod1.normalization_id : state.dataset_uns_mod2.normalization_id
+      [id, state + [rna_norm: rna_norm]]
+    }
 
   /***************************
    * RUN METHODS AND METRICS *
@@ -3640,14 +3698,14 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      // // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      // filter: { id, state, comp ->
-      //   def norm = state.normalization_id
-      //   def pref = comp.config.functionality.info.preferred_normalization
-      //   // if the preferred normalisation is none at all,
-      //   // we can pass whichever dataset we want
-      //   (norm == "log_cp10k" && pref == "counts") || norm == pref
-      // },
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      filter: { id, state, comp ->
+        def norm = state.rna_norm
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        (norm == "log_cp10k" && pref == "counts") || norm == pref
+      },
 
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
@@ -3705,12 +3763,12 @@ workflow run_wf {
   dataset_meta_ch = dataset_ch
     // only keep one of the normalization methods
     | filter{ id, state ->
-      state.dataset_uns.normalization_id == "log_cp10k"
+      state.rna_norm == "log_cp10k"
     }
     | joinStates { ids, states ->
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
-        def uns = state.dataset_uns.clone()
+        def uns = state.dataset_uns_mod2.clone()
         uns.remove("normalization_id")
         uns
       }
@@ -3772,7 +3830,7 @@ workflow run_wf {
       def mergedStates = states.inject([:]) { acc, m -> acc + m }
       [ids[0], mergedStates]
     }
-    
+
   emit:
   output_ch
 }

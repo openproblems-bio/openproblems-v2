@@ -186,31 +186,35 @@ function ViashHelp {
   echo "    --output_train_mod1"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
   echo ""
   echo "    --output_train_mod2"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
   echo ""
   echo "    --output_test_mod1"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
   echo ""
   echo "    --output_test_mod2"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod2.h5ad"
   echo ""
   echo "    --seed"
   echo "        type: integer"
   echo "        default: 1"
   echo "        The seed for determining the train/test split."
   echo ""
+  echo "    --dataset_id"
+  echo "        type: string"
+  echo "        New dataset ID"
+  echo ""
   echo "    --swap"
   echo "        type: boolean"
-  echo "        default: true"
+  echo "        default: false"
   echo "        Swap mod1 and mod2"
 }
 
@@ -439,9 +443,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("rstudio/reticulate"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-02-06T12:34:13Z"
+LABEL org.opencontainers.image.created="2024-02-26T08:18:49Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e3c59971146b6d022bdf73d3c3ebe366c6a4144b"
+LABEL org.opencontainers.image.revision="631077328123de89bfe95941faa6e1796d9d597c"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -673,6 +677,17 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_SEED=$(ViashRemoveFlags "$1")
             shift 1
             ;;
+        --dataset_id)
+            [ -n "$VIASH_PAR_DATASET_ID" ] && ViashError Bad arguments for option \'--dataset_id\': \'$VIASH_PAR_DATASET_ID\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DATASET_ID="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --dataset_id. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --dataset_id=*)
+            [ -n "$VIASH_PAR_DATASET_ID" ] && ViashError Bad arguments for option \'--dataset_id=*\': \'$VIASH_PAR_DATASET_ID\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_DATASET_ID=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
         --swap)
             [ -n "$VIASH_PAR_SWAP" ] && ViashError Bad arguments for option \'--swap\': \'$VIASH_PAR_SWAP\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_SWAP="$2"
@@ -852,7 +867,7 @@ if [ -z ${VIASH_PAR_SEED+x} ]; then
   VIASH_PAR_SEED="1"
 fi
 if [ -z ${VIASH_PAR_SWAP+x} ]; then
-  VIASH_PAR_SWAP="true"
+  VIASH_PAR_SWAP="false"
 fi
 
 # check whether required files exist
@@ -1039,6 +1054,7 @@ par <- list(
   "output_test_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD1" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_test_mod2" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD2" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "seed" = $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo -n "as.integer('"; echo -n "$VIASH_PAR_SEED" | sed "s#['\\]#\\\\&#g"; echo "')"; else echo NULL; fi ),
+  "dataset_id" = $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_DATASET_ID" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "swap" = $( if [ ! -z ${VIASH_PAR_SWAP+x} ]; then echo -n "as.logical(toupper('"; echo -n "$VIASH_PAR_SWAP" | sed "s#['\\]#\\\\&#g"; echo "'))"; else echo NULL; fi )
 )
 meta <- list(
@@ -1077,14 +1093,21 @@ ad2 <- anndata::read_h5ad(if (!par\$swap) par\$input_mod2 else par\$input_mod1)
 ad1_mod <- unique(ad1\$var[["feature_types"]])
 ad2_mod <- unique(ad2\$var[["feature_types"]])
 
-# determine new dataset id
-new_dataset_id <- paste0(ad1\$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
-
 # determine new uns
-uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism")
-ad1_uns <- ad2_uns <- ad1\$uns[uns_vars]
+uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id")
+ad1_uns <- ad1\$uns[uns_vars]
+ad2_uns <- ad2\$uns[uns_vars]
 ad1_uns\$modality <- ad1_mod
 ad2_uns\$modality <- ad2_mod
+
+# Create new dataset id and name depending on the modality
+if (!is.null(par\$dataset_id)) {
+  ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns\$dataset_id
+  ad1_uns\$dataset_id <- ad2_uns\$dataset_id <- par\$dataset_id
+}
+
+new_dataset_name <- paste0(ad1_uns\$dataset_name, " (", ad1_mod, "2", ad2_mod, ")")
+ad1_uns\$dataset_name <- ad2_uns\$dataset_name <- new_dataset_name
 
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()

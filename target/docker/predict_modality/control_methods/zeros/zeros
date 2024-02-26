@@ -176,27 +176,27 @@ function ViashHelp {
   echo "    --input_train_mod1"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
   echo ""
   echo "    --input_train_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
   echo ""
   echo "    --input_test_mod1"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
   echo ""
   echo "    --input_test_mod2"
   echo "        type: file, required parameter, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod2.h5ad"
   echo ""
   echo "    --output"
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
-  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/prediction.h5ad"
+  echo "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/prediction.h5ad"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -421,9 +421,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/control_methods zeros"
-LABEL org.opencontainers.image.created="2024-02-06T12:34:12Z"
+LABEL org.opencontainers.image.created="2024-02-26T08:18:50Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e3c59971146b6d022bdf73d3c3ebe366c6a4144b"
+LABEL org.opencontainers.image.revision="631077328123de89bfe95941faa6e1796d9d597c"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

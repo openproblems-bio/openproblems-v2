@@ -2827,6 +2827,12 @@ meta = [
                 "required" : false
               },
               {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "gene_activity_var_names",
                 "description" : "Names of the gene activity matrix",
@@ -2947,6 +2953,12 @@ meta = [
                 "required" : false
               },
               {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "gene_activity_var_names",
                 "description" : "Names of the gene activity matrix",
@@ -3025,10 +3037,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -3048,7 +3072,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3109,10 +3133,22 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_organism",
                 "type" : "string",
                 "description" : "The organism of the sample in the dataset.",
                 "required" : false
+              },
+              {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
               },
               {
                 "type" : "string",
@@ -3132,7 +3168,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3193,6 +3229,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -3229,6 +3271,12 @@ meta = [
                 "required" : false
               },
               {
+                "name" : "normalization_id",
+                "type" : "string",
+                "description" : "The unique identifier of the normalization method used.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "gene_activity_var_names",
                 "description" : "Names of the gene activity matrix",
@@ -3246,7 +3294,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod1.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3307,6 +3355,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "string",
+                "name" : "common_dataset_id",
+                "description" : "A common identifier for the dataset",
+                "required" : false
+              },
+              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -3360,7 +3414,7 @@ meta = [
           }
         },
         "example" : [
-          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+          "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod2.h5ad"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -3384,11 +3438,21 @@ meta = [
         "dest" : "par"
       },
       {
+        "type" : "string",
+        "name" : "--dataset_id",
+        "description" : "New dataset ID",
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
         "type" : "boolean",
         "name" : "--swap",
         "description" : "Swap mod1 and mod2",
         "default" : [
-          true
+          false
         ],
         "required" : false,
         "direction" : "input",
@@ -3497,7 +3561,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3529,6 +3593,7 @@ par <- list(
   "output_test_mod1" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD1+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD1" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_test_mod2" = $( if [ ! -z ${VIASH_PAR_OUTPUT_TEST_MOD2+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_TEST_MOD2" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "seed" = $( if [ ! -z ${VIASH_PAR_SEED+x} ]; then echo -n "as.integer('"; echo -n "$VIASH_PAR_SEED" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "')"; else echo NULL; fi ),
+  "dataset_id" = $( if [ ! -z ${VIASH_PAR_DATASET_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_DATASET_ID" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "swap" = $( if [ ! -z ${VIASH_PAR_SWAP+x} ]; then echo -n "as.logical(toupper('"; echo -n "$VIASH_PAR_SWAP" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'))"; else echo NULL; fi )
 )
 meta <- list(
@@ -3567,14 +3632,21 @@ ad2 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_mod2 else par\\$input_mod
 ad1_mod <- unique(ad1\\$var[["feature_types"]])
 ad2_mod <- unique(ad2\\$var[["feature_types"]])
 
-# determine new dataset id
-new_dataset_id <- paste0(ad1\\$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
-
 # determine new uns
-uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism")
-ad1_uns <- ad2_uns <- ad1\\$uns[uns_vars]
+uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id")
+ad1_uns <- ad1\\$uns[uns_vars]
+ad2_uns <- ad2\\$uns[uns_vars]
 ad1_uns\\$modality <- ad1_mod
 ad2_uns\\$modality <- ad2_mod
+
+# Create new dataset id and name depending on the modality
+if (!is.null(par\\$dataset_id)) {
+  ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns\\$dataset_id
+  ad1_uns\\$dataset_id <- ad2_uns\\$dataset_id <- par\\$dataset_id
+}
+
+new_dataset_name <- paste0(ad1_uns\\$dataset_name, " (", ad1_mod, "2", ad2_mod, ")")
+ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name
 
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()

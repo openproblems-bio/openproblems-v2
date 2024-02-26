@@ -414,9 +414,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_dataset_info"
-LABEL org.opencontainers.image.created="2024-02-06T12:34:09Z"
+LABEL org.opencontainers.image.created="2024-02-26T08:18:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e3c59971146b6d022bdf73d3c3ebe366c6a4144b"
+LABEL org.opencontainers.image.revision="631077328123de89bfe95941faa6e1796d9d597c"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -928,6 +928,10 @@ outputs <- map(datasets, function(dataset) {
     "data_reference" = dataset\$dataset_reference %||% NA_character_,
     "data_url" = dataset\$dataset_url %||% NA_character_
   )
+
+  if (!is.null(dataset[["common_dataset_id"]])) {
+    out[["common_dataset_id"]] <- dataset[["common_dataset_id"]]
+  }
 
   # show warning when certain data is missing and return null?
   for (n in names(out)) {

@@ -42,13 +42,29 @@ workflow run_wf {
 
     // extract the dataset metadata
     | extract_metadata.run(
+      key: "metadata_mod1",
       fromState: [input: "input_train_mod1"],
       toState: { id, output, state ->
         state + [
-          dataset_uns: readYaml(output.output).uns
+          dataset_uns_mod1: readYaml(output.output).uns
         ]
       }
     )
+
+    | extract_metadata.run(
+      key: "metadata_mod2",
+      fromState: [input: "input_test_mod2"],
+      toState: { id, output, state ->
+        state + [
+          dataset_uns_mod2: readYaml(output.output).uns
+        ]
+      }
+    )
+
+    | map{ id, state ->
+      def rna_norm = state.dataset_uns_mod1.modality == "GEX" ? state.dataset_uns_mod1.normalization_id : state.dataset_uns_mod2.normalization_id
+      [id, state + [rna_norm: rna_norm]]
+    }
 
   /***************************
    * RUN METHODS AND METRICS *
@@ -59,14 +75,14 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      // // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      // filter: { id, state, comp ->
-      //   def norm = state.normalization_id
-      //   def pref = comp.config.functionality.info.preferred_normalization
-      //   // if the preferred normalisation is none at all,
-      //   // we can pass whichever dataset we want
-      //   (norm == "log_cp10k" && pref == "counts") || norm == pref
-      // },
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      filter: { id, state, comp ->
+        def norm = state.rna_norm
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        (norm == "log_cp10k" && pref == "counts") || norm == pref
+      },
 
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
@@ -124,12 +140,12 @@ workflow run_wf {
   dataset_meta_ch = dataset_ch
     // only keep one of the normalization methods
     | filter{ id, state ->
-      state.dataset_uns.normalization_id == "log_cp10k"
+      state.rna_norm == "log_cp10k"
     }
     | joinStates { ids, states ->
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
-        def uns = state.dataset_uns.clone()
+        def uns = state.dataset_uns_mod2.clone()
         uns.remove("normalization_id")
         uns
       }
@@ -191,7 +207,7 @@ workflow run_wf {
       def mergedStates = states.inject([:]) { acc, m -> acc + m }
       [ids[0], mergedStates]
     }
-    
+
   emit:
   output_ch
 }

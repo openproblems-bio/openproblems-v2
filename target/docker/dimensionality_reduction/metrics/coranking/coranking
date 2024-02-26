@@ -410,9 +410,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("coRanking", "bit64"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics coranking"
-LABEL org.opencontainers.image.created="2024-02-06T12:34:06Z"
+LABEL org.opencontainers.image.created="2024-02-26T08:18:50Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e3c59971146b6d022bdf73d3c3ebe366c6a4144b"
+LABEL org.opencontainers.image.revision="631077328123de89bfe95941faa6e1796d9d597c"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

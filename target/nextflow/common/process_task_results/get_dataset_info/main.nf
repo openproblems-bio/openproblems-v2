@@ -2880,7 +2880,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_dataset_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2952,6 +2952,10 @@ outputs <- map(datasets, function(dataset) {
     "data_reference" = dataset\\$dataset_reference %||% NA_character_,
     "data_url" = dataset\\$dataset_url %||% NA_character_
   )
+
+  if (!is.null(dataset[["common_dataset_id"]])) {
+    out[["common_dataset_id"]] <- dataset[["common_dataset_id"]]
+  }
 
   # show warning when certain data is missing and return null?
   for (n in names(out)) {

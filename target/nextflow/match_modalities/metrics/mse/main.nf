@@ -3124,8 +3124,8 @@ meta = [
           "label" : "Mean Squared Error",
           "name" : "mse",
           "summary" : "Compute the mean squared error.",
-          "description" : "The mean squared error (MSE) is a measure of the quality of an estimator. It is always non-negative, and values closer to zero are better.\n",
-          "reference" : "",
+          "description" : "Mean squared error (MSE) is the average distance between each pair of matched observations of the same cell in the learned latent space. Lower is better.\n",
+          "reference" : "lance2022multimodal",
           "maximize" : true,
           "min" : 0,
           "max" : "+.inf",
@@ -3211,7 +3211,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse",
     "viash_version" : "0.8.0",
-    "git_commit" : "e3c59971146b6d022bdf73d3c3ebe366c6a4144b",
+    "git_commit" : "631077328123de89bfe95941faa6e1796d9d597c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
