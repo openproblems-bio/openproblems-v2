@@ -75,7 +75,7 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      // // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
         def norm = state.rna_norm
         def pref = comp.config.functionality.info.preferred_normalization
