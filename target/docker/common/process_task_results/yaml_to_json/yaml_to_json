@@ -412,9 +412,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results yaml_to_json"
-LABEL org.opencontainers.image.created="2024-02-23T20:38:16Z"
+LABEL org.opencontainers.image.created="2024-02-26T10:38:37Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c893d648a59409582b775234e4249f51c48d0dbd"
+LABEL org.opencontainers.image.revision="524f3896da354d933456602890e367c8b03d6377"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

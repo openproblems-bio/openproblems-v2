@@ -3210,7 +3210,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/clustering_overlap",
     "viash_version" : "0.8.0",
-    "git_commit" : "c893d648a59409582b775234e4249f51c48d0dbd",
+    "git_commit" : "524f3896da354d933456602890e367c8b03d6377",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
