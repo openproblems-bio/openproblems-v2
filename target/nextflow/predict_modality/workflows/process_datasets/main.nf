@@ -3468,7 +3468,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3490,7 +3490,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3512,7 +3512,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3558,7 +3558,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+    "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3659,10 +3659,9 @@ workflow run_wf {
         // Example new id: dataset_loader/dataset_id/direction/normalization_id
         def left = id.replaceAll("/${state.normalization_id}\$", "")
         def right = id.replaceAll("^${left}", "")
-        def new_dataset_id = left + "/" + dir
-        def new_id =  new_dataset_id + right
+        def new_id = left + "/" + dir + right
 
-        [new_id, state + [dataset_id:  new_dataset_id, direction: dir, "_meta": [join_id: id]]]
+        [new_id, state + [direction: dir, "_meta": [join_id: id]]]
       }
     }
 
@@ -3670,7 +3669,7 @@ workflow run_wf {
       fromState: { id, state ->
         def swap_state = state.direction == "swap" ? true : false
         [
-          dataset_id: state.dataset_id,
+          dataset_id: id,
           input_mod1: state.dataset_mod1,
           input_mod2: state.dataset_mod2,
           output_train_mod1: state.output_train_mod1,

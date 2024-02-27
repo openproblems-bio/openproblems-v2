@@ -3252,21 +3252,6 @@ meta = [
             "dest" : "par"
           }
         ]
-      },
-      {
-        "name" : "Methods",
-        "arguments" : [
-          {
-            "type" : "string",
-            "name" : "--method_ids",
-            "description" : "A list of method ids to run. If not specified, all methods will be run.",
-            "required" : false,
-            "direction" : "input",
-            "multiple" : true,
-            "multiple_sep" : ":",
-            "dest" : "par"
-          }
-        ]
       }
     ],
     "resources" : [
@@ -3302,7 +3287,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3324,7 +3309,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3346,7 +3331,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
@@ -3368,7 +3353,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/control_methods/random_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
@@ -3390,7 +3375,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/control_methods/zeros/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
@@ -3412,7 +3397,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/control_methods/solution/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
@@ -3434,7 +3419,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/methods/knnr_py/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
@@ -3456,7 +3441,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/methods/knnr_r/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
@@ -3478,7 +3463,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/methods/lm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
@@ -3500,7 +3485,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
@@ -3522,7 +3507,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/methods/random_forest/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
@@ -3544,7 +3529,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
@@ -3566,7 +3551,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+          "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
           "executable" : "/nextflow/predict_modality/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
@@ -3612,7 +3597,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "cd2924f4643aa18384b0fc9ea7d959aa97b4e644",
+    "git_commit" : "e3e3c19856526dbfd9906ad0054510ebd6551e0f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3713,16 +3698,13 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      // // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
         def norm = state.rna_norm
         def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
-        def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
-        def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
-
-        method_check && norm_check
+        (norm == "log_cp10k" && pref == "counts") || norm == pref
       },
 
       // define a new 'id' by appending the method name to the dataset id
