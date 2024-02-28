@@ -7,7 +7,7 @@ functionality:
     summary: "Positive control method that assigns celltype proportions from the ground truth."
     description: |
       A positive control method with perfect assignment of predicted celltype proportions from the ground truth.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
 
   resources:
     - type: python_script

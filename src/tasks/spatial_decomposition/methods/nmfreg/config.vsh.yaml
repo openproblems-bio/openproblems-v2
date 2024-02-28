@@ -7,7 +7,7 @@ functionality:
     summary: "NMFreg reconstructs gene expression as a weighted combination of cell type signatures defined by scRNA-seq."
     description: |
       Non-Negative Matrix Factorization regression (NMFreg) is a decomposition method that reconstructs expression of each spatial location as a weighted combination of cell-type signatures defined by scRNA-seq. It was originally developed for Slide-seq data. This is a re-implementation from https://github.com/tudaga/NMFreg_tutorial.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     reference: "rodriques2019slide"
     documentation_url: https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html
     repository_url: https://github.com/tudaga/NMFreg_tutorial/tree/master?tab=readme-ov-file

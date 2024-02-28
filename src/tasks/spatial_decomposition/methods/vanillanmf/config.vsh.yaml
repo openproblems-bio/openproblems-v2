@@ -7,7 +7,7 @@ functionality:
     summary: "NMF reconstructs gene expression as a weighted combination of cell type signatures defined by scRNA-seq."
     description: |
       NMF is a decomposition method based on Non-negative Matrix Factorization (NMF) that reconstructs expression of each spatial location as a weighted combination of cell-type signatures defined by scRNA-seq. It is a simpler baseline than NMFreg as it only performs the NMF step based on mean expression signatures of cell types, returning the weights loading of the NMF as (normalized) cell type proportions, without the regression step.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     reference: cichocki2009fast
     documentation_url: https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.NMF.html
     repository_url: https://github.com/scikit-learn/scikit-learn/blob/92c9b1866/sklearn/decomposition/

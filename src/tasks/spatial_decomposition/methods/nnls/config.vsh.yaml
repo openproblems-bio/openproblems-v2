@@ -7,7 +7,7 @@ functionality:
     summary: "NNLS is a decomposition method based on Non-Negative Least Square Regression."
     description: |
       NonNegative Least Squares (NNLS), is a convex optimization problem with convex constraints. It was used by the AutoGeneS method to infer cellular proporrtions by solvong a multi-objective optimization problem.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     reference: "aliee2021autogenes"
     documentation_url: https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.nnls.html
     repository_url: https://github.com/scipy/scipy

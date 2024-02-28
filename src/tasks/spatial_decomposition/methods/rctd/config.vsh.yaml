@@ -7,7 +7,7 @@ functionality:
     summary: "RCTD learns cell type profiles from scRNA-seq to decompose cell type mixtures while correcting for differences across sequencing technologies."
     description: |
       RCTD (Robust Cell Type Decomposition) is a decomposition method that uses signatures learnt from single-cell data to decompose spatial expression of tissues. It is able to use a platform effect normalization step, which normalizes the scRNA-seq cell type profiles to match the platform effects of the spatial transcriptomics dataset.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     reference: cable2021robust
     documentation_url: https://raw.githack.com/dmcable/spacexr/master/vignettes/spatial-transcriptomics.html
     repository_url: https://github.com/dmcable/spacexr

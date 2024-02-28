@@ -8,7 +8,7 @@ functionality:
     summary: "Stereoscope is a decomposition method based on Negative Binomial regression."
     description: |
       Stereoscope is a decomposition method based on Negative Binomial regression. It is similar in scope and implementation to cell2location but less flexible to incorporate additional covariates such as batch effects and other type of experimental design annotations.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     reference: andersson2020single
     documentation_url: https://docs.scvi-tools.org/en/stable/user_guide/models/stereoscope.html
     repository_url: https://github.com/scverse/scvi-tools

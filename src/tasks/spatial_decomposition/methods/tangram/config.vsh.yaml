@@ -7,7 +7,7 @@ functionality:
     summary: "Tanagram maps single-cell gene expression data onto spatial gene expression data by fitting gene expression on shared genes"
     description: |
       Tangram is a method to map gene expression signatures from scRNA-seq data to spatial data. It performs the cell type mapping by learning a similarity matrix between single-cell and spatial locations based on gene expression profiles.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     reference: biancalani2021deep
     documentation_url: https://tangram-sc.readthedocs.io/en/latest/index.html
     repository_url: https://github.com/broadinstitute/Tangram

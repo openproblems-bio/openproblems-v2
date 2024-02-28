@@ -7,7 +7,7 @@ functionality:
     summary: "Negative control method that randomly assigns celltype proportions from a Dirichlet distribution."
     description: |
       A negative control method with random assignment of predicted celltype proportions from a Dirichlet distribution.
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
 
   resources:
     - type: python_script
