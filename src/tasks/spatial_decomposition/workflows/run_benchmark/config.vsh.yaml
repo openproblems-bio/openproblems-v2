@@ -1,6 +1,6 @@
 functionality:
   name: "run_benchmark"
-  namespace: "dimensionality_reduction/workflows"
+  namespace: "spatial_decomposition/workflows"
   argument_groups:
     - name: Inputs
       arguments:
