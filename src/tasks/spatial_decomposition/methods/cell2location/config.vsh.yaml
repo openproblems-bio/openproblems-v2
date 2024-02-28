@@ -10,6 +10,19 @@ functionality:
       Cell2location is a decomposition method based on Negative Binomial regression that is able to account for batch effects in estimating the single-cell gene expression signature used for the spatial decomposition step. 
       Note that when batch information is unavailable for this task, we can use either a hard-coded reference, or a negative-binomial learned reference without batch labels. The parameter alpha refers to the detection efficiency prior.
     preferred_normalization: counts
+    variants: 
+      cell2location_amortised_detection_alpha_20:
+        detection_alpha: 20
+        amortised: true
+      cell2location_detection_alpha_1:
+        detection_alpha: 1
+      cell2location_detection_alpha_20:
+        detection_alpha: 20
+      cell2location_detection_alpha_20_nb:
+        detection_alpha: 20
+        hard_coded_reference: false
+      cell2location_detection_alpha_200:
+        detection_alpha: 200
     reference: "kleshchevnikov2022cell2location"
     documentation_url: https://cell2location.readthedocs.io/en/latest/
     repository_url: https://github.com/BayraktarLab/cell2location
