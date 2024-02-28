@@ -53,6 +53,10 @@ info:
         description: The organism of the sample in the dataset.
         required: false
       - type: string
+        name: ccc_target
+        description: assumed truth value. A pandas data frame containing response, source, and target
+        required: true
+      - type: string
         name: normalization_id
         description: "Which normalization was used"
         required: true
