@@ -9,7 +9,7 @@ functionality:
     - name: --alpha
       type: double
       description: Alpha value to use for generating synthetic dataset
-      default: 1
+      default: 1.0
     - name: --simulated_data
       type: file
       direction: output
