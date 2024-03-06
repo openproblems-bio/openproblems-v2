@@ -418,9 +418,9 @@ RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.pa
   Rscript -e 'if (!requireNamespace("batchelor", quietly = TRUE)) BiocManager::install("batchelor")'
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/methods fastmnn"
-LABEL org.opencontainers.image.created="2024-03-04T17:34:34Z"
+LABEL org.opencontainers.image.created="2024-03-06T15:26:00Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="28067c55104c5c9d30b1b5f9fe993ea7ed649b28"
+LABEL org.opencontainers.image.revision="69140a224584215bf30677f6d7bf05e5155caae3"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
