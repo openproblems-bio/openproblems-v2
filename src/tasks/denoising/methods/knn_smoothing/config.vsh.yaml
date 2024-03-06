@@ -38,4 +38,4 @@ platforms:
           - scottgigante-immunai/knn-smoothing@python_package
   - type: nextflow
     directives: 
-      label: [ midtime, highmem, highcpu, highdisk ]
+      label: [ midtime, highmem, highcpu ]
