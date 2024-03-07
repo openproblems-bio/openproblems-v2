@@ -414,9 +414,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/control_methods random_labels"
-LABEL org.opencontainers.image.created="2024-03-06T15:25:58Z"
+LABEL org.opencontainers.image.created="2024-03-07T14:48:00Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="69140a224584215bf30677f6d7bf05e5155caae3"
+LABEL org.opencontainers.image.revision="d3ecb1da3c76fe24ec21d7d4a1498647a2c26b73"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
