@@ -35,15 +35,14 @@ def convert_matrix(adata):
   for key in adata:
       if isinstance(adata[key], sparse.csr_matrix):
         adata[key] = sparse.csc_matrix(adata[key])
-  return adata
       
 
 print("load dataset file", flush=True)
 adata = ad.read_h5ad(par["input"])
 
-# Convert to sparsce csc_matrix
-adata.layers = convert_matrix(adata.layers)
-adata.obsm = convert_matrix(adata.obsm)
+# Convert to sparse csc_matrix
+convert_matrix(adata.layers)
+convert_matrix(adata.obsm)
 
 # Add is_train to obs if it is missing
 if "is_train" not in adata.obs.columns:
