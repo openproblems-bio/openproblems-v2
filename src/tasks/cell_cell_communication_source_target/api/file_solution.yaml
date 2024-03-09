@@ -53,8 +53,20 @@ info:
         description: The organism of the sample in the dataset.
         required: false
       - type: string
+        name: ccc_source
+        description: The cell type that initiates the communication signal. This serves as the ground-truth cell-cell communication (CCC) information. This vector contains one value per CCC interaction.
+        required: true
+      - type: string
         name: ccc_target
-        description: assumed truth value. A pandas data frame containing response, source, and target
+        description: The cell type which is intended to receive the communicational signal. This vector needs to be of the same length as `ccc_source`.
+        required: true
+      - type: string
+        name: ccc_ligand
+        description: The gene of the signalling molecule released by the source cell. This vector needs to be of the same length as `ccc_source`.
+        required: true
+      - type: string
+        name: ccc_receptor
+        description: The gene of the protein on the surface of the target cell that the ligand specifically binds to. This vector needs to be of the same length as `ccc_source`.
         required: true
       - type: string
         name: normalization_id
