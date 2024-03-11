@@ -441,9 +441,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("lmds", "FNN", "proxy", "proxyC"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods newwave_knnr"
-LABEL org.opencontainers.image.created="2024-03-11T14:21:14Z"
+LABEL org.opencontainers.image.created="2024-03-11T15:06:42Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1d1e93452d8edbe919345587ecf0c44ce033551f"
+LABEL org.opencontainers.image.revision="43d86e0fe2d908f0f73be63028ae0751a4c664aa"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -756,8 +756,8 @@ fi
 ViashDockerSetup 'ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build' ifneedbepullelsecachedbuild
 
 if [ $VIASH_MODE == "docker_debug" ]; then
-  ViashNotice "+ docker run --entrypoint=bash -i --rm --shm_size=25gb -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build'"
-  docker run --entrypoint=bash -i --rm --shm_size=25gb -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build'
+  ViashNotice "+ docker run --entrypoint=bash -i --rm --shm-size=25gb -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build'"
+  docker run --entrypoint=bash -i --rm --shm-size=25gb -v "$(pwd)":/pwd --workdir /pwd -t 'ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build'
   exit 0
 fi
 
@@ -985,7 +985,7 @@ VIASH_UNIQUE_MOUNTS=($(for val in "${VIASH_EXTRA_MOUNTS[@]}"; do echo "$val"; do
 function ViashPerformChown {
   if (( ${#VIASH_CHOWN_VARS[@]} )); then
     set +e
-    eval docker run --entrypoint=chown -i --rm --shm_size=25gb ${VIASH_UNIQUE_MOUNTS[@]} ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build "$(id -u):$(id -g)" --silent --recursive ${VIASH_CHOWN_VARS[@]}
+    eval docker run --entrypoint=chown -i --rm --shm-size=25gb ${VIASH_UNIQUE_MOUNTS[@]} ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build "$(id -u):$(id -g)" --silent --recursive ${VIASH_CHOWN_VARS[@]}
     set -e
   fi
 }
@@ -1004,8 +1004,8 @@ fi
 # set dependency paths
 
 
-ViashDebug "Running command: $(echo docker run --entrypoint=bash -i --rm --shm_size=25gb ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build)"
-cat << VIASHEOF | eval docker run --entrypoint=bash -i --rm --shm_size=25gb ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build
+ViashDebug "Running command: $(echo docker run --entrypoint=bash -i --rm --shm-size=25gb ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build)"
+cat << VIASHEOF | eval docker run --entrypoint=bash -i --rm --shm-size=25gb ${VIASH_UNIQUE_MOUNTS[@]} $VIASH_EXTRA_DOCKER_ARGS ghcr.io/openproblems-bio/predict_modality/methods/newwave_knnr:integration_build
 set -e
 tempscript=\$(mktemp "$VIASH_META_TEMP_DIR/viash-run-newwave_knnr-XXXXXX").R
 function clean_up {
