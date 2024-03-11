@@ -3227,14 +3227,6 @@ meta = [
             "NewWave"
           ],
           "bioc_force_install" : false
-        },
-        {
-          "type" : "r",
-          "github" : [
-            "Jiefei-Wang/SharedObject",
-            "fedeago/NewWave"
-          ],
-          "bioc_force_install" : false
         }
       ]
     },
@@ -3280,7 +3272,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr",
     "viash_version" : "0.8.0",
-    "git_commit" : "27fae2828264ff05259b39e985de18fd206fc105",
+    "git_commit" : "1d1e93452d8edbe919345587ecf0c44ce033551f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3356,8 +3348,17 @@ input_test_mod1 <- anndata::read_h5ad(par\\$input_test_mod1)
 batch1 <- c(as.character(input_train_mod1\\$obs\\$batch), as.character(input_test_mod1\\$obs\\$batch))
 batch2 <- as.character(input_train_mod1\\$obs\\$batch)
 
+# create SummarizedExperiment object
 data1 <- SummarizedExperiment::SummarizedExperiment(
-  assays = list(counts = cbind(t(input_train_mod1\\$layers[["counts"]]), t(input_test_mod1\\$layers[["counts"]]))),
+  assays = list(
+    counts = as(
+      cbind(
+        t(input_train_mod1\\$layers[["counts"]]),
+        t(input_test_mod1\\$layers[["counts"]])
+      ),
+      "CsparseMatrix"
+    )
+  ),
   colData = data.frame(batch = factor(batch1))
 )
 data1 <- data1[Matrix::rowSums(SummarizedExperiment::assay(data1)) > 0, ]

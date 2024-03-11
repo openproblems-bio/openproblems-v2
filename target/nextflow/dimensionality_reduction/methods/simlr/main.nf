@@ -3042,7 +3042,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/simlr",
     "viash_version" : "0.8.0",
-    "git_commit" : "27fae2828264ff05259b39e985de18fd206fc105",
+    "git_commit" : "1d1e93452d8edbe919345587ecf0c44ce033551f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3103,13 +3103,15 @@ rm(.viash_orig_warn)
 cat("Reading input files\\\\n")
 input <- anndata::read_h5ad(par\\$input)
 
+X <- t(as.matrix(input\\$layers[["normalized"]]))
+
 if (is.null(par\\$n_clusters)) {
   cat("Estimating the number of clusters\\\\n")
   set.seed(1)
   NUMC = 2:5
   estimates <- SIMLR::SIMLR_Estimate_Number_of_Clusters(
-    X = as.matrix(input\\$layers[["normalized"]]), 
-    NUMC = NUMC, 
+    X = X,
+    NUMC = NUMC,
     cores.ratio = par\\$cores_ratio
   )
   n_clusters <- NUMC[which.min(estimates\\$K2)]
@@ -3125,12 +3127,12 @@ if (is.null(par\\$n_dim)) {
 
 cat("Running SIMLR\\\\n")
 simlr_result <- SIMLR::SIMLR(
-  X = as.matrix(input\\$layers[["normalized"]]), 
-  c = n_clusters, 
-  no.dim = n_dim, 
-  k = par\\$tuning_param, 
-  if.impute = par\\$impute, 
-  normalize = par\\$normalize, 
+  X = X,
+  c = n_clusters,
+  no.dim = n_dim,
+  k = par\\$tuning_param,
+  if.impute = par\\$impute,
+  normalize = par\\$normalize,
   cores.ratio = par\\$cores_ratio
 )
 obsm_X_emb <- simlr_result\\$ydata
@@ -3144,7 +3146,7 @@ output <- anndata::AnnData(
   ),
   obsm = list(
     X_emb = obsm_X_emb
-  ), 
+  ),
   shape = input\\$shape
 )
 output\\$write_h5ad(par\\$output, compression = "gzip")
