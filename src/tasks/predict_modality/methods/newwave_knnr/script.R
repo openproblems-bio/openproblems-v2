@@ -5,7 +5,6 @@ requireNamespace("NewWave", quietly = TRUE)
 requireNamespace("FNN", quietly = TRUE)
 requireNamespace("SingleCellExperiment", quietly = TRUE)
 
-
 ## VIASH START
 path <- "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/"
 par <- list(
