@@ -2954,7 +2954,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/denoising/methods/alra",
     "viash_version" : "0.8.0",
-    "git_commit" : "fbfebe255f1649f70f4cb1bcfbf3c5823cc9f366",
+    "git_commit" : "72a6f4eafbdf171f5802f98382760e29b925054c",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
