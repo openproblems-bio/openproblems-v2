@@ -17,8 +17,8 @@ meta <- list(
 ## VIASH END
 
 cat("Reading input files\n")
-input_single_cell <- anndata::read_h5ad(par[["input_single_cell"]])
-input_spatial <- anndata::read_h5ad(par[["input_spatial"]])
+input_single_cell <- anndata::read_h5ad(par$input_single_cell)
+input_spatial <- anndata::read_h5ad(par$input_spatial)
 
 # set spatial coordinates for the single cell data
 coordinates <- matrix(1, dim(input_single_cell)[1], 2)

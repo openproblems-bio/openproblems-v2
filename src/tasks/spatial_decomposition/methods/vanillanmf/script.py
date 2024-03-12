@@ -17,7 +17,7 @@ meta = {
 
 print('Reading input files', flush=True)
 input_single_cell = ad.read_h5ad(par['input_single_cell'])
-input_spatial = ad.read_h5ad(par['input_spatial'])
+input_spatial = ad.read_h5ad(par['input_spatial_masked'])
 
 print('Generate predictions', flush=True)
 

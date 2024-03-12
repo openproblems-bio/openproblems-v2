@@ -4,7 +4,7 @@ import sys
 ## VIASH START
 par = {
     "input": "resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad",
-    # "input": "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/dataset_simulated.h5ad",
+    # "input": "resources_test/spatial_decomposition/pancreas/dataset_simulated.h5ad",
     "output_spatial_masked": "spatial_masked.h5ad",
     "output_single_cell": "single_cell_ref.h5ad",
     "output_solution": "solution.h5ad",

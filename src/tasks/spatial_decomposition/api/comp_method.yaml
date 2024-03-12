@@ -11,7 +11,7 @@ functionality:
       __merge__: file_single_cell.yaml
       direction: input
       required: true
-    - name: "--input_spatial"
+    - name: "--input_spatial_masked"
       __merge__: file_spatial_masked.yaml
       direction: input
       required: true

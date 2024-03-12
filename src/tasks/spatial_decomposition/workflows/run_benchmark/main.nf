@@ -39,7 +39,7 @@ workflow run_wf {
     | map{ id, state -> 
       [id, state + ["_meta": [join_id: id]]]
     }
-
+    
     // extract the dataset metadata
     | extract_metadata.run(
       fromState: [input: "input_solution"],
@@ -59,15 +59,6 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, comp ->
-        def norm = state.dataset_uns.normalization_id
-        def pref = comp.config.functionality.info.preferred_normalization
-        // if the preferred normalisation is none at all,
-        // we can pass whichever dataset we want
-        (norm == "log_cp10k" && pref == "counts") || norm == pref
-      },
-
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
         id + "." + comp.config.functionality.name
@@ -76,7 +67,8 @@ workflow run_wf {
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: { id, state, comp ->
         def new_args = [
-          input: state.input_dataset
+          input_single_cell: state.input_single_cell, 
+          input_spatial_masked: state.input_spatial_masked
         ]
         if (comp.config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
@@ -103,7 +95,7 @@ workflow run_wf {
       fromState: { id, state, comp ->
         [
           input_solution: state.input_solution,
-          input_embedding: state.method_output
+          input_method: state.method_output
         ]
       },
       // use 'toState' to publish that component's outputs to the overall state
@@ -122,10 +114,6 @@ workflow run_wf {
 
   // extract the dataset metadata
   dataset_meta_ch = dataset_ch
-    // only keep one of the normalization methods
-    | filter{ id, state ->
-      state.dataset_uns.normalization_id == "log_cp10k"
-    }
     | joinStates { ids, states ->
       // store the dataset metadata in a file
       def dataset_uns = states.collect{state ->
