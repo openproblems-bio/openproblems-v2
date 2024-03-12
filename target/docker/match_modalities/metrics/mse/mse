@@ -422,9 +422,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component match_modalities/metrics mse"
-LABEL org.opencontainers.image.created="2024-03-12T12:13:20Z"
+LABEL org.opencontainers.image.created="2024-03-12T14:50:31Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0ae327f0bc7f1171985bfc49a4efde9d2d7b3283"
+LABEL org.opencontainers.image.revision="fbfebe255f1649f70f4cb1bcfbf3c5823cc9f366"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

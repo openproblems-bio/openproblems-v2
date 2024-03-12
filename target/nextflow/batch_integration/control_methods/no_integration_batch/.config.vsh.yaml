@@ -245,5 +245,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/no_integration_batch"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/no_integration_batch/no_integration_batch"
   viash_version: "0.8.0"
-  git_commit: "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283"
+  git_commit: "fbfebe255f1649f70f4cb1bcfbf3c5823cc9f366"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
