@@ -29,7 +29,6 @@ platforms:
         pypi:
           - umap-learn[plot]
           - pyliger
-          - dask-expr
   - type: nextflow
     directives:
       label: [ lowcpu, highmem, midtime ]
