@@ -426,9 +426,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/normalization sqrt_cp"
-LABEL org.opencontainers.image.created="2024-03-11T15:06:37Z"
+LABEL org.opencontainers.image.created="2024-03-12T09:21:11Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="43d86e0fe2d908f0f73be63028ae0751a4c664aa"
+LABEL org.opencontainers.image.revision="4605ee3b5e035fb260257a84877e035eb055979f"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
