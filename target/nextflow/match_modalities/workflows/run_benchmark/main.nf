@@ -3126,6 +3126,21 @@ meta = [
             "dest" : "par"
           }
         ]
+      },
+      {
+        "name" : "Methods",
+        "arguments" : [
+          {
+            "type" : "string",
+            "name" : "--method_ids",
+            "description" : "A list of method ids to run. If not specified, all methods will be run.",
+            "required" : false,
+            "direction" : "input",
+            "multiple" : true,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
       }
     ],
     "resources" : [
@@ -3161,7 +3176,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3183,7 +3198,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3205,7 +3220,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/control_methods/random_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/random_features"
@@ -3227,7 +3242,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/control_methods/true_features/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/control_methods/true_features"
@@ -3249,7 +3264,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/methods/fastmnn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/fastmnn"
@@ -3271,7 +3286,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/methods/scot/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot"
@@ -3293,7 +3308,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/methods/harmonic_alignment/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/harmonic_alignment"
@@ -3315,7 +3330,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/methods/procrustes/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/procrustes"
@@ -3337,7 +3352,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/metrics/knn_auc/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc"
@@ -3359,7 +3374,7 @@ meta = [
           "functionalityNamespace" : "match_modalities/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+          "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
           "executable" : "/nextflow/match_modalities/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse"
@@ -3405,7 +3420,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "83fc635afcbd0309c1741f26608ffebada4b5ae0",
+    "git_commit" : "0ae327f0bc7f1171985bfc49a4efde9d2d7b3283",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3485,11 +3500,14 @@ workflow run_wf {
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
-      def norm = state.dataset_uns.normalization_id
-      def pref = comp.config.functionality.info.preferred_normalization
-      // if the preferred normalisation is none at all,
-      // we can pass whichever dataset we want
-      (norm == "log_cp10k" && pref == "counts") || norm == pref
+        def norm = state.dataset_uns.normalization_id
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
+        def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
+
+        method_check && norm_check
       },
 
       // define a new 'id' by appending the method name to the dataset id
