@@ -422,9 +422,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pymde"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods pymde"
-LABEL org.opencontainers.image.created="2024-03-13T21:40:22Z"
+LABEL org.opencontainers.image.created="2024-03-13T22:12:13Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="544e1b552b0a378846c681ae2c176ab9391395bb"
+LABEL org.opencontainers.image.revision="121a5b75f10f761ec76bc01dfeef1d8dc9192511"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
