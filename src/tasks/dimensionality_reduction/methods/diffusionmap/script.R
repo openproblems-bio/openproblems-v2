@@ -12,10 +12,7 @@ par <- list(
 cat("Reading input files\n")
 input <- anndata::read_h5ad(par$input)
 
-# TODO: if we wanted to, we could compute the distance
-# matrix in batches. This would be useful for large datasets.
 cat("Running destiny diffusion map\n")
-
 # create SummarizedExperiment object
 sce <- SingleCellExperiment::SingleCellExperiment(
   assays = list(
