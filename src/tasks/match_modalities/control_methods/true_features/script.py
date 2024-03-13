@@ -35,7 +35,7 @@ output_mod2 = ad.AnnData(
   obs=adata_mod2.obs[[]],
   var=adata_mod2.var[[]],
   obsm={
-    "integrated": adata_mod2.obsm["X_svd"]
+    "integrated": adata_mod1.obsm["X_svd"]
   },
   uns={
     "dataset_id": adata_mod2.uns["dataset_id"],
