@@ -3137,7 +3137,7 @@ meta = [
           "label" : "kNN Area Under the Curve",
           "name" : "knn_auc",
           "summary" : "Compute the kNN Area Under the Curve",
-          "description" : "Let $f(i) \\\\u2208 F$ be the scRNA-seq measurement of cell $i$, and $g(i) \\\\u2208 G$ be the scATAC- seq measurement of cell $i$. kNN-AUC calculates the average percentage overlap of neighborhoods of $f(i)$ in $F$ with neighborhoods of $g(i)$ in $G$. Higher is better.\n",
+          "description" : "Let $f(i) \\\\in F$ be the scRNA-seq measurement of cell $i$, and $g(i) \\\\in G$ be the scATAC- seq measurement of cell $i$. kNN-AUC calculates the average percentage overlap of neighborhoods of $f(i)$ in $F$ with neighborhoods of $g(i)$ in $G$. Higher is better.\n",
           "reference" : "lance2022multimodal",
           "min" : 0,
           "max" : 1,
@@ -3224,7 +3224,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc",
     "viash_version" : "0.8.0",
-    "git_commit" : "922d086d4cccba4b64f487a920d216528fc07622",
+    "git_commit" : "0aaef65e5acad35e2fbc0648f6375af4f61c732a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
