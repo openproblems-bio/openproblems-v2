@@ -183,7 +183,7 @@ function ViashHelp {
   echo ""
   echo "    --n_dim"
   echo "        type: integer"
-  echo "        default: 3"
+  echo "        default: 2"
   echo "        Number of dimensions."
   echo ""
   echo "    --n_landmarks"
@@ -423,9 +423,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("Matrix", "lmds"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods lmds"
-LABEL org.opencontainers.image.created="2024-03-13T10:55:42Z"
+LABEL org.opencontainers.image.created="2024-03-13T21:40:20Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0aaef65e5acad35e2fbc0648f6375af4f61c732a"
+LABEL org.opencontainers.image.revision="544e1b552b0a378846c681ae2c176ab9391395bb"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -784,7 +784,7 @@ fi
 
 # filling in defaults
 if [ -z ${VIASH_PAR_N_DIM+x} ]; then
-  VIASH_PAR_N_DIM="3"
+  VIASH_PAR_N_DIM="2"
 fi
 if [ -z ${VIASH_PAR_N_LANDMARKS+x} ]; then
   VIASH_PAR_N_LANDMARKS="1000"

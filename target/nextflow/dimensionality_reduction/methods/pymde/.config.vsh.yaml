@@ -1,5 +1,5 @@
 functionality:
-  name: "diffusion_maps"
+  name: "pymde"
   namespace: "dimensionality_reduction/methods"
   version: "main_build"
   arguments:
@@ -75,35 +75,36 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  - type: "integer"
-    name: "--n_comps"
-    description: "Number of components to use for the embedding."
+  - type: "string"
+    name: "--embed_method"
+    description: "The method to use for embedding. Options are 'umap' and 'tsne'."
     info: null
     default:
-    - 2
+    - "neighbors"
+    required: false
+    choices:
+    - "neighbors"
+    - "distances"
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_hvg"
+    description: "Number of highly variable genes to subset to. If not specified,\
+      \ the input matrix will not be subset."
+    info: null
     required: false
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "integer"
-    name: "t"
-    description: "Number to power the eigenvalues by."
+    name: "--n_pca_dims"
+    description: "Number of principal components to use for the initial PCA step."
     info: null
     default:
-    - 1
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "n_retries"
-    description: "Number of times to retry if the embedding fails, each time adding\
-      \ noise."
-    info: null
-    default:
-    - 1
+    - 100
     required: false
     direction: "input"
     multiple: false
@@ -126,19 +127,18 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    label: "Diffusion maps"
-    summary: "Positive control by Use 1000-dimensional diffusions maps as an embedding."
-    description: "This serves as a positive control since it uses 1000-dimensional\
-      \ diffusions maps as an embedding"
-    reference: "coifman2006diffusion"
-    documentation_url: "https://github.com/openproblems-bio/openproblems"
-    repository_url: "https://github.com/openproblems-bio/openproblems"
+    label: "PyMDE"
+    summary: "A Python implementation of Minimum-Distortion Embedding"
+    description: "PyMDE is a Python implementation of Minimum-Distortion Embedding.\
+      \ It is a non-linear\nmethod that preserves distances between cells or neighbourhoods\
+      \ in the original space.\n"
+    reference: "agrawal2021mde"
+    repository_url: "https://github.com/cvxgrp/pymde"
+    documentation_url: "https://pymde.org"
     v1:
-      path: "openproblems/tasks/dimensionality_reduction/methods/diffusion_map.py"
+      path: "openproblems/tasks/dimensionality_reduction/methods/pymde.py"
       commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     preferred_normalization: "log_cp10k"
-    variants:
-      diffusion_map: null
     type: "method"
     type_info:
       label: "Method"
@@ -161,10 +161,8 @@ platforms:
   setup:
   - type: "python"
     user: false
-    pypi:
-    - "umap-learn"
-    - "scipy"
-    - "numpy"
+    packages:
+    - "pymde"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -197,10 +195,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/diffusion_map/config.vsh.yaml"
-  platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/diffusion_maps"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/diffusion_maps/diffusion_maps"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/pymde/config.vsh.yaml"
+  platform: "nextflow"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pymde"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pymde/pymde"
   viash_version: "0.8.0"
-  git_commit: "0aaef65e5acad35e2fbc0648f6375af4f61c732a"
+  git_commit: "544e1b552b0a378846c681ae2c176ab9391395bb"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

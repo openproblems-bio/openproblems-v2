@@ -111,7 +111,7 @@ functionality:
       \ first two principal components as the two-dimensional embedding. PCA\nis calculated\
       \ on the logCPM expression matrix with and without selecting 1000\nHVGs.\n"
     reference: "pearson1901pca"
-    repository_url: "https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"
+    repository_url: "https://github.com/scikit-learn/scikit-learn"
     documentation_url: "https://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html"
     v1:
       path: "openproblems/tasks/dimensionality_reduction/methods/pca.py"
@@ -182,5 +182,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/pca/pca"
   viash_version: "0.8.0"
-  git_commit: "0aaef65e5acad35e2fbc0648f6375af4f61c732a"
+  git_commit: "544e1b552b0a378846c681ae2c176ab9391395bb"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
