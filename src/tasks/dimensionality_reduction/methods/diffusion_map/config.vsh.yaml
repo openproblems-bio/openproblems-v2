@@ -1,6 +1,6 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
-  name: diffusionmap
+  name: diffusion_map
   info:
     label: Diffusion Map
     summary: Finding meaningful geometric descriptions of datasets using diffusion maps.
