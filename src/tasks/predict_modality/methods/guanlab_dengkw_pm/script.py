@@ -19,6 +19,8 @@ meta = {
 }
 ## VIASH END
 
+
+## Removed PCA and normalization steps, as they arr already performed with the input data
 print('Reading input files', flush=True)
 input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
@@ -92,6 +94,7 @@ y_pred /= 10
 # Store as sparse matrix to be efficient. 
 # Note that this might require different classifiers/embedders before-hand. 
 # Not every class is able to support such data structures.
+## Changed from csr to csc matrix as this is more supported.
 y_pred = csc_matrix(y_pred)
 
 print("Write output AnnData to file", flush=True)

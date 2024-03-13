@@ -32,14 +32,10 @@ functionality:
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_r:1.0.2
-    run_args: --shm-size=25gb
     setup:
-      - type: docker
-        run: |
-          df -h /dev/shm > /var/shm.txt
       - type: r
         cran: [ lmds, FNN, proxy, proxyC]
         bioc: [ SingleCellExperiment, NewWave ]
   - type: nextflow
     directives:
-      label: [ "midtime", highmem, highcpu ]
+      label: [ midtime, highmem, highcpu, highsharedmem ]
