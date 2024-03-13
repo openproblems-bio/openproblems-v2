@@ -31,7 +31,7 @@ authors:
     roles: [ author ]
     info:
       github: michalk8
-  - name: "Scott Gigante"
+  - name: Scott Gigante
     roles: [ author ]
     info:
       github: scottgigante
@@ -40,13 +40,22 @@ authors:
     roles: [ author ]
     info:
       github: bendemeo
-  - name: "Juan A. Cordero Varela"
+  - name: Robrecht Cannoodt
+    roles: [ author ]
+    info:
+      github: rcannood
+      orcid: 0000-0003-3641-729X
+  - name: Kai Waldrant
+    roles: [ contributor ]
+    info:
+      github: KaiWaldrant
+      orcid: 0009-0003-8555-1361
+  - name: Sai Nirmayi Yasa
+    roles: [ contributor ]
+    info:
+      github: sainirmayi
+  - name: Juan A. Cordero Varela
     roles: [ contributor ]
     info:
       github: jacorvar
       orcid: 0000-0002-7373-5433
-  - name: Robrecht Cannoodt
-    roles: [ contributor ]
-    info:
-      github: rcannood
-      orcid: "0000-0003-3641-729X"
