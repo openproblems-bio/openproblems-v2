@@ -19,8 +19,8 @@ print("Reading adata file", flush=True)
 input_solution_mod1 = ad.read_h5ad(par["input_solution_mod1"])
 input_solution_mod2 = ad.read_h5ad(par["input_solution_mod2"])
 
-input_integrated_mod1 = ad.read_h5ad(par["input_integrated_mod1"])[input_solution_mod1.obs["permutation_indices"]]
-input_integrated_mod2 = ad.read_h5ad(par["input_integrated_mod2"])[input_solution_mod2.obs["permutation_indices"]]
+input_integrated_mod1 = ad.read_h5ad(par["input_integrated_mod1"])
+input_integrated_mod2 = ad.read_h5ad(par["input_integrated_mod2"])
 
 print("Computing MSE", flush=True)
 def _square(X):
@@ -31,10 +31,10 @@ def _square(X):
 		return X ** 2
 
 
-X = input_integrated_mod1.obsm["integrated"].toarray()
-Y = input_integrated_mod2.obsm["integrated"].toarray()
+X = input_integrated_mod1.obsm["integrated"]
+Y = input_integrated_mod2.obsm["integrated"]
 
-X_shuffled = X[np.random.permutation(np.arange(X.shape[0])), :]
+X_shuffled = X[input_solution_mod1.obs["permutation_indices"]]
 error_random = np.mean(np.sum(_square(X_shuffled - Y)))
 error_abs = np.mean(np.sum(_square(X - Y)))
 metric_value = (error_abs / error_random).item()
