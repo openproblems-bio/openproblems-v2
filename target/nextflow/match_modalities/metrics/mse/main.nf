@@ -3126,7 +3126,7 @@ meta = [
           "summary" : "Compute the mean squared error.",
           "description" : "Mean squared error (MSE) is the average distance between each pair of matched observations of the same cell in the learned latent space. Lower is better.\n",
           "reference" : "lance2022multimodal",
-          "maximize" : true,
+          "maximize" : false,
           "min" : 0,
           "max" : "+.inf",
           "v1" : {
@@ -3163,7 +3163,8 @@ meta = [
           "user" : false,
           "packages" : [
             "numpy",
-            "scipy"
+            "scipy",
+            "scprep"
           ],
           "upgrade" : true
         }
@@ -3211,7 +3212,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/mse",
     "viash_version" : "0.8.0",
-    "git_commit" : "2c2d6f0a7ecc3cac51fa23acc0eec036cee39446",
+    "git_commit" : "0891a3c0e7611c9536e55469b5ac2eade7407ff1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
