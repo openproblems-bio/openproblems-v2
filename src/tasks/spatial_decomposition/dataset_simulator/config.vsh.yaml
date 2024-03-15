@@ -9,35 +9,35 @@ functionality:
       description: |
         The dataset simulator creates cell-aggregates from the single-cell dataset by sampling from a Dirichlet distribution. The simulated data consists of the the spatial expression matrix, the XY coordinates of the spots, the cell-type proportions in eaxh spot, and the reference single-cell data.
   arguments:
-    - name: --input
+    - name: "--input"
       type: file
       description: Single-cell reference dataset
       example: "resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad"
-    - name: --alpha
+    - name: "--alpha"
       type: double
       description: Alpha value to use for generating synthetic dataset
       default: 1.0
-    - name: --n_obs
+    - name: "--n_obs"
       type: integer
       description: Number of spatial observations to generate. Default value is 100.
       default: 100
-    - name: --cell_lb
+    - name: "--cell_lb"
       type: integer
       description: Lower bound for number of cells at each spot. Default value is 10.
       default: 10
-    - name: --cell_ub
+    - name: "--cell_ub"
       type: integer
       description: Upper bound for number of cells at each spot. Default value is 30.
       default: 30
-    - name: --umi_lb
+    - name: "--umi_lb"
       type: integer
       description: Lower bound for number of cells at each spot. Default value is 1000.
       default: 1000
-    - name: --umi_ub
+    - name: "--umi_ub"
       type: integer
       description: Upper bound for number of UMIs at each spot. Default value is 5000.
       default: 5000
-    - name: --simulated_data
+    - name: "--simulated_data"
       type: file
       direction: output
       description: Simulated dataset
