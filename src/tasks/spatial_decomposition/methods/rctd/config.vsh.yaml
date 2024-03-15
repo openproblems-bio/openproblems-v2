@@ -31,7 +31,7 @@ platforms:
     setup:
       - type: r
         cran: [ Matrix ]
-        github: [ dmcable/RCTD ]
+        github: [ dmcable/spacexr ]
   - type: native
   - type: nextflow
     directives:
