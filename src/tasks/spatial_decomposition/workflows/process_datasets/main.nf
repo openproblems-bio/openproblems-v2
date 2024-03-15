@@ -43,13 +43,12 @@ workflow run_wf {
       toState: [
         output_single_cell: "output_single_cell",
         output_spatial_masked: "output_spatial_masked",
-        output_solution: "output_solution", 
-        simulated_data: "simulated_data"
+        output_solution: "output_solution" 
       ]
     )
 
     // only output the files for which an output file was specified
-    | setState(["output_single_cell", "output_spatial_masked", "output_solution", "simulated_data"])
+    | setState(["output_single_cell", "output_spatial_masked", "output_solution"])
 
   emit:
   output_ch

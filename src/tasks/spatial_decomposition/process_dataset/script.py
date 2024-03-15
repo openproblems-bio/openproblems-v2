@@ -3,14 +3,10 @@ import sys
 
 ## VIASH START
 par = {
-    "input": "resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad",
-    # "input": "resources_test/spatial_decomposition/pancreas/dataset_simulated.h5ad",
+    "input": "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/dataset_simulated.h5ad",
     "output_spatial_masked": "spatial_masked.h5ad",
     "output_single_cell": "single_cell_ref.h5ad",
     "output_solution": "solution.h5ad",
-    "generate_dataset": True, 
-    "alpha": 1,
-    "simulated_data": "dataset_simulated.h5ad"
 }
 meta = {
     "functionality_name": "process_dataset",
@@ -23,14 +19,15 @@ sys.path.append(meta['resources_dir'])
 from subset_anndata import read_config_slots_info, subset_anndata
 
 print(">> Load dataset", flush=True)
+adata = ad.read_h5ad(par["input"])
 
-if par['generate_dataset']:
-    from sample_datasets import _pancreas_synthetic
-    raw_input = ad.read_h5ad(par["input"])
-    adata = _pancreas_synthetic(raw_input, n_obs=100, alpha=par['alpha'])
-    adata.write_h5ad(par['simulated_data'], compression='gzip')
-else:
-    adata = ad.read_h5ad(par["input"])
+# if par['generate_dataset']:
+#     from sample_datasets import _pancreas_synthetic
+#     raw_input = ad.read_h5ad(par["input"])
+#     adata = _pancreas_synthetic(raw_input, n_obs=100, alpha=par['alpha'])
+#     adata.write_h5ad(par['simulated_data'], compression='gzip')
+# else:
+#     adata = ad.read_h5ad(par["input"])
 
 print(">> Figuring out which data needs to be copied to which output file", flush=True)
 slot_info = read_config_slots_info(meta["config"])
