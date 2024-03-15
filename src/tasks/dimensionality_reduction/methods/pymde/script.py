@@ -1,20 +1,26 @@
 import anndata as ad
 import scanpy as sc
-from ivis import Ivis
-
-# todo: allow using gpus instead!
+import pymde
 
 ## VIASH START
 par = {
     "input": "resources_test/dimensionality_reduction/pancreas/dataset.h5ad",
     "output": "reduced.h5ad",
+    "embed_method": "neighbors",
     "n_hvg": 1000,
-    "n_pca_dims": 50
+    "n_pca_dims": 50,
 }
 meta = {
     "functionality_name": "foo",
 }
 ## VIASH END
+
+if par["embed_method"] == "neighbors":
+    mde_fn = pymde.preserve_neighbors
+elif par["embed_method"] == "distances":
+    mde_fn = pymde.preserve_distances
+else:
+    raise ValueError(f"Unknown embedding method: {par['embed_method']}")
 
 print("Load input data", flush=True)
 input = ad.read_h5ad(par["input"])
@@ -25,20 +31,16 @@ if par["n_hvg"]:
     idx = input.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
     X_mat = X_mat[:, idx]
 
-print(f"Running PCA with {par['n_pca_dims']} dimensions", flush=True)
+print(f"Compute PCA", flush=True)
 X_pca = sc.tl.pca(X_mat, n_comps=par["n_pca_dims"], svd_solver="arpack")
 
-print("Run ivis", flush=True)
-# parameters taken from:
-# https://bering-ivis.readthedocs.io/en/latest/scanpy_singlecell.html#reducing-dimensionality-using-ivis
-ivis = Ivis(
-    k=15,
-    model="maaten",
-    n_epochs_without_progress=5,
-    verbose=0,
-    embedding_dims=2,
+print(f"Run MDE", flush=True)
+X_emb = (
+    mde_fn(X_pca, embedding_dim=2, verbose=True)
+    .embed(verbose=True)
+    .detach()
+    .numpy()
 )
-X_emb = ivis.fit_transform(X_pca)
 
 print("Create output AnnData", flush=True)
 output = ad.AnnData(
