@@ -5,11 +5,25 @@ import anndata as ad
 import numpy as np
 import scanpy as sc
 
+par = {
+    "input": "resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad",
+    "alpha": 1,
+    "n_obs": 100,
+    "cell_lb": 10,
+    "cell_ub": 30,
+    "umi_lb": 1000,
+    "umi_ub": 5000,
+    "simulated_data": "dataset_simulated.h5ad"
+}
+meta = {
+    "functionality_name": "dataset_simulator",
+    "resources_dir": "src/tasks/spatial_decomposition/dataset_simulator",
+}
+
 CELLTYPE_MIN_CELLS = 25
-cell_lb = 10,
-cell_ub = 30,
-umi_lb = 1000,
-umi_ub = 5000,
+# Reading input dataset
+adata = ad.read_h5ad(par['input'])
+
 def generate_synthetic_dataset(
     adata: ad.AnnData,
     alpha: Union[float, Sequence] = 1.0,
@@ -18,7 +32,6 @@ def generate_synthetic_dataset(
     cell_ub: int = 30,
     umi_lb: int = 1000,
     umi_ub: int = 5000,
-    seed: int = 42,
 ) -> ad.AnnData:
     """Create cell-aggregate samples for ground-truth spatial decomposition task.
 
@@ -41,8 +54,6 @@ def generate_synthetic_dataset(
         lower bound for number of UMIs at each spot. Default value is 10.
     umi_ub: int
         upper bound for number of UMIs at each spot. Default value is 30.
-    seed: int
-        Seed for rng.
 
     Returns
     -------
@@ -58,7 +69,7 @@ def generate_synthetic_dataset(
     adata = filter_celltypes(adata)
 
     # set random generator seed
-    rng = np.random.default_rng(seed)
+    rng = np.random.default_rng(42)
 
     # get single cell expression data
     counts = adata.layers['counts']
@@ -162,3 +173,21 @@ def filter_genes_cells(adata):
         adata.uns["var_names_all"] = adata.var.index.to_numpy()
     sc.pp.filter_genes(adata, min_cells=1)
     sc.pp.filter_cells(adata, min_counts=2)
+
+adata.X = adata.layers["counts"]
+sc.pp.filter_genes(adata, min_counts=10)
+adata_merged = generate_synthetic_dataset(adata, 
+    alpha=par['alpha'], 
+    n_obs=par['n_obs'], 
+    cell_lb=par['cell_lb'], 
+    cell_ub=par['cell_ub'], 
+    umi_lb=par['umi_lb'], 
+    umi_ub=par['umi_ub'] 
+)
+adata.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
+filter_genes_cells(adata_merged)
+adata_merged.X = None
+adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
+
+print("Writing output to file")
+adata_merged.write_h5ad(par["simulated_data"])
