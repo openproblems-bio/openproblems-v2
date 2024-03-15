@@ -48,6 +48,12 @@ functionality:
           required: true
           direction: output
           default: task_info.yaml
+    - name: Methods
+      arguments:
+        - name: "--method_ids"
+          type: string
+          multiple: true
+          description: A list of method ids to run. If not specified, all methods will be run.
   resources:
     - type: nextflow_script
       path: main.nf
@@ -66,6 +72,7 @@ functionality:
     - name: predict_modality/methods/lm
     - name: predict_modality/methods/newwave_knnr
     - name: predict_modality/methods/random_forest
+    - name: predict_modality/methods/guanlab_dengkw_pm
     - name: predict_modality/metrics/correlation
     - name: predict_modality/metrics/mse
 platforms:
