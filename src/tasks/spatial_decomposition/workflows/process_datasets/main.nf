@@ -38,6 +38,16 @@ workflow run_wf {
       state.dataset != null
     }
 
+    | dataset_simulator.run(
+      runIf: {id, state -> state.alpha}, 
+      fromState: [ 
+        input: "dataset", 
+        alpha: "alpha"
+      ],
+      toState: [ dataset: "simulated_data"], 
+      auto: [publish: true]
+    )
+
     | process_dataset.run(
       fromState: [ input: "dataset" ],
       toState: [
