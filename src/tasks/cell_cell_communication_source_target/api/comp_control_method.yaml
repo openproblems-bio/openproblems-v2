@@ -30,8 +30,8 @@ functionality:
       direction: output
       required: true
   test_resources:
-    - path: /resources_test/cell_cell_communication_source_target/pancreas
-      dest: resources_test/cell_cell_communication_source_target/pancreas
+    - path: /resources_test/cell_cell_communication_source_target/mouse_brain_atlas
+      dest: resources_test/cell_cell_communication_source_target/mouse_brain_atlas
     - type: python_script
       path: /src/common/comp_tests/check_method_config.py
     - type: python_script

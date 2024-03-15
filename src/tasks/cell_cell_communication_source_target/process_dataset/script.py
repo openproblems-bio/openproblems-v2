@@ -1,9 +1,10 @@
 import sys
 import anndata as ad
+from openproblems.tasks._cell_cell_communication._common.utils import ligand_receptor_resource
 
 ## VIASH START
 par = {
-    "input": "resources_test/common/pancreas/dataset.h5ad",
+    "input": "resources_test/common/mouse_brain_atlas/dataset.h5ad",
     'output_train': 'train.h5ad',
     'output_test': 'test.h5ad',
     'output_solution': 'solution.h5ad'

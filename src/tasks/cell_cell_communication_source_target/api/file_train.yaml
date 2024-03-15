@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/cell_cell_communication_source_target/pancreas/train.h5ad"
+example: "resources_test/cell_cell_communication_source_target/mouse_brain_atlas/train.h5ad"
 info:
   label: "Training data"
   summary: "The training data"
