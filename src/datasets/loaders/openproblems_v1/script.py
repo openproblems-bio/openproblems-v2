@@ -59,7 +59,8 @@ if 'ccc_target' in adata.uns:
         adata.uns['ccc_target'] = adata.uns['ligand_receptor_resource']['target']
         adata.uns['ccc_ligand'] = adata.uns['ligand_receptor_resource']['ligand_genesymbol']
         adata.uns['ccc_receptor'] = adata.uns['ligand_receptor_resource']['receptor_genesymbol']
-    
+        del adata.uns['ligand_receptor_resource'] 
+
 print("Setting .obs['cell_type']", flush=True)
 if par["obs_cell_type"]:
     if par["obs_cell_type"] in adata.obs:
