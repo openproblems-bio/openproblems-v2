@@ -7,7 +7,7 @@ functionality:
       label: Dataset simulator
       summary: Simulate cell aggregates from single-cell data.
       description: |
-        The dataset simulator creates cell-aggregates from the single-cell dataset by sampling from a Dirichlet distribution. The simulated data consists of the the spatial expression matrix, the XY coordinates of the spots, the cell-type proportions in eaxh spot, and the reference single-cell data.
+        The dataset simulator creates cell-aggregates from the single-cell dataset by sampling from a Dirichlet distribution. The simulated data consists of the the spatial expression matrix, the XY coordinates of the spots, the cell-type proportions in each spot, and the reference single-cell data.
   arguments:
     - name: "--input"
       type: file
