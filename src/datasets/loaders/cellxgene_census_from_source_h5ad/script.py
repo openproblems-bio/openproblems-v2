@@ -32,6 +32,20 @@ def get_anndata(par):
         cellxgene_census.download_source_h5ad(par["input_id"], path)
         return sc.read_h5ad(path)
 
+def filter_min_cells_per_group(adata, par):
+    t0 = adata.shape
+    cell_count = adata.obs \
+        .groupby(par["cell_filter_grouping"])["soma_joinid"] \
+        .transform("count")
+        
+    adata = adata[cell_count >= par["cell_filter_minimum_count"]]
+    t1 = adata.shape
+    logger.info(
+        "Removed %s cells based on %s cell_filter_minimum_count of %s cell_filter_grouping."
+        % ((t0[0] - t1[0]), par["cell_filter_minimum_count"], par["cell_filter_grouping"])
+    )
+    return adata
+
 def filter_by_counts(adata, par):
     logger.info("Remove cells with few counts and genes with few counts.")
     t0 = adata.shape
@@ -104,12 +118,17 @@ def main(par, meta):
 
     logger.info("AnnData: %s", str(adata))
 
+    if par["cell_filter_grouping"] is not None:
+        adata = filter_min_cells_per_group(adata, par)
+
     # remove cells with few counts and genes with few counts
     filter_by_counts(adata, par)
 
-    # this is not needed in source h5ads
-    # # use feature_id as var_names
-    # adata.var_names = adata.var["feature_id"]
+    # logger.log(f"Filtered AnnData: {adata}")
+    print(f"Filtered AnnData: {adata}", flush=True)
+
+    # use feature_id as var_names
+    adata.var_names = adata.var["feature_id"]
 
     # move .X to .layers["counts"]
     move_x_to_layers(adata)

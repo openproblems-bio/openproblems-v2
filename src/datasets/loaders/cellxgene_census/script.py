@@ -129,6 +129,9 @@ def add_metadata_to_uns(adata, par):
         adata.uns[key] = par[key]
 
 def print_unique(adata, column):
+    if column not in adata.obs.columns:
+        logger.info(f"Column {column} not found in obs")
+        return
     formatted = "', '".join(adata.obs[column].unique())
     logger.info(f"Unique {column}: ['{formatted}']")
 
