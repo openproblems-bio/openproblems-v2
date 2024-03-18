@@ -21,14 +21,6 @@ from subset_anndata import read_config_slots_info, subset_anndata
 print(">> Load dataset", flush=True)
 adata = ad.read_h5ad(par["input"])
 
-# if par['generate_dataset']:
-#     from sample_datasets import _pancreas_synthetic
-#     raw_input = ad.read_h5ad(par["input"])
-#     adata = _pancreas_synthetic(raw_input, n_obs=100, alpha=par['alpha'])
-#     adata.write_h5ad(par['simulated_data'], compression='gzip')
-# else:
-#     adata = ad.read_h5ad(par["input"])
-
 print(">> Figuring out which data needs to be copied to which output file", flush=True)
 slot_info = read_config_slots_info(meta["config"])
 
