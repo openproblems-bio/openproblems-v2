@@ -182,19 +182,28 @@ function ViashHelp {
   echo ""
   echo "    --input_scores"
   echo "        type: file, file must exist"
-  echo "        example:"
-  echo "resources/label_projection/benchmarks/openproblems_v1/combined.extract_scores.output.yaml"
+  echo "        example: score_uns.yaml"
   echo "        Scores file"
   echo ""
   echo "    --input_execution"
   echo "        type: file, file must exist"
-  echo "        example: resources/label_projection/benchmarks/openproblems_v1/trace.txt"
+  echo "        example: trace.txt"
   echo "        Nextflow log file"
   echo ""
-  echo "    --output"
+  echo "    --input_metric_info"
+  echo "        type: file, file must exist"
+  echo "        example: metric_info.json"
+  echo "        Metric info file"
+  echo ""
+  echo "    --output_results"
   echo "        type: file, output, file must exist"
-  echo "        default: output.json"
+  echo "        default: results.json"
   echo "        Output json"
+  echo ""
+  echo "    --output_metric_execution_info"
+  echo "        type: file, output, file must exist"
+  echo "        default: metric_execution_info.json"
+  echo "        Output metric execution info"
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -421,9 +430,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "dplyr", "tidyr", "readr", "lubridate", "dynutils", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_results"
-LABEL org.opencontainers.image.created="2024-03-18T09:35:59Z"
+LABEL org.opencontainers.image.created="2024-03-18T10:03:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d18504750fa21c3e9b2ccc9f5dc42638500bef03"
+LABEL org.opencontainers.image.revision="31f6b555deae8c1df67ae472c45b8d7ba492fb95"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -611,15 +620,37 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_INPUT_EXECUTION=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --output)
-            [ -n "$VIASH_PAR_OUTPUT" ] && ViashError Bad arguments for option \'--output\': \'$VIASH_PAR_OUTPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OUTPUT="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output. Use "--help" to get more information on the parameters. && exit 1
+        --input_metric_info)
+            [ -n "$VIASH_PAR_INPUT_METRIC_INFO" ] && ViashError Bad arguments for option \'--input_metric_info\': \'$VIASH_PAR_INPUT_METRIC_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_METRIC_INFO="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_metric_info. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --output=*)
-            [ -n "$VIASH_PAR_OUTPUT" ] && ViashError Bad arguments for option \'--output=*\': \'$VIASH_PAR_OUTPUT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
+        --input_metric_info=*)
+            [ -n "$VIASH_PAR_INPUT_METRIC_INFO" ] && ViashError Bad arguments for option \'--input_metric_info=*\': \'$VIASH_PAR_INPUT_METRIC_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_METRIC_INFO=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --output_results)
+            [ -n "$VIASH_PAR_OUTPUT_RESULTS" ] && ViashError Bad arguments for option \'--output_results\': \'$VIASH_PAR_OUTPUT_RESULTS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_RESULTS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output_results. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --output_results=*)
+            [ -n "$VIASH_PAR_OUTPUT_RESULTS" ] && ViashError Bad arguments for option \'--output_results=*\': \'$VIASH_PAR_OUTPUT_RESULTS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_RESULTS=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --output_metric_execution_info)
+            [ -n "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ] && ViashError Bad arguments for option \'--output_metric_execution_info\': \'$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --output_metric_execution_info. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --output_metric_execution_info=*)
+            [ -n "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ] && ViashError Bad arguments for option \'--output_metric_execution_info=*\': \'$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         ---setup)
@@ -762,8 +793,11 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
 fi
 
 # filling in defaults
-if [ -z ${VIASH_PAR_OUTPUT+x} ]; then
-  VIASH_PAR_OUTPUT="output.json"
+if [ -z ${VIASH_PAR_OUTPUT_RESULTS+x} ]; then
+  VIASH_PAR_OUTPUT_RESULTS="results.json"
+fi
+if [ -z ${VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO+x} ]; then
+  VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO="metric_execution_info.json"
 fi
 
 # check whether required files exist
@@ -773,6 +807,10 @@ if [ ! -z "$VIASH_PAR_INPUT_SCORES" ] && [ ! -e "$VIASH_PAR_INPUT_SCORES" ]; the
 fi
 if [ ! -z "$VIASH_PAR_INPUT_EXECUTION" ] && [ ! -e "$VIASH_PAR_INPUT_EXECUTION" ]; then
   ViashError "Input file '$VIASH_PAR_INPUT_EXECUTION' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_INPUT_METRIC_INFO" ] && [ ! -e "$VIASH_PAR_INPUT_METRIC_INFO" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_METRIC_INFO' does not exist."
   exit 1
 fi
 
@@ -821,8 +859,11 @@ if [[ -n "$VIASH_META_MEMORY_PB" ]]; then
 fi
 
 # create parent directories of output files, if so desired
-if [ ! -z "$VIASH_PAR_OUTPUT" ] && [ ! -d "$(dirname "$VIASH_PAR_OUTPUT")" ]; then
-  mkdir -p "$(dirname "$VIASH_PAR_OUTPUT")"
+if [ ! -z "$VIASH_PAR_OUTPUT_RESULTS" ] && [ ! -d "$(dirname "$VIASH_PAR_OUTPUT_RESULTS")" ]; then
+  mkdir -p "$(dirname "$VIASH_PAR_OUTPUT_RESULTS")"
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ] && [ ! -d "$(dirname "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO")" ]; then
+  mkdir -p "$(dirname "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO")"
 fi
 
 # detect volumes from file arguments
@@ -835,10 +876,19 @@ if [ ! -z "$VIASH_PAR_INPUT_EXECUTION" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_EXECUTION")" )
   VIASH_PAR_INPUT_EXECUTION=$(ViashAutodetectMount "$VIASH_PAR_INPUT_EXECUTION")
 fi
-if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
-  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT")" )
-  VIASH_PAR_OUTPUT=$(ViashAutodetectMount "$VIASH_PAR_OUTPUT")
-  VIASH_CHOWN_VARS+=( "$VIASH_PAR_OUTPUT" )
+if [ ! -z "$VIASH_PAR_INPUT_METRIC_INFO" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_METRIC_INFO")" )
+  VIASH_PAR_INPUT_METRIC_INFO=$(ViashAutodetectMount "$VIASH_PAR_INPUT_METRIC_INFO")
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_RESULTS" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT_RESULTS")" )
+  VIASH_PAR_OUTPUT_RESULTS=$(ViashAutodetectMount "$VIASH_PAR_OUTPUT_RESULTS")
+  VIASH_CHOWN_VARS+=( "$VIASH_PAR_OUTPUT_RESULTS" )
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO")" )
+  VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO=$(ViashAutodetectMount "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO")
+  VIASH_CHOWN_VARS+=( "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" )
 fi
 if [ ! -z "$VIASH_META_RESOURCES_DIR" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_META_RESOURCES_DIR")" )
@@ -916,7 +966,9 @@ par <- list(
   "task_id" = $( if [ ! -z ${VIASH_PAR_TASK_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK_ID" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_scores" = $( if [ ! -z ${VIASH_PAR_INPUT_SCORES+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_SCORES" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_execution" = $( if [ ! -z ${VIASH_PAR_INPUT_EXECUTION+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_EXECUTION" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi )
+  "input_metric_info" = $( if [ ! -z ${VIASH_PAR_INPUT_METRIC_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_METRIC_INFO" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output_results" = $( if [ ! -z ${VIASH_PAR_OUTPUT_RESULTS+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_RESULTS" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output_metric_execution_info" = $( if [ ! -z ${VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
   "functionality_name" = $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo -n "'"; echo -n "$VIASH_META_FUNCTIONALITY_NAME" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -943,57 +995,8 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-# read scores
-raw_scores <-
-  yaml::yaml.load_file(par\$input_scores) %>%
-  map_df(function(x) {
-    tryCatch({
-      as_tibble(as.data.frame(
-        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
-      ))
-    }, error = function(e) {
-      message("Encountered error while reading scores: ", e\$message)
-      NULL
-    })
-  })
-
-# scale scores
-scores <- raw_scores %>%
-  complete(
-    dataset_id,
-    method_id,
-    metric_ids,
-    fill = list(metric_values = NA_real_)
-  ) %>%
-  group_by(metric_ids, dataset_id) %>%
-  mutate(
-    scaled_score = dynutils::scale_minmax(metric_values) %|% 0
-  ) %>%
-  group_by(dataset_id, method_id) %>%
-  summarise(
-    metric_values = list(as.list(setNames(metric_values, metric_ids))),
-    scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
-    mean_score = mean(scaled_score),
-    .groups = "drop"
-  )
-
-# read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\\\((.*)/([^\\\\.]*)\\\\.(.*)\\\\)\$"
-
-trace <- readr::read_tsv(par\$input_execution) %>%
-  mutate(
-    id = name,
-    process_id = stringr::str_extract(id, id_regex, 1L),
-    dataset_id = stringr::str_extract(id, id_regex, 2L),
-    normalization_id = stringr::str_extract(id, id_regex, 3L),
-    method_id = stringr::str_extract(id, id_regex, 4L),
-    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
-  ) %>%
-  filter(process_id == method_id) %>%
-  arrange(desc(submit)) %>%
-  group_by(name) %>%
-  slice(1)
-# parse strings into numbers
+# --- helper functions ---------------------------------------------------------
+cat("Loading helper functions\\n")
 parse_exit <- function(x) {
   if (is.na(x) || x == "-") {
     NA_integer_
@@ -1033,7 +1036,77 @@ parse_size <- function(x) {
   as.integer(ceiling(out))
 }
 
+# --- read input files ---------------------------------------------------------
+cat("Reading input files\\n")
+# read scores
+raw_scores <-
+  yaml::yaml.load_file(par\$input_scores) %>%
+  map_df(function(x) {
+    tryCatch({
+      as_tibble(as.data.frame(
+        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
+      ))
+    }, error = function(e) {
+      message("Encountered error while reading scores: ", e\$message)
+      NULL
+    })
+  })
+
+# read metric info
+metric_info <- jsonlite::read_json(par\$input_metric_info, simplifyVector = TRUE)
+
+# --- process scores and execution info ----------------------------------------
+cat("Processing scores and execution info\\n")
+scores <- raw_scores %>%
+  complete(
+    dataset_id,
+    method_id,
+    metric_ids,
+    fill = list(metric_values = NA_real_)
+  ) %>%
+  left_join(metric_info %>% select(metric_ids = metric_id, maximize), by = "metric_ids") %>%
+  group_by(metric_ids, dataset_id) %>%
+  mutate(
+    scaled_score = dynutils::scale_minmax(metric_values) %|% 0,
+    scaled_score = ifelse(maximize, scaled_score, 1 - scaled_score)
+  ) %>%
+  group_by(dataset_id, method_id) %>%
+  summarise(
+    metric_values = list(as.list(setNames(metric_values, metric_ids))),
+    scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
+    mean_score = mean(scaled_score),
+    .groups = "drop"
+  )
+
+# read nxf log and process the task id
+id_regex <- "^.*:(.*)_process \\\\((.*)/([^\\\\.]*)(.[^\\\\.]*)?\\\\.(.*)\\\\)\$"
+
+trace <- readr::read_tsv(par\$input_execution) %>%
+  mutate(
+    id = name,
+    process_id = stringr::str_extract(id, id_regex, 1L),
+    dataset_id = stringr::str_extract(id, id_regex, 2L),
+    normalization_id = stringr::str_extract(id, id_regex, 3L),
+    grp4 = gsub("^\\\\.", "", stringr::str_extract(id, id_regex, 4L)),
+    grp5 = stringr::str_extract(id, id_regex, 5L),
+    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
+  ) %>%
+  # detect whether entry is a metric or a method
+  mutate(
+    method_id = ifelse(is.na(grp4), grp5, grp4),
+    metric_id = ifelse(is.na(grp4), grp4, grp5)
+  ) %>%
+  select(-grp4, -grp5) %>%
+  filter(!is.na(method_id)) %>%
+  # take last entry for each run
+  arrange(desc(submit)) %>%
+  group_by(name) %>%
+  slice(1) %>%
+  ungroup()
+
+# parse values
 execution_info <- trace %>%
+  filter(process_id == method_id) %>% # only keep method entries
   rowwise() %>%
   transmute(
     dataset_id,
@@ -1074,9 +1147,39 @@ out <- full_join(
   ungroup()
 
 
+# --- process metric execution info --------------------------------------------
+cat("Processing metric execution info\\n")
+metric_execution_info <- trace %>%
+  filter(process_id == metric_id) %>% # only keep metric entries
+  rowwise() %>%
+  transmute(
+    dataset_id,
+    normalization_id,
+    method_id,
+    metric_id,
+    resources = list(list(
+      exit_code = parse_exit(exit),
+      duration_sec = parse_duration(realtime),
+      cpu_pct = parse_cpu(\`%cpu\`),
+      peak_memory_mb = parse_size(peak_vmem),
+      disk_read_mb = parse_size(rchar),
+      disk_write_mb = parse_size(wchar)
+    ))
+  ) %>%
+  ungroup()
+
+# --- write output files -------------------------------------------------------
+cat("Writing output files\\n")
+# write output files
 jsonlite::write_json(
   purrr::transpose(out),
-  par\$output,
+  par\$output_results,
+  auto_unbox = TRUE,
+  pretty = TRUE
+)
+jsonlite::write_json(
+  purrr::transpose(metric_execution_info),
+  par\$output_metric_execution_info,
   auto_unbox = TRUE,
   pretty = TRUE
 )
@@ -1094,8 +1197,14 @@ fi
 if [ ! -z "$VIASH_PAR_INPUT_EXECUTION" ]; then
   VIASH_PAR_INPUT_EXECUTION=$(ViashStripAutomount "$VIASH_PAR_INPUT_EXECUTION")
 fi
-if [ ! -z "$VIASH_PAR_OUTPUT" ]; then
-  VIASH_PAR_OUTPUT=$(ViashStripAutomount "$VIASH_PAR_OUTPUT")
+if [ ! -z "$VIASH_PAR_INPUT_METRIC_INFO" ]; then
+  VIASH_PAR_INPUT_METRIC_INFO=$(ViashStripAutomount "$VIASH_PAR_INPUT_METRIC_INFO")
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_RESULTS" ]; then
+  VIASH_PAR_OUTPUT_RESULTS=$(ViashStripAutomount "$VIASH_PAR_OUTPUT_RESULTS")
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ]; then
+  VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO=$(ViashStripAutomount "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO")
 fi
 if [ ! -z "$VIASH_META_RESOURCES_DIR" ]; then
   VIASH_META_RESOURCES_DIR=$(ViashStripAutomount "$VIASH_META_RESOURCES_DIR")
@@ -1112,8 +1221,12 @@ fi
 
 
 # check whether required files exist
-if [ ! -z "$VIASH_PAR_OUTPUT" ] && [ ! -e "$VIASH_PAR_OUTPUT" ]; then
-  ViashError "Output file '$VIASH_PAR_OUTPUT' does not exist."
+if [ ! -z "$VIASH_PAR_OUTPUT_RESULTS" ] && [ ! -e "$VIASH_PAR_OUTPUT_RESULTS" ]; then
+  ViashError "Output file '$VIASH_PAR_OUTPUT_RESULTS' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ] && [ ! -e "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" ]; then
+  ViashError "Output file '$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO' does not exist."
   exit 1
 fi
 
