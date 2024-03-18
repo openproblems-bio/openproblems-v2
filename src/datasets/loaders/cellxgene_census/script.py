@@ -81,7 +81,7 @@ def filter_min_cells_per_group(adata, par):
     t0 = adata.shape
     cell_count = adata.obs \
         .groupby(par["cell_filter_grouping"])["soma_joinid"] \
-        .transform("count") \
+        .transform("count")
         
     adata = adata[cell_count >= par["cell_filter_minimum_count"]]
     t1 = adata.shape
