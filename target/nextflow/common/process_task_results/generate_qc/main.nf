@@ -2892,7 +2892,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/generate_qc",
     "viash_version" : "0.8.0",
-    "git_commit" : "9c4d9c492397ef1582fa50ab25cf268df3832b8b",
+    "git_commit" : "05189b19b08c5c15da3c894cd44ad3e954a94de2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
