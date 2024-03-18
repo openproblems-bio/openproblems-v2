@@ -2752,7 +2752,7 @@ meta = [
         "name" : "--input_scores",
         "description" : "Scores file",
         "example" : [
-          "resources/label_projection/benchmarks/openproblems_v1/combined.extract_scores.output.yaml"
+          "score_uns.yaml"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2767,7 +2767,7 @@ meta = [
         "name" : "--input_execution",
         "description" : "Nextflow log file",
         "example" : [
-          "resources/label_projection/benchmarks/openproblems_v1/trace.txt"
+          "trace.txt"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2779,10 +2779,40 @@ meta = [
       },
       {
         "type" : "file",
-        "name" : "--output",
+        "name" : "--input_metric_info",
+        "description" : "Metric info file",
+        "example" : [
+          "metric_info.json"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--output_results",
         "description" : "Output json",
         "default" : [
-          "output.json"
+          "results.json"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : false,
+        "direction" : "output",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--output_metric_execution_info",
+        "description" : "Output metric execution info",
+        "default" : [
+          "metric_execution_info.json"
         ],
         "must_exist" : true,
         "create_parent" : true,
@@ -2877,7 +2907,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "05189b19b08c5c15da3c894cd44ad3e954a94de2",
+    "git_commit" : "c738f2829daf7bcbf231f9f0b2496d1cd9673149",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2911,7 +2941,9 @@ par <- list(
   "task_id" = $( if [ ! -z ${VIASH_PAR_TASK_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK_ID" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_scores" = $( if [ ! -z ${VIASH_PAR_INPUT_SCORES+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_SCORES" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_execution" = $( if [ ! -z ${VIASH_PAR_INPUT_EXECUTION+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_EXECUTION" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
+  "input_metric_info" = $( if [ ! -z ${VIASH_PAR_INPUT_METRIC_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_METRIC_INFO" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output_results" = $( if [ ! -z ${VIASH_PAR_OUTPUT_RESULTS+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_RESULTS" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output_metric_execution_info" = $( if [ ! -z ${VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
   "functionality_name" = $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo -n "'"; echo -n "$VIASH_META_FUNCTIONALITY_NAME" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -2938,57 +2970,8 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
-# read scores
-raw_scores <-
-  yaml::yaml.load_file(par\\$input_scores) %>%
-  map_df(function(x) {
-    tryCatch({
-      as_tibble(as.data.frame(
-        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
-      ))
-    }, error = function(e) {
-      message("Encountered error while reading scores: ", e\\$message)
-      NULL
-    })
-  })
-
-# scale scores
-scores <- raw_scores %>%
-  complete(
-    dataset_id,
-    method_id,
-    metric_ids,
-    fill = list(metric_values = NA_real_)
-  ) %>%
-  group_by(metric_ids, dataset_id) %>%
-  mutate(
-    scaled_score = dynutils::scale_minmax(metric_values) %|% 0
-  ) %>%
-  group_by(dataset_id, method_id) %>%
-  summarise(
-    metric_values = list(as.list(setNames(metric_values, metric_ids))),
-    scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
-    mean_score = mean(scaled_score),
-    .groups = "drop"
-  )
-
-# read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\\\\\\\((.*)/([^\\\\\\\\.]*)\\\\\\\\.(.*)\\\\\\\\)\\$"
-
-trace <- readr::read_tsv(par\\$input_execution) %>%
-  mutate(
-    id = name,
-    process_id = stringr::str_extract(id, id_regex, 1L),
-    dataset_id = stringr::str_extract(id, id_regex, 2L),
-    normalization_id = stringr::str_extract(id, id_regex, 3L),
-    method_id = stringr::str_extract(id, id_regex, 4L),
-    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
-  ) %>%
-  filter(process_id == method_id) %>%
-  arrange(desc(submit)) %>%
-  group_by(name) %>%
-  slice(1)
-# parse strings into numbers
+# --- helper functions ---------------------------------------------------------
+cat("Loading helper functions\\\\n")
 parse_exit <- function(x) {
   if (is.na(x) || x == "-") {
     NA_integer_
@@ -3028,7 +3011,77 @@ parse_size <- function(x) {
   as.integer(ceiling(out))
 }
 
+# --- read input files ---------------------------------------------------------
+cat("Reading input files\\\\n")
+# read scores
+raw_scores <-
+  yaml::yaml.load_file(par\\$input_scores) %>%
+  map_df(function(x) {
+    tryCatch({
+      as_tibble(as.data.frame(
+        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
+      ))
+    }, error = function(e) {
+      message("Encountered error while reading scores: ", e\\$message)
+      NULL
+    })
+  })
+
+# read metric info
+metric_info <- jsonlite::read_json(par\\$input_metric_info, simplifyVector = TRUE)
+
+# --- process scores and execution info ----------------------------------------
+cat("Processing scores and execution info\\\\n")
+scores <- raw_scores %>%
+  complete(
+    dataset_id,
+    method_id,
+    metric_ids,
+    fill = list(metric_values = NA_real_)
+  ) %>%
+  left_join(metric_info %>% select(metric_ids = metric_id, maximize), by = "metric_ids") %>%
+  group_by(metric_ids, dataset_id) %>%
+  mutate(
+    scaled_score = dynutils::scale_minmax(metric_values) %|% 0,
+    scaled_score = ifelse(maximize, scaled_score, 1 - scaled_score)
+  ) %>%
+  group_by(dataset_id, method_id) %>%
+  summarise(
+    metric_values = list(as.list(setNames(metric_values, metric_ids))),
+    scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
+    mean_score = mean(scaled_score),
+    .groups = "drop"
+  )
+
+# read nxf log and process the task id
+id_regex <- "^.*:(.*)_process \\\\\\\\((.*)/([^\\\\\\\\.]*)(.[^\\\\\\\\.]*)?\\\\\\\\.(.*)\\\\\\\\)\\$"
+
+trace <- readr::read_tsv(par\\$input_execution) %>%
+  mutate(
+    id = name,
+    process_id = stringr::str_extract(id, id_regex, 1L),
+    dataset_id = stringr::str_extract(id, id_regex, 2L),
+    normalization_id = stringr::str_extract(id, id_regex, 3L),
+    grp4 = gsub("^\\\\\\\\.", "", stringr::str_extract(id, id_regex, 4L)),
+    grp5 = stringr::str_extract(id, id_regex, 5L),
+    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
+  ) %>%
+  # detect whether entry is a metric or a method
+  mutate(
+    method_id = ifelse(is.na(grp4), grp5, grp4),
+    metric_id = ifelse(is.na(grp4), grp4, grp5)
+  ) %>%
+  select(-grp4, -grp5) %>%
+  filter(!is.na(method_id)) %>%
+  # take last entry for each run
+  arrange(desc(submit)) %>%
+  group_by(name) %>%
+  slice(1) %>%
+  ungroup()
+
+# parse values
 execution_info <- trace %>%
+  filter(process_id == method_id) %>% # only keep method entries
   rowwise() %>%
   transmute(
     dataset_id,
@@ -3069,9 +3122,39 @@ out <- full_join(
   ungroup()
 
 
+# --- process metric execution info --------------------------------------------
+cat("Processing metric execution info\\\\n")
+metric_execution_info <- trace %>%
+  filter(process_id == metric_id) %>% # only keep metric entries
+  rowwise() %>%
+  transmute(
+    dataset_id,
+    normalization_id,
+    method_id,
+    metric_id,
+    resources = list(list(
+      exit_code = parse_exit(exit),
+      duration_sec = parse_duration(realtime),
+      cpu_pct = parse_cpu(\\`%cpu\\`),
+      peak_memory_mb = parse_size(peak_vmem),
+      disk_read_mb = parse_size(rchar),
+      disk_write_mb = parse_size(wchar)
+    ))
+  ) %>%
+  ungroup()
+
+# --- write output files -------------------------------------------------------
+cat("Writing output files\\\\n")
+# write output files
 jsonlite::write_json(
   purrr::transpose(out),
-  par\\$output,
+  par\\$output_results,
+  auto_unbox = TRUE,
+  pretty = TRUE
+)
+jsonlite::write_json(
+  purrr::transpose(metric_execution_info),
+  par\\$output_metric_execution_info,
   auto_unbox = TRUE,
   pretty = TRUE
 )

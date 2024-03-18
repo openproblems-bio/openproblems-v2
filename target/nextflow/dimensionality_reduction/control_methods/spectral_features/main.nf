@@ -2981,9 +2981,9 @@ meta = [
     "resources" : [
       {
         "type" : "python_script",
-        "path" : "src/tasks/dimensionality_reduction/methods/diffusion_map/script.py",
+        "path" : "script.py",
         "is_executable" : true,
-        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/control_methods/spectral_features/"
       }
     ],
     "test_resources" : [
@@ -3092,7 +3092,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/control_methods/spectral_features",
     "viash_version" : "0.8.0",
-    "git_commit" : "05189b19b08c5c15da3c894cd44ad3e954a94de2",
+    "git_commit" : "c738f2829daf7bcbf231f9f0b2496d1cd9673149",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

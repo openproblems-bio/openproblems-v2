@@ -1,5 +1,5 @@
 functionality:
-  name: "diffusion_maps"
+  name: "diffusion_map"
   namespace: "dimensionality_reduction/methods"
   version: "integration_build"
   arguments:
@@ -76,42 +76,19 @@ functionality:
     multiple_sep: ":"
     dest: "par"
   - type: "integer"
-    name: "--n_comps"
-    description: "Number of components to use for the embedding."
+    name: "--n_dim"
+    description: "Number of dimensions."
     info: null
     default:
-    - 2
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "t"
-    description: "Number to power the eigenvalues by."
-    info: null
-    default:
-    - 1
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "n_retries"
-    description: "Number of times to retry if the embedding fails, each time adding\
-      \ noise."
-    info: null
-    default:
-    - 1
+    - 3
     required: false
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   resources:
-  - type: "python_script"
-    path: "script.py"
+  - type: "r_script"
+    path: "script.R"
     is_executable: true
   test_resources:
   - type: "file"
@@ -126,19 +103,19 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    label: "Diffusion maps"
-    summary: "Positive control by Use 1000-dimensional diffusions maps as an embedding."
-    description: "This serves as a positive control since it uses 1000-dimensional\
-      \ diffusions maps as an embedding"
+    label: "Diffusion Map"
+    summary: "Finding meaningful geometric descriptions of datasets using diffusion\
+      \ maps."
+    description: "Implements diffusion map method of data parametrization, including\
+      \ creation and visualization of diffusion map, clustering with diffusion K-means\
+      \ and regression using adaptive regression model."
     reference: "coifman2006diffusion"
-    documentation_url: "https://github.com/openproblems-bio/openproblems"
-    repository_url: "https://github.com/openproblems-bio/openproblems"
+    documentation_url: "https://bioconductor.org/packages/release/bioc/html/destiny.html"
+    repository_url: "https://github.com/theislab/destiny"
     v1:
       path: "openproblems/tasks/dimensionality_reduction/methods/diffusion_map.py"
       commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
     preferred_normalization: "log_cp10k"
-    variants:
-      diffusion_map: null
     type: "method"
     type_info:
       label: "Method"
@@ -150,7 +127,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.2"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -159,13 +136,10 @@ platforms:
   setup_strategy: "ifneedbepullelsecachedbuild"
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
   setup:
-  - type: "python"
-    user: false
-    pypi:
-    - "umap-learn"
-    - "scipy"
-    - "numpy"
-    upgrade: true
+  - type: "r"
+    bioc:
+    - "destiny"
+    bioc_force_install: false
   entrypoint: []
   cmd: null
 - type: "nextflow"
@@ -198,9 +172,9 @@ platforms:
   container: "docker"
 info:
   config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/dimensionality_reduction/methods/diffusion_map/config.vsh.yaml"
-  platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/diffusion_maps"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/diffusion_maps/diffusion_maps"
+  platform: "docker"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/diffusion_map"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/methods/diffusion_map/diffusion_map"
   viash_version: "0.8.0"
-  git_commit: "05189b19b08c5c15da3c894cd44ad3e954a94de2"
+  git_commit: "c738f2829daf7bcbf231f9f0b2496d1cd9673149"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
