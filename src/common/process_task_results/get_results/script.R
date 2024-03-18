@@ -103,6 +103,9 @@ scale_scores <- function(values, is_control, maximize) {
     1 - scaled
   }
 }
+aggregate_scores <- function(scaled_score) {
+  mean(pmin(1, pmax(0, scaled_score)) %|% 0)
+}
 scores <- raw_scores %>%
   complete(
     dataset_id,
@@ -118,7 +121,7 @@ scores <- raw_scores %>%
   summarise(
     metric_values = list(as.list(setNames(metric_values, metric_ids))),
     scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
-    mean_score = mean(scaled_score),
+    mean_score = aggregate_scores(scaled_score),
     .groups = "drop"
   )
 
