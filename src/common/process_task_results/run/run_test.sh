@@ -14,7 +14,7 @@ for TASK in "denoising" "dimensionality_reduction" "batch_integration" "label_pr
   # find subdir in bucket with latest date
   DATE=$(aws s3 ls $BASE_DIR --recursive | awk '{print $4}' | grep 'task_info.yaml' | sort -r | head -n 1 | sed 's#.*/run_\(.*\)/[^/]*$#\1#')
   
-  INPUT_DIR="$BASE_DIR/$DATE"
+  INPUT_DIR="$BASE_DIR/run_$DATE"
   OUTPUT_DIR="../website/results/$TASK/data"
 
   # # temp sync
