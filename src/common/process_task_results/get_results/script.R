@@ -9,65 +9,17 @@ library(purrr, warn.conflicts = FALSE)
 library(rlang, warn.conflicts = FALSE)
 
 ## VIASH START
-dir <- "resources/dimensionality_reduction/results/run_2023-12-22_13-08-31"
 par <- list(
-  input_scores = paste0(dir, "/score_uns.yaml"),
-  input_execution ="resources_test/predict_modality/openproblems_neurips2021/results/trace.txt",
-  output = "output/results.json"
+  input_scores = "work/0b/80ef7640d545eecbb7f5656bf3981b/_viash_par/input_scores_1/score_uns.yaml",
+  input_execution = "work/0b/80ef7640d545eecbb7f5656bf3981b/_viash_par/input_execution_1/trace.txt",
+  input_metric_info = "work/0b/80ef7640d545eecbb7f5656bf3981b/_viash_par/input_metric_info_1/output.json",
+  output_results = "output/results.json",
+  output_metric_execution_info = "output/metric_execution_info.json"
 )
 ## VIASH END
 
-# read scores
-raw_scores <-
-  yaml::yaml.load_file(par$input_scores) %>%
-  map_df(function(x) {
-    tryCatch({
-      as_tibble(as.data.frame(
-        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
-      ))
-    }, error = function(e) {
-      message("Encountered error while reading scores: ", e$message)
-      NULL
-    })
-  })
-
-# scale scores
-scores <- raw_scores %>%
-  complete(
-    dataset_id,
-    method_id,
-    metric_ids,
-    fill = list(metric_values = NA_real_)
-  ) %>%
-  group_by(metric_ids, dataset_id) %>%
-  mutate(
-    scaled_score = dynutils::scale_minmax(metric_values) %|% 0
-  ) %>%
-  group_by(dataset_id, method_id) %>%
-  summarise(
-    metric_values = list(as.list(setNames(metric_values, metric_ids))),
-    scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
-    mean_score = mean(scaled_score),
-    .groups = "drop"
-  )
-
-# read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\((.*)/([^\\.]*)\\.(.*)\\)$"
-
-trace <- readr::read_tsv(par$input_execution) %>%
-  mutate(
-    id = name,
-    process_id = stringr::str_extract(id, id_regex, 1L),
-    dataset_id = stringr::str_extract(id, id_regex, 2L),
-    normalization_id = stringr::str_extract(id, id_regex, 3L),
-    method_id = stringr::str_extract(id, id_regex, 4L),
-    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
-  ) %>%
-  filter(process_id == method_id) %>%
-  arrange(desc(submit)) %>%
-  group_by(name) %>%
-  slice(1)
-# parse strings into numbers
+# --- helper functions ---------------------------------------------------------
+cat("Loading helper functions\n")
 parse_exit <- function(x) {
   if (is.na(x) || x == "-") {
     NA_integer_
@@ -107,6 +59,47 @@ parse_size <- function(x) {
   as.integer(ceiling(out))
 }
 
+# --- read input files ---------------------------------------------------------
+cat("Reading input files\n")
+# read scores
+raw_scores <-
+  yaml::yaml.load_file(par$input_scores) %>%
+  map_df(function(x) {
+    tryCatch({
+      as_tibble(as.data.frame(
+        x[c("dataset_id", "method_id", "metric_ids", "metric_values")]
+      ))
+    }, error = function(e) {
+      message("Encountered error while reading scores: ", e$message)
+      NULL
+    })
+  })
+
+# read metric info
+metric_info <- jsonlite::read_json(par$input_metric_info, simplifyVector = TRUE)
+
+# --- process scores and execution info ----------------------------------------
+cat("Processing scores and execution info\n")
+scores <- raw_scores %>%
+  complete(
+    dataset_id,
+    method_id,
+    metric_ids,
+    fill = list(metric_values = NA_real_)
+  ) %>%
+  left_join(metric_info %>% select(metric_ids = metric_id, maximize), by = "metric_ids") %>%
+  group_by(metric_ids, dataset_id) %>%
+  mutate(
+    scaled_score = dynutils::scale_minmax(metric_values) %|% 0,
+    scaled_score = ifelse(maximize, scaled_score, 1 - scaled_score)
+  ) %>%
+  group_by(dataset_id, method_id) %>%
+  summarise(
+    metric_values = list(as.list(setNames(metric_values, metric_ids))),
+    scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
+    mean_score = mean(scaled_score),
+    .groups = "drop"
+  )
 execution_info <- trace %>%
   rowwise() %>%
   transmute(
