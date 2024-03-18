@@ -100,7 +100,36 @@ scores <- raw_scores %>%
     mean_score = mean(scaled_score),
     .groups = "drop"
   )
+
+# read nxf log and process the task id
+id_regex <- "^.*:(.*)_process \\((.*)/([^\\.]*)(.[^\\.]*)?\\.(.*)\\)$"
+
+trace <- readr::read_tsv(par$input_execution) %>%
+  mutate(
+    id = name,
+    process_id = stringr::str_extract(id, id_regex, 1L),
+    dataset_id = stringr::str_extract(id, id_regex, 2L),
+    normalization_id = stringr::str_extract(id, id_regex, 3L),
+    grp4 = gsub("^\\.", "", stringr::str_extract(id, id_regex, 4L)),
+    grp5 = stringr::str_extract(id, id_regex, 5L),
+    submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
+  ) %>%
+  # detect whether entry is a metric or a method
+  mutate(
+    method_id = ifelse(is.na(grp4), grp5, grp4),
+    metric_id = ifelse(is.na(grp4), grp4, grp5)
+  ) %>%
+  select(-grp4, -grp5) %>%
+  filter(!is.na(method_id)) %>%
+  # take last entry for each run
+  arrange(desc(submit)) %>%
+  group_by(name) %>%
+  slice(1) %>%
+  ungroup()
+
+# parse values
 execution_info <- trace %>%
+  filter(process_id == method_id) %>% # only keep method entries
   rowwise() %>%
   transmute(
     dataset_id,
@@ -141,9 +170,39 @@ out <- full_join(
   ungroup()
 
 
+# --- process metric execution info --------------------------------------------
+cat("Processing metric execution info\n")
+metric_execution_info <- trace %>%
+  filter(process_id == metric_id) %>% # only keep metric entries
+  rowwise() %>%
+  transmute(
+    dataset_id,
+    normalization_id,
+    method_id,
+    metric_id,
+    resources = list(list(
+      exit_code = parse_exit(exit),
+      duration_sec = parse_duration(realtime),
+      cpu_pct = parse_cpu(`%cpu`),
+      peak_memory_mb = parse_size(peak_vmem),
+      disk_read_mb = parse_size(rchar),
+      disk_write_mb = parse_size(wchar)
+    ))
+  ) %>%
+  ungroup()
+
+# --- write output files -------------------------------------------------------
+cat("Writing output files\n")
+# write output files
 jsonlite::write_json(
   purrr::transpose(out),
-  par$output,
+  par$output_results,
+  auto_unbox = TRUE,
+  pretty = TRUE
+)
+jsonlite::write_json(
+  purrr::transpose(metric_execution_info),
+  par$output_metric_execution_info,
   auto_unbox = TRUE,
   pretty = TRUE
 )
