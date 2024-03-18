@@ -5,6 +5,7 @@ import anndata as ad
 import numpy as np
 import scanpy as sc
 
+## VIASH START
 par = {
     "input": "resources_test/common/cxg_mouse_pancreas_atlas/dataset.h5ad",
     "alpha": 1,
@@ -19,6 +20,7 @@ meta = {
     "functionality_name": "dataset_simulator",
     "resources_dir": "src/tasks/spatial_decomposition/dataset_simulator",
 }
+## VIASH END
 
 CELLTYPE_MIN_CELLS = 25
 # Reading input dataset
