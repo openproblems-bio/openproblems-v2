@@ -406,9 +406,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common decompress_gzip"
-LABEL org.opencontainers.image.created="2024-03-14T10:18:09Z"
+LABEL org.opencontainers.image.created="2024-03-18T09:35:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0891a3c0e7611c9536e55469b5ac2eade7407ff1"
+LABEL org.opencontainers.image.revision="d18504750fa21c3e9b2ccc9f5dc42638500bef03"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
