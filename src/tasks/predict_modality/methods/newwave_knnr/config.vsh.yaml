@@ -35,8 +35,7 @@ platforms:
     setup:
       - type: docker
         run: |
-          df -h /dev/shm > /var/shm.txt &&
-          docker --version >> var/shm.txt
+          df -h /dev/shm > /var/shm.txt
       - type: r
         cran: [ lmds, FNN, proxy, proxyC]
         bioc: [ SingleCellExperiment, NewWave ]
