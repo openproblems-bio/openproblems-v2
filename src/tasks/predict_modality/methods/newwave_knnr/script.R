@@ -8,6 +8,9 @@ requireNamespace("SingleCellExperiment", quietly = TRUE)
 content <- readLines("/var/shm.txt")
 print(content)
 
+shm <- system2("df -h /dev/shm", stdout = TRUE)
+print(shm)
+
 ## VIASH START
 path <- "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/"
 par <- list(
