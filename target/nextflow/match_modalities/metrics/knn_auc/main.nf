@@ -3224,7 +3224,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc",
     "viash_version" : "0.8.0",
-    "git_commit" : "31f6b555deae8c1df67ae472c45b8d7ba492fb95",
+    "git_commit" : "282f0b389216bfb0c36dd51798b3a0f88ff6e1e0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
