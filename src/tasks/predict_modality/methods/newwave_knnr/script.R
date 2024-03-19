@@ -8,7 +8,7 @@ requireNamespace("SingleCellExperiment", quietly = TRUE)
 content <- readLines("/var/shm.txt")
 print(content)
 
-shm <- system2("df -h /dev/shm", stdout = TRUE)
+shm <- system("df -h /dev/shm")
 print(shm)
 
 ## VIASH START
