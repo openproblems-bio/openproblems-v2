@@ -2779,6 +2779,36 @@ meta = [
       },
       {
         "type" : "file",
+        "name" : "--input_dataset_info",
+        "description" : "Method info file",
+        "example" : [
+          "dataset_info.json"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
+        "name" : "--input_method_info",
+        "description" : "Method info file",
+        "example" : [
+          "method_info.json"
+        ],
+        "must_exist" : true,
+        "create_parent" : true,
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "file",
         "name" : "--input_metric_info",
         "description" : "Metric info file",
         "example" : [
@@ -2907,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "282f0b389216bfb0c36dd51798b3a0f88ff6e1e0",
+    "git_commit" : "1ce8070376c79ff448b9fdbc547527fa49941fef",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2941,6 +2971,8 @@ par <- list(
   "task_id" = $( if [ ! -z ${VIASH_PAR_TASK_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK_ID" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_scores" = $( if [ ! -z ${VIASH_PAR_INPUT_SCORES+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_SCORES" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_execution" = $( if [ ! -z ${VIASH_PAR_INPUT_EXECUTION+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_EXECUTION" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_dataset_info" = $( if [ ! -z ${VIASH_PAR_INPUT_DATASET_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_DATASET_INFO" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_method_info" = $( if [ ! -z ${VIASH_PAR_INPUT_METHOD_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_METHOD_INFO" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_metric_info" = $( if [ ! -z ${VIASH_PAR_INPUT_METRIC_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_METRIC_INFO" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_results" = $( if [ ! -z ${VIASH_PAR_OUTPUT_RESULTS+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_RESULTS" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_metric_execution_info" = $( if [ ! -z ${VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
@@ -3028,10 +3060,36 @@ raw_scores <-
   })
 
 # read metric info
+dataset_info <- jsonlite::read_json(par\\$input_dataset_info, simplifyVector = TRUE)
+method_info <- jsonlite::read_json(par\\$input_method_info, simplifyVector = TRUE)
 metric_info <- jsonlite::read_json(par\\$input_metric_info, simplifyVector = TRUE)
 
 # --- process scores and execution info ----------------------------------------
 cat("Processing scores and execution info\\\\n")
+scale_scores <- function(values, is_control, maximize) {
+  control_values <- values[is_control & !is.na(values)]
+  if (length(control_values) < 2) {
+    return(NA_real_)
+  }
+
+  min_control_value <- min(control_values)
+  max_control_value <- max(control_values)
+
+  if (min_control_value == max_control_value) {
+    return(NA_real_)
+  }
+
+  scaled <- (values - min_control_value) / (max_control_value - min_control_value)
+
+  if (maximize) {
+    scaled
+  } else {
+    1 - scaled
+  }
+}
+aggregate_scores <- function(scaled_score) {
+  mean(pmin(1, pmax(0, scaled_score)) %|% 0)
+}
 scores <- raw_scores %>%
   complete(
     dataset_id,
@@ -3039,17 +3097,15 @@ scores <- raw_scores %>%
     metric_ids,
     fill = list(metric_values = NA_real_)
   ) %>%
+  left_join(method_info %>% select(method_id, is_baseline), by = "method_id") %>%
   left_join(metric_info %>% select(metric_ids = metric_id, maximize), by = "metric_ids") %>%
   group_by(metric_ids, dataset_id) %>%
-  mutate(
-    scaled_score = dynutils::scale_minmax(metric_values) %|% 0,
-    scaled_score = ifelse(maximize, scaled_score, 1 - scaled_score)
-  ) %>%
+  mutate(scaled_score = scale_scores(metric_values, is_baseline, maximize[[1]]) %|% 0) %>%
   group_by(dataset_id, method_id) %>%
   summarise(
     metric_values = list(as.list(setNames(metric_values, metric_ids))),
     scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
-    mean_score = mean(scaled_score),
+    mean_score = aggregate_scores(scaled_score),
     .groups = "drop"
   )
 

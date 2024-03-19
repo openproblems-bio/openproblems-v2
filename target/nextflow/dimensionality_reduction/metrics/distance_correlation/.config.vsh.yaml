@@ -178,7 +178,7 @@ functionality:
       reference: "kruskal1964mds"
       min: 0
       max: "+.inf"
-      maximize: false
+      maximize: true
       v1:
         path: "openproblems/tasks/dimensionality_reduction/metrics/distance_correlation.py"
         commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
@@ -192,7 +192,7 @@ functionality:
       reference: "coifman2006diffusion"
       min: 0
       max: "+.inf"
-      maximize: false
+      maximize: true
       v1:
         path: "openproblems/tasks/dimensionality_reduction/metrics/root_mean_square_error.py"
         commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
@@ -261,5 +261,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation/distance_correlation"
   viash_version: "0.8.0"
-  git_commit: "282f0b389216bfb0c36dd51798b3a0f88ff6e1e0"
+  git_commit: "1ce8070376c79ff448b9fdbc547527fa49941fef"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
