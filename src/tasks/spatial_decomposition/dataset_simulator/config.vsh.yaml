@@ -184,6 +184,11 @@ functionality:
   resources:
     - type: python_script
       path: script.py
+  test_resources:
+    - type: python_script
+      path: /src/common/comp_tests/run_and_check_adata.py
+    - path: /resources_test/common/cxg_mouse_pancreas_atlas
+      dest: resources_test/common/cxg_mouse_pancreas_atlas
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.2
