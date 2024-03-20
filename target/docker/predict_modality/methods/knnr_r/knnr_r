@@ -434,9 +434,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("lmds", "FNN", "proxyC"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods knnr_r"
-LABEL org.opencontainers.image.created="2024-03-19T07:53:51Z"
+LABEL org.opencontainers.image.created="2024-03-20T20:42:00Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9811630e7dd6e681f57be57037d47965367724f5"
+LABEL org.opencontainers.image.revision="cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

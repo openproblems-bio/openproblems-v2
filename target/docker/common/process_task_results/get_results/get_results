@@ -190,6 +190,16 @@ function ViashHelp {
   echo "        example: trace.txt"
   echo "        Nextflow log file"
   echo ""
+  echo "    --input_dataset_info"
+  echo "        type: file, file must exist"
+  echo "        example: dataset_info.json"
+  echo "        Method info file"
+  echo ""
+  echo "    --input_method_info"
+  echo "        type: file, file must exist"
+  echo "        example: method_info.json"
+  echo "        Method info file"
+  echo ""
   echo "    --input_metric_info"
   echo "        type: file, file must exist"
   echo "        example: metric_info.json"
@@ -430,9 +440,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "dplyr", "tidyr", "readr", "lubridate", "dynutils", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_results"
-LABEL org.opencontainers.image.created="2024-03-19T07:53:48Z"
+LABEL org.opencontainers.image.created="2024-03-20T20:41:59Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9811630e7dd6e681f57be57037d47965367724f5"
+LABEL org.opencontainers.image.revision="cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -618,6 +628,28 @@ while [[ $# -gt 0 ]]; do
         --input_execution=*)
             [ -n "$VIASH_PAR_INPUT_EXECUTION" ] && ViashError Bad arguments for option \'--input_execution=*\': \'$VIASH_PAR_INPUT_EXECUTION\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
             VIASH_PAR_INPUT_EXECUTION=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --input_dataset_info)
+            [ -n "$VIASH_PAR_INPUT_DATASET_INFO" ] && ViashError Bad arguments for option \'--input_dataset_info\': \'$VIASH_PAR_INPUT_DATASET_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_DATASET_INFO="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_dataset_info. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --input_dataset_info=*)
+            [ -n "$VIASH_PAR_INPUT_DATASET_INFO" ] && ViashError Bad arguments for option \'--input_dataset_info=*\': \'$VIASH_PAR_INPUT_DATASET_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_DATASET_INFO=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --input_method_info)
+            [ -n "$VIASH_PAR_INPUT_METHOD_INFO" ] && ViashError Bad arguments for option \'--input_method_info\': \'$VIASH_PAR_INPUT_METHOD_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_METHOD_INFO="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --input_method_info. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --input_method_info=*)
+            [ -n "$VIASH_PAR_INPUT_METHOD_INFO" ] && ViashError Bad arguments for option \'--input_method_info=*\': \'$VIASH_PAR_INPUT_METHOD_INFO\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_INPUT_METHOD_INFO=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         --input_metric_info)
@@ -809,6 +841,14 @@ if [ ! -z "$VIASH_PAR_INPUT_EXECUTION" ] && [ ! -e "$VIASH_PAR_INPUT_EXECUTION" 
   ViashError "Input file '$VIASH_PAR_INPUT_EXECUTION' does not exist."
   exit 1
 fi
+if [ ! -z "$VIASH_PAR_INPUT_DATASET_INFO" ] && [ ! -e "$VIASH_PAR_INPUT_DATASET_INFO" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_DATASET_INFO' does not exist."
+  exit 1
+fi
+if [ ! -z "$VIASH_PAR_INPUT_METHOD_INFO" ] && [ ! -e "$VIASH_PAR_INPUT_METHOD_INFO" ]; then
+  ViashError "Input file '$VIASH_PAR_INPUT_METHOD_INFO' does not exist."
+  exit 1
+fi
 if [ ! -z "$VIASH_PAR_INPUT_METRIC_INFO" ] && [ ! -e "$VIASH_PAR_INPUT_METRIC_INFO" ]; then
   ViashError "Input file '$VIASH_PAR_INPUT_METRIC_INFO' does not exist."
   exit 1
@@ -875,6 +915,14 @@ fi
 if [ ! -z "$VIASH_PAR_INPUT_EXECUTION" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_EXECUTION")" )
   VIASH_PAR_INPUT_EXECUTION=$(ViashAutodetectMount "$VIASH_PAR_INPUT_EXECUTION")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_DATASET_INFO" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_DATASET_INFO")" )
+  VIASH_PAR_INPUT_DATASET_INFO=$(ViashAutodetectMount "$VIASH_PAR_INPUT_DATASET_INFO")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_METHOD_INFO" ]; then
+  VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_METHOD_INFO")" )
+  VIASH_PAR_INPUT_METHOD_INFO=$(ViashAutodetectMount "$VIASH_PAR_INPUT_METHOD_INFO")
 fi
 if [ ! -z "$VIASH_PAR_INPUT_METRIC_INFO" ]; then
   VIASH_EXTRA_MOUNTS+=( "$(ViashAutodetectMountArg "$VIASH_PAR_INPUT_METRIC_INFO")" )
@@ -966,6 +1014,8 @@ par <- list(
   "task_id" = $( if [ ! -z ${VIASH_PAR_TASK_ID+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK_ID" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_scores" = $( if [ ! -z ${VIASH_PAR_INPUT_SCORES+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_SCORES" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_execution" = $( if [ ! -z ${VIASH_PAR_INPUT_EXECUTION+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_EXECUTION" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_dataset_info" = $( if [ ! -z ${VIASH_PAR_INPUT_DATASET_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_DATASET_INFO" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "input_method_info" = $( if [ ! -z ${VIASH_PAR_INPUT_METHOD_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_METHOD_INFO" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "input_metric_info" = $( if [ ! -z ${VIASH_PAR_INPUT_METRIC_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_METRIC_INFO" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_results" = $( if [ ! -z ${VIASH_PAR_OUTPUT_RESULTS+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_RESULTS" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi ),
   "output_metric_execution_info" = $( if [ ! -z ${VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT_METRIC_EXECUTION_INFO" | sed "s#['\\]#\\\\&#g"; echo "'"; else echo NULL; fi )
@@ -1053,10 +1103,36 @@ raw_scores <-
   })
 
 # read metric info
+dataset_info <- jsonlite::read_json(par\$input_dataset_info, simplifyVector = TRUE)
+method_info <- jsonlite::read_json(par\$input_method_info, simplifyVector = TRUE)
 metric_info <- jsonlite::read_json(par\$input_metric_info, simplifyVector = TRUE)
 
 # --- process scores and execution info ----------------------------------------
 cat("Processing scores and execution info\\n")
+scale_scores <- function(values, is_control, maximize) {
+  control_values <- values[is_control & !is.na(values)]
+  if (length(control_values) < 2) {
+    return(NA_real_)
+  }
+
+  min_control_value <- min(control_values)
+  max_control_value <- max(control_values)
+
+  if (min_control_value == max_control_value) {
+    return(NA_real_)
+  }
+
+  scaled <- (values - min_control_value) / (max_control_value - min_control_value)
+
+  if (maximize) {
+    scaled
+  } else {
+    1 - scaled
+  }
+}
+aggregate_scores <- function(scaled_score) {
+  mean(pmin(1, pmax(0, scaled_score)) %|% 0)
+}
 scores <- raw_scores %>%
   complete(
     dataset_id,
@@ -1064,17 +1140,15 @@ scores <- raw_scores %>%
     metric_ids,
     fill = list(metric_values = NA_real_)
   ) %>%
+  left_join(method_info %>% select(method_id, is_baseline), by = "method_id") %>%
   left_join(metric_info %>% select(metric_ids = metric_id, maximize), by = "metric_ids") %>%
   group_by(metric_ids, dataset_id) %>%
-  mutate(
-    scaled_score = dynutils::scale_minmax(metric_values) %|% 0,
-    scaled_score = ifelse(maximize, scaled_score, 1 - scaled_score)
-  ) %>%
+  mutate(scaled_score = scale_scores(metric_values, is_baseline, maximize[[1]]) %|% 0) %>%
   group_by(dataset_id, method_id) %>%
   summarise(
     metric_values = list(as.list(setNames(metric_values, metric_ids))),
     scaled_scores = list(as.list(setNames(scaled_score, metric_ids))),
-    mean_score = mean(scaled_score),
+    mean_score = aggregate_scores(scaled_score),
     .groups = "drop"
   )
 
@@ -1196,6 +1270,12 @@ if [ ! -z "$VIASH_PAR_INPUT_SCORES" ]; then
 fi
 if [ ! -z "$VIASH_PAR_INPUT_EXECUTION" ]; then
   VIASH_PAR_INPUT_EXECUTION=$(ViashStripAutomount "$VIASH_PAR_INPUT_EXECUTION")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_DATASET_INFO" ]; then
+  VIASH_PAR_INPUT_DATASET_INFO=$(ViashStripAutomount "$VIASH_PAR_INPUT_DATASET_INFO")
+fi
+if [ ! -z "$VIASH_PAR_INPUT_METHOD_INFO" ]; then
+  VIASH_PAR_INPUT_METHOD_INFO=$(ViashStripAutomount "$VIASH_PAR_INPUT_METHOD_INFO")
 fi
 if [ ! -z "$VIASH_PAR_INPUT_METRIC_INFO" ]; then
   VIASH_PAR_INPUT_METRIC_INFO=$(ViashStripAutomount "$VIASH_PAR_INPUT_METRIC_INFO")

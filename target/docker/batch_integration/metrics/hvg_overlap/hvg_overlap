@@ -411,9 +411,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.4"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics hvg_overlap"
-LABEL org.opencontainers.image.created="2024-03-19T07:53:46Z"
+LABEL org.opencontainers.image.created="2024-03-20T20:42:05Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9811630e7dd6e681f57be57037d47965367724f5"
+LABEL org.opencontainers.image.revision="cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

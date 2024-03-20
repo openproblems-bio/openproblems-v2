@@ -2987,7 +2987,7 @@ meta = [
           "reference" : "kruskal1964mds",
           "min" : 0,
           "max" : "+.inf",
-          "maximize" : false,
+          "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/distance_correlation.py",
             "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32",
@@ -3002,7 +3002,7 @@ meta = [
           "reference" : "coifman2006diffusion",
           "min" : 0,
           "max" : "+.inf",
-          "maximize" : false,
+          "maximize" : true,
           "v1" : {
             "path" : "openproblems/tasks/dimensionality_reduction/metrics/root_mean_square_error.py",
             "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32",
@@ -3089,7 +3089,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/metrics/distance_correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "9811630e7dd6e681f57be57037d47965367724f5",
+    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
