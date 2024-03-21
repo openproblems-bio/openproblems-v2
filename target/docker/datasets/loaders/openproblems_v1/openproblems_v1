@@ -477,9 +477,9 @@ RUN git clone https://github.com/openproblems-bio/openproblems.git /opt/openprob
   pip install --no-cache-dir --editable /opt/openproblems
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_v1"
-LABEL org.opencontainers.image.created="2024-03-19T20:07:03Z"
+LABEL org.opencontainers.image.created="2024-03-21T12:39:41Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9d5fee4a6c6b49387a4018bdd6278a8ed7ff5c9a"
+LABEL org.opencontainers.image.revision="c759c9b8a94e63bee15f25ce11f5185bfa29c939"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -3224,7 +3224,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/metrics/knn_auc",
     "viash_version" : "0.8.0",
-    "git_commit" : "9d5fee4a6c6b49387a4018bdd6278a8ed7ff5c9a",
+    "git_commit" : "c759c9b8a94e63bee15f25ce11f5185bfa29c939",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3288,7 +3288,7 @@ print("Compute KNN on PCA", flush=True)
 _, indices_true = (
     sklearn.neighbors.NearestNeighbors(n_neighbors=n_neighbors)
     .fit(input_solution_mod1.obsm["X_svd"])
-    .kneighbors(input_solution_mod2.obsm["X_svd"])
+    .kneighbors(input_solution_mod1.obsm["X_svd"])
 )
 
 _, indices_pred = (

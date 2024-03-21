@@ -2999,7 +2999,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/pymde",
     "viash_version" : "0.8.0",
-    "git_commit" : "9d5fee4a6c6b49387a4018bdd6278a8ed7ff5c9a",
+    "git_commit" : "c759c9b8a94e63bee15f25ce11f5185bfa29c939",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
