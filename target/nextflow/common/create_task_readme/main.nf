@@ -2850,7 +2850,6 @@ meta = [
             "cli",
             "igraph",
             "rmarkdown",
-            "bit64",
             "processx"
           ],
           "bioc_force_install" : false
@@ -2917,7 +2916,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_task_readme",
     "viash_version" : "0.8.0",
-    "git_commit" : "c759c9b8a94e63bee15f25ce11f5185bfa29c939",
+    "git_commit" : "e76e11b98aa79d2c6780c36c76b9040a94c53111",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

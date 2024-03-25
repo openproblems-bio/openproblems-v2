@@ -426,9 +426,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("dmcable/spacexr"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/methods rctd"
-LABEL org.opencontainers.image.created="2024-03-21T12:39:48Z"
+LABEL org.opencontainers.image.created="2024-03-25T10:52:49Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c759c9b8a94e63bee15f25ce11f5185bfa29c939"
+LABEL org.opencontainers.image.revision="e76e11b98aa79d2c6780c36c76b9040a94c53111"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

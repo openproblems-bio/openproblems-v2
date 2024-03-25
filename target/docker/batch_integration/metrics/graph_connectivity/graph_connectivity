@@ -410,9 +410,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.4"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics graph_connectivity"
-LABEL org.opencontainers.image.created="2024-03-21T12:39:49Z"
+LABEL org.opencontainers.image.created="2024-03-25T10:52:44Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c759c9b8a94e63bee15f25ce11f5185bfa29c939"
+LABEL org.opencontainers.image.revision="e76e11b98aa79d2c6780c36c76b9040a94c53111"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
