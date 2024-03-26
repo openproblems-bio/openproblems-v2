@@ -1,0 +1,18 @@
+__merge__: ../api/comp_process_dataset.yaml
+functionality:
+  name: process_dataset
+  description: Preprocess adata object for c2c source target
+  resources:
+    - type: python_script
+      path: script.py
+    - path: /src/common/helper_functions/subset_anndata.py
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    setup:
+      - type: python
+        pypi:
+          - liana
+  - type: nextflow
+    directives:
+      label: [ highmem, midcpu , midtime]

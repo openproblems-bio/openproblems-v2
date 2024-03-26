@@ -50,6 +50,17 @@ for key, value in dataset_fun.metadata.items():
     print(f"Setting .uns['{key}']", flush=True)
     adata.uns[key] = value
 
+if 'ccc_target' in adata.uns:
+    if 'source' in adata.uns['ccc_target'].columns and 'target' in adata.uns['ccc_target'].columns:
+        adata.uns["ligand_receptor_resource"] = op.tasks._cell_cell_communication._common.utils.ligand_receptor_resource(
+                adata.uns["target_organism"]
+            )
+        adata.uns['ccc_source'] = adata.uns['ligand_receptor_resource']['source']
+        adata.uns['ccc_target'] = adata.uns['ligand_receptor_resource']['target']
+        adata.uns['ccc_ligand'] = adata.uns['ligand_receptor_resource']['ligand_genesymbol']
+        adata.uns['ccc_receptor'] = adata.uns['ligand_receptor_resource']['receptor_genesymbol']
+        del adata.uns['ligand_receptor_resource'] 
+
 print("Setting .obs['cell_type']", flush=True)
 if par["obs_cell_type"]:
     if par["obs_cell_type"] in adata.obs:
