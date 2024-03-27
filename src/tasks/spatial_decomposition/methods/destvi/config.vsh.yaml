@@ -33,8 +33,7 @@ platforms:
     setup:
       - type: python
         packages: 
-          - scvi-tools
-          - chex==0.1.85
+          - scvi-tools>=1.1.0
 
   - type: native
   - type: nextflow

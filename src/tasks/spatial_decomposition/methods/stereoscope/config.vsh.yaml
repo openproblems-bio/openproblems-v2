@@ -33,7 +33,7 @@ platforms:
     setup:
       - type: python
         packages: 
-          - scvi-tools
+          - scvi-tools>=1.1.0
   - type: native
   - type: nextflow
     directives:

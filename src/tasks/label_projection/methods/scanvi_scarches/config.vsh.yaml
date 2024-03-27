@@ -58,7 +58,7 @@ platforms:
     # Add custom dependencies here
     setup:
       - type: python
-        pypi: scvi-tools
+        pypi: scvi-tools>=1.1.0
   - type: nextflow
     directives:
       label: [ "midtime",midmem, midcpu]
