@@ -9,19 +9,10 @@ info:
         name: counts
         description: Raw counts
         required: true
-      - type: double
-        name: normalized
-        description: Normalized expression values
-        required: true
     obs:
       - type: string
         name: label
         description: Cell type annotation.
-        required: true
-    var:
-      - type: double
-        name: hvg_score
-        description: High variability gene score (normalized dispersion). The greater, the more variable.
         required: true
     uns:
       - type: string
@@ -67,8 +58,4 @@ info:
       - type: string
         name: ccc_receptor
         description: The gene of the protein on the surface of the target cell that the ligand specifically binds to. This vector needs to be of the same length as `ccc_source`.
-        required: true
-      - type: string
-        name: normalization_id
-        description: "Which normalization was used"
         required: true

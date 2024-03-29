@@ -5,14 +5,18 @@ import scipy
 
 ## VIASH START
 par = {
-    "input_id": "pancreas",
-    "dataset_id": "pancreas",
-    "obs_cell_type": "cell_type",
-    "obs_batch": "tech",
-    "obs_tissue": "tissue",
+    "input_id": "allen_brain_atlas",
+    "dataset_id": "allen_brain_atlas",
+    "obs_cell_type": "label",
+    "obs_batch": None,
+    "obs_tissue": None,
     "layer_counts": "counts",
     "output": "test_data.h5ad",
+    "var_feature_name": "index",
+    "var_feature_id": None,
+    "sparse": True
 }
+
 meta = {
     "resources_dir": "src/datasets/loaders/openproblems_v1/"
 }
@@ -48,18 +52,7 @@ adata = dataset_fun(**kwargs)
 # metadata are two different classes.
 for key, value in dataset_fun.metadata.items():
     print(f"Setting .uns['{key}']", flush=True)
-    adata.uns[key] = value
-
-if 'ccc_target' in adata.uns:
-    if 'source' in adata.uns['ccc_target'].columns and 'target' in adata.uns['ccc_target'].columns:
-        adata.uns["ligand_receptor_resource"] = op.tasks._cell_cell_communication._common.utils.ligand_receptor_resource(
-                adata.uns["target_organism"]
-            )
-        adata.uns['ccc_source'] = adata.uns['ligand_receptor_resource']['source']
-        adata.uns['ccc_target'] = adata.uns['ligand_receptor_resource']['target']
-        adata.uns['ccc_ligand'] = adata.uns['ligand_receptor_resource']['ligand_genesymbol']
-        adata.uns['ccc_receptor'] = adata.uns['ligand_receptor_resource']['receptor_genesymbol']
-        del adata.uns['ligand_receptor_resource'] 
+    adata.uns[key] = value 
 
 print("Setting .obs['cell_type']", flush=True)
 if par["obs_cell_type"]:

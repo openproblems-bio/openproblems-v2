@@ -9,19 +9,10 @@ info:
         name: counts
         description: Raw counts
         required: true
-      - type: double
-        name: normalized
-        description: Normalized counts
-        required: true
     obs:
       - type: string
         name: label
         description: Cell type annotation.
-        required: true
-    var:
-      - type: double
-        name: hvg_score
-        description: A ranking of the features by hvg.
         required: true
     uns:
       - type: string
@@ -29,6 +20,18 @@ info:
         description: "A unique identifier for the dataset"
         required: true
       - type: string
-        name: normalization_id
-        description: "Which normalization was used"
+        name: ccc_source
+        description: The cell type that initiates the communication signal. This serves as the ground-truth cell-cell communication (CCC) information. This vector contains one value per CCC interaction.
+        required: true
+      - type: string
+        name: ccc_target
+        description: The cell type which is intended to receive the communicational signal. This vector needs to be of the same length as `ccc_source`.
+        required: true
+      - type: string
+        name: ccc_ligand
+        description: The gene of the signalling molecule released by the source cell. This vector needs to be of the same length as `ccc_source`.
+        required: true
+      - type: string
+        name: ccc_receptor
+        description: The gene of the protein on the surface of the target cell that the ligand specifically binds to. This vector needs to be of the same length as `ccc_source`.
         required: true

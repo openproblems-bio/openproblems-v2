@@ -8,11 +8,25 @@ functionality:
     - path: /src/common/helper_functions/subset_anndata.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    image: ghcr.io/openproblems-bio/base_r:1.0.2
     setup:
+      - type: apt
+        packages: git
+      - type: docker
+        run: |
+          git clone https://github.com/openproblems-bio/openproblems.git /opt/openproblems && \
+            pip install --no-cache-dir -r /opt/openproblems/docker/openproblems/requirements.txt && \
+            pip install --no-cache-dir --editable /opt/openproblems
+      - type: r
+        bioc: [BiocManager]
+        github: [saezlab/liana]
       - type: python
-        pypi:
-          - liana
+        pip:
+        - scipy
+        - scprep
+        - numpy
+        - pandas
+        - rpy2
   - type: nextflow
-    directives:
-      label: [ highmem, midcpu , midtime]
+    directives: 
+      label: [ midtime, highmem, highcpu]

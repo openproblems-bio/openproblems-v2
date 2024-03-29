@@ -10,10 +10,6 @@ info:
         description: "A unique identifier for the dataset"
         required: true
       - type: string
-        name: normalization_id
-        description: "Which normalization was used"
-        required: true
-      - type: string
         name: method_id
         description: "A unique identifier for the method"
         required: true
