@@ -13,7 +13,7 @@ functionality:
     v1:
       path: openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py
       commit: b3456fd73c04c28516f6df34c57e6e3e8b0dab32
-    preferred_normalization: log_cp10k
+    preferred_normalization: counts
     variants:
       scvi_full_unscaled:
   resources:
@@ -21,12 +21,12 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    image: ghcr.io/openproblems-bio/base_python:1.0.3
     setup:
       - type: python
         pypi:
           - scvi-tools
-          - scib==1.1.3
+          - numpy
   - type: nextflow
     directives: 
-      label: [ "midtime", midmem, lowcpu ]
+      label: [ midtime, midmem, lowcpu ]

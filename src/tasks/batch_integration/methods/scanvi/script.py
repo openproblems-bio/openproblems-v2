@@ -25,7 +25,7 @@ n_epochs_scVI = int(np.min([round((20000 / adata.n_obs) * 400), 400]))  # 400
 n_epochs_scANVI = int(np.min([10, np.max([2, round(n_epochs_scVI / 3.0)])]))
 
 print('Run SCVI', flush=True)
-SCVI.setup_anndata(adata, layer="normalized", batch_key="batch")
+SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
 
 # Defaults from SCVI github tutorials scanpy_pbmc3k and harmonization
 n_latent = 30
