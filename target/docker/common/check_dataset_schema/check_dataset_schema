@@ -420,9 +420,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component common check_dataset_schema"
-LABEL org.opencontainers.image.created="2024-04-02T17:35:47Z"
+LABEL org.opencontainers.image.created="2024-04-02T17:35:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d24d974c5a72d908639a76d58459fd050bb1e919"
+LABEL org.opencontainers.image.revision="9fef3308ab86a148bc8bfbabda89abdccb983a65"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
