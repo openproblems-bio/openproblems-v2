@@ -1,21 +1,9 @@
-# The API specifies which type of component this is.
-# It contains specifications for:
-#   - The input/output files
-#   - Common parameters
-#   - A unit test
 __merge__: ../../api/comp_method_embedding.yaml
 
 functionality:
-  # A unique identifier for your component (required).
-  # Can contain only lowercase letters or underscores.
   name: scanvi
-
-  # Metadata for your component
   info:
-    # A relatively short label, used when rendering visualizations (required)
     label: scANVI
-    # A one sentence summary of how this method works (required). Used when 
-    # rendering summary tables.
     summary: "scANVI is a deep learning method that considers cell type labels."
     description : |
       scANVI (single-cell ANnotation using Variational Inference; Python class SCANVI) is a semi-supervised model for single-cell transcriptomics data. In a sense, it can be seen as a scVI extension that can leverage the cell type knowledge for a subset of the cells present in the data sets to infer the states of the rest of the cells.
