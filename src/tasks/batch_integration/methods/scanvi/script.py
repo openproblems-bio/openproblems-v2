@@ -1,6 +1,6 @@
-import yaml
 import anndata as ad
-from scib.integration import scanvi
+import numpy as np
+from scvi.model import SCVI, SCANVI
 
 ## VIASH START
 par = {
@@ -15,16 +15,46 @@ meta = {
 ## VIASH END
 
 
-
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
+ad_out = adata.copy()
 
-print('Run scanvi', flush=True)
-adata.X = adata.layers['normalized']
-adata = scanvi(adata, batch='batch', labels='label')
-del adata.X
+# Set the max epochs for training
+n_epochs_scVI = int(np.min([round((20000 / adata.n_obs) * 400), 400]))  # 400
+n_epochs_scANVI = int(np.min([10, np.max([2, round(n_epochs_scVI / 3.0)])]))
+
+print('Run SCVI', flush=True)
+SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
+
+# Defaults from SCVI github tutorials scanpy_pbmc3k and harmonization
+n_latent = 30
+n_hidden = 128
+n_layers = 2
+
+vae = SCVI(
+        adata,
+        gene_likelihood="nb",
+        n_layers=n_layers,
+        n_latent=n_latent,
+        n_hidden=n_hidden,
+    )
+
+train_kwargs = {"train_size": 1.0}
+train_kwargs["max_epochs"] = n_epochs_scVI
+
+vae.train(**train_kwargs)
+
+print('Run SCANVI', flush=True)
+scanvae = SCANVI.from_scvi_model(
+    scvi_model=vae,
+    labels_key="label",
+    unlabeled_category="UnknownUnknown",  # pick anything definitely not in a dataset
+)
+scanvae.train(max_epochs=n_epochs_scANVI, train_size=1.0)
+
+ad_out.obsm["X_emb"] = scanvae.get_latent_representation()
+ad_out.uns["method_id"] = meta['functionality_name']
 
 print("Store outputs", flush=True)
-adata.uns['method_id'] = meta['functionality_name']
-adata.write_h5ad(par['output'], compression='gzip')
+ad_out.write_h5ad(par['output'], compression='gzip')
