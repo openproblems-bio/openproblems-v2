@@ -26,6 +26,7 @@ functionality:
     - type: python_script
       path: script.py
 platforms:
+  # Due to a [ gcc-8 ] dependency in the mnnpy package, we need to use a python:3.8 image
   - type: docker
     image: python:3.8
     setup:
@@ -39,9 +40,8 @@ platforms:
           - pyyaml
           - requests
           - jsonschema
-          - scib==1.1.3
         github:
           - chriscainx/mnnpy
   - type: nextflow
     directives:
-      label: [ "midtime", lowcpu, lowmem ]
+      label: [ midtime, lowcpu, lowmem ]

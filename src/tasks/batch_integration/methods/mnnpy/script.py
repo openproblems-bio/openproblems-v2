@@ -1,5 +1,5 @@
 import anndata as ad
-from scib.integration import mnn
+import mnnpy
 
 ## VIASH START
 par = {
@@ -16,12 +16,24 @@ meta = {
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
+ad_out = adata.copy()
+
 print('Run mnn', flush=True)
 adata.X = adata.layers['normalized']
-adata.layers['corrected_counts'] = mnn(adata, batch='batch').X
+split = []
+batch_categories = adata.obs['batch'].cat.categories
+for i in batch_categories:
+    split.append(adata[adata.obs['batch'] == i].copy())
+corrected, _, _ = mnnpy.mnn_correct(
+        *split,
+        batch_key='batch',
+        batch_categories=batch_categories,
+        index_unique=None
+    )
 
-del adata.X
+ad_out.layers['corrected_counts'] = corrected.X
+
 
 print("Store outputs", flush=True)
-adata.uns['method_id'] = meta['functionality_name']
-adata.write_h5ad(par['output'], compression='gzip')
+ad_out.uns['method_id'] = meta['functionality_name']
+ad_out.write_h5ad(par['output'], compression='gzip')
