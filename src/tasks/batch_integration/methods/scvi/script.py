@@ -3,36 +3,45 @@ from scvi.model import SCVI
 
 ## VIASH START
 par = {
-    'input': 'resources_test/batch_integration/pancreas/unintegrated.h5ad',
-    'output': 'output.h5ad'
+    'input': 'resources_test/batch_integration/pancreas/dataset.h5ad',
+    'output': 'output.h5ad',
+    'n_hvg': 2000,
+    'n_latent': 30,
+    'n_hidden': 128,
+    'n_layers': 2,
+    'max_epochs': 400
 }
 meta = {
-    'functionality_name' : 'foo',
-    'config': 'bar'
+    'functionality_name' : 'scvi',
 }
 ## VIASH END
 
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
-ad_out = adata.copy()
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    adata = adata[:, idx].copy()
 
-print('Run scvi', flush=True)
+print("Processing data", flush=True)
 SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
 
-# Defaults from SCVI github tutorials scanpy_pbmc3k and harmonization
-n_latent = 30
-n_hidden = 128
-n_layers = 2
+print("Run scVI", flush=True)
+model_kwargs = {
+    key: par[key]
+    for key in ["n_latent", "n_hidden", "n_layers"]
+    if par[key] is not None
+}
 
-vae = SCVI(
-    adata,
-    gene_likelihood="nb",
-    n_layers=n_layers,
-    n_latent=n_latent,
-    n_hidden=n_hidden,
-)
-train_kwargs = {"train_size": 1.0}
+vae = SCVI(adata, **model_kwargs)
+
+train_kwargs = {
+    key: par[key]
+    for key in ["max_epochs"]
+    if par[key] is not None
+}
+
 vae.train(**train_kwargs)
 
 print("Store outputs", flush=True)

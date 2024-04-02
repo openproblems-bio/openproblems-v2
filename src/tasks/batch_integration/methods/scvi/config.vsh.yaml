@@ -16,6 +16,29 @@ functionality:
     preferred_normalization: counts
     variants:
       scvi_full_unscaled:
+  # defaults are derived from te scvi tutorial:
+  # https://docs.scvi-tools.org/en/stable/tutorials/notebooks/scrna/harmonization.html
+  arguments:
+    - name: --n_hvg
+      type: integer
+      default: 2000
+      description: Number of highly variable genes to use.
+    - name: --n_latent
+      type: integer
+      default: 30
+      description: Number of latent dimensions.
+    - name: --n_hidden
+      type: integer
+      default: 128
+      description: Number of hidden units.
+    - name: --n_layers
+      type: integer
+      default: 2
+      description: Number of layers.
+    - name: --max_epochs
+      type: integer
+      example: 400
+      description: Maximum number of epochs.
   resources:
     - type: python_script
       path: script.py
