@@ -2937,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_component",
     "viash_version" : "0.8.0",
-    "git_commit" : "acd27f57e4ced023abf8bdb0c344276c62ed4270",
+    "git_commit" : "44e3590ac70ff4604db407efd4458d3354f48f49",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3116,7 +3116,7 @@ def generate_docker_platform(par) -> str:
   if par["language"] == "python":
     image_str = "ghcr.io/openproblems-bio/base_python:1.0.2"
     setup_type = "python"
-    package_example = "scib==1.1.3"
+    package_example = "scib==1.1.5"
   elif par["language"] == "r":
     image_str = "ghcr.io/openproblems-bio/base_r:1.0.2"
     setup_type = "r"
