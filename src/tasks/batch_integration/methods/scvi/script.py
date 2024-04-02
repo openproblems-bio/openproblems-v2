@@ -35,8 +35,19 @@ vae = SCVI(
 train_kwargs = {"train_size": 1.0}
 vae.train(**train_kwargs)
 
-ad_out.obsm["X_emb"] = vae.get_latent_representation()
-ad_out.uns["method_id"] = meta['functionality_name']
-
 print("Store outputs", flush=True)
-ad_out.write_h5ad(par['output'], compression='gzip')
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    obsm={
+        "X_emb": vae.get_latent_representation(),
+    },
+    uns={
+        "dataset_id": adata.uns["dataset_id"],
+        "normalization_id": adata.uns["normalization_id"],
+        "method_id": meta["functionality_name"],
+    },
+)
+
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
