@@ -89,8 +89,7 @@ lobj <- rliger::quantileNorm(lobj)
 cat(">> Store dimred in adata\n")
 # remove dataset names from rownames
 for (name in names(rliger::rawData(lobj))) {
-  rownames(lobj@H.norm) <- sub(paste0(name, "_"), "", rownames(lobj@H.norm)
-  )
+  rownames(lobj@H.norm) <- sub(paste0(name, "_"), "", rownames(lobj@H.norm))
 }
 adata$obsm[["X_emb"]] <- lobj@H.norm[rownames(adata), , drop = FALSE]
 adata$uns[["method_id"]] <- meta$functionality_name
