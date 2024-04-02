@@ -418,9 +418,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/control_methods random_proportions"
-LABEL org.opencontainers.image.created="2024-04-02T15:18:50Z"
+LABEL org.opencontainers.image.created="2024-04-02T15:41:23Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="12d4837fc9116c10d2a6e3121d50bb04577e5b88"
+LABEL org.opencontainers.image.revision="acd27f57e4ced023abf8bdb0c344276c62ed4270"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

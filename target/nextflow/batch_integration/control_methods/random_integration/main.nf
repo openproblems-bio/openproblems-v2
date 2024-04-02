@@ -2861,18 +2861,6 @@ meta = [
             "obsp" : [
               {
                 "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "connectivities",
                 "description" : "Neighbors connectivities matrix.",
                 "required" : true
@@ -2904,12 +2892,6 @@ meta = [
                 "required" : false
               },
               {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              },
-              {
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
@@ -2919,62 +2901,6 @@ meta = [
                 "type" : "object",
                 "name" : "neighbors",
                 "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              }
-            ],
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
                 "required" : true
               }
             ]
@@ -3105,7 +3031,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_integration",
     "viash_version" : "0.8.0",
-    "git_commit" : "12d4837fc9116c10d2a6e3121d50bb04577e5b88",
+    "git_commit" : "acd27f57e4ced023abf8bdb0c344276c62ed4270",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
