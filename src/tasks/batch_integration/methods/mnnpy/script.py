@@ -5,7 +5,7 @@ import mnnpy
 par = {
     'input': 'resources_test/batch_integration/pancreas/unintegrated.h5ad',
     'output': 'output.h5ad',
-    'hvg': True,
+    'n_hvg': 2000,
 }
 meta = {
     'functionality_name': 'foo',
@@ -16,7 +16,10 @@ meta = {
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
-ad_out = adata.copy()
+if par['n_hvg']:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = adata.var['hvg_score'].to_numpy().argsort()[::-1][:par['n_hvg']]
+    adata = adata[:, idx].copy()
 
 print('Run mnn', flush=True)
 adata.X = adata.layers['normalized']
@@ -31,9 +34,20 @@ corrected, _, _ = mnnpy.mnn_correct(
         index_unique=None
     )
 
-ad_out.layers['corrected_counts'] = corrected.X
+print("Store outputs", flush=True)
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    uns={
+        'dataset_id': adata.uns['dataset_id'],
+        'normalization_id': adata.uns['normalization_id'],
+        'method_id': meta['functionality_name'],
+    },
+    layers={
+        'corrected_counts': corrected.X,
+    }
+)
 
 
 print("Store outputs", flush=True)
-ad_out.uns['method_id'] = meta['functionality_name']
-ad_out.write_h5ad(par['output'], compression='gzip')
+output.write_h5ad(par['output'], compression='gzip')
