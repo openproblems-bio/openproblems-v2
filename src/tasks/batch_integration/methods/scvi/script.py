@@ -36,13 +36,7 @@ model_kwargs = {
 
 vae = SCVI(adata, **model_kwargs)
 
-train_kwargs = {
-    key: par[key]
-    for key in ["max_epochs"]
-    if par[key] is not None
-}
-
-vae.train(**train_kwargs)
+vae.train(max_epochs=par["max_epochs"], train_size=1.0)
 
 print("Store outputs", flush=True)
 output = ad.AnnData(

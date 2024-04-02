@@ -16,17 +16,41 @@ functionality:
     preferred_normalization: counts
     variants:
       scanvi_full_unscaled:
+  arguments:
+    - name: --n_hvg
+      type: integer
+      default: 2000
+      description: Number of highly variable genes to use.
+    - name: --n_latent
+      type: integer
+      default: 30
+      description: Number of latent dimensions.
+    - name: --n_hidden
+      type: integer
+      default: 128
+      description: Number of hidden units.
+    - name: --n_layers
+      type: integer
+      default: 2
+      description: Number of layers.
+    - name: --max_epochs_scvi
+      type: integer
+      example: 400
+      description: Maximum number of epochs.
+    - name: --max_epochs_scanvi
+      type: integer
+      example: 10
+      description: Maximum number of epochs.
   resources:
     - type: python_script
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.3
+    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3
     setup:
       - type: python
         pypi:
           - scvi-tools>=1.1.0
-          - numpy
   - type: nextflow
     directives:
       label: [ midtime, lowmem, lowcpu ]
