@@ -2780,6 +2780,12 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "double",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  },
+                  {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -2925,6 +2931,12 @@ meta = [
                     "required" : true
                   },
                   {
+                    "type" : "double",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
+                    "required" : true
+                  },
+                  {
                     "type" : "string",
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -3032,6 +3044,12 @@ meta = [
                     "type" : "boolean",
                     "name" : "hvg",
                     "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                    "required" : true
+                  },
+                  {
+                    "type" : "double",
+                    "name" : "hvg_score",
+                    "description" : "A ranking of the features by hvg.",
                     "required" : true
                   },
                   {
@@ -3168,7 +3186,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e76e11b98aa79d2c6780c36c76b9040a94c53111",
+          "git_commit" : "12d4837fc9116c10d2a6e3121d50bb04577e5b88",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3190,7 +3208,7 @@ meta = [
           "functionalityNamespace" : "batch_integration",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e76e11b98aa79d2c6780c36c76b9040a94c53111",
+          "git_commit" : "12d4837fc9116c10d2a6e3121d50bb04577e5b88",
           "executable" : "/nextflow/batch_integration/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset"
@@ -3236,7 +3254,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "e76e11b98aa79d2c6780c36c76b9040a94c53111",
+    "git_commit" : "12d4837fc9116c10d2a6e3121d50bb04577e5b88",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

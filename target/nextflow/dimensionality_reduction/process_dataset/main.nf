@@ -2862,9 +2862,9 @@ meta = [
                 "required" : true
               },
               {
-                "type" : "integer",
+                "type" : "double",
                 "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
+                "description" : "A score for the feature indicating how highly variable it is.",
                 "required" : true
               }
             ],
@@ -3297,7 +3297,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e76e11b98aa79d2c6780c36c76b9040a94c53111",
+    "git_commit" : "12d4837fc9116c10d2a6e3121d50bb04577e5b88",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
