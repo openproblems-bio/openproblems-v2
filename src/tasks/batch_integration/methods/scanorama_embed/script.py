@@ -1,4 +1,3 @@
-import yaml
 import anndata as ad
 import scanorama
 
@@ -71,5 +70,5 @@ output = ad.AnnData(
     }
 )
 
-print("Store outputs", flush=True)
+print("Write output to file", flush=True)
 output.write(par['output'], compression='gzip')
