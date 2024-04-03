@@ -39,7 +39,7 @@ sca.models.SCVI.setup_anndata(
     adata, 
     batch_key="batch", 
     labels_key="label",
-    layer="normalized"
+    layer="counts"
 )
 
 vae = sca.models.SCVI(
