@@ -36,11 +36,11 @@ functionality:
     - name: --max_epochs_scvi
       type: integer
       example: 400
-      description: Maximum number of epochs.
+      description: Maximum number of training epochs for scVI.
     - name: --max_epochs_scanvi
       type: integer
       example: 10
-      description: Maximum number of epochs.
+      description: Maximum number of training epochs for scANVI.
   resources:
     - type: python_script
       path: script.py
@@ -53,4 +53,4 @@ platforms:
           - scvi-tools>=1.1.0
   - type: nextflow
     directives:
-      label: [ midtime, lowmem, lowcpu ]
+      label: [ midtime, lowmem, lowcpu, gpu ]

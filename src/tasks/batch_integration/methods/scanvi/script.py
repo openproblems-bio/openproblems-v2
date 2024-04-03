@@ -9,8 +9,8 @@ par = {
     'n_latent': 30,
     'n_hidden': 128,
     'n_layers': 2,
-    'max_epochs_scvi': 400,
-    'max_epochs_scanvi': 400
+    'max_epochs_scvi': 20,
+    'max_epochs_scanvi': 20
 }
 meta = {
     'functionality_name' : 'scanvi',
@@ -24,15 +24,6 @@ if par["n_hvg"]:
     print(f"Select top {par['n_hvg']} high variable genes", flush=True)
     idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
     adata = adata[:, idx].copy()
-
-# based on scib
-# -> https://github.com/theislab/scib/blob/main/scib/integration.py#L290-L297
-if not par["max_epochs_scvi"]:
-    par["max_epochs_scvi"] = min(int(round(20000 / adata.n_obs) * 400), 400)
-    print(f"Setting max_epochs_scvi to {par['max_epochs_scvi']}", flush=True)
-if not par["max_epochs_scanvi"]:
-    par["max_epochs_scanvi"] = min(max(2, int(round(par["max_epochs_scvi"] / 3.0))), 10)
-    print(f"Setting max_epochs_scanvi to {par['max_epochs_scanvi']}", flush=True)
 
 print("Processing data", flush=True)
 SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
