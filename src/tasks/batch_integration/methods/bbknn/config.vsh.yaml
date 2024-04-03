@@ -21,6 +21,19 @@ functionality:
       bbknn_full_unscaled:
       bbknn_full_scaled:
         preferred_normalization: log_cp10k_scaled
+  arguments:
+    - name: --annoy_n_trees
+      type: integer
+      default: 10
+      description: Number of trees to use in the annoy forrest.
+    - name: --neighbors_within_batch
+      type: integer
+      default: 3
+      description: Number of neighbors to report within each batch.
+    - name: --n_hvg
+      type: integer
+      default: 2000
+      description: Number of highly variable genes to use.
   resources:
     - type: python_script
       path: script.py
@@ -33,4 +46,4 @@ platforms:
           - bbknn
   - type: nextflow
     directives: 
-      label: [ "midtime", midmem, lowcpu ]
+      label: [ midtime, midmem, lowcpu ]
