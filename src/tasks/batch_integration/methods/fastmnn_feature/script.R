@@ -36,7 +36,7 @@ output <- anndata::AnnData(
     dataset_id = adata$uns[["dataset_id"]],
     normalization_id = adata$uns[["normalization_id"]],
     method_id = meta$functionality_name
-    )
+  )
 )
 
 if (return_type == "feature") {
