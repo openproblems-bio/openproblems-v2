@@ -138,7 +138,7 @@ functionality:
     description: "Number of epochs to train the DestVI model using MAP inference."
     info: null
     default:
-    - 10000
+    - 2000
     required: false
     direction: "input"
     multiple: false
@@ -184,7 +184,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -196,8 +196,7 @@ platforms:
   - type: "python"
     user: false
     packages:
-    - "scvi-tools"
-    - "chex==0.1.85"
+    - "scvi-tools>=1.1.0"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -210,6 +209,7 @@ platforms:
     - "midtime"
     - "midmem"
     - "midcpu"
+    - "gpu"
     tag: "$id"
   auto:
     simplifyInput: true
@@ -237,5 +237,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/spatial_decomposition/methods/destvi"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/spatial_decomposition/methods/destvi/destvi"
   viash_version: "0.8.0"
-  git_commit: "9fef3308ab86a148bc8bfbabda89abdccb983a65"
+  git_commit: "05cfabe9f4562e99296172caeed748d16d4fec4f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

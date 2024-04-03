@@ -2989,17 +2989,17 @@ meta = [
       }
     ],
     "info" : {
-      "label" : "SCANVI",
-      "summary" : "ScANVI predicts cell type labels for unlabelled test data by leveraging cell type labels, modelling uncertainty and using deep neural networks with stochastic optimization.",
+      "label" : "scANVI",
+      "summary" : "scANVI predicts cell type labels for unlabelled test data by leveraging cell type labels, modelling uncertainty and using deep neural networks with stochastic optimization.",
       "description" : "single-cell ANnotation using Variational Inference is a\nsemi-supervised variant of the scVI(Lopez et al. 2018) algorithm. Like scVI,\nscANVI uses deep neural networks and stochastic optimization to model\nuncertainty caused by technical noise and bias in single - cell\ntranscriptomics measurements. However, scANVI also leverages cell type labels\nin the generative modelling. In this approach, scANVI is used to predict the\ncell type labels of the unlabelled test data.\n",
       "reference" : "lotfollahi2020query",
-      "repository_url" : "https://github.com/YosefLab/scvi-tools",
+      "repository_url" : "https://github.com/scverse/scvi-tools",
       "documentation_url" : "https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html",
       "v1" : {
         "path" : "openproblems/tasks/label_projection/methods/scvi_tools.py",
         "commit" : "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6"
       },
-      "preferred_normalization" : "log_cp10k",
+      "preferred_normalization" : "counts",
       "variants" : {
         "scanvi_hvg" : {
           "num_hvg" : 2000
@@ -3019,7 +3019,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "nvcr.io/nvidia/pytorch:23.12-py3",
+      "image" : "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3032,9 +3032,8 @@ meta = [
           "type" : "python",
           "user" : false,
           "packages" : [
-            "pyyaml",
-            "anndata~=0.8.0",
-            "scarches"
+            "scarches",
+            "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
         }
@@ -3083,7 +3082,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi",
     "viash_version" : "0.8.0",
-    "git_commit" : "9fef3308ab86a148bc8bfbabda89abdccb983a65",
+    "git_commit" : "05cfabe9f4562e99296172caeed748d16d4fec4f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3100,6 +3099,7 @@ tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 import anndata as ad
 import scarches as sca
+import pandas as pd
 
 # followed procedure from here:
 # https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html
@@ -3133,30 +3133,28 @@ dep = {
 ## VIASH END
 
 print("Load input data", flush=True)
-input_train_orig = ad.read_h5ad(par['input_train'])
-input_test_orig = ad.read_h5ad(par['input_test'])
+input_train = ad.read_h5ad(par['input_train'])
+input_test = ad.read_h5ad(par['input_test'])
 
 if par["num_hvg"]:
     print("Subsetting to HVG", flush=True)
-    hvg_idx = input_train_orig.var['hvg_score'].to_numpy().argsort()[:par["num_hvg"]]
-    input_train = input_train_orig[:,hvg_idx]
-    input_test = input_test_orig[:,hvg_idx]
-else:
-    input_train = input_train_orig
-    input_test = input_test_orig
+    hvg_idx = input_train.var['hvg_score'].to_numpy().argsort()[:par["num_hvg"]]
+    input_train = input_train[:,hvg_idx]
+    input_test = input_test[:,hvg_idx]
 
 print("Concatenating train and test data", flush=True)
 input_train.obs['is_test'] = False
 input_test.obs['is_test'] = True
 input_test.obs['label'] = "Unknown"
 adata = ad.concat([input_train, input_test], merge = "same")
+del input_train
 
 print("Create SCANVI model and train it on fully labelled reference dataset", flush=True)
 sca.models.SCVI.setup_anndata(
     adata, 
     batch_key="batch", 
     labels_key="label",
-    layer="normalized"
+    layer="counts"
 )
 
 vae = sca.models.SCVI(
@@ -3176,11 +3174,23 @@ scanvae.train()
 
 print("Make predictions", flush=True)
 preds = scanvae.predict(adata)
-input_test_orig.obs["label_pred"] = preds[adata.obs['is_test'].values]
+
+print("Store outputs", flush=True)
+output = ad.AnnData(
+    obs=pd.DataFrame(
+        {"label_pred": preds[adata.obs['is_test'].values]},
+        index=input_test.obs.index,
+    ),
+    var=input_test.var[[]],
+    uns={
+        "dataset_id": input_test.uns["dataset_id"],
+        "normalization_id": input_test.uns["normalization_id"],
+        "method_id": meta["functionality_name"],
+    },
+)
 
 print("Write output to file", flush=True)
-input_test_orig.uns["method_id"] = meta["functionality_name"]
-input_test_orig.write_h5ad(par['output'], compression="gzip")
+output.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"
 '''

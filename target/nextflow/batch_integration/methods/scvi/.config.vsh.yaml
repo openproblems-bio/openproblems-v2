@@ -119,6 +119,61 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
+  - type: "integer"
+    name: "--n_hvg"
+    description: "Number of highly variable genes to use."
+    info: null
+    default:
+    - 2000
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_latent"
+    description: "Number of latent dimensions."
+    info: null
+    default:
+    - 30
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_hidden"
+    description: "Number of hidden units."
+    info: null
+    default:
+    - 128
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_layers"
+    description: "Number of layers."
+    info: null
+    default:
+    - 2
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--max_epochs"
+    description: "Maximum number of epochs."
+    info: null
+    example:
+    - 400
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
   resources:
   - type: "python_script"
     path: "script.py"
@@ -144,12 +199,12 @@ functionality:
       \ of each cell, conditioned on unobserved factors and the batch variable. ScVI\
       \ is run as implemented in Luecken et al.\n"
     reference: "lopez2018deep"
-    repository_url: "https://github.com/YosefLab/scvi-tools"
-    documentation_url: "https://github.com/YosefLab/scvi-tools#readme"
+    repository_url: "https://github.com/scverse/scvi-tools"
+    documentation_url: "https://docs.scvi-tools.org/en/stable/user_guide/models/scvi.html"
     v1:
       path: "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py"
       commit: "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
-    preferred_normalization: "log_cp10k"
+    preferred_normalization: "counts"
     variants:
       scvi_full_unscaled: null
     type: "method"
@@ -163,7 +218,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -175,8 +230,7 @@ platforms:
   - type: "python"
     user: false
     pypi:
-    - "scvi-tools"
-    - "scib==1.1.5"
+    - "scvi-tools>=1.1.0"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -187,6 +241,7 @@ platforms:
     - "midtime"
     - "midmem"
     - "lowcpu"
+    - "gpu"
     tag: "$id"
   auto:
     simplifyInput: true
@@ -214,5 +269,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scvi"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scvi/scvi"
   viash_version: "0.8.0"
-  git_commit: "9fef3308ab86a148bc8bfbabda89abdccb983a65"
+  git_commit: "05cfabe9f4562e99296172caeed748d16d4fec4f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

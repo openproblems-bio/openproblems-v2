@@ -172,8 +172,8 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    label: "SCANVI"
-    summary: "ScANVI predicts cell type labels for unlabelled test data by leveraging\
+    label: "scANVI"
+    summary: "scANVI predicts cell type labels for unlabelled test data by leveraging\
       \ cell type labels, modelling uncertainty and using deep neural networks with\
       \ stochastic optimization."
     description: "single-cell ANnotation using Variational Inference is a\nsemi-supervised\
@@ -184,12 +184,12 @@ functionality:
       \ In this approach, scANVI is used to predict the\ncell type labels of the unlabelled\
       \ test data.\n"
     reference: "lotfollahi2020query"
-    repository_url: "https://github.com/YosefLab/scvi-tools"
+    repository_url: "https://github.com/scverse/scvi-tools"
     documentation_url: "https://scarches.readthedocs.io/en/latest/scanvi_surgery_pipeline.html"
     v1:
       path: "openproblems/tasks/label_projection/methods/scvi_tools.py"
       commit: "e3be930c6d4bbd656ab1e656badb52bb50e6cdd6"
-    preferred_normalization: "log_cp10k"
+    preferred_normalization: "counts"
     variants:
       scanvi_all_genes: null
       scanvi_hvg:
@@ -205,7 +205,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "nvcr.io/nvidia/pytorch:23.12-py3"
+  image: "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -217,9 +217,8 @@ platforms:
   - type: "python"
     user: false
     packages:
-    - "pyyaml"
-    - "anndata~=0.8.0"
     - "scarches"
+    - "scvi-tools>=1.1.0"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -258,5 +257,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi/scanvi"
   viash_version: "0.8.0"
-  git_commit: "9fef3308ab86a148bc8bfbabda89abdccb983a65"
+  git_commit: "05cfabe9f4562e99296172caeed748d16d4fec4f"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

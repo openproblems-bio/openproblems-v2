@@ -2921,7 +2921,7 @@ meta = [
         "name" : "--max_epochs_sp",
         "description" : "Number of epochs to train the DestVI model using MAP inference.",
         "default" : [
-          10000
+          2000
         ],
         "required" : false,
         "direction" : "input",
@@ -2985,7 +2985,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -2998,8 +2998,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "packages" : [
-            "scvi-tools",
-            "chex==0.1.85"
+            "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
         }
@@ -3016,7 +3015,8 @@ meta = [
         "label" : [
           "midtime",
           "midmem",
-          "midcpu"
+          "midcpu",
+          "gpu"
         ],
         "tag" : "$id"
       },
@@ -3051,7 +3051,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/destvi",
     "viash_version" : "0.8.0",
-    "git_commit" : "9fef3308ab86a148bc8bfbabda89abdccb983a65",
+    "git_commit" : "05cfabe9f4562e99296172caeed748d16d4fec4f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3498,7 +3498,8 @@ meta["defaults"] = [
   "label" : [
     "midtime",
     "midmem",
-    "midcpu"
+    "midcpu",
+    "gpu"
   ],
   "tag" : "$id"
 }'''),

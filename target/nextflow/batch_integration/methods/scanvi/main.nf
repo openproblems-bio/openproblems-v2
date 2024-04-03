@@ -2904,6 +2904,84 @@ meta = [
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_hvg",
+        "description" : "Number of highly variable genes to use.",
+        "default" : [
+          2000
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_latent",
+        "description" : "Number of latent dimensions.",
+        "default" : [
+          30
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_hidden",
+        "description" : "Number of hidden units.",
+        "default" : [
+          128
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_layers",
+        "description" : "Number of layers.",
+        "default" : [
+          2
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--max_epochs_scvi",
+        "description" : "Maximum number of training epochs for scVI.",
+        "example" : [
+          400
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--max_epochs_scanvi",
+        "description" : "Maximum number of training epochs for scANVI.",
+        "example" : [
+          10
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
       }
     ],
     "resources" : [
@@ -2940,17 +3018,17 @@ meta = [
       }
     ],
     "info" : {
-      "label" : "ScanVI",
-      "summary" : "ScanVI is a deep learning method that considers cell type labels.",
+      "label" : "scANVI",
+      "summary" : "scANVI is a deep learning method that considers cell type labels.",
       "description" : "scANVI (single-cell ANnotation using Variational Inference; Python class SCANVI) is a semi-supervised model for single-cell transcriptomics data. In a sense, it can be seen as a scVI extension that can leverage the cell type knowledge for a subset of the cells present in the data sets to infer the states of the rest of the cells.\n",
       "reference" : "lopez2018deep",
-      "repository_url" : "https://github.com/YosefLab/scvi-tools",
-      "documentation_url" : "https://github.com/YosefLab/scvi-tools#readme",
+      "repository_url" : "https://github.com/scverse/scvi-tools",
+      "documentation_url" : "https://docs.scvi-tools.org/en/stable/user_guide/models/scanvi.html",
       "v1" : {
         "path" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scanvi.py",
         "commit" : "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
       },
-      "preferred_normalization" : "log_cp10k",
+      "preferred_normalization" : "counts",
       "type" : "method",
       "subtype" : "embedding",
       "type_info" : {
@@ -2966,7 +3044,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -2979,8 +3057,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "pypi" : [
-            "scvi-tools",
-            "scib==1.1.5"
+            "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
         }
@@ -2993,7 +3070,8 @@ meta = [
         "label" : [
           "midtime",
           "lowmem",
-          "lowcpu"
+          "lowcpu",
+          "gpu"
         ],
         "tag" : "$id"
       },
@@ -3028,7 +3106,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanvi",
     "viash_version" : "0.8.0",
-    "git_commit" : "9fef3308ab86a148bc8bfbabda89abdccb983a65",
+    "git_commit" : "05cfabe9f4562e99296172caeed748d16d4fec4f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3043,15 +3121,20 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-import yaml
 import anndata as ad
-from scib.integration import scanvi
+from scvi.model import SCVI, SCANVI
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_latent': $( if [ ! -z ${VIASH_PAR_N_LATENT+x} ]; then echo "int(r'${VIASH_PAR_N_LATENT//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_hidden': $( if [ ! -z ${VIASH_PAR_N_HIDDEN+x} ]; then echo "int(r'${VIASH_PAR_N_HIDDEN//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_layers': $( if [ ! -z ${VIASH_PAR_N_LAYERS+x} ]; then echo "int(r'${VIASH_PAR_N_LAYERS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'max_epochs_scvi': $( if [ ! -z ${VIASH_PAR_MAX_EPOCHS_SCVI+x} ]; then echo "int(r'${VIASH_PAR_MAX_EPOCHS_SCVI//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'max_epochs_scanvi': $( if [ ! -z ${VIASH_PAR_MAX_EPOCHS_SCANVI+x} ]; then echo "int(r'${VIASH_PAR_MAX_EPOCHS_SCANVI//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3073,20 +3156,52 @@ dep = {
 
 ## VIASH END
 
-
-
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    adata = adata[:, idx].copy()
 
-print('Run scanvi', flush=True)
-adata.X = adata.layers['normalized']
-adata = scanvi(adata, batch='batch', labels='label')
-del adata.X
+print("Processing data", flush=True)
+SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
+
+print("Run scVI", flush=True)
+model_kwargs = {
+    key: par[key]
+    for key in ["n_latent", "n_hidden", "n_layers"]
+    if par[key] is not None
+}
+
+vae = SCVI(adata, **model_kwargs)
+
+vae.train(max_epochs=par["max_epochs_scvi"], train_size=1.0)
+
+print('Run SCANVI', flush=True)
+scanvae = SCANVI.from_scvi_model(
+    scvi_model=vae,
+    labels_key="label",
+    unlabeled_category="UnknownUnknown", # pick anything definitely not in a dataset
+)
+scanvae.train(max_epochs=par["max_epochs_scanvi"], train_size=1.0)
 
 print("Store outputs", flush=True)
-adata.uns['method_id'] = meta['functionality_name']
-adata.write_h5ad(par['output'], compression='gzip')
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    obsm={
+        "X_emb": scanvae.get_latent_representation(),
+    },
+    uns={
+        "dataset_id": adata.uns["dataset_id"],
+        "normalization_id": adata.uns["normalization_id"],
+        "method_id": meta["functionality_name"],
+    },
+)
+
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"
 '''
@@ -3441,7 +3556,8 @@ meta["defaults"] = [
   "label" : [
     "midtime",
     "lowmem",
-    "lowcpu"
+    "lowcpu",
+    "gpu"
   ],
   "tag" : "$id"
 }'''),
