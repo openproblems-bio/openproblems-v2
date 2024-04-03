@@ -398,7 +398,7 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_r:1.0.2
+FROM ghcr.io/openproblems-bio/base_r:1.0.3
 
 ENTRYPOINT []
 
@@ -407,9 +407,9 @@ RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.pa
   Rscript -e 'if (!requireNamespace("batchelor", quietly = TRUE)) BiocManager::install("batchelor")'
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods mnn_correct"
-LABEL org.opencontainers.image.created="2024-04-03T07:59:27Z"
+LABEL org.opencontainers.image.created="2024-04-03T15:13:52Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="05cfabe9f4562e99296172caeed748d16d4fec4f"
+LABEL org.opencontainers.image.revision="3861275cc48e4c561db38658adecce98e4902a41"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -908,11 +908,25 @@ out <- suppressWarnings(batchelor::mnnCorrect(
 
 cat("Reformat output\\n")
 layer <- SummarizedExperiment::assay(out, "corrected")
-adata\$layers[["corrected_counts"]] <- as(t(layer), "sparseMatrix")
+as(t(layer), "sparseMatrix")
+
+
 
 cat("Store outputs\\n")
-adata\$uns[["method_id"]] <- meta\$functionality_name
-zzz <- adata\$write_h5ad(par\$output, compression = "gzip")
+output <- anndata::AnnData(
+  uns = list(
+    dataset_id = adata\$uns[["dataset_id"]],
+    normalization_id = adata\$uns[["normalization_id"]],
+    method_id = meta\$functionality_name
+  ),
+  layers = list(
+    corrected_counts = as(t(layer), "sparseMatrix")
+  ),
+  shape = adata\$shape
+)
+
+cat("Write output to file\\n")
+zzz <- output\$write_h5ad(par\$output, compression = "gzip")
 VIASHMAIN
 Rscript "\$tempscript" &
 wait "\$!"

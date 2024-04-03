@@ -2962,7 +2962,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3032,7 +3032,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/liger",
     "viash_version" : "0.8.0",
-    "git_commit" : "05cfabe9f4562e99296172caeed748d16d4fec4f",
+    "git_commit" : "3861275cc48e4c561db38658adecce98e4902a41",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3159,16 +3159,26 @@ lobj <- rliger::runIntegration(lobj, k = 20)
 cat(">> Quantile normalization\\\\n")
 lobj <- rliger::quantileNorm(lobj)
 
-cat(">> Store dimred in adata\\\\n")
+cat(">> Store output\\\\n")
 # remove dataset names from rownames
 for (name in names(rliger::rawData(lobj))) {
   rownames(lobj@H.norm) <- sub(paste0(name, "_"), "", rownames(lobj@H.norm))
 }
-adata\\$obsm[["X_emb"]] <- lobj@H.norm[rownames(adata), , drop = FALSE]
-adata\\$uns[["method_id"]] <- meta\\$functionality_name
 
-cat(">> Write AnnData to disk\\\\n")
-zzz <- adata\\$write_h5ad(par\\$output, compression = "gzip")
+output <- anndata::AnnData(
+  uns = list(
+    dataset_id = adata\\$uns[["dataset_id"]],
+    normalization_id = adata\\$uns[["normalization_id"]],
+    method_id = meta\\$functionality_name
+  ),
+  obsm = list(
+    X_emb = lobj@H.norm[rownames(adata), , drop = FALSE]
+  ),
+  shape = adata\\$shape
+)
+
+cat(">> Write AnnData to file\\\\n")
+zzz <- output\\$write_h5ad(par\\$output, compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''

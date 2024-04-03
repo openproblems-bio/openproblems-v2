@@ -2966,7 +2966,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3026,7 +3026,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_embedding",
     "viash_version" : "0.8.0",
-    "git_commit" : "05cfabe9f4562e99296172caeed748d16d4fec4f",
+    "git_commit" : "3861275cc48e4c561db38658adecce98e4902a41",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3097,17 +3097,25 @@ cat("Reformat output\\\\n")
 # reusing the same script for fastmnn_embed and fastmnn_feature
 return_type <- gsub("fastmnn_", "", meta[["functionality_name"]])
 
+output <- anndata::AnnData(
+  shape = adata\\$shape,
+  uns = list(
+    dataset_id = adata\\$uns[["dataset_id"]],
+    normalization_id = adata\\$uns[["normalization_id"]],
+    method_id = meta\\$functionality_name
+  )
+)
+
 if (return_type == "feature") {
   layer <- as(SummarizedExperiment::assay(out, "reconstructed"), "sparseMatrix")
-  adata\\$layers[["corrected_counts"]] <- t(layer)
+  output\\$layers[["corrected_counts"]] <- t(layer)
 } else if (return_type == "embedding") {
   obsm <- SingleCellExperiment::reducedDim(out, "corrected")
-  adata\\$obsm[["X_emb"]] <- obsm
+  output\\$obsm[["X_emb"]] <- obsm
 }
 
-cat("Store outputs\\\\n")
-adata\\$uns[["method_id"]] <- meta\\$functionality_name
-zzz <- adata\\$write_h5ad(par\\$output, compression = "gzip")
+cat("Write output to file\\\\n")
+zzz <- output\\$write_h5ad(par\\$output, compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''

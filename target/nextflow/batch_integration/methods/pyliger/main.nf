@@ -2967,7 +2967,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3030,7 +3030,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/pyliger",
     "viash_version" : "0.8.0",
-    "git_commit" : "05cfabe9f4562e99296172caeed748d16d4fec4f",
+    "git_commit" : "3861275cc48e4c561db38658adecce98e4902a41",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3127,12 +3127,22 @@ pyliger.quantile_norm(lobj)
 print('>> Concatenate outputs', flush=True)
 ad_out = ad.concat(lobj.adata_list)
 
-print('>> Store output', flush=True)
-adata.obsm['X_emb'] = ad_out[adata.obs_names, :].obsm['H_norm']
-adata.uns['method_id'] = meta['functionality_name']
+print('Store output', flush=True)
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+        obsm={
+        'X_emb': ad_out[adata.obs_names, :].obsm['H_norm']
+    },
+    uns={
+        'dataset_id': adata.uns['dataset_id'],
+        'normalization_id': adata.uns['normalization_id'],
+        'method_id': meta['functionality_name'],
+    }
+)
 
-print("Write output to disk", flush=True)
-adata.write_h5ad(par['output'], compression='gzip')
+print("Write output to file", flush=True)
+output.write_h5ad(par['output'], compression='gzip')
 VIASHMAIN
 python -B "$tempscript"
 '''
