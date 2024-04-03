@@ -32,12 +32,10 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: nvcr.io/nvidia/pytorch:23.12-py3
+    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3
     setup:
       - type: python
         packages: 
-          - pyyaml
-          - "anndata~=0.8.0"
           - scarches
           - scvi-tools>=1.1.0
   - type: nextflow
