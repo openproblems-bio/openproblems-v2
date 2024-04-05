@@ -6,7 +6,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 # ensure that the command below is run from the root of the repository
 cd "$REPO_ROOT"
 
-DATASET_DIR=resources_test/common
+DATASET_DIR=resources_test/cell_cell_communication_source_target/mouse_brain_atlas
 
 set -e
 
@@ -34,16 +34,9 @@ nextflow run . \
   --dataset_summary "Adult mouse primary visual cortex" \
   --dataset_description "A murine brain atlas with adjacent cell types as assumed benchmark truth, inferred from deconvolution proportion correlations using matching 10x Visium slides (see Dimitrov et al., 2022)." \
   --dataset_organism "mus_musculus" \
-  --keep_cell_type_categories "acinar:beta" \
-  --keep_batch_categories "celseq:inDrop4:smarter" \
   --seed 123 \
-  --normalization_methods log_cp10k \
   --do_subsample true \
   --output_raw '$id/raw.h5ad' \
-  --output_normalized '$id/normalized.h5ad' \
-  --output_hvg '$id/hvg.h5ad' \
-  --output_pca '$id/pca.h5ad' \
-  --output_knn '$id/knn.h5ad' \
   --output_dataset '$id/dataset.h5ad' \
   --output_meta '$id/dataset_meta.yaml' \
   --output_state '$id/state.yaml' \
@@ -52,4 +45,4 @@ nextflow run . \
 # rm -r $DATASET_DIR/temp_*
 
 # # run task process dataset components
-# src/tasks/cell_cell_communication_source_target/resources_test_scripts/mouse_brain_atlas.sh
+src/tasks/cell_cell_communication_source_target/resources_test_scripts/mouse_brain_atlas.sh
