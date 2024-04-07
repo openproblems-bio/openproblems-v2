@@ -34,7 +34,11 @@ nextflow run . \
   --normalization_methods log_cp10k \
   --seed 123 \
   --do_subsample true \
-  --output_raw '$id/raw.h5ad' \
+  --output_raw  force_null \
+  --output_normalized force_null \
+  --output_hvg force_null \
+  --output_pca force_null \
+  --output_knn force_null \
   --output_dataset '$id/dataset.h5ad' \
   --output_meta '$id/dataset_meta.yaml' \
   --output_state '$id/state.yaml' \
