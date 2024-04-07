@@ -11,7 +11,7 @@ info:
         required: true
     obs:
       - type: string
-        name: label
+        name: cell_type
         description: Cell type annotation.
         required: true
     uns:
