@@ -6,7 +6,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 # ensure that the command below is run from the root of the repository
 cd "$REPO_ROOT"
 
-DATASET_DIR=resources_test/cell_cell_communication_source_target/mouse_brain_atlas
+DATASET_DIR=resources_test/common
 
 set -e
 
