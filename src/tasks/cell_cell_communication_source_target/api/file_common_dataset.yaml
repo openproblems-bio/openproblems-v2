@@ -43,7 +43,7 @@ info:
         type: string
         description: The organism of the sample in the dataset.
         required: false
-      - type: string
+      - type: object
         name: ccc_target
         description: The cell type which is intended to receive the communicational signal. This vector needs to be of the same length as `ccc_source`.
         required: true
