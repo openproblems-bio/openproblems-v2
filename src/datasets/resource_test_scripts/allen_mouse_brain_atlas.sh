@@ -34,6 +34,7 @@ nextflow run . \
   --dataset_summary "Adult mouse primary visual cortex" \
   --dataset_description "A murine brain atlas with adjacent cell types as assumed benchmark truth, inferred from deconvolution proportion correlations using matching 10x Visium slides (see Dimitrov et al., 2022)." \
   --dataset_organism "mus_musculus" \
+  --normalization_methods log_cp10k \
   --seed 123 \
   --do_subsample true \
   --output_raw '$id/raw.h5ad' \
