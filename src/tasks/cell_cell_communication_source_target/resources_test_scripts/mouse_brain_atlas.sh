@@ -11,7 +11,7 @@ cd "$REPO_ROOT"
 set -e
 
 RAW_DATA=resources_test/common
-DATASET_DIR=resources_test/cell_cell_communication_source_target/mouse_brain_atlas
+DATASET_DIR=resources_test/cell_cell_communication_source_target
 
 mkdir -p $DATASET_DIR
 
