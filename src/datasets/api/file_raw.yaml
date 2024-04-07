@@ -155,6 +155,11 @@ info:
         name: soma_joinid
         description: If the dataset was retrieved from CELLxGENE census, this is a unique identifier for the cell.
         required: false
+
+      - type: object
+        name: ccc_target
+        description: The cell type which is intended to receive the communicational signal. This vector needs to be of the same length as `ccc_source`.
+        required: false
     var:
       - type: string
         name: feature_id
