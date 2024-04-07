@@ -46,5 +46,5 @@ nextflow run . \
 
 # rm -r $DATASET_DIR/temp_*
 
-# # run task process dataset components
+# run task process dataset components
 src/tasks/cell_cell_communication_source_target/resources_test_scripts/mouse_brain_atlas.sh
