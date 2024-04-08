@@ -5,7 +5,7 @@ info:
   summary: "The prediction file"
   slots:
     obs:
-      - type: string
+      - type: object
         name: ccc_pred
         description: Predicted interactions for the test cells.
         required: true
