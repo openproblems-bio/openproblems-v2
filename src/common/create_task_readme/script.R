@@ -65,11 +65,9 @@ authors_str <-
   }
 
 cat("Generate qmd content\n")
-relative_path <- gsub(
-  paste0(dirname(par[["viash_yaml"]]), "/*(.*)/*$"),
-  "\\1",
-  par[["task_dir"]]
-)
+relative_path <- par[["task_dir"]] %>%
+  gsub(paste0(dirname(par[["viash_yaml"]]), "/*"), "", .) %>%
+  gsub("/*$", "", .)
 source_url <- paste0(par[["github_url"]], relative_path)
 qmd_content <- strip_margin(glue::glue("
   §---
