@@ -19,7 +19,7 @@ input_adata = ad.AnnData(X=adata.layers["counts"])
 normalized_counts = ac.pp.tfidf(input_adata, inplace=False)
 
 print("Store output in adata", flush=True)
-adata.layers[par["layer_output"]] = normalized_counts.X
+adata.layers[par["layer_output"]] = normalized_counts
 adata.uns["normalization_id"] = par["normalization_id"] or meta['functionality_name']
 
 print("Write data", flush=True)
