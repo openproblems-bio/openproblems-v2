@@ -4,7 +4,6 @@ RUN_ID="run_$(date +%Y-%m-%d_%H-%M-%S)"
 publish_dir="s3://openproblems-data/resources/spatial_decomposition/results/${RUN_ID}"
 
 cat > /tmp/params.yaml << HERE
-id: spatial_decomposition
 input_states: s3://openproblems-data/resources/spatial_decomposition/datasets/**/state.yaml
 rename_keys: 'input_single_cell:output_single_cell,input_spatial_masked:output_spatial_masked,input_solution:output_solution'
 output_state: "state.yaml"
