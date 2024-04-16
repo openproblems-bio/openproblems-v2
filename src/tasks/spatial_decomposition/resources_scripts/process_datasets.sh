@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Simulating spot-resolution spatial data with alpha = 1
+
 cat > /tmp/params.yaml << 'HERE'
 id: spatial_decomposition_process_datasets
 input_states: s3://openproblems-data/resources/datasets/**/state.yaml
