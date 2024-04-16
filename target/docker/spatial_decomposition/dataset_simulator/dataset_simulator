@@ -438,9 +438,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition dataset_simulator"
-LABEL org.opencontainers.image.created="2024-04-16T11:27:49Z"
+LABEL org.opencontainers.image.created="2024-04-16T12:52:31Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2f43dd753ce8af73a9b93cfe4c9fd4b84ba164c3"
+LABEL org.opencontainers.image.revision="949427cd2a6927a19a61ffc2f94d6cdd0be3cac2"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1204,10 +1204,11 @@ adata_merged = generate_synthetic_dataset(adata,
     umi_lb=par['umi_lb'], 
     umi_ub=par['umi_ub'] 
 )
-adata.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
+adata_merged.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
 filter_genes_cells(adata_merged)
 adata_merged.X = None
-adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
+if "is_primary_data" in adata_merged.obs:
+    adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
 
 print("Writing output to file")
 adata_merged.write_h5ad(par["simulated_data"])

@@ -3120,7 +3120,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/asw_label",
     "viash_version" : "0.8.0",
-    "git_commit" : "2f43dd753ce8af73a9b93cfe4c9fd4b84ba164c3",
+    "git_commit" : "949427cd2a6927a19a61ffc2f94d6cdd0be3cac2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
