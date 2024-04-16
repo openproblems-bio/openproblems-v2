@@ -189,7 +189,8 @@ adata_merged = generate_synthetic_dataset(adata,
 adata_merged.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
 filter_genes_cells(adata_merged)
 adata_merged.X = None
-adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
+if "is_primary_data" in adata_merged.obs:
+    adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
 
 print("Writing output to file")
 adata_merged.write_h5ad(par["simulated_data"])
