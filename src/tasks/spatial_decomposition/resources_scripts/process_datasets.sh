@@ -18,6 +18,9 @@ process {
     memory = '16GB'
     disk = '100GB'
   }
+  withLabel:highmem {
+    memory = '350GB'
+  }
 }
 HERE
 
@@ -30,4 +33,4 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --params-file /tmp/params.yaml \
   --entry-name auto \
   --config /tmp/nextflow.config \
-  --labels spatial_decomposition,process_datasets
+  # --labels spatial_decomposition,process_datasets
