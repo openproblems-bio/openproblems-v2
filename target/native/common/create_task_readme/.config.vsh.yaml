@@ -2,45 +2,74 @@ functionality:
   name: "create_task_readme"
   namespace: "common"
   version: "integration_build"
-  arguments:
-  - type: "string"
-    name: "--task"
-    description: "Which task the component will be added to."
-    info: null
-    example:
-    - "denoising"
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "file"
-    name: "--output"
-    description: "Path to the component directory. Suggested location is `src/<TASK>/README.md`."
-    info: null
-    default:
-    - "src/tasks/${VIASH_PAR_TASK}/README.md"
-    must_exist: true
-    create_parent: true
-    required: false
-    direction: "output"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "file"
-    name: "--viash_yaml"
-    description: "Path to the project config file. Needed for knowing the relative\
-      \ location of a file to the project root.\n"
-    info: null
-    default:
-    - "_viash.yaml"
-    must_exist: true
-    create_parent: true
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
+  argument_groups:
+  - name: "Inputs"
+    arguments:
+    - type: "string"
+      name: "--task"
+      description: "Which task the component will be added to."
+      info: null
+      example:
+      - "denoising"
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--task_dir"
+      description: "Path to the task directory."
+      info: null
+      default:
+      - "src/tasks/${VIASH_PAR_TASK}"
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "file"
+      name: "--viash_yaml"
+      description: "Path to the project config file. Needed for knowing the relative\
+        \ location of a file to the project root.\n"
+      info: null
+      default:
+      - "_viash.yaml"
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+    - type: "string"
+      name: "--github_url"
+      description: "URL to the GitHub repository. Needed for linking to the source\
+        \ code.\n"
+      info: null
+      default:
+      - "https://github.com/openproblems-bio/openproblems-v2/tree/main/"
+      required: false
+      direction: "input"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
+  - name: "Outputs"
+    arguments:
+    - type: "file"
+      name: "--output"
+      description: "Path to the component directory. Suggested location is `src/tasks/<TASK>/README.md`."
+      info: null
+      default:
+      - "src/tasks/${VIASH_PAR_TASK}/README.md"
+      must_exist: true
+      create_parent: true
+      required: false
+      direction: "output"
+      multiple: false
+      multiple_sep: ":"
+      dest: "par"
   resources:
   - type: "r_script"
     path: "script.R"
@@ -88,7 +117,6 @@ platforms:
     - "cli"
     - "igraph"
     - "rmarkdown"
-    - "bit64"
     - "processx"
     bioc_force_install: false
   - type: "apt"
@@ -141,5 +169,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/common/create_task_readme"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/native/common/create_task_readme/create_task_readme"
   viash_version: "0.8.0"
-  git_commit: "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
+  git_commit: "e53b41324181d89f6d501bdb06335929972d5627"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

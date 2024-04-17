@@ -2777,6 +2777,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -2855,12 +2861,6 @@ meta = [
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "X_emb",
                 "description" : "integration embedding prediction",
                 "required" : true
@@ -2886,71 +2886,9 @@ meta = [
                 "required" : false
               },
               {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              },
-              {
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
-                "required" : true
-              }
-            ],
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
-              }
-            ],
-            "obsp" : [
-              {
-                "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
                 "required" : true
               }
             ]
@@ -2963,6 +2901,71 @@ meta = [
         "create_parent" : true,
         "required" : true,
         "direction" : "output",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_hvg",
+        "description" : "Number of highly variable genes to use.",
+        "default" : [
+          2000
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_latent",
+        "description" : "Number of latent dimensions.",
+        "default" : [
+          30
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_hidden",
+        "description" : "Number of hidden units.",
+        "default" : [
+          128
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_layers",
+        "description" : "Number of layers.",
+        "default" : [
+          2
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--max_epochs",
+        "description" : "Maximum number of epochs.",
+        "example" : [
+          400
+        ],
+        "required" : false,
+        "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
@@ -3006,13 +3009,13 @@ meta = [
       "summary" : "scVI combines a variational autoencoder with a hierarchical Bayesian model.",
       "description" : "scVI combines a variational autoencoder with a hierarchical Bayesian model. It uses the negative binomial distribution to describe gene expression of each cell, conditioned on unobserved factors and the batch variable. ScVI is run as implemented in Luecken et al.\n",
       "reference" : "lopez2018deep",
-      "repository_url" : "https://github.com/YosefLab/scvi-tools",
-      "documentation_url" : "https://github.com/YosefLab/scvi-tools#readme",
+      "repository_url" : "https://github.com/scverse/scvi-tools",
+      "documentation_url" : "https://docs.scvi-tools.org/en/stable/user_guide/models/scvi.html",
       "v1" : {
         "path" : "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scvi.py",
         "commit" : "b3456fd73c04c28516f6df34c57e6e3e8b0dab32"
       },
-      "preferred_normalization" : "log_cp10k",
+      "preferred_normalization" : "counts",
       "type" : "method",
       "subtype" : "embedding",
       "type_info" : {
@@ -3028,7 +3031,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3041,8 +3044,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "pypi" : [
-            "scvi-tools",
-            "scib==1.1.3"
+            "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
         }
@@ -3055,7 +3057,8 @@ meta = [
         "label" : [
           "midtime",
           "midmem",
-          "lowcpu"
+          "lowcpu",
+          "gpu"
         ],
         "tag" : "$id"
       },
@@ -3090,7 +3093,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scvi",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3105,15 +3108,19 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-import yaml
 import anndata as ad
-from scib.integration import scvi
+from scvi.model import SCVI
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_latent': $( if [ ! -z ${VIASH_PAR_N_LATENT+x} ]; then echo "int(r'${VIASH_PAR_N_LATENT//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_hidden': $( if [ ! -z ${VIASH_PAR_N_HIDDEN+x} ]; then echo "int(r'${VIASH_PAR_N_HIDDEN//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'n_layers': $( if [ ! -z ${VIASH_PAR_N_LAYERS+x} ]; then echo "int(r'${VIASH_PAR_N_LAYERS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'max_epochs': $( if [ ! -z ${VIASH_PAR_MAX_EPOCHS+x} ]; then echo "int(r'${VIASH_PAR_MAX_EPOCHS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3138,14 +3145,41 @@ dep = {
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print('Run scvi', flush=True)
-adata.X = adata.layers['normalized']
-adata = scvi(adata, batch='batch')
-del adata.X
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    adata = adata[:, idx].copy()
+
+print("Processing data", flush=True)
+SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
+
+print("Run scVI", flush=True)
+model_kwargs = {
+    key: par[key]
+    for key in ["n_latent", "n_hidden", "n_layers"]
+    if par[key] is not None
+}
+
+vae = SCVI(adata, **model_kwargs)
+
+vae.train(max_epochs=par["max_epochs"], train_size=1.0)
 
 print("Store outputs", flush=True)
-adata.uns['method_id'] = meta['functionality_name']
-adata.write_h5ad(par['output'], compression='gzip')
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    obsm={
+        "X_emb": vae.get_latent_representation(),
+    },
+    uns={
+        "dataset_id": adata.uns["dataset_id"],
+        "normalization_id": adata.uns["normalization_id"],
+        "method_id": meta["functionality_name"],
+    },
+)
+
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN
 python -B "$tempscript"
 '''
@@ -3500,7 +3534,8 @@ meta["defaults"] = [
   "label" : [
     "midtime",
     "midmem",
-    "lowcpu"
+    "lowcpu",
+    "gpu"
   ],
   "tag" : "$id"
 }'''),

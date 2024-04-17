@@ -3505,19 +3505,7 @@ meta = [
       "resolve_volume" : "Automatic",
       "chown" : true,
       "setup_strategy" : "ifneedbepullelsecachedbuild",
-      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
-      "setup" : [
-        {
-          "type" : "r",
-          "cran" : [
-            "bit64"
-          ],
-          "github" : [
-            "rstudio/reticulate"
-          ],
-          "bioc_force_install" : false
-        }
-      ]
+      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2"
     },
     {
       "type" : "nextflow",
@@ -3561,7 +3549,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

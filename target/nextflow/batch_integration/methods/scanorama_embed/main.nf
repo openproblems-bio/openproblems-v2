@@ -2777,6 +2777,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -2855,12 +2861,6 @@ meta = [
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "X_emb",
                 "description" : "integration embedding prediction",
                 "required" : true
@@ -2886,71 +2886,9 @@ meta = [
                 "required" : false
               },
               {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              },
-              {
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
-                "required" : true
-              }
-            ],
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
-              }
-            ],
-            "obsp" : [
-              {
-                "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
                 "required" : true
               }
             ]
@@ -2963,6 +2901,19 @@ meta = [
         "create_parent" : true,
         "required" : true,
         "direction" : "output",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_hvg",
+        "description" : "Number of highly variable genes to use.",
+        "default" : [
+          2000
+        ],
+        "required" : false,
+        "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
@@ -3033,7 +2984,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3046,8 +2997,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "pypi" : [
-            "scanorama",
-            "scib==1.1.3"
+            "scanorama"
           ],
           "upgrade" : true
         }
@@ -3095,7 +3045,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_embed",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3110,15 +3060,15 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-import yaml
 import anndata as ad
-from scib.integration import scanorama
+import scanorama
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3140,17 +3090,65 @@ dep = {
 
 ## VIASH END
 
+# based on scib
+# -> https://github.com/theislab/scib/blob/59ae6eee5e611d9d3db067685ec96c28804e9127/scib/utils.py#L51C1-L72C62
+def merge_adata(*adata_list, **kwargs):
+    """Merge adatas from list while remove duplicated \\`\\`obs\\`\\` and \\`\\`var\\`\\` columns
+
+    :param adata_list: \\`\\`anndata\\`\\` objects to be concatenated
+    :param kwargs: arguments to be passed to \\`\\`anndata.AnnData.concatenate\\`\\`
+    """
+
+    if len(adata_list) == 1:
+        return adata_list[0]
+
+    # Make sure that adatas do not contain duplicate columns
+    for _adata in adata_list:
+        for attr in ("obs", "var"):
+            df = getattr(_adata, attr)
+            dup_mask = df.columns.duplicated()
+            if dup_mask.any():
+                print(
+                    f"Deleting duplicated keys \\`{list(df.columns[dup_mask].unique())}\\` from \\`adata.{attr}\\`."
+                )
+                setattr(_adata, attr, df.loc[:, ~dup_mask])
+
+    return ad.AnnData.concatenate(*adata_list, **kwargs)
+
+
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
+if par['n_hvg']:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = adata.var['hvg_score'].to_numpy().argsort()[::-1][:par['n_hvg']]
+    adata = adata[:, idx].copy()
+
 print('Run scanorama', flush=True)
 adata.X = adata.layers['normalized']
-adata.obsm['X_emb'] = scanorama(adata, batch='batch').obsm['X_emb']
-del adata.X
+split = []
+batch_categories = adata.obs['batch'].cat.categories
+for i in batch_categories:
+    split.append(adata[adata.obs['batch'] == i].copy())
+corrected = scanorama.correct_scanpy(split, return_dimred=True)
+corrected = merge_adata(*corrected, batch_key='batch', batch_categories=batch_categories, index_unique=None)
 
-print("Store outputs", flush=True)
-adata.uns['method_id'] = meta['functionality_name']
-adata.write(par['output'], compression='gzip')
+print("Store output", flush=True)
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    uns={
+        'dataset_id': adata.uns['dataset_id'],
+        'normalization_id': adata.uns['normalization_id'],
+        'method_id': meta['functionality_name'],
+    },
+    obsm={
+        'X_emb': corrected.obsm["X_scanorama"],
+    }
+)
+
+print("Write output to file", flush=True)
+output.write(par['output'], compression='gzip')
 VIASHMAIN
 python -B "$tempscript"
 '''

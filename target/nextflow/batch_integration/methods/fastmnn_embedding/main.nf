@@ -2777,6 +2777,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -2855,12 +2861,6 @@ meta = [
             "obsm" : [
               {
                 "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              },
-              {
-                "type" : "double",
                 "name" : "X_emb",
                 "description" : "integration embedding prediction",
                 "required" : true
@@ -2886,71 +2886,9 @@ meta = [
                 "required" : false
               },
               {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              },
-              {
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
-                "required" : true
-              }
-            ],
-            "layers" : [
-              {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
-              }
-            ],
-            "obsp" : [
-              {
-                "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
                 "required" : true
               }
             ]
@@ -3028,7 +2966,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3088,7 +3026,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_embedding",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3159,17 +3097,25 @@ cat("Reformat output\\\\n")
 # reusing the same script for fastmnn_embed and fastmnn_feature
 return_type <- gsub("fastmnn_", "", meta[["functionality_name"]])
 
+output <- anndata::AnnData(
+  shape = adata\\$shape,
+  uns = list(
+    dataset_id = adata\\$uns[["dataset_id"]],
+    normalization_id = adata\\$uns[["normalization_id"]],
+    method_id = meta\\$functionality_name
+  )
+)
+
 if (return_type == "feature") {
   layer <- as(SummarizedExperiment::assay(out, "reconstructed"), "sparseMatrix")
-  adata\\$layers[["corrected_counts"]] <- t(layer)
+  output\\$layers[["corrected_counts"]] <- t(layer)
 } else if (return_type == "embedding") {
   obsm <- SingleCellExperiment::reducedDim(out, "corrected")
-  adata\\$obsm[["X_emb"]] <- obsm
+  output\\$obsm[["X_emb"]] <- obsm
 }
 
-cat("Store outputs\\\\n")
-adata\\$uns[["method_id"]] <- meta\\$functionality_name
-zzz <- adata\\$write_h5ad(par\\$output, compression = "gzip")
+cat("Write output to file\\\\n")
+zzz <- output\\$write_h5ad(par\\$output, compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''

@@ -5,11 +5,11 @@ import sklearn.neighbors
 
 ## VIASH START
 par = {
-  "input_integrated_mod1": "output/test/true_features_mod1.h5ad",
-  "input_integrated_mod2": "output/test/true_features_mod2.h5ad",
+  "input_integrated_mod1": "resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad",
+  "input_integrated_mod2": "resources_test/match_modalities/scicar_cell_lines/integrated_mod2.h5ad",
   "input_solution_mod1": "resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad",
   "input_solution_mod2": "resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad",
-  "output": "output/citeseq_cbmc/true_knn_auc.h5ad",
+  "output": "resources_test/multimodal/score.h5ad",
   "proportion_neighbors": 0.1,
 }
 meta = {

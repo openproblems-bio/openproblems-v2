@@ -33,6 +33,10 @@ functionality:
           description: "Whether or not the feature is considered to be a 'highly variable\
             \ gene'"
           required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
         - type: "string"
           name: "feature_name"
           description: "A human-readable name for the feature, usually a gene symbol."
@@ -86,10 +90,6 @@ functionality:
       slots:
         obsm:
         - type: "double"
-          name: "X_pca"
-          description: "The resulting PCA embedding."
-          required: true
-        - type: "double"
           name: "X_emb"
           description: "integration embedding prediction"
           required: true
@@ -106,50 +106,9 @@ functionality:
           type: "string"
           description: "The organism of the sample in the dataset."
           required: false
-        - type: "object"
-          name: "knn"
-          description: "Supplementary K nearest neighbors data."
-          required: true
         - type: "string"
           name: "method_id"
           description: "A unique identifier for the method"
-          required: true
-        layers:
-        - type: "integer"
-          name: "counts"
-          description: "Raw counts"
-          required: true
-        - type: "double"
-          name: "normalized"
-          description: "Normalized expression values"
-          required: true
-        obs:
-        - type: "string"
-          name: "batch"
-          description: "Batch information"
-          required: true
-        - type: "string"
-          name: "label"
-          description: "label information"
-          required: true
-        var:
-        - type: "boolean"
-          name: "hvg"
-          description: "Whether or not the feature is considered to be a 'highly variable\
-            \ gene'"
-          required: true
-        - type: "string"
-          name: "feature_name"
-          description: "A human-readable name for the feature, usually a gene symbol."
-          required: true
-        obsp:
-        - type: "double"
-          name: "knn_distances"
-          description: "K nearest neighbors distance matrix."
-          required: true
-        - type: "double"
-          name: "knn_connectivities"
-          description: "K nearest neighbors connectivities matrix."
           required: true
     example:
     - "resources_test/batch_integration/pancreas/integrated_embedding.h5ad"
@@ -157,6 +116,72 @@ functionality:
     create_parent: true
     required: true
     direction: "output"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_hvg"
+    description: "Number of highly variable genes to use."
+    info: null
+    default:
+    - 2000
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_latent"
+    description: "Number of latent dimensions."
+    info: null
+    default:
+    - 30
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_hidden"
+    description: "Number of hidden units."
+    info: null
+    default:
+    - 128
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_layers"
+    description: "Number of layers."
+    info: null
+    default:
+    - 2
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--max_epochs_scvi"
+    description: "Maximum number of training epochs for scVI."
+    info: null
+    example:
+    - 400
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--max_epochs_scanvi"
+    description: "Maximum number of training epochs for scANVI."
+    info: null
+    example:
+    - 10
+    required: false
+    direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
@@ -177,20 +202,20 @@ functionality:
     path: "resources_test/batch_integration/pancreas"
     dest: "resources_test/batch_integration/pancreas"
   info:
-    label: "ScanVI"
-    summary: "ScanVI is a deep learning method that considers cell type labels."
+    label: "scANVI"
+    summary: "scANVI is a deep learning method that considers cell type labels."
     description: "scANVI (single-cell ANnotation using Variational Inference; Python\
       \ class SCANVI) is a semi-supervised model for single-cell transcriptomics data.\
       \ In a sense, it can be seen as a scVI extension that can leverage the cell\
       \ type knowledge for a subset of the cells present in the data sets to infer\
       \ the states of the rest of the cells.\n"
     reference: "lopez2018deep"
-    repository_url: "https://github.com/YosefLab/scvi-tools"
-    documentation_url: "https://github.com/YosefLab/scvi-tools#readme"
+    repository_url: "https://github.com/scverse/scvi-tools"
+    documentation_url: "https://docs.scvi-tools.org/en/stable/user_guide/models/scanvi.html"
     v1:
       path: "openproblems/tasks/_batch_integration/batch_integration_graph/methods/scanvi.py"
       commit: "29803b95c88b4ec5921df2eec7111fd5d1a95daf"
-    preferred_normalization: "log_cp10k"
+    preferred_normalization: "counts"
     variants:
       scanvi_full_unscaled: null
     type: "method"
@@ -204,7 +229,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.2"
+  image: "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -216,8 +241,7 @@ platforms:
   - type: "python"
     user: false
     pypi:
-    - "scvi-tools"
-    - "scib==1.1.3"
+    - "scvi-tools>=1.1.0"
     upgrade: true
   entrypoint: []
   cmd: null
@@ -228,6 +252,7 @@ platforms:
     - "midtime"
     - "lowmem"
     - "lowcpu"
+    - "gpu"
     tag: "$id"
   auto:
     simplifyInput: true
@@ -255,5 +280,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/scanvi"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/scanvi/scanvi"
   viash_version: "0.8.0"
-  git_commit: "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
+  git_commit: "e53b41324181d89f6d501bdb06335929972d5627"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -409,13 +409,13 @@ ENTRYPOINT []
 
  
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("Matrix", "bit64", "rsvd"), repos = "https://cran.rstudio.com")' && \
+  Rscript -e 'remotes::install_cran(c("Matrix", "rsvd"), repos = "https://cran.rstudio.com")' && \
   Rscript -e 'remotes::install_github(c("KlugerLab/ALRA"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods alra"
-LABEL org.opencontainers.image.created="2024-03-20T20:42:05Z"
+LABEL org.opencontainers.image.created="2024-04-17T09:46:18Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
+LABEL org.opencontainers.image.revision="e53b41324181d89f6d501bdb06335929972d5627"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

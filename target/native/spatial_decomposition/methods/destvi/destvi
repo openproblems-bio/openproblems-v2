@@ -196,7 +196,7 @@ function ViashHelp {
   echo ""
   echo "    --max_epochs_sp"
   echo "        type: integer"
-  echo "        default: 10000"
+  echo "        default: 2000"
   echo "        Number of epochs to train the DestVI model using MAP inference."
 }
 
@@ -397,7 +397,7 @@ if [ -z ${VIASH_PAR_MAX_EPOCHS_SC+x} ]; then
   VIASH_PAR_MAX_EPOCHS_SC="500"
 fi
 if [ -z ${VIASH_PAR_MAX_EPOCHS_SP+x} ]; then
-  VIASH_PAR_MAX_EPOCHS_SP="10000"
+  VIASH_PAR_MAX_EPOCHS_SP="2000"
 fi
 
 # check whether required files exist

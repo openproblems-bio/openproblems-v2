@@ -2777,6 +2777,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -2917,6 +2923,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -3024,6 +3036,12 @@ meta = [
                 "type" : "boolean",
                 "name" : "hvg",
                 "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
                 "required" : true
               },
               {
@@ -3233,7 +3251,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "pypi" : [
-            "scib==1.1.3"
+            "scib==1.1.5"
           ],
           "upgrade" : true
         }
@@ -3281,7 +3299,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

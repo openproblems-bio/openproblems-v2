@@ -2777,6 +2777,12 @@ meta = [
                 "required" : true
               },
               {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
+              },
+              {
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
@@ -2854,18 +2860,6 @@ meta = [
           "slots" : {
             "layers" : [
               {
-                "type" : "integer",
-                "name" : "counts",
-                "description" : "Raw counts",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "normalized",
-                "description" : "Normalized expression values",
-                "required" : true
-              },
-              {
                 "type" : "double",
                 "name" : "corrected_counts",
                 "description" : "Corrected counts after integration",
@@ -2892,65 +2886,9 @@ meta = [
                 "required" : false
               },
               {
-                "type" : "object",
-                "name" : "knn",
-                "description" : "Supplementary K nearest neighbors data.",
-                "required" : true
-              },
-              {
                 "type" : "string",
                 "name" : "method_id",
                 "description" : "A unique identifier for the method",
-                "required" : true
-              }
-            ],
-            "obs" : [
-              {
-                "type" : "string",
-                "name" : "batch",
-                "description" : "Batch information",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "label",
-                "description" : "label information",
-                "required" : true
-              }
-            ],
-            "var" : [
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "string",
-                "name" : "feature_name",
-                "description" : "A human-readable name for the feature, usually a gene symbol.",
-                "required" : true
-              }
-            ],
-            "obsm" : [
-              {
-                "type" : "double",
-                "name" : "X_pca",
-                "description" : "The resulting PCA embedding.",
-                "required" : true
-              }
-            ],
-            "obsp" : [
-              {
-                "type" : "double",
-                "name" : "knn_distances",
-                "description" : "K nearest neighbors distance matrix.",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "knn_connectivities",
-                "description" : "K nearest neighbors connectivities matrix.",
                 "required" : true
               }
             ]
@@ -3024,7 +2962,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_r:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_r:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3084,7 +3022,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnn_correct",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3151,11 +3089,25 @@ out <- suppressWarnings(batchelor::mnnCorrect(
 
 cat("Reformat output\\\\n")
 layer <- SummarizedExperiment::assay(out, "corrected")
-adata\\$layers[["corrected_counts"]] <- as(t(layer), "sparseMatrix")
+as(t(layer), "sparseMatrix")
+
+
 
 cat("Store outputs\\\\n")
-adata\\$uns[["method_id"]] <- meta\\$functionality_name
-zzz <- adata\\$write_h5ad(par\\$output, compression = "gzip")
+output <- anndata::AnnData(
+  uns = list(
+    dataset_id = adata\\$uns[["dataset_id"]],
+    normalization_id = adata\\$uns[["normalization_id"]],
+    method_id = meta\\$functionality_name
+  ),
+  layers = list(
+    corrected_counts = as(t(layer), "sparseMatrix")
+  ),
+  shape = adata\\$shape
+)
+
+cat("Write output to file\\\\n")
+zzz <- output\\$write_h5ad(par\\$output, compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''

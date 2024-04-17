@@ -398,7 +398,7 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.2
+FROM ghcr.io/openproblems-bio/base_python:1.0.3
 
 ENTRYPOINT []
 
@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn[plot]" "pyliger" "dask-expr"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods pyliger"
-LABEL org.opencontainers.image.created="2024-03-20T20:42:02Z"
+LABEL org.opencontainers.image.created="2024-04-17T09:46:16Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
+LABEL org.opencontainers.image.revision="e53b41324181d89f6d501bdb06335929972d5627"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -938,12 +938,22 @@ pyliger.quantile_norm(lobj)
 print('>> Concatenate outputs', flush=True)
 ad_out = ad.concat(lobj.adata_list)
 
-print('>> Store output', flush=True)
-adata.obsm['X_emb'] = ad_out[adata.obs_names, :].obsm['H_norm']
-adata.uns['method_id'] = meta['functionality_name']
+print('Store output', flush=True)
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+        obsm={
+        'X_emb': ad_out[adata.obs_names, :].obsm['H_norm']
+    },
+    uns={
+        'dataset_id': adata.uns['dataset_id'],
+        'normalization_id': adata.uns['normalization_id'],
+        'method_id': meta['functionality_name'],
+    }
+)
 
-print("Write output to disk", flush=True)
-adata.write_h5ad(par['output'], compression='gzip')
+print("Write output to file", flush=True)
+output.write_h5ad(par['output'], compression='gzip')
 VIASHMAIN
 python -B "\$tempscript" &
 wait "\$!"

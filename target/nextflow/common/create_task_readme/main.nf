@@ -2733,49 +2733,87 @@ meta = [
     "name" : "create_task_readme",
     "namespace" : "common",
     "version" : "integration_build",
-    "arguments" : [
+    "argument_groups" : [
       {
-        "type" : "string",
-        "name" : "--task",
-        "description" : "Which task the component will be added to.",
-        "example" : [
-          "denoising"
-        ],
-        "required" : false,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
+        "name" : "Inputs",
+        "arguments" : [
+          {
+            "type" : "string",
+            "name" : "--task",
+            "description" : "Which task the component will be added to.",
+            "example" : [
+              "denoising"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--task_dir",
+            "description" : "Path to the task directory.",
+            "default" : [
+              "src/tasks/${VIASH_PAR_TASK}"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "file",
+            "name" : "--viash_yaml",
+            "description" : "Path to the project config file. Needed for knowing the relative location of a file to the project root.\n",
+            "default" : [
+              "_viash.yaml"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--github_url",
+            "description" : "URL to the GitHub repository. Needed for linking to the source code.\n",
+            "default" : [
+              "https://github.com/openproblems-bio/openproblems-v2/tree/main/"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
       },
       {
-        "type" : "file",
-        "name" : "--output",
-        "description" : "Path to the component directory. Suggested location is `src/<TASK>/README.md`.",
-        "default" : [
-          "src/tasks/${VIASH_PAR_TASK}/README.md"
-        ],
-        "must_exist" : true,
-        "create_parent" : true,
-        "required" : false,
-        "direction" : "output",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
-      },
-      {
-        "type" : "file",
-        "name" : "--viash_yaml",
-        "description" : "Path to the project config file. Needed for knowing the relative location of a file to the project root.\n",
-        "default" : [
-          "_viash.yaml"
-        ],
-        "must_exist" : true,
-        "create_parent" : true,
-        "required" : false,
-        "direction" : "input",
-        "multiple" : false,
-        "multiple_sep" : ":",
-        "dest" : "par"
+        "name" : "Outputs",
+        "arguments" : [
+          {
+            "type" : "file",
+            "name" : "--output",
+            "description" : "Path to the component directory. Suggested location is `src/tasks/<TASK>/README.md`.",
+            "default" : [
+              "src/tasks/${VIASH_PAR_TASK}/README.md"
+            ],
+            "must_exist" : true,
+            "create_parent" : true,
+            "required" : false,
+            "direction" : "output",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
       }
     ],
     "resources" : [
@@ -2850,7 +2888,6 @@ meta = [
             "cli",
             "igraph",
             "rmarkdown",
-            "bit64",
             "processx"
           ],
           "bioc_force_install" : false
@@ -2917,7 +2954,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_task_readme",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2943,8 +2980,10 @@ library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 
 par <- list(
   "task" = $( if [ ! -z ${VIASH_PAR_TASK+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "viash_yaml" = $( if [ ! -z ${VIASH_PAR_VIASH_YAML+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_VIASH_YAML" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
+  "task_dir" = $( if [ ! -z ${VIASH_PAR_TASK_DIR+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_TASK_DIR" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "viash_yaml" = $( if [ ! -z ${VIASH_PAR_VIASH_YAML+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_VIASH_YAML" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "github_url" = $( if [ ! -z ${VIASH_PAR_GITHUB_URL+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_GITHUB_URL" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
 )
 meta <- list(
   "functionality_name" = $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo -n "'"; echo -n "$VIASH_META_FUNCTIONALITY_NAME" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -2971,15 +3010,23 @@ rm(.viash_orig_warn)
 
 ## VIASH END
 
+if (is.null(par\\$task) && is.null(par\\$task_dir)) {
+  stop("Either 'task' or 'task_dir' must be provided")
+}
+if (is.null(par\\$viash_yaml)) {
+  stop("Argument 'viash_yaml' must be provided")
+}
+if (is.null(par\\$output)) {
+  stop("Argument 'output' must be provided")
+}
+
 # import helper function
 source(paste0(meta["resources_dir"], "/read_and_merge_yaml.R"))
 source(paste0(meta["resources_dir"], "/strip_margin.R"))
 source(paste0(meta["resources_dir"], "/read_api_files.R"))
 
 cat("Read task info\\\\n")
-task_dir <- paste0(dirname(par[["viash_yaml"]]), "/src/tasks/", par[["task"]]) %>%
-  gsub("^\\\\\\\\./", "", .)
-task_api <- read_task_api(task_dir)
+task_api <- read_task_api(par[["task_dir"]])
 
 # determine ordering
 root <- .task_graph_get_root(task_api)
@@ -3012,7 +3059,10 @@ authors_str <-
   }
 
 cat("Generate qmd content\\\\n")
-task_dir_short <- gsub(".*openproblems-v2/", "", task_dir)
+relative_path <- par[["task_dir"]] %>%
+  gsub(paste0(dirname(par[["viash_yaml"]]), "/*"), "", .) %>%
+  gsub("/*\\$", "", .)
+source_url <- paste0(par[["github_url"]], relative_path)
 qmd_content <- strip_margin(glue::glue("
   §---
   §title: \\\\"{task_api\\$task_info\\$label}\\\\"
@@ -3021,7 +3071,7 @@ qmd_content <- strip_margin(glue::glue("
   §
   §{task_api\\$task_info\\$summary}
   §
-  §Path: [\\`{task_dir_short}\\`](https://github.com/openproblems-bio/openproblems-v2/tree/main/{task_dir_short})
+  §Path: [\\`{relative_path}\\`]({source_url})
   §
   §## Motivation
   §

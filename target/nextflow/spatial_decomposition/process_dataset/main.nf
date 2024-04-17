@@ -2771,7 +2771,7 @@ meta = [
                 "required" : true
               },
               {
-                "type" : "integer",
+                "type" : "double",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
                 "required" : true
@@ -3122,7 +3122,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

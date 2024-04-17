@@ -3159,7 +3159,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/dataset_simulator",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3377,10 +3377,11 @@ adata_merged = generate_synthetic_dataset(adata,
     umi_lb=par['umi_lb'], 
     umi_ub=par['umi_ub'] 
 )
-adata.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
+adata_merged.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
 filter_genes_cells(adata_merged)
 adata_merged.X = None
-adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
+if "is_primary_data" in adata_merged.obs:
+    adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
 
 print("Writing output to file")
 adata_merged.write_h5ad(par["simulated_data"])

@@ -2777,7 +2777,7 @@ meta = [
                 "required" : true
               },
               {
-                "type" : "integer",
+                "type" : "double",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
                 "required" : true
@@ -2855,7 +2855,7 @@ meta = [
                 "required" : true
               },
               {
-                "type" : "integer",
+                "type" : "double",
                 "name" : "hvg_score",
                 "description" : "A ranking of the features by hvg.",
                 "required" : true
@@ -3069,7 +3069,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3082,7 +3082,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "pypi" : [
-            "scvi-tools"
+            "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
         }
@@ -3095,7 +3095,8 @@ meta = [
         "label" : [
           "midtime",
           "midmem",
-          "midcpu"
+          "midcpu",
+          "gpu"
         ],
         "tag" : "$id"
       },
@@ -3130,7 +3131,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi_scarches",
     "viash_version" : "0.8.0",
-    "git_commit" : "cf678cdaee2b5f1cc3bbae256de382ea3cc96acb",
+    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3578,7 +3579,8 @@ meta["defaults"] = [
   "label" : [
     "midtime",
     "midmem",
-    "midcpu"
+    "midcpu",
+    "gpu"
   ],
   "tag" : "$id"
 }'''),

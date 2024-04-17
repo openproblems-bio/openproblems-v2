@@ -181,6 +181,31 @@ function ViashHelp {
   echo "        type: file, required parameter, output, file must exist"
   echo "        example:"
   echo "resources_test/batch_integration/pancreas/integrated_embedding.h5ad"
+  echo ""
+  echo "    --n_hvg"
+  echo "        type: integer"
+  echo "        default: 2000"
+  echo "        Number of highly variable genes to use."
+  echo ""
+  echo "    --n_latent"
+  echo "        type: integer"
+  echo "        default: 30"
+  echo "        Number of latent dimensions."
+  echo ""
+  echo "    --n_hidden"
+  echo "        type: integer"
+  echo "        default: 128"
+  echo "        Number of hidden units."
+  echo ""
+  echo "    --n_layers"
+  echo "        type: integer"
+  echo "        default: 2"
+  echo "        Number of layers."
+  echo ""
+  echo "    --max_epochs"
+  echo "        type: integer"
+  echo "        example: 400"
+  echo "        Maximum number of epochs."
 }
 
 ######## Helper functions for setting up Docker images for viash ########
@@ -398,18 +423,18 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.2
+FROM ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3
 
 ENTRYPOINT []
 
  
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scvi-tools" "scib==1.1.3"
+  pip install --upgrade --no-cache-dir "scvi-tools>=1.1.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scvi"
-LABEL org.opencontainers.image.created="2024-03-20T20:42:03Z"
+LABEL org.opencontainers.image.created="2024-04-17T09:46:17Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="cf678cdaee2b5f1cc3bbae256de382ea3cc96acb"
+LABEL org.opencontainers.image.revision="e53b41324181d89f6d501bdb06335929972d5627"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -586,6 +611,61 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
+        --n_hvg)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_hvg. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_hvg=*)
+            [ -n "$VIASH_PAR_N_HVG" ] && ViashError Bad arguments for option \'--n_hvg=*\': \'$VIASH_PAR_N_HVG\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HVG=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --n_latent)
+            [ -n "$VIASH_PAR_N_LATENT" ] && ViashError Bad arguments for option \'--n_latent\': \'$VIASH_PAR_N_LATENT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_LATENT="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_latent. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_latent=*)
+            [ -n "$VIASH_PAR_N_LATENT" ] && ViashError Bad arguments for option \'--n_latent=*\': \'$VIASH_PAR_N_LATENT\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_LATENT=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --n_hidden)
+            [ -n "$VIASH_PAR_N_HIDDEN" ] && ViashError Bad arguments for option \'--n_hidden\': \'$VIASH_PAR_N_HIDDEN\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HIDDEN="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_hidden. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_hidden=*)
+            [ -n "$VIASH_PAR_N_HIDDEN" ] && ViashError Bad arguments for option \'--n_hidden=*\': \'$VIASH_PAR_N_HIDDEN\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_HIDDEN=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --n_layers)
+            [ -n "$VIASH_PAR_N_LAYERS" ] && ViashError Bad arguments for option \'--n_layers\': \'$VIASH_PAR_N_LAYERS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_LAYERS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --n_layers. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --n_layers=*)
+            [ -n "$VIASH_PAR_N_LAYERS" ] && ViashError Bad arguments for option \'--n_layers=*\': \'$VIASH_PAR_N_LAYERS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_N_LAYERS=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
+        --max_epochs)
+            [ -n "$VIASH_PAR_MAX_EPOCHS" ] && ViashError Bad arguments for option \'--max_epochs\': \'$VIASH_PAR_MAX_EPOCHS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_MAX_EPOCHS="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --max_epochs. Use "--help" to get more information on the parameters. && exit 1
+            shift 2
+            ;;
+        --max_epochs=*)
+            [ -n "$VIASH_PAR_MAX_EPOCHS" ] && ViashError Bad arguments for option \'--max_epochs=*\': \'$VIASH_PAR_MAX_EPOCHS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_MAX_EPOCHS=$(ViashRemoveFlags "$1")
+            shift 1
+            ;;
         ---setup)
             VIASH_MODE='docker_setup'
             VIASH_DOCKER_SETUP_STRATEGY="$2"
@@ -733,6 +813,20 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
   exit 1
 fi
 
+# filling in defaults
+if [ -z ${VIASH_PAR_N_HVG+x} ]; then
+  VIASH_PAR_N_HVG="2000"
+fi
+if [ -z ${VIASH_PAR_N_LATENT+x} ]; then
+  VIASH_PAR_N_LATENT="30"
+fi
+if [ -z ${VIASH_PAR_N_HIDDEN+x} ]; then
+  VIASH_PAR_N_HIDDEN="128"
+fi
+if [ -z ${VIASH_PAR_N_LAYERS+x} ]; then
+  VIASH_PAR_N_LAYERS="2"
+fi
+
 # check whether required files exist
 if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
   ViashError "Input file '$VIASH_PAR_INPUT' does not exist."
@@ -740,6 +834,36 @@ if [ ! -z "$VIASH_PAR_INPUT" ] && [ ! -e "$VIASH_PAR_INPUT" ]; then
 fi
 
 # check whether parameters values are of the right type
+if [[ -n "$VIASH_PAR_N_HVG" ]]; then
+  if ! [[ "$VIASH_PAR_N_HVG" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_hvg' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_N_LATENT" ]]; then
+  if ! [[ "$VIASH_PAR_N_LATENT" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_latent' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_N_HIDDEN" ]]; then
+  if ! [[ "$VIASH_PAR_N_HIDDEN" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_hidden' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_N_LAYERS" ]]; then
+  if ! [[ "$VIASH_PAR_N_LAYERS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--n_layers' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
+if [[ -n "$VIASH_PAR_MAX_EPOCHS" ]]; then
+  if ! [[ "$VIASH_PAR_MAX_EPOCHS" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--max_epochs' has to be an integer. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+fi
 if [[ -n "$VIASH_META_CPUS" ]]; then
   if ! [[ "$VIASH_META_CPUS" =~ ^[-+]?[0-9]+$ ]]; then
     ViashError 'cpus' has to be an integer. Use "--help" to get more information on the parameters.
@@ -856,15 +980,19 @@ function interrupt {
 trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
-import yaml
 import anndata as ad
-from scib.integration import scvi
+from scvi.model import SCVI
 
 ## VIASH START
 # The following code has been auto-generated by Viash.
 par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi )
+  'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
+  'n_hvg': $( if [ ! -z ${VIASH_PAR_N_HVG+x} ]; then echo "int(r'${VIASH_PAR_N_HVG//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'n_latent': $( if [ ! -z ${VIASH_PAR_N_LATENT+x} ]; then echo "int(r'${VIASH_PAR_N_LATENT//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'n_hidden': $( if [ ! -z ${VIASH_PAR_N_HIDDEN+x} ]; then echo "int(r'${VIASH_PAR_N_HIDDEN//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'n_layers': $( if [ ! -z ${VIASH_PAR_N_LAYERS+x} ]; then echo "int(r'${VIASH_PAR_N_LAYERS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'max_epochs': $( if [ ! -z ${VIASH_PAR_MAX_EPOCHS+x} ]; then echo "int(r'${VIASH_PAR_MAX_EPOCHS//\'/\'\"\'\"r\'}')"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -889,14 +1017,41 @@ dep = {
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print('Run scvi', flush=True)
-adata.X = adata.layers['normalized']
-adata = scvi(adata, batch='batch')
-del adata.X
+if par["n_hvg"]:
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
+    idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
+    adata = adata[:, idx].copy()
+
+print("Processing data", flush=True)
+SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
+
+print("Run scVI", flush=True)
+model_kwargs = {
+    key: par[key]
+    for key in ["n_latent", "n_hidden", "n_layers"]
+    if par[key] is not None
+}
+
+vae = SCVI(adata, **model_kwargs)
+
+vae.train(max_epochs=par["max_epochs"], train_size=1.0)
 
 print("Store outputs", flush=True)
-adata.uns['method_id'] = meta['functionality_name']
-adata.write_h5ad(par['output'], compression='gzip')
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    obsm={
+        "X_emb": vae.get_latent_representation(),
+    },
+    uns={
+        "dataset_id": adata.uns["dataset_id"],
+        "normalization_id": adata.uns["normalization_id"],
+        "method_id": meta["functionality_name"],
+    },
+)
+
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
 VIASHMAIN
 python -B "\$tempscript" &
 wait "\$!"
