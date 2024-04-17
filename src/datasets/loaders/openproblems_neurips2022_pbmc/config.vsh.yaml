@@ -7,12 +7,12 @@ functionality:
       arguments:
         - name: "--input_mod1"
           type: file
-          description: Processed h5ad files on private bucket: s3://openproblems-nextflow/datasets_private/neurips2022/cite_rna_merged.h5ad
+          description: "Processed h5ad files on private bucket: s3://openproblems-nextflow/datasets_private/neurips2022/cite_rna_merged.h5ad"
           required: true
           example: cite_rna_merged.h5ad
         - name: "--input_mod2"
           type: file
-          description: Processed h5ad files on private bucket: s3://openproblems-nextflow/datasets_private/neurips2022/cite_prot_merged.h5ad
+          description: "Processed h5ad files on private bucket: s3://openproblems-nextflow/datasets_private/neurips2022/cite_prot_merged.h5ad"
           required: true
           example: cite_prot_merged.h5ad
         - name: "--mod1"

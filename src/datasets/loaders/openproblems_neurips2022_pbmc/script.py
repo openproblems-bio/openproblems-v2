@@ -8,21 +8,19 @@ par = {
   "input_mod1": "cite_rna_merged.h5ad",
   "input_mod2": "cite_prot_merged.h5ad",
   "mod1": "GEX",
-  "mod2": "ATAC",
+  "mod2": "ADT",
   "dataset_id": "openproblems/neurips2022_pbmc",
   "dataset_name": "Kaggle22 PBMC (CITE-seq)",
-  "dataset_url_mod1": "s3://openproblems-nextflow/datasets_private/neurips2022/cite_rna_merged.h5ad",
-  "dataset_url_mod2": "s3://openproblems-nextflow/datasets_private/neurips2022/cite_prot_merged.h5ad",
+  "dataset_url": "https://www.kaggle.com/competitions/open-problems-multimodal/data",
   "dataset_reference": "Neurips22",
   "dataset_summary": "Neurips22 competition dataset",
-  "dataset_description": "value",
+  "dataset_description": "The dataset for this competition comprises single-cell multiomics data collected from mobilized peripheral CD34+ hematopoietic stem and progenitor cells (HSPCs) isolated from four healthy human donors.",
   "dataset_organism": "homo_sapiens",
   "output_mod1": "output/mod1.h5ad",
   "output_mod2": "output/mod2.h5ad"
 }
 meta = {
   "functionality_name": "openproblems_neurips2022_pbmc",
-  "resources_dir": "/tmp/viash_inject_openproblems_neurips2021_bmmc14365472827677740971", # to be adjusted?
 }
 ## VIASH END
 
@@ -44,6 +42,34 @@ convert_matrix(adata_mod1.layers)
 convert_matrix(adata_mod1.obsm)
 convert_matrix(adata_mod2.layers)
 convert_matrix(adata_mod2.obsm)
+
+
+# Add is_train to obs (modality 1)
+if "is_train" not in adata_mod1.obs.columns:
+    split_info = adata_mod1.obs["kaggle_dataset"]
+    train_sets = ["train", "test_public"]
+    adata_mod1.obs["is_train"] = [ "train" if x in train_sets else "test" for x in split_info ]
+
+# Add is_train to obs if it is missing (modality 2)
+if "is_train" not in adata_mod2.obs.columns:
+    split_info = adata_mod2.obs["kaggle_dataset"]
+    train_sets = ["train", "test_public"]
+    adata_mod2.obs["is_train"] = [ "train" if x in train_sets else "test" for x in split_info ]
+
+
+# split up index in modality 1 into feature ID and feature name
+adata_mod1.var['feature_id']=[str(s).split('_')[0] for s in adata_mod1.var.index.tolist()]
+adata_mod1.var['feature_name']=[str(s).split('_')[1] for s in adata_mod1.var.index.tolist()]
+adata_mod1.var.set_index('feature_id',drop=False, inplace=True)
+
+# set feature_name (proteins have only partial ensmble IDs))
+adata_mod2.var['feature_name']=adata_mod2.var.index.tolist()
+adata_mod2.var.set_index('feature_name',drop=False, inplace=True)
+
+
+# remove adata.X
+del adata_mod1.X
+del adata_mod2.X
 
 
 print("Add metadata to uns", flush=True)
