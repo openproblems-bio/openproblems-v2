@@ -2937,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "4ec99374d27374ab8261f77a535e6ca326ce5c43",
+    "git_commit" : "388b1094059592e77cd21edee13d1d171bab112a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3110,14 +3110,14 @@ scores <- raw_scores %>%
   )
 
 # read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\\\\\\\((.*)/([^\\\\\\\\.]*)(.[^\\\\\\\\.]*)?\\\\\\\\.(.*)\\\\\\\\)\\$"
+id_regex <- "^.*:(.*)_process \\\\\\\\((.*)(/[^\\\\\\\\.]*)?(.[^\\\\\\\\.]*)?\\\\\\\\.(.*)\\\\\\\\)\\$"
 
 trace <- readr::read_tsv(par\\$input_execution) %>%
   mutate(
     id = name,
     process_id = stringr::str_extract(id, id_regex, 1L),
     dataset_id = stringr::str_extract(id, id_regex, 2L),
-    normalization_id = stringr::str_extract(id, id_regex, 3L),
+    normalization_id = gsub("^/", "", stringr::str_extract(id, id_regex, 3L)),
     grp4 = gsub("^\\\\\\\\.", "", stringr::str_extract(id, id_regex, 4L)),
     grp5 = stringr::str_extract(id, id_regex, 5L),
     submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
