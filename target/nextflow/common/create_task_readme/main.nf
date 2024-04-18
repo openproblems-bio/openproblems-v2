@@ -2954,7 +2954,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/create_task_readme",
     "viash_version" : "0.8.0",
-    "git_commit" : "80824d9d5d07b0d0721c6a7495e2110f3a533547",
+    "git_commit" : "4ec99374d27374ab8261f77a535e6ca326ce5c43",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3057,6 +3057,16 @@ authors_str <-
   } else {
     ""
   }
+readme_str <-
+  if (is.null(task_api\\$task_info\\$readme) || is.na(task_api\\$task_info\\$readme)) {
+    ""
+  } else {
+    paste0(
+      "\\\\n## README\\\\n\\\\n",
+      task_api\\$task_info\\$readme,
+      "\\\\n"
+    )
+  }
 
 cat("Generate qmd content\\\\n")
 relative_path <- par[["task_dir"]] %>%
@@ -3078,7 +3088,7 @@ qmd_content <- strip_margin(glue::glue("
   §
   §Path to source: [\\`{relative_path}\\`]({source_url})
   §
-  §{task_api\\$task_info\\$readme}
+  §{readme_str}
   §
   §## Motivation
   §
