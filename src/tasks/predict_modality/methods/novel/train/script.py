@@ -19,8 +19,8 @@ else:
 ## VIASH START
 
 par = {
-  'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021_normal/bmmc_cite/train_mod1.h5ad',
-  'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021_normal/bmmc_cite/train_mod2.h5ad',
+  'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/normal/train_mod1.h5ad',
+  'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/normal/train_mod2.h5ad',
   'output': 'model.pt'
 }
 
@@ -36,30 +36,24 @@ from helper_functions import ModelRegressionAtac2Gex, ModelRegressionAdt2Gex, Mo
 
 print('Load data', flush=True)
 
-# TODO: something went really wrong while refactoring this component,
-# because the train script is not supposed to get access to the test data.
-# see this version of the code to start:
-# https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/blob/dc7bd58dacbe804dcc7be047531d795b1b04741e/src/predict_modality/methods/novel/train/script.py#L27-L28
-
-
 input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 
 mod1 = input_train_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
 
-input_train_mod1.X = input_train_mod2.layers['counts']
-input_train_mod2.X = input_train_mod1.layers['counts']
+input_train_mod1.X = input_train_mod1.layers['counts']
+input_train_mod2.X = input_train_mod2.layers['counts']
 
 input_train_mod2_df = input_train_mod2.to_df()
 
 print('Start train', flush=True)
 
 # select number of variables for LSI
-n_vars = input_train_mod1.n_vars -1 if input_train_mod1.n_vars < 256 else 256
+n_comp = input_train_mod1.n_vars -1 if input_train_mod1.n_vars < 256 else 256
 
 if mod1 != 'ADT':  
-  lsi_transformer_gex = lsiTransformer(n_components=n_vars)
+  lsi_transformer_gex = lsiTransformer(n_components=n_comp)
   input_train_mod1_df = lsi_transformer_gex.fit_transform(input_train_mod1)
 else:
   input_train_mod1_df = input_train_mod1.to_df()
@@ -73,6 +67,9 @@ train_mod1 = input_train_mod1_df.iloc[train_ix, :]
 train_mod2 = input_train_mod2_df.iloc[train_ix, :]
 test_mod1 = input_train_mod1_df.iloc[test_ix, :]
 test_mod2 = input_train_mod2_df.iloc[test_ix, :]
+
+n_vars_mod1 = input_train_mod1_df.shape[1]
+n_vars_mod2 = input_train_mod2_df.shape[1]
   
 # train_mod1, test_mod1, train_mod2, test_mod2 = train_test_split(input_train_mod1, input_train_mod2, test_size=0.25, random_state=666)
 
@@ -83,7 +80,7 @@ if mod1 == 'ATAC' and mod2 == 'GEX':
   dataset_test = ModalityMatchingDataset(test_mod1, test_mod2)
   dataloader_test = DataLoader(dataset_test, 64, shuffle = False, num_workers = 8)
 
-  model = ModelRegressionAtac2Gex(256,13431).to(device)
+  model = ModelRegressionAtac2Gex(n_vars_mod1,n_vars_mod2).to(device)
   optimizer = torch.optim.AdamW(model.parameters(), lr=0.00008386597445284492,weight_decay=0.000684887347727808)
         
 elif mod1 == 'ADT' and mod2 == 'GEX':
@@ -93,7 +90,7 @@ elif mod1 == 'ADT' and mod2 == 'GEX':
   dataset_test = ModalityMatchingDataset(test_mod1, test_mod2)
   dataloader_test = DataLoader(dataset_test, 32, shuffle = False, num_workers = 4)
 
-  model = ModelRegressionAdt2Gex(134,13953).to(device)
+  model = ModelRegressionAdt2Gex(n_vars_mod1,n_vars_mod2).to(device)
   optimizer = torch.optim.Adam(model.parameters(), lr=0.00041, weight_decay=0.0000139)
 
 
@@ -104,7 +101,7 @@ elif mod1 == 'GEX' and mod2 == 'ADT':
   dataset_test = ModalityMatchingDataset(test_mod1, test_mod2)
   dataloader_test = DataLoader(dataset_test, 64, shuffle = False, num_workers = 8)
 
-  model = ModelRegressionGex2Adt(256,134).to(device)
+  model = ModelRegressionGex2Adt(n_vars_mod1,n_vars_mod2).to(device)
   optimizer = torch.optim.AdamW(model.parameters(), lr=0.000034609210829678734, weight_decay=0.0009965881574697426)
 
 
@@ -115,7 +112,7 @@ elif mod1 == 'GEX' and mod2 == 'ATAC':
   dataset_test = ModalityMatchingDataset(test_mod1, test_mod2)
   dataloader_test = DataLoader(dataset_test, 64, shuffle = False, num_workers = 8)
 
-  model = ModelRegressionGex2Atac(256,10000).to(device)
+  model = ModelRegressionGex2Atac(n_vars_mod1,n_vars_mod2).to(device)
   optimizer = torch.optim.AdamW(model.parameters(), lr=0.00001806762345275399, weight_decay=0.0004084171379280058)
 
 loss_fn = torch.nn.MSELoss()
