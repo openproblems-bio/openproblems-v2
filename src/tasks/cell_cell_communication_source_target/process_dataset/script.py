@@ -6,7 +6,7 @@ import pandas as pd
 
 ## VIASH START
 par = {
-    "input": "resources_test/cell_cell_communication_source_target/mouse_brain_atlas",
+    "input": "resources_test/cell_cell_communication_source_target/allen_brain_atlas",
     'output_train': 'train.h5ad',
     'output_test': 'test.h5ad',
     'output_solution': 'solution.h5ad'
