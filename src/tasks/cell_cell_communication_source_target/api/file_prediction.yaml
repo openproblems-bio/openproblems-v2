@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/cell_cell_communication_source_target/mouse_brain_atlas/prediction.h5ad"
+example: "resources_test/cell_cell_communication_source_target/allen_brain_atlas/dataset.h5ad"
 info:
   label: "Prediction"
   summary: "The prediction file"
