@@ -1,17 +1,22 @@
 __merge__: ../../../api/comp_method_predict.yaml
 functionality:
   name: novel_predict
+  arguments:
+    - name: "--input_transform"
+      type: file
+      direction: input
+      required: false
+      example: "lsi_transformer.pickle"
   resources:
     - type: python_script
       path: script.py
     - path: ../helper_functions.py
 platforms:
   - type: docker
-    image: "pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime"
+    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3
     setup:
       - type: python
         packages:
-          - anndata~=0.8.0
           - scikit-learn
           - networkx
   - type: nextflow

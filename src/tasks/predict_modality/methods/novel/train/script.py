@@ -19,8 +19,8 @@ else:
 ## VIASH START
 
 par = {
-  'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/normal/train_mod1.h5ad',
-  'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/normal/train_mod2.h5ad',
+  'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/train_mod1.h5ad',
+  'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/train_mod2.h5ad',
   'output': 'model.pt'
 }
 
@@ -68,11 +68,14 @@ train_mod2 = input_train_mod2_df.iloc[train_ix, :]
 test_mod1 = input_train_mod1_df.iloc[test_ix, :]
 test_mod2 = input_train_mod2_df.iloc[test_ix, :]
 
+n_vars_train_mod1 = train_mod1.shape[1]
+n_vars_train_mod2 = train_mod2.shape[1]
+n_vars_test_mod1 = test_mod1.shape[1]
+n_vars_test_mod2 = test_mod2.shape[1]
+
 n_vars_mod1 = input_train_mod1_df.shape[1]
 n_vars_mod2 = input_train_mod2_df.shape[1]
   
-# train_mod1, test_mod1, train_mod2, test_mod2 = train_test_split(input_train_mod1, input_train_mod2, test_size=0.25, random_state=666)
-
 if mod1 == 'ATAC' and mod2 == 'GEX':
   dataset_train = ModalityMatchingDataset(train_mod1, train_mod2)
   dataloader_train = DataLoader(dataset_train, 256, shuffle = True, num_workers = 8)
