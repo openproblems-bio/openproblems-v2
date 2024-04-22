@@ -356,7 +356,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_r:1.0.2"
+  image: "ghcr.io/openproblems-bio/base_r:1.0.4"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -400,5 +400,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/control_methods/random_predict"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/control_methods/random_predict/random_predict"
   viash_version: "0.8.0"
-  git_commit: "b3a00b3b5c2918c50399a9980f5b3942bfb2868b"
+  git_commit: "4b059e43143960fc68621d268b1a535263697e87"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

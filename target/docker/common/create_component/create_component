@@ -449,9 +449,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "ruamel.yaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component common create_component"
-LABEL org.opencontainers.image.created="2024-04-19T09:31:01Z"
+LABEL org.opencontainers.image.created="2024-04-22T11:09:35Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b3a00b3b5c2918c50399a9980f5b3942bfb2868b"
+LABEL org.opencontainers.image.revision="4b059e43143960fc68621d268b1a535263697e87"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1059,7 +1059,7 @@ def create_config(par, component_type, pretty_name, script_path) -> str:
     |  # Allows turning the component into a Nextflow module / pipeline.
     |  - type: nextflow
     |    directives:
-    |      label: [ "midtime",midmem, midcpu]
+    |      label: [midtime,midmem, midcpu]
     |'''
   )
 
@@ -1138,11 +1138,11 @@ def generate_resources(par, script_path) -> str:
 def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
-    image_str = "ghcr.io/openproblems-bio/base_python:1.0.2"
+    image_str = "ghcr.io/openproblems-bio/base_python:1.0.4"
     setup_type = "python"
     package_example = "scib==1.1.5"
   elif par["language"] == "r":
-    image_str = "ghcr.io/openproblems-bio/base_r:1.0.2"
+    image_str = "ghcr.io/openproblems-bio/base_r:1.0.4"
     setup_type = "r"
     package_example = "tidyverse"
   return strip_margin(f'''\\

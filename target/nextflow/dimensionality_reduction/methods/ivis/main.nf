@@ -2924,7 +2924,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.2",
+      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -2986,7 +2986,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/ivis",
     "viash_version" : "0.8.0",
-    "git_commit" : "b3a00b3b5c2918c50399a9980f5b3942bfb2868b",
+    "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
