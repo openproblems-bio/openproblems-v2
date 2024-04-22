@@ -191,7 +191,7 @@ functionality:
       dest: resources_test/common/cxg_mouse_pancreas_atlas
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    image: ghcr.io/openproblems-bio/base_python:1.0.4
     setup:
       - type: python
         packages: [numpy, scanpy]
