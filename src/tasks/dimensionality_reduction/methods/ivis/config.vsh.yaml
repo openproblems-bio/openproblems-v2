@@ -41,4 +41,4 @@ platforms:
           - tensorflow<2.16
   - type: nextflow
     directives:
-      label: [ midtime, highmem, highcpu ]
+      label: [midtime, highmem, highcpu]

@@ -62,4 +62,4 @@ platforms:
         cran: [ proxyC, testthat, dynutils ]
   - type: nextflow
     directives:
-      label: [ "midtime", lowmem, lowcpu ]
+      label: [midtime, lowmem, lowcpu]

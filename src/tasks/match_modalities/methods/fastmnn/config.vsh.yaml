@@ -26,4 +26,4 @@ platforms:
         bioc: batchelor
   - type: nextflow
     directives:
-      label: [ "midtime", lowmem, lowcpu ]
+      label: [midtime, lowmem, lowcpu]

@@ -32,4 +32,4 @@ platforms:
           - dask-expr
   - type: nextflow
     directives:
-      label: [ lowcpu, highmem, midtime ]
+      label: [lowcpu, highmem, midtime]

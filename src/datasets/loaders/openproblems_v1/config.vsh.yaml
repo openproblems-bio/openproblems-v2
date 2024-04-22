@@ -83,4 +83,4 @@ platforms:
             pip install --no-cache-dir --editable /opt/openproblems
   - type: nextflow
     directives:
-      label: [ highmem, midcpu , midtime]
+      label: [highmem, midcpu , midtime]

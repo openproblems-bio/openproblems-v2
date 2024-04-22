@@ -31,4 +31,4 @@ platforms:
         packages: scikit-learn
   - type: nextflow
     directives: 
-      label: [ "midtime", midmem, lowcpu ]
+      label: [midtime, midmem, lowcpu]

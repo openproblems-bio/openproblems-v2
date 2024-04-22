@@ -197,5 +197,5 @@ platforms:
         packages: [numpy, scanpy]
   - type: nextflow
     directives: 
-      label: [ midtime, highmem, highcpu ]
+      label: [midtime, highmem, highcpu]
   - type: native

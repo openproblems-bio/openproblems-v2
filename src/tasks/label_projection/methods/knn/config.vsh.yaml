@@ -34,4 +34,4 @@ platforms:
         packages: [scikit-learn, jsonschema]
   - type: nextflow
     directives: 
-      label: [ "midtime", midmem, lowcpu ]
+      label: [midtime, midmem, lowcpu]

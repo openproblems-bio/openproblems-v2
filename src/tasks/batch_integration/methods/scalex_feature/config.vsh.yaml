@@ -36,4 +36,4 @@ platforms:
           - torch<2.1
   - type: nextflow
     directives:
-      label: [ lowmem, lowcpu, midtime ]
+      label: [lowmem, lowcpu, midtime]

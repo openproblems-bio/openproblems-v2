@@ -28,4 +28,4 @@ platforms:
         github: welch-lab/RcppPlanc
   - type: nextflow
     directives:
-      label: [ lowcpu, highmem, midtime ]
+      label: [lowcpu, highmem, midtime]
