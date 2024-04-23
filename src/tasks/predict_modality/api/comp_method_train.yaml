@@ -24,7 +24,7 @@ functionality:
     - name: "--output"
       type: file
       description: A trained model.
-      example: model.pt
+      default: model.pt
       direction: output
       required: true
   # test_resources:
