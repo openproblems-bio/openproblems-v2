@@ -3092,7 +3092,7 @@ meta = [
         "type" : "file",
         "name" : "--output",
         "description" : "A trained model.",
-        "example" : [
+        "default" : [
           "model.pt"
         ],
         "must_exist" : true,
@@ -3211,7 +3211,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_train",
     "viash_version" : "0.8.0",
-    "git_commit" : "8f6df1f38b19e51df6b192927741a1e1e7388811",
+    "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
