@@ -413,9 +413,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/metrics r2"
-LABEL org.opencontainers.image.created="2024-04-17T09:46:15Z"
+LABEL org.opencontainers.image.created="2024-04-23T07:04:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e53b41324181d89f6d501bdb06335929972d5627"
+LABEL org.opencontainers.image.revision="8128e9fb7f1acd3f28ab598fea45b95f6ce1ba73"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

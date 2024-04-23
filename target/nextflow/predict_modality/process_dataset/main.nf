@@ -2781,6 +2781,18 @@ meta = [
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
                 "required" : true
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -2907,6 +2919,18 @@ meta = [
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
                 "required" : true
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3027,6 +3051,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : false
               }
             ],
             "uns" : [
@@ -3123,6 +3159,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
+                "required" : false
               }
             ],
             "uns" : [
@@ -3218,6 +3266,18 @@ meta = [
                 "type" : "string",
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
                 "required" : false
               }
             ],
@@ -3344,6 +3404,18 @@ meta = [
                 "type" : "string",
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : false
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
                 "required" : false
               }
             ],
@@ -3549,7 +3621,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
+    "git_commit" : "8128e9fb7f1acd3f28ab598fea45b95f6ce1ba73",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3640,8 +3712,8 @@ ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids")), drop = FALSE]
+ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
+ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features

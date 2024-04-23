@@ -3159,7 +3159,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/dataset_simulator",
     "viash_version" : "0.8.0",
-    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
+    "git_commit" : "8128e9fb7f1acd3f28ab598fea45b95f6ce1ba73",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3214,8 +3214,10 @@ dep = {
 ## VIASH END
 
 CELLTYPE_MIN_CELLS = 25
+
 # Reading input dataset
 adata = ad.read_h5ad(par['input'])
+
 
 def generate_synthetic_dataset(
     adata: ad.AnnData,
@@ -3353,11 +3355,13 @@ def generate_synthetic_dataset(
     adata_merged.uns["cell_type_names"] = uni_labs
     return adata_merged
 
+
 def filter_celltypes(adata, min_cells=CELLTYPE_MIN_CELLS):
     """Filter rare celltypes from an AnnData"""
     celltype_counts = adata.obs["cell_type"].value_counts() >= min_cells
     keep_cells = np.isin(adata.obs["cell_type"], celltype_counts.index[celltype_counts])
     return adata[adata.obs.index[keep_cells]].copy()
+
 
 def filter_genes_cells(adata):
     """Remove empty cells and genes."""
@@ -3366,6 +3370,7 @@ def filter_genes_cells(adata):
         adata.uns["var_names_all"] = adata.var.index.to_numpy()
     sc.pp.filter_genes(adata, min_cells=1)
     sc.pp.filter_cells(adata, min_counts=2)
+
 
 adata.X = adata.layers["counts"]
 sc.pp.filter_genes(adata, min_counts=10)
@@ -3380,8 +3385,15 @@ adata_merged = generate_synthetic_dataset(adata,
 adata_merged.uns["spatial_data_summary"] = f"Dirichlet alpha={par['alpha']}"
 filter_genes_cells(adata_merged)
 adata_merged.X = None
-if "is_primary_data" in adata_merged.obs:
-    adata_merged.obs['is_primary_data'] = adata_merged.obs['is_primary_data'].fillna(False)
+
+# Convert non-string objects to categoricals to avoid
+# TypeError: Can't implicitly convert non-string objects to strings
+# In this case, the error is raised when there are NA values in .obs columns with dtype object (boolean).
+# The resulting anndata object cannot be written to a file.
+# This conversion is handled in later versions of anndata (0.10)
+for col in adata_merged.obs:
+    if adata_merged.obs[col].dtype == 'object':
+        adata_merged.obs[col] = adata_merged.obs[col].astype('category')
 
 print("Writing output to file")
 adata_merged.write_h5ad(par["simulated_data"])

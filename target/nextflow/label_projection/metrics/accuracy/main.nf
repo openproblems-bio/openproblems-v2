@@ -3082,7 +3082,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/metrics/accuracy",
     "viash_version" : "0.8.0",
-    "git_commit" : "e53b41324181d89f6d501bdb06335929972d5627",
+    "git_commit" : "8128e9fb7f1acd3f28ab598fea45b95f6ce1ba73",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
