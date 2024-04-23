@@ -1,9 +1,8 @@
 #!/bin/bash
 
-viash run src/tasks/predict_modality/methods/novel/config.vsh.yaml -- \
-    --input_train_mod1 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad' \
-    --input_train_mod2 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad' \
-    --input_test_mod1 'resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad' \
-    --input_test_mod2 'resources_test/predict_modality/neurips2021_bmmc_cite/test_mod2.h5ad' \
-    --pretrain 'model.pt' \
-    --output 'output/novel_test.h5ad'
+viash run src/tasks/predict_modality/methods/novel/predict/config.vsh.yaml -- \
+    --input_train_mod2 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_cite/normal/log_cp10k/train_mod2.h5ad' \
+    --input_test_mod1 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_cite/normal/log_cp10k/test_mod1.h5ad' \
+    --input_model output/novel/model.pt \
+    --input_transform output/novel/lsi_transform.pickle \
+    --output 'output/novel/novel_test.h5ad'
