@@ -4,7 +4,7 @@ library(Seurat)
 ## VIASH START
 par <- list(
   input_single_cell = "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/single_cell_ref.h5ad",
-  input_spatial = "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/spatial_masked.h5ad",
+  input_spatial_masked = "resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas/spatial_masked.h5ad",
   output = "output.h5ad", 
   n_pcs = 30,
   sctransform_n_cells = 500
