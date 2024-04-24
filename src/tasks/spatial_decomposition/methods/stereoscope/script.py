@@ -36,8 +36,8 @@ SpatialStereoscope.setup_anndata(input_spatial)
 st_model = SpatialStereoscope.from_rna_model(input_spatial, sc_model)
 st_model.train(
   max_epochs=par["max_epochs_sp"],
-  early_stopping=True,
-  early_stopping_monitor="elbo_validation"
+  # early_stopping=True,
+  # early_stopping_monitor="elbo_validation"
 )
 input_spatial.obsm["proportions_pred"] = st_model.get_proportions().to_numpy()
 
