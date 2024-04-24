@@ -21,7 +21,7 @@ functionality:
       type: file
       description: A trained model.
       example: model.pt
-      direction: output
+      direction: input
       required: true
     - name: "--output"
       __merge__: file_prediction.yaml
