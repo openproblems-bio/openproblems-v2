@@ -3161,11 +3161,12 @@ meta = [
     "info" : {
       "label" : "Guanlab-dengkw",
       "summary" : "A kernel ridge regression method with RBF kernel.",
-      "description" : "This is a solution developed by Team Guanlab - dengkw in the Neurips 2021 competiton to predeict one modality from another using kernel ridge regression (KRR) with RBF kernel. Truncated SVD is applied on the combined training and test data from modality 1 followed by row-wise z-score normalization on the reduced matrix. The truncated SVD of modality 2 is predicted by training a KRR model on the normalized training matrix of modality 1. Predictions on the normalized test matrix are then re-mapped to the modality 2 feature space via the right singular vectors. \n",
+      "description" : "This is a solution developed by Team Guanlab - dengkw in the Neurips 2021 competition to predict one modality\nfrom another using kernel ridge regression (KRR) with RBF kernel. Truncated SVD is applied on the combined\ntraining and test data from modality 1 followed by row-wise z-score normalization on the reduced matrix. The\ntruncated SVD of modality 2 is predicted by training a KRR model on the normalized training matrix of modality 1.\nPredictions on the normalized test matrix are then re-mapped to the modality 2 feature space via the right\nsingular vectors. \n",
       "preferred_normalization" : "log_cp10k",
       "reference" : "lance2022multimodal",
       "documentation_url" : "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/Guanlab-dengkw",
       "repository_url" : "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/Guanlab-dengkw",
+      "competition_submission_id" : 170636,
       "type" : "method",
       "type_info" : {
         "label" : "Method",
@@ -3206,7 +3207,7 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "midtime",
+          "hightime",
           "highmem",
           "highcpu"
         ],
@@ -3243,7 +3244,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/guanlab_dengkw_pm",
     "viash_version" : "0.8.0",
-    "git_commit" : "b8337001d5f1da422e273d23e94b61161be9ddf0",
+    "git_commit" : "030cd349d0a8efc59bd0dbdf79bc91402d86d395",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3328,10 +3329,8 @@ input_train = ad.concat(
 )
 
 print('Determine parameters by the modalities', flush=True)
-mod1_type = input_train_mod1.uns["modality"]
-mod1_type = mod1_type.upper()
-mod2_type = input_train_mod2.uns["modality"]
-mod2_type = mod2_type.upper()
+mod1_type = input_train_mod1.uns["modality"].upper()
+mod2_type = input_train_mod2.uns["modality"].upper()
 n_comp_dict = {
                 ("GEX", "ADT"): (300, 70, 10, 0.2),
                 ("ADT", "GEX"): (None, 50, 10, 0.2),
@@ -3770,7 +3769,7 @@ meta["defaults"] = [
     "tag" : "main_build"
   },
   "label" : [
-    "midtime",
+    "hightime",
     "highmem",
     "highcpu"
   ],
