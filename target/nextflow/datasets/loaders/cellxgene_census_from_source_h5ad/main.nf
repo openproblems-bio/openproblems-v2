@@ -3057,7 +3057,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/cellxgene_census_from_source_h5ad",
     "viash_version" : "0.8.0",
-    "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

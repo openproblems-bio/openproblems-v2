@@ -425,7 +425,7 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_r:1.0.2
+FROM ghcr.io/openproblems-bio/base_r:1.0.4
 
 ENTRYPOINT []
 
@@ -434,9 +434,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("lmds", "FNN", "proxyC"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods knnr_r"
-LABEL org.opencontainers.image.created="2024-04-23T20:22:44Z"
+LABEL org.opencontainers.image.created="2024-04-25T14:07:02Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="02b0adaa2a4c662cc4a9f83d88325880a21970e9"
+LABEL org.opencontainers.image.revision="230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

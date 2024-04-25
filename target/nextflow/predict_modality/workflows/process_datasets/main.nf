@@ -2784,18 +2784,6 @@ meta = [
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
                     "required" : true
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : true
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : true
                   }
                 ],
                 "uns" : [
@@ -2922,18 +2910,6 @@ meta = [
                     "name" : "feature_name",
                     "description" : "A human-readable name for the feature, usually a gene symbol.",
                     "required" : true
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : true
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : true
                   }
                 ],
                 "uns" : [
@@ -3059,18 +3035,6 @@ meta = [
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
                     "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : false
                   }
                 ],
                 "uns" : [
@@ -3167,18 +3131,6 @@ meta = [
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
                     "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : false
                   }
                 ],
                 "uns" : [
@@ -3274,18 +3226,6 @@ meta = [
                     "type" : "string",
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
-                    "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
                     "required" : false
                   }
                 ],
@@ -3413,18 +3353,6 @@ meta = [
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
                     "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : false
                   }
                 ],
                 "uns" : [
@@ -3540,7 +3468,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3562,7 +3490,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3584,7 +3512,7 @@ meta = [
           "functionalityNamespace" : "predict_modality",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
@@ -3630,7 +3558,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

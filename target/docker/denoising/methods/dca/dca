@@ -402,18 +402,22 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.2
+FROM python:3.9
 
 ENTRYPOINT []
 
  
+RUN apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y procps && \
+  rm -rf /var/lib/apt/lists/*
+
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "git+https://github.com/scottgigante-immunai/dca.git@patch-1"
+  pip install --upgrade --no-cache-dir "anndata~=0.8.0" "scanpy" "pyyaml" "requests" "jsonschema" "git+https://github.com/scottgigante-immunai/dca.git@patch-1"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods dca"
-LABEL org.opencontainers.image.created="2024-04-23T20:22:45Z"
+LABEL org.opencontainers.image.created="2024-04-25T14:06:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="02b0adaa2a4c662cc4a9f83d88325880a21970e9"
+LABEL org.opencontainers.image.revision="230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

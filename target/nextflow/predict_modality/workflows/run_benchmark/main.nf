@@ -2778,18 +2778,6 @@ meta = [
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
                     "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : false
                   }
                 ],
                 "uns" : [
@@ -2886,18 +2874,6 @@ meta = [
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
                     "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
-                    "required" : false
                   }
                 ],
                 "uns" : [
@@ -2993,18 +2969,6 @@ meta = [
                     "type" : "string",
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
-                    "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
                     "required" : false
                   }
                 ],
@@ -3131,18 +3095,6 @@ meta = [
                     "type" : "string",
                     "name" : "gene_ids",
                     "description" : "The gene identifiers (if available)",
-                    "required" : false
-                  },
-                  {
-                    "type" : "boolean",
-                    "name" : "hvg",
-                    "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                    "required" : false
-                  },
-                  {
-                    "type" : "double",
-                    "name" : "hvg_score",
-                    "description" : "A ranking of the features by hvg.",
                     "required" : false
                   }
                 ],
@@ -3350,7 +3302,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3372,7 +3324,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3394,7 +3346,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/control_methods/mean_per_gene/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/mean_per_gene"
@@ -3416,7 +3368,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/control_methods/random_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/random_predict"
@@ -3438,7 +3390,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/control_methods/zeros/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/zeros"
@@ -3460,7 +3412,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/control_methods/solution/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/control_methods/solution"
@@ -3482,7 +3434,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/methods/knnr_py/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_py"
@@ -3504,7 +3456,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/methods/knnr_r/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r"
@@ -3526,7 +3478,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/methods/lm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lm"
@@ -3548,7 +3500,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/methods/newwave_knnr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
@@ -3570,7 +3522,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/methods/random_forest/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/random_forest"
@@ -3592,32 +3544,10 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/methods/guanlab_dengkw_pm/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/guanlab_dengkw_pm"
-      },
-      {
-        "name" : "predict_modality/methods/novel",
-        "repository" : {
-          "type" : "local",
-          "name" : "",
-          "localPath" : ""
-        },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/run/config.vsh.yaml",
-        "configInfo" : {
-          "functionalityName" : "novel",
-          "git_tag" : "",
-          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
-          "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/run/config.vsh.yaml",
-          "functionalityNamespace" : "predict_modality/methods",
-          "output" : "",
-          "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
-          "executable" : "/nextflow/predict_modality/methods/novel/main.nf"
-        },
-        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel"
       },
       {
         "name" : "predict_modality/metrics/correlation",
@@ -3636,7 +3566,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/correlation"
@@ -3658,7 +3588,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
           "executable" : "/nextflow/predict_modality/metrics/mse/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse"
@@ -3704,7 +3634,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "02b0adaa2a4c662cc4a9f83d88325880a21970e9",
+    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3724,7 +3654,6 @@ include { lm } from "${meta.resources_dir}/../../../../nextflow/predict_modality
 include { newwave_knnr } from "${meta.resources_dir}/../../../../nextflow/predict_modality/methods/newwave_knnr/main.nf"
 include { random_forest } from "${meta.resources_dir}/../../../../nextflow/predict_modality/methods/random_forest/main.nf"
 include { guanlab_dengkw_pm } from "${meta.resources_dir}/../../../../nextflow/predict_modality/methods/guanlab_dengkw_pm/main.nf"
-include { novel } from "${meta.resources_dir}/../../../../nextflow/predict_modality/methods/novel/main.nf"
 include { correlation } from "${meta.resources_dir}/../../../../nextflow/predict_modality/metrics/correlation/main.nf"
 include { mse } from "${meta.resources_dir}/../../../../nextflow/predict_modality/metrics/mse/main.nf"
 
@@ -3754,8 +3683,7 @@ workflow run_wf {
     lm,
     newwave_knnr,
     random_forest,
-    guanlab_dengkw_pm,
-    novel
+    guanlab_dengkw_pm
   ]
 
   // construct list of metrics

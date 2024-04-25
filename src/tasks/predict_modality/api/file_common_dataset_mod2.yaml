@@ -34,16 +34,6 @@ info:
         description: A human-readable name for the feature, usually a gene symbol.
         # TODO: make this required once the dataloader supports it
         required: true
-      
-      - type: boolean
-        name: hvg
-        description: Whether or not the feature is considered to be a 'highly variable gene'
-        required: true
-
-      - type: double
-        name: hvg_score
-        description: A ranking of the features by hvg.
-        required: true
     uns:
       - type: string
         name: dataset_id
