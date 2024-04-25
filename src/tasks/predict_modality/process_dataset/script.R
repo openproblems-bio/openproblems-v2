@@ -61,7 +61,7 @@ ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_ids", "hvg", "hvg_scor
 
 if (ad1_mod == "ATAC") {
   # binarize features
-  ad1$layers[["normalized"]]@x <- (ad1$layers[["normalized"]]@x > 0) + 0
+  # ad1$layers[["normalized"]]@x <- (ad1$layers[["normalized"]]@x > 0) + 0
 
   # copy gene activity in new object
   ad1_uns$gene_activity_var_names <- ad1$uns$gene_activity_var_names
