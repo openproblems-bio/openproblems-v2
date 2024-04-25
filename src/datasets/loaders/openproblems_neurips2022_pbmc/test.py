@@ -2,6 +2,8 @@ from os import path
 import subprocess
 import anndata as ad
 
+# TODO: update once data is public
+
 input_mod1 = "cite_rna_merged.h5ad" #change data set path after loading manually?
 input_mod2 = "cite_prot_merged.h5ad" #change data set path after loading manually?
 mod1 = "GEX"

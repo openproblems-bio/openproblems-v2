@@ -7,12 +7,12 @@ functionality:
       arguments:
         - name: "--input_mod1"
           type: file
-          description: "Processed h5ad files on private bucket: s3://openproblems-nextflow/datasets_private/neurips2022/cite_rna_merged.h5ad"
+          description: "Processed RNA h5ad file"
           required: true
           example: cite_rna_merged.h5ad
         - name: "--input_mod2"
           type: file
-          description: "Processed h5ad files on private bucket: s3://openproblems-nextflow/datasets_private/neurips2022/cite_prot_merged.h5ad"
+          description: "Processed ADT or ATAC h5ad file"
           required: true
           example: cite_prot_merged.h5ad
         - name: "--mod1"
@@ -66,14 +66,15 @@ functionality:
   resources:
     - type: python_script
       path: script.py
-  test_resources:
-    - type: python_script
-      path: test.py
+  # skip unit test until data is public
+  # test_resources:
+  #   - type: python_script
+  #     path: test.py
     # - type: file
     #   path: /resources_test/common/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    image: ghcr.io/openproblems-bio/base_python:1.0.4
   - type: nextflow
     directives:
-      label: [ highmem, midcpu , midtime]
+      label: [ highmem, midcpu, midtime]
