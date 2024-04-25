@@ -238,5 +238,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/trustworthiness"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/dimensionality_reduction/metrics/trustworthiness/trustworthiness"
   viash_version: "0.8.0"
-  git_commit: "d7e29d729114904b3a1ff837572a5cf6677b0956"
+  git_commit: "1913ae1526417c6a9c486725d32569f9d8f6b819"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

@@ -437,9 +437,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scvi-tools>=1.1.0"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scanvi"
-LABEL org.opencontainers.image.created="2024-04-25T20:43:51Z"
+LABEL org.opencontainers.image.created="2024-04-25T21:30:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d7e29d729114904b3a1ff837572a5cf6677b0956"
+LABEL org.opencontainers.image.revision="1913ae1526417c6a9c486725d32569f9d8f6b819"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
