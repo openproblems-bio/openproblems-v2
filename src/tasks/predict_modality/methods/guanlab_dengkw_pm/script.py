@@ -1,6 +1,5 @@
 import anndata as ad
 import numpy as np
-import gc
 from scipy.sparse import csc_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.gaussian_process.kernels import RBF
@@ -8,15 +7,15 @@ from sklearn.kernel_ridge import KernelRidge
 
 ## VIASH START
 par = {
-  'input_train_mod1': 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod1.h5ad',
-  'input_train_mod2': 'resources_test/predict_modality/neurips2021_bmmc_cite/train_mod2.h5ad',
-  'input_test_mod1': 'resources_test/predict_modality/neurips2021_bmmc_cite/test_mod1.h5ad',
-  'output': 'output.h5ad', 
-  'distance_method': 'minkowski', 
-  'n_pcs': 50
+    'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/train_mod1.h5ad',
+    'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/train_mod2.h5ad',
+    'input_test_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/test_mod1.h5ad',
+    'output': 'output.h5ad', 
+    'distance_method': 'minkowski', 
+    'n_pcs': 50
 }
 meta = {
-  'functionality_name': 'guanlab_dengkw_pm'
+    'functionality_name': 'guanlab_dengkw_pm'
 }
 ## VIASH END
 
@@ -40,7 +39,6 @@ batch_len = len(batches)
 
 obs = input_test_mod1.obs
 var = input_train_mod2.var
-dataset_id = input_train_mod1.uns['dataset_id']
 
 input_train = ad.concat(
     {"train": input_train_mod1, "test": input_test_mod1},
@@ -55,11 +53,11 @@ print('Determine parameters by the modalities', flush=True)
 mod1_type = input_train_mod1.uns["modality"].upper()
 mod2_type = input_train_mod2.uns["modality"].upper()
 n_comp_dict = {
-                ("GEX", "ADT"): (300, 70, 10, 0.2),
-                ("ADT", "GEX"): (None, 50, 10, 0.2),
-                ("GEX", "ATAC"): (1000, 50, 10, 0.1),
-                ("ATAC", "GEX"): (100, 70, 10, 0.1)
-              }
+    ("GEX", "ADT"): (300, 70, 10, 0.2),
+    ("ADT", "GEX"): (None, 50, 10, 0.2),
+    ("GEX", "ATAC"): (1000, 50, 10, 0.1),
+    ("ATAC", "GEX"): (100, 70, 10, 0.1)
+}
 print(f"{mod1_type}, {mod2_type}", flush=True)
 n_mod1, n_mod2, scale, alpha = n_comp_dict[(mod1_type, mod2_type)]
 print(f"{n_mod1}, {n_mod2}, {scale}, {alpha}", flush=True)
@@ -69,18 +67,18 @@ print('Models using the Truncated SVD to reduce the dimension', flush=True)
 
 if n_mod1 is not None and n_mod1 < input_train.shape[1]:
     embedder_mod1 = TruncatedSVD(n_components=n_mod1)
-    mod1_pca = embedder_mod1.fit_transform(input_train.layers["counts"]).astype(np.float32)
+    mod1_pca = embedder_mod1.fit_transform(input_train.layers["normalized"]).astype(np.float32)
     train_matrix = mod1_pca[input_train.obs['group'] == 'train']
     test_matrix = mod1_pca[input_train.obs['group'] == 'test']
 else:
-    train_matrix = input_train_mod1.to_df(layer="counts").values.astype(np.float32)
-    test_matrix = input_test_mod1.to_df(layer="counts").values.astype(np.float32)
+    train_matrix = input_train_mod1.to_df(layer="normalized").values.astype(np.float32)
+    test_matrix = input_test_mod1.to_df(layer="normalized").values.astype(np.float32)
   
 if n_mod2 is not None and n_mod2 < input_train_mod2.shape[1]:
     embedder_mod2 = TruncatedSVD(n_components=n_mod2)
-    train_gs = embedder_mod2.fit_transform(input_train_mod2.layers["counts"]).astype(np.float32)
+    train_gs = embedder_mod2.fit_transform(input_train_mod2.layers["normalized"]).astype(np.float32)
 else:
-    train_gs = input_train_mod2.to_df(layer="counts").values.astype(np.float32)
+    train_gs = input_train_mod2.to_df(layer="normalized").values.astype(np.float32)
 
 del input_train
 
@@ -99,14 +97,13 @@ del test_matrix
 
 print('Running KRR model ...', flush=True)
 y_pred = np.zeros((pred_dimx, pred_dimy), dtype=np.float32)
-np.random.seed(1000)
 
 for _ in range(5):
-  np.random.shuffle(batches)
-  for batch in [batches[:batch_len//2], batches[batch_len//2:]]:
-    # for passing the test
-    if not batch:
-      batch = [batches[0]]
+    np.random.shuffle(batches)
+    for batch in [batches[:batch_len//2], batches[batch_len//2:]]:
+        # for passing the test
+        if not batch:
+            batch = [batches[0]]
 
     print(batch, flush=True)
     kernel = RBF(length_scale = scale)
