@@ -34,4 +34,4 @@ platforms:
           - numpy
   - type: nextflow
     directives:
-      label: [midtime, highmem, highcpu]
+      label: [hightime, highmem, highcpu]
