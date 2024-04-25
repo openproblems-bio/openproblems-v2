@@ -13,12 +13,19 @@ workflow run_wf {
 
   // construct list of methods
   methods = [
+    // controls
     random_features,
+    spectral_features,
     true_features,
+    // methods
     densmap,
+    diffusion_map,
+    ivis,
+    lmds,
     neuralee,
     pca,
     phate,
+    pymde,
     simlr,
     tsne,
     umap
@@ -26,6 +33,7 @@ workflow run_wf {
 
   // construct list of metrics
   metrics = [
+    clustering_performance,
     coranking,
     density_preservation,
     distance_correlation,
@@ -60,14 +68,17 @@ workflow run_wf {
     // run all methods
     | runEach(
       components: methods,
-
+      
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
       filter: { id, state, comp ->
         def norm = state.dataset_uns.normalization_id
         def pref = comp.config.functionality.info.preferred_normalization
         // if the preferred normalisation is none at all,
         // we can pass whichever dataset we want
-        (norm == "log_cp10k" && pref == "counts") || norm == pref
+        def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
+        def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
+
+        method_check && norm_check
       },
 
       // define a new 'id' by appending the method name to the dataset id

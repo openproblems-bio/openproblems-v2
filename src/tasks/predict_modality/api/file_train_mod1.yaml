@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite_GEX2ADT/train_mod1.h5ad"
+example: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/train_mod1.h5ad"
 info:
   label: "Train mod1"
   summary: "The mod1 expression values of the train cells."
@@ -35,7 +35,7 @@ info:
       - type: string
         name: common_dataset_id
         description: "A common identifier for the dataset"
-        required: true
+        required: false
       - name: dataset_organism
         type: string
         description: The organism of the sample in the dataset.

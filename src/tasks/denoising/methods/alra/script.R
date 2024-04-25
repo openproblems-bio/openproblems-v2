@@ -1,29 +1,53 @@
-
 cat(">> Loading dependencies\n")
 library(anndata, warn.conflicts = FALSE)
-library(Matrix, warn.conflicts = FALSE)
 library(ALRA, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
   input_train = "resources_test/denoising/pancreas/train.h5ad",
-  # input_train = "resources_test/common/pancreas/dataset.h5ad",
+  norm = "log",
   output = "output.h5ad"
+)
+meta <- list(
+  functionality_name = "alra"
 )
 ## VIASH END
 
 cat(">> Load input data\n")
-adata <- read_h5ad(par$input_train)
+input_train <- read_h5ad(par$input_train, backed = "r")
 
-counts <- t(adata$layers[["counts"]])
+cat(">> Set normalization method\n")
+if (par$norm == "sqrt") {
+  norm_fn <- sqrt
+  denorm_fn <- function(x) x^2
+} else if (par$norm == "log") {
+  norm_fn <- log1p
+  denorm_fn <- expm1
+} else {
+  stop("Unknown normalization method: ", par$norm)
+}
+
+cat(">> Normalize data\n")
+data <- as.matrix(input_train$layers[["counts"]])
+totalPerCell <- rowSums(data)
+data <- sweep(data, 1, totalPerCell, "/")
+data <- norm_fn(data)
 
 cat(">> Run ALRA\n")
-# alra doesn't work with sparce matrices
-out <- alra(as.matrix(counts))
+data <- alra(data)$A_norm_rank_k_cor_sc
+data <- denorm_fn(data)
+data <- sweep(data, 1, totalPerCell, "*")
 
 cat(">> Store output\n")
-adata$layers[["denoised"]] <- as(t(out$A_norm_rank_k_cor_sc), "CsparseMatrix")
-adata$uns[["method_id"]] <- meta[["functionality_name"]]
+output <- AnnData(
+  layers = list(denoised = data),
+  obs = input_train$obs[, c(), drop = FALSE],
+  var = input_train$var[, c(), drop = FALSE],
+  uns = list(
+    dataset_id = input_train$uns[["dataset_id"]],
+    method_id = meta$functionality_name
+  )
+)
 
 cat(">> Write output to file\n")
-adata$write_h5ad(par$output, compression = "gzip")
+output$write_h5ad(par$output, compression = "gzip")

@@ -40,15 +40,15 @@ functionality:
       path: script.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.2
+    image: ghcr.io/openproblems-bio/base_r:1.0.4
     setup:
       - type: r
         github: theislab/kBET
       - type: python
         pypi:
-          - scib==1.1.4
+          - scib==1.1.5
           - rpy2>=3
           - anndata2ri
   - type: nextflow
     directives: 
-      label: [ "midtime", midmem, lowcpu ]
+      label: [midtime, midmem, lowcpu]

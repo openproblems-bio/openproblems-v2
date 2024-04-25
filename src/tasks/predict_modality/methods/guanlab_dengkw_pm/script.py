@@ -1,11 +1,10 @@
 import anndata as ad
-import logging
 import numpy as np
-from scipy.sparse import csr_matrix
+import gc
+from scipy.sparse import csc_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.kernel_ridge import KernelRidge
-logging.basicConfig(level=logging.INFO)
 
 ## VIASH START
 par = {
@@ -21,10 +20,14 @@ meta = {
 }
 ## VIASH END
 
+
+## Removed PCA and normalization steps, as they arr already performed with the input data
 print('Reading input files', flush=True)
 input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
+
+dataset_id = input_train_mod1.uns['dataset_id']
 
 pred_dimx = input_test_mod1.shape[0]
 pred_dimy = input_train_mod2.shape[1]
@@ -48,7 +51,7 @@ input_train = ad.concat(
     index_unique="-"
 )
 
-logging.info('Determine parameters by the modalities')
+print('Determine parameters by the modalities', flush=True)
 mod1_type = input_train_mod1.uns["modality"]
 mod1_type = mod1_type.upper()
 mod2_type = input_train_mod2.uns["modality"]
@@ -59,12 +62,12 @@ n_comp_dict = {
                 ("GEX", "ATAC"): (1000, 50, 10, 0.1),
                 ("ATAC", "GEX"): (100, 70, 10, 0.1)
               }
-logging.info(f"{mod1_type}, {mod2_type}")
+print(f"{mod1_type}, {mod2_type}", flush=True)
 n_mod1, n_mod2, scale, alpha = n_comp_dict[(mod1_type, mod2_type)]
-logging.info(f"{n_mod1}, {n_mod2}, {scale}, {alpha}")
+print(f"{n_mod1}, {n_mod2}, {scale}, {alpha}", flush=True)
 
 # Perform PCA on the input data
-logging.info('Models using the Truncated SVD to reduce the dimension')
+print('Models using the Truncated SVD to reduce the dimension', flush=True)
 
 if n_mod1 is not None and n_mod1 < input_train.shape[1]:
     embedder_mod1 = TruncatedSVD(n_components=n_mod1)
@@ -83,7 +86,7 @@ else:
 
 del input_train
 
-logging.info('Running normalization ...')
+print('Running normalization ...', flush=True)
 train_sd = np.std(train_matrix, axis=1).reshape(-1, 1)
 train_sd[train_sd == 0] = 1
 train_norm = (train_matrix - np.mean(train_matrix, axis=1).reshape(-1, 1)) / train_sd
@@ -96,7 +99,7 @@ test_norm = (test_matrix - np.mean(test_matrix, axis=1).reshape(-1, 1)) / test_s
 test_norm = test_norm.astype(np.float32)
 del test_matrix
 
-logging.info('Running KRR model ...')
+print('Running KRR model ...', flush=True)
 y_pred = np.zeros((pred_dimx, pred_dimy), dtype=np.float32)
 np.random.seed(1000)
 
@@ -107,10 +110,10 @@ for _ in range(5):
     if not batch:
       batch = [batches[0]]
 
-    logging.info(batch)
+    print(batch, flush=True)
     kernel = RBF(length_scale = scale)
     krr = KernelRidge(alpha=alpha, kernel=kernel)
-    logging.info('Fitting KRR ... ')
+    print('Fitting KRR ... ', flush=True)
     krr.fit(train_norm[feature_obs.batch.isin(batch)], train_gs[gs_obs.batch.isin(batch)])
     y_pred += (krr.predict(test_norm) @ embedder_mod2.components_)
 
@@ -123,7 +126,8 @@ y_pred /= 10
 # Store as sparse matrix to be efficient. 
 # Note that this might require different classifiers/embedders before-hand. 
 # Not every class is able to support such data structures.
-y_pred = csr_matrix(y_pred)
+## Changed from csr to csc matrix as this is more supported.
+y_pred = csc_matrix(y_pred)
 
 print("Write output AnnData to file", flush=True)
 output = ad.AnnData(
@@ -133,7 +137,7 @@ output = ad.AnnData(
   obs = obs,
   var = var,
   uns = {
-    'dataset_id': input_train_mod1.uns['dataset_id'],
+    'dataset_id': dataset_id,
     'method_id': meta['functionality_name']
   }
 )

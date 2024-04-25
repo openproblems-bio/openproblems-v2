@@ -58,7 +58,7 @@ jobs:
         tools_version: 'main_build'
 
     - name: Deploy to target branch
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: .
@@ -159,7 +159,7 @@ jobs:
 
     - uses: viash-io/viash-actions/setup@v5
 
-    - uses: nf-core/setup-nextflow@v1.5.2
+    - uses: nf-core/setup-nextflow@v2.0.0
 
     # build target dir
     # use containers from release branch, hopefully these are available
