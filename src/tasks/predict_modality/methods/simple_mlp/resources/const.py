@@ -1,2 +1,0 @@
-PATH = '.'
-OUT_PATH = '.'

@@ -71,7 +71,7 @@ def train(task,cp,wp,tr1,tr2,num_workers):
         run_name = f'fold_{fold}'
         logger = TensorBoardLogger(save_path, name='') 
         
-        enable_ckpt = False # set this to false to fix code
+        enable_ckpt = True
         
         score, yp = _train(X, y, Xt, yt, enable_ckpt, logger, yaml_path, num_workers=num_workers)
         yps.append(yp)
