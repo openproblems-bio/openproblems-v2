@@ -3161,7 +3161,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/cell2location",
     "viash_version" : "0.8.0",
-    "git_commit" : "e763de0a04c00655db32232afecbbc8bc46c0617",
+    "git_commit" : "b8337001d5f1da422e273d23e94b61161be9ddf0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
