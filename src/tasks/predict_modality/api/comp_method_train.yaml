@@ -22,8 +22,6 @@ functionality:
       direction: input
       required: false
     - name: "--output"
-      type: file
-      description: A trained model.
-      default: model.pt
+      __merge__: file_pretrained_model.yaml
       direction: output
       required: true

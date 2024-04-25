@@ -18,9 +18,7 @@ functionality:
       direction: input
       required: true
     - name: "--input_model"
-      type: file
-      description: A trained model.
-      example: model.pt
+      __merge__: file_pretrained_model.yaml
       direction: input
       required: true
     - name: "--output"
