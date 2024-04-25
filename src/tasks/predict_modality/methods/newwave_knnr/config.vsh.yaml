@@ -9,7 +9,7 @@ functionality:
     reference: agostinis2022newwave
     repository_url: https://github.com/fedeago/NewWave
     documentation_url: https://bioconductor.org/packages/release/bioc/html/NewWave.html
-    preferred_normalization: counts
+    preferred_normalization: log_cp10k
   arguments:
     - name: "--newwave_maxiter"
       type: "integer"
