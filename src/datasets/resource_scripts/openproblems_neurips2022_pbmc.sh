@@ -28,27 +28,30 @@ param_list:
 
 dataset_url: "https://www.kaggle.com/competitions/open-problems-multimodal/data"
 dataset_reference: lance2024predicting
-normalization_methods: [log_cp10k]
-do_subsample: true
-even: true
-n_obs: 600
-n_vars: 1500
+normalization_methods: [log_cp10k, sqrt_cp10k, l1_sqrt]
 output_mod1: '$id/dataset_mod1.h5ad'
 output_mod2: '$id/dataset_mod2.h5ad'
 output_meta_mod1: '$id/dataset_metadata_mod1.yaml'
 output_meta_mod2: '$id/dataset_metadata_mod2.yaml'
 output_state: '$id/state.yaml'
-# publish_dir: s3://openproblems-data/resources_test/common
+publish_dir: s3://openproblems-data/resources/datasets
 HERE
 
-nextflow run . \
-  -main-script target/nextflow/datasets/workflows/process_openproblems_neurips2022_pbmc/main.nf \
-  -profile docker \
-  -resume \
-  --publish_dir resources_test/common \
-  -params-file "$params_file" \
-  -c src/wf_utils/labels.config
+cat > /tmp/nextflow.config << HERE
+process {
+  withName:'.*publishStatesProc' {
+    memory = '16GB'
+    disk = '100GB'
+  }
+}
+HERE
 
-
-# run task process dataset components
-# src/tasks/predict_modality/resources_test_scripts/neurips2022_pbmc.sh
+tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+  --revision main_build \
+  --pull-latest \
+  --main-script target/nextflow/datasets/workflows/process_openproblems_neurips2022_pbmc/main.nf \
+  --workspace 53907369739130 \
+  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+  --params-file "$params_file" \
+  --config /tmp/nextflow.config \
+  --labels openproblems_neurips2022_pbmc,dataset_loader \
