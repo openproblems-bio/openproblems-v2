@@ -55,9 +55,9 @@ ad1_uns$dataset_name <- ad2_uns$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
-ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_ids")), drop = FALSE]
+# determine new var
+ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
+ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features
