@@ -1,6 +1,7 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: random_forest
+  status: disabled # disabled due to long execution times
   info:
     label: Random Forests
     summary: Random forest regression.
