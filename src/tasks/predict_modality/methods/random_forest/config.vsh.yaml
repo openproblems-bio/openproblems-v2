@@ -1,6 +1,7 @@
 __merge__: ../../api/comp_method.yaml
 functionality:
   name: random_forest
+  status: disabled # disabled due to long execution times
   info:
     label: Random Forests
     summary: Random forest regression.
@@ -8,7 +9,7 @@ functionality:
     reference: breiman2001random
     documentation_url: https://www.stat.berkeley.edu/~breiman/RandomForests/reg_home.htm
     repository_url: https://github.com/cran/randomForest
-    preferred_normalization: counts
+    preferred_normalization: log_cp10k
   arguments:
     - name: "--distance_method"
       type: "string"
@@ -27,10 +28,10 @@ functionality:
       path: script.R
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_r:1.0.2
+    image: ghcr.io/openproblems-bio/base_r:1.0.4
     setup:
       - type: r
         cran: [ lmds, ranger, pbapply]
   - type: nextflow
     directives:
-      label: [ "midtime", highmem, highcpu ]
+      label: [hightime, highmem, highcpu]
