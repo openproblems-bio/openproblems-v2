@@ -3014,15 +3014,57 @@ meta = [
                 ],
                 "uns" : [
                   {
-                    "type" : "string",
                     "name" : "cell_type_names",
+                    "type" : "string",
                     "description" : "Cell type names corresponding to columns of `proportions`",
                     "required" : true
                   },
                   {
-                    "type" : "string",
                     "name" : "dataset_id",
+                    "type" : "string",
                     "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
                     "required" : true
                   }
                 ]
@@ -3086,7 +3128,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3108,7 +3150,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/dataset_simulator/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/dataset_simulator"
@@ -3130,7 +3172,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/process_dataset"
@@ -3176,7 +3218,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+    "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

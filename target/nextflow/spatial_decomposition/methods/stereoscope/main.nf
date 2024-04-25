@@ -3013,7 +3013,7 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "midtime",
+          "hightime",
           "midmem",
           "midcpu",
           "gpu"
@@ -3051,7 +3051,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/stereoscope",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+    "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3113,7 +3113,7 @@ sc_model = RNAStereoscope(input_single_cell)
 sc_model.train(
   max_epochs=par["max_epochs_sc"],
   # early_stopping=True,
-  # early_stopping_monitor="elbo_train"
+  # early_stopping_monitor="elbo_validation"
 )
 
 SpatialStereoscope.setup_anndata(input_spatial)
@@ -3121,7 +3121,7 @@ st_model = SpatialStereoscope.from_rna_model(input_spatial, sc_model)
 st_model.train(
   max_epochs=par["max_epochs_sp"],
   # early_stopping=True,
-  # early_stopping_monitor="elbo_train"
+  # early_stopping_monitor="elbo_validation"
 )
 input_spatial.obsm["proportions_pred"] = st_model.get_proportions().to_numpy()
 
@@ -3495,7 +3495,7 @@ meta["defaults"] = [
     "tag" : "main_build"
   },
   "label" : [
-    "midtime",
+    "hightime",
     "midmem",
     "midcpu",
     "gpu"

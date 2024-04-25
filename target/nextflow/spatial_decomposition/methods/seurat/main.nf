@@ -3014,7 +3014,7 @@ meta = [
       "directives" : {
         "label" : [
           "midtime",
-          "midmem",
+          "highmem",
           "midcpu"
         ],
         "tag" : "$id"
@@ -3050,7 +3050,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/seurat",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+    "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3126,7 +3126,8 @@ seurat_sp <- SCTransform(
   seurat_sp,
   assay = "spatial",
   ncells = min(par\\$sctransform_n_cells, nrow(seurat_sp)),
-  verbose = TRUE
+  verbose = TRUE,
+  conserve.memory = TRUE
 )
 
 seurat_sp <- RunPCA(seurat_sp, assay = "SCT", verbose = FALSE, n_pcs = par\\$n_pcs)
@@ -3136,7 +3137,8 @@ seurat_sc <- SCTransform(
   seurat_sc,
   assay = "RNA",
   ncells = min(par\\$sctransform_n_cells, nrow(seurat_sc)),
-  verbose = TRUE
+  verbose = TRUE,
+  conserve.memory = TRUE
 )
 
 seurat_sc <- RunPCA(seurat_sc, verbose = FALSE, n_pcs = par\\$n_pcs)
@@ -3539,7 +3541,7 @@ meta["defaults"] = [
   },
   "label" : [
     "midtime",
-    "midmem",
+    "highmem",
     "midcpu"
   ],
   "tag" : "$id"

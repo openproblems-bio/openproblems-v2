@@ -2874,15 +2874,57 @@ meta = [
                 ],
                 "uns" : [
                   {
-                    "type" : "string",
                     "name" : "cell_type_names",
+                    "type" : "string",
                     "description" : "Cell type names corresponding to columns of `proportions`",
                     "required" : true
                   },
                   {
-                    "type" : "string",
                     "name" : "dataset_id",
+                    "type" : "string",
                     "description" : "A unique identifier for the dataset",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_name",
+                    "type" : "string",
+                    "description" : "Nicely formatted name.",
+                    "required" : true
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "dataset_url",
+                    "description" : "Link to the original source of the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_reference",
+                    "type" : "string",
+                    "description" : "Bibtex reference of the paper in which the dataset was published.",
+                    "required" : false
+                  },
+                  {
+                    "name" : "dataset_summary",
+                    "type" : "string",
+                    "description" : "Short description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_description",
+                    "type" : "string",
+                    "description" : "Long description of the dataset.",
+                    "required" : true
+                  },
+                  {
+                    "name" : "dataset_organism",
+                    "type" : "string",
+                    "description" : "The organism of the sample in the dataset.",
+                    "required" : false
+                  },
+                  {
+                    "type" : "string",
+                    "name" : "normalization_id",
+                    "description" : "Which normalization was used",
                     "required" : true
                   }
                 ]
@@ -3011,7 +3053,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3033,7 +3075,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3055,7 +3097,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/control_methods/random_proportions/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/control_methods/random_proportions"
@@ -3077,7 +3119,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/control_methods/true_proportions/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/control_methods/true_proportions"
@@ -3099,7 +3141,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/cell2location/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/cell2location"
@@ -3121,7 +3163,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/destvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/destvi"
@@ -3143,7 +3185,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/nmfreg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/nmfreg"
@@ -3165,7 +3207,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/rctd/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/rctd"
@@ -3187,7 +3229,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/seurat/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/seurat"
@@ -3209,7 +3251,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/stereoscope/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/stereoscope"
@@ -3231,7 +3273,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/tangram/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/tangram"
@@ -3253,7 +3295,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/methods/vanillanmf/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/vanillanmf"
@@ -3275,7 +3317,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+          "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
           "executable" : "/nextflow/spatial_decomposition/metrics/r2/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/metrics/r2"
@@ -3321,7 +3363,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "4b059e43143960fc68621d268b1a535263697e87",
+    "git_commit" : "b5f5582eed3e5b0bcf84d35087e30e6e24b284da",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3406,6 +3448,18 @@ workflow run_wf {
     | runEach(
       components: methods,
 
+      // use the 'filter' argument to only run a method on the normalisation the component is asking for
+      filter: { id, state, comp ->
+        def norm = state.dataset_uns.normalization_id
+        def pref = comp.config.functionality.info.preferred_normalization
+        // if the preferred normalisation is none at all,
+        // we can pass whichever dataset we want
+        def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
+        def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
+
+        method_check && norm_check
+      },
+      
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
         id + "." + comp.config.functionality.name
