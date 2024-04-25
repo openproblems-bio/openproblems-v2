@@ -331,7 +331,7 @@ functionality:
     reference: "fix1989discriminatory"
     documentation_url: "https://cran.r-project.org/package=FNN"
     repository_url: "https://github.com/cran/FNN"
-    preferred_normalization: "counts"
+    preferred_normalization: "log_cp10k"
     type: "method"
     type_info:
       label: "Method"
@@ -394,5 +394,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/knnr_r"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/knnr_r/knnr_r"
   viash_version: "0.8.0"
-  git_commit: "5129ed619f3aa53b177052465dffe4318639705d"
+  git_commit: "d7e29d729114904b3a1ff837572a5cf6677b0956"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

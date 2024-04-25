@@ -440,9 +440,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-04-25T15:10:02Z"
+LABEL org.opencontainers.image.created="2024-04-25T20:43:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="5129ed619f3aa53b177052465dffe4318639705d"
+LABEL org.opencontainers.image.revision="d7e29d729114904b3a1ff837572a5cf6677b0956"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1109,13 +1109,13 @@ ad1_uns\$dataset_name <- ad2_uns\$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
-ad1_var <- ad1\$var[, intersect(colnames(ad1\$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2\$var[, intersect(colnames(ad2\$var), c("gene_ids")), drop = FALSE]
+# determine new var
+ad1_var <- ad1\$var[, intersect(colnames(ad1\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
+ad2_var <- ad2\$var[, intersect(colnames(ad2\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features
-  ad1\$layers[["normalized"]]@x <- (ad1\$layers[["normalized"]]@x > 0) + 0
+  # ad1\$layers[["normalized"]]@x <- (ad1\$layers[["normalized"]]@x > 0) + 0
 
   # copy gene activity in new object
   ad1_uns\$gene_activity_var_names <- ad1\$uns\$gene_activity_var_names

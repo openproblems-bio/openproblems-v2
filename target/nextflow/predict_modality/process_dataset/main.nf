@@ -3621,7 +3621,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "5129ed619f3aa53b177052465dffe4318639705d",
+    "git_commit" : "d7e29d729114904b3a1ff837572a5cf6677b0956",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3711,13 +3711,13 @@ ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
-ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids")), drop = FALSE]
+# determine new var
+ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
+ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
 if (ad1_mod == "ATAC") {
   # binarize features
-  ad1\\$layers[["normalized"]]@x <- (ad1\\$layers[["normalized"]]@x > 0) + 0
+  # ad1\\$layers[["normalized"]]@x <- (ad1\\$layers[["normalized"]]@x > 0) + 0
 
   # copy gene activity in new object
   ad1_uns\\$gene_activity_var_names <- ad1\\$uns\\$gene_activity_var_names

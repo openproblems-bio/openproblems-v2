@@ -209,7 +209,7 @@ function ViashHelp {
   echo ""
   echo "    --keep_cell_type_categories"
   echo "        type: string, multiple values allowed"
-  echo "        Categories indexes to be selected"
+  echo "        Cell type indexes to be selected"
   echo ""
   echo "    --keep_batch_categories"
   echo "        type: string, multiple values allowed"
@@ -447,9 +447,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/processors subsample"
-LABEL org.opencontainers.image.created="2024-04-25T15:10:04Z"
+LABEL org.opencontainers.image.created="2024-04-25T20:43:58Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="5129ed619f3aa53b177052465dffe4318639705d"
+LABEL org.opencontainers.image.revision="d7e29d729114904b3a1ff837572a5cf6677b0956"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
