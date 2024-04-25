@@ -1,0 +1,26 @@
+__merge__: ../../../api/comp_method_train.yaml
+functionality:
+  name: novel
+  info:
+    label: Novel
+    summary: A training method using encoder-decoder MLP model
+    description: This method trains an encoder-decoder MLP model with one output neuron per component in the target. As an input, the encoders use representations obtained from ATAC and GEX data via LSI transform and raw ADT data. The hyperparameters of the models were found via broad hyperparameter search using the Optuna framework.
+    documentation_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel#readme
+    repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
+    reference: pmlr-v176-lance22a
+  arguments:
+    - name: --output_transform
+      type: file
+      description: The output transform file
+      required: false
+      default: lsi_transformer.pickle
+      direction: output
+  resources:
+    - path: main.nf
+      type: nextflow_script
+      entrypoint: run_wf
+  dependencies:
+    - name: predict_modality/methods/novel_train
+    - name: predict_modality/methods/novel_predict
+platforms:
+  - type: nextflow
