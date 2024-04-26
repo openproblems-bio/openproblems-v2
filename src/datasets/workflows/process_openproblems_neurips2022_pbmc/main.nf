@@ -41,15 +41,11 @@ workflow run_wf {
       [id, state + [_meta: [join_id: id]]]
     }
 
-    | decompress_gzip.run(
-      fromState: ["input": "input"],
-      toState: ["input_decompressed": "output"]
-    )
-
     // process neurips downloaded dataset
-    | openproblems_neurips2021_bmmc.run(
+    | openproblems_neurips2022_pbmc.run(
       fromState: [
-        "input": "input_decompressed",
+        "input_mod1": "input_mod1",
+        "input_mod2": "input_mod2",
         "mod1": "mod1",
         "mod2": "mod2",
         "dataset_id": "id",
