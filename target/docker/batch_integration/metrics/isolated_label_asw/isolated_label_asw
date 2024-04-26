@@ -411,9 +411,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scib==1.1.5"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/metrics isolated_label_asw"
-LABEL org.opencontainers.image.created="2024-04-26T01:51:30Z"
+LABEL org.opencontainers.image.created="2024-04-26T08:34:37Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f0ef558f16a94526f16ce888f246d3a3d3986e9d"
+LABEL org.opencontainers.image.revision="f8c18d7070399a1986ddbc3715d291f4ac33f10e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -3053,7 +3053,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3075,7 +3075,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3097,7 +3097,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/control_methods/random_proportions/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/control_methods/random_proportions"
@@ -3119,7 +3119,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/control_methods/true_proportions/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/control_methods/true_proportions"
@@ -3141,7 +3141,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/cell2location/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/cell2location"
@@ -3163,7 +3163,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/destvi/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/destvi"
@@ -3185,7 +3185,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/nmfreg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/nmfreg"
@@ -3207,7 +3207,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/rctd/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/rctd"
@@ -3229,7 +3229,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/seurat/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/seurat"
@@ -3251,7 +3251,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/stereoscope/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/stereoscope"
@@ -3273,7 +3273,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/tangram/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/tangram"
@@ -3295,7 +3295,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/methods/vanillanmf/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/vanillanmf"
@@ -3317,7 +3317,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+          "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
           "executable" : "/nextflow/spatial_decomposition/metrics/r2/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/metrics/r2"
@@ -3363,7 +3363,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
+    "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
