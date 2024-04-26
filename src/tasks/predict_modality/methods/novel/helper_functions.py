@@ -201,6 +201,9 @@ class ModelRegressionGex2Adt(nn.Module):
         x = F.gelu(self.output(x))
         return x
 
+def rmse(y, y_pred):
+    return np.sqrt(np.mean(np.square(y - y_pred)))
+
 def train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test, name_model, device):
     best_score = 100000
     for i in range(100):
@@ -242,5 +245,3 @@ def train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test
             best_score = rmse(cat_targets,cat_outputs)
     print("best rmse: ", best_score)
     
-def rmse(y, y_pred):
-    return np.sqrt(np.mean(np.square(y - y_pred)))
