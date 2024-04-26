@@ -1,17 +1,24 @@
 import os
 import logging
 import anndata as ad
+import torch
+import pytorch_lightning as pl
+from torch.utils.data import TensorDataset, DataLoader
+from pytorch_lightning.callbacks import ModelCheckpoint
+from pytorch_lightning.loggers import TensorBoardLogger,WandbLogger
+from pathlib import Path
+import numpy as np
 
 logging.basicConfig(level=logging.INFO)
 
 ## VIASH START
 par = {
-    # 'input_train_mod1': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod1.h5ad',
-    # 'input_train_mod2': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod2.h5ad',
-    # 'input_test_mod1': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/test_mod1.h5ad',
-    'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/swap/train_mod1.h5ad',
-    'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/swap/train_mod2.h5ad',
-    'input_test_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/swap/test_mod1.h5ad',
+    'input_train_mod1': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod1.h5ad',
+    'input_train_mod2': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod2.h5ad',
+    'input_test_mod1': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/test_mod1.h5ad',
+    # 'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/swap/train_mod1.h5ad',
+    # 'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/swap/train_mod2.h5ad',
+    # 'input_test_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/swap/test_mod1.h5ad',
     'output': 'output/model'
 }
 meta = {
@@ -24,7 +31,57 @@ resources_dir = f"{meta['resources_dir']}/resources"
 
 import sys
 sys.path.append(resources_dir)
-from train import train
+from models import MLP
+import utils
+
+
+def _train(X, y, Xt, yt, enable_ckpt, logger, yaml_path, num_workers):
+    config = utils.load_yaml(yaml_path)
+    X = torch.from_numpy(X).float()
+    y = torch.from_numpy(y).float()
+    ymean = torch.mean(y,dim=0,keepdim=True)
+    
+    tr_ds = TensorDataset(X,y)
+    tr_loader = DataLoader(tr_ds, batch_size=config.batch_size,num_workers=num_workers,
+                        shuffle=True, drop_last=True)
+    
+    Xt = torch.from_numpy(Xt).float()
+    yt = torch.from_numpy(yt).float()
+    te_ds = TensorDataset(Xt,yt)
+    te_loader = DataLoader(te_ds, batch_size=config.batch_size,num_workers=num_workers,
+                        shuffle=False, drop_last=False)
+    
+    checkpoint_callback = ModelCheckpoint(monitor='valid_RMSE')
+    if enable_ckpt:
+        epochs = config.epochs
+        cb = [checkpoint_callback]
+    else:
+        epochs = 1
+        cb = None
+    
+    trainer = pl.Trainer(
+        devices=1,
+        enable_checkpointing=enable_ckpt,
+        logger=logger, 
+        #gpus=1, 
+        max_epochs=epochs, 
+        callbacks=cb,
+        # progress_bar_refresh_rate=5
+    )
+    
+    net = MLP(X.shape[1],y.shape[1],ymean,config)
+    trainer.fit(net, tr_loader, te_loader)
+    
+    cp = 'best' if enable_ckpt else None
+    yp = trainer.predict(net,te_loader,ckpt_path=cp)
+    yp = torch.cat(yp,dim=0)
+    
+    score = ((yp-yt)**2).mean()**0.5
+    print(f"VALID RMSE {score:.3f}")
+    del trainer
+    return score,yp.detach().numpy()
+
+
 
 input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
@@ -40,12 +97,35 @@ os.makedirs(par['output'], exist_ok=True)
 if not os.path.exists(yaml_path):
     logging.warning(f"No configuration file found for task '{task}'. Skipping training.")
     sys.exit(0)
+else:
+    yaml_path = f'{resources_dir}/yaml/mlp_{task}.yaml'
+    yps = []
+    scores = []
 
-train(
-    task=task,
-    cp=resources_dir,
-    wp=par['output'],
-    tr1=input_train_mod1,
-    tr2=input_train_mod2,
-    num_workers=meta["cpus"]
-)
+    msgs = {}
+    for fold in range(3):
+
+        run_name = f"{task}_fold_{fold}"
+        save_path = f"{par['output']}/{run_name}"
+        enable_ckpt = True
+        num_workers = meta["cpus"]
+
+        Path(save_path).mkdir(parents=True, exist_ok=True)   
+
+        X,y,Xt,yt = utils.split(input_train_mod1, input_train_mod2, fold)
+        
+        logger = TensorBoardLogger(save_path, name='') 
+        
+        
+        score, yp = _train(X, y, Xt, yt, enable_ckpt, logger, yaml_path, num_workers)
+        yps.append(yp)
+        scores.append(score)
+        msg = f"{task} Fold {fold} RMSE {score:.3f}"
+        msgs[f'Fold {fold}'] = f'{score:.3f}'
+        print(msg)
+
+    yp = np.concatenate(yps)
+    score = np.mean(scores)
+    msgs['Overall'] = f'{score:.3f}'
+    print('Overall', f'{score:.3f}')
+
