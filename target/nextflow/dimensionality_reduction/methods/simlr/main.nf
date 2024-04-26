@@ -3042,7 +3042,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/dimensionality_reduction/methods/simlr",
     "viash_version" : "0.8.0",
-    "git_commit" : "84f03e11d5618377bf6bfbdae9abd802496b1855",
+    "git_commit" : "22ceaf05cecb3f9fdbceb63fec6b2fceba30a516",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

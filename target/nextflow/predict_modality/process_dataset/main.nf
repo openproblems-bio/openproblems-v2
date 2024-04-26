@@ -3621,7 +3621,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "84f03e11d5618377bf6bfbdae9abd802496b1855",
+    "git_commit" : "22ceaf05cecb3f9fdbceb63fec6b2fceba30a516",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3696,7 +3696,7 @@ determine_modality <- function(ad, mod1 = TRUE) {
   } else if ("feature_types" %in% colnames(ad\\$var)) {
     unique(ad\\$var[["feature_types"]])
   } else if (mod1) {
-    "RNA"
+    "GEX"
   } else if (grepl("cite", ad\\$uns[["dataset_id"]])) {
     "ADT"
   } else if (grepl("multiome", ad\\$uns[["dataset_id"]])) {
