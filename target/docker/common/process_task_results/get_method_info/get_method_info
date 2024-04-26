@@ -414,9 +414,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_method_info"
-LABEL org.opencontainers.image.created="2024-04-25T21:30:56Z"
+LABEL org.opencontainers.image.created="2024-04-26T01:51:33Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1913ae1526417c6a9c486725d32569f9d8f6b819"
+LABEL org.opencontainers.image.revision="f0ef558f16a94526f16ce888f246d3a3d3986e9d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

@@ -2937,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "1913ae1526417c6a9c486725d32569f9d8f6b819",
+    "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3110,7 +3110,8 @@ scores <- raw_scores %>%
   )
 
 # read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\\\\\\\((.*)(/[^\\\\\\\\.]*)?(.[^\\\\\\\\.]*)?\\\\\\\\.(.*)\\\\\\\\)\\$"
+norm_methods <- "/log_cp10k|/log_cpm|/sqrt_cp10k|/sqrt_cpm|/l1_sqrt|/log_scran_pooling"
+id_regex <- paste0("^.*:(.*)_process \\\\\\\\(([^\\\\\\\\.]*)(", norm_methods, ")?(.[^\\\\\\\\.]*)?\\\\\\\\.(.*)\\\\\\\\)\\$")
 
 trace <- readr::read_tsv(par\\$input_execution) %>%
   mutate(

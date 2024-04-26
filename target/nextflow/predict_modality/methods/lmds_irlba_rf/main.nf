@@ -3288,7 +3288,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lmds_irlba_rf",
     "viash_version" : "0.8.0",
-    "git_commit" : "1913ae1526417c6a9c486725d32569f9d8f6b819",
+    "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3411,7 +3411,7 @@ rownames(prediction) <- rownames(dr_test)
 colnames(prediction) <- colnames(X_mod2)
 
 out <- anndata::AnnData(
-  layers = list(normalized = as.matrix(prediction)),
+  layers = list(normalized = as(prediction, "CsparseMatrix")),
   shape = dim(prediction),
   uns = list(
     dataset_id = dataset_id,

@@ -3425,7 +3425,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_neurips2022_pbmc",
     "viash_version" : "0.8.0",
-    "git_commit" : "1913ae1526417c6a9c486725d32569f9d8f6b819",
+    "git_commit" : "f0ef558f16a94526f16ce888f246d3a3d3986e9d",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3515,10 +3515,13 @@ if "is_train" not in adata_mod2.obs.columns:
 
 # split up index in modality 1 into feature ID and feature name
 adata_mod1.var['feature_id'] = [str(s).split('_')[0] for s in adata_mod1.var.index.tolist()]
-adata_mod1.var['feature_name'] = [str(s).split('_')[1] for s in adata_mod1.var.index.tolist()]
+# TODO: index does not always contain an underscore.
+if "_" in adata_mod1.var.index[0]:
+  adata_mod1.var['feature_name'] = [str(s).split('_')[1] for s in adata_mod1.var.index.tolist()]
 adata_mod1.var.set_index('feature_id',drop=False, inplace=True)
 
-# set feature_name (proteins have only partial ensmble IDs))
+# set feature_name (proteins have only partial ensemble IDs))
+adata_mod2.var['feature_id'] = adata_mod2.var.index.tolist() # feature id needs to be filled in
 adata_mod2.var['feature_name'] = adata_mod2.var.index.tolist()
 adata_mod2.var.set_index('feature_name',drop=False, inplace=True)
 
