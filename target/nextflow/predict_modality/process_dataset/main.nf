@@ -3584,9 +3584,9 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "midtime",
-          "midmem",
-          "lowcpu"
+          "hightime",
+          "highmem",
+          "highcpu"
         ],
         "tag" : "$id"
       },
@@ -3621,7 +3621,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "f8c18d7070399a1986ddbc3715d291f4ac33f10e",
+    "git_commit" : "84f03e11d5618377bf6bfbdae9abd802496b1855",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3731,10 +3731,7 @@ ad1_obsm <- ad2_obsm <- list()
 ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
-if (ad1_mod == "ATAC") {
-  # binarize features
-  # ad1\\$layers[["normalized"]]@x <- (ad1\\$layers[["normalized"]]@x > 0) + 0
-
+if (ad1_mod == "ATAC" && "gene_activity" %in% names(ad1\\$obsm)) {
   # copy gene activity in new object
   ad1_uns\\$gene_activity_var_names <- ad1\\$uns\\$gene_activity_var_names
   ad1_obsm\\$gene_activity <- as(ad1\\$obsm\\$gene_activity, "CsparseMatrix")
@@ -3749,12 +3746,11 @@ if (ad2_mod == "ATAC") {
     ad2_var <- ad2_var[sel_ix, , drop = FALSE]
   }
 
-  # binarize features
-  ad2\\$layers[["normalized"]]@x <- (ad2\\$layers[["normalized"]]@x > 0) + 0
-
-  # copy gene activity in new object
-  ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
-  ad2_obsm\\$gene_activity <- as(ad2\\$obsm\\$gene_activity, "CsparseMatrix")
+  if ("gene_activity" %in% names(ad2\\$obsm)) {
+    # copy gene activity in new object
+    ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
+    ad2_obsm\\$gene_activity <- as(ad2\\$obsm\\$gene_activity, "CsparseMatrix")
+  }
 }
 
 cat("Creating train/test split\\\\n")
@@ -4168,9 +4164,9 @@ meta["defaults"] = [
     "tag" : "main_build"
   },
   "label" : [
-    "midtime",
-    "midmem",
-    "lowcpu"
+    "hightime",
+    "highmem",
+    "highcpu"
   ],
   "tag" : "$id"
 }'''),
