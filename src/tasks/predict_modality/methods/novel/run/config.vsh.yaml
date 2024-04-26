@@ -25,6 +25,7 @@ functionality:
       type: file
       direction: output
       required: true
+      default: prediction.h5ad
   resources:
     - path: main.nf
       type: nextflow_script
