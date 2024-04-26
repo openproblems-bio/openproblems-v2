@@ -11,13 +11,16 @@ workflow run_wf {
           ] 
         }
     )
+    | view{ id, state -> state}
     | novel_predict.run(
-      fromState: ["input_train_mod2", "input_test_mod1", "input_model", "input_transform"],
+      fromState: ["input_train_mod2", "input_test_mod1", "input_model", "input_transform", "output"],
       toState: ["output": "output"]
     )
+    | view{ id, state -> state}
     | setState ([
-      "output"
+      "output": state.output
     ])
+
 
   emit: output_ch
 }

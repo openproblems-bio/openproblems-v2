@@ -27,3 +27,4 @@ functionality:
       __merge__: file_prediction.yaml
       direction: output
       required: true
+      default: "prediction.h5ad"
