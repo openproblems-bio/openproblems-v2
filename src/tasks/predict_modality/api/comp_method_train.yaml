@@ -2,7 +2,6 @@ functionality:
   namespace: "predict_modality/methods"
   info:
     type: method_train
-    preferred_normalization: counts
     type_info:
       label: Train
       summary: Train a model to predict the expression of one modality from another.
@@ -22,15 +21,6 @@ functionality:
       direction: input
       required: false
     - name: "--output"
-      type: file
-      description: A trained model.
-      default: model.pt
+      __merge__: file_pretrained_model.yaml
       direction: output
       required: true
-  # test_resources:
-  #   - type: python_script
-  #     path: /src/common/comp_tests/check_method_config.py
-  #   - type: python_script
-  #     path: /src/common/comp_tests/run_and_check_adata.py
-  #   - path: /resources_test/common/openproblems_neurips2021/bmmc_cite
-  #     dest: resources_test/common/openproblems_neurips2021/bmmc_cite

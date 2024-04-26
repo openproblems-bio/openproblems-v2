@@ -9,10 +9,14 @@ library(purrr, warn.conflicts = FALSE)
 library(rlang, warn.conflicts = FALSE)
 
 ## VIASH START
+dir <- "work/c1/6660ea0cc6155d7e13fa341d16057b/_viash_par"
 par <- list(
-  input_scores = "work/0b/80ef7640d545eecbb7f5656bf3981b/_viash_par/input_scores_1/score_uns.yaml",
-  input_execution = "work/0b/80ef7640d545eecbb7f5656bf3981b/_viash_par/input_execution_1/trace.txt",
-  input_metric_info = "work/0b/80ef7640d545eecbb7f5656bf3981b/_viash_par/input_metric_info_1/output.json",
+  task_id = "task_1",
+  input_scores = paste0(dir, "/input_scores_1/score_uns.yaml"),
+  input_execution = paste0(dir, "/input_execution_1/trace.txt"),
+  input_dataset_info = paste0(dir, "/input_dataset_info_1/output.json"),
+  input_method_info = paste0(dir, "/input_method_info_1/output.json"),
+  input_metric_info = paste0(dir, "/input_metric_info_1/output.json"),
   output_results = "output/results.json",
   output_metric_execution_info = "output/metric_execution_info.json"
 )
@@ -126,14 +130,15 @@ scores <- raw_scores %>%
   )
 
 # read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\((.*)/([^\\.]*)(.[^\\.]*)?\\.(.*)\\)$"
+norm_methods <- "/log_cp10k|/log_cpm|/sqrt_cp10k|/sqrt_cpm|/l1_sqrt|/log_scran_pooling"
+id_regex <- paste0("^.*:(.*)_process \\(([^\\.]*)(", norm_methods, ")?(.[^\\.]*)?\\.(.*)\\)$")
 
 trace <- readr::read_tsv(par$input_execution) %>%
   mutate(
     id = name,
     process_id = stringr::str_extract(id, id_regex, 1L),
     dataset_id = stringr::str_extract(id, id_regex, 2L),
-    normalization_id = stringr::str_extract(id, id_regex, 3L),
+    normalization_id = gsub("^/", "", stringr::str_extract(id, id_regex, 3L)),
     grp4 = gsub("^\\.", "", stringr::str_extract(id, id_regex, 4L)),
     grp5 = stringr::str_extract(id, id_regex, 5L),
     submit = strptime(submit, "%Y-%m-%d %H:%M:%S"),
