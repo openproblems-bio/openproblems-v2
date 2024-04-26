@@ -7,6 +7,7 @@ functionality:
     documentation_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel#readme
     repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
     reference: pmlr-v176-lance22a
+    submission_id: "169769"
   arguments:
     - name: "--input_train_mod1"
       type: file
