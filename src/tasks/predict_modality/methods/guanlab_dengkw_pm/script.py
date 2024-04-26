@@ -115,7 +115,7 @@ for batch in batch_subsets:
     y_pred += (krr.predict(test_norm) @ embedder_mod2.components_)
 
 np.clip(y_pred, a_min=0, a_max=None, out=y_pred)
-y_pred /= batch_len
+y_pred /= len(batch_subsets)
 
 # Store as sparse matrix to be efficient. 
 # Note that this might require different classifiers/embedders before-hand. 
