@@ -1,6 +1,5 @@
 import scanpy as sc
 import numpy as np
-import yaml
 
 ## VIASH START
 
@@ -17,22 +16,24 @@ meta = {
 ## VIASH END
 
 print('Read input', flush=True)
-input = sc.read_h5ad(par['input'])
+adata = sc.read_h5ad(par['input'])
+adata.X = adata.layers["normalized"]
+adata.var["highly_variable"] = adata.var["hvg"]
 
-print("process dataset", flush=True)
-input.obsm["X_emb"] = np.zeros((input.shape[0], 50), dtype=float)
-for batch in input.obs["batch"].unique():
-    batch_idx = input.obs["batch"] == batch
+print("Process dataset", flush=True)
+adata.obsm["X_emb"] = np.zeros((adata.shape[0], 50), dtype=float)
+for batch in adata.obs["batch"].unique():
+    batch_idx = adata.obs["batch"] == batch
     n_comps = min(50, np.sum(batch_idx))
     solver = "full" if n_comps == np.sum(batch_idx) else "arpack"
-    # input.obsm["X_emb"][batch_idx, :n_comps] = sc.tl.pca(
-    #     input[batch_idx],
-    #     n_comps=n_comps,
-    #     use_highly_variable=False,
-    #     svd_solver=solver,
-    #     copy=True,
-    # ).obsm["X_pca"]
+    adata.obsm["X_emb"][batch_idx, :n_comps] = sc.tl.pca(
+        adata[batch_idx],
+        n_comps=n_comps,
+        use_highly_variable=True,
+        svd_solver=solver,
+        copy=True,
+    ).obsm["X_pca"]
 
 print("Store outputs", flush=True)
-input.uns['method_id'] = meta['functionality_name']
-input.write_h5ad(par['output'], compression='gzip')
+adata.uns['method_id'] = meta['functionality_name']
+adata.write_h5ad(par['output'], compression='gzip')
