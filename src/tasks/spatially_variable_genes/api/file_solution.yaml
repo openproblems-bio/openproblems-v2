@@ -2,17 +2,19 @@ type: file
 example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.csv"
 info:
   label: Solution
-  summary: "CSV file with estimated spatial variability score for each gene."
+  summary: "CSV file with true spatial variability."
+  description: "CSV file with true spatial variability score for each gene."
   slots:
     - type: string
       name: feature_name
-      description: feature name
+      description: Feature name
       required: true
     - type: string
       name: gene_name
-      description: gene names
+      description: Gene names
       required: true
     - type: double
-      name: spatial_var_score
-      description: estimated spatial variability
+      name: true_spatial_var_score
+      description: True spatial variability score
       required: true
+      
