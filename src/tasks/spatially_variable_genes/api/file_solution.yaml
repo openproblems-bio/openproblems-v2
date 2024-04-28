@@ -1,0 +1,15 @@
+type: file
+example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.csv"
+info:
+  label: Solution
+  summary: "The CSV file containing estimated spatial variability for each gene, with true cell-type proportions for each spot / capture location."
+  slots:
+    # TODO, two columns, one for gene name
+    - type: string
+      name: gene_name
+      description: gene names
+      required: true
+    - type: double
+      name: spatial_var
+      description: estimated spatial variability
+      required: true
