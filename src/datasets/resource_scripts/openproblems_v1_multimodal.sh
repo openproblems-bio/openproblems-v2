@@ -55,8 +55,8 @@ param_list:
     mod2: ATAC
 
 normalization_methods: [log_cp10k, sqrt_cp10k, l1_sqrt]
-output_dataset_mod1: '$id/dataset_mod1.h5ad'
-output_dataset_mod2: '$id/dataset_mod2.h5ad'
+output_mod1: '$id/dataset_mod1.h5ad'
+output_mod2: '$id/dataset_mod2.h5ad'
 output_meta_mod1: '$id/dataset_metadata_mod1.yaml'
 output_meta_mod2: '$id/dataset_metadata_mod2.yaml'
 output_state: '$id/state.yaml'
@@ -79,7 +79,7 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --pull-latest \
   --main-script target/nextflow/datasets/workflows/process_openproblems_v1_multimodal/main.nf \
   --workspace 53907369739130 \
-  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
   --params-file "$params_file" \
   --labels openproblems_v1_multimodal,dataset_loader \
   --config /tmp/nextflow.config

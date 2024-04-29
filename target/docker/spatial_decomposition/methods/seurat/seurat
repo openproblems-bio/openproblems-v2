@@ -423,9 +423,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("Matrix", "Seurat"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/methods seurat"
-LABEL org.opencontainers.image.created="2024-04-25T14:06:58Z"
+LABEL org.opencontainers.image.created="2024-04-29T14:07:12Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
+LABEL org.opencontainers.image.revision="752309948027a2354d7b57cd7919c5957507e6a5"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -998,7 +998,8 @@ seurat_sp <- SCTransform(
   seurat_sp,
   assay = "spatial",
   ncells = min(par\$sctransform_n_cells, nrow(seurat_sp)),
-  verbose = TRUE
+  verbose = TRUE,
+  conserve.memory = TRUE
 )
 
 seurat_sp <- RunPCA(seurat_sp, assay = "SCT", verbose = FALSE, n_pcs = par\$n_pcs)
@@ -1008,7 +1009,8 @@ seurat_sc <- SCTransform(
   seurat_sc,
   assay = "RNA",
   ncells = min(par\$sctransform_n_cells, nrow(seurat_sc)),
-  verbose = TRUE
+  verbose = TRUE,
+  conserve.memory = TRUE
 )
 
 seurat_sc <- RunPCA(seurat_sc, verbose = FALSE, n_pcs = par\$n_pcs)

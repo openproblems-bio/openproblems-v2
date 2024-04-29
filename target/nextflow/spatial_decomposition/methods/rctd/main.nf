@@ -3016,7 +3016,7 @@ meta = [
       "directives" : {
         "label" : [
           "midtime",
-          "midmem",
+          "highmem",
           "midcpu"
         ],
         "tag" : "$id"
@@ -3052,7 +3052,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/rctd",
     "viash_version" : "0.8.0",
-    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+    "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3122,7 +3122,7 @@ celltype_counts <- table(input_single_cell\\$obs\\$cell_type)
 input_single_cell <- input_single_cell[input_single_cell\\$obs\\$cell_type %in% names(as.table(celltype_counts[celltype_counts > 25]))]
 
 # get single cell reference counts
-sc_counts <- t(as.matrix(input_single_cell\\$layers['counts']))
+sc_counts <- t(input_single_cell\\$layers['counts'])
 # get single cell reference labels
 sc_cell_types <- factor(input_single_cell\\$obs\\$cell_type)
 names(sc_cell_types) <- rownames(input_single_cell)
@@ -3130,7 +3130,7 @@ names(sc_cell_types) <- rownames(input_single_cell)
 reference <- Reference(sc_counts, sc_cell_types)
 
 # get spatial data counts
-sp_counts <- t(as.matrix(input_spatial\\$layers['counts']))
+sp_counts <- t(input_spatial\\$layers['counts'])
 # get spatial data coordinates
 sp_coords <- as.data.frame(input_spatial\\$obsm['coordinates'])
 colnames(sp_coords) <- c("x", "y")
@@ -3537,7 +3537,7 @@ meta["defaults"] = [
   },
   "label" : [
     "midtime",
-    "midmem",
+    "highmem",
     "midcpu"
   ],
   "tag" : "$id"

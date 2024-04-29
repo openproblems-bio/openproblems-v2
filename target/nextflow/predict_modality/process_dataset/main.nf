@@ -2780,6 +2780,30 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -2906,6 +2930,30 @@ meta = [
                 "type" : "string",
                 "name" : "feature_name",
                 "description" : "A human-readable name for the feature, usually a gene symbol.",
+                "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -3027,6 +3075,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3123,6 +3183,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3219,6 +3291,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3345,6 +3429,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3512,9 +3608,9 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "midtime",
-          "midmem",
-          "lowcpu"
+          "hightime",
+          "highmem",
+          "highcpu"
         ],
         "tag" : "$id"
       },
@@ -3549,7 +3645,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+    "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3616,9 +3712,25 @@ cat("Reading input data\\\\n")
 ad1 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_mod1 else par\\$input_mod2)
 ad2 <- anndata::read_h5ad(if (!par\\$swap) par\\$input_mod2 else par\\$input_mod1)
 
-# figure out modality types
-ad1_mod <- unique(ad1\\$var[["feature_types"]])
-ad2_mod <- unique(ad2\\$var[["feature_types"]])
+# use heuristic to determine modality
+# TODO: should be removed once modality is stored in the uns
+determine_modality <- function(ad, mod1 = TRUE) {
+  if ("modality" %in% names(ad\\$uns)) {
+    ad\\$uns[["modality"]]
+  } else if ("feature_types" %in% colnames(ad\\$var)) {
+    unique(ad\\$var[["feature_types"]])
+  } else if (mod1) {
+    "GEX"
+  } else if (grepl("cite", ad\\$uns[["dataset_id"]])) {
+    "ADT"
+  } else if (grepl("multiome", ad\\$uns[["dataset_id"]])) {
+    "ATAC"
+  } else {
+    stop("Could not determine modality")
+  }
+}
+ad1_mod <- determine_modality(ad1, !par\\$swap)
+ad2_mod <- determine_modality(ad2, par\\$swap)
 
 # determine new uns
 uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id")
@@ -3640,13 +3752,10 @@ ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name
 ad1_obsm <- ad2_obsm <- list()
 
 # determine new varm
-ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids")), drop = FALSE]
+ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
+ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
-if (ad1_mod == "ATAC") {
-  # binarize features
-  ad1\\$layers[["normalized"]]@x <- (ad1\\$layers[["normalized"]]@x > 0) + 0
-
+if (ad1_mod == "ATAC" && "gene_activity" %in% names(ad1\\$obsm)) {
   # copy gene activity in new object
   ad1_uns\\$gene_activity_var_names <- ad1\\$uns\\$gene_activity_var_names
   ad1_obsm\\$gene_activity <- as(ad1\\$obsm\\$gene_activity, "CsparseMatrix")
@@ -3661,12 +3770,11 @@ if (ad2_mod == "ATAC") {
     ad2_var <- ad2_var[sel_ix, , drop = FALSE]
   }
 
-  # binarize features
-  ad2\\$layers[["normalized"]]@x <- (ad2\\$layers[["normalized"]]@x > 0) + 0
-
-  # copy gene activity in new object
-  ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
-  ad2_obsm\\$gene_activity <- as(ad2\\$obsm\\$gene_activity, "CsparseMatrix")
+  if ("gene_activity" %in% names(ad2\\$obsm)) {
+    # copy gene activity in new object
+    ad2_uns\\$gene_activity_var_names <- ad2\\$uns\\$gene_activity_var_names
+    ad2_obsm\\$gene_activity <- as(ad2\\$obsm\\$gene_activity, "CsparseMatrix")
+  }
 }
 
 cat("Creating train/test split\\\\n")
@@ -4080,9 +4188,9 @@ meta["defaults"] = [
     "tag" : "integration_build"
   },
   "label" : [
-    "midtime",
-    "midmem",
-    "lowcpu"
+    "hightime",
+    "highmem",
+    "highcpu"
   ],
   "tag" : "$id"
 }'''),

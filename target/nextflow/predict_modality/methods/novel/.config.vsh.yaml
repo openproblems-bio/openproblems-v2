@@ -1,5 +1,5 @@
 functionality:
-  name: "newwave_knnr"
+  name: "novel"
   namespace: "predict_modality/methods"
   version: "integration_build"
   arguments:
@@ -32,6 +32,16 @@ functionality:
           name: "gene_ids"
           description: "The gene identifiers (if available)"
           required: false
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A score for the feature indicating how highly variable it\
+            \ is."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -96,6 +106,16 @@ functionality:
           name: "gene_ids"
           description: "The gene identifiers (if available)"
           required: false
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A score for the feature indicating how highly variable it\
+            \ is."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -160,6 +180,16 @@ functionality:
           name: "gene_ids"
           description: "The gene identifiers (if available)"
           required: false
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A score for the feature indicating how highly variable it\
+            \ is."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -244,54 +274,11 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  - type: "integer"
-    name: "--newwave_maxiter"
-    description: "Maximum number of NewWave iterations."
-    info: null
-    default:
-    - 40
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "--newwave_ngene"
-    description: "Setting of the n_gene_par NewWave parameter."
-    info: null
-    default:
-    - 200
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "--newwave_ncell"
-    description: "Setting of the n_cell_par NewWave parameter."
-    info: null
-    default:
-    - 200
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "--n_neighbors"
-    description: "Number of neighbors to use in the knn regression."
-    info: null
-    default:
-    - 20
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
   resources:
-  - type: "r_script"
-    path: "script.R"
+  - type: "nextflow_script"
+    path: "main.nf"
     is_executable: true
+    entrypoint: "run_wf"
   test_resources:
   - type: "python_script"
     path: "src/common/comp_tests/check_method_config.py"
@@ -305,13 +292,17 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    label: "NewWave+KNNR"
-    summary: "Perform DR with NewWave, predict modality with KNN regression."
-    description: "Perform DR with NewWave, predict modality with KNN regression."
-    reference: "agostinis2022newwave"
-    repository_url: "https://github.com/fedeago/NewWave"
-    documentation_url: "https://bioconductor.org/packages/release/bioc/html/NewWave.html"
-    preferred_normalization: "counts"
+    label: "Novel"
+    summary: "A method using encoder-decoder MLP model"
+    description: "This method trains an encoder-decoder MLP model with one output\
+      \ neuron per component in the target. As an input, the encoders use representations\
+      \ obtained from ATAC and GEX data via LSI transform and raw ADT data. The hyperparameters\
+      \ of the models were found via broad hyperparameter search using the Optuna\
+      \ framework."
+    documentation_url: "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel#readme"
+    repository_url: "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel"
+    reference: "pmlr-v176-lance2022multimodal"
+    submission_id: "169769"
     type: "method"
     type_info:
       label: "Method"
@@ -319,39 +310,48 @@ functionality:
       description: "A regression method to predict the expression of one modality\
         \ from another.\n"
   status: "enabled"
+  dependencies:
+  - name: "predict_modality/methods/novel_train"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/train/config.vsh.yaml"
+    configInfo:
+      functionalityName: "novel_train"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/train/config.vsh.yaml"
+      functionalityNamespace: "predict_modality/methods"
+      output: ""
+      platform: ""
+      git_commit: "752309948027a2354d7b57cd7919c5957507e6a5"
+      executable: "/nextflow/predict_modality/methods/novel_train/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_train"
+  - name: "predict_modality/methods/novel_predict"
+    repository:
+      type: "local"
+      name: ""
+      localPath: ""
+    foundConfigPath: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/predict/config.vsh.yaml"
+    configInfo:
+      functionalityName: "novel_predict"
+      git_tag: ""
+      git_remote: "https://github.com/openproblems-bio/openproblems-v2"
+      viash_version: "0.8.0"
+      config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/predict/config.vsh.yaml"
+      functionalityNamespace: "predict_modality/methods"
+      output: ""
+      platform: ""
+      git_commit: "752309948027a2354d7b57cd7919c5957507e6a5"
+      executable: "/nextflow/predict_modality/methods/novel_predict/main.nf"
+    writtenPath: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_predict"
   set_wd_to_resources_dir: false
 platforms:
-- type: "docker"
-  id: "docker"
-  image: "ghcr.io/openproblems-bio/base_r:1.0.4"
-  target_organization: "openproblems-bio"
-  target_registry: "ghcr.io"
-  namespace_separator: "/"
-  resolve_volume: "Automatic"
-  chown: true
-  setup_strategy: "ifneedbepullelsecachedbuild"
-  target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
-  setup:
-  - type: "r"
-    cran:
-    - "lmds"
-    - "FNN"
-    - "proxy"
-    - "proxyC"
-    bioc:
-    - "SingleCellExperiment"
-    - "NewWave"
-    bioc_force_install: false
-  entrypoint: []
-  cmd: null
 - type: "nextflow"
   id: "nextflow"
   directives:
-    label:
-    - "midtime"
-    - "highmem"
-    - "highcpu"
-    - "highsharedmem"
     tag: "$id"
   auto:
     simplifyInput: true
@@ -374,10 +374,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/newwave_knnr/config.vsh.yaml"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/novel/run/config.vsh.yaml"
   platform: "nextflow"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/newwave_knnr/newwave_knnr"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel/main.nf"
   viash_version: "0.8.0"
-  git_commit: "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
+  git_commit: "752309948027a2354d7b57cd7919c5957507e6a5"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

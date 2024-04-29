@@ -2775,6 +2775,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -2871,6 +2883,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -2967,6 +2991,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3161,11 +3197,12 @@ meta = [
     "info" : {
       "label" : "Guanlab-dengkw",
       "summary" : "A kernel ridge regression method with RBF kernel.",
-      "description" : "This is a solution developed by Team Guanlab - dengkw in the Neurips 2021 competiton to predeict one modality from another using kernel ridge regression (KRR) with RBF kernel. Truncated SVD is applied on the combined training and test data from modality 1 followed by row-wise z-score normalization on the reduced matrix. The truncated SVD of modality 2 is predicted by training a KRR model on the normalized training matrix of modality 1. Predictions on the normalized test matrix are then re-mapped to the modality 2 feature space via the right singular vectors. \n",
+      "description" : "This is a solution developed by Team Guanlab - dengkw in the Neurips 2021 competition to predict one modality\nfrom another using kernel ridge regression (KRR) with RBF kernel. Truncated SVD is applied on the combined\ntraining and test data from modality 1 followed by row-wise z-score normalization on the reduced matrix. The\ntruncated SVD of modality 2 is predicted by training a KRR model on the normalized training matrix of modality 1.\nPredictions on the normalized test matrix are then re-mapped to the modality 2 feature space via the right\nsingular vectors. \n",
       "preferred_normalization" : "log_cp10k",
       "reference" : "lance2022multimodal",
       "documentation_url" : "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/Guanlab-dengkw",
       "repository_url" : "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/Guanlab-dengkw",
+      "competition_submission_id" : 170636,
       "type" : "method",
       "type_info" : {
         "label" : "Method",
@@ -3206,7 +3243,7 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "midtime",
+          "hightime",
           "highmem",
           "highcpu"
         ],
@@ -3243,7 +3280,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/guanlab_dengkw_pm",
     "viash_version" : "0.8.0",
-    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+    "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3260,7 +3297,6 @@ tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
 import anndata as ad
 import numpy as np
-import gc
 from scipy.sparse import csc_matrix
 from sklearn.decomposition import TruncatedSVD
 from sklearn.gaussian_process.kernels import RBF
@@ -3303,21 +3339,10 @@ input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
 
-dataset_id = input_train_mod1.uns['dataset_id']
-
-pred_dimx = input_test_mod1.shape[0]
-pred_dimy = input_train_mod2.shape[1]
-
-feature_obs = input_train_mod1.obs
-gs_obs = input_train_mod2.obs
-
 batches = input_train_mod1.obs.batch.unique().tolist()
 batch_len = len(batches)
 
-obs = input_test_mod1.obs
-var = input_train_mod2.var
-dataset_id = input_train_mod1.uns['dataset_id']
-
+# combine the train and test data
 input_train = ad.concat(
     {"train": input_train_mod1, "test": input_test_mod1},
     axis=0,
@@ -3328,16 +3353,14 @@ input_train = ad.concat(
 )
 
 print('Determine parameters by the modalities', flush=True)
-mod1_type = input_train_mod1.uns["modality"]
-mod1_type = mod1_type.upper()
-mod2_type = input_train_mod2.uns["modality"]
-mod2_type = mod2_type.upper()
+mod1_type = input_train_mod1.uns["modality"].upper()
+mod2_type = input_train_mod2.uns["modality"].upper()
 n_comp_dict = {
-                ("GEX", "ADT"): (300, 70, 10, 0.2),
-                ("ADT", "GEX"): (None, 50, 10, 0.2),
-                ("GEX", "ATAC"): (1000, 50, 10, 0.1),
-                ("ATAC", "GEX"): (100, 70, 10, 0.1)
-              }
+    ("GEX", "ADT"): (300, 70, 10, 0.2),
+    ("ADT", "GEX"): (None, 50, 10, 0.2),
+    ("GEX", "ATAC"): (1000, 50, 10, 0.1),
+    ("ATAC", "GEX"): (100, 70, 10, 0.1)
+}
 print(f"{mod1_type}, {mod2_type}", flush=True)
 n_mod1, n_mod2, scale, alpha = n_comp_dict[(mod1_type, mod2_type)]
 print(f"{n_mod1}, {n_mod2}, {scale}, {alpha}", flush=True)
@@ -3345,20 +3368,20 @@ print(f"{n_mod1}, {n_mod2}, {scale}, {alpha}", flush=True)
 # Perform PCA on the input data
 print('Models using the Truncated SVD to reduce the dimension', flush=True)
 
-if n_mod1 is not None and n_mod1 < input_train.shape[1]:
+if n_mod1 is not None and n_mod1 < input_train.n_vars:
     embedder_mod1 = TruncatedSVD(n_components=n_mod1)
-    mod1_pca = embedder_mod1.fit_transform(input_train.layers["counts"]).astype(np.float32)
+    mod1_pca = embedder_mod1.fit_transform(input_train.layers["normalized"]).astype(np.float32)
     train_matrix = mod1_pca[input_train.obs['group'] == 'train']
     test_matrix = mod1_pca[input_train.obs['group'] == 'test']
 else:
-    train_matrix = input_train_mod1.to_df(layer="counts").values.astype(np.float32)
-    test_matrix = input_test_mod1.to_df(layer="counts").values.astype(np.float32)
+    train_matrix = input_train_mod1.to_df(layer="normalized").values.astype(np.float32)
+    test_matrix = input_test_mod1.to_df(layer="normalized").values.astype(np.float32)
   
-if n_mod2 is not None and n_mod2 < input_train_mod2.shape[1]:
+if n_mod2 is not None and n_mod2 < input_train_mod2.n_vars:
     embedder_mod2 = TruncatedSVD(n_components=n_mod2)
-    train_gs = embedder_mod2.fit_transform(input_train_mod2.layers["counts"]).astype(np.float32)
+    train_gs = embedder_mod2.fit_transform(input_train_mod2.layers["normalized"]).astype(np.float32)
 else:
-    train_gs = input_train_mod2.to_df(layer="counts").values.astype(np.float32)
+    train_gs = input_train_mod2.to_df(layer="normalized").values.astype(np.float32)
 
 del input_train
 
@@ -3376,28 +3399,36 @@ test_norm = test_norm.astype(np.float32)
 del test_matrix
 
 print('Running KRR model ...', flush=True)
-y_pred = np.zeros((pred_dimx, pred_dimy), dtype=np.float32)
-np.random.seed(1000)
+if batch_len == 1:
+    # just in case there is only one batch
+    batch_subsets = [batches]
+elif mod1_type == "ADT" or mod2_type == "ADT":
+    # two fold consensus predictions
+    batch_subsets = [
+        batches[:batch_len//2],
+        batches[batch_len//2:]
+    ]
+else:
+    # leave-one-batch-out consensus predictions
+    batch_subsets = [
+        batches[:i] + batches[i+1:]
+        for i in range(batch_len)
+    ]
 
-for _ in range(5):
-  np.random.shuffle(batches)
-  for batch in [batches[:batch_len//2], batches[batch_len//2:]]:
-    # for passing the test
-    if not batch:
-      batch = [batches[0]]
-
+y_pred = np.zeros((input_test_mod1.n_obs, input_train_mod2.n_vars), dtype=np.float32)
+for batch in batch_subsets:
     print(batch, flush=True)
     kernel = RBF(length_scale = scale)
     krr = KernelRidge(alpha=alpha, kernel=kernel)
     print('Fitting KRR ... ', flush=True)
-    krr.fit(train_norm[feature_obs.batch.isin(batch)], train_gs[gs_obs.batch.isin(batch)])
+    krr.fit(
+        train_norm[input_train_mod1.obs.batch.isin(batch)], 
+        train_gs[input_train_mod2.obs.batch.isin(batch)]
+    )
     y_pred += (krr.predict(test_norm) @ embedder_mod2.components_)
 
 np.clip(y_pred, a_min=0, a_max=None, out=y_pred)
-if mod2_type == "ATAC":
-    np.clip(y_pred, a_min=0, a_max=1, out=y_pred)
-
-y_pred /= 10
+y_pred /= len(batch_subsets)
 
 # Store as sparse matrix to be efficient. 
 # Note that this might require different classifiers/embedders before-hand. 
@@ -3407,13 +3438,11 @@ y_pred = csc_matrix(y_pred)
 
 print("Write output AnnData to file", flush=True)
 output = ad.AnnData(
-  layers = {
-    'normalized': y_pred
-  },
-  obs = obs,
-  var = var,
+  layers = { 'normalized': y_pred },
+  obs = input_test_mod1.obs[[]],
+  var = input_train_mod2.var[[]],
   uns = {
-    'dataset_id': dataset_id,
+    'dataset_id': input_train_mod1.uns['dataset_id'],
     'method_id': meta['functionality_name']
   }
 )
@@ -3770,7 +3799,7 @@ meta["defaults"] = [
     "tag" : "integration_build"
   },
   "label" : [
-    "midtime",
+    "hightime",
     "highmem",
     "highcpu"
   ],

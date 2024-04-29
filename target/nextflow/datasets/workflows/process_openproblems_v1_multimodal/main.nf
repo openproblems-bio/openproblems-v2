@@ -3061,7 +3061,7 @@ meta = [
         "arguments" : [
           {
             "type" : "file",
-            "name" : "--output_dataset_mod1",
+            "name" : "--output_mod1",
             "info" : {
               "label" : "Common dataset",
               "summary" : "A dataset processed by the common dataset processing pipeline.",
@@ -3340,7 +3340,7 @@ meta = [
           },
           {
             "type" : "file",
-            "name" : "--output_dataset_mod2",
+            "name" : "--output_mod2",
             "info" : {
               "label" : "Common dataset",
               "summary" : "A dataset processed by the common dataset processing pipeline.",
@@ -3684,7 +3684,7 @@ meta = [
           "functionalityNamespace" : "datasets/loaders",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/loaders/openproblems_v1_multimodal/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_v1_multimodal"
@@ -3706,7 +3706,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3728,7 +3728,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/normalization/log_scran_pooling/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_scran_pooling"
@@ -3750,7 +3750,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/normalization/sqrt_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/sqrt_cp"
@@ -3772,7 +3772,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/normalization/l1_sqrt/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/l1_sqrt"
@@ -3794,7 +3794,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/normalization/prot_clr/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/prot_clr"
@@ -3816,7 +3816,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/normalization/atac_tfidf/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/atac_tfidf"
@@ -3838,7 +3838,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/processors/subsample/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/subsample"
@@ -3860,7 +3860,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/processors/svd/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/svd"
@@ -3882,7 +3882,7 @@ meta = [
           "functionalityNamespace" : "datasets/processors",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/datasets/processors/hvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/processors/hvg"
@@ -3904,7 +3904,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+          "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3950,7 +3950,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/process_openproblems_v1_multimodal",
     "viash_version" : "0.8.0",
-    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+    "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -4127,21 +4127,21 @@ workflow run_wf {
     // add synonyms
     | map{ id, state ->
       [id, state + [
-        "output_dataset_mod1": state.hvg_mod1,
-        "output_dataset_mod2": state.hvg_mod2
+        "output_mod1": state.hvg_mod1,
+        "output_mod2": state.hvg_mod2
       ]]
     }
 
     | extract_metadata.run(
       key: "extract_metadata_mod1",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "output_dataset_mod1")
+        def schema = findArgumentSchema(meta.config, "output_mod1")
         // workaround: convert GString to String
         schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.output_dataset_mod1,
+          "input": state.output_mod1,
           "schema": schemaYaml
         ]
       },
@@ -4151,13 +4151,13 @@ workflow run_wf {
     | extract_metadata.run(
       key: "extract_metadata_mod2",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "output_dataset_mod2")
+        def schema = findArgumentSchema(meta.config, "output_mod2")
         // workaround: convert GString to String
         schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.output_dataset_mod2,
+          "input": state.output_mod2,
           "schema": schemaYaml
         ]
       },
@@ -4166,8 +4166,8 @@ workflow run_wf {
     
     // only output the files for which an output file was specified
     | setState([
-      "output_dataset_mod1",
-      "output_dataset_mod2",
+      "output_mod1",
+      "output_mod2",
       "output_meta_mod1",
       "output_meta_mod2",
       "_meta"

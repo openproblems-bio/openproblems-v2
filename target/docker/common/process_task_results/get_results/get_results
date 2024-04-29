@@ -440,9 +440,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("purrr", "yaml", "rlang", "dplyr", "tidyr", "readr", "lubridate", "dynutils", "processx"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component common/process_task_results get_results"
-LABEL org.opencontainers.image.created="2024-04-25T14:07:03Z"
+LABEL org.opencontainers.image.created="2024-04-29T14:07:17Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
+LABEL org.opencontainers.image.revision="752309948027a2354d7b57cd7919c5957507e6a5"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1153,7 +1153,8 @@ scores <- raw_scores %>%
   )
 
 # read nxf log and process the task id
-id_regex <- "^.*:(.*)_process \\\\((.*)(/[^\\\\.]*)?(.[^\\\\.]*)?\\\\.(.*)\\\\)\$"
+norm_methods <- "/log_cp10k|/log_cpm|/sqrt_cp10k|/sqrt_cpm|/l1_sqrt|/log_scran_pooling"
+id_regex <- paste0("^.*:(.*)_process \\\\(([^\\\\.]*)(", norm_methods, ")?(.[^\\\\.]*)?\\\\.(.*)\\\\)\$")
 
 trace <- readr::read_tsv(par\$input_execution) %>%
   mutate(

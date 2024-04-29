@@ -2775,6 +2775,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -2871,6 +2883,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -2967,6 +2991,18 @@ meta = [
                 "name" : "gene_ids",
                 "description" : "The gene identifiers (if available)",
                 "required" : false
+              },
+              {
+                "type" : "boolean",
+                "name" : "hvg",
+                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
+                "required" : true
+              },
+              {
+                "type" : "double",
+                "name" : "hvg_score",
+                "description" : "A score for the feature indicating how highly variable it is.",
+                "required" : true
               }
             ],
             "uns" : [
@@ -3174,7 +3210,7 @@ meta = [
       "reference" : "fix1989discriminatory",
       "documentation_url" : "https://cran.r-project.org/package=FNN",
       "repository_url" : "https://github.com/cran/FNN",
-      "preferred_normalization" : "counts",
+      "preferred_normalization" : "log_cp10k",
       "type" : "method",
       "type_info" : {
         "label" : "Method",
@@ -3214,7 +3250,7 @@ meta = [
       "id" : "nextflow",
       "directives" : {
         "label" : [
-          "midtime",
+          "hightime",
           "lowmem",
           "lowcpu"
         ],
@@ -3251,7 +3287,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r",
     "viash_version" : "0.8.0",
-    "git_commit" : "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e",
+    "git_commit" : "752309948027a2354d7b57cd7919c5957507e6a5",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3725,7 +3761,7 @@ meta["defaults"] = [
     "tag" : "integration_build"
   },
   "label" : [
-    "midtime",
+    "hightime",
     "lowmem",
     "lowcpu"
   ],

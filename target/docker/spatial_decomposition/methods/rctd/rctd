@@ -426,9 +426,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("dmcable/spacexr"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/methods rctd"
-LABEL org.opencontainers.image.created="2024-04-25T14:06:56Z"
+LABEL org.opencontainers.image.created="2024-04-29T14:07:10Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
+LABEL org.opencontainers.image.revision="752309948027a2354d7b57cd7919c5957507e6a5"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -995,7 +995,7 @@ celltype_counts <- table(input_single_cell\$obs\$cell_type)
 input_single_cell <- input_single_cell[input_single_cell\$obs\$cell_type %in% names(as.table(celltype_counts[celltype_counts > 25]))]
 
 # get single cell reference counts
-sc_counts <- t(as.matrix(input_single_cell\$layers['counts']))
+sc_counts <- t(input_single_cell\$layers['counts'])
 # get single cell reference labels
 sc_cell_types <- factor(input_single_cell\$obs\$cell_type)
 names(sc_cell_types) <- rownames(input_single_cell)
@@ -1003,7 +1003,7 @@ names(sc_cell_types) <- rownames(input_single_cell)
 reference <- Reference(sc_counts, sc_cell_types)
 
 # get spatial data counts
-sp_counts <- t(as.matrix(input_spatial\$layers['counts']))
+sp_counts <- t(input_spatial\$layers['counts'])
 # get spatial data coordinates
 sp_coords <- as.data.frame(input_spatial\$obsm['coordinates'])
 colnames(sp_coords) <- c("x", "y")

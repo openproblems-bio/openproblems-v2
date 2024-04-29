@@ -1,5 +1,5 @@
 functionality:
-  name: "newwave_knnr"
+  name: "lmds_irlba_rf"
   namespace: "predict_modality/methods"
   version: "integration_build"
   arguments:
@@ -32,6 +32,16 @@ functionality:
           name: "gene_ids"
           description: "The gene identifiers (if available)"
           required: false
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A score for the feature indicating how highly variable it\
+            \ is."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -96,6 +106,16 @@ functionality:
           name: "gene_ids"
           description: "The gene identifiers (if available)"
           required: false
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A score for the feature indicating how highly variable it\
+            \ is."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -160,6 +180,16 @@ functionality:
           name: "gene_ids"
           description: "The gene identifiers (if available)"
           required: false
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A score for the feature indicating how highly variable it\
+            \ is."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -244,45 +274,35 @@ functionality:
     multiple: false
     multiple_sep: ":"
     dest: "par"
-  - type: "integer"
-    name: "--newwave_maxiter"
-    description: "Maximum number of NewWave iterations."
+  - type: "string"
+    name: "--distance_method"
+    description: "The distance method to use. Possible values are euclidean, pearson,\
+      \ spearman and others."
     info: null
     default:
-    - 40
+    - "pearson"
     required: false
     direction: "input"
     multiple: false
     multiple_sep: ":"
     dest: "par"
   - type: "integer"
-    name: "--newwave_ngene"
-    description: "Setting of the n_gene_par NewWave parameter."
-    info: null
-    default:
-    - 200
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "--newwave_ncell"
-    description: "Setting of the n_cell_par NewWave parameter."
-    info: null
-    default:
-    - 200
-    required: false
-    direction: "input"
-    multiple: false
-    multiple_sep: ":"
-    dest: "par"
-  - type: "integer"
-    name: "--n_neighbors"
-    description: "Number of neighbors to use in the knn regression."
+    name: "--n_pcs"
+    description: "Number of principal components to use."
     info: null
     default:
     - 20
+    required: false
+    direction: "input"
+    multiple: false
+    multiple_sep: ":"
+    dest: "par"
+  - type: "integer"
+    name: "--n_trees"
+    description: "Number of trees to use."
+    info: null
+    default:
+    - 500
     required: false
     direction: "input"
     multiple: false
@@ -305,13 +325,17 @@ functionality:
   - type: "file"
     path: "src/common/library.bib"
   info:
-    label: "NewWave+KNNR"
-    summary: "Perform DR with NewWave, predict modality with KNN regression."
-    description: "Perform DR with NewWave, predict modality with KNN regression."
-    reference: "agostinis2022newwave"
-    repository_url: "https://github.com/fedeago/NewWave"
-    documentation_url: "https://bioconductor.org/packages/release/bioc/html/NewWave.html"
-    preferred_normalization: "counts"
+    label: "LMDS + IRLBA + RF"
+    summary: "A random forest regression using LMDS of modality 1 to predict a PCA\
+      \ embedding of modality 2, which is then reversed to predict the original modality\
+      \ 2."
+    description: "A random forest regression using LMDS of modality 1 to predict a\
+      \ PCA embedding of modality 2, which is then reversed to predict the original\
+      \ modality 2.\n"
+    reference: "lance2022multimodal"
+    documentation_url: "https://github.com/openproblems-bio/openproblems-v2/tree/main/src/tasks/predict_modality/methods"
+    repository_url: "https://github.com/openproblems-bio/openproblems-v2"
+    preferred_normalization: "log_cp10k"
     type: "method"
     type_info:
       label: "Method"
@@ -335,12 +359,9 @@ platforms:
   - type: "r"
     cran:
     - "lmds"
-    - "FNN"
-    - "proxy"
-    - "proxyC"
-    bioc:
-    - "SingleCellExperiment"
-    - "NewWave"
+    - "ranger"
+    - "pbapply"
+    - "irlba"
     bioc_force_install: false
   entrypoint: []
   cmd: null
@@ -348,10 +369,9 @@ platforms:
   id: "nextflow"
   directives:
     label:
-    - "midtime"
+    - "hightime"
     - "highmem"
     - "highcpu"
-    - "highsharedmem"
     tag: "$id"
   auto:
     simplifyInput: true
@@ -374,10 +394,10 @@ platforms:
   debug: false
   container: "docker"
 info:
-  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/newwave_knnr/config.vsh.yaml"
-  platform: "docker"
-  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/newwave_knnr"
-  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/predict_modality/methods/newwave_knnr/newwave_knnr"
+  config: "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/predict_modality/methods/lmds_irlba_rf/config.vsh.yaml"
+  platform: "nextflow"
+  output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lmds_irlba_rf"
+  executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lmds_irlba_rf/lmds_irlba_rf"
   viash_version: "0.8.0"
-  git_commit: "230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
+  git_commit: "752309948027a2354d7b57cd7919c5957507e6a5"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

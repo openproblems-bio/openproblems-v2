@@ -422,10 +422,12 @@ ENTRYPOINT []
 RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scvi-tools>=1.1.0"
 
+RUN pip install -U "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/methods stereoscope"
-LABEL org.opencontainers.image.created="2024-04-25T14:06:56Z"
+LABEL org.opencontainers.image.created="2024-04-29T14:07:10Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="230e4b61a0f93f1fc3ba3e1264263fc246e0b00e"
+LABEL org.opencontainers.image.revision="752309948027a2354d7b57cd7919c5957507e6a5"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -984,7 +986,7 @@ sc_model = RNAStereoscope(input_single_cell)
 sc_model.train(
   max_epochs=par["max_epochs_sc"],
   # early_stopping=True,
-  # early_stopping_monitor="elbo_train"
+  # early_stopping_monitor="elbo_validation"
 )
 
 SpatialStereoscope.setup_anndata(input_spatial)
@@ -992,7 +994,7 @@ st_model = SpatialStereoscope.from_rna_model(input_spatial, sc_model)
 st_model.train(
   max_epochs=par["max_epochs_sp"],
   # early_stopping=True,
-  # early_stopping_monitor="elbo_train"
+  # early_stopping_monitor="elbo_validation"
 )
 input_spatial.obsm["proportions_pred"] = st_model.get_proportions().to_numpy()
 

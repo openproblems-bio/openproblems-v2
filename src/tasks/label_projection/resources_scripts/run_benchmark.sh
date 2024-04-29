@@ -16,7 +16,7 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --pull-latest \
   --main-script target/nextflow/label_projection/workflows/run_benchmark/main.nf \
   --workspace 53907369739130 \
-  --compute-env 4CVGm8oIMcE6QRlNBCQ64Z \
+  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
   --params-file /tmp/params.yaml \
   --entry-name auto \
   --config src/wf_utils/labels_tw.config \
