@@ -432,9 +432,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising process_dataset"
-LABEL org.opencontainers.image.created="2024-04-29T14:35:36Z"
+LABEL org.opencontainers.image.created="2024-04-29T19:10:07Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="07b935cbb077aea592966fe8b64f48af9f1308b5"
+LABEL org.opencontainers.image.revision="7f1c0a54a01f2864835a56ef105c03d3cabf85d8"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

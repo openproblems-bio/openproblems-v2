@@ -3071,7 +3071,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/match_modalities/methods/scot",
     "viash_version" : "0.8.0",
-    "git_commit" : "07b935cbb077aea592966fe8b64f48af9f1308b5",
+    "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
