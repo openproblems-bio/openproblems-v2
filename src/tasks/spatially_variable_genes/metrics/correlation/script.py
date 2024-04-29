@@ -1,11 +1,10 @@
 import anndata as ad
-import sklearn.metrics
 import pandas as pd
 
 ## VIASH START
 par = {
-  'input_method': 'resources_test/spatially_variable_genes/10x_Visium_mouse_brain/output.csv',
-  'input_solution': 'resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.csv',
+  'input_method': 'resources_test/spatially_variable_genes/10x_Visium_mouse_brain/output.h5ad',
+  'input_solution': 'resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.h5ad',
   'output': 'score.h5ad'
 }
 meta = {
@@ -14,12 +13,12 @@ meta = {
 ## VIASH END
 
 print('Reading input files', flush=True)
-input_method = pd.read_csv(par['input_method'])
-input_solution = pd.read_csv(par['input_solution'])
+input_method = ad.read_h5ad(par['input_method'])
+input_solution = ad.read_h5ad(par['input_solution'])
 
 
 print('Compute metrics', flush=True)
-df = pd.merge(input_method, input_solution, how='left')
+df = pd.merge(input_method.var, input_solution.var, how='left')
 groupby = df.groupby('gene_name', observed=True)
 corr = groupby.apply(lambda x: x['pred_spatial_var_score'].corr(x['true_spatial_var_score'], method='kendall'))
 

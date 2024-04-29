@@ -1,20 +1,26 @@
 type: file
-example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.csv"
+example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.h5ad"
 info:
   label: Solution
-  summary: "CSV file with true spatial variability."
-  description: "CSV file with true spatial variability score for each gene."
+  summary: "Anndata with true spatial variability."
+  description: "Anndata with true spatial variability score for each gene."
   slots:
-    - type: string
-      name: feature_name
-      description: Feature name
-      required: true
-    - type: string
-      name: gene_name
-      description: Gene names
-      required: true
-    - type: double
-      name: true_spatial_var_score
-      description: True spatial variability score
-      required: true
+    var:
+      - type: string
+        name: feature_name
+        description: Feature name
+        required: true
+      - type: string
+        name: gene_name
+        description: Gene names
+        required: true
+      - type: double
+        name: pred_spatial_var_score
+        description: Predicted spatial variability score
+        required: true
+    uns:
+      - type: string
+        name: dataset_id
+        description: "A unique identifier for the dataset"
+        required: true
       

@@ -27,7 +27,7 @@ info:
       - type: string
         name: dataset_id
         description: "A unique identifier for the dataset"
-        required: false
+        required: true
       - name: dataset_name
         type: string
         description: Nicely formatted name.

@@ -6,12 +6,12 @@ functionality:
     metrics:
       - name: correlation
         label: correlation
-        summary: "Correlation represents the proportion of variance in the true proportions which is explained by the predicted proportions."
+        summary: "Correlation represents the agreement of true and predicted spatial variability."
         description: |
-          R2, or the “coefficient of determination”, reports the fraction of the true proportion values' variance that can be explained by the predicted proportion values. The best score, and upper bound, is 1.0. There is no fixed lower bound for the metric. The uniform/non-weighted average across all cell types/states is used to summarise performance. By default, cases resulting in a score of NaN (perfect predictions) or -Inf (imperfect predictions) are replaced with 1.0 (perfect predictions) or 0.0 (imperfect predictions) respectively.
+          Kendall rank correlation coefficient measure the ordinal association between two measured quantities. The best score, and upper bound, is 1.0. The lower bound for is -1.
         reference: miles2005rsquared
-        documentation_url: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.r2_score.html
-        repository_url: https://github.com/scikit-learn/scikit-learn/tree/5c4aa5d0d90ba66247d675d4c3fc2fdfba3c39ff
+        documentation_url: https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient
+        repository_url: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html
         min: -1
         max: 1
         maximize: true
