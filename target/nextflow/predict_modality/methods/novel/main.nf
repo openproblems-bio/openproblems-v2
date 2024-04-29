@@ -3199,7 +3199,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
+          "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
           "executable" : "/nextflow/predict_modality/methods/novel_train/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_train"
@@ -3221,7 +3221,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
+          "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
           "executable" : "/nextflow/predict_modality/methods/novel_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_predict"
@@ -3267,7 +3267,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel",
     "viash_version" : "0.8.0",
-    "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
+    "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3298,7 +3298,7 @@ workflow run_wf {
       toState: ["output": "output"]
     )
     | setState ([
-      "output": state.output
+      "output"
     ])
 
 

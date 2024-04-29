@@ -3373,7 +3373,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp",
     "viash_version" : "0.8.0",
-    "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
+    "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

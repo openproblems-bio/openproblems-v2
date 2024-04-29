@@ -3028,7 +3028,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
+          "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3074,7 +3074,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/workflows/extract_dataset_meta",
     "viash_version" : "0.8.0",
-    "git_commit" : "7f1c0a54a01f2864835a56ef105c03d3cabf85d8",
+    "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
