@@ -1,7 +1,10 @@
-import anndata as ad
+from glob import glob
 import sys
-from scipy.sparse import csc_matrix
 import numpy as np
+from scipy.sparse import csc_matrix
+import anndata as ad
+import torch
+from torch.utils.data import TensorDataset,DataLoader
 
 ## VIASH START
 par = {
@@ -19,54 +22,78 @@ meta = {
 
 resources_dir = f"{meta['resources_dir']}/resources"
 sys.path.append(resources_dir)
-from predict import predict
+from models import MLP
+import utils
 
-def get_y_dim(task):
-  if task == "ADT2GEX":
-      return 13953,
-  elif task == "GEX2ADT":
-    return 134
-  elif task == "ATAC2GEX":
-    return 13431
-  elif task == "GEX2ATAC":
-    return 10000
+def _predict(model,dl):
+  model = model.cuda()
+  model.eval()
+  yps = []
+  for x in dl:
+    with torch.no_grad():
+      yp = model(x[0].cuda())
+      yps.append(yp.detach().cpu().numpy())
+  yp = np.vstack(yps)
+  return yp
+
 
 print('Load data', flush=True)
-input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 input_test_mod1 = ad.read_h5ad(par['input_test_mod1'])
 
 # determine variables
-mod_1 = input_train_mod1.uns['modality']
+mod_1 = input_test_mod1.uns['modality']
 mod_2 = input_train_mod2.uns['modality']
 
 task = f'{mod_1}2{mod_2}'
-
-y_dim = input_test_mod1.shape[1]
 
 ymean = np.asarray(input_train_mod2.layers["normalized"].mean(axis=0))
 
 print('Start predict', flush=True)
 if task == 'GEX2ATAC':
-    y_pred = ymean*np.ones([input_test_mod1.shape[0],y_dim])
+    y_pred = ymean*np.ones([input_test_mod1.n_obs, input_test_mod1.n_vars])
 else:
-    y_pred = predict(
-       ymean=ymean,
-       ad=input_test_mod1.layers["normalized"].toarray(),
-       task=task,
-       y_dim=y_dim,
-       folds=[0,1,2],
-       cp=resources_dir,
-       wp=par['input_model']
-    )
+    folds = [0, 1, 2]
+
+    ymean = torch.from_numpy(ymean).float()
+    yaml_path=f"{resources_dir}/yaml/mlp_{task}.yaml"
+    config = utils.load_yaml(yaml_path)
+    X = input_test_mod1.layers["normalized"].toarray()
+    X = torch.from_numpy(X).float()
+    
+    te_ds = TensorDataset(X)
+    
+    yp = 0
+    for fold in folds:
+        # load_path = f"{par['input_model']}/{task}_fold_{fold}/version_0/checkpoints/*"
+        load_path = f"{par['input_model']}/{task}_fold_{fold}/**.ckpt"
+        print(load_path)
+        ckpt = glob(load_path)[0]
+        model_inf = MLP.load_from_checkpoint(
+            ckpt,
+            in_dim=X.shape[1],
+            out_dim=input_test_mod1.n_vars,
+            ymean=ymean,
+            config=config
+        )
+        te_loader = DataLoader(
+            te_ds,
+            batch_size=config.batch_size,
+            num_workers=0,
+            shuffle=False,
+            drop_last=False
+        )
+        yp = yp + _predict(model_inf, te_loader)
+
+    y_pred = yp/len(folds)
 
 y_pred = csc_matrix(y_pred)
 
 adata = ad.AnnData(
-    layers=list(normalized=y_pred),
+    layers={"normalized": y_pred},
     shape=y_pred.shape,
     uns={
-        'dataset_id': input_train_mod1.uns['dataset_id'],
+        'dataset_id': input_test_mod1.uns['dataset_id'],
         'method_id': meta['functionality_name'],
     },
 )
