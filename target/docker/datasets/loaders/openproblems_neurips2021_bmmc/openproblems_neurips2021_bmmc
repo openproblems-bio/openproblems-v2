@@ -452,9 +452,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders openproblems_neurips2021_bmmc"
-LABEL org.opencontainers.image.created="2024-04-29T07:42:01Z"
+LABEL org.opencontainers.image.created="2024-04-29T08:45:54Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="6db04429523fc1e0056236e5c81c6f0e6d2038ba"
+LABEL org.opencontainers.image.revision="b6b85a3ebd341d70a43f5a70e7e8967e263095b9"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1104,7 +1104,8 @@ convert_matrix(adata.obsm)
 if "is_train" not in adata.obs.columns:
   batch_info = adata.obs["batch"]
   batch_categories = batch_info.dtype.categories
-  train = ["s1d1", "s2d1", "s2d4", "s3d6", "s3d1"]
+  # From https://github.com/openproblems-bio/neurips2021_multimodal_viash/blob/75281c039ab98b459edbf52058a18597e710ed4d/src/common/datasets/process_inhouse_datasets/script.R#L14-L17
+  train = ["s1d1", "s1d2", "s2d1", "s2d4", "s3d1", "s3d6", "s3d7"]
   adata.obs["is_train"] = [ "train" if x in train else "test" for x in batch_info ]
 
 # Construct Modality datasets
