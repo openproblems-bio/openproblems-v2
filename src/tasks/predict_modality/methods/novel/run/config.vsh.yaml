@@ -35,5 +35,3 @@ functionality:
     - name: predict_modality/methods/novel_predict
 platforms:
   - type: nextflow
-  - directives:
-      label: [midmem, hightime, midcpu, midsharedmem, gpu]
