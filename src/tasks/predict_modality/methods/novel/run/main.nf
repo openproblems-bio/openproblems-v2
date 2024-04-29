@@ -16,7 +16,7 @@ workflow run_wf {
       toState: ["output": "output"]
     )
     | setState ([
-      "output": state.output
+      "output"
     ])
 
 
