@@ -3287,7 +3287,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/knnr_r",
     "viash_version" : "0.8.0",
-    "git_commit" : "22ceaf05cecb3f9fdbceb63fec6b2fceba30a516",
+    "git_commit" : "6db04429523fc1e0056236e5c81c6f0e6d2038ba",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

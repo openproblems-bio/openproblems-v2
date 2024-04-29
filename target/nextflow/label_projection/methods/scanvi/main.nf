@@ -3036,6 +3036,12 @@ meta = [
             "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
+        },
+        {
+          "type" : "docker",
+          "run" : [
+            "pip install -U \\"jax[cuda12_pip]\\" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html\n"
+          ]
         }
       ]
     },
@@ -3082,7 +3088,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/scanvi",
     "viash_version" : "0.8.0",
-    "git_commit" : "22ceaf05cecb3f9fdbceb63fec6b2fceba30a516",
+    "git_commit" : "6db04429523fc1e0056236e5c81c6f0e6d2038ba",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
