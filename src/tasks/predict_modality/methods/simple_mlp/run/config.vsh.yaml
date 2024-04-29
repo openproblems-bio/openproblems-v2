@@ -13,6 +13,7 @@ functionality:
     documentation_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/AXX
     repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/AXX
     reference: lance2022multimodal
+    preferred_normalization: log_cp10k
     competition_submission_id: 170812
   resources:
     - path: main.nf
