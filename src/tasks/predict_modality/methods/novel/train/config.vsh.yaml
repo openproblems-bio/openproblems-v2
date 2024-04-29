@@ -22,4 +22,4 @@ platforms:
           - networkx
   - type: nextflow
     directives:
-      label: [midmem, midtime, midcpu, midsharedmem]
+      label: [midmem, hightime, midcpu, midsharedmem, gpu]
