@@ -4,7 +4,7 @@ functionality:
   resources:
     - type: python_script
       path: script.py
-    - path: resources/
+    - path: ../resources/
 platforms:
   - type: docker
     # image: pytorch/pytorch:1.9.0-cuda11.1-cudnn8-runtime
