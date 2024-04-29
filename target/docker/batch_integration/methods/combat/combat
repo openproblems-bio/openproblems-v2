@@ -410,9 +410,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods combat"
-LABEL org.opencontainers.image.created="2024-04-29T08:45:51Z"
+LABEL org.opencontainers.image.created="2024-04-29T13:46:30Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b6b85a3ebd341d70a43f5a70e7e8967e263095b9"
+LABEL org.opencontainers.image.revision="1a1019592365d7a47e0d4afd34316cf3f66f1b6a"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

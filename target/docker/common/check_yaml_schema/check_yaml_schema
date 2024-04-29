@@ -408,9 +408,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "jsonschema"
 
 LABEL org.opencontainers.image.description="Companion container for running component common check_yaml_schema"
-LABEL org.opencontainers.image.created="2024-04-29T08:45:47Z"
+LABEL org.opencontainers.image.created="2024-04-29T13:46:33Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b6b85a3ebd341d70a43f5a70e7e8967e263095b9"
+LABEL org.opencontainers.image.revision="1a1019592365d7a47e0d4afd34316cf3f66f1b6a"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
