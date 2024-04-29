@@ -7,8 +7,8 @@ functionality:
       summary: A spatially variable gene identification method.
       description: "Method to identify spatially variable genes"
   arguments:
-    - name: "--input_spatial_masked"
-      __merge__: file_spatial_masked.yaml
+    - name: "--input_data"
+      __merge__: file_common_dataset.yaml
       direction: input
       required: true
     - name: "--output"
