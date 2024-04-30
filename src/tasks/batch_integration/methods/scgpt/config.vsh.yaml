@@ -30,6 +30,10 @@ functionality:
       example: args.json
       description: |
         Path to scGPT model config file.
+    - name: --n_hvg
+      type: integer
+      default: 2000
+      description: Number of highly variable genes to use.
   resources:
     - type: python_script
       path: script.py
