@@ -10,13 +10,23 @@ output_state: "$id/state.yaml"
 publish_dir: s3://openproblems-data/resources/predict_modality/datasets
 HERE
 
+cat > /tmp/nextflow.config << HERE
+process {
+  executor = 'awsbatch'
+  withName:'.*publishStatesProc' {
+    memory = '16GB'
+    disk = '100GB'
+  }
+}
+HERE
+
 tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --revision main_build \
   --pull-latest \
   --main-script target/nextflow/predict_modality/workflows/process_datasets/main.nf \
   --workspace 53907369739130 \
-  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
+  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
   --params-file /tmp/params.yaml \
   --entry-name auto \
-  --config src/wf_utils/labels_tw.config \
+  --config /tmp/nextflow.config \
   --labels predict_modality,process_datasets

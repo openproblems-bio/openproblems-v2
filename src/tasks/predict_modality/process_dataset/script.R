@@ -40,7 +40,7 @@ determine_modality <- function(ad, mod1 = TRUE) {
   } else if ("feature_types" %in% colnames(ad$var)) {
     unique(ad$var[["feature_types"]])
   } else if (mod1) {
-    "GEX"
+    "RNA"
   } else if (grepl("cite", ad$uns[["dataset_id"]])) {
     "ADT"
   } else if (grepl("multiome", ad$uns[["dataset_id"]])) {
@@ -71,7 +71,7 @@ ad1_uns$dataset_name <- ad2_uns$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
+# determine new var
 ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 

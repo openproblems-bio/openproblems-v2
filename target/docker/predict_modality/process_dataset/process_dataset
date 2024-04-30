@@ -440,9 +440,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-04-30T06:41:42Z"
+LABEL org.opencontainers.image.created="2024-04-30T07:30:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="582f0726ce73ed39a1c1ede49455256fd9d7bc60"
+LABEL org.opencontainers.image.revision="1cdcc2ee66a4381437da16e32c91f4da5d4e4c10"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1094,7 +1094,7 @@ determine_modality <- function(ad, mod1 = TRUE) {
   } else if ("feature_types" %in% colnames(ad\$var)) {
     unique(ad\$var[["feature_types"]])
   } else if (mod1) {
-    "GEX"
+    "RNA"
   } else if (grepl("cite", ad\$uns[["dataset_id"]])) {
     "ADT"
   } else if (grepl("multiome", ad\$uns[["dataset_id"]])) {
@@ -1125,7 +1125,7 @@ ad1_uns\$dataset_name <- ad2_uns\$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
+# determine new var
 ad1_var <- ad1\$var[, intersect(colnames(ad1\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 ad2_var <- ad2\$var[, intersect(colnames(ad2\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
