@@ -15,6 +15,8 @@ par = {
     "model": "resources_test/batch_integration/scgpt/pretrained_model",
     "model_config": "resources_test/batch_integration/scgpt/pretrained_model/config.json",
     "model_vocab": "resources_test/batch_integration/scgpt/pretrained_model/vocab.json",
+    "pad_token": "<pad>",
+    "n_bins": 51,
     "output": "output.h5ad"
 }
 
@@ -37,11 +39,22 @@ if par["n_hvg"]:
     idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
     adata = adata[:, idx].copy()
 
-vocab = GeneVocab.from_file(par["model_vocab"])
+print("Cross check genes", flush=True)
 
-adata.var["id_in_vocabulary"] = [ 1 if feature in vocab else -1 for feature in adata.var["feature_name"]]
-feature_ids_in_vocab = np.array(adata.var["id_in_vocabulary"])
+pad_token = par["pad_token"]
+special_tokens = [pad_token, "<cls>", "<eoc>"]
+
+vocab = GeneVocab.from_file(par["model_vocab"])
+[vocab.append_token(s) for s in special_tokens if s not in vocab]
+
+adata.var["id_in_vocab"] = [ 1 if feature in vocab else -1 for feature in adata.var["feature_name"]]
+feature_ids_in_vocab = np.array(adata.var["id_in_vocab"])
 adata = adata[:, adata.var["id_in_vocab"] >= 0]
+
+
+print("Binning data", flush=True)
+
+
 
 print("Load model config", flush=True)
 
