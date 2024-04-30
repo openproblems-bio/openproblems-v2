@@ -28,6 +28,17 @@ meta = {
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+def _digitize(x: np.ndarray, bins: np.ndarray) -> np.ndarray:
+    assert x.ndim == 1 and bins.ndim == 1
+    left_digits = np.digitize(x, bins)
+    right_digits = np.digitize(x, bins, right=True)
+    rands = np.random.rand(len(x))  # uniform random numbers
+    digits = rands * (right_digits - left_digits) + left_digits
+    digits = np.ceil(digits)
+    smallest_dtype = np.min_scalar_type(digits.max().astype(np.uint)) # Already checked for non-negative values
+    digits = digits.astype(smallest_dtype)
+    return digits
+
 
 print("Load data", flush=True)
 adata = ad.read_h5ad(par["input"])
@@ -38,6 +49,7 @@ if par["n_hvg"]:
     print(f"Select top {par["n_hvg"]} high variable genes", flush=True)
     idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
     adata = adata[:, idx].copy()
+
 
 print("Cross check genes", flush=True)
 
@@ -54,7 +66,28 @@ adata = adata[:, adata.var["id_in_vocab"] >= 0]
 
 print("Binning data", flush=True)
 
+layer_data = adata.layers["normalized"]
 
+binned_rows = []
+bin_edges = []
+for row_number in range(adata.layers["normalized"].indptr.size-1):
+    row_start_index, row_end_index = layer_data.indptr[row_number], layer_data.indptr[row_number+1]
+    non_zero_row = layer_data.data[row_start_index:row_end_index]
+    if non_zero_row.max() == 0:
+        binned_rows.append(np.zeros_like(non_zero_row, dtype=np.int8))
+        bin_edges.append(np.array([0] * par["n_bins"]))
+        continue
+    bins = np.quantile(non_zero_row, np.linspace(0, 1, par["n_bins"] - 1))
+    non_zero_digits = _digitize(non_zero_row, bins)
+    assert non_zero_digits.min() >= 1
+    assert non_zero_digits.max() <= par["n_bins"] - 1
+    binned_rows.append(non_zero_digits)
+    bin_edges.append(np.concatenate([[0], bins]))
+
+adata.layers["binned"] = scipy.sparse.csc_matrix((np.concatenate(binned_rows, casting="same_kind"),
+                                                 layer_data.indices, layer_data.indptr), shape=layer_data.shape)
+
+adata.obsm["bin_edges"] = np.stack(bin_edges)
 
 print("Load model config", flush=True)
 
