@@ -421,9 +421,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "networkx"
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods novel_train"
-LABEL org.opencontainers.image.created="2024-04-29T19:38:01Z"
+LABEL org.opencontainers.image.created="2024-04-30T06:41:41Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="c83adba963d002dd42950bdf908d4b5b03dee63e"
+LABEL org.opencontainers.image.revision="582f0726ce73ed39a1c1ede49455256fd9d7bc60"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -996,8 +996,8 @@ input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 mod1 = input_train_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
 
-input_train_mod1.X = input_train_mod1.layers['counts']
-input_train_mod2.X = input_train_mod2.layers['counts']
+input_train_mod1.X = input_train_mod1.layers['normalized']
+input_train_mod2.X = input_train_mod2.layers['normalized']
 
 input_train_mod2_df = input_train_mod2.to_df()
 

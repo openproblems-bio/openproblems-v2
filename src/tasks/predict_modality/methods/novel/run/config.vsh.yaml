@@ -9,6 +9,7 @@ functionality:
     repository_url: https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel
     reference: pmlr-v176-lance2022multimodal
     submission_id: "169769"
+    preferred_normalization: log_cp10k
   resources:
     - path: main.nf
       type: nextflow_script

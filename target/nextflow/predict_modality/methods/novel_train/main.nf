@@ -3211,7 +3211,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_train",
     "viash_version" : "0.8.0",
-    "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
+    "git_commit" : "582f0726ce73ed39a1c1ede49455256fd9d7bc60",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3286,8 +3286,8 @@ input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 mod1 = input_train_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
 
-input_train_mod1.X = input_train_mod1.layers['counts']
-input_train_mod2.X = input_train_mod2.layers['counts']
+input_train_mod1.X = input_train_mod1.layers['normalized']
+input_train_mod2.X = input_train_mod2.layers['normalized']
 
 input_train_mod2_df = input_train_mod2.to_df()
 

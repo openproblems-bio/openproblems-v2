@@ -3173,6 +3173,7 @@ meta = [
       "repository_url" : "https://github.com/openproblems-bio/neurips2021_multimodal_topmethods/tree/main/src/predict_modality/methods/novel",
       "reference" : "pmlr-v176-lance2022multimodal",
       "submission_id" : "169769",
+      "preferred_normalization" : "log_cp10k",
       "type" : "method",
       "type_info" : {
         "label" : "Method",
@@ -3199,7 +3200,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
+          "git_commit" : "582f0726ce73ed39a1c1ede49455256fd9d7bc60",
           "executable" : "/nextflow/predict_modality/methods/novel_train/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_train"
@@ -3221,7 +3222,7 @@ meta = [
           "functionalityNamespace" : "predict_modality/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
+          "git_commit" : "582f0726ce73ed39a1c1ede49455256fd9d7bc60",
           "executable" : "/nextflow/predict_modality/methods/novel_predict/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_predict"
@@ -3267,7 +3268,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel",
     "viash_version" : "0.8.0",
-    "git_commit" : "c83adba963d002dd42950bdf908d4b5b03dee63e",
+    "git_commit" : "582f0726ce73ed39a1c1ede49455256fd9d7bc60",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
