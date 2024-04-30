@@ -19,8 +19,8 @@ else:
 ## VIASH START
 
 par = {
-  'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/train_mod1.h5ad',
-  'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/normal/train_mod2.h5ad',
+  'input_train_mod1': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod1.h5ad',
+  'input_train_mod2': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod2.h5ad',
   'output': 'model.pt'
 }
 
@@ -42,8 +42,8 @@ input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 mod1 = input_train_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
 
-input_train_mod1.X = input_train_mod1.layers['counts']
-input_train_mod2.X = input_train_mod2.layers['counts']
+input_train_mod1.X = input_train_mod1.layers['normalized']
+input_train_mod2.X = input_train_mod2.layers['normalized']
 
 input_train_mod2_df = input_train_mod2.to_df()
 
