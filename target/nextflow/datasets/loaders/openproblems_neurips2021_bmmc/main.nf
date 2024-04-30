@@ -3418,7 +3418,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/openproblems_neurips2021_bmmc",
     "viash_version" : "0.8.0",
-    "git_commit" : "1cdcc2ee66a4381437da16e32c91f4da5d4e4c10",
+    "git_commit" : "d783d577c2f9ddafd677b42299e85757b4212d14",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3498,7 +3498,8 @@ convert_matrix(adata.obsm)
 if "is_train" not in adata.obs.columns:
   batch_info = adata.obs["batch"]
   batch_categories = batch_info.dtype.categories
-  train = ["s1d1", "s2d1", "s2d4", "s3d6", "s3d1"]
+  # From https://github.com/openproblems-bio/neurips2021_multimodal_viash/blob/75281c039ab98b459edbf52058a18597e710ed4d/src/common/datasets/process_inhouse_datasets/script.R#L14-L17
+  train = ["s1d1", "s1d2", "s2d1", "s2d4", "s3d1", "s3d6", "s3d7"]
   adata.obs["is_train"] = [ "train" if x in train else "test" for x in batch_info ]
 
 # Construct Modality datasets

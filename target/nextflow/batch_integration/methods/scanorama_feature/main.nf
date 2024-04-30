@@ -3045,7 +3045,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_feature",
     "viash_version" : "0.8.0",
-    "git_commit" : "1cdcc2ee66a4381437da16e32c91f4da5d4e4c10",
+    "git_commit" : "d783d577c2f9ddafd677b42299e85757b4212d14",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
