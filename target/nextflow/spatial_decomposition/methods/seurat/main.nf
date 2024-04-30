@@ -3050,7 +3050,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/seurat",
     "viash_version" : "0.8.0",
-    "git_commit" : "74ab3c55fe5bf3eeca338214e6147facd6bf6ed6",
+    "git_commit" : "0968b19bc02804f258364949ef2b654632fd9e56",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

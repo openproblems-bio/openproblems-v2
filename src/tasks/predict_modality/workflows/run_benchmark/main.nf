@@ -24,7 +24,7 @@ workflow run_wf {
     // newwave_knnr,
     // random_forest,
     guanlab_dengkw_pm,
-    novel
+    simplemlp
   ]
 
   // construct list of metrics

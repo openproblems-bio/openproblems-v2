@@ -2793,18 +2793,6 @@ meta = [
                 "name" : "hvg_score",
                 "description" : "A score for the feature indicating how highly variable it is.",
                 "required" : true
-              },
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
-                "required" : true
               }
             ],
             "uns" : [
@@ -2942,18 +2930,6 @@ meta = [
                 "type" : "double",
                 "name" : "hvg_score",
                 "description" : "A score for the feature indicating how highly variable it is.",
-                "required" : true
-              },
-              {
-                "type" : "boolean",
-                "name" : "hvg",
-                "description" : "Whether or not the feature is considered to be a 'highly variable gene'",
-                "required" : true
-              },
-              {
-                "type" : "double",
-                "name" : "hvg_score",
-                "description" : "A ranking of the features by hvg.",
                 "required" : true
               }
             ],
@@ -3645,7 +3621,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "74ab3c55fe5bf3eeca338214e6147facd6bf6ed6",
+    "git_commit" : "0968b19bc02804f258364949ef2b654632fd9e56",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3751,7 +3727,7 @@ ad1_uns\\$dataset_name <- ad2_uns\\$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
+# determine new var
 ad1_var <- ad1\\$var[, intersect(colnames(ad1\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 ad2_var <- ad2\\$var[, intersect(colnames(ad2\\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
