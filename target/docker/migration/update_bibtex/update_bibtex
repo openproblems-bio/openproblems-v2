@@ -409,9 +409,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/sciunto-org/python-bibtexparser@main"
 
 LABEL org.opencontainers.image.description="Companion container for running component migration update_bibtex"
-LABEL org.opencontainers.image.created="2024-04-30T07:56:23Z"
+LABEL org.opencontainers.image.created="2024-04-30T09:54:05Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d783d577c2f9ddafd677b42299e85757b4212d14"
+LABEL org.opencontainers.image.revision="74ab3c55fe5bf3eeca338214e6147facd6bf6ed6"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
