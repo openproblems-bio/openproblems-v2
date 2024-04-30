@@ -47,7 +47,9 @@ mod_2 = input_train_mod2.uns['modality']
 
 task = f'{mod_1}2{mod_2}'
 
-ymean = np.asarray(input_train_mod2.layers["normalized"].mean(axis=0))
+print('Load ymean', flush=True)
+ymean_path = f"{par['input_model']}/{task}_ymean.npy"
+ymean = np.load(ymean_path)
 
 print('Start predict', flush=True)
 if task == 'GEX2ATAC':

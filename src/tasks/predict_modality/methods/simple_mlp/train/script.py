@@ -104,42 +104,49 @@ sites = obs_info.site.unique()
 
 os.makedirs(par['output'], exist_ok=True)
 
+print('Compute ymean', flush=True)
+ymean = np.asarray(input_train_mod2.layers["normalized"].mean(axis=0))
+path = f"{par['output']}/{task}_ymean.npy"
+np.save(path, ymean)
+
+if task == "GEX2ATAC":
+    logging.info(f"No training required for this task ({task}).")
+
 if not os.path.exists(yaml_path):
-    logging.warning(f"No configuration file found for task '{task}'. Skipping training.")
-    sys.exit(0)
-else:
-    yaml_path = f'{resources_dir}/yaml/mlp_{task}.yaml'
-    yps = []
-    scores = []
+    logging.error(f"No configuration file found for task '{task}'")
 
-    msgs = {}
-    # TODO: if we want this method to work for other datasets, dont use hardcoded range
-    for fold in range(3):
+yaml_path = f'{resources_dir}/yaml/mlp_{task}.yaml'
+yps = []
+scores = []
 
-        run_name = f"{task}_fold_{fold}"
-        save_path = f"{par['output']}/{run_name}"
-        num_workers = meta["cpus"] or 0
+msgs = {}
+# TODO: if we want this method to work for other datasets, dont use hardcoded range
+for fold in range(3):
 
-        Path(save_path).mkdir(parents=True, exist_ok=True)   
+    run_name = f"{task}_fold_{fold}"
+    save_path = f"{par['output']}/{run_name}"
+    num_workers = meta["cpus"] or 0
 
-        X,y,Xt,yt = utils.split(input_train_mod1, input_train_mod2, fold)
-        
-        logger = TensorBoardLogger(save_path, name='') 
-        
-        config = utils.load_yaml(yaml_path)
+    Path(save_path).mkdir(parents=True, exist_ok=True)   
 
-        if config.batch_size > X.shape[0]:
-            config = config._replace(batch_size=math.ceil(X.shape[0] / 2))
+    X,y,Xt,yt = utils.split(input_train_mod1, input_train_mod2, fold)
+    
+    logger = TensorBoardLogger(save_path, name='') 
+    
+    config = utils.load_yaml(yaml_path)
 
-        score, yp = _train(X, y, Xt, yt, logger, config, num_workers)
-        yps.append(yp)
-        scores.append(score)
-        msg = f"{task} Fold {fold} RMSE {score:.3f}"
-        msgs[f'Fold {fold}'] = f'{score:.3f}'
-        print(msg)
+    if config.batch_size > X.shape[0]:
+        config = config._replace(batch_size=math.ceil(X.shape[0] / 2))
 
-    yp = np.concatenate(yps)
-    score = np.mean(scores)
-    msgs['Overall'] = f'{score:.3f}'
-    print('Overall', f'{score:.3f}')
+    score, yp = _train(X, y, Xt, yt, logger, config, num_workers)
+    yps.append(yp)
+    scores.append(score)
+    msg = f"{task} Fold {fold} RMSE {score:.3f}"
+    msgs[f'Fold {fold}'] = f'{score:.3f}'
+    print(msg)
+
+yp = np.concatenate(yps)
+score = np.mean(scores)
+msgs['Overall'] = f'{score:.3f}'
+print('Overall', f'{score:.3f}')
 
