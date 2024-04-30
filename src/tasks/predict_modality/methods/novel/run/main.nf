@@ -15,10 +15,6 @@ workflow run_wf {
       fromState: ["input_train_mod2", "input_test_mod1", "input_model", "input_transform", "output"],
       toState: ["output": "output"]
     )
-    | setState ([
-      "output"
-    ])
-
 
   emit: output_ch
 }
