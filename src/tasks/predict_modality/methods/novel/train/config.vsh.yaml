@@ -14,7 +14,7 @@ functionality:
     - path: ../helper_functions.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3
+    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.4
     setup:
       - type: python
         packages:
@@ -22,4 +22,4 @@ platforms:
           - networkx
   - type: nextflow
     directives:
-      label: [midmem, hightime, midcpu, midsharedmem, gpu]
+      label: [highmem, hightime, midcpu, highsharedmem, gpu]
