@@ -30,6 +30,7 @@ dataset_url: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE194122"
 dataset_reference: luecken2021neurips
 normalization_methods: [log_cp10k]
 do_subsample: true
+even: true
 n_obs: 600
 n_vars: 1500
 output_mod1: '$id/dataset_mod1.h5ad'
@@ -61,7 +62,7 @@ nextflow run . \
 #   --revision main_build \
 #   --main-script target/nextflow/datasets/workflows/process_openproblems_neurips2021_bmmc/main.nf \
 #   --workspace 53907369739130 \
-#   --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+#   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
 #   --params-file "$params_file" \
 #   --config /tmp/nextflow.config \
 #   --labels predict_modality

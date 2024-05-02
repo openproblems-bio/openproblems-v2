@@ -9,7 +9,7 @@ param_list:
     rename_keys: 'input:output_dataset'
   - id: openproblems_v1_multimodal
     input_states: "$DATASETS_DIR/openproblems_v1_multimodal/**/log_cp10k/state.yaml"
-    rename_keys: 'input:output_dataset_mod1'
+    rename_keys: 'input:output_mod1'
   - id: cellxgene_census
     input_states: "$DATASETS_DIR/cellxgene_census/**/log_cp10k/state.yaml"
     rename_keys: 'input:output_dataset'
@@ -37,7 +37,7 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --pull-latest \
   --main-script target/nextflow/datasets/workflows/extract_dataset_info/main.nf \
   --workspace 53907369739130 \
-  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
   --params-file "/tmp/params.yaml" \
   --config /tmp/nextflow.config
 
