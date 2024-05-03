@@ -109,11 +109,14 @@ ymean = np.asarray(input_train_mod2.layers["normalized"].mean(axis=0))
 path = f"{par['output']}/{task}_ymean.npy"
 np.save(path, ymean)
 
+
 if task == "GEX2ATAC":
     logging.info(f"No training required for this task ({task}).")
+    sys.exit(0)
 
 if not os.path.exists(yaml_path):
     logging.error(f"No configuration file found for task '{task}'")
+    sys.exit(1)
 
 yaml_path = f'{resources_dir}/yaml/mlp_{task}.yaml'
 yps = []
