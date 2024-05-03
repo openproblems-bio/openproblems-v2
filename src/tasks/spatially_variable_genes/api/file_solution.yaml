@@ -15,8 +15,8 @@ info:
         description: Gene names
         required: true
       - type: double
-        name: pred_spatial_var_score
-        description: Predicted spatial variability score
+        name: true_spatial_var_score
+        description: True spatial variability score
         required: true
     uns:
       - type: string
