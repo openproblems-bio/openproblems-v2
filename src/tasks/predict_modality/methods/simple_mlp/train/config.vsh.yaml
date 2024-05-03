@@ -18,4 +18,4 @@ platforms:
           - pytorch-lightning
   - type: nextflow
     directives:
-      label: [highmem, hightime, highcpu, gpu, midsharedmem]
+      label: [highmem, hightime, highcpu, gpu, highsharedmem]
