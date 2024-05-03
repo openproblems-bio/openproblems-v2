@@ -4,6 +4,7 @@ import json
 import scipy
 from sklearn.model_selection import train_test_split
 from scgpt.tokenizer.gene_tokenizer import GeneVocab
+from scgpt.tokenizer import tokenize_and_pad_batch
 from scgpt.model import TransformerModel
 from scgpt.utils.util import load_pretrained
 import torch
@@ -12,14 +13,15 @@ import torch
 
 par = {
     "input": "resources_test/batch_integration/pancreas/dataset.h5ad",
-    "model": "resources_test/batch_integration/scgpt/pretrained_model",
-    "model_config": "resources_test/batch_integration/scgpt/pretrained_model/config.json",
-    "model_vocab": "resources_test/batch_integration/scgpt/pretrained_model/vocab.json",
+    "model": "resources_test/scGPT_human/best_model.pt",
+    "model_config": "resources_test/scGPT_human/args.json",
+    "model_vocab": "resources_test/scGPT_human/vocab.json",
     "pad_token": "<pad>",
     "max_seq_len": None,
     "pad_value": -2,
     "n_bins": 51,
-    "output": "output.h5ad"
+    "output": "output.h5ad",
+    "n_hvg": 2000,
 }
 
 meta = {
@@ -48,7 +50,7 @@ adata = ad.read_h5ad(par["input"])
 print("Preprocess data", flush=True)
 
 if par["n_hvg"]:
-    print(f"Select top {par["n_hvg"]} high variable genes", flush=True)
+    print(f"Select top {par['n_hvg']} high variable genes", flush=True)
     idx = adata.var["hvg_score"].to_numpy().argsort()[::-1][:par["n_hvg"]]
     adata = adata[:, idx].copy()
 
@@ -91,6 +93,43 @@ adata.layers["binned"] = scipy.sparse.csc_matrix((np.concatenate(binned_rows, ca
 
 adata.obsm["bin_edges"] = np.stack(bin_edges)
 
+
+
+print("Tokenize input data", flush=True)
+
+all_counts = (
+    adata.layers["normalized"].A
+    if scipy.sparse.issparse(adata.layers["normalized"])
+    else adata.layers["normalized"]
+)
+genes = adata.var["feature_name"].tolist()
+
+vocab.set_default_index(vocab["<pad>"])
+ntokens = len(vocab)
+gene_ids = np.array(vocab(genes), dtype=int)
+
+if not par["max_seq_len"]:
+    max_seq_len = adata.var.shape[0] + 1
+else:
+    max_seq_len = par["max_seq_len"]
+
+tokenized_data = tokenize_and_pad_batch(
+    all_counts,
+    gene_ids,
+    max_len=max_seq_len,
+    vocab=vocab,
+    pad_token=pad_token,
+    pad_value=par["pad_value"],
+    append_cls=True,  # append <cls> token at the beginning,
+    include_zero_gene=False,
+    return_pt=True,
+    mod_type=None,
+    vocab_mod=None
+    )
+
+all_gene_ids, all_values = tokenized_data["genes"], tokenized_data["values"]
+padding_mask = all_gene_ids.eq(vocab[pad_token])
+
 print("Load model config", flush=True)
 
 with open(par["model_config"], "r") as f:
@@ -102,32 +141,92 @@ d_hid = model_configs["d_hid"]
 nlayers = model_configs["nlayers"]
 n_layers_cls = model_configs["n_layers_cls"]
 
-print("Tokenize input data", flush=True)
-all_counts = (
-    adata.layers["normalized"].A
-    if scipy.sparse.issparse(adata.layers["normalized"])
-    else adata.layers["normalized"]
-)
-genes = adata.var["feature_name"].tolist()
-
-celltypes_labels = adata.obs["label"].tolist()  # make sure count from 0
-num_types = len(set(celltypes_labels))
-celltypes_labels = np.array(celltypes_labels)
-
 batch_ids = adata.obs["batch"].tolist()
 num_batch_types = len(set(batch_ids))
-batch_ids = np.array(batch_ids)
 
-(
-    train_data,
-    valid_data,
-    train_celltype_labels,
-    valid_celltype_labels,
-    train_batch_labels,
-    valid_batch_labels,
-) = train_test_split(
-    all_counts, celltypes_labels, batch_ids, test_size=0.1, shuffle=True
+model = TransformerModel(
+    ntokens,
+    d_model=embsize,
+    nhead=nhead,
+    d_hid=d_hid,
+    nlayers=nlayers,
+    vocab=vocab,
+    dropout=0.5, # scGPT default, only relevant for fine-tuning applications
+    pad_token=pad_token,
+    pad_value=par["pad_value"],
+    nlayers_cls=3,  # only applicable for decoder-based operations
+    n_cls=1,  # only applicable for decoder-based operations
+    do_mvc=False,  # only applicable for decoder-based operations
+    ecs_threshold=0.8,  # only applicable for decoder-based operations
+    do_dab=False,  # only applicable for decoder-based operations
+    use_batch_labels=False, # only applicable for decoder-based operations
+    num_batch_labels=num_batch_types,
+    domain_spec_batchnorm=True,
+    input_emb_style="continuous",  # scGPT default
+    explicit_zero_prob=False,  #TODO: Parametrize when GPU-based machine types are supported
+    use_fast_transformer=True if device == "cuda" else False,  #TODO: Parametrize when GPU-based machine types are supported
+    # fast_transformer_backend="flash",  #TODO: Parametrize when GPU-based machine types are supported
+    pre_norm=False  #TODO: Parametrize when GPU-based machine types are supported
+    )
+
+load_pretrained(
+    model,
+    torch.load(par["model"], map_location=device),
+    verbose=False
+    )
+
+model.to(device)
+model.eval()
+
+
+cell_embeddings = model.encode_batch(
+    torch.from_numpy(all_gene_ids),
+    torch.from_numpy(all_values).float(),
+    src_key_padding_mask=torch.from_numpy(padding_mask),
+    batch_size=par["batch_size"],
+    batch_labels=torch.from_numpy(batch_ids).long() if par["dsbn"] else None,
+    output_to_cpu=True,
+    time_step=0,
+    return_np=True
 )
 
-vocab.set_default_index(vocab["<pad>"])
-gene_ids = np.array(vocab(genes), dtype=int)
+cell_embeddings = cell_embeddings / np.linalg.norm(
+    cell_embeddings, axis=1, keepdims=True
+)
+
+print("Store outputs", flush=True)
+output = ad.AnnData(
+    obs=adata.obs[[]],
+    var=adata.var[[]],
+    obsm={
+        "X_emb": cell_embeddings,
+    },
+    uns={
+        "dataset_id": adata.uns["dataset_id"],
+        "normalization_id": adata.uns["normalization_id"],
+        "method_id": meta["functionality_name"],
+    },
+)
+
+print("Write output to file", flush=True)
+output.write_h5ad(par["output"], compression="gzip")
+
+# celltypes_labels = adata.obs["label"].tolist()  # make sure count from 0
+# num_types = len(set(celltypes_labels))
+# celltypes_labels = np.array(celltypes_labels)
+
+# batch_ids = adata.obs["batch"].tolist()
+# num_batch_types = len(set(batch_ids))
+# batch_ids = np.array(batch_ids)
+
+# (
+#     train_data,
+#     valid_data,
+#     train_celltype_labels,
+#     valid_celltype_labels,
+#     train_batch_labels,
+#     valid_batch_labels,
+# ) = train_test_split(
+#     all_counts, celltypes_labels, batch_ids, test_size=0.1, shuffle=True
+# )
+
