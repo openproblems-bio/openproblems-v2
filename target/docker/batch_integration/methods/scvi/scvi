@@ -434,9 +434,9 @@ RUN pip install --upgrade pip && \
 RUN pip install -U "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scvi"
-LABEL org.opencontainers.image.created="2024-04-30T10:28:39Z"
+LABEL org.opencontainers.image.created="2024-05-03T10:55:09Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="0968b19bc02804f258364949ef2b654632fd9e56"
+LABEL org.opencontainers.image.revision="d3f3cc5830d8571d3ee06a6d7763221add682d67"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

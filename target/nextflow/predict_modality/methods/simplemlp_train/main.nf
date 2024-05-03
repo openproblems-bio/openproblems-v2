@@ -3161,7 +3161,8 @@ meta = [
           "highmem",
           "hightime",
           "highcpu",
-          "gpu"
+          "gpu",
+          "midsharedmem"
         ],
         "tag" : "$id"
       },
@@ -3196,7 +3197,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/simplemlp_train",
     "viash_version" : "0.8.0",
-    "git_commit" : "0968b19bc02804f258364949ef2b654632fd9e56",
+    "git_commit" : "d3f3cc5830d8571d3ee06a6d7763221add682d67",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3732,7 +3733,8 @@ meta["defaults"] = [
     "highmem",
     "hightime",
     "highcpu",
-    "gpu"
+    "gpu",
+    "midsharedmem"
   ],
   "tag" : "$id"
 }'''),
