@@ -8,8 +8,8 @@ description: |
 authors:
   - name: "Zhijian Li"
     roles: [ author, maintainer ]
-    # info: 
-    #   github: 
+    info: 
+      github: lzj1769
     #   orcid: 
   - name: "Zain M. Patel"
     roles: [ author ]
