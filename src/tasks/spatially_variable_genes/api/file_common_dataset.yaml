@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/input.h5ad"
+example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/input_data.h5ad"
 info:
   label: "Common Dataset"
   summary: A subset of the common dataset.
