@@ -34,6 +34,21 @@ functionality:
       type: integer
       default: 2000
       description: Number of highly variable genes to use.
+    - name: --pad_token
+      type: string
+      default: "<pad>"
+      description: Padding token.
+    - name: --pad_value
+      type: integer
+      default: -2
+      description: Padding value.
+    - name: --max_seq_len
+      type: integer
+      description: Maximum sequence length.
+    - name: --n_bins
+      type: integer
+      default: 51
+      description: Number of bins.
   resources:
     - type: python_script
       path: script.py

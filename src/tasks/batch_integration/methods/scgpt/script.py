@@ -16,6 +16,8 @@ par = {
     "model_config": "resources_test/batch_integration/scgpt/pretrained_model/config.json",
     "model_vocab": "resources_test/batch_integration/scgpt/pretrained_model/vocab.json",
     "pad_token": "<pad>",
+    "max_seq_len": None,
+    "pad_value": -2,
     "n_bins": 51,
     "output": "output.h5ad"
 }
