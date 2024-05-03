@@ -410,9 +410,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn"
 
 LABEL org.opencontainers.image.description="Companion container for running component label_projection/methods naive_bayes"
-LABEL org.opencontainers.image.created="2024-05-03T11:40:55Z"
+LABEL org.opencontainers.image.created="2024-05-03T12:15:19Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="3d0a9cdce5be4b8f4d140a187705fba81e49a936"
+LABEL org.opencontainers.image.revision="cc78f93f1e488d51a9ff4e0904a474031aa1548d"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
