@@ -49,6 +49,10 @@ functionality:
       type: integer
       default: 51
       description: Number of bins.
+    - name: --batch_size
+      type: integer
+      default: 64
+      description: Batch size.
   resources:
     - type: python_script
       path: script.py

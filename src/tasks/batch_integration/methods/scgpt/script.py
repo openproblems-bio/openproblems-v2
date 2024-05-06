@@ -22,6 +22,7 @@ par = {
     "n_bins": 51,
     "output": "output.h5ad",
     "n_hvg": 2000,
+    "batch_size": 64,
 }
 
 meta = {
@@ -129,6 +130,7 @@ tokenized_data = tokenize_and_pad_batch(
 
 all_gene_ids, all_values = tokenized_data["genes"], tokenized_data["values"]
 padding_mask = all_gene_ids.eq(vocab[pad_token])
+padding_mask = padding_mask.numpy()
 
 print("Load model config", flush=True)
 
@@ -141,7 +143,10 @@ d_hid = model_configs["d_hid"]
 nlayers = model_configs["nlayers"]
 n_layers_cls = model_configs["n_layers_cls"]
 
-batch_ids = adata.obs["batch"].tolist()
+batch_id_cats = adata.obs["batch"].astype("category")
+batch_id_labels = batch_id_cats.cat.codes.values
+batch_ids = batch_id_labels.tolist()
+batch_ids = np.array(batch_ids)
 num_batch_types = len(set(batch_ids))
 
 model = TransformerModel(
@@ -180,9 +185,9 @@ model.eval()
 
 
 cell_embeddings = model.encode_batch(
-    torch.from_numpy(all_gene_ids),
-    torch.from_numpy(all_values).float(),
-    src_key_padding_mask=torch.from_numpy(padding_mask),
+    torch.from_numpy(np.array(all_gene_ids)),
+    torch.from_numpy(np.array(all_values)).float(),
+    src_key_padding_mask=torch.from_numpy(np.array(padding_mask)),
     batch_size=par["batch_size"],
     batch_labels=torch.from_numpy(batch_ids).long() if par["dsbn"] else None,
     output_to_cpu=True,
