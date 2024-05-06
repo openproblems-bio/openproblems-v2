@@ -189,7 +189,7 @@ cell_embeddings = model.encode_batch(
     torch.from_numpy(np.array(all_values)).float(),
     src_key_padding_mask=torch.from_numpy(np.array(padding_mask)),
     batch_size=par["batch_size"],
-    batch_labels=torch.from_numpy(batch_ids).long() if par["dsbn"] else None,
+    batch_labels=torch.from_numpy(batch_ids).long(),
     output_to_cpu=True,
     time_step=0,
     return_np=True
