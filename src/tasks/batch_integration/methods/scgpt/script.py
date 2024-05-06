@@ -89,7 +89,7 @@ for row_number in range(adata.layers["normalized"].indptr.size-1):
     binned_rows.append(non_zero_digits)
     bin_edges.append(np.concatenate([[0], bins]))
 
-adata.layers["binned"] = scipy.sparse.csc_matrix((np.concatenate(binned_rows, casting="same_kind"),
+adata.layers["binned"] = scipy.sparse.csr_matrix((np.concatenate(binned_rows, casting="same_kind"),
                                                  layer_data.indices, layer_data.indptr), shape=layer_data.shape)
 
 adata.obsm["bin_edges"] = np.stack(bin_edges)
