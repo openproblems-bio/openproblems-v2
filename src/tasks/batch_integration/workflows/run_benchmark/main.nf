@@ -27,7 +27,7 @@ workflow run_wf {
     scanorama_feature,
     scanvi,
     scvi,
-    scgpt,
+    scgpt_embedding,
     no_integration_batch,
     random_embed_cell,
     random_embed_cell_jitter,
