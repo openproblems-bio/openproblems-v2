@@ -2997,10 +2997,15 @@ meta = [
         {
           "type" : "r",
           "cran" : [
-            "Matrix"
+            "Matrix",
+            "pak"
           ],
-          "github" : [
-            "dmcable/spacexr"
+          "bioc_force_install" : false
+        },
+        {
+          "type" : "r",
+          "script" : [
+            "pak::pkg_install(\\"dmcable/spacexr\\")"
           ],
           "bioc_force_install" : false
         }
@@ -3052,7 +3057,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/rctd",
     "viash_version" : "0.8.0",
-    "git_commit" : "1a1019592365d7a47e0d4afd34316cf3f66f1b6a",
+    "git_commit" : "5f3e6ca59338f04d4c3e35caa4e1d77b13c25465",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3118,8 +3123,8 @@ rownames(coordinates) <- rownames(input_single_cell)
 input_single_cell\\$obsm <- list(coordinates = coordinates)
 
 # remove rare cell types to prevent RCTD error
-celltype_counts <- table(input_single_cell\\$obs\\$cell_type)
-input_single_cell <- input_single_cell[input_single_cell\\$obs\\$cell_type %in% names(as.table(celltype_counts[celltype_counts > 25]))]
+# celltype_counts <- table(input_single_cell\\$obs\\$cell_type)
+# input_single_cell <- input_single_cell[input_single_cell\\$obs\\$cell_type %in% names(as.table(celltype_counts[celltype_counts > 25]))]
 
 # get single cell reference counts
 sc_counts <- t(input_single_cell\\$layers['counts'])
