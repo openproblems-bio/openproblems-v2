@@ -451,9 +451,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scgpt"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scgpt_embedding"
-LABEL org.opencontainers.image.created="2024-05-06T09:54:51Z"
+LABEL org.opencontainers.image.created="2024-05-08T08:39:18Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="da55084ce01409b4ffc56fe6ae28fdc10bcc0643"
+LABEL org.opencontainers.image.revision="63b912cc4dfc12e6119ceff54b8cd10476f4db94"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
