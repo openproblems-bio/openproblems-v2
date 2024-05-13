@@ -41,16 +41,20 @@ input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
 mod1 = input_test_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
 
+n_vars_mod1 = input_train_mod2.uns["model_dim"]["mod1"]
+n_vars_mod2 = input_train_mod2.uns["model_dim"]["mod2"]
+
+
 del input_train_mod2
 
-input_test_mod1.X = input_test_mod1.layers['counts']
+input_test_mod1.X = input_test_mod1.layers['normalized']
 
 model_fp = par['input_model']
 
 print("Start predict", flush=True)
 
 if mod1 == 'GEX' and mod2 == 'ADT':
-  model = ModelRegressionGex2Adt(256,134)   
+  model = ModelRegressionGex2Adt(n_vars_mod1,n_vars_mod2)   
   weight = torch.load(model_fp, map_location='cpu')    
   with open(par['input_transform'], 'rb') as f:
     lsi_transformer_gex = pickle.load(f)
@@ -59,7 +63,7 @@ if mod1 == 'GEX' and mod2 == 'ADT':
   input_test_mod1_ = lsi_transformer_gex.transform(input_test_mod1)
 
 elif mod1 == 'GEX' and mod2 == 'ATAC':
-  model = ModelRegressionGex2Atac(256,10000)   
+  model = ModelRegressionGex2Atac(n_vars_mod1,n_vars_mod2)   
   weight = torch.load(model_fp, map_location='cpu')
   with open(par['input_transform'], 'rb') as f:
     lsi_transformer_gex = pickle.load(f)
@@ -68,7 +72,7 @@ elif mod1 == 'GEX' and mod2 == 'ATAC':
   input_test_mod1_ = lsi_transformer_gex.transform(input_test_mod1)
     
 elif mod1 == 'ATAC' and mod2 == 'GEX':
-  model = ModelRegressionAtac2Gex(256,13431)   
+  model = ModelRegressionAtac2Gex(n_vars_mod1,n_vars_mod2)   
   weight = torch.load(model_fp, map_location='cpu')
   with open(par['input_transform'], 'rb') as f:
     lsi_transformer_gex = pickle.load(f)
@@ -77,7 +81,7 @@ elif mod1 == 'ATAC' and mod2 == 'GEX':
   input_test_mod1_ = lsi_transformer_gex.transform(input_test_mod1)
 
 elif mod1 == 'ADT' and mod2 == 'GEX':
-    model = ModelRegressionAdt2Gex(134,13953)   
+    model = ModelRegressionAdt2Gex(n_vars_mod1,n_vars_mod2)   
     weight = torch.load(model_fp, map_location='cpu')
 
     model.load_state_dict(weight)    

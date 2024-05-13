@@ -8,6 +8,12 @@ functionality:
       required: false
       default: "lsi_transformer.pickle"
       direction: output
+    - name: --output_train_mod2
+      type: file
+      description: copy of the input with model dim in `.uns`
+      direction: output
+      default: "train_mod2.h5ad"
+      required: false
   resources:
     - path: script.py
       type: python_script

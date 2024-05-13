@@ -19,8 +19,9 @@ else:
 ## VIASH START
 
 par = {
-  'input_train_mod1': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod1.h5ad',
-  'input_train_mod2': 'resources/predict_modality/datasets/openproblems_neurips2021/bmmc_multiome/normal/log_cp10k/train_mod2.h5ad',
+  'input_train_mod1': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/normal/train_mod1.h5ad',
+  'input_train_mod2': 'resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/normal/train_mod2.h5ad',
+  'output_train_mod2': 'train_mod2.h5ad',
   'output': 'model.pt'
 }
 
@@ -38,6 +39,8 @@ print('Load data', flush=True)
 
 input_train_mod1 = ad.read_h5ad(par['input_train_mod1'])
 input_train_mod2 = ad.read_h5ad(par['input_train_mod2'])
+
+adata = input_train_mod2.copy()
 
 mod1 = input_train_mod1.uns['modality']
 mod2 = input_train_mod2.uns['modality']
@@ -120,6 +123,10 @@ elif mod1 == 'GEX' and mod2 == 'ATAC':
 
 loss_fn = torch.nn.MSELoss()
 train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test, par['output'], device)
+
+# Add model dim for use in predict part
+adata.uns["model_dim"] = {"mod1": n_vars_mod1, "mod2": n_vars_mod2}
+adata.write_h5ad(par['output_train_mod2'], compression="gzip")
 
 if mod1 != 'ADT':
     with open(par['output_transform'], 'wb') as f:
