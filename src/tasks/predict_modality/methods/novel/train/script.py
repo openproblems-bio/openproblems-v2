@@ -52,6 +52,15 @@ input_train_mod2_df = input_train_mod2.to_df()
 
 print('Start train', flush=True)
 
+
+# Check for zero divide
+zero_row = input_train_mod1.X.sum(axis=0) == 0
+
+if True in zero_row:
+  rem_var = input_train_mod1[:, zero_row].var_names
+  input_train_mod1 = input_train_mod1[:, ~zero_row]
+  
+
 # select number of variables for LSI
 n_comp = input_train_mod1.n_vars -1 if input_train_mod1.n_vars < 256 else 256
 
@@ -126,6 +135,7 @@ train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test, pa
 
 # Add model dim for use in predict part
 adata.uns["model_dim"] = {"mod1": n_vars_mod1, "mod2": n_vars_mod2}
+adata.uns["removed_vars"] = [rem_var[0]]
 adata.write_h5ad(par['output_train_mod2'], compression="gzip")
 
 if mod1 != 'ADT':
