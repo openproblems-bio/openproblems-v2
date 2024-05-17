@@ -1,4 +1,5 @@
 import scanpy as sc
+import sys
 
 ## VIASH START
 
@@ -15,12 +16,19 @@ meta = {
 
 ## VIASH END
 
+# add helper scripts to path
+sys.path.append(meta["resources_dir"])
+from utils import _set_uns
+
+
 print('Read input', flush=True)
 adata = sc.read_h5ad(par['input'])
 
 print("process dataset", flush=True)
-adata.obsm["X_emb"] = adata.obsm["X_pca"]
-sc.pp.neighbors(adata, use_rep='X_pca')
+neighbors_map = adata.uns['knn']
+adata.obsp['connectivities'] = adata.obsp[neighbors_map['connectivities_key']]
+adata.obsp['distances'] = adata.obsp[neighbors_map['distances_key']]
+_set_uns(adata, neighbors_key='knn')
 
 print("Store outputs", flush=True)
 adata.uns['method_id'] = meta['functionality_name']
