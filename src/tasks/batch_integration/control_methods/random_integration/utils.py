@@ -1,6 +1,12 @@
 import numpy as np
 
 
+def _set_uns(adata, neighbors_key):
+    adata.uns["neighbors"] = adata.uns[neighbors_key]
+    adata.uns["neighbors"]["connectivities_key"] = "connectivities"
+    adata.uns["neighbors"]["distances_key"] = "distances"
+
+
 def _randomize_features(X, partition=None):
     """
     Taken and adapted from opsca-v1:
@@ -17,18 +23,20 @@ def _randomize_features(X, partition=None):
     return X_out
 
 
-def _randomize_graph(adata, partition=None):
+def _randomize_graph(adata, partition=None, neighbors_key="neighbors"):
     """
     Taken and adapted from opsca-v1:
     https://github.com/openproblems-bio/openproblems/blob/acf5c95a7306b819c4a13972783433d0a48f769b/openproblems/tasks/_batch_integration/_common/methods/baseline.py#L25
     """
+    knn_map = adata.uns[neighbors_key]
     distances, connectivities = (
-        adata.obsp["distances"],
-        adata.obsp["connectivities"],
+        adata.obsp[knn_map["distances_key"]],
+        adata.obsp[knn_map["connectivities_key"]],
     )
     new_idx = _randomize_features(np.arange(distances.shape[0]), partition=partition)
     adata.obsp["distances"] = distances[new_idx][:, new_idx]
     adata.obsp["connectivities"] = connectivities[new_idx][:, new_idx]
+    _set_uns(adata, neighbors_key)
     return adata
 
 

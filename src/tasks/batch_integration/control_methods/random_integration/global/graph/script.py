@@ -24,11 +24,8 @@ from utils import _randomize_graph
 print('Read input', flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print('Compute neighbors...', flush=True)
-sc.pp.neighbors(adata, use_rep='X_pca')
-
-print('Randomize graph', flush=True)
-adata = _randomize_graph(adata)
+print('Randomize graph...', flush=True)
+adata = _randomize_graph(adata, neighbors_key="knn")
 
 print("Store outputs", flush=True)
 adata.uns['method_id'] = meta['functionality_name']
