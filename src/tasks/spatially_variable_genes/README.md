@@ -64,7 +64,7 @@ flowchart LR
 A subset of the common dataset.
 
 Example file:
-`resources_test/spatially_variable_genes/10x_Visium_mouse_brain/input.h5ad`
+`resources_test/spatially_variable_genes/10x_visium_mouse_brain/input.h5ad`
 
 Format:
 
@@ -140,7 +140,7 @@ Arguments:
 Anndata with estimate spatial variability.
 
 Example file:
-`resources_test/spatially_variable_genes/10x_Visium_mouse_brain/output.h5ad`
+`resources_test/spatially_variable_genes/10x_visium_mouse_brain/output.h5ad`
 
 Description:
 
@@ -194,7 +194,7 @@ Arguments:
 Metric score file.
 
 Example file:
-`resources_test/spatially_variable_genes/10x_Visium_mouse_brain/score.h5ad`
+`resources_test/spatially_variable_genes/10x_visium_mouse_brain/score.h5ad`
 
 Format:
 
@@ -223,7 +223,7 @@ Slot description:
 Anndata with true spatial variability.
 
 Example file:
-`resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.h5ad`
+`resources_test/spatially_variable_genes/10x_visium_mouse_brain/solution.h5ad`
 
 Description:
 
