@@ -440,9 +440,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality process_dataset"
-LABEL org.opencontainers.image.created="2024-05-13T11:43:21Z"
+LABEL org.opencontainers.image.created="2024-05-22T15:00:27Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="63b912cc4dfc12e6119ceff54b8cd10476f4db94"
+LABEL org.opencontainers.image.revision="ae0a4c335fefff0549c9596f3e6752b670f953d2"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1125,7 +1125,7 @@ ad1_uns\$dataset_name <- ad2_uns\$dataset_name <- new_dataset_name
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new var
+# determine new varm
 ad1_var <- ad1\$var[, intersect(colnames(ad1\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 ad2_var <- ad2\$var[, intersect(colnames(ad2\$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 

@@ -3097,7 +3097,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/methods/mlp",
     "viash_version" : "0.8.0",
-    "git_commit" : "63b912cc4dfc12e6119ceff54b8cd10476f4db94",
+    "git_commit" : "ae0a4c335fefff0549c9596f3e6752b670f953d2",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

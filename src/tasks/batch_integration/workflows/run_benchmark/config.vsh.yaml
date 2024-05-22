@@ -69,7 +69,6 @@ functionality:
     - name: batch_integration/methods/scanorama_feature
     - name: batch_integration/methods/scanvi
     - name: batch_integration/methods/scvi
-    - name: batch_integration/methods/scgpt_embedding
     - name: batch_integration/control_methods/no_integration_batch
     - name: batch_integration/control_methods/random_embed_cell
     - name: batch_integration/control_methods/random_embed_cell_jitter
