@@ -1,0 +1,34 @@
+functionality:
+  name: "process_datasets"
+  namespace: "spatially_variable_genes/workflows"
+  argument_groups:
+    - name: Inputs
+      arguments:
+        - name: "--input"
+          __merge__: "/src/tasks/spatially_variable_genes/api/file_common_dataset.yaml"
+          required: true
+          direction: input
+        - name: "--alpha"
+          type: double
+          required: false
+          direction: input
+    - name: Outputs
+      arguments:
+        - name: "--output_dataset"
+          __merge__: /src/tasks/spatially_variable_genes/api/file_dataset.yaml
+          required: true
+          direction: output
+        - name: "--output_solution"
+          __merge__: /src/tasks/spatially_variable_genes/api/file_solution.yaml
+          required: true
+          direction: output
+  resources:
+    - type: nextflow_script
+      path: main.nf
+      entrypoint: run_wf
+    - path: /src/wf_utils/helper.nf
+  dependencies:
+    - name: common/check_dataset_schema
+    - name: spatially_variable_genes/process_dataset
+platforms:
+  - type: nextflow
