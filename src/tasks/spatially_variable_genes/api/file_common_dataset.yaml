@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/spatially_variable_genes/10x_Visium_mouse_brain/input_data.h5ad"
+example: "resources_test/common/10x_visium_mouse_brain/common_dataset.h5ad"
 info:
   label: "Common Dataset"
   summary: A subset of the common dataset.
@@ -17,6 +17,10 @@ info:
       - type: string
         name: gene_name
         description: Gene name
+        required: true
+      - type: double
+        name: true_spatial_var_score
+        description: True spatial variability score
         required: true
     obsm:
       - type: double
