@@ -3,8 +3,8 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  'input_method': 'resources_test/spatially_variable_genes/10x_Visium_mouse_brain/output.h5ad',
-  'input_solution': 'resources_test/spatially_variable_genes/10x_Visium_mouse_brain/solution.h5ad',
+  'input_method': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/output.h5ad',
+  'input_solution': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/solution.h5ad',
   'output': 'score.h5ad'
 }
 meta = {
