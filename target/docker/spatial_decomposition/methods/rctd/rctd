@@ -422,13 +422,14 @@ ENTRYPOINT []
 
  
 RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packages("remotes")' && \
-  Rscript -e 'remotes::install_cran(c("Matrix"), repos = "https://cran.rstudio.com")' && \
-  Rscript -e 'remotes::install_github(c("dmcable/spacexr"), repos = "https://cran.rstudio.com")'
+  Rscript -e 'remotes::install_cran(c("Matrix", "pak"), repos = "https://cran.rstudio.com")'
+
+RUN Rscript -e 'pak::pkg_install("dmcable/spacexr")'
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/methods rctd"
-LABEL org.opencontainers.image.created="2024-05-23T15:54:34Z"
+LABEL org.opencontainers.image.created="2024-05-23T19:51:13Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9925982ea2c78e2280129b4dc17eec35d103e661"
+LABEL org.opencontainers.image.revision="bfcc2241f9adfd43b2dc5e5ec1cc943bd69d0c24"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -991,8 +992,8 @@ rownames(coordinates) <- rownames(input_single_cell)
 input_single_cell\$obsm <- list(coordinates = coordinates)
 
 # remove rare cell types to prevent RCTD error
-celltype_counts <- table(input_single_cell\$obs\$cell_type)
-input_single_cell <- input_single_cell[input_single_cell\$obs\$cell_type %in% names(as.table(celltype_counts[celltype_counts > 25]))]
+# celltype_counts <- table(input_single_cell\$obs\$cell_type)
+# input_single_cell <- input_single_cell[input_single_cell\$obs\$cell_type %in% names(as.table(celltype_counts[celltype_counts > 25]))]
 
 # get single cell reference counts
 sc_counts <- t(input_single_cell\$layers['counts'])

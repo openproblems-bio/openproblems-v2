@@ -413,9 +413,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "numpy" "scipy"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/methods nnls"
-LABEL org.opencontainers.image.created="2024-05-23T15:54:36Z"
+LABEL org.opencontainers.image.created="2024-05-23T19:51:15Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9925982ea2c78e2280129b4dc17eec35d103e661"
+LABEL org.opencontainers.image.revision="bfcc2241f9adfd43b2dc5e5ec1cc943bd69d0c24"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -935,11 +935,9 @@ adata_means.var_names = input_single_cell.var_names
 
 X = adata_means.X.T
 y = input_spatial.layers['counts'].T
-if issparse(y):
-  y = y.toarray()
 res = np.zeros((y.shape[1], X.shape[1]))  # (voxels, cells)
 for i in range(y.shape[1]):
-  x, _ = nnls(X, y[:, i])
+  x, _ = nnls(X, y[:, i].toarray().reshape(-1))
   res[i] = x
 
 # Normalize coefficients to sum to 1

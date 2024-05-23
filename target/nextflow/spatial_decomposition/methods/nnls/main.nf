@@ -3025,7 +3025,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/nnls",
     "viash_version" : "0.8.0",
-    "git_commit" : "9925982ea2c78e2280129b4dc17eec35d103e661",
+    "git_commit" : "bfcc2241f9adfd43b2dc5e5ec1cc943bd69d0c24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3090,11 +3090,9 @@ adata_means.var_names = input_single_cell.var_names
 
 X = adata_means.X.T
 y = input_spatial.layers['counts'].T
-if issparse(y):
-  y = y.toarray()
 res = np.zeros((y.shape[1], X.shape[1]))  # (voxels, cells)
 for i in range(y.shape[1]):
-  x, _ = nnls(X, y[:, i])
+  x, _ = nnls(X, y[:, i].toarray().reshape(-1))
   res[i] = x
 
 # Normalize coefficients to sum to 1

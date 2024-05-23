@@ -426,9 +426,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scikit-learn" "networkx"
 
 LABEL org.opencontainers.image.description="Companion container for running component predict_modality/methods novel_train"
-LABEL org.opencontainers.image.created="2024-05-23T15:54:35Z"
+LABEL org.opencontainers.image.created="2024-05-23T19:51:14Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="9925982ea2c78e2280129b4dc17eec35d103e661"
+LABEL org.opencontainers.image.revision="bfcc2241f9adfd43b2dc5e5ec1cc943bd69d0c24"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1031,12 +1031,15 @@ input_train_mod2.X = input_train_mod2.layers['normalized']
 
 input_train_mod2_df = input_train_mod2.to_df()
 
+del input_train_mod2
+
 print('Start train', flush=True)
 
 
 # Check for zero divide
 zero_row = input_train_mod1.X.sum(axis=0) == 0
 
+rem_var = None
 if True in zero_row:
   rem_var = input_train_mod1[:, zero_row].var_names
   input_train_mod1 = input_train_mod1[:, ~zero_row]
@@ -1116,7 +1119,8 @@ train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test, pa
 
 # Add model dim for use in predict part
 adata.uns["model_dim"] = {"mod1": n_vars_mod1, "mod2": n_vars_mod2}
-adata.uns["removed_vars"] = [rem_var[0]]
+if rem_var:
+  adata.uns["removed_vars"] = [rem_var[0]]
 adata.write_h5ad(par['output_train_mod2'], compression="gzip")
 
 if mod1 != 'ADT':

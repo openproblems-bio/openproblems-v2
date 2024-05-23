@@ -3252,7 +3252,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/novel_predict",
     "viash_version" : "0.8.0",
-    "git_commit" : "9925982ea2c78e2280129b4dc17eec35d103e661",
+    "git_commit" : "bfcc2241f9adfd43b2dc5e5ec1cc943bd69d0c24",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3329,13 +3329,15 @@ mod2 = input_train_mod2.uns['modality']
 n_vars_mod1 = input_train_mod2.uns["model_dim"]["mod1"]
 n_vars_mod2 = input_train_mod2.uns["model_dim"]["mod2"]
 
-rem_var = input_train_mod2.uns["removed_vars"]
+input_test_mod1.X = input_test_mod1.layers['normalized'].tocsr()
+
+# Remove vars that were removed from training set. Mostlyy only applicable for testing.
+if input_train_mod2.uns.get("removed_vars"):
+  rem_var = input_train_mod2.uns["removed_vars"]
+  input_test_mod1 = input_test_mod1[:, ~input_test_mod1.var_names.isin(rem_var)]
 
 del input_train_mod2
 
-input_test_mod1.X = input_test_mod1.layers['normalized'].tocsr()
-
-input_test_mod1 = input_test_mod1[:, ~input_test_mod1.var_names.isin(rem_var)]
 
 model_fp = par['input_model']
 

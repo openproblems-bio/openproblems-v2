@@ -50,12 +50,15 @@ input_train_mod2.X = input_train_mod2.layers['normalized']
 
 input_train_mod2_df = input_train_mod2.to_df()
 
+del input_train_mod2
+
 print('Start train', flush=True)
 
 
 # Check for zero divide
 zero_row = input_train_mod1.X.sum(axis=0) == 0
 
+rem_var = None
 if True in zero_row:
   rem_var = input_train_mod1[:, zero_row].var_names
   input_train_mod1 = input_train_mod1[:, ~zero_row]
@@ -135,7 +138,8 @@ train_and_valid(model, optimizer, loss_fn, dataloader_train, dataloader_test, pa
 
 # Add model dim for use in predict part
 adata.uns["model_dim"] = {"mod1": n_vars_mod1, "mod2": n_vars_mod2}
-adata.uns["removed_vars"] = [rem_var[0]]
+if rem_var:
+  adata.uns["removed_vars"] = [rem_var[0]]
 adata.write_h5ad(par['output_train_mod2'], compression="gzip")
 
 if mod1 != 'ADT':
