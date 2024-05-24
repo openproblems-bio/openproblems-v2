@@ -13,5 +13,9 @@ workflow run_wf {
       toState: ["output": "output"]
     )
 
+    | map { tup ->
+      [tup[0], [output: tup[1].output]]
+    }
+
   emit: output_ch
 }
