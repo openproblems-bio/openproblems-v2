@@ -2880,7 +2880,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_method_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "4fbd8f5e81e93a8faacaedb626c1604ed53a9732",
+    "git_commit" : "907447bc4c8073182f35850747298d05aad536d7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2964,6 +2964,7 @@ outputs <- map(configs, function(config) {
     method_id = info\\$id,
     method_name = info\\$label,
     method_summary = info\\$summary,
+    method_description = info\\$description,
     is_baseline = grepl("control", info\\$type),
     paper_reference = info\\$reference %||% NA_character_,
     code_url = info\\$repository_url %||% NA_character_,

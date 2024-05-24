@@ -2880,7 +2880,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_metric_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "4fbd8f5e81e93a8faacaedb626c1604ed53a9732",
+    "git_commit" : "907447bc4c8073182f35850747298d05aad536d7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2966,7 +2966,8 @@ outputs <- map(configs, function(config) {
         task_id = info\\$task_id,
         metric_id = info\\$id,
         metric_name = info\\$label,
-        metric_summary = info\\$description,
+        metric_summary = info\\$summary,
+        metric_description = info\\$description,
         paper_reference = info\\$reference %||% NA_character_,
         implementation_url = info\\$implementation_url %||% NA_character_,
         code_version = NA_character_,
