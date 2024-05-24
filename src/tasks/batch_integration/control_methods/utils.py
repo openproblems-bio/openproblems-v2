@@ -40,7 +40,7 @@ def _randomize_graph(adata, partition=None, neighbors_key="neighbors"):
     return adata
 
 
-def _random_embedding(partition, jitter=0.01):
+def _perfect_embedding(partition, jitter=0.01):
     """
     Taken and adapted from opsca-v1:
     https://github.com/openproblems-bio/openproblems/blob/acf5c95a7306b819c4a13972783433d0a48f769b/openproblems/tasks/_batch_integration/_common/methods/baseline.py#L37
@@ -53,4 +53,4 @@ def _random_embedding(partition, jitter=0.01):
     )
     if jitter is not None:
         embedding = embedding + np.random.uniform(-1 * jitter, jitter, embedding.shape)
-    return embedding
+    return np.asarray(embedding)
