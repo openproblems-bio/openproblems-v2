@@ -29,13 +29,15 @@ functionality:
 
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.3
+    image: ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.4
     setup:
       - type: python
         packages: 
           - scvi-tools>=1.1.0
-
+      - type: docker
+        run: |
+          pip install -U "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
   - type: native
   - type: nextflow
     directives:
-      label: [ midtime, midmem, midcpu, gpu ]
+      label: [hightime, midmem, midcpu, gpu]
