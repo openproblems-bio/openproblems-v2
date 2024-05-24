@@ -1,11 +1,11 @@
 # use method api spec
 __merge__: ../../../../api/comp_control_method_feature.yaml
 functionality:
-  name: random_integration
+  name: random_integration_feature
   info:
     label: Random integration
-    summary: "Feature values are randomly permuted."
-    description: "Feature values are randomly permuted."
+    summary: "Feature values are randomly permuted"
+    description: "Feature values are randomly permuted"
     v1:
       path: openproblems/tasks/_batch_integration/_common/methods/baseline.py
       commit: acf5c95a7306b819c4a13972783433d0a48f769b
