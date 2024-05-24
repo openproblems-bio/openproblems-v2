@@ -2880,7 +2880,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_dataset_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "bfcc2241f9adfd43b2dc5e5ec1cc943bd69d0c24",
+    "git_commit" : "9a09b43dab0896378f91280a35f23c4a310c253a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2949,8 +2949,11 @@ outputs <- map(datasets, function(dataset) {
     "dataset_id" = dataset\\$dataset_id,
     "dataset_name" = dataset\\$dataset_name,
     "dataset_summary" = dataset\\$dataset_summary,
+    "dataset_description" = dataset\\$dataset_description %||% NA_character_,
     "data_reference" = dataset\\$dataset_reference %||% NA_character_,
-    "data_url" = dataset\\$dataset_url %||% NA_character_
+    "data_url" = dataset\\$dataset_url %||% NA_character_,
+    "date_created" = dataset\\$date_created %||% NA_character_,
+    "file_size" = dataset\\$file_size %||% NA_character_
   )
 
   if (!is.null(dataset[["common_dataset_id"]])) {
