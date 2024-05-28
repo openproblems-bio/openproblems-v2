@@ -2,7 +2,7 @@ import anndata as ad
 
 # VIASH START
 par = {
-    'input_data': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad',
+    'input_data': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/dataset.h5ad',
     'input_solution': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/solution.h5ad',
     'output': 'output.h5ad'
 }
