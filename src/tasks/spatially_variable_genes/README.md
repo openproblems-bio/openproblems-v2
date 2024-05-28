@@ -45,18 +45,23 @@ flowchart LR
   file_common_dataset("Common Dataset")
   comp_control_method[/"Control method"/]
   comp_method[/"Method"/]
+  comp_process_dataset[/"Data processor"/]
   file_output("Output")
+  file_solution("Solution")
+  file_dataset("Dataset")
   comp_metric[/"Metric"/]
   file_score("Score")
-  file_solution("Solution")
   file_common_dataset---comp_control_method
   file_common_dataset---comp_method
+  file_common_dataset---comp_process_dataset
   comp_control_method-->file_output
   comp_method-->file_output
+  comp_process_dataset-->file_solution
+  comp_process_dataset-->file_dataset
   file_output---comp_metric
-  comp_metric-->file_score
   file_solution---comp_control_method
   file_solution---comp_metric
+  comp_metric-->file_score
 ```
 
 ## File format: Common Dataset
@@ -64,14 +69,14 @@ flowchart LR
 A subset of the common dataset.
 
 Example file:
-`resources_test/spatially_variable_genes/10x_visium_mouse_brain/input.h5ad`
+`resources_test/common/10x_visium_mouse_brain/common_dataset.h5ad`
 
 Format:
 
 <div class="small">
 
     AnnData object
-     var: 'feature_name', 'gene_name'
+     var: 'feature_name', 'gene_name', 'true_spatial_var_score'
      obsm: 'spatial'
      layers: 'counts'
      uns: 'dataset_id', 'dataset_name', 'dataset_url', 'dataset_reference', 'dataset_summary', 'dataset_description', 'dataset_organism'
@@ -82,19 +87,20 @@ Slot description:
 
 <div class="small">
 
-| Slot                         | Type      | Description                                                                    |
-|:-----------------------------|:----------|:-------------------------------------------------------------------------------|
-| `var["feature_name"]`        | `string`  | Feature name.                                                                  |
-| `var["gene_name"]`           | `string`  | Gene name.                                                                     |
-| `obsm["spatial"]`            | `double`  | Spatial coordinates for each spot.                                             |
-| `layers["counts"]`           | `integer` | Raw counts.                                                                    |
-| `uns["dataset_id"]`          | `string`  | A unique identifier for the dataset.                                           |
-| `uns["dataset_name"]`        | `string`  | (*Optional*) Nicely formatted name.                                            |
-| `uns["dataset_url"]`         | `string`  | (*Optional*) Link to the original source of the dataset.                       |
-| `uns["dataset_reference"]`   | `string`  | (*Optional*) Bibtex reference of the paper in which the dataset was published. |
-| `uns["dataset_summary"]`     | `string`  | (*Optional*) Short description of the dataset.                                 |
-| `uns["dataset_description"]` | `string`  | (*Optional*) Long description of the dataset.                                  |
-| `uns["dataset_organism"]`    | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
+| Slot                            | Type      | Description                                                                    |
+|:--------------------------------|:----------|:-------------------------------------------------------------------------------|
+| `var["feature_name"]`           | `string`  | Feature name.                                                                  |
+| `var["gene_name"]`              | `string`  | Gene name.                                                                     |
+| `var["true_spatial_var_score"]` | `double`  | True spatial variability score.                                                |
+| `obsm["spatial"]`               | `double`  | Spatial coordinates for each spot.                                             |
+| `layers["counts"]`              | `integer` | Raw counts.                                                                    |
+| `uns["dataset_id"]`             | `string`  | A unique identifier for the dataset.                                           |
+| `uns["dataset_name"]`           | `string`  | (*Optional*) Nicely formatted name.                                            |
+| `uns["dataset_url"]`            | `string`  | (*Optional*) Link to the original source of the dataset.                       |
+| `uns["dataset_reference"]`      | `string`  | (*Optional*) Bibtex reference of the paper in which the dataset was published. |
+| `uns["dataset_summary"]`        | `string`  | (*Optional*) Short description of the dataset.                                 |
+| `uns["dataset_description"]`    | `string`  | (*Optional*) Long description of the dataset.                                  |
+| `uns["dataset_organism"]`       | `string`  | (*Optional*) The organism of the sample in the dataset.                        |
 
 </div>
 
@@ -135,6 +141,25 @@ Arguments:
 
 </div>
 
+## Component type: Data processor
+
+Path:
+[`src/spatially_variable_genes`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/spatially_variable_genes)
+
+A spatially variable genes dataset processor.
+
+Arguments:
+
+<div class="small">
+
+| Name                | Type   | Description                                              |
+|:--------------------|:-------|:---------------------------------------------------------|
+| `--input`           | `file` | A subset of the common dataset.                          |
+| `--output_dataset`  | `file` | (*Output*) The dataset without spatially variable genes. |
+| `--output_solution` | `file` | (*Output*) Anndata with true spatial variability.        |
+
+</div>
+
 ## File format: Output
 
 Anndata with estimate spatial variability.
@@ -167,6 +192,73 @@ Slot description:
 | `var["pred_spatial_var_score"]` | `double` | Predicted spatial variability score. |
 | `uns["dataset_id"]`             | `string` | A unique identifier for the dataset. |
 | `uns["method_id"]`              | `string` | A unique identifier for the method.  |
+
+</div>
+
+## File format: Solution
+
+Anndata with true spatial variability.
+
+Example file:
+`resources_test/spatially_variable_genes/10x_visium_mouse_brain/solution.h5ad`
+
+Description:
+
+Anndata with true spatial variability score for each gene.
+
+Format:
+
+<div class="small">
+
+    AnnData object
+     var: 'feature_name', 'gene_name', 'true_spatial_var_score'
+     uns: 'dataset_id'
+
+</div>
+
+Slot description:
+
+<div class="small">
+
+| Slot                            | Type     | Description                          |
+|:--------------------------------|:---------|:-------------------------------------|
+| `var["feature_name"]`           | `string` | Feature name.                        |
+| `var["gene_name"]`              | `string` | Gene names.                          |
+| `var["true_spatial_var_score"]` | `double` | True spatial variability score.      |
+| `uns["dataset_id"]`             | `string` | A unique identifier for the dataset. |
+
+</div>
+
+## File format: Dataset
+
+The dataset without spatially variable genes.
+
+Example file:
+`resources_test/spatially_variable_genes/10x_visium_mouse_brain/dataset.h5ad`
+
+Format:
+
+<div class="small">
+
+    AnnData object
+     var: 'feature_name'
+     obsm: 'spatial'
+     layers: 'counts'
+     uns: 'dataset_id', 'dataset_name'
+
+</div>
+
+Slot description:
+
+<div class="small">
+
+| Slot                  | Type      | Description                          |
+|:----------------------|:----------|:-------------------------------------|
+| `var["feature_name"]` | `string`  | Feature name.                        |
+| `obsm["spatial"]`     | `double`  | Spatial coordinates for each spot.   |
+| `layers["counts"]`    | `integer` | Raw counts.                          |
+| `uns["dataset_id"]`   | `string`  | A unique identifier for the dataset. |
+| `uns["dataset_name"]` | `string`  | (*Optional*) Nicely formatted name.  |
 
 </div>
 
@@ -215,40 +307,6 @@ Slot description:
 | `uns["method_id"]`     | `string` | A unique identifier for the method.                                                          |
 | `uns["metric_ids"]`    | `string` | One or more unique metric identifiers.                                                       |
 | `uns["metric_values"]` | `double` | The metric values obtained for the given prediction. Must be of same length as ‘metric_ids’. |
-
-</div>
-
-## File format: Solution
-
-Anndata with true spatial variability.
-
-Example file:
-`resources_test/spatially_variable_genes/10x_visium_mouse_brain/solution.h5ad`
-
-Description:
-
-Anndata with true spatial variability score for each gene.
-
-Format:
-
-<div class="small">
-
-    AnnData object
-     var: 'feature_name', 'gene_name', 'pred_spatial_var_score'
-     uns: 'dataset_id'
-
-</div>
-
-Slot description:
-
-<div class="small">
-
-| Slot                            | Type     | Description                          |
-|:--------------------------------|:---------|:-------------------------------------|
-| `var["feature_name"]`           | `string` | Feature name.                        |
-| `var["gene_name"]`              | `string` | Gene names.                          |
-| `var["pred_spatial_var_score"]` | `double` | Predicted spatial variability score. |
-| `uns["dataset_id"]`             | `string` | A unique identifier for the dataset. |
 
 </div>
 
