@@ -6,12 +6,10 @@ import re
 
 ## VIASH START
 par = {
-  "task": "denoising",
-  "type": "method",
   "language": "python",
   "name": "new_comp",
-  "output": "src/tasks/denoising/methods/new_comp",
-  "api_file": "src/tasks/denoising/api/comp_method.yaml",
+  "output": "src/task/method/new_comp",
+  "api_file": "src/task/api/comp_method.yaml",
   "viash_yaml": "_viash.yaml"
 }
 ## VIASH END
@@ -62,7 +60,7 @@ def create_config(par, component_type, pretty_name, script_path) -> str:
     |  # Allows turning the component into a Nextflow module / pipeline.
     |  - type: nextflow
     |    directives:
-    |      label: [midtime,midmem, midcpu]
+    |      label: [midtime,midmem,midcpu]
     |'''
   )
 
@@ -70,7 +68,7 @@ def generate_info(par, component_type, pretty_name) -> str:
   """Generate the functionality info for a component."""
   if component_type in ["method", "control_method"]:
     str = strip_margin(f'''\
-      |    # A relatively short label, used when rendering visualisarions (required)
+      |    # A relatively short label, used when rendering visualisations (required)
       |    label: {pretty_name}
       |    # A one sentence summary of how this method works (required). Used when 
       |    # rendering summary tables.
@@ -142,21 +140,22 @@ def generate_docker_platform(par) -> str:
   """Set up the docker platform for Python."""
   if par["language"] == "python":
     image_str = "ghcr.io/openproblems-bio/base_python:1.0.4"
-    setup_type = "python"
-    package_example = "scib==1.1.5"
+    extra = ""
   elif par["language"] == "r":
     image_str = "ghcr.io/openproblems-bio/base_r:1.0.4"
-    setup_type = "r"
-    package_example = "tidyverse"
+    extra = strip_margin(f'''\
+      |      - type: r
+      |        packages: [ arrow, readr ]
+      |''')
   return strip_margin(f'''\
     |  - type: docker
     |    image: {image_str}
     |    # Add custom dependencies here (optional). For more information, see
     |    # https://viash.io/reference/config/platforms/docker/#setup .
-    |    # setup:
-    |    #   - type: {setup_type}
-    |    #     packages: {package_example}
-    |''')
+    |    setup:
+    |      - type: python
+    |        packages: [ fastparquet ]
+    |{extra}''')
 
 def set_par_values(config) -> None:
   """Adds values to each of the arguments in a config file."""
@@ -167,9 +166,12 @@ def set_par_values(config) -> None:
     # find value
     if arg["type"] != "file":
       value = arg.get("default", arg.get("example", "..."))
-    elif arg.get("direction", "input") == "input":
-      key_strip = key.replace("input_", "")
-      value = f'resources_test/{par["task"]}/pancreas/{key_strip}.h5ad'
+    elif key == "de_train":
+      value = "resources/neurips-2023-kaggle/de_train.parquet"
+    elif key == "de_train_h5ad":
+      value = "resources/neurips-2023-kaggle/2023-09-12_de_by_cell_type_train.h5ad"
+    elif key == "id_map":
+      value = "resources/neurips-2023-kaggle/id_map.csv"
     else:
       key_strip = key.replace("output_", "")
       value = f'{key_strip}.h5ad'
@@ -178,222 +180,82 @@ def set_par_values(config) -> None:
     config['functionality']['arguments'][argi]["key"] = key
     config['functionality']['arguments'][argi]["value"] = value
   
-def look_for_adata_arg(args, uns_field):
-  """Look for an argument that has a .uns[uns_field] in its info.slots."""
-  for arg in args:
-    uns = arg.get("info", {}).get("slots", {}).get("uns", [])
-    for unval in uns:
-      if unval.get("name") == uns_field:
-        return arg["key"]
-  return "adata"
-
-def write_output_python(arg, copy_from_adata, is_metric):
-  """Create code for writing the output h5ad files."""
-  slots = arg.get("info", {}).get("slots", {})
-  outer = []
-  for group_name, slots in slots.items():
-    inner = []
-    for slot in slots:
-      if group_name == "uns" and slot["name"] in ["dataset_id", "normalization_id"]:
-        value = f"{copy_from_adata}.uns['{slot['name']}']"
-      elif group_name == "uns" and slot["name"] == "method_id":
-        if is_metric:
-          value = f"{copy_from_adata}.uns['{slot['name']}']"
-        else:
-          value = "meta['functionality_name']"
-      else:
-        value = group_name + "_" + slot["name"]
-      inner.append(f"'{slot['name']}': {value}")
-    inner_values = ',\n    '.join(inner)
-    outer.append(f"{group_name}={{\n    {inner_values}\n  }}")
-  outer_values = ',\n  '.join(outer)
-  return strip_margin(
-    f'''\
-      |print("Write {arg["key"]} AnnData to file", flush=True)
-      |{arg["key"]} = ad.AnnData(
-      |  {outer_values}
-      |)
-      |{arg["key"]}.write_h5ad(par['{arg["key"]}'], compression='gzip')'''
-  )
-
-def write_output_r(arg, copy_from_adata, is_metric):
-  """Create code for writing the output h5ad files."""
-  slots = arg.get("info", {}).get("slots", {})
-  outer = []
-  for group_name, slots in slots.items():
-    inner = []
-    for slot in slots:
-      if group_name == "uns" and slot["name"] in ["dataset_id", "normalization_id"]:
-        value = f"{copy_from_adata}$uns[[\"{slot['name']}\"]]"
-      elif group_name == "uns" and slot["name"] == "method_id":
-        if is_metric:
-          value = f"{copy_from_adata}$uns[[\"{slot['name']}\"]]"
-        else:
-          value = "meta[[\"functionality_name\"]]"
-      else:
-        value = group_name + "_" + slot["name"]
-      inner.append(f"{slot['name']} = {value}")
-    inner_values = ',\n    '.join(inner)
-    outer.append(f"{group_name} = list(\n    {inner_values}\n  )")
-  outer_values = ',\n  '.join(outer)
-  return strip_margin(
-    f'''\
-      |cat("Write {arg["key"]} AnnData to file\\n")
-      |{arg["key"]} <- anndata::AnnData(
-      |  {outer_values}
-      |)
-      |{arg["key"]}$write_h5ad(par[["{arg["key"]}"]], compression = "gzip")'''
-  )
 
 def create_python_script(par, config, type):
-  args = config['functionality']['arguments']
-
-  # create the arguments of the par string
-  par_string = ",\n  ".join(f"'{arg['key']}': '{arg['value']}'" for arg in args)
-
-  # create code for reading the input h5ad file
-  read_h5ad_string = "\n".join(
-    f"{arg['key']} = ad.read_h5ad(par['{arg['key']}'])"
-    for arg in args
-    if arg['type'] == "file"
-    and arg.get('direction', "input") == "input"
-  )
-
-  # determine which adata to copy from
-  copy_from_adata = look_for_adata_arg(args, "method_id" if type == "metric" else "dataset_id")
-
-  # create code for writing the output h5ad files
-  write_h5ad_string = "\n".join(
-    write_output_python(arg, copy_from_adata, type == "metric")
-    for arg in args
-    if arg["type"] == "file"
-    and arg.get("direction", "input") == "output"
-  )
-
-  if type == 'metric':
-    processing_string = strip_margin(f'''\
-      |print('Compute metrics', flush=True)
-      |# metric_ids and metric_values can have length > 1
-      |# but should be of equal length
-      |uns_metric_ids = [ '{par['name']}' ]
-      |uns_metric_values = [ 0.5 ]''')
-  else:
-    processing_string = strip_margin(f'''\
-      |print('Preprocess data', flush=True)
-      |# ... preprocessing ...
-      |
-      |print('Train model', flush=True)
-      |# ... train model ...
-      |
-      |print('Generate predictions', flush=True)
-      |# ... generate predictions ...''')
-
-  script = strip_margin(f'''\
-    |import anndata as ad
+  script = strip_margin('''\
+    |import pandas as pd
     |
     |## VIASH START
-    |# Note: this section is auto-generated by viash at runtime. To edit it, make changes
-    |# in config.vsh.yaml and then run `viash config inject config.vsh.yaml`.
-    |par = {{
-    |  {par_string}
-    |}}
-    |meta = {{
-    |  'functionality_name': '{par["name"]}'
-    |}}
+    |par = {
+    |  "de_train": "resources/neurips-2023-kaggle/de_train.parquet",
+    |  "de_test": "resources/neurips-2023-kaggle/de_test.parquet",
+    |  "id_map": "resources/neurips-2023-kaggle/id_map.csv",
+    |  "output": "output.parquet",
+    |}
     |## VIASH END
     |
     |print('Reading input files', flush=True)
-    |{read_h5ad_string}
+    |de_train = pd.read_parquet(par["de_train"])
+    |id_map = pd.read_csv(par["id_map"])
+    |gene_names = [col for col in de_train.columns if col not in {"cell_type", "sm_name", "sm_lincs_id", "SMILES", "split", "control", "index"}]
     |
-    |{processing_string}
+    |print('Preprocess data', flush=True)
+    |# ... preprocessing ...
     |
-    |{write_h5ad_string}
+    |print('Train model', flush=True)
+    |# ... train model ...
+    |
+    |print('Generate predictions', flush=True)
+    |# ... generate predictions ...
+    |
+    |print('Write output to file', flush=True)
+    |output = pd.DataFrame(
+    |  # ... TODO: fill in data ...
+    |  index=id_map["id"],
+    |  columns=gene_names
+    |).reset_index()
+    |output.to_parquet(par["output"])
     |''')
 
   return script
 
 def create_r_script(par, api_spec, type):
-  args = api_spec['functionality']['arguments']
-
-  # create the arguments of the par string
-  par_string = ",\n  ".join(f'{arg["key"]} = "{arg["value"]}"' for arg in args)
-
-  # create helpers for reading the h5ad file
-  read_h5ad_string = "\n".join(
-    f'{arg["key"]} <- anndata::read_h5ad(par[["{arg["key"]}"]])'
-    for arg in args
-    if arg['type'] == "file"
-    and arg.get("direction", "input") == "input"
-  )
-
-  # determine which adata to copy from
-  copy_from_adata = look_for_adata_arg(args, "method_id" if type == "metric" else "dataset_id")
-
-  # create code for writing the output h5ad files
-  write_h5ad_string = "\n".join(
-    write_output_r(arg, copy_from_adata, type == "metric")
-    for arg in args
-    if arg["type"] == "file"
-    and arg.get("direction", "input") == "output"
-  )
-
-  if type == 'metric':
-    processing_string = strip_margin(f'''\
-      |cat("Compute metrics\\n")
-      |# metric_ids and metric_values can have length > 1
-      |# but should be of equal length
-      |uns_metric_ids <- c("{par['name']}")
-      |uns_metric_values <- c(0.5)''')
-  else:
-    processing_string = strip_margin(f'''\
-      |cat("Preprocess data\\n")
-      |# ... preprocessing ...
-      |
-      |cat("Train model\\n")
-      |# ... train model ...
-      |
-      |cat("Generate predictions\\n")
-      |# ... generate predictions ...''')
-
   script = strip_margin(f'''\
-    |library(anndata)
+    |requireNamespace("arrow", quietly = TRUE)
+    |requireNamespace("readr", quietly = TRUE)
     |
     |## VIASH START
     |par <- list(
-    |  {par_string}
-    |)
-    |meta <- list(
-    |  functionality_name = "{par["name"]}"
+    |  de_train = "resources/neurips-2023-kaggle/de_train.parquet",
+    |  id_map = "resources/neurips-2023-kaggle/id_map.csv",
+    |  output = "output.parquet"
     |)
     |## VIASH END
     |
     |cat("Reading input files\\n")
-    |{read_h5ad_string}
+    |de_train <- arrow::read_parquet(par$de_train)
+    |id_map <- readr::read_csv(par$id_map)
     |
-    |{processing_string}
+    |cat("Preprocess data\\n")
+    |# ... preprocessing ...
     |
-    |{write_h5ad_string}
+    |cat("Train model\\n")
+    |# ... train model ...
+    |
+    |cat("Generate predictions\\n")
+    |# ... generate predictions ...
+    |
+    |cat("Write output to file\\n")
+    |output <- data.frame(
+    |  id = id_map$id,
+    |  # ... more columns ...
+    |  check.names = FALSE
+    |)
+    |arrow::write_parquet(output, par$output)
     |''')
 
   return script
 
-# def read_viash_config(file):
-#   file = file.absolute()
-
-#   # read in config
-#   command = ["viash", "config", "view", str(file)]
-
-#   # Execute the command and capture the output
-#   output = subprocess.check_output(
-#     command,
-#     universal_newlines=True,
-#     cwd=str(file.parent)
-#   )
-
-#   # Parse the output as YAML
-#   config = yaml.load(output)
-
-#   return config
 
 
 def main(par):
