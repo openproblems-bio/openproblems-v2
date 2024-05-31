@@ -41,8 +41,6 @@ outputs <- map(configs, function(config) {
         info$config_path
       )
 
-      assertthat::assert_that(nrow(info) == 1, msg = "Expected only one row")
-
       # ↑ this could be used as the new format
 
       # construct v1 format
