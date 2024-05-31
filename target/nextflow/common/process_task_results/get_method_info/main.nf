@@ -2880,7 +2880,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_method_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "9a09b43dab0896378f91280a35f23c4a310c253a",
+    "git_commit" : "50194161acc6b520bc10d002329d3457a99bac85",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2941,20 +2941,28 @@ outputs <- map(configs, function(config) {
   if (length(config\\$functionality\\$status) > 0 && config\\$functionality\\$status == "disabled") {
     return(NULL)
   }
-  info <- config\\$functionality\\$info
+
+  # prep for viash 0.9.0
+  build_info <- config\\$build_info %||% config\\$info
+  if ("functionality" %in% names(config)) {
+    config[names(config\\$functionality)] <- config\\$functionality
+    config[["functionality"]] <- NULL
+  }
+
+  info <- config\\$info
 
   # add extra info
-  info\\$config_path <- gsub(".*openproblems-v2/src/", "src/", config\\$info\\$config)
-  info\\$task_id <- gsub("/.*", "", config\\$functionality\\$namespace)
-  info\\$id <- config\\$functionality\\$name
-  info\\$namespace <- config\\$functionality\\$namespace
-  info\\$commit_sha <- config\\$info\\$git_commit %||% "missing-sha"
+  info\\$config_path <- gsub(".*/src/", "src/", build_info\\$config)
+  info\\$task_id <- gsub("/.*", "", config\\$namespace)
+  info\\$id <- config\\$name
+  info\\$namespace <- config\\$namespace
+  info\\$commit_sha <- build_info\\$git_commit %||% "missing-sha"
   info\\$code_version <- "missing-version"
-  info\\$implementation_url <- paste0(
-    "https://github.com/openproblems-bio/openproblems-v2/tree/",
-    info\\$commit_sha, "/",
-    info\\$config_path
-  )
+    info\\$implementation_url <- paste0(
+      build_info\\$git_remote, "/blob/",
+      build_info\\$git_commit, "/",
+      info\\$config_path
+    )
 
   # ↑ this could be used as the new format
 

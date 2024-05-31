@@ -3078,7 +3078,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/metrics/mse",
     "viash_version" : "0.8.0",
-    "git_commit" : "9a09b43dab0896378f91280a35f23c4a310c253a",
+    "git_commit" : "50194161acc6b520bc10d002329d3457a99bac85",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

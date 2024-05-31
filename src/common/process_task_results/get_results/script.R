@@ -158,22 +158,29 @@ trace <- readr::read_tsv(par$input_execution) %>%
 
 # parse values
 execution_info <- trace %>%
-  filter(process_id == method_id) %>% # only keep method entries
+  # warning: meth == proc would be better than grepl(meth, proc)
+  filter(map2_lgl(method_id, process_id, grepl)) %>% # only keep method entries
   rowwise() %>%
-  transmute(
-    dataset_id,
-    normalization_id,
-    method_id,
-    resources = list(list(
-      exit_code = parse_exit(exit),
-      duration_sec = parse_duration(realtime),
-      cpu_pct = parse_cpu(`%cpu`),
-      peak_memory_mb = parse_size(peak_vmem),
-      disk_read_mb = parse_size(rchar),
-      disk_write_mb = parse_size(wchar)
-    ))
+  mutate(
+    exit_code = parse_exit(exit),
+    duration_sec = parse_duration(realtime),
+    cpu_pct = parse_cpu(`%cpu`),
+    peak_memory_mb = parse_size(peak_vmem),
+    disk_read_mb = parse_size(rchar),
+    disk_write_mb = parse_size(wchar)
   ) %>%
-  ungroup()
+  group_by(dataset_id, normalization_id, method_id) %>%
+  summarise(
+    resources = list(list(
+      exit_code = max(exit_code),
+      duration_sec = sum(duration_sec),
+      cpu_pct = sum(cpu_pct),
+      peak_memory_mb = max(peak_memory_mb),
+      disk_read_mb = sum(disk_read_mb),
+      disk_write_mb = sum(disk_write_mb)
+    )),
+    .groups = "drop"
+  )
 
 # combine scores with execution info
 # fill up missing entries with NAs and 0s
