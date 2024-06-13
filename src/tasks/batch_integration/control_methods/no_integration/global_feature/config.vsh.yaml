@@ -1,7 +1,8 @@
 # use method api spec
 __merge__: ../../../api/comp_control_method_feature.yaml
 functionality:
-  name: no_integration_global_feature
+  name: global_feature
+  namespace: batch_integration/control_methods/no_integration
   info:
     label: No integration
     summary: "Original feature space is not modified"

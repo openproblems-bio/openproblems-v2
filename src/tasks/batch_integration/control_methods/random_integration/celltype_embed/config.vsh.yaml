@@ -1,7 +1,8 @@
 # use method api spec
 __merge__: ../../../api/comp_control_method_embedding.yaml
 functionality:
-  name: random_integration_celltype_embed
+  name: celltype_embed
+  namespace: batch_integration/control_methods/random_integration
   info:
     label: Random embedding by cell type
     summary: "Embedding coordinates are randomized within celltype labels"

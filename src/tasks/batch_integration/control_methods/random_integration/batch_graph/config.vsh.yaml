@@ -1,7 +1,8 @@
 # use method api spec
 __merge__: ../../../api/comp_control_method_graph.yaml
 functionality:
-  name: random_integration_batch_graph
+  name: batch_graph
+  namespace: batch_integration/control_methods/random_integration
   info:
     label: Random integration
     summary: "Graph connectivity values are randomly permuted within each batch"

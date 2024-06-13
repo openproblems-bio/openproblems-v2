@@ -1,7 +1,8 @@
 # use method api spec
 __merge__: ../../../api/comp_control_method_feature.yaml
 functionality:
-  name: random_integration_celltype_feature
+  name: celltype_feature
+  namespace: batch_integration/control_methods/random_integration
   info:
     label: Random feature by cell type
     summary: "Features are randomized within celltype labels"

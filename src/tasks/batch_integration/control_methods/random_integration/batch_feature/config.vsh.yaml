@@ -1,7 +1,8 @@
 # use method api spec
 __merge__: ../../../api/comp_control_method_feature.yaml
 functionality:
-  name: random_integration_batch_feature
+  name: batch_feature
+  namespace: batch_integration/control_methods/random_integration
   info:
     label: Random integration by batch
     summary: "Feature values are randomly permuted within each batch"
