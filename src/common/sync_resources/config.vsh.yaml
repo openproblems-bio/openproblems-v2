@@ -1,11 +1,11 @@
 functionality:
-  name: "sync_test_resources"
+  name: "sync_resources"
   namespace: "common"
   version: "dev"
-  description: Synchronise the test resources from s3 to resources_test
+  description: Synchronise the resources from s3 to resources_test
   usage: |
-    sync_test_resources
-    sync_test_resources --input s3://openproblems-data/resources_test --output resources_test
+    sync_resources
+    sync_resources --input s3://openproblems-data/resources_test --output resources_test
   arguments:
     - name: "--input"
       alternatives: ["-i"]
