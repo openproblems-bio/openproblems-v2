@@ -495,9 +495,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "cellxgene-census" "scanpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders cellxgene_census_from_source_h5ad"
-LABEL org.opencontainers.image.created="2024-06-13T09:21:46Z"
+LABEL org.opencontainers.image.created="2024-06-14T11:45:12Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="b4817e3ce213df201ef20f373e62193deb837a2c"
+LABEL org.opencontainers.image.revision="d0bc03fb05d43fb26f51c6fe6aa2e2a2f7ff5ade"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
