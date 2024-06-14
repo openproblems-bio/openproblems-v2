@@ -9,7 +9,9 @@ output_path <- "output.md"
 cat(">> Running the script as test\n")
 system(paste(
   meta["executable"],
+  "--task", "label_projection",
   "--output", output_path,
+  "--task_dir", paste0(opv2, "/src/tasks/label_projection"),
   "--viash_yaml", paste0(opv2, "/_viash.yaml")
 ))
 

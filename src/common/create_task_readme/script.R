@@ -4,6 +4,8 @@ library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
+  "task" = "batch_integration",
+  "task_dir" = "src/tasks/batch_integration",
   "output" = "src/tasks/batch_integration/README.md",
   "viash_yaml" = "_viash.yaml",
   "github_url" = "https://github.com/openproblems-bio/openproblems-v2/tree/main/"
@@ -14,6 +16,9 @@ meta <- list(
 )
 ## VIASH END
 
+if (is.null(par$task) && is.null(par$task_dir)) {
+  stop("Either 'task' or 'task_dir' must be provided")
+}
 if (is.null(par$viash_yaml)) {
   stop("Argument 'viash_yaml' must be provided")
 }
@@ -27,7 +32,7 @@ source(paste0(meta["resources_dir"], "/strip_margin.R"))
 source(paste0(meta["resources_dir"], "/read_api_files.R"))
 
 cat("Read task info\n")
-task_api <- read_task_api("/src")
+task_api <- read_task_api(par[["task_dir"]])
 
 # determine ordering
 root <- .task_graph_get_root(task_api)
@@ -70,7 +75,7 @@ readme_str <-
   }
 
 cat("Generate qmd content\n")
-relative_path <- "/src" %>%
+relative_path <- par[["task_dir"]] %>%
   gsub(paste0(dirname(par[["viash_yaml"]]), "/*"), "", .) %>%
   gsub("/*$", "", .)
 source_url <- paste0(par[["github_url"]], relative_path)

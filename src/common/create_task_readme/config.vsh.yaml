@@ -6,6 +6,16 @@ functionality:
   argument_groups:
     - name: Inputs
       arguments:
+        - type: string
+          name: --task
+          description: Which task the component will be added to.
+          example: denoising
+          required: false
+        - type: file
+          name: --task_dir
+          description: Path to the task directory.
+          default: src/tasks/${VIASH_PAR_TASK}
+          required: false
         - type: file
           name: --viash_yaml
           description: |
