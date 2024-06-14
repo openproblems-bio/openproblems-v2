@@ -27,6 +27,9 @@ workflow run_wf {
     scanorama_feature,
     scanvi,
     scvi,
+    scgpt_embedding.run(
+      args : [model: "s3://openproblems-data/resources/foundation_models/scgpt/scGPT_human/best_model.pt", model_config: "s3://openproblems-data/resources/foundation_models/scgpt/scGPT_human/args.json", model_vocab: "s3://openproblems-data/resources/foundation_models/scgpt/scGPT_human/vocab.json"]
+    ),
     no_integration_batch,
     random_embed_cell,
     random_embed_cell_jitter,
