@@ -28,8 +28,6 @@ workflow run_wf {
     scanvi,
     scvi,
     no_integration_batch_embed,
-    no_integration_batch_feature,
-    no_integration_batch_graph,
     no_integration_global_embed,
     no_integration_global_feature,
     no_integration_global_graph,

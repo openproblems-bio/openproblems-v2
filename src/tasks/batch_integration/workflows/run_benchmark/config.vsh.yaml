@@ -71,10 +71,6 @@ functionality:
     - name: batch_integration/methods/scvi
     - name: batch_integration/control_methods/no_integration/batch_embed
       alias: no_integration_batch_embed
-    - name: batch_integration/control_methods/no_integration/batch_feature
-      alias: no_integration_batch_feature
-    - name: batch_integration/control_methods/no_integration/batch_graph
-      alias: no_integration_batch_graph
     - name: batch_integration/control_methods/no_integration/global_embed
       alias: no_integration_global_embed
     - name: batch_integration/control_methods/no_integration/global_feature
