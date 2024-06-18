@@ -3,7 +3,7 @@ import sys
 
 ## VIASH START
 par = {
-    "input": "resources_test/common/10x_visium_mouse_brain/common_dataset.h5ad",
+    "input": "resources_test/common/10x_visium_mouse_brain/dataset.h5ad",
     "output_dataset": "dataset.h5ad",
     "output_solution": "solution.h5ad",
 }

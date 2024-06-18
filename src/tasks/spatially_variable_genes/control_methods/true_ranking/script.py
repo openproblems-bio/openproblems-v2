@@ -11,9 +11,6 @@ meta = {
 }
 # VIASH END
 
-print('Reading input files', flush=True)
-input_data = ad.read_h5ad(par['input_data'])
-
 print('Generate predictions', flush=True)
 input_solution = ad.read_h5ad(par['input_solution'])
 
