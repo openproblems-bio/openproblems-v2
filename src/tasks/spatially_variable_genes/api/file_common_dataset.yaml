@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/common/10x_visium_mouse_brain/common_dataset.h5ad"
+example: "resources_test/common/10x_visium_mouse_brain/dataset.h5ad"
 info:
   label: "Common Dataset"
   summary: A subset of the common dataset.
