@@ -8,10 +8,6 @@ functionality:
           __merge__: "/src/tasks/spatially_variable_genes/api/file_common_dataset.yaml"
           required: true
           direction: input
-        - name: "--alpha"
-          type: double
-          required: false
-          direction: input
     - name: Outputs
       arguments:
         - name: "--output_dataset"
