@@ -14,9 +14,10 @@ set -e
 nextflow run . \
   -main-script target/nextflow/spatially_variable_genes/workflows/process_datasets/main.nf \
   -profile docker \
-  -entry auto \
   -c src/wf_utils/labels_ci.config \
-  --input resources_test/common/10x_visium_mouse_brain/common_dataset.h5ad \
-  --output_dataset 10x_visium_mouse_brain/dataset.h5ad \
-  --output_solution 10x_visium_mouse_brain/solution.h5ad \
-  --publish_dir resources_test/spatially_variable_genes
+  --id 10x_visium_mouse_brain \
+  --input "resources_test/common/10x_visium_mouse_brain/dataset.h5ad" \
+  --output_dataset dataset.h5ad \
+  --output_solution solution.h5ad \
+  --publish_dir "resources_test/spatially_variable_genes/10x_visium_mouse_brain" \
+  --output_state "state.yaml"
