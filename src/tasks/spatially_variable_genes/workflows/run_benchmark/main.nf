@@ -45,22 +45,22 @@ workflow run_wf {
    * RUN METHODS AND METRICS *
    ***************************/
   score_ch = dataset_ch
-
+  
     // run all methods
     | runEach(
       components: methods,
 
       // use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, comp ->
-        def norm = state.dataset_uns.normalization_id
-        def pref = comp.config.functionality.info.preferred_normalization
-        // if the preferred normalisation is none at all,
-        // we can pass whichever dataset we want
-        def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
-        def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
+      // filter: { id, state, comp ->
+      //   def norm = state.dataset_uns.normalization_id
+      //   def pref = comp.config.functionality.info.preferred_normalization
+      //   // if the preferred normalisation is none at all,
+      //   // we can pass whichever dataset we want
+      //   def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
+      //   def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
 
-        method_check && norm_check
-      },
+      //   method_check && norm_check
+      // },
       
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
@@ -70,7 +70,7 @@ workflow run_wf {
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: { id, state, comp ->
         def new_args = [
-          input_dataset: state.input_dataset, 
+          input_data: state.input_dataset, 
         ]
         if (comp.config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
@@ -86,7 +86,7 @@ workflow run_wf {
         ]
       }
     )
-
+    
     // run all metrics
     | runEach(
       components: metrics,
