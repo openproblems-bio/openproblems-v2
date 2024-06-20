@@ -131,7 +131,7 @@ scores <- raw_scores %>%
 
 # read nxf log and process the task id
 norm_methods <- "/log_cp10k|/log_cpm|/sqrt_cp10k|/sqrt_cpm|/l1_sqrt|/log_scran_pooling"
-id_regex <- paste0("^.*:(.*)_process \\(([^\\.]*)(", norm_methods, ")?(.[^\\.]*)?\\.(.*)\\)$")
+id_regex <- paste0("^.*:(.*)_process \\((?>([^\\.]*)(", norm_methods, "))?(.[^\\.]*)?\\.(.*)\\)$") 
 
 trace <- readr::read_tsv(par$input_execution) %>%
   mutate(
