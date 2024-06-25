@@ -1,11 +1,9 @@
 import anndata as ad
 import squidpy as sq
 
-print(sq.__version__)
-
 # VIASH START
 par = {
-    'input_data': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/dataset.h5ad',
+    'input_data': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad',
     'output': 'output.h5ad'
 }
 meta = {
@@ -16,16 +14,16 @@ meta = {
 print('Generate predictions', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
-print(adata)
-
 sq.gr.spatial_neighbors(adata,
                         coord_type="generic",
                         delaunay=True)
 
 sq.gr.spatial_autocorr(adata,
                        mode="moran",
+                       layer="normalized_data",
                        n_perms=100,
-                       n_jobs=10)
+                       n_jobs=10,
+                       genes=adata.var_names)
 
 # save results
 df = adata.uns["moranI"]
