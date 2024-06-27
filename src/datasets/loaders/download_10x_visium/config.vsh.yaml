@@ -22,6 +22,7 @@ functionality:
           direction: output
           description: Output h5ad file
           required: true
+          example: dataset.h5ad
     - name: Metadata
       arguments:
         - name: "--dataset_id"

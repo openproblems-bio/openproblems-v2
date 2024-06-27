@@ -24,7 +24,8 @@ sc.pp.calculate_qc_metrics(adata,
     
 counts = sc.get.obs_df(adata, 
                        keys=list(adata.var_names), 
-                       use_raw=False, layer='counts')
+                       use_raw=False, 
+                       layer='counts')
 
 total_counts = sc.get.obs_df(adata, keys=["total_counts"])
 norm_expr = NaiveDE.stabilize(counts.T).T
@@ -41,8 +42,8 @@ df = df.reset_index()
 df.columns = ['feature_name', 'pred_spatial_var_score']
 
 output = ad.AnnData(var=df,
-                    uns={'dataset_id': '10x_visium_mouse_brain',
-                         'method_id': 'spatialDE'})
+                    uns={'dataset_id': adata.uns['dataset_id'],
+                         'method_id': meta['functionality_name']})
 
 print("Write output to file", flush=True)
 output.write_h5ad(par['output'])
