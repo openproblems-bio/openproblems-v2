@@ -32,6 +32,11 @@ with tempfile.TemporaryDirectory() as tempdir:
 # Make variable names unique
 adata.var_names_make_unique()
 
+# Rename .var columns
+adata.var['feature_name'] = adata.var_names
+adata.var.set_index(adata.var['gene_ids'], inplace=True)
+adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
+
 # Move counts to .layers
 print("Add metadata to uns", flush=True)
 adata.layers["counts"] = adata.X
