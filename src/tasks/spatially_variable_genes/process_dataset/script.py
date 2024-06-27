@@ -25,6 +25,7 @@ slot_info = read_config_slots_info(meta["config"])
 
 print(">> Create dataset for methods", flush=True)
 output_dataset = subset_anndata(adata, slot_info['output_dataset'])
+# TODO: remove gene names to prevent data leakage!
 
 print(">> Create solution object for metrics", flush=True)
 output_solution = subset_anndata(adata, slot_info['output_solution'])
