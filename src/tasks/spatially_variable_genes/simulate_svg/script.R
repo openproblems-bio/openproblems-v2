@@ -1,35 +1,38 @@
-suppressMessages(library(scDesign3))
+# suppressMessages(library(scDesign3))
 # suppressMessages(library(scales))
-suppressMessages(library(dplyr))
+# suppressMessages(library(dplyr))
 # suppressMessages(library(ggplot2))
 # suppressMessages(library(cowplot))
 # suppressMessages(library(Seurat))
-suppressMessages(library(SingleCellExperiment))
-suppressMessages(library(anndata))
-
-# NOTE: This script is still WIP
+# suppressMessages(library(SingleCellExperiment))
+requireNamespace("scDesign3", quietly = TRUE)
+requireNamespace("anndata", quietly = TRUE)
+requireNamespace("Matrix", quietly = TRUE)
+requireNamespace("SingleCellExperiment", quietly = TRUE)
+library(rlang)
 
 ## VIASH START
 par <- list(
   input = "dataset_raw.h5ad",
   output = "dataset_sim.h5ad"
 )
+meta <- list(
+  cpus = 30L
+)
 ## VIASH END
 
 adata <- anndata::read_h5ad(par$input)
 
+adata <- adata[,1:100]
+
 # get data
-counts <- Matrix::t(adata$X)
-colnames(counts) <- adata$obs_names
-rownames(counts) <- adata$var_names
-    
 df_loc <- as.data.frame(adata$obsm[['spatial']])
 colnames(df_loc) <- c("spatial1", "spatial2")
 rownames(df_loc) <- adata$obs_names
 
 # transform into SCE
 ref_sce <- SingleCellExperiment(
-  list(counts = counts),
+  list(counts = Matrix::t(adata$X)),
   colData = df_loc
 )
 
@@ -50,31 +53,35 @@ ref_data <- scDesign3::construct_data(
 ref_marginal <- scDesign3::fit_marginal(
   data = ref_data,
   predictor = "gene",
-  mu_formula = "s(spatial1, spatial2, bs = 'gp', k = 500)", 
+  mu_formula = "s(spatial1, spatial2, bs = 'gp', k = 500)",
   sigma_formula = "1",
   family_use = "nb",
-  n_cores = 2,
+  parallelization = "pbmcmapply",
+  n_cores = meta$cpus %||% 2L,
   usebam = FALSE,
   trace = TRUE
 )
 
+# 
 ref_copula <- scDesign3::fit_copula(
   sce = ref_sce,
   assay_use = "counts",
   marginal_list = ref_marginal,
   family_use = "nb",
   copula = "gaussian",
-  n_cores = 2,
+  parallelization = "pbmcmapply",
+  n_cores = meta$cpus %||% 2L,
   input_data = ref_data$dat
 )
 
 ref_para <- scDesign3::extract_para(
   sce = ref_sce,
   marginal_list = ref_marginal,
-  n_cores = 5,
   family_use = "nb",
   new_covariate = ref_data$newCovariate,
-  data = ref_data$dat
+  data = ref_data$dat,
+  parallelization = "pbmcmapply",
+  n_cores = meta$cpus %||% 2L
 )
 
 dev_explain <- sapply(ref_marginal, function(x) {
