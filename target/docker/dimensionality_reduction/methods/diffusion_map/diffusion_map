@@ -411,9 +411,9 @@ RUN Rscript -e 'if (!requireNamespace("BiocManager", quietly = TRUE)) install.pa
   Rscript -e 'if (!requireNamespace("destiny", quietly = TRUE)) BiocManager::install("destiny")'
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods diffusion_map"
-LABEL org.opencontainers.image.created="2024-06-27T07:53:17Z"
+LABEL org.opencontainers.image.created="2024-06-27T08:01:29Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="996adeed41ae6bf43496bc09bb9b8e58808857f0"
+LABEL org.opencontainers.image.revision="44694e82e86ee3d89737ae9474d54c5f0a29b6fc"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

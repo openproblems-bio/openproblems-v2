@@ -423,9 +423,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("Matrix", "lmds"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/methods lmds"
-LABEL org.opencontainers.image.created="2024-06-27T07:53:16Z"
+LABEL org.opencontainers.image.created="2024-06-27T08:01:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="996adeed41ae6bf43496bc09bb9b8e58808857f0"
+LABEL org.opencontainers.image.revision="44694e82e86ee3d89737ae9474d54c5f0a29b6fc"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
