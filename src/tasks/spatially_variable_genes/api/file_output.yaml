@@ -10,10 +10,6 @@ info:
         name: feature_name
         description: Feature name
         required: true
-      - type: string
-        name: gene_name
-        description: Gene names
-        required: true
       - type: double
         name: pred_spatial_var_score
         description: Predicted spatial variability score
