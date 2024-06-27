@@ -1,5 +1,5 @@
-library(SPARK)
-library(anndata)
+suppressMessages(library(SPARK))
+suppressMessages(library(anndata))
 
 # VIASH START
 par = list(
@@ -12,9 +12,9 @@ meta = list(
 )
 
 # VIASH END
-cat('Generate predictions')
 
 # load data
+cat('Load data\n')
 adata <- anndata::read_h5ad(par$input_data)
 counts <- t(as.matrix(adata$layers[['counts']]))
 colnames(counts) <- adata$obs_names
@@ -24,12 +24,12 @@ rownames(info) <- colnames(counts)
 colnames(info) <- c("x", "y")
 
 # run SPARK
+cat('Run SPARK\n')
 if (!is.null(meta$n_cpus)) {
 n_cpus <- meta$n_cpus
 } else {
 n_cpus <- 1
 }
-
 
 spark <- CreateSPARKObject(counts=counts, percentage = 0, min_total_counts = 0, location=info[, 1:2])
 

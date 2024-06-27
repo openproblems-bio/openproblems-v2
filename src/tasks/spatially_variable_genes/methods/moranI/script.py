@@ -20,7 +20,7 @@ sq.gr.spatial_neighbors(adata,
 
 sq.gr.spatial_autocorr(adata,
                        mode="moran",
-                       layer='counts',
+                       layer='normalized',
                        n_perms=100,
                        genes=adata.var_names)
 
