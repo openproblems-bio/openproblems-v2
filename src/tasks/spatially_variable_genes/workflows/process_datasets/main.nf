@@ -57,7 +57,7 @@ workflow run_wf {
       args: [n_cp: 10000]
     )
 
-    | process_dataset.run(
+    | split_dataset.run(
       fromState: [
         input: "dataset_simulated_normalized"
       ],
