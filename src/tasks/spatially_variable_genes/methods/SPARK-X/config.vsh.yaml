@@ -1,0 +1,25 @@
+__merge__: ../../api/comp_method.yaml
+
+functionality:
+  name: spark_x
+  info:
+    label: SPARK-X
+    summary: "SPARK-X is a non-parametric method for rapid and effective detection of spatially expressed genes in large spatial transcriptomic studies."
+    description: |
+      SPARK-X builds upon a robust covariance test framework and extends it to incorporating a variety of spatial kernels for non-parametric spatial modeling of sparse count data from large spatial transcriptomic studies.
+    preferred_normalization: counts
+
+  resources:
+    - type: r_script
+      path: script.R
+
+platforms:
+  - type: docker
+    image: ghcr.io/openproblems-bio/base_r:1.0.4
+    setup:
+      - type: r
+        github: xzhoulab/SPARK
+  - type: native
+  - type: nextflow
+    directives:
+      label: [midtime, midmem, midcpu]
