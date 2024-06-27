@@ -14,42 +14,6 @@ workflow run_wf {
   main:
   output_ch = input_ch
 
-    | download_10x_spatial.run(
-      fromState: [
-        "input",
-        "dataset_id",
-        "dataset_name",
-        "dataset_url",
-        "dataset_reference",
-        "dataset_summary",
-        "dataset_description",
-        "dataset_organism"
-      ],
-      toState: [
-        dataset_raw: "output"
-      ]
-    )
-
-    | simulate_svg.run(
-      fromState: [
-        input: "dataset_raw"
-      ],
-      toState: [
-        dataset_simulated: "output"
-      ]
-    )
-
-    | log_cp.run(
-      fromState: [
-        input: "dataset_simulated",
-      ],
-      toState: [
-        dataset_simulated_normalized: "output"
-      ],
-      args: [n_cp: 10000]
-    )
-
-    /*
     | check_dataset_schema.run(
       fromState: { id, state ->
         def schema = findArgumentSchema(meta.config, "input")
@@ -73,9 +37,27 @@ workflow run_wf {
     | filter { id, state ->
       state.dataset != null
     }
-    */
 
-    | process_dataset.run(
+    | simulate_svg.run(
+      fromState: [
+        input: "dataset"
+      ],
+      toState: [
+        dataset_simulated: "output"
+      ]
+    )
+
+    | log_cp.run(
+      fromState: [
+        input: "dataset_simulated",
+      ],
+      toState: [
+        dataset_simulated_normalized: "output"
+      ],
+      args: [n_cp: 10000]
+    )
+
+    | split_dataset.run(
       fromState: [
         input: "dataset_simulated_normalized"
       ],
