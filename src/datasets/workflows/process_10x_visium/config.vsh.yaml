@@ -57,41 +57,49 @@ functionality:
           type: string
           description: The organism of the dataset.
           required: false
-    # - name: Sampling options
-    #   arguments:
-    #     - name: "--do_subsample"
-    #       type: boolean
-    #       default: false
-    #       description: "Whether or not to subsample the dataset"
-    #     - name: "--n_obs"
-    #       type: integer
-    #       description: Maximum number of observations to be kept. It might end up being less because empty cells / genes are removed.
-    #       default: 500
-    #     - name: "--n_vars"
-    #       type: integer
-    #       description: Maximum number of variables to be kept. It might end up being less because empty cells / genes are removed.
-    #       default: 500
-    #     - name: "--keep_features"
-    #       type: string
-    #       multiple: true
-    #       description: A list of genes to keep.
-    #     - name: "--keep_cell_type_categories"
-    #       type: "string"
-    #       multiple: true
-    #       description: "Categories indexes to be selected"
-    #       required: false
-    #     - name: "--keep_batch_categories"
-    #       type: "string"
-    #       multiple: true
-    #       description: "Categories indexes to be selected"
-    #       required: false
-    #     - name: "--even"
-    #       type: "boolean_true"
-    #       description: Subsample evenly from different batches
-    #     - name: "--seed"
-    #       type: "integer"
-    #       description: "A seed for the subsampling."
-    #       example: 123
+    - name: Sampling options
+      arguments:
+        - name: "--do_subsample"
+          type: boolean
+          default: false
+          description: "Whether or not to subsample the dataset"
+        - name: "--n_obs"
+          type: integer
+          description: Maximum number of observations to be kept. It might end up being less because empty cells / genes are removed.
+          default: 500
+        - name: "--n_vars"
+          type: integer
+          description: Maximum number of variables to be kept. It might end up being less because empty cells / genes are removed.
+          default: 500
+        # - name: "--keep_features"
+        #   type: string
+        #   multiple: true
+        #   description: A list of genes to keep.
+        # - name: "--keep_cell_type_categories"
+        #   type: "string"
+        #   multiple: true
+        #   description: "Categories indexes to be selected"
+        #   required: false
+        # - name: "--keep_batch_categories"
+        #   type: "string"
+        #   multiple: true
+        #   description: "Categories indexes to be selected"
+        #   required: false
+        # - name: "--even"
+        #   type: "boolean_true"
+        #   description: Subsample evenly from different batches
+        - name: "--seed"
+          type: "integer"
+          description: "A seed for the subsampling."
+          example: 123
+    - name: Normalization
+      arguments:
+        - name: "--normalization_methods"
+          type: string
+          multiple: true
+          choices: ["log_cp10k", "log_cpm", "sqrt_cp10k", "sqrt_cpm", "l1_sqrt", "log_scran_pooling"]
+          default: ["log_cp10k", "log_cpm", "sqrt_cp10k", "sqrt_cpm", "l1_sqrt"]
+          description: "Which normalization methods to run."
   resources:
     - type: nextflow_script
       path: main.nf
@@ -99,7 +107,14 @@ functionality:
     - path: /src/wf_utils/helper.nf
   dependencies: 
     - name: datasets/loaders/download_10x_visium
-    # - name: datasets/processors/subsample
+    - name: datasets/normalization/log_cp
+    - name: datasets/normalization/log_scran_pooling
+    - name: datasets/normalization/sqrt_cp
+    - name: datasets/normalization/l1_sqrt
+    - name: datasets/processors/subsample
+    # - name: datasets/processors/pca
+    - name: datasets/processors/hvg
+    # - name: datasets/processors/knn
     - name: common/extract_metadata
 platforms:
   - type: nextflow
