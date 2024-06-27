@@ -20,9 +20,8 @@ sq.gr.spatial_neighbors(adata,
 
 sq.gr.spatial_autocorr(adata,
                        mode="moran",
-                       layer="normalized_data",
+                       layer='counts',
                        n_perms=100,
-                       n_jobs=10,
                        genes=adata.var_names)
 
 # save results
@@ -32,8 +31,8 @@ df = df.reset_index()
 df.columns = ['feature_name', 'pred_spatial_var_score']
 
 output = ad.AnnData(var=df,
-                    uns={'dataset_id': '10x_visium_mouse_brain',
-                         'method_id': 'moranI'})
+                    uns={'dataset_id': adata.uns['dataset_id'],
+                         'method_id': meta['functionality_name']})
 
 print("Write output to file", flush=True)
 output.write_h5ad(par['output'])
