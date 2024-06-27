@@ -28,7 +28,7 @@ platforms:
     setup:
       - type: python
         packages: 
-          - numpy
+          - numpy<2.0
           - scipy
           - scikit-learn
   - type: native

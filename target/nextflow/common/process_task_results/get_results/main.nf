@@ -2937,7 +2937,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_results",
     "viash_version" : "0.8.0",
-    "git_commit" : "50194161acc6b520bc10d002329d3457a99bac85",
+    "git_commit" : "996adeed41ae6bf43496bc09bb9b8e58808857f0",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3138,29 +3138,22 @@ trace <- readr::read_tsv(par\\$input_execution) %>%
 
 # parse values
 execution_info <- trace %>%
-  # warning: meth == proc would be better than grepl(meth, proc)
-  filter(map2_lgl(method_id, process_id, grepl)) %>% # only keep method entries
+  filter(process_id == method_id) %>% # only keep method entries
   rowwise() %>%
-  mutate(
-    exit_code = parse_exit(exit),
-    duration_sec = parse_duration(realtime),
-    cpu_pct = parse_cpu(\\`%cpu\\`),
-    peak_memory_mb = parse_size(peak_vmem),
-    disk_read_mb = parse_size(rchar),
-    disk_write_mb = parse_size(wchar)
-  ) %>%
-  group_by(dataset_id, normalization_id, method_id) %>%
-  summarise(
+  transmute(
+    dataset_id,
+    normalization_id,
+    method_id,
     resources = list(list(
-      exit_code = max(exit_code),
-      duration_sec = sum(duration_sec),
-      cpu_pct = sum(cpu_pct),
-      peak_memory_mb = max(peak_memory_mb),
-      disk_read_mb = sum(disk_read_mb),
-      disk_write_mb = sum(disk_write_mb)
-    )),
-    .groups = "drop"
-  )
+      exit_code = parse_exit(exit),
+      duration_sec = parse_duration(realtime),
+      cpu_pct = parse_cpu(\\`%cpu\\`),
+      peak_memory_mb = parse_size(peak_vmem),
+      disk_read_mb = parse_size(rchar),
+      disk_write_mb = parse_size(wchar)
+    ))
+  ) %>%
+  ungroup()
 
 # combine scores with execution info
 # fill up missing entries with NAs and 0s
