@@ -18,7 +18,7 @@ meta = list(
 
 # load data
 cat('Load data')
-adata <- read_h5ad(opt$input)
+adata <- read_h5ad(par$input_data)
 counts <- t(as.matrix(adata$layers[['counts']]))
     
 colnames(counts) <- adata$obs_names

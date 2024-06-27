@@ -20,7 +20,8 @@ platforms:
     image: ghcr.io/openproblems-bio/base_r:1.0.4
     setup:
       - type: r
-        github: xzhoulab/SPARK
+        cran: [anndata, dplyr]
+        bioc: [SpatialExperiment, scran, nnSVG]
   - type: native
   - type: nextflow
     directives:
