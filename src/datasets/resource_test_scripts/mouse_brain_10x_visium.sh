@@ -14,7 +14,7 @@ param_list:
     dataset_organism: Mus musculus
 
 normalization_methods: [log_cp10k]
-n_obs: 500
+n_obs: 600
 n_vars: 500
 output_dataset: '$id/dataset.h5ad'
 output_meta: '$id/dataset_metadata.yaml'
