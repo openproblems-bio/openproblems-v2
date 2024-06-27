@@ -20,7 +20,7 @@ functionality:
       description: Number of epochs to train the Conditional version of single-cell Variational Inference (CondSCVI) model using MAP inference.
     - name: "--max_epochs_sp"
       type: integer
-      default: 2000
+      default: 10000
       description: Number of epochs to train the DestVI model using MAP inference.
 
   resources:
@@ -33,7 +33,7 @@ platforms:
     setup:
       - type: python
         packages: 
-          - scvi-tools>=1.1.0
+          - scvi-tools
       # - type: docker
       #   run: |
       #     pip install -U "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
