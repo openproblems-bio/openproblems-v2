@@ -1,6 +1,7 @@
 library(rlang, quietly = TRUE, warn.conflicts = FALSE)
 library(purrr, quietly = TRUE, warn.conflicts = FALSE)
 library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
+library(yaml, quietly = TRUE, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
@@ -74,11 +75,15 @@ readme_str <-
     )
   }
 
+# get relevant taks info
+
+viash_info <- yaml.load_file(par[["viash_yaml"]])
+
 cat("Generate qmd content\n")
 relative_path <- par[["task_dir"]] %>%
   gsub(paste0(dirname(par[["viash_yaml"]]), "/*"), "", .) %>%
   gsub("/*$", "", .)
-source_url <- paste0(par[["github_url"]], relative_path)
+source_url <- paste0(viash_info$links$repository, "/", relative_path)
 qmd_content <- strip_margin(glue::glue("
   §---
   §title: \"{task_api$task_info$label}\"
