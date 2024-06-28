@@ -10,6 +10,9 @@ functionality:
       spatial domains. It uses gene-specific estimates of length scale parameters within the Gaussian process models, 
       and scales linearly with the number of spatial locations.
     preferred_normalization: counts
+    reference: weber2023nnsvg
+    documentation_url: https://bioconductor.org/packages/release/bioc/vignettes/nnSVG/inst/doc/nnSVG.html
+    repository_url: https://github.com/lmweber/nnSVG
 
   resources:
     - type: r_script

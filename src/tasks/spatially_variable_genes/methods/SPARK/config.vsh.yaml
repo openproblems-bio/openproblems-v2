@@ -10,6 +10,9 @@ functionality:
       With a newly developed penalized quasi-likelihood (PQL) algorithm, SPARK is scalable to analyzing tens of 
       thousands of genes across tens of thousands spatial locations.
     preferred_normalization: counts
+    reference: sun2020statistical
+    documentation_url: https://xzhoulab.github.io/SPARK/02_SPARK_Example/
+    repository_url: https://github.com/xzhoulab/SPARK
 
   resources:
     - type: r_script
