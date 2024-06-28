@@ -1,7 +1,6 @@
+import sys
 import anndata as ad
 from scib.metrics import silhouette_batch
-
-from read_anndata_partial import read_anndata
 
 ## VIASH START
 par = {
@@ -13,13 +12,18 @@ meta = {
 }
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('Read input', flush=True)
-input_solution = read_anndata(par['input_integrated'], obs='obsm', uns='uns')
-input_solution.obs = read_anndata(par['input_solution'], obs='obs').obs
+adata = read_anndata(par['input_integrated'], obs='obs', obsm='obsm', uns='uns')
+adata.obs = read_anndata(par['input_solution'], obs='obs').obs
+adata.uns |= read_anndata(par['input_solution'], uns='uns').uns
 
 print('compute score', flush=True)
 score = silhouette_batch(
-    input_solution,
+    adata,
     batch_key='batch',
     label_key='label',
     embed='X_emb',
@@ -28,9 +32,9 @@ score = silhouette_batch(
 print('Create output AnnData object', flush=True)
 output = ad.AnnData(
     uns={
-        'dataset_id': input_solution.uns['dataset_id'],
-        'normalization_id': input_solution.uns['normalization_id'],
-        'method_id': input_solution.uns['method_id'],
+        'dataset_id': adata.uns['dataset_id'],
+        'normalization_id': adata.uns['normalization_id'],
+        'method_id': adata.uns['method_id'],
         'metric_ids': [ meta['functionality_name'] ],
         'metric_values': [ score ]
     }

@@ -44,6 +44,8 @@ platforms:
     setup:
       - type: python
         pypi:
+          - anndata==0.10
+          - scanpy==1.10
           - scib==1.1.5
   - type: nextflow
     directives: 
