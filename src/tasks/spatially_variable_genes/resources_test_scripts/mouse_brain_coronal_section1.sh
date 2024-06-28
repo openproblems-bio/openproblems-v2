@@ -21,7 +21,7 @@ nextflow run . \
   -c src/wf_utils/labels_ci.config \
   --id mouse_brain_coronal_section1 \
   --input $RAW_DATA/mouse_brain_coronal_section1/dataset.h5ad \
-  --output_dataset0 dataset.h5ad \
+  --output_dataset dataset.h5ad \
   --output_solution solution.h5ad \
   --publish_dir $DATASET_DIR/mouse_brain_coronal_section1 \
   --output_state "state.yaml"
