@@ -42,13 +42,17 @@ functionality:
   resources:
     - type: python_script
       path: script.py
+    - type: python_script
+      path: /src/common/helper_functions/read_anndata_partial.py
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.4
     setup:
       - type: python
         pypi:
-          - git+https://github.com/theislab/scib.git@v1.1.4
+          - anndata==0.10
+          - scanpy==1.10
+          - git+https://github.com/theislab/scib.git@v1.1.5
   - type: nextflow
     directives: 
       label: [midtime, midmem, lowcpu]
