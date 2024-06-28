@@ -21,11 +21,6 @@ functionality:
           description: |
             Path to the project config file. Needed for knowing the relative location of a file to the project root.
           default: "_viash.yaml"
-        - type: string
-          name: --github_url
-          description: |
-            URL to the GitHub repository. Needed for linking to the source code.
-          default: "https://github.com/openproblems-bio/openproblems-v2/tree/main/"
     - name: Outputs
       arguments:
         - type: file

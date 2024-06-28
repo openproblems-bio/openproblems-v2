@@ -26,7 +26,7 @@ def strip_margin(text: str) -> str:
 def create_config(par, component_type, pretty_name, script_path) -> str:
   info_str = generate_info(par, component_type, pretty_name)
   resources_str = generate_resources(par, script_path)
-  docker_platform = generate_docker_platform(par)
+  docker_engine = generate_docker_engine(par)
 
   return strip_margin(f'''\
     |# The API specifies which type of component this is.
@@ -36,110 +36,111 @@ def create_config(par, component_type, pretty_name, script_path) -> str:
     |#   - A unit test
     |__merge__: {os.path.relpath(par["api_file"], par["output"])}
     |
-    |functionality:
-    |  # A unique identifier for your component (required).
-    |  # Can contain only lowercase letters or underscores.
-    |  name: {par["name"]}
     |
-    |  # Metadata for your component
-    |  info:
+    |# A unique identifier for your component (required).
+    |# Can contain only lowercase letters or underscores.
+    |name: {par["name"]}
+    |
+    |# Metadata for your component
+    |info:
     |{info_str}
-    |  # Component-specific parameters (optional)
-    |  # arguments:
-    |  #   - name: "--n_neighbors"
-    |  #     type: "integer"
-    |  #     default: 5
-    |  #     description: Number of neighbors to use.
+    |# Component-specific parameters (optional)
+    |# arguments:
+    |#   - name: "--n_neighbors"
+    |#     type: "integer"
+    |#     default: 5
+    |#     description: Number of neighbors to use.
     |
-    |  # Resources required to run the component
-    |  resources:
+    |# Resources required to run the component
+    |resources:
     |{resources_str}
-    |platforms:
+    |engines:
     |  # Specifications for the Docker image for this component.
-    |{docker_platform}
+    |{docker_engine}
+    |runners:
     |  # This platform allows running the component natively
-    |  - type: native
+    |  - type: executable
     |  # Allows turning the component into a Nextflow module / pipeline.
     |  - type: nextflow
     |    directives:
-    |      label: [midtime,midmem, midcpu]
+    |      label: [midtime,midmem,midcpu]
     |'''
   )
 
 def generate_info(par, component_type, pretty_name) -> str:
-  """Generate the functionality info for a component."""
+  """Generate the info for a component."""
   if component_type in ["method", "control_method"]:
     str = strip_margin(f'''\
-      |    # A relatively short label, used when rendering visualisarions (required)
-      |    label: {pretty_name}
-      |    # A one sentence summary of how this method works (required). Used when 
-      |    # rendering summary tables.
-      |    summary: "FILL IN: A one sentence summary of this method."
-      |    # A multi-line description of how this component works (required). Used
-      |    # when rendering reference documentation.
-      |    description: |
-      |      FILL IN: A (multi-line) description of how this method works.
-      |    # Which normalisation method this component prefers to use (required).
-      |    preferred_normalization: log_cp10k
+      |  # A relatively short label, used when rendering visualisations (required)
+      |  label: {pretty_name}
+      |  # A one sentence summary of how this method works (required). Used when 
+      |  # rendering summary tables.
+      |  summary: "FILL IN: A one sentence summary of this method."
+      |  # A multi-line description of how this component works (required). Used
+      |  # when rendering reference documentation.
+      |  description: |
+      |    FILL IN: A (multi-line) description of how this method works.
+      |  # Which normalisation method this component prefers to use (required).
+      |  preferred_normalization: log_cp10k
       |''')
     if component_type == "method":
       str += strip_margin(f'''\
-        |    # A reference key from the bibtex library at src/common/library.bib (required).
-        |    reference: bibtex_reference_key
-        |    # URL to the documentation for this method (required).
-        |    documentation_url: https://url.to/the/documentation
-        |    # URL to the code repository for this method (required).
-        |    repository_url: https://github.com/organisation/repository
+        |  # A reference key from the bibtex library at src/common/library.bib (required).
+        |  reference: bibtex_reference_key
+        |  # URL to the documentation for this method (required).
+        |  documentation_url: https://url.to/the/documentation
+        |  # URL to the code repository for this method (required).
+        |  repository_url: https://github.com/organisation/repository
         |''')
     return str
   elif component_type == "metric":
     return strip_margin(f'''\
-      |    metrics:
-      |      # A unique identifier for your metric (required).
-      |      # Can contain only lowercase letters or underscores.
-      |      name: {par["name"]}
-      |      # A relatively short label, used when rendering visualisarions (required)
-      |      label: {pretty_name}
-      |      # A one sentence summary of how this metric works (required). Used when 
-      |      # rendering summary tables.
-      |      summary: "FILL IN: A one sentence summary of this metric."
-      |      # A multi-line description of how this component works (required). Used
-      |      # when rendering reference documentation.
-      |      description: |
-      |        FILL IN: A (multi-line) description of how this metric works.
-      |      # A reference key from the bibtex library at src/common/library.bib (required).
-      |      reference: bibtex_reference_key
-      |      # URL to the documentation for this metric (required).
-      |      documentation_url: https://url.to/the/documentation
-      |      # URL to the code repository for this metric (required).
-      |      repository_url: https://github.com/organisation/repository
-      |      # The minimum possible value for this metric (required)
-      |      min: 0
-      |      # The maximum possible value for this metric (required)
-      |      max: 1
-      |      # Whether a higher value represents a 'better' solution (required)
-      |      maximize: true
+      |  metrics:
+      |    # A unique identifier for your metric (required).
+      |    # Can contain only lowercase letters or underscores.
+      |    name: {par["name"]}
+      |    # A relatively short label, used when rendering visualisarions (required)
+      |    label: {pretty_name}
+      |    # A one sentence summary of how this metric works (required). Used when 
+      |    # rendering summary tables.
+      |    summary: "FILL IN: A one sentence summary of this metric."
+      |    # A multi-line description of how this component works (required). Used
+      |    # when rendering reference documentation.
+      |    description: |
+      |      FILL IN: A (multi-line) description of how this metric works.
+      |    # A reference key from the bibtex library at src/common/library.bib (required).
+      |    reference: bibtex_reference_key
+      |    # URL to the documentation for this metric (required).
+      |    documentation_url: https://url.to/the/documentation
+      |    # URL to the code repository for this metric (required).
+      |    repository_url: https://github.com/organisation/repository
+      |    # The minimum possible value for this metric (required)
+      |    min: 0
+      |    # The maximum possible value for this metric (required)
+      |    max: 1
+      |    # Whether a higher value represents a 'better' solution (required)
+      |    maximize: true
       |''')
 
 
 def generate_resources(par, script_path) -> str:
-  """Add the script to the functionality resources."""
+  """Add the script to the resources."""
   if par["language"] == "python":
     type_str = "python_script"
   elif par["language"] == "r":
     type_str = "r_script"
 
   return strip_margin(f'''\
-    |    # The script of your component (required)
-    |    - type: {type_str}
-    |      path: {script_path}
-    |    # Additional resources your script needs (optional)
-    |    # - type: file
-    |    #   path: weights.pt
+    |  # The script of your component (required)
+    |  - type: {type_str}
+    |    path: {script_path}
+    |  # Additional resources your script needs (optional)
+    |  # - type: file
+    |  #   path: weights.pt
     |''')
 
-def generate_docker_platform(par) -> str:
-  """Set up the docker platform for Python."""
+def generate_docker_engine(par) -> str:
+  """Set up the docker engine for Python."""
   if par["language"] == "python":
     image_str = "ghcr.io/openproblems-bio/base_python:1.0.4"
     setup_type = "python"
@@ -152,7 +153,7 @@ def generate_docker_platform(par) -> str:
     |  - type: docker
     |    image: {image_str}
     |    # Add custom dependencies here (optional). For more information, see
-    |    # https://viash.io/reference/config/platforms/docker/#setup .
+    |    # https://viash.io/reference/config/engines/docker/#setup .
     |    # setup:
     |    #   - type: {setup_type}
     |    #     packages: {package_example}
@@ -160,7 +161,7 @@ def generate_docker_platform(par) -> str:
 
 def set_par_values(config) -> None:
   """Adds values to each of the arguments in a config file."""
-  args = config['functionality']['arguments']
+  args = config['arguments']
   for argi, arg in enumerate(args):
     key = re.sub("^-*", "", arg['name'])
 
@@ -175,8 +176,8 @@ def set_par_values(config) -> None:
       value = f'{key_strip}.h5ad'
 
     # store key and value
-    config['functionality']['arguments'][argi]["key"] = key
-    config['functionality']['arguments'][argi]["value"] = value
+    config['arguments'][argi]["key"] = key
+    config['arguments'][argi]["value"] = value
   
 def look_for_adata_arg(args, uns_field):
   """Look for an argument that has a .uns[uns_field] in its info.slots."""
@@ -200,7 +201,7 @@ def write_output_python(arg, copy_from_adata, is_metric):
         if is_metric:
           value = f"{copy_from_adata}.uns['{slot['name']}']"
         else:
-          value = "meta['functionality_name']"
+          value = "meta['name']"
       else:
         value = group_name + "_" + slot["name"]
       inner.append(f"'{slot['name']}': {value}")
@@ -229,7 +230,7 @@ def write_output_r(arg, copy_from_adata, is_metric):
         if is_metric:
           value = f"{copy_from_adata}$uns[[\"{slot['name']}\"]]"
         else:
-          value = "meta[[\"functionality_name\"]]"
+          value = "meta[[\"name\"]]"
       else:
         value = group_name + "_" + slot["name"]
       inner.append(f"{slot['name']} = {value}")
@@ -246,7 +247,7 @@ def write_output_r(arg, copy_from_adata, is_metric):
   )
 
 def create_python_script(par, config, type):
-  args = config['functionality']['arguments']
+  args = config['arguments']
 
   # create the arguments of the par string
   par_string = ",\n  ".join(f"'{arg['key']}': '{arg['value']}'" for arg in args)
@@ -298,7 +299,7 @@ def create_python_script(par, config, type):
     |  {par_string}
     |}}
     |meta = {{
-    |  'functionality_name': '{par["name"]}'
+    |  'name': '{par["name"]}'
     |}}
     |## VIASH END
     |
@@ -313,7 +314,7 @@ def create_python_script(par, config, type):
   return script
 
 def create_r_script(par, api_spec, type):
-  args = api_spec['functionality']['arguments']
+  args = api_spec['arguments']
 
   # create the arguments of the par string
   par_string = ",\n  ".join(f'{arg["key"]} = "{arg["value"]}"' for arg in args)
@@ -363,7 +364,7 @@ def create_r_script(par, api_spec, type):
     |  {par_string}
     |)
     |meta <- list(
-    |  functionality_name = "{par["name"]}"
+    |  name = "{par["name"]}"
     |)
     |## VIASH END
     |
@@ -376,25 +377,6 @@ def create_r_script(par, api_spec, type):
     |''')
 
   return script
-
-# def read_viash_config(file):
-#   file = file.absolute()
-
-#   # read in config
-#   command = ["viash", "config", "view", str(file)]
-
-#   # Execute the command and capture the output
-#   output = subprocess.check_output(
-#     command,
-#     universal_newlines=True,
-#     cwd=str(file.parent)
-#   )
-
-#   # Parse the output as YAML
-#   config = yaml.load(output)
-
-#   return config
-
 
 def main(par):
   ####### CHECK INPUTS #######
@@ -430,11 +412,11 @@ def main(par):
   ## READ API FILE
   print("Read API file", flush=True)
   api = read_and_merge_yaml(api_file)
-  comp_type = api.get("functionality", {}).get("info", {}).get("type", {})
+  comp_type = api.get("info", {}).get("type", {})
   if not comp_type:
     sys.exit(strip_margin(f"""\
       |Error: API file is incorrectly formatted.
-      |  Reason: Could not find component type at `.functionality.info.type`.'
+      |  Reason: Could not find component type at `.info.type`.'
       |  Please fix the formatting of the API file."""))
 
   ####### CREATE OUTPUT DIR #######
