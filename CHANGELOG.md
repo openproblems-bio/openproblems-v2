@@ -67,6 +67,8 @@
 
 * Add library.bib file check to component unit test (PR #167)
 
+* Lower bound scvi-tools to 1.1.0 for all methods using the package (PR #416).
+
 ### BUG FIXES
 
 * fix typos in metric and common defenition schemas (PR #212)
@@ -106,6 +108,12 @@
 
 ## batch_integration
 
+### MINOR CHANGES
+
+* Updated `methods/scanvi` to use `counts` as  `preferred_normalization`
+
+* Updated `methods/scvi` to use `counts` as  `preferred_normalization`
+
 ### NEW FUNCTIONALITY
 
 * `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
@@ -124,13 +132,11 @@
 
 * Removed the separate subtask specific subfolders. The "subtask" is added to the config.
 
-* `control_methods/no_integration_batch`: Migrated from v1 embedding.
+* `control_methods/no_integration`: Migrated from v1.
 
-* `control_methods/random_embed_cell`: Migrated from v1 embedding.
+* `control_methods/perfect_integration`: Migrated from v1, renaming "random embedding" to "perfect integration".
 
-* `control_methods/random_embed_cel_jitter`: Migrated from v1 embedding.
-
-* `control_methods/random_integration`: Migrated from v1 graph.
+* `control_methods/random_integration`: Migrated from v1.
 
 * `methods/bbknn`: Migrated from v1 graph.
 
@@ -167,6 +173,10 @@
 * Removed the `.uns["output_type"]` field from output anndata in methods and control methods. (PR #205)
 
 ## label_projection
+
+### MINOR CHANGES
+
+* Updated `methods/scanvi` to use `counts` as  `preferred_normalization`
 
 ### NEW FUNCTIONALITY
 
@@ -346,7 +356,6 @@
 
 * `metrics/mse`: Migrated from v1.
 
-
 ### Changes from V1
 
 * `methods/scot`: Add new scot method.
@@ -357,3 +366,53 @@
 * The methods and metrics now take 2 modal datasets as input instead of 1.
 
 
+## spatial_decomposition (PR #365)
+
+### NEW FUNCTIONALITY
+
+* `api/file_*`: Created a file format specifications for the h5ad files throughout the pipeline.
+
+* `api/comp_*`: Created an api definition for the process, method and metric components.
+
+* `dataset_simulator`: Added a component to simulate spatial datasets with the required ground-truth.
+
+* `process_dataset`: Added a component for processing common datasets into task-ready dataset objects.
+
+* `resources_test/spatial_decomposition/cxg_mouse_pancreas_atlas` with `src/tasks/spatial_decomposition/resources_test_scripts/cxg_mouse_pancreas_atlas.sh`.
+
+* Added `variant` key to config files to store the different input parameter sets for components.
+
+* `workflows/run`: Added nf-tower test script.
+
+### V1 MIGRATION
+
+* `methods/cell2location`: Migrated from v1.
+
+* `methods/destvi`: Migrated from v1.
+
+* `methods/nmfreg`: Migrated from v1.
+
+* `methods/nnls`: Migrated and adapted from v1.
+
+* `methods/rctd`: Migrated and adapted from v1.
+
+* `methods/seurat`: Migrated and adapted from v1.
+
+* `methods/stereoscope`: Migrated from v1.
+
+* `methods/tangram`: Migrated from v1.
+
+* `methods/vanillanmf`: Migrated from v1.
+
+* `control_methods/random_proportions`: Migrated from v1.
+
+* `control_methods/true_proportions`: Migrated from v1.
+
+* `metric/r2`: Migrated from v1.
+
+### Changes from V1
+
+* Raw counts and normalized expression data is stored in `.layers["counts"]` and `.layers["normalized"]`, respectively,
+  instead of in `.X`.
+  
+* A `process_dataset` has been implemented to make a distinction between the data that a method or metric is allowed to see.

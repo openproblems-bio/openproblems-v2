@@ -114,11 +114,16 @@ workflow run_wf {
     )
 
     // run normalization methods on second modality
-    | runEach(
-      components: normalization_methods,
-      filter: { id, state, comp ->
-        comp.name == state.normalization_id
-      },
+    // TODO: can we change this to DSB?
+    | prot_clr.run(
+      runIf: { id, state -> state.mod2 == "ADT" },
+      args: [normalization_id: "prot_clr"],
+      fromState: ["input": "raw_mod2"],
+      toState: ["normalized_mod2": "output"]
+    )
+    | atac_tfidf.run(
+      runIf: { id, state -> state.mod2 == "ATAC" },
+      args: [normalization_id: "atac_tfidf"],
       fromState: ["input": "raw_mod2"],
       toState: ["normalized_mod2": "output"]
     )
@@ -140,6 +145,7 @@ workflow run_wf {
     )
 
     | hvg.run(
+      key: "hvg_mod2",
       fromState: [ "input": "svd_mod2" ],
       toState: [ "hvg_mod2": "output" ]
     )
@@ -147,21 +153,21 @@ workflow run_wf {
     // add synonyms
     | map{ id, state ->
       [id, state + [
-        "output_dataset_mod1": state.hvg_mod1,
-        "output_dataset_mod2": state.hvg_mod2
+        "output_mod1": state.hvg_mod1,
+        "output_mod2": state.hvg_mod2
       ]]
     }
 
     | extract_metadata.run(
       key: "extract_metadata_mod1",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "output_dataset_mod1")
+        def schema = findArgumentSchema(meta.config, "output_mod1")
         // workaround: convert GString to String
         schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.output_dataset_mod1,
+          "input": state.output_mod1,
           "schema": schemaYaml
         ]
       },
@@ -171,13 +177,13 @@ workflow run_wf {
     | extract_metadata.run(
       key: "extract_metadata_mod2",
       fromState: { id, state ->
-        def schema = findArgumentSchema(meta.config, "output_dataset_mod2")
+        def schema = findArgumentSchema(meta.config, "output_mod2")
         // workaround: convert GString to String
         schema = iterateMap(schema, { it instanceof GString ? it.toString() : it })
         def schemaYaml = tempFile("schema.yaml")
         writeYaml(schema, schemaYaml)
         [
-          "input": state.output_dataset_mod2,
+          "input": state.output_mod2,
           "schema": schemaYaml
         ]
       },
@@ -186,8 +192,8 @@ workflow run_wf {
     
     // only output the files for which an output file was specified
     | setState([
-      "output_dataset_mod1",
-      "output_dataset_mod2",
+      "output_mod1",
+      "output_mod2",
       "output_meta_mod1",
       "output_meta_mod2",
       "_meta"

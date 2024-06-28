@@ -20,6 +20,8 @@ param_list:
     dataset_organism: homo_sapiens
     layer_counts: counts
     var_feature_name: index
+    mod1: GEX
+    mod2: ADT
 
   - id: openproblems_v1_multimodal/scicar_cell_lines
     input_id: scicar_cell_lines
@@ -33,6 +35,8 @@ param_list:
     layer_counts: counts
     var_feature_id: index
     var_feature_name: gene_short_name
+    mod1: GEX
+    mod2: ATAC
 
   - id: openproblems_v1_multimodal/scicar_mouse_kidney
     input_id: scicar_mouse_kidney
@@ -47,14 +51,27 @@ param_list:
     layer_counts: counts
     var_feature_id: index
     var_feature_name: gene_short_name
+    mod1: GEX
+    mod2: ATAC
 
 normalization_methods: [log_cp10k, sqrt_cp10k, l1_sqrt]
-output_dataset_mod1: '$id/dataset_mod1.h5ad'
-output_dataset_mod2: '$id/dataset_mod2.h5ad'
+output_mod1: '$id/dataset_mod1.h5ad'
+output_mod2: '$id/dataset_mod2.h5ad'
 output_meta_mod1: '$id/dataset_metadata_mod1.yaml'
 output_meta_mod2: '$id/dataset_metadata_mod2.yaml'
 output_state: '$id/state.yaml'
 publish_dir: s3://openproblems-data/resources/datasets
+HERE
+
+
+cat > /tmp/nextflow.config << HERE
+process {
+  withName:'.*publishStatesProc' {
+    memory = '16GB'
+    disk = '100GB'
+  }
+  errorStrategy = "ignore"
+}
 HERE
 
 tw launch https://github.com/openproblems-bio/openproblems-v2.git \
@@ -62,6 +79,7 @@ tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --pull-latest \
   --main-script target/nextflow/datasets/workflows/process_openproblems_v1_multimodal/main.nf \
   --workspace 53907369739130 \
-  --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
   --params-file "$params_file" \
-  --labels openproblems_v1_multimodal,dataset_loader
+  --labels openproblems_v1_multimodal,dataset_loader \
+  --config /tmp/nextflow.config

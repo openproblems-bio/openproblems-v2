@@ -5,7 +5,7 @@ README_files/
 *.h5ad
 
 # IDE ignores
-.idea/
+/.idea/
 
 # repo specific ignores
 output_bash
@@ -17,14 +17,14 @@ output_bash
 
 # viash specific ignores
 docker_output/
-target/
+/target/
 check_results/
 log.txt
 .viash*
-resources/
-resources_test/
+/resources/
+/resources_test/
 
 # nextflow specific ignores
-.nextflow*
-work
+/.nextflow*
+/work
 output
