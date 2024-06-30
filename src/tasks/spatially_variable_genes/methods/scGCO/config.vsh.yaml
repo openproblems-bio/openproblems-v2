@@ -39,24 +39,27 @@ platforms:
           - gdal-bin 
           - libgdal-dev
       - type: docker
-        run: |
-          pip install git+https://github.com/amueller/gco_python.git
+        run : |
+          pip install Cython==0.29.33 numpy==1.23.5 scipy==1.9.1
       - type: docker
         run : |
           git clone https://github.com/lzj1769/scGCO_simple.git /opt/scGCO/scGCO_simple
       - type: python
         packages:
-          - h5py
-          - pandas
-          - parmap
-          - tqdm
-          - anndata
-          - networkx
-          - matplotlib
-          - scikit-learn
+          - h5py==3.8.0
+          - pandas==1.5.3
+          - parmap==1.6.0
+          - scanpy==1.9.3
+          - tqdm==4.65.0
+          - anndata==0.8.0
+          - matplotlib==3.7.1
+          - scikit-learn==1.2.2
           - hdbscan
-          - seaborn
-          - pysal
+          - seaborn==0.12.2
+          - pysal==2.0.0
+          - pygco==0.0.16
+          - shapely==2.0.1
+          - networkx==2.5
           - scikit-image
   - type: native
   - type: nextflow

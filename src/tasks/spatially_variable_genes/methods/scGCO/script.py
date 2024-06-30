@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings('ignore')
+
 import pandas as pd
 import anndata as ad
 import numpy as np
@@ -20,20 +23,23 @@ meta = {
 print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
-print('Run scGCO', flush=True)
-
 data = pd.DataFrame(
     adata.layers['counts'].todense(),
     columns=adata.var_names,
     index=adata.obs_names
 )
+
+print('Run scGCO', flush=True)
 data_norm = normalize_count_cellranger(data)
 
 exp = data.iloc[:, 0]
 locs = adata.obsm['spatial'].copy()
+
+print('Create graph with weight', flush=True)
 cellGraph = create_graph_with_weight(locs, exp)
 gmmDict = gmm_model(data_norm)
 
+print('Identify spatial genes', flush=True)
 df = identify_spatial_genes(locs, data_norm, cellGraph, gmmDict)
 df = df.loc[adata.var_names]
 
@@ -42,7 +48,9 @@ df = df.loc[adata.var_names][['fdr']]
 df = df.reset_index()
 df.columns = ['feature_name', 'pred_spatial_var_score']
 
-df['pred_spatial_var_score'] = -np.log10(df['pred_spatial_var_score'])
+# Transform the values via -log10 to make sure a bigger score represents a 
+# higher spatial variation
+df['pred_spatial_var_score'] = -np.log10(df['pred_spatial_var_score'].tolist())
 
 output = ad.AnnData(var=df,
                     uns={'dataset_id': adata.uns['dataset_id'],

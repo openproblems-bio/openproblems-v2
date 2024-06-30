@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings('ignore')
+
 import anndata as ad
 import squidpy as sq
 

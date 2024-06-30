@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings('ignore')
+
 import scanpy as sc
 import anndata as ad
 import NaiveDE
@@ -13,10 +16,11 @@ meta = {
 }
 # VIASH END
 
-print('Generate predictions', flush=True)
+print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
 # run spatialDE
+print('Run spatialDE')
 sc.pp.calculate_qc_metrics(adata, 
                            layer='counts', 
                            inplace=True, 
