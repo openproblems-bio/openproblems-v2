@@ -26,8 +26,14 @@ platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_r:1.0.4
     setup:
+      - type: apt
+        packages: 
+          - git
+      - type: docker
+        run : |
+          git clone https://github.com/Minzhe/BOOST-GP.git /opt/BOOST-GP
       - type: r
-        cran: [anndata]
+        cran: [anndata, RcppDist, ggplot2]
   - type: native
   - type: nextflow
     directives:

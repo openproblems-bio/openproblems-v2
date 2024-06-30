@@ -1,6 +1,8 @@
 library(RcppDist)
+library(anndata)
 
-source("opt/BOOST-GP/boost.gp.R")
+setwd("/opt/BOOST-GP")
+source("./R/boost.gp.R")
 
 # VIASH START
 par <- list(
@@ -12,7 +14,9 @@ meta <- list(
 )
 # VIASH END
 
-cat("Load data")
+cat("Load data\n")
+adata <- anndata::read_h5ad(par$input_data)
+
 counts <- as.matrix(adata$layers[["counts"]])
 colnames(counts) <- adata$var_names
 rownames(counts) <- adata$obs_names
@@ -22,11 +26,10 @@ loc <- as.data.frame(adata$obsm[["spatial"]])
 rownames(loc) <- adata$obs_names
 colnames(loc) <- c("x", "y")
 
-cat("Run BOOST-GP")
+cat("Run BOOST-GP\n")
 df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = 10, burn = 5))
 
 df$feature_name <- rownames(df)
-
 df <- subset(df, select = c("feature_name", "PPI"))
 colnames(df) <- c("feature_name", "pred_spatial_var_score")
 
