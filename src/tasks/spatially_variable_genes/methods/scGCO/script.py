@@ -41,7 +41,6 @@ gmmDict = gmm_model(data_norm)
 
 print('Identify spatial genes', flush=True)
 df = identify_spatial_genes(locs, data_norm, cellGraph, gmmDict)
-df = df.loc[adata.var_names]
 
 # save results
 df = df.loc[adata.var_names][['fdr']]
