@@ -123,7 +123,7 @@ df = df.reset_index()
 df.columns = ['feature_name', 'pred_spatial_var_score']
 
 # reverse it to make sure a bigger score represents a higher spatial variation
-df['pred_spatial_var_score'] < - -df['pred_spatial_var_score']
+df['pred_spatial_var_score'] = -np.log10(df['pred_spatial_var_score'])
 
 output = ad.AnnData(var=df,
                     uns={'dataset_id': adata.uns['dataset_id'],

@@ -11,9 +11,10 @@ meta = {
 }
 # VIASH END
 
-print('Generate predictions', flush=True)
+print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
+print('Run moranI', flush=True)
 sq.gr.spatial_neighbors(adata,
                         coord_type="generic",
                         delaunay=True)

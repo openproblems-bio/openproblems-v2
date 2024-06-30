@@ -39,9 +39,9 @@ df <- subset(df, select = c("feature_name", "adjustedPval"))
 colnames(df) <- c("feature_name", "pred_spatial_var_score")
 rownames(df) <- NULL
 
-# because SPARK-X only generates p-values, we here reverse it to make sure a 
-# bigger score represents a higher spatial variation
-df$pred_spatial_var_score <- -df$pred_spatial_var_score
+# because SPARK-X only generates p-values, we here transform the values
+# via -log10 to make sure a bigger score represents a higher spatial variation
+df$pred_spatial_var_score <- -log10(df$pred_spatial_var_score)
 
 # save output
 cat("Write output AnnData to file\n")
