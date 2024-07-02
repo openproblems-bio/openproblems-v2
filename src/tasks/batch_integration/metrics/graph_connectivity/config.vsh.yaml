@@ -37,12 +37,10 @@ functionality:
       path: /src/common/helper_functions/read_anndata_partial.py
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.4
+    image: ghcr.io/openproblems-bio/base_images/python:1.1.0
     setup:
       - type: python
         pypi:
-          - anndata==0.10
-          - scanpy==1.10
           - scib==1.1.5
   - type: nextflow
     directives: 
