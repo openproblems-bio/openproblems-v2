@@ -53,6 +53,32 @@ functionality:
           type: string
           description: The organism of the dataset.
           required: false
+    - name: Gene or spot filtering
+      description: Arguments related to filtering cells and genes by counts.
+      arguments:
+        - name: "--spot_filter_min_genes"
+          type: integer
+          description: Remove spots with less than this number of genes.
+          required: false
+          example: 1000
+        - name: "--spot_filter_min_counts"
+          type: integer
+          description: Remove spots with less than this number of counts.
+          required: false
+          example: 1000
+        - name: "--gene_filter_min_cells"
+          type: integer
+          description: Remove genes expressed in less than this number of cells.
+          required: false
+          example: 10
+        - name: "--gene_filter_min_counts"
+          type: integer
+          description: Remove genes with less than this number of counts.
+          required: false
+        - name: "--remove_mitochondrial"
+          type: boolean
+          description: Remove mitovhondrial genes?
+          required: false
   
   resources:
     - type: python_script

@@ -1,6 +1,7 @@
 import subprocess
 import squidpy as sq
 import tempfile
+import scanpy as sc
 
 ## VIASH START
 par = {
@@ -31,6 +32,28 @@ with tempfile.TemporaryDirectory() as tempdir:
 
 # Make variable names unique
 adata.var_names_make_unique()
+
+if par["remove_mitochondrial"]:
+  print("Removing mitochondrial genes")
+  adata.var["mt"] = adata.var_names.str.startswith("MT-") | adata.var_names.str.startswith("mt-")
+  sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
+
+print("Filtering spots or genes")
+t0 = adata.shape
+# remove cells with few counts
+if par["spot_filter_min_counts"]:
+  sc.pp.filter_cells(adata, min_counts=par["cell_filter_min_counts"])
+# remove cells with few genes 
+if par["spot_filter_min_genes"]:
+  sc.pp.filter_cells(adata, min_genes=par["cell_filter_min_genes"])
+# remove genes that have few counts
+if par["gene_filter_min_counts"]:
+  sc.pp.filter_genes(adata, min_counts=par["gene_filter_min_counts"])
+# remove genes that are found in few cells
+if par["gene_filter_min_cells"]:
+  sc.pp.filter_genes(adata, min_cells=par["gene_filter_min_cells"])
+t1 = adata.shape
+print("Removed %s cells and %s genes.", (t0[0] - t1[0]), (t0[1] - t1[1]))
 
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
