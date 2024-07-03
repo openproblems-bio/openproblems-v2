@@ -18,8 +18,8 @@ df = input_solution.var
 df.columns = ['feature_name', 'gene_name', 'pred_spatial_var_score']
 
 output = ad.AnnData(var=df,
-                    uns={'dataset_id': '10x_visium_mouse_brain',
-                         'method_id': 'true_ranking'})
+                    uns={'dataset_id': input_solution.uns['dataset_id'],
+                         'method_id': meta['functionality_name']})
 
 print("Write output to file", flush=True)
 output.write_h5ad(par['output'])
