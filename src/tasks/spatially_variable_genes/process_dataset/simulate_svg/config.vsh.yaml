@@ -12,11 +12,13 @@ functionality:
       required: true
     - type: integer
       name: --gp_k
+      description: Dimension of basis used for the Gaussian process smoother.
       default: 500
       info:
         test_value: 50
     - type: integer
       name: --select_top_variable_genes
+      description: Number of top variable genes to use for subsetting.
       default: 50
   resources:
     - type: r_script
@@ -34,4 +36,4 @@ platforms:
         github: SONGDONGYUAN1994/scDesign3
   - type: nextflow
     directives: 
-      label: [midtime, highmem, highcpu]
+      label: [hightime, highmem, highcpu]

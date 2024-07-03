@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run this prior to executing this script:
-# bin/viash_build -q 'spatially_variable_genes'
+# viash ns build -q 'spatially_variable_genes'
 
 # get the root of the directory
 REPO_ROOT=$(git rev-parse --show-toplevel)

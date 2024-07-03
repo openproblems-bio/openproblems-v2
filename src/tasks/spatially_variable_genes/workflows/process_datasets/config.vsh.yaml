@@ -18,6 +18,18 @@ functionality:
           __merge__: /src/tasks/spatially_variable_genes/api/file_solution.yaml
           required: true
           direction: output
+    - name: Simulation options
+      arguments:
+        - type: integer
+          name: --gp_k_sim
+          description: Dimension of basis used for the Gaussian process smoother.
+          default: 500
+          info:
+            test_value: 50
+        - type: integer
+          name: --select_top_variable_genes_sim
+          description: Number of top variable genes to use for subsetting.
+          default: 50
   resources:
     - type: nextflow_script
       path: main.nf

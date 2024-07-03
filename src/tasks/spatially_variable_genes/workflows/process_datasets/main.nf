@@ -40,7 +40,9 @@ workflow run_wf {
 
     | simulate_svg.run(
       fromState: [
-        input: "dataset"
+        input: "dataset",
+        gp_k: "gp_k_sim",
+        select_top_variable_genes: "select_top_variable_genes_sim"
       ],
       toState: [
         dataset_simulated: "output"
