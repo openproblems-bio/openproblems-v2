@@ -12,8 +12,6 @@ param_list:
     dataset_organism: Mus musculus
 
 normalization_methods: [log_cp10k]
-n_obs: 600
-n_vars: 500
 output_dataset: '$id/dataset.h5ad'
 output_meta: '$id/dataset_metadata.yaml'
 output_state: '$id/state.yaml'
@@ -21,7 +19,6 @@ output_raw: force_null
 output_normalized: force_null
 output_hvg: force_null
 publish_dir: s3://openproblems-data/resources/datasets
-do_subsample: true
 HERE
 
 cat > /tmp/nextflow.config << HERE
