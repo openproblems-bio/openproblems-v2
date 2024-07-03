@@ -9,6 +9,10 @@ info:
         name: counts
         description: Raw counts.
         required: true
+      - type: double
+        name: counts
+        description: Normalized expression values.
+        required: true
     var:
       - type: string
         name: feature_id
