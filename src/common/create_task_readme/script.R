@@ -34,6 +34,7 @@ source(paste0(meta["resources_dir"], "/read_api_files.R"))
 
 cat("Read task info\n")
 task_api <- read_task_api(par[["task_dir"]])
+viash_info <- yaml.load_file(par[["viash_yaml"]])
 
 # determine ordering
 root <- .task_graph_get_root(task_api)
@@ -64,9 +65,62 @@ authors_str <-
   } else {
     ""
   }
+
+readme_base <- strip_margin(glue::glue("
+  §## Installation
+  §
+  §You need to have Docker, Java, and Viash installed. Follow
+  §[these instructions](https://openproblems.bio/documentation/fundamentals/requirements)
+  §to install the required dependencies.
+  §
+  §## Add a method
+  §
+  §To add a method to the repository, follow the instructions in the `scripts/add_a_method.sh` script.
+  §
+  §## Frequently used commands
+  §
+  §To get started, you can run the following commands:
+  §
+  §```bash
+  §git clone git@github.com:openproblems-bio/{viash_info$name}.git
+  §
+  §cd {viash_info$name}
+  §
+  §# initialise submodule
+  §scripts/init_submodule.sh
+  §
+  §# download resources
+  §scripts/download_resources.sh
+  §```
+  §
+  §To run the benchmark, you first need to build the components. Afterwards, you can run the benchmark:
+  §
+  §```bash
+  §viash ns build --parallel --setup cachedbuild
+  §
+  §scripts/run_benchmark.sh
+  §```
+  §
+  §After adding a component, it is recommended to run the tests to ensure that the component is working correctly:
+  §
+  §```bash
+  §viash ns test --parallel
+  §```
+  §
+  §Optionally, you can provide the `--query` argument to test only a subset of components:
+  §
+  §```bash
+  §viash ns test --parallel --query "component_name"
+  §```
+"), symbol = "§")
+
 readme_str <-
   if (is.null(task_api$task_info$readme) || is.na(task_api$task_info$readme)) {
-    ""
+    paste0(
+      "\n## README\n\n",
+      readme_base,
+      "\n"
+    )
   } else {
     paste0(
       "\n## README\n\n",
@@ -77,7 +131,7 @@ readme_str <-
 
 # get relevant taks info
 
-viash_info <- yaml.load_file(par[["viash_yaml"]])
+
 
 cat("Generate qmd content\n")
 relative_path <- par[["task_dir"]] %>%
