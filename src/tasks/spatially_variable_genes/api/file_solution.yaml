@@ -22,7 +22,7 @@ info:
         required: false
       
       - type: string
-        name: feature_name
+        name: orig_feature_name
         description: Original human-readable name for the feature, usually a gene symbol.
         required: true
         
@@ -30,6 +30,7 @@ info:
         name: true_spatial_var_score
         description: True spatial variability score
         required: true
+    
     uns:
       - type: string
         name: dataset_id
