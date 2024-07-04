@@ -7,8 +7,8 @@ info:
   slots:
     var:
       - type: string
-        name: feature_name
-        description: Feature name
+        name: feature_id
+        description: Feature ID
         required: true
       - type: double
         name: pred_spatial_var_score
