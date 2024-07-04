@@ -63,10 +63,11 @@ platforms:
   - type: docker
     image: python:3.10-slim
     setup:
+      - type: apt
+        packages: git
       - type: python
         pypi: 
         - ruamel.yaml
-        - "git+https://github.com/openproblems-bio/core.git#egg=openproblems&subdirectory=packages/python/openproblems"
-  - type: native
+        - git+https://github.com/openproblems-bio/core.git#egg=openproblems&subdirectory=packages/python/openproblems
   - type: nextflow
 

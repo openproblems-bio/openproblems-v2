@@ -3,7 +3,8 @@ from pathlib import Path
 import sys
 import os
 import re
-from openproblems.uitls import strip_margin
+from openproblems.utils import strip_margin
+from openproblems.io import read_nested_yaml
 
 ## VIASH START
 par = {
@@ -16,10 +17,6 @@ par = {
   "viash_yaml": "_viash.yaml"
 }
 ## VIASH END
-
-# import helper function
-sys.path.append(meta["resources_dir"])
-from read_and_merge_yaml import read_and_merge_yaml
 
 def create_config(par, component_type, pretty_name, script_path) -> str:
   info_str = generate_info(par, component_type, pretty_name)
@@ -409,7 +406,7 @@ def main(par):
   
   ## READ API FILE
   print("Read API file", flush=True)
-  api = read_and_merge_yaml(api_file)
+  api = read_nested_yaml(api_file)
   comp_type = api.get("info", {}).get("type", {})
   if not comp_type:
     sys.exit(strip_margin(f"""\
