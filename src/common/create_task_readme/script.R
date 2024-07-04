@@ -110,7 +110,7 @@ readme_base <- strip_margin(glue::glue("
   §Optionally, you can provide the `--query` argument to test only a subset of components:
   §
   §```bash
-  §viash ns test --parallel --query "component_name"
+  §viash ns test --parallel --query 'component_name'
   §```
 "), symbol = "§")
 
