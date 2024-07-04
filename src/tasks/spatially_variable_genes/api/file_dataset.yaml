@@ -13,6 +13,11 @@ info:
         name: normalized
         description: Normalised expression values
         required: true
+    var: 
+      - type: string
+        name: feature_id
+        description: Unique identifier for the feature, in this case a ENSEMBL gene id suffixed with alpha value.
+        required: false   
     obsm:
       - type: double
         name: spatial

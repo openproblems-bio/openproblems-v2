@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/common/mouse_brain_coronal_section1/simulated_dataset.h5ad"
+example: "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/simulated_dataset.h5ad"
 info:
   label: "Common Dataset"
   summary: A subset of the common dataset.
@@ -8,28 +8,24 @@ info:
       - type: integer
         name: counts
         description: Raw counts.
-        required: true
+        required: true 
     var:
       - type: string
         name: feature_id
         description: Unique identifier for the feature, in this case a ENSEMBL gene id suffixed with alpha value.
-        required: false
-      
+        required: false    
       - type: string
         name: feature_name
         description: A human-readable name for the feature, in this case a gene symbol suffixed with alpha value.
-        required: true
-        
+        required: true     
       - type: string
         name: orig_feature_id
         description: Original unique identifier for the feature, usually a ENSEMBL gene id.
-        required: false
-      
+        required: false 
       - type: string
         name: orig_feature_name
         description: Original human-readable name for the feature, usually a gene symbol.
         required: true
-        
       - type: double
         name: true_spatial_var_score
         description: True spatial variability score
@@ -59,7 +55,7 @@ info:
       - name: dataset_reference
         type: string
         description: Bibtex reference of the paper in which the dataset was published.
-        required: true
+        required: false
       - name: dataset_summary
         type: string
         description: Short description of the dataset.
