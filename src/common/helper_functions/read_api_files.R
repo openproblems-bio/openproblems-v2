@@ -2,7 +2,7 @@
 anndata_struct_names <- c("obs", "var", "obsm", "obsp", "varm", "varp", "layers", "uns")
 
 read_anndata_spec <- function(path) {
-  spec <- read_and_merge_yaml(path)
+  spec <- openproblems::read_and_merge_yaml(path)
   list(
     info = read_anndata_info(spec, path),
     slots = read_anndata_slots(spec, path)
@@ -84,7 +84,7 @@ list_as_tibble <- function(li) {
 }
 
 read_comp_spec <- function(path) {
-  spec_yaml <- read_and_merge_yaml(path)
+  spec_yaml <- openproblems::read_and_merge_yaml(path)
   list(
     info = read_comp_info(spec_yaml, path),
     args = read_comp_args(spec_yaml, path)
@@ -241,7 +241,7 @@ read_task_api <- function(path) {
   cli::cli_inform("Reading task info")
   task_info_yaml <- list.files(api_dir, pattern = "task_info.ya?ml", full.names = TRUE)
   assertthat::assert_that(length(task_info_yaml) == 1)
-  task_info <- read_and_merge_yaml(task_info_yaml, project_path)
+  task_info <- openproblems::read_and_merge_yaml(task_info_yaml, project_path)
 
   cli::cli_inform("Reading task authors")
   authors <- map_df(task_info$authors, function(aut) {

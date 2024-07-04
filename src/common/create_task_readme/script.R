@@ -2,6 +2,7 @@ library(rlang, quietly = TRUE, warn.conflicts = FALSE)
 library(purrr, quietly = TRUE, warn.conflicts = FALSE)
 library(dplyr, quietly = TRUE, warn.conflicts = FALSE)
 library(yaml, quietly = TRUE, warn.conflicts = FALSE)
+library(openproblems)
 
 ## VIASH START
 par <- list(
@@ -28,8 +29,6 @@ if (is.null(par$output)) {
 }
 
 # import helper function
-source(paste0(meta["resources_dir"], "/read_and_merge_yaml.R"))
-source(paste0(meta["resources_dir"], "/strip_margin.R"))
 source(paste0(meta["resources_dir"], "/read_api_files.R"))
 
 cat("Read task info\n")
@@ -66,7 +65,7 @@ authors_str <-
     ""
   }
 
-readme_base <- strip_margin(glue::glue("
+readme_base <- openproblems::strip_margin(glue::glue("
   §## Installation
   §
   §You need to have Docker, Java, and Viash installed. Follow
@@ -138,7 +137,7 @@ relative_path <- par[["task_dir"]] %>%
   gsub(paste0(dirname(par[["viash_yaml"]]), "/*"), "", .) %>%
   gsub("/*$", "", .)
 source_url <- paste0(viash_info$links$repository, "/", relative_path)
-qmd_content <- strip_margin(glue::glue("
+qmd_content <- openproblems::strip_margin(glue::glue("
   §---
   §title: \"{task_api$task_info$label}\"
   §format: gfm
