@@ -257,7 +257,7 @@ read_task_api <- function(path) {
   names(comps) <- basename(comp_yamls) %>% gsub("\\..*$", "", .)
 
   cli::cli_inform("Reading file yamls")
-  file_yamls <- openproblems::find_project_root(
+  file_yamls <- openproblems:::resolve_path(
     path = na.omit(unique(comp_args$`__merge__`)),
     project_path = project_path,
     parent_path = api_dir
