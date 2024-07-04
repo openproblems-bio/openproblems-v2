@@ -3,8 +3,8 @@ import pandas as pd
 
 ## VIASH START
 par = {
-  'input_method': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/output.h5ad',
-  'input_solution': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/solution.h5ad',
+  'input_method': 'resources_test/spatially_variable_genes/mouse_brain_coronal_section1/output.h5ad',
+  'input_solution': 'resources_test/spatially_variable_genes/mouse_brain_coronal_section1/solution.h5ad',
   'output': 'score.h5ad'
 }
 meta = {
@@ -16,15 +16,9 @@ print('Reading input files', flush=True)
 input_method = ad.read_h5ad(par['input_method'])
 input_solution = ad.read_h5ad(par['input_solution'])
 
-# remove index from input_solution
-input_solution.var.reset_index(drop=True, inplace=True)
-
 print('Compute metrics', flush=True)
-# input_method.var.drop(columns="feature_name", inplace=True)
-# input_solution.var.drop(columns="feature_name", inplace=True)
-
-df = pd.merge(input_method.var, input_solution.var, how='left', on='feature_name')
-groupby = df.groupby('gene_name', observed=True)
+df = pd.merge(input_method.var, input_solution.var, how='left', on='feature_id')
+groupby = df.groupby('orig_feature_name', observed=True)
 corr = groupby.apply(lambda x: x['pred_spatial_var_score'].corr(x['true_spatial_var_score'], method='kendall'))
 
 uns_metric_ids = [ 'correlation' ]
