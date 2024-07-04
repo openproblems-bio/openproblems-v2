@@ -70,7 +70,7 @@ workflow run_wf {
     )
 
     // only output the files for which an output file was specified
-    | setState(["output_dataset", "output_solution"])
+    | setState(["output_dataset", "output_solution", "dataset_simulated_normalized"])
 
   emit:
   output_ch

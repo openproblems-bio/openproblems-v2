@@ -18,6 +18,10 @@ functionality:
           __merge__: /src/tasks/spatially_variable_genes/api/file_solution.yaml
           required: true
           direction: output
+        - name: "--dataset_simulated_normalized"
+          __merge__: /src/tasks/spatially_variable_genes/api/file_simulated_dataset.yaml
+          required: false
+          direction: output
     - name: Simulation options
       arguments:
         - type: integer
