@@ -64,7 +64,9 @@ platforms:
     image: python:3.10-slim
     setup:
       - type: python
-        pypi: ruamel.yaml
+        pypi: 
+        - ruamel.yaml
+        - "git+https://github.com/openproblems-bio/core.git#egg=openproblems&subdirectory=packages/python/openproblems"
   - type: native
   - type: nextflow
 

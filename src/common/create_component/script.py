@@ -3,6 +3,7 @@ from pathlib import Path
 import sys
 import os
 import re
+from openproblems.uitls import strip_margin
 
 ## VIASH START
 par = {
@@ -19,9 +20,6 @@ par = {
 # import helper function
 sys.path.append(meta["resources_dir"])
 from read_and_merge_yaml import read_and_merge_yaml
-
-def strip_margin(text: str) -> str:
-  return re.sub("(^|\n)[ \t]*\|", "\\1", text)
 
 def create_config(par, component_type, pretty_name, script_path) -> str:
   info_str = generate_info(par, component_type, pretty_name)
