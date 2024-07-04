@@ -168,7 +168,7 @@ render_component <- function(spec) {
     spec <- read_comp_spec(spec)
   }
 
-  strip_margin(glue::glue("
+  openproblems::strip_margin(glue::glue("
     §## Component type: {spec$info$label}
     §
     §Path: [`src/{spec$info$namespace}`](https://github.com/openproblems-bio/openproblems-v2/tree/main/src/{spec$info$namespace})
@@ -208,7 +208,7 @@ render_file <- function(spec) {
       paste0("Description:\n\n", spec$info$description)
     }
 
-  strip_margin(glue::glue("
+  openproblems::strip_margin(glue::glue("
     §## File format: {spec$info$label}
     §
     §{spec$info$summary %||% ''}
@@ -348,7 +348,7 @@ render_task_graph <- function(task_api, root = .task_graph_get_root(task_api)) {
   edf <- igraph::as_data_frame(task_api$task_graph, "edges") %>%
     arrange(match(from, order), match(to, order))
 
-  strip_margin(glue::glue("
+  openproblems::strip_margin(glue::glue("
     §```mermaid
     §flowchart LR
     §{paste(vdf$str, collapse = '\n')}
