@@ -93,23 +93,23 @@ read_comp_spec <- function(path) {
 
 read_comp_info <- function(spec_yaml, path) {
   # TEMP: make it readable
-  spec_yaml$functionality$arguments <- NULL
-  spec_yaml$functionality$argument_groups <- NULL
+  spec_yaml$arguments <- NULL
+  spec_yaml$argument_groups <- NULL
   
-  df <- list_as_tibble(spec_yaml$functionality)
-  if (list_contains_tibble(spec_yaml$functionality$info)) {
-    df <- dplyr::bind_cols(df, list_as_tibble(spec_yaml$functionality$info))
+  df <- list_as_tibble(spec_yaml)
+  if (list_contains_tibble(spec_yaml$info)) {
+    df <- dplyr::bind_cols(df, list_as_tibble(spec_yaml$info))
   }
-  if (list_contains_tibble(spec_yaml$functionality$info$type_info)) {
-    df <- dplyr::bind_cols(df, list_as_tibble(spec_yaml$functionality$info$type_info))
+  if (list_contains_tibble(spec_yaml$info$type_info)) {
+    df <- dplyr::bind_cols(df, list_as_tibble(spec_yaml$info$type_info))
   }
   df$file_name <- basename(path) %>% gsub("\\.yaml", "", .)
   as_tibble(df)
 }
 
 read_comp_args <- function(spec_yaml, path) {
-  arguments <- spec_yaml$functionality$arguments
-  for (arg_group in spec_yaml$functionality$argument_groups) {
+  arguments <- spec_yaml$arguments
+  for (arg_group in spec_yaml$argument_groups) {
     arguments <- c(arguments, arg_group$arguments)
   }
   map_df(arguments, function(arg) {
