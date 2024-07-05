@@ -55,7 +55,7 @@ ref_marginal <- scDesign3::fit_marginal(
   sigma_formula = "1",
   family_use = "nb",
   parallelization = "pbmcmapply",
-  n_cores = 5L,
+  n_cores = 2L,
   usebam = FALSE,
   trace = TRUE
 )
@@ -91,21 +91,10 @@ ref_marginal <- scDesign3::fit_marginal(
   sigma_formula = "1",
   family_use = "nb",
   parallelization = "pbmcmapply",
-  n_cores = 1L,
+  n_cores = 2L,
   usebam = FALSE,
   trace = TRUE
 )
-# ref_marginal <- scDesign3::fit_marginal(
-#   data = ref_data,
-#   predictor = "gene",
-#   mu_formula = mu_formula,
-#   sigma_formula = "1",
-#   family_use = "nb",
-#   parallelization = "pbmcmapply",
-#   n_cores = 2L,
-#   usebam = FALSE,
-#   trace = TRUE
-# )
 
 cat("Fit a copula, obtain AIC and BIC\n")
 ref_copula <- scDesign3::fit_copula(
@@ -127,26 +116,10 @@ ref_para <- scDesign3::extract_para(
   new_covariate = ref_data$newCovariate,
   data = ref_data$dat,
   parallelization = "pbmcmapply",
-  # n_cores = meta$cpus %||% 2L
   n_cores = 2L
 )
 
 cat("Simulate the new count matrix\n")
-# sim_count <- scDesign3::simu_new(
-#   sce = ref_sce,
-#   mean_mat = ref_para$mean_mat,
-#   sigma_mat = ref_para$sigma_mat,
-#   zero_mat = ref_para$zero_mat,
-#   quantile_mat = NULL,
-#   copula_list = ref_copula$copula_list,
-#   n_cores = 5L,
-#   family_use = "nb",
-#   input_data = ref_data$dat,
-#   new_covariate = ref_data$newCovariate,
-#   important_feature = rep(TRUE, nrow(ref_sce)),
-#   filtered_gene = NULL
-# )
-
 # generate non-spatially variable mean values with shuffling
 shuffle_idx <- sample(nrow(ref_para$mean_mat))
 non_de_mat <- ref_para$mean_mat[shuffle_idx, ]
@@ -178,6 +151,7 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
   )
 
   rownames(counts) <- new_var$feature_id
+  rownames(new_var) <- new_var$feature_id
   
   list(
     counts = Matrix::t(counts),
