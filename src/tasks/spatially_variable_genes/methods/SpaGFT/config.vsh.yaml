@@ -52,6 +52,7 @@ platforms:
           - anndata
           - /opt/SpaGFT
           - mizani==0.9.3
+          - pyyaml
   - type: native
   - type: nextflow
     directives:

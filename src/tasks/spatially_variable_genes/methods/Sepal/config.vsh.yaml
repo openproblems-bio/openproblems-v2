@@ -8,6 +8,10 @@ functionality:
     description: |
       This method assesses the degree of randomness exhibited by each transcript profile and rank them accordingly.
     preferred_normalization: counts
+    reference: andersson2021sepal
+    documentation_url: https://squidpy.readthedocs.io/en/stable/api/squidpy.gr.sepal.html
+    repository_url: https://github.com/scverse/squidpy
+
 
   # Component-specific parameters (optional)
   arguments:

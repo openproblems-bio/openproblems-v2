@@ -46,6 +46,7 @@ platforms:
           - tensorflow==2.12.0 
           - gpflow
           - check_shapes==1.0.0
+          - pyyaml
       - type: docker
         run : |
           git clone https://github.com/markvdw/RobustGP.git /opt/RobustGP

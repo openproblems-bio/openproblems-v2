@@ -61,6 +61,7 @@ platforms:
           - shapely==2.0.1
           - networkx==2.5
           - scikit-image
+          - pyyaml
   - type: native
   - type: nextflow
     directives:

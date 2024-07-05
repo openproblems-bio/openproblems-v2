@@ -46,6 +46,7 @@ platforms:
         - anndata
         - patsy
         - /opt/SpatialDE2
+        - pyyaml
   - type: native
   - type: nextflow
     directives:

@@ -8,6 +8,10 @@ functionality:
     description: |
       SpatialDE decomposes expression variability into spatial and nonspatial components using two random effect terms: a spatial variance term that parametrizes gene expression covariance by pairwise distances of samples, and a noise term that models nonspatial variability.
     preferred_normalization: counts
+    reference: svensson2018spatialde
+    documentation_url: https://github.com/Teichlab/SpatialDE
+    repository_url: https://github.com/Teichlab/SpatialDE
+
 
   resources:
     - type: python_script
