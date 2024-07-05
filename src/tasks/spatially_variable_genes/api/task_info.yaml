@@ -1,0 +1,23 @@
+name: spatially_variable_genes
+label: "Spatially variable genes"
+summary: "Spatially variable genes (SVGs) are genes whose expression levels vary significantly across different spatial regions within a tissue or across cells in a spatially structured context."
+motivation: |
+  Recent years have witnessed significant progress in spatially-resolved transcriptome profiling techniques that simultaneously characterize cellular gene expression and their physical position, generating spatial transcriptomic (ST) data. The application of these techniques has dramatically advanced our understanding of disease and developmental biology. One common task for all ST profiles, regardless of the employed protocols, is to identify genes that exhibit spatial patterns. These genes, defined as spatially variable genes (SVGs), contain additional information about the spatial structure of the tissues of interest, compared to highly variable genes (HVGs).
+description: |
+  "Fill in detailed task description"
+authors:
+  - name: "Zhijian Li"
+    roles: [ author, maintainer ]
+    info: 
+      github: lzj1769
+    #   orcid: 
+  - name: "Zain M. Patel"
+    roles: [ author ]
+    # info: 
+    #   github: 
+    #   orcid: 
+  - name: "Sai Nirmayi Yasa"
+    roles: [ author ]
+    info: 
+      github: sainirmayi
+      orcid: "0009-0003-6319-9803"

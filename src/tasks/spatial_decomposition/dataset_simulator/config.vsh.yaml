@@ -194,9 +194,7 @@ platforms:
     image: ghcr.io/openproblems-bio/base_python:1.0.4
     setup:
       - type: python
-        packages: 
-        - numpy<2.0
-        - scanpy
+        packages: [numpy, scanpy]
   - type: nextflow
     directives: 
       label: [midtime, highmem, highcpu]

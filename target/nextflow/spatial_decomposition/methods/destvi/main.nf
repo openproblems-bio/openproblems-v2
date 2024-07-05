@@ -2921,7 +2921,7 @@ meta = [
         "name" : "--max_epochs_sp",
         "description" : "Number of epochs to train the DestVI model using MAP inference.",
         "default" : [
-          10000
+          2000
         ],
         "required" : false,
         "direction" : "input",
@@ -2998,9 +2998,15 @@ meta = [
           "type" : "python",
           "user" : false,
           "packages" : [
-            "scvi-tools"
+            "scvi-tools>=1.1.0"
           ],
           "upgrade" : true
+        },
+        {
+          "type" : "docker",
+          "run" : [
+            "pip install -U \\"jax[cuda12_pip]\\" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html\n"
+          ]
         }
       ]
     },
@@ -3051,7 +3057,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/methods/destvi",
     "viash_version" : "0.8.0",
-    "git_commit" : "44694e82e86ee3d89737ae9474d54c5f0a29b6fc",
+    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
