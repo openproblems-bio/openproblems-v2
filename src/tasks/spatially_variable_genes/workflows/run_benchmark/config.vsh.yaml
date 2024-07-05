@@ -50,6 +50,20 @@ functionality:
     - name: common/check_dataset_schema
     - name: common/extract_metadata
     - name: spatially_variable_genes/control_methods/true_ranking
+    - name: spatially_variable_genes/methods/boostgp
+    - name: spatially_variable_genes/methods/gpcounts
+    - name: spatially_variable_genes/methods/moran_i
+    - name: spatially_variable_genes/methods/nnsvg
+    - name: spatially_variable_genes/methods/scgco
+    - name: spatially_variable_genes/methods/sepal
+    - name: spatially_variable_genes/methods/somde
+    - name: spatially_variable_genes/methods/spagcn
+    - name: spatially_variable_genes/methods/spagft
+    - name: spatially_variable_genes/methods/spanve
+    - name: spatially_variable_genes/methods/spark
+    - name: spatially_variable_genes/methods/spark_x
+    - name: spatially_variable_genes/methods/spatialde
+    - name: spatially_variable_genes/methods/spatialde2
     - name: spatially_variable_genes/metrics/correlation
 platforms:
   - type: nextflow
