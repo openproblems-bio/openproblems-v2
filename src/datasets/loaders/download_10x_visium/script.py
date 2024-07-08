@@ -12,7 +12,10 @@ par = {
   "dataset_url": "https://www.10xgenomics.com/datasets/mouse-brain-coronal-section-1-ffpe-2-standard",
   "dataset_summary": "Gene expression library of Mouse Brain (CytAssist FFPE) using the Mouse Whole Transcriptome Probe Set",
   "dataset_organism": "Mus musculus",
-  "dataset": "dataset.h5ad"
+  "dataset": "dataset.h5ad",
+  "spot_filter_min_genes": 200,
+  "gene_filter_min_spots": 50,
+  "remove_mitochondrial": True
 }
 meta = {
   "functionality_name": "download_10x_spatial"
@@ -33,27 +36,29 @@ with tempfile.TemporaryDirectory() as tempdir:
 # Make variable names unique
 adata.var_names_make_unique()
 
+sc.pp.calculate_qc_metrics(adata, inplace=True)
+
 if par["remove_mitochondrial"]:
   print("Removing mitochondrial genes")
-  adata.var["mt"] = adata.var_names.str.startswith("MT-") | adata.var_names.str.startswith("mt-")
-  sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
+  non_mito_genes_list = [name for name in adata.var_names if not (name.startswith('MT-') or name.startswith('mt-'))]
+  adata = adata[:, non_mito_genes_list]
 
 print("Filtering spots or genes")
 t0 = adata.shape
 # remove cells with few counts
 if par["spot_filter_min_counts"]:
-  sc.pp.filter_cells(adata, min_counts=par["cell_filter_min_counts"])
+  sc.pp.filter_cells(adata, min_counts=par["spot_filter_min_counts"], inplace=True)
 # remove cells with few genes 
 if par["spot_filter_min_genes"]:
-  sc.pp.filter_cells(adata, min_genes=par["cell_filter_min_genes"])
+  sc.pp.filter_cells(adata, min_genes=par["spot_filter_min_genes"], inplace=True)
 # remove genes that have few counts
 if par["gene_filter_min_counts"]:
-  sc.pp.filter_genes(adata, min_counts=par["gene_filter_min_counts"])
+  sc.pp.filter_genes(adata, min_counts=par["gene_filter_min_counts"], inplace=True)
 # remove genes that are found in few cells
-if par["gene_filter_min_cells"]:
-  sc.pp.filter_genes(adata, min_cells=par["gene_filter_min_cells"])
+if par["gene_filter_min_spots"]:
+  sc.pp.filter_genes(adata, min_cells=par["gene_filter_min_spots"], inplace=True)
 t1 = adata.shape
-print("Removed %s cells and %s genes.", (t0[0] - t1[0]), (t0[1] - t1[1]))
+print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names

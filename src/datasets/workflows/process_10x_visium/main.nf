@@ -60,6 +60,9 @@ workflow run_wf {
         "dataset_summary": "dataset_summary",
         "dataset_description": "dataset_description",
         "dataset_organism": "dataset_organism",
+        "spot_filter_min_genes": "spot_filter_min_genes",
+        "gene_filter_min_spots": "gene_filter_min_spots",
+        "remove_mitochondrial": "remove_mitochondrial"
       ],
       toState: ["output_raw": "dataset"]
     )
@@ -98,24 +101,17 @@ workflow run_wf {
       }
     )
 
-    | hvg.run(
-      fromState: ["input": "output_normalized"],
-      toState: ["output_hvg": "output"]
+    | svg.run(
+        fromState: [
+          "input": "output_normalized",
+          "num_features": "num_reference_svg"
+        ],
+        toState: ["output_svg": "output"]
     )
-
-    // | pca.run(
-    //   fromState: ["input": "output_hvg"],
-    //   toState: ["output_pca": "output" ]
-    // )
-
-    // | knn.run(
-    //   fromState: ["input": "output_pca"],
-    //   toState: ["output_knn": "output"]
-    // )
     
     // add synonym
     | map{ id, state ->
-      [id, state + [output_dataset: state.output_hvg]]
+      [id, state + [output_dataset: state.output_svg]]
     }
 
     | extract_metadata.run(

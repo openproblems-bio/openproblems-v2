@@ -60,17 +60,16 @@ functionality:
           type: integer
           description: Remove spots with less than this number of genes.
           required: false
-          example: 1000
+          example: 200
         - name: "--spot_filter_min_counts"
           type: integer
           description: Remove spots with less than this number of counts.
           required: false
-          example: 1000
-        - name: "--gene_filter_min_cells"
+        - name: "--gene_filter_min_spots"
           type: integer
           description: Remove genes expressed in less than this number of cells.
           required: false
-          example: 10
+          example: 50
         - name: "--gene_filter_min_counts"
           type: integer
           description: Remove genes with less than this number of counts.

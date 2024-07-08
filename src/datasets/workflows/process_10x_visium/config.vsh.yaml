@@ -57,6 +57,31 @@ functionality:
           type: string
           description: The organism of the dataset.
           required: false
+    - name: Gene or spot filtering
+      description: Arguments related to filtering cells and genes by counts.
+      arguments:
+        - name: "--spot_filter_min_genes"
+          type: integer
+          description: Remove spots with less than this number of genes.
+          required: false
+          example: 200
+        - name: "--spot_filter_min_counts"
+          type: integer
+          description: Remove spots with less than this number of counts.
+          required: false
+        - name: "--gene_filter_min_spots"
+          type: integer
+          description: Remove genes expressed in less than this number of cells.
+          required: false
+          example: 50
+        - name: "--gene_filter_min_counts"
+          type: integer
+          description: Remove genes with less than this number of counts.
+          required: false
+        - name: "--remove_mitochondrial"
+          type: boolean
+          description: Remove mitovhondrial genes?
+          required: false
     - name: Sampling options
       arguments:
         - name: "--do_subsample"
@@ -100,6 +125,12 @@ functionality:
           choices: ["log_cp10k", "log_cpm", "sqrt_cp10k", "sqrt_cpm", "l1_sqrt", "log_scran_pooling"]
           default: ["log_cp10k", "log_cpm", "sqrt_cp10k", "sqrt_cpm", "l1_sqrt"]
           description: "Which normalization methods to run."
+    - name: SVGs
+      arguments: 
+        - name: "--num_reference_svg"
+          type: integer
+          description: Number of top SVGs to select as reference.
+          default: 200
   resources:
     - type: nextflow_script
       path: main.nf
@@ -112,9 +143,7 @@ functionality:
     - name: datasets/normalization/sqrt_cp
     - name: datasets/normalization/l1_sqrt
     - name: datasets/processors/subsample
-    # - name: datasets/processors/pca
-    - name: datasets/processors/hvg
-    # - name: datasets/processors/knn
+    - name: datasets/processors/svg
     - name: common/extract_metadata
 platforms:
   - type: nextflow

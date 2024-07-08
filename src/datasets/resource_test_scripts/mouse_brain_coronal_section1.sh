@@ -21,9 +21,13 @@ output_meta: '$id/dataset_metadata.yaml'
 output_state: '$id/state.yaml'
 output_raw: force_null
 output_normalized: force_null
-output_hvg: force_null
+output_svg: force_null
 publish_dir: resources_test/common
 do_subsample: true
+spot_filter_min_genes: 200
+gene_filter_min_spots: 50
+remove_mitochondrial: true
+num_reference_svg: 200
 HERE
 
 nextflow run . \
