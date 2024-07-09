@@ -1,16 +1,16 @@
 functionality:
-  name: "svg"
-  namespace: "datasets/processors"
+  name: "select_reference"
+  namespace: "spatially_variable_genes/process_dataset"
   description: "Compute SVG"
   info:
     type: dataset_processor
     type_info:
-      label: SVG
+      label: select_reference
       description: |
         Computes the spatially variable genes scores and select certain number of SVGs as reference.
   arguments:
     - name: "--input"
-      __merge__: ../../api/file_normalized.yaml
+      __merge__: ../../api/file_common_dataset.yaml
       required: true
       direction: input
     - name: "--input_layer"
@@ -21,11 +21,11 @@ functionality:
       type: file
       direction: output
       required: true
-      example: "resources_test/common/mouse_brain_coronal_section1/svg.h5ad"
+      __merge__: ../../api/file_common_dataset.yaml
     - name: "--num_features"
       type: integer
       default: 200
-      description: "The number of SVG to select"
+      description: "The number of variable genes to select"
   resources:
     - type: python_script
       path: script.py
