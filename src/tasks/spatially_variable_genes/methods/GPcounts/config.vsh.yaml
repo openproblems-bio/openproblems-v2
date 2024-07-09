@@ -47,11 +47,10 @@ platforms:
           - gpflow
           - check_shapes==1.0.0
           - pyyaml
+          - scipy
       - type: docker
         run : |
-          git clone https://github.com/markvdw/RobustGP.git /opt/RobustGP
-      - type: docker
-        run : |
+          git clone https://github.com/markvdw/RobustGP.git /opt/RobustGP && \
           git clone https://github.com/ManchesterBioinference/GPcounts.git /opt/GPcounts
       - type: python
         packages: 

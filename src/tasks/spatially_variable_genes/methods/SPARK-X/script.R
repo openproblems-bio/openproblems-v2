@@ -3,12 +3,12 @@ suppressMessages(library(anndata))
 
 # VIASH START
 par <- list(
-    "input_data" = "resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad",
+    "input_data" = "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad",
     "output" = "output.h5ad"
 )
 meta <- list(
     "functionality_name" = "SPARK-X",
-    "n_cpus" = 4L
+    "cpus" = 4L
 )
 
 # VIASH END
@@ -25,8 +25,8 @@ colnames(info) <- c("x", "y")
 
 # run SPARK-X
 cat("Load SPARK-X\n")
-if (!is.null(meta$n_cpus)) {
-    n_cpus <- meta$n_cpus
+if (!is.null(meta$cpus)) {
+    n_cpus <- meta$cpus
 } else {
     n_cpus <- 1
 }
@@ -34,9 +34,9 @@ if (!is.null(meta$n_cpus)) {
 sparkX <- sparkx(counts, info[, 1:2], numCores = n_cpus, option = "mixture")
 
 df <- as.data.frame(sparkX$res_mtest)
-df$feature_name <- rownames(df)
-df <- subset(df, select = c("feature_name", "adjustedPval"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df$feature_id <- rownames(df)
+df <- subset(df, select = c("feature_id", "adjustedPval"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 rownames(df) <- NULL
 
 # because SPARK-X only generates p-values, we here transform the values

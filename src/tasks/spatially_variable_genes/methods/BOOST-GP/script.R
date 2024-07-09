@@ -6,7 +6,7 @@ source("./R/boost.gp.R")
 
 # VIASH START
 par <- list(
-    "input_data" = "resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad",
+    "input_data" = "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad",
     "output" = "output.h5ad"
 )
 meta <- list(
@@ -29,9 +29,9 @@ colnames(loc) <- c("x", "y")
 cat("Run BOOST-GP\n")
 df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = 10, burn = 5))
 
-df$feature_name <- rownames(df)
-df <- subset(df, select = c("feature_name", "PPI"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df$feature_id <- rownames(df)
+df <- subset(df, select = c("feature_id", "PPI"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 
 # save output
 cat("Write output AnnData to file\n")
@@ -44,4 +44,4 @@ output <- anndata::AnnData(
     )
 )
 
-anndata::write_h5ad(anndata = output, filename = par$output)
+zzz <- output$write_h5ad(par$output, compression = "gzip")

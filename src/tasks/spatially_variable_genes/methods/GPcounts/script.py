@@ -9,7 +9,7 @@ warnings.filterwarnings('ignore')
 
 # VIASH START
 par = {
-    'input_data': 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad',
+    'input_data': 'resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad',
     'output': 'output.h5ad'
 }
 meta = {
@@ -64,7 +64,7 @@ df = gp_counts.calculate_FDR(log_likelihood_ratio)
 # save results
 df = df.loc[adata.var_names][['log_likelihood_ratio']]
 df = df.reset_index()
-df.columns = ['feature_name', 'pred_spatial_var_score']
+df.columns = ['feature_id', 'pred_spatial_var_score']
 
 output = ad.AnnData(var=df,
                     uns={'dataset_id': adata.uns['dataset_id'],

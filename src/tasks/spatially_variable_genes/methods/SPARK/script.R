@@ -3,12 +3,12 @@ suppressMessages(library(anndata))
 
 # VIASH START
 par <- list(
-    "input_data" = "resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad",
+    "input_data" = "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad",
     "output" = "output.h5ad"
 )
 meta <- list(
     "functionality_name" = "SPARK",
-    "n_cpus" = 4
+    "cpus" = 4
 )
 
 # VIASH END
@@ -25,8 +25,8 @@ colnames(info) <- c("x", "y")
 
 # run SPARK
 cat("Run SPARK\n")
-if (!is.null(meta$n_cpus)) {
-    n_cpus <- meta$n_cpus
+if (!is.null(meta$cpus)) {
+    n_cpus <- meta$cpus
 } else {
     n_cpus <- 1
 }
@@ -52,10 +52,10 @@ spark <- spark.test(spark,
 
 df <- as.data.frame(spark@res_mtest)
 
-df$feature_name <- rownames(df)
+df$feature_id <- rownames(df)
 
-df <- subset(df, select = c("feature_name", "adjusted_pvalue"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df <- subset(df, select = c("feature_id", "adjusted_pvalue"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 
 # because SPARK only generates p-values, we here transform the values
 # via -log10 to make sure a bigger score represents a higher spatial variation

@@ -6,12 +6,12 @@ suppressMessages(library(dplyr))
 
 # VIASH START
 par = list(
-    'input_data' = 'resources_test/spatially_variable_genes/10x_visium_mouse_brain/input_data.h5ad',
+    'input_data' = 'resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad',
     'output' = 'output.h5ad'
 )
 meta = list(
     'functionality_name' = 'nnSVG',
-    'n_cpus' = 4
+    'cpus' = 4
 )
 
 # VIASH END
@@ -45,8 +45,8 @@ spe <- computeLibraryFactors(spe)
 spe <- logNormCounts(spe)
 
 # run nnSVG
-if (!is.null(meta$n_cpus)) {
-n_cpus <- meta$n_cpus
+if (!is.null(meta$cpus)) {
+n_cpus <- meta$cpus
 } else {
 n_cpus <- 1
 }
@@ -55,9 +55,9 @@ cat('Run nnSVG')
 spe <- nnSVG(spe, n_threads=n_cpus)
 
 df <- as.data.frame(rowData(spe)) %>%
-    subset(select = c('feature_name', 'LR_stat'))
+    subset(select = c('feature_id', 'LR_stat'))
 
-colnames(df) <- c('feature_name', 'pred_spatial_var_score')
+colnames(df) <- c('feature_id', 'pred_spatial_var_score')
 rownames(df) <- NULL
 
 # save output
