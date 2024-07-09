@@ -1,6 +1,8 @@
 library(RcppDist)
 library(anndata)
 
+dest <- getwd()
+
 setwd("/opt/BOOST-GP")
 source("./R/boost.gp.R")
 
@@ -44,4 +46,4 @@ output <- anndata::AnnData(
     )
 )
 
-zzz <- output$write_h5ad(par$output, compression = "gzip")
+zzz <- output$write_h5ad(paste0(dest, "/", par$output), compression = "gzip")
