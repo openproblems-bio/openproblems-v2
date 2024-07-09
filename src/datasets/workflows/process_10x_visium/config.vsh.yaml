@@ -125,12 +125,6 @@ functionality:
           choices: ["log_cp10k", "log_cpm", "sqrt_cp10k", "sqrt_cpm", "l1_sqrt", "log_scran_pooling"]
           default: ["log_cp10k", "log_cpm", "sqrt_cp10k", "sqrt_cpm", "l1_sqrt"]
           description: "Which normalization methods to run."
-    - name: SVGs
-      arguments: 
-        - name: "--num_reference_svg"
-          type: integer
-          description: Number of top SVGs to select as reference.
-          default: 200
   resources:
     - type: nextflow_script
       path: main.nf
@@ -143,7 +137,6 @@ functionality:
     - name: datasets/normalization/sqrt_cp
     - name: datasets/normalization/l1_sqrt
     - name: datasets/processors/subsample
-    - name: datasets/processors/svg
     - name: common/extract_metadata
 platforms:
   - type: nextflow

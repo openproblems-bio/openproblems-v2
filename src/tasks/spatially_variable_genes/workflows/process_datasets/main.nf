@@ -38,6 +38,14 @@ workflow run_wf {
       state.dataset != null
     }
 
+    | select_reference.run(
+      fromState: [
+        input: "dataset",
+        num_features: "num_reference_genes"
+      ],
+      toState: [dataset: "output"]
+    )
+
     | simulate_svg.run(
       fromState: [
         input: "dataset",

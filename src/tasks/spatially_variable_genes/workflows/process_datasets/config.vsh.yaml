@@ -29,11 +29,18 @@ functionality:
           description: Dimension of basis used for the Gaussian process smoother.
           default: 500
           info:
-            test_value: 50
+            test_value: 200
         - type: integer
           name: --select_top_variable_genes_sim
           description: Number of top variable genes to use for subsetting.
           default: 50
+    - name: Reference genes
+      arguments: 
+        - name: "--num_reference_genes"
+          type: integer
+          description: Number of top SVGs to select as reference.
+          default: 200
+
   resources:
     - type: nextflow_script
       path: main.nf
@@ -41,6 +48,7 @@ functionality:
     - path: /src/wf_utils/helper.nf
   dependencies:
     - name: common/check_dataset_schema
+    - name: spatially_variable_genes/process_dataset/select_reference
     - name: spatially_variable_genes/process_dataset/simulate_svg
     - name: datasets/normalization/log_cp
     - name: spatially_variable_genes/process_dataset/split_dataset

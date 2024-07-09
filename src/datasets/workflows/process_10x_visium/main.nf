@@ -100,18 +100,10 @@ workflow run_wf {
         ]
       }
     )
-
-    | svg.run(
-        fromState: [
-          "input": "output_normalized",
-          "num_features": "num_reference_svg"
-        ],
-        toState: ["output_svg": "output"]
-    )
     
     // add synonym
     | map{ id, state ->
-      [id, state + [output_dataset: state.output_svg]]
+      [id, state + [output_dataset: state.output_normalized]]
     }
 
     | extract_metadata.run(
