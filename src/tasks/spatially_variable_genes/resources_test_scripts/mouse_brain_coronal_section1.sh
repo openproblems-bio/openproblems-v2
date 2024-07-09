@@ -26,7 +26,7 @@ nextflow run . \
   --dataset_simulated_normalized simulated_dataset.h5ad \
   --publish_dir $DATASET_DIR/mouse_brain_coronal_section1 \
   --output_state "state.yaml" \
-  --gp_k_sim 200 \
+  --gp_k_sim 50 \
   --select_top_variable_genes 50 \
   --num_reference_genes 200
 
