@@ -15,7 +15,7 @@ functionality:
       description: Dimension of basis used for the Gaussian process smoother.
       default: 500
       info:
-        test_value: 50
+        test_value: 200
     - type: integer
       name: --select_top_variable_genes
       description: Number of top variable genes to use for subsetting.
