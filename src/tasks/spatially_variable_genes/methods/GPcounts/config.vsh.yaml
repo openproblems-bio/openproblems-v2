@@ -51,7 +51,7 @@ platforms:
       - type: docker
         run : |
           git clone https://github.com/markvdw/RobustGP.git /opt/RobustGP && \
-          git clone https://github.com/ManchesterBioinference/GPcounts.git /opt/GPcounts
+          git clone https://github.com/lzj1769/GPcounts.git /opt/GPcounts
       - type: python
         packages: 
           - /opt/RobustGP
