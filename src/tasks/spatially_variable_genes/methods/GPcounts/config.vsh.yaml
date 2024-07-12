@@ -47,7 +47,7 @@ platforms:
           - gpflow
           - check_shapes==1.0.0
           - pyyaml
-          - scipy
+          - scipy==1.9.1
       - type: docker
         run : |
           git clone https://github.com/markvdw/RobustGP.git /opt/RobustGP && \
