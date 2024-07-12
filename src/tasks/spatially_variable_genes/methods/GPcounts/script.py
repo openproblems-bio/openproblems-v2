@@ -23,6 +23,9 @@ adata = ad.read_h5ad(par['input_data'])
 print('Run GPcounts')
 adata.X = adata.layers['counts'].copy()
 
+# test
+adata = adata[:, :150]
+
 spatialx = [str(i) for i in adata.obsm['spatial'][:, 0]]
 spatialy = [str(i) for i in adata.obsm['spatial'][:, 1]]
 
