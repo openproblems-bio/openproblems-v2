@@ -16,7 +16,7 @@ adata = ad.read_h5ad(par['input_data'])
 
 print('Run SpaGFT', flush=True)
 
-adata.X = adata.layers['counts'].copy()
+adata.X = adata.layers['normalized'].copy()
 
 adata.obs.loc[:, ['array_row', 'array_col']] = adata.obsm['spatial']
 
