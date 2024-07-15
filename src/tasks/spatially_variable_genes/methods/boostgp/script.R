@@ -1,7 +1,7 @@
 library(RcppDist)
 library(anndata)
 
-dir <- getwd()
+dest <- getwd()
 
 setwd("/opt/BOOST-GP")
 source("./R/boost.gp.R")
@@ -18,7 +18,7 @@ meta <- list(
 # VIASH END
 
 cat("Load data\n")
-adata <- anndata::read_h5ad(paste0(dir, "/", par$input_data))
+adata <- anndata::read_h5ad(par$input_data)
 
 counts <- as.matrix(adata$layers[["counts"]])
 colnames(counts) <- adata$var_names
@@ -47,4 +47,4 @@ output <- anndata::AnnData(
     )
 )
 
-zzz <- output$write_h5ad(paste0(dir, "/", par$output), compression = "gzip")
+zzz <- output$write_h5ad(paste0(dest, "/", par$output), compression = "gzip")
