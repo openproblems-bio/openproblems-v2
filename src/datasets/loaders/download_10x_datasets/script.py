@@ -18,7 +18,7 @@ par = {
   "remove_mitochondrial": True
 }
 meta = {
-  "functionality_name": "download_10x_spatial"
+  "functionality_name": "download_10x_datasets"
 }
 ## VIASH END
 

@@ -1,8 +1,8 @@
 functionality:
-  name: download_10x_visium
+  name: download_10x_datasets
   namespace: datasets/loaders
   description: |
-    Download a SpaceRanger h5 file from the 10x genomics website (or someplace else).
+    Download a SpaceRanger h5 gene expression file and spatial imaging data from the 10x genomics website (or someplace else).
   
   argument_groups: 
     - name: Inputs
