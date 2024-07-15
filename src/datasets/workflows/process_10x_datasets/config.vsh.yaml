@@ -1,5 +1,5 @@
 functionality:
-  name: process_10x_visium
+  name: process_10x_datasets
   namespace: datasets/workflows
   description: | 
     Download and process datasets originating from 10x Genomics.
@@ -131,7 +131,7 @@ functionality:
       entrypoint: run_wf
     - path: /src/wf_utils/helper.nf
   dependencies: 
-    - name: datasets/loaders/download_10x_visium
+    - name: datasets/loaders/download_10x_datasets
     - name: datasets/normalization/log_cp
     - name: datasets/normalization/log_scran_pooling
     - name: datasets/normalization/sqrt_cp

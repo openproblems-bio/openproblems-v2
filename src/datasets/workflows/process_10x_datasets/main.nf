@@ -49,7 +49,7 @@ workflow run_wf {
     }
 
     // fetch data from legacy openproblems
-    | download_10x_visium.run(
+    | download_10x_datasets.run(
       fromState: [
         "input_expression": "input_expression",
         "input_spatial": "input_spatial",
