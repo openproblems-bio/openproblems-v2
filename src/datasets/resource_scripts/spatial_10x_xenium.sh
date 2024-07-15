@@ -26,8 +26,10 @@ output_meta: '$id/dataset_metadata.yaml'
 output_state: '$id/state.yaml'
 output_raw: force_null
 output_normalized: force_null
-output_hvg: force_null
 publish_dir: s3://openproblems-data/resources/datasets
+spot_filter_min_genes: 100
+gene_filter_min_spots: 50
+remove_mitochondrial: true
 HERE
 
 cat > /tmp/nextflow.config << HERE
@@ -46,7 +48,7 @@ HERE
 tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --revision main_build \
   --pull-latest \
-  --main-script target/nextflow/datasets/workflows/process_10x_xenium/main.nf \
+  --main-script target/nextflow/datasets/workflows/process_10x_datasets/main.nf \
   --workspace 53907369739130 \
   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
   --params-file "/tmp/params.yaml" \
