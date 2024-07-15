@@ -408,9 +408,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_github(c("xzhoulab/SPARK"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods spark_x"
-LABEL org.opencontainers.image.created="2024-07-05T13:58:07Z"
+LABEL org.opencontainers.image.created="2024-07-15T08:52:49Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="7d86cfd9601698cc185db9f0126c677b209dcc8e"
+LABEL org.opencontainers.image.revision="1f49b879c83b847ecf5ed97bcc4afacdb3f00596"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -906,8 +906,8 @@ colnames(info) <- c("x", "y")
 
 # run SPARK-X
 cat("Load SPARK-X\\n")
-if (!is.null(meta\$n_cpus)) {
-    n_cpus <- meta\$n_cpus
+if (!is.null(meta\$cpus)) {
+    n_cpus <- meta\$cpus
 } else {
     n_cpus <- 1
 }
@@ -915,9 +915,9 @@ if (!is.null(meta\$n_cpus)) {
 sparkX <- sparkx(counts, info[, 1:2], numCores = n_cpus, option = "mixture")
 
 df <- as.data.frame(sparkX\$res_mtest)
-df\$feature_name <- rownames(df)
-df <- subset(df, select = c("feature_name", "adjustedPval"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df\$feature_id <- rownames(df)
+df <- subset(df, select = c("feature_id", "adjustedPval"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 rownames(df) <- NULL
 
 # because SPARK-X only generates p-values, we here transform the values

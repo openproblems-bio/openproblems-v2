@@ -2957,7 +2957,7 @@ meta = [
         "name" : "--gp_k",
         "description" : "Dimension of basis used for the Gaussian process smoother.",
         "info" : {
-          "test_value" : 50
+          "test_default" : 50
         },
         "default" : [
           500
@@ -3004,6 +3004,14 @@ meta = [
         "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
+    "info" : {
+      "type" : "process_dataset",
+      "type_info" : {
+        "label" : "Data processor",
+        "summary" : "A spatially variable genes simulator.",
+        "description" : "Simulate spatially variable and spatially non-variable genes.\n"
+      }
+    },
     "status" : "enabled",
     "set_wd_to_resources_dir" : false
   },
@@ -3071,7 +3079,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg",
     "viash_version" : "0.8.0",
-    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3130,8 +3138,6 @@ rm(.viash_orig_warn)
 
 cat("Read AnnData\\\\n")
 adata <- anndata::read_h5ad(par\\$input)
-
-adata
 
 cat("Transform into SCE\\\\n")
 df_loc <- as.data.frame(adata\\$obsm[['spatial']])

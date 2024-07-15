@@ -2853,7 +2853,7 @@ meta = [
         "type" : "r_script",
         "path" : "script.R",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SPARK-X/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spark_x/"
       }
     ],
     "test_resources" : [
@@ -2963,11 +2963,11 @@ meta = [
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SPARK-X/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spark_x/config.vsh.yaml",
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spark_x",
     "viash_version" : "0.8.0",
-    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3031,8 +3031,8 @@ colnames(info) <- c("x", "y")
 
 # run SPARK-X
 cat("Load SPARK-X\\\\n")
-if (!is.null(meta\\$n_cpus)) {
-    n_cpus <- meta\\$n_cpus
+if (!is.null(meta\\$cpus)) {
+    n_cpus <- meta\\$cpus
 } else {
     n_cpus <- 1
 }
@@ -3040,9 +3040,9 @@ if (!is.null(meta\\$n_cpus)) {
 sparkX <- sparkx(counts, info[, 1:2], numCores = n_cpus, option = "mixture")
 
 df <- as.data.frame(sparkX\\$res_mtest)
-df\\$feature_name <- rownames(df)
-df <- subset(df, select = c("feature_name", "adjustedPval"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df\\$feature_id <- rownames(df)
+df <- subset(df, select = c("feature_id", "adjustedPval"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 rownames(df) <- NULL
 
 # because SPARK-X only generates p-values, we here transform the values

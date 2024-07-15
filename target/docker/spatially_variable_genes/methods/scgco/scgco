@@ -413,12 +413,12 @@ RUN pip install Cython==0.29.33 numpy==1.23.5 scipy==1.9.1
 RUN git clone https://github.com/lzj1769/scGCO_simple.git /opt/scGCO/scGCO_simple
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "h5py==3.8.0" "pandas==1.5.3" "parmap==1.6.0" "scanpy==1.9.3" "tqdm==4.65.0" "anndata==0.8.0" "matplotlib==3.7.1" "scikit-learn==1.2.2" "hdbscan" "seaborn==0.12.2" "pysal==2.0.0" "pygco==0.0.16" "shapely==2.0.1" "networkx==2.5" "scikit-image" "pyyaml"
+  pip install --upgrade --no-cache-dir "h5py==3.8.0" "pandas==1.5.3" "parmap==1.6.0" "scanpy==1.9.3" "tqdm==4.65.0" "anndata==0.8.0" "matplotlib==3.7.1" "scikit-learn==1.2.2" "hdbscan" "seaborn==0.12.2" "pysal==2.0.0" "pygco==0.0.16" "shapely==2.0.1" "networkx==2.5" "scikit-image" "pyyaml" "requests"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods scgco"
-LABEL org.opencontainers.image.created="2024-07-05T13:58:10Z"
+LABEL org.opencontainers.image.created="2024-07-15T08:52:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="7d86cfd9601698cc185db9f0126c677b209dcc8e"
+LABEL org.opencontainers.image.revision="1f49b879c83b847ecf5ed97bcc4afacdb3f00596"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -928,7 +928,7 @@ df = identify_spatial_genes(locs, data_norm, cellGraph, gmmDict)
 # save results
 df = df.loc[adata.var_names][['fdr']]
 df = df.reset_index()
-df.columns = ['feature_name', 'pred_spatial_var_score']
+df.columns = ['feature_id', 'pred_spatial_var_score']
 
 # Transform the values via -log10 to make sure a bigger score represents a 
 # higher spatial variation

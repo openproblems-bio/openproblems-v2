@@ -3127,6 +3127,24 @@ meta = [
             "dest" : "par"
           }
         ]
+      },
+      {
+        "name" : "Reference genes",
+        "arguments" : [
+          {
+            "type" : "integer",
+            "name" : "--num_reference_genes",
+            "description" : "Number of top SVGs to select as reference.",
+            "default" : [
+              200
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
       }
     ],
     "resources" : [
@@ -3162,10 +3180,32 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
+      },
+      {
+        "name" : "spatially_variable_genes/process_dataset/select_reference",
+        "repository" : {
+          "type" : "local",
+          "name" : "",
+          "localPath" : ""
+        },
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/process_dataset/select_reference/config.vsh.yaml",
+        "configInfo" : {
+          "functionalityName" : "select_reference",
+          "git_tag" : "",
+          "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
+          "viash_version" : "0.8.0",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/process_dataset/select_reference/config.vsh.yaml",
+          "functionalityNamespace" : "spatially_variable_genes/process_dataset",
+          "output" : "",
+          "platform" : "",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
+          "executable" : "/nextflow/spatially_variable_genes/process_dataset/select_reference/main.nf"
+        },
+        "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/select_reference"
       },
       {
         "name" : "spatially_variable_genes/process_dataset/simulate_svg",
@@ -3184,7 +3224,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/process_dataset",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/process_dataset/simulate_svg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg"
@@ -3206,7 +3246,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3228,7 +3268,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/process_dataset",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/process_dataset/split_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/split_dataset"
@@ -3274,7 +3314,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3283,6 +3323,7 @@ meta = [
 // resolve dependencies dependencies (if any)
 meta["root_dir"] = getRootDir()
 include { check_dataset_schema } from "${meta.resources_dir}/../../../../nextflow/common/check_dataset_schema/main.nf"
+include { select_reference } from "${meta.resources_dir}/../../../../nextflow/spatially_variable_genes/process_dataset/select_reference/main.nf"
 include { simulate_svg } from "${meta.resources_dir}/../../../../nextflow/spatially_variable_genes/process_dataset/simulate_svg/main.nf"
 include { log_cp } from "${meta.resources_dir}/../../../../nextflow/datasets/normalization/log_cp/main.nf"
 include { split_dataset } from "${meta.resources_dir}/../../../../nextflow/spatially_variable_genes/process_dataset/split_dataset/main.nf"
@@ -3328,6 +3369,14 @@ workflow run_wf {
     | filter { id, state ->
       state.dataset != null
     }
+
+    | select_reference.run(
+      fromState: [
+        input: "dataset",
+        num_features: "num_reference_genes"
+      ],
+      toState: [dataset: "output"]
+    )
 
     | simulate_svg.run(
       fromState: [

@@ -2853,7 +2853,7 @@ meta = [
         "type" : "python_script",
         "path" : "script.py",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SpaGCN/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spagcn/"
       }
     ],
     "test_resources" : [
@@ -2980,11 +2980,11 @@ meta = [
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SpaGCN/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spagcn/config.vsh.yaml",
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagcn",
     "viash_version" : "0.8.0",
-    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

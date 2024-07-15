@@ -2980,7 +2980,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3002,7 +3002,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3024,7 +3024,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/control_methods/true_ranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/control_methods/true_ranking"
@@ -3036,17 +3036,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/BOOST-GP/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/boostgp/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "boostgp",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/BOOST-GP/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/boostgp/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/boostgp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/boostgp"
@@ -3058,17 +3058,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/GPcounts/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/gpcounts/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "gpcounts",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/GPcounts/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/gpcounts/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/gpcounts/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/gpcounts"
@@ -3080,17 +3080,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/moranI/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/moran_i/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "moran_i",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/moranI/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/moran_i/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/moran_i/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/moran_i"
@@ -3102,17 +3102,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/nnSVG/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/nnsvg/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "nnsvg",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/nnSVG/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/nnsvg/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/nnsvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/nnsvg"
@@ -3124,17 +3124,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/scGCO/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/scgco/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "scgco",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/scGCO/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/scgco/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/scgco/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/scgco"
@@ -3146,17 +3146,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/Sepal/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/sepal/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "sepal",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/Sepal/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/sepal/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/sepal/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/sepal"
@@ -3168,17 +3168,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SOMDE/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/somde/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "somde",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SOMDE/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/somde/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/somde/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/somde"
@@ -3190,17 +3190,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SpaGCN/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spagcn/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spagcn",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SpaGCN/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spagcn/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spagcn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagcn"
@@ -3212,17 +3212,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SpaGFT/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spagft/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spagft",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SpaGFT/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spagft/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spagft/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagft"
@@ -3234,17 +3234,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/Spanve/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spanve/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spanve",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/Spanve/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spanve/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spanve/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spanve"
@@ -3256,17 +3256,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SPARK/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spark/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spark",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SPARK/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spark/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spark/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spark"
@@ -3278,17 +3278,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SPARK-X/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spark_x/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spark_x",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/SPARK-X/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spark_x/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spark_x/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spark_x"
@@ -3300,17 +3300,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialDE/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialde/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spatialde",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialDE/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialde/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spatialde/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spatialde"
@@ -3322,17 +3322,17 @@ meta = [
           "name" : "",
           "localPath" : ""
         },
-        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialDE2/config.vsh.yaml",
+        "foundConfigPath" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialde2/config.vsh.yaml",
         "configInfo" : {
           "functionalityName" : "spatialde2",
           "git_tag" : "",
           "git_remote" : "https://github.com/openproblems-bio/openproblems-v2",
           "viash_version" : "0.8.0",
-          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialDE2/config.vsh.yaml",
+          "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/spatialde2/config.vsh.yaml",
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/methods/spatialde2/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spatialde2"
@@ -3354,7 +3354,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+          "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
           "executable" : "/nextflow/spatially_variable_genes/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/metrics/correlation"
@@ -3400,7 +3400,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3495,18 +3495,6 @@ workflow run_wf {
     | runEach(
       components: methods,
 
-      use the 'filter' argument to only run a method on the normalisation the component is asking for
-      filter: { id, state, comp ->
-        def norm = state.dataset_uns.normalization_id
-        def pref = comp.config.functionality.info.preferred_normalization
-        // if the preferred normalisation is none at all,
-        // we can pass whichever dataset we want
-        def norm_check = (norm == "log_cp10k" && pref == "counts") || norm == pref
-        def method_check = !state.method_ids || state.method_ids.contains(comp.config.functionality.name)
-
-        method_check && norm_check
-      },
-      
       // define a new 'id' by appending the method name to the dataset id
       id: { id, state, comp ->
         id + "." + comp.config.functionality.name

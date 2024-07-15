@@ -19,8 +19,6 @@ meta <- list(
 cat("Read AnnData\n")
 adata <- anndata::read_h5ad(par$input)
 
-adata
-
 cat("Transform into SCE\n")
 df_loc <- as.data.frame(adata$obsm[['spatial']])
 colnames(df_loc) <- c("spatial1", "spatial2")

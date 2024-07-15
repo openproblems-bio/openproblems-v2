@@ -498,7 +498,7 @@ sq.gr.spatial_neighbors(adata,
                         delaunay=False)
 
 sq.gr.sepal(adata, 
-            layer='counts',
+            layer='normalized',
             max_neighs=par['max_neighs'], 
             genes=adata.var_names,
             n_jobs=1)

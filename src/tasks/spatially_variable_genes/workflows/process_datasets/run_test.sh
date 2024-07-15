@@ -11,13 +11,22 @@ cd "$REPO_ROOT"
 
 set -e
 
+RAW_DATA=resources_test/common
+DATASET_DIR=resources_test/spatially_variable_genes
+
+mkdir -p $DATASET_DIR
+
 nextflow run . \
   -main-script target/nextflow/spatially_variable_genes/workflows/process_datasets/main.nf \
   -profile docker \
   -c src/wf_utils/labels_ci.config \
-  --id 10x_visium_mouse_brain \
-  --input "resources_test/common/10x_visium_mouse_brain/dataset.h5ad" \
+  --id mouse_brain_coronal_section1 \
+  --input $RAW_DATA/mouse_brain_coronal_section1/dataset.h5ad \
   --output_dataset dataset.h5ad \
   --output_solution solution.h5ad \
-  --publish_dir "resources_test/spatially_variable_genes/10x_visium_mouse_brain" \
-  --output_state "state.yaml"
+  --dataset_simulated_normalized simulated_dataset.h5ad \
+  --publish_dir $DATASET_DIR/mouse_brain_coronal_section1 \
+  --output_state "state.yaml" \
+  --gp_k_sim 50 \
+  --select_top_variable_genes 50 \
+  --num_reference_genes 200

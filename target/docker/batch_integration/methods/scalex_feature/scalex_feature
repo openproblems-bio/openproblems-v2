@@ -412,9 +412,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scalex" "numpy<1.24" "torch<2.1"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scalex_feature"
-LABEL org.opencontainers.image.created="2024-07-05T13:58:15Z"
+LABEL org.opencontainers.image.created="2024-07-15T08:52:52Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="7d86cfd9601698cc185db9f0126c677b209dcc8e"
+LABEL org.opencontainers.image.revision="1f49b879c83b847ecf5ed97bcc4afacdb3f00596"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

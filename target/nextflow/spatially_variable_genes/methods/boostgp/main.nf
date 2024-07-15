@@ -2846,6 +2846,22 @@ meta = [
         "multiple" : false,
         "multiple_sep" : ":",
         "dest" : "par"
+      },
+      {
+        "type" : "integer",
+        "name" : "--n_iter",
+        "description" : "Number of iterations.",
+        "info" : {
+          "test_default" : 8
+        },
+        "default" : [
+          10
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
       }
     ],
     "resources" : [
@@ -2853,7 +2869,7 @@ meta = [
         "type" : "r_script",
         "path" : "script.R",
         "is_executable" : true,
-        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/BOOST-GP/"
+        "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/boostgp/"
       }
     ],
     "test_resources" : [
@@ -2928,7 +2944,6 @@ meta = [
         {
           "type" : "r",
           "cran" : [
-            "anndata",
             "RcppDist",
             "ggplot2"
           ],
@@ -2978,11 +2993,11 @@ meta = [
     }
   ],
   "info" : {
-    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/BOOST-GP/config.vsh.yaml",
+    "config" : "/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/spatially_variable_genes/methods/boostgp/config.vsh.yaml",
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/boostgp",
     "viash_version" : "0.8.0",
-    "git_commit" : "7d86cfd9601698cc185db9f0126c677b209dcc8e",
+    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3000,6 +3015,8 @@ cat > "$tempscript" << VIASHMAIN
 library(RcppDist)
 library(anndata)
 
+dest <- getwd()
+
 setwd("/opt/BOOST-GP")
 source("./R/boost.gp.R")
 
@@ -3010,7 +3027,8 @@ source("./R/boost.gp.R")
 
 par <- list(
   "input_data" = $( if [ ! -z ${VIASH_PAR_INPUT_DATA+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_INPUT_DATA" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
-  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi )
+  "output" = $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo -n "'"; echo -n "$VIASH_PAR_OUTPUT" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
+  "n_iter" = $( if [ ! -z ${VIASH_PAR_N_ITER+x} ]; then echo -n "as.integer('"; echo -n "$VIASH_PAR_N_ITER" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "')"; else echo NULL; fi )
 )
 meta <- list(
   "functionality_name" = $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo -n "'"; echo -n "$VIASH_META_FUNCTIONALITY_NAME" | sed "s#['\\\\]#\\\\\\\\&#g"; echo "'"; else echo NULL; fi ),
@@ -3050,11 +3068,11 @@ rownames(loc) <- adata\\$obs_names
 colnames(loc) <- c("x", "y")
 
 cat("Run BOOST-GP\\\\n")
-df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = 10, burn = 5))
+df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = par\\$n_iter, burn = 5))
 
-df\\$feature_name <- rownames(df)
-df <- subset(df, select = c("feature_name", "PPI"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df\\$feature_id <- rownames(df)
+df <- subset(df, select = c("feature_id", "PPI"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 
 # save output
 cat("Write output AnnData to file\\\\n")
@@ -3067,7 +3085,7 @@ output <- anndata::AnnData(
     )
 )
 
-anndata::write_h5ad(anndata = output, filename = par\\$output)
+zzz <- output\\$write_h5ad(paste0(dest, "/", par\\$output), compression = "gzip")
 VIASHMAIN
 Rscript "$tempscript"
 '''
