@@ -18,6 +18,14 @@ functionality:
     documentation_url: https://github.com/Minzhe/BOOST-GP
     repository_url: https://github.com/Minzhe/BOOST-GP
 
+  arguments:
+    - name: --n_iter
+      type: integer
+      description: Number of iterations.
+      default: 10
+      info:
+        test_default: 8
+
   resources:
     - type: r_script
       path: script.R

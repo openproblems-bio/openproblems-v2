@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 # VIASH START
 par = {
     'input_data': 'resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad',
-    'output': 'output.h5ad'
+    'output': 'output.h5ad',
 }
 meta = {
     'functionality_name': 'GPcounts'
@@ -22,6 +22,10 @@ adata = ad.read_h5ad(par['input_data'])
 
 print('Run GPcounts')
 adata.X = adata.layers['counts'].copy()
+
+# Subset if required
+if par['n_features']:
+    adata = adata[:, :par['n_features']]
 
 spatialx = [str(i) for i in adata.obsm['spatial'][:, 0]]
 spatialy = [str(i) for i in adata.obsm['spatial'][:, 1]]
@@ -47,7 +51,6 @@ scalesdf = pd.DataFrame(scales)
 scalesdf = scalesdf.T
 
 Y = Y.T
-# Y_run = Y.iloc[0:20, :]  # select first 20 genes to run GPcounts
 X = X[['x', 'y']]
 
 sparse = True

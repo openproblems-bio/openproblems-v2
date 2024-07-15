@@ -1,7 +1,7 @@
 library(RcppDist)
 library(anndata)
 
-dest <- getwd()
+dir <- getwd()
 
 setwd("/opt/BOOST-GP")
 source("./R/boost.gp.R")
@@ -9,7 +9,8 @@ source("./R/boost.gp.R")
 # VIASH START
 par <- list(
     "input_data" = "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad",
-    "output" = "output.h5ad"
+    "output" = "output.h5ad",
+    "n_iter" = 10
 )
 meta <- list(
     "functionality_name" = "BOOST-GP"
@@ -17,7 +18,7 @@ meta <- list(
 # VIASH END
 
 cat("Load data\n")
-adata <- anndata::read_h5ad(par$input_data)
+adata <- anndata::read_h5ad(paste0(dir, "/", par$input_data))
 
 counts <- as.matrix(adata$layers[["counts"]])
 colnames(counts) <- adata$var_names
@@ -29,7 +30,7 @@ rownames(loc) <- adata$obs_names
 colnames(loc) <- c("x", "y")
 
 cat("Run BOOST-GP\n")
-df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = 10, burn = 5))
+df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = par$n_iter, burn = 5))
 
 df$feature_id <- rownames(df)
 df <- subset(df, select = c("feature_id", "PPI"))
@@ -46,4 +47,4 @@ output <- anndata::AnnData(
     )
 )
 
-zzz <- output$write_h5ad(paste0(dest, "/", par$output), compression = "gzip")
+zzz <- output$write_h5ad(paste0(dir, "/", par$output), compression = "gzip")

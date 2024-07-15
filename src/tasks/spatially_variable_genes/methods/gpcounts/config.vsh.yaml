@@ -12,16 +12,17 @@ functionality:
       likelihood through a logarithmic link function and the dispersion parameter is fitted by maximum 
       likelihood. We validate the method on simulated time course data, showing better performance to identify 
       changes in over-dispersed counts data than methods based on Gaussian or Poisson likelihoods. 
-      To demonstrate temporal inference, we apply GPcounts to single-cell RNA-seq datasets after pseudotime and 
-      branching inference. To demonstrate spatial inference, we apply GPcounts to data from the mouse olfactory 
-      bulb to identify spatially variable genes and compare to two published GP methods. We also provide the option 
-      of modelling additional dropout using a zero-inflated negative binomial. 
-      Our results show that GPcounts can be used to model temporal and spatial counts data in cases where 
-      simpler Gaussian and Poisson likelihoods are unrealistic.
     preferred_normalization: counts
     reference: bintayyash2021non
     documentation_url: https://github.com/ManchesterBioinference/GPcounts/blob/master/demo_notebooks/GPcounts_spatial.ipynb
     repository_url: https://github.com/ManchesterBioinference/GPcounts
+
+  arguments:
+    - name: --n_features
+      type: integer
+      description: Number of features to include.
+      info: 
+        test_default: 150
 
   resources:
     - type: python_script
