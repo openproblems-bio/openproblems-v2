@@ -18,7 +18,6 @@ info:
         name: feature_id
         description: Unique identifier for the feature, usually a ENSEMBL gene id.
         required: false
-      
       - type: string
         name: feature_name
         description: A human-readable name for the feature, usually a gene symbol.
