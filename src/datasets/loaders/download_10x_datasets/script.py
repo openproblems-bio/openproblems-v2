@@ -26,8 +26,8 @@ print(f"Downloading data", flush=True)
 with tempfile.TemporaryDirectory() as tempdir:
   input_exp = "feature_bc_matrix.h5"
   input_sp = "image_data.tar.gz"
-  epx_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_exp}",  par['input_expression']], stderr=subprocess.STDOUT)
-  sp_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_sp}",  par['input_spatial']], stderr=subprocess.STDOUT)
+  epx_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_exp}", par['input_expression']], stderr=subprocess.STDOUT)
+  sp_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_sp}", par['input_spatial']], stderr=subprocess.STDOUT)
   extract_spatial = subprocess.run(["tar", "-xzf", f"{tempdir}/{input_sp}", "-C", tempdir], stderr=subprocess.STDOUT)
 
   # Read visium data and create anndata object

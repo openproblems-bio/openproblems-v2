@@ -9,7 +9,7 @@ functionality:
       arguments:
         - name: "--input_data"
           type: string
-          description: URL to the feature / barcode matrix HDF5.
+          description: URL to the Anndata file.
           required: true
     - name: Outputs
       arguments:
@@ -72,7 +72,7 @@ functionality:
           required: false
         - name: "--remove_mitochondrial"
           type: boolean
-          description: Remove mitovhondrial genes?
+          description: Remove mitochondrial genes?
           required: false
   
   resources:
@@ -85,8 +85,4 @@ functionality:
 platforms:
   - type: docker
     image: ghcr.io/openproblems-bio/base_python:1.0.4
-    setup:
-      - type: python
-        packages:
-          - squidpy
   - type: nextflow

@@ -2,7 +2,7 @@ import os
 import subprocess
 import anndata as ad
 
-input_data ="https://zenodo.org/api/records/12784832/draft/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad"
+input_data ="https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad?download=1"
 dataset_id = "spatial_slideseq_v2/mouse_olfactory_bulb_puck"
 dataset_name = "mouse_olfactory_bulb_puck"
 dataset_url = "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"

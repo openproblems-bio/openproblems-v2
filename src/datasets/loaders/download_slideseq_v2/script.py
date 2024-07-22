@@ -4,7 +4,7 @@ import scanpy as sc
 
 # VIASH START
 par = {
-    "input_data": "https://zenodo.org/api/records/12784832/draft/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad",
+    "input_data": "https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad?download=1",
     "dataset_id": "spatial_slideseq_v2/mouse_olfactory_bulb_puck",
     "dataset_name": "Mouse Olfactory Bulk Puck",
     "dataset_url": "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary",
@@ -23,11 +23,7 @@ meta = {
 print(f"Downloading data", flush=True)
 with tempfile.TemporaryDirectory() as tempdir:
     input_data = "input_data.h5ad"
-    epx_data = subprocess.run(["wget", "-O",
-                               f"{tempdir}/{input_data}",
-                               par['input_data']],
-                              stderr=subprocess.STDOUT)
-    # Read visium data and create anndata object
+    epx_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_data}", par['input_data']], stderr=subprocess.STDOUT)
     adata = sc.read_h5ad(filename=f"{tempdir}/{input_data}")
 
 # Make variable names unique
@@ -68,8 +64,6 @@ print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
-adata.var.set_index(adata.var['gene_ids'], inplace=True)
-adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
 
 # Move counts to .layers
 print("Add metadata to uns", flush=True)
@@ -78,8 +72,7 @@ adata.X = None
 
 # Add metadata
 print("Add metadata to uns", flush=True)
-metadata_fields = ["dataset_id", "dataset_name", "dataset_url",
-                   "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
+metadata_fields = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
 for key in metadata_fields:
     if key in par:
         print(f"Setting .uns['{key}']", flush=True)
