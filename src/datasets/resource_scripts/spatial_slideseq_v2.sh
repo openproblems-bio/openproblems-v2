@@ -3,7 +3,7 @@
 cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: spatial_slideseq_v2/mouse_olfactory_bulb_puck
-    input_data: "https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad?download=1"
+    input_data: ""
     dataset_name: mouse_olfactory_bulb_puck
     dataset_url: "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"
     dataset_summary: Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2
@@ -13,7 +13,7 @@ param_list:
     gene_filter_min_spots: 500
 
   - id: spatial_slideseq_v2/mouse_cortex
-    input_data: "https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_palla2021squidpy_Slide-seqV2_Mouse_Cortex_data_whole.h5ad?download=1"
+    input_data: ""
     dataset_name: mouse_cortex
     dataset_url: "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"
     dataset_summary: Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2
@@ -23,7 +23,7 @@ param_list:
     gene_filter_min_spots: 500
 
   - id: spatial_slideseq_v2/mouse_cerebellum
-    input_data: "https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_Slide-seqV2_Mouse_Cerebellum_SCP948_data_whole.h5ad?download=1"
+    input_data: ""
     dataset_name: mouse_cerebellum
     dataset_url: "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"
     dataset_summary: Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2
@@ -33,7 +33,7 @@ param_list:
     gene_filter_min_spots: 500
 
   - id: spatial_slideseq_v2/mouse_hippocampus_puck
-    input_data: "https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_Slide-seqV2_Mouse_Hippocampus_Puck_200115_08_data_whole.h5ad?download=1"
+    input_data: ""
     dataset_name: mouse_hippocampus_puck
     dataset_url: "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"
     dataset_summary: Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2
@@ -43,7 +43,7 @@ param_list:
     gene_filter_min_spots: 500
 
   - id: spatial_slideseq_v2/mouse_somatosensory_cortex_Puck
-    input_data: "https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_Slide-seqV2_Mouse_SomatosensoryCortex_Puck_200306_03_data_whole.h5ad?download=1"
+    input_data: ""
     dataset_name: mouse_somatosensory_cortex_Puck
     dataset_url: "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"
     dataset_summary: Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2

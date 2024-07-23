@@ -41,7 +41,7 @@ platforms:
         run : |
           git clone https://github.com/Minzhe/BOOST-GP.git /opt/BOOST-GP
       - type: r
-        cran: [RcppDist, ggplot2]
+        cran: [RcppDist, ggplot2, anndata]
   - type: native
   - type: nextflow
     directives:
