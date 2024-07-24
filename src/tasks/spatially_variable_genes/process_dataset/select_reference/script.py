@@ -2,15 +2,18 @@ import anndata as ad
 import squidpy as sq
 
 ### VIASH START
+par = {
+    "input": "resources_test/common/mouse_brain_coronal_section1/dataset.h5ad",
+    "input_layer": "normalized",
+    "output": "reference_dataset.h5ad",
+    "num_features": 50
+}
 ### VIASH END
 
 print(">> Load data", flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print(">> Look for layer", flush=True)
-layer = adata.X if not par['input_layer'] else adata.layers[par['input_layer']]
-
-print(">> Run SVG", flush=True)
+print(">> Run Moran's I spatial autocorrelation", flush=True)
 sq.gr.spatial_neighbors(adata, coord_type="grid", delaunay=False)
 sq.gr.spatial_autocorr(adata, 
                        layer="normalized",
