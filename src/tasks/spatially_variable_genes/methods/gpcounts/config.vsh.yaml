@@ -22,7 +22,7 @@ functionality:
       type: integer
       description: Number of features to include.
       info: 
-        test_default: 150
+        test_default: 120
 
   resources:
     - type: python_script
