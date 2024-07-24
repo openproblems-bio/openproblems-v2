@@ -2,15 +2,65 @@
 
 cat > "/tmp/params.yaml" << 'HERE'
 param_list:
-  - id: spatial_slide_tags/mouse_embryo
-    input_data: "Slide-tags enables single-nucleus barcoding for multimodal spatial genomics"
-    dataset_name: mouse_embryo
-    dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
-    dataset_summary: 
-    dataset_description: ""
+  - id: spatial_dbit_seq/mouse_e10_brain
+    input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E10_brain_gene_25um_data.h5ad?download=1"
+    dataset_name: mouse_e10_brain
+    dataset_url: "https://www.cell.com/cell/fulltext/S0092-8674(20)31390-8"
+    dataset_summary: High-Spatial-Resolution Multi-Omics Sequencing via Deterministic Barcoding in Tissue
+    dataset_description: "Gene expression library of an E10 whole mouse embryo tissue profiled using DBiT-seq"
     dataset_organism: Mus musculus
-    spot_filter_min_genes: 100
-    gene_filter_min_spots: 500
+    spot_filter_min_genes: 10
+    gene_filter_min_spots: 50
+
+  - id: spatial_dbit_seq/mouse_e10_eye
+    input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E10_eye_and_nearby_data.h5ad?download=1"
+    dataset_name: mouse_e10_eye
+    dataset_url: "https://www.cell.com/cell/fulltext/S0092-8674(20)31390-8"
+    dataset_summary: High-Spatial-Resolution Multi-Omics Sequencing via Deterministic Barcoding in Tissue
+    dataset_description: "Gene expression library of an E10 whole mouse embryo tissue profiled using DBiT-seq"
+    dataset_organism: Mus musculus
+    spot_filter_min_genes: 10
+    gene_filter_min_spots: 50
+
+  - id: spatial_dbit_seq/mouse_e10_whole_body
+    input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E10_whole_gene_best_data.h5ad?download=1"
+    dataset_name: mouse_e10_whole_body
+    dataset_url: "https://www.cell.com/cell/fulltext/S0092-8674(20)31390-8"
+    dataset_summary: High-Spatial-Resolution Multi-Omics Sequencing via Deterministic Barcoding in Tissue
+    dataset_description: "Gene expression library of an E10 whole mouse embryo tissue profiled using DBiT-seq"
+    dataset_organism: Mus musculus
+    spot_filter_min_genes: 10
+    gene_filter_min_spots: 50
+
+  - id: spatial_dbit_seq/mouse_e11_lower_body
+    input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E11_lower_body_data.h5ad?download=1"
+    dataset_name: mouse_e11_lower_body
+    dataset_url: "https://www.cell.com/cell/fulltext/S0092-8674(20)31390-8"
+    dataset_summary: High-Spatial-Resolution Multi-Omics Sequencing via Deterministic Barcoding in Tissue
+    dataset_description: "Gene expression library of an E10 whole mouse embryo tissue profiled using DBiT-seq"
+    dataset_organism: Mus musculus
+    spot_filter_min_genes: 10
+    gene_filter_min_spots: 50
+
+  - id: spatial_dbit_seq/mouse_e11_1
+    input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_GSM4364244_E11-FL-1L_gene_data.h5ad?download=1"
+    dataset_name: mouse_e11_1
+    dataset_url: "https://www.cell.com/cell/fulltext/S0092-8674(20)31390-8"
+    dataset_summary: High-Spatial-Resolution Multi-Omics Sequencing via Deterministic Barcoding in Tissue
+    dataset_description: "Gene expression library of an E11 whole mouse embryo tissue profiled using DBiT-seq"
+    dataset_organism: Mus musculus
+    spot_filter_min_genes: 10
+    gene_filter_min_spots: 50
+
+  - id: spatial_dbit_seq/mouse_e11_2
+    input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_GSM4364245_E11-FL-2L_gene_data.h5ad?download=1"
+    dataset_name: mouse_e11_2
+    dataset_url: "https://www.cell.com/cell/fulltext/S0092-8674(20)31390-8"
+    dataset_summary: High-Spatial-Resolution Multi-Omics Sequencing via Deterministic Barcoding in Tissue
+    dataset_description: "Gene expression library of an E11 whole mouse embryo tissue profiled using DBiT-seq"
+    dataset_organism: Mus musculus
+    spot_filter_min_genes: 10
+    gene_filter_min_spots: 50
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
