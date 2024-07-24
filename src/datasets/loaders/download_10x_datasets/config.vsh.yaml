@@ -76,7 +76,7 @@ functionality:
           required: false
         - name: "--remove_mitochondrial"
           type: boolean
-          description: Remove mitovhondrial genes?
+          description: Remove mitochondrial genes?
           required: false
   
   resources:

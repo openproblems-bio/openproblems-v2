@@ -403,17 +403,17 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM python:3.9.16
+FROM ghcr.io/openproblems-bio/base_images/tensorflow_nvidia:1.1.0
 
 ENTRYPOINT []
 
  
 RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y git procps libhdf5-dev && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y git && \
   rm -rf /var/lib/apt/lists/*
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "anndata" "scanpy" "numpy==1.22.4" "matplotlib==3.7.1" "tensorflow-probability==0.19.0" "tensorflow==2.12.0" "gpflow" "check_shapes==1.0.0" "pyyaml" "scipy==1.9.1"
+  pip install --upgrade --no-cache-dir "tensorflow-probability" "tensorflow" "gpflow" "scipy==1.9.1"
 
 RUN git clone https://github.com/markvdw/RobustGP.git /opt/RobustGP && \
 git clone https://github.com/lzj1769/GPcounts.git /opt/GPcounts
@@ -422,9 +422,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "/opt/RobustGP" "/opt/GPcounts"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods gpcounts"
-LABEL org.opencontainers.image.created="2024-07-15T09:22:36Z"
+LABEL org.opencontainers.image.created="2024-07-24T10:56:18Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1f49b879c83b847ecf5ed97bcc4afacdb3f00596"
+LABEL org.opencontainers.image.revision="809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

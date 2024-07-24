@@ -2968,6 +2968,42 @@ meta = [
                 "name" : "orig_dataset_id",
                 "description" : "Original unique identifier for the dataset",
                 "required" : true
+              },
+              {
+                "name" : "dataset_name",
+                "type" : "string",
+                "description" : "Nicely formatted name.",
+                "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "dataset_url",
+                "description" : "Link to the original source of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_reference",
+                "type" : "string",
+                "description" : "Bibtex reference of the paper in which the dataset was published.",
+                "required" : false
+              },
+              {
+                "name" : "dataset_summary",
+                "type" : "string",
+                "description" : "Short description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_description",
+                "type" : "string",
+                "description" : "Long description of the dataset.",
+                "required" : true
+              },
+              {
+                "name" : "dataset_organism",
+                "type" : "string",
+                "description" : "The organism of the sample in the dataset.",
+                "required" : true
               }
             ]
           }
@@ -3077,7 +3113,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/split_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
+    "git_commit" : "809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

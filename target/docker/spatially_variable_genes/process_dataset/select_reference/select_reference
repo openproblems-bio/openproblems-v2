@@ -418,9 +418,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "squidpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/process_dataset select_reference"
-LABEL org.opencontainers.image.created="2024-07-15T09:22:41Z"
+LABEL org.opencontainers.image.created="2024-07-24T10:56:21Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="1f49b879c83b847ecf5ed97bcc4afacdb3f00596"
+LABEL org.opencontainers.image.revision="809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -937,10 +937,7 @@ dep = {
 print(">> Load data", flush=True)
 adata = ad.read_h5ad(par['input'])
 
-print(">> Look for layer", flush=True)
-layer = adata.X if not par['input_layer'] else adata.layers[par['input_layer']]
-
-print(">> Run SVG", flush=True)
+print(">> Run Moran's I spatial autocorrelation", flush=True)
 sq.gr.spatial_neighbors(adata, coord_type="grid", delaunay=False)
 sq.gr.spatial_autocorr(adata, 
                        layer="normalized",

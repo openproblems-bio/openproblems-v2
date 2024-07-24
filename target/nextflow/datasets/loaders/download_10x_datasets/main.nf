@@ -2907,7 +2907,7 @@ meta = [
           {
             "type" : "boolean",
             "name" : "--remove_mitochondrial",
-            "description" : "Remove mitovhondrial genes?",
+            "description" : "Remove mitochondrial genes?",
             "required" : false,
             "direction" : "input",
             "multiple" : false,
@@ -2997,7 +2997,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/download_10x_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
+    "git_commit" : "809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3060,8 +3060,8 @@ print(f"Downloading data", flush=True)
 with tempfile.TemporaryDirectory() as tempdir:
   input_exp = "feature_bc_matrix.h5"
   input_sp = "image_data.tar.gz"
-  epx_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_exp}",  par['input_expression']], stderr=subprocess.STDOUT)
-  sp_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_sp}",  par['input_spatial']], stderr=subprocess.STDOUT)
+  epx_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_exp}", par['input_expression']], stderr=subprocess.STDOUT)
+  sp_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_sp}", par['input_spatial']], stderr=subprocess.STDOUT)
   extract_spatial = subprocess.run(["tar", "-xzf", f"{tempdir}/{input_sp}", "-C", tempdir], stderr=subprocess.STDOUT)
 
   # Read visium data and create anndata object

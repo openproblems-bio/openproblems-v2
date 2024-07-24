@@ -3177,7 +3177,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/label_projection/control_methods/random_labels",
     "viash_version" : "0.8.0",
-    "git_commit" : "1f49b879c83b847ecf5ed97bcc4afacdb3f00596",
+    "git_commit" : "809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

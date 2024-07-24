@@ -3,9 +3,6 @@ library(anndata)
 
 dest <- getwd()
 
-setwd("/opt/BOOST-GP")
-source("./R/boost.gp.R")
-
 # VIASH START
 par <- list(
     "input_data" = "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad",
@@ -19,6 +16,9 @@ meta <- list(
 
 cat("Load data\n")
 adata <- anndata::read_h5ad(par$input_data)
+
+setwd("/opt/BOOST-GP")
+source("./R/boost.gp.R")
 
 counts <- as.matrix(adata$layers[["counts"]])
 colnames(counts) <- adata$var_names
