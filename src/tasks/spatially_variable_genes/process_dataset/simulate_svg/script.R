@@ -160,7 +160,7 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
 cat("Collecting final output\n", sep = "")
 final_counts <- do.call(cbind, lapply(outputs, function(x) x$counts))
 final_var <- do.call(rbind, lapply(outputs, function(x) x$var))
-final_uns <- adata$uns[c("dataset_id", "dataset_name", "dataset_description", "dataset_summary", "dataset_url", "dataset_organism")]
+final_uns <- adata$uns[c("dataset_id", "dataset_name", "dataset_description", "dataset_summary", "dataset_url", "dataset_organism", "dataset_reference")]
 final_uns$orig_dataset_id <- adata$uns$dataset_id
 final_uns$dataset_id <- paste0(adata$uns$dataset_id, "_simulate_svg")
 

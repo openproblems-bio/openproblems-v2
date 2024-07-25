@@ -3068,7 +3068,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/control_methods/true_ranking",
     "viash_version" : "0.8.0",
-    "git_commit" : "809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee",
+    "git_commit" : "e8b73ba11c301d819300e0295eae12c1c300c637",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

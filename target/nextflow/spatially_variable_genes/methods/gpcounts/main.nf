@@ -2852,7 +2852,7 @@ meta = [
         "name" : "--n_features",
         "description" : "Number of features to include.",
         "info" : {
-          "test_default" : 150
+          "test_default" : 120
         },
         "required" : false,
         "direction" : "input",
@@ -2937,7 +2937,7 @@ meta = [
           "user" : false,
           "packages" : [
             "tensorflow-probability",
-            "tensorflow",
+            "tensorflow[and-cuda]",
             "gpflow",
             "scipy==1.9.1"
           ],
@@ -3007,7 +3007,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/gpcounts",
     "viash_version" : "0.8.0",
-    "git_commit" : "809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee",
+    "git_commit" : "e8b73ba11c301d819300e0295eae12c1c300c637",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

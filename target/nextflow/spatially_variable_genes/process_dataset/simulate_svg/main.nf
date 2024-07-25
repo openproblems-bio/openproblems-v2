@@ -3079,7 +3079,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg",
     "viash_version" : "0.8.0",
-    "git_commit" : "809e63f1e9e1f0e0a5e3ca36fa782b05bb5c7fee",
+    "git_commit" : "e8b73ba11c301d819300e0295eae12c1c300c637",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3280,7 +3280,7 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
 cat("Collecting final output\\\\n", sep = "")
 final_counts <- do.call(cbind, lapply(outputs, function(x) x\\$counts))
 final_var <- do.call(rbind, lapply(outputs, function(x) x\\$var))
-final_uns <- adata\\$uns[c("dataset_id", "dataset_name", "dataset_description", "dataset_summary", "dataset_url", "dataset_organism")]
+final_uns <- adata\\$uns[c("dataset_id", "dataset_name", "dataset_description", "dataset_summary", "dataset_url", "dataset_organism", "dataset_reference")]
 final_uns\\$orig_dataset_id <- adata\\$uns\\$dataset_id
 final_uns\\$dataset_id <- paste0(adata\\$uns\\$dataset_id, "_simulate_svg")
 
