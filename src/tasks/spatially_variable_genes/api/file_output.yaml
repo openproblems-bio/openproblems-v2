@@ -9,6 +9,10 @@ info:
       - type: string
         name: feature_id
         description: Feature ID
+        required: false
+      - type: string
+        name: feature_name
+        description: Feature name
         required: true
       - type: double
         name: pred_spatial_var_score
