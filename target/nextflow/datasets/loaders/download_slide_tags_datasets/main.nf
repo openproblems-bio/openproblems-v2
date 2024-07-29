@@ -2931,24 +2931,14 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
+      "image" : "ghcr.io/openproblems-bio/base_images/python:1.1.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
       "resolve_volume" : "Automatic",
       "chown" : true,
       "setup_strategy" : "ifneedbepullelsecachedbuild",
-      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
-      "setup" : [
-        {
-          "type" : "python",
-          "user" : false,
-          "packages" : [
-            "squidpy"
-          ],
-          "upgrade" : true
-        }
-      ]
+      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2"
     },
     {
       "type" : "nextflow",
@@ -2987,7 +2977,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/download_slide_tags_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "e8b73ba11c301d819300e0295eae12c1c300c637",
+    "git_commit" : "61c3403d9a4d21bdfab4cd8e348d3aa46c6f378e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3052,13 +3042,13 @@ with tempfile.TemporaryDirectory() as tempdir:
     epx_data = subprocess.run(
         ["wget", "-O", f"{tempdir}/{input_data}", par['input_data']], stderr=subprocess.STDOUT)
     extract_spatial = subprocess.run(
-        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir], stderr=subprocess.STDOUT)
+        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir, "--strip-components=1"], stderr=subprocess.STDOUT)
 
     # Read gene expression and create anndata object
-    adata = sc.read_10x_mtx(path=f"{tempdir}/{dataset_name}")
+    adata = sc.read_10x_mtx(path=tempdir)
 
     # Read spatial locations
-    df = pd.read_csv(f"{tempdir}/{dataset_name}/spatial.csv", skiprows=1)
+    df = pd.read_csv(f"{tempdir}/spatial.csv", skiprows=1)
     df = df.set_index('TYPE')
     df.columns = ['spatial1', 'spatial2', 'cell_type']
 

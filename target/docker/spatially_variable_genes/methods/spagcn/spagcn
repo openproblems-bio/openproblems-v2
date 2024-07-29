@@ -414,9 +414,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "/opt/SpaGCN/SpaGCN_package"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods spagcn"
-LABEL org.opencontainers.image.created="2024-07-25T10:23:06Z"
+LABEL org.opencontainers.image.created="2024-07-29T10:14:44Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e8b73ba11c301d819300e0295eae12c1c300c637"
+LABEL org.opencontainers.image.revision="61c3403d9a4d21bdfab4cd8e348d3aa46c6f378e"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

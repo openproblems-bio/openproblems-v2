@@ -482,9 +482,9 @@ spe <- logNormCounts(spe)
 
 # run nnSVG
 if (!is.null(meta\$cpus)) {
-n_cpus <- meta\$cpus
+    n_cpus <- meta\$cpus
 } else {
-n_cpus <- 1
+    n_cpus <- 1
 }
 
 cat('Run nnSVG')

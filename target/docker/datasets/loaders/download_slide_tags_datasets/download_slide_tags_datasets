@@ -456,18 +456,16 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.4
+FROM ghcr.io/openproblems-bio/base_images/python:1.1.0
 
 ENTRYPOINT []
 
  
-RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "squidpy"
-
+RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders download_slide_tags_datasets"
-LABEL org.opencontainers.image.created="2024-07-25T10:23:08Z"
+LABEL org.opencontainers.image.created="2024-07-29T10:14:46Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="e8b73ba11c301d819300e0295eae12c1c300c637"
+LABEL org.opencontainers.image.revision="61c3403d9a4d21bdfab4cd8e348d3aa46c6f378e"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1132,13 +1130,13 @@ with tempfile.TemporaryDirectory() as tempdir:
     epx_data = subprocess.run(
         ["wget", "-O", f"{tempdir}/{input_data}", par['input_data']], stderr=subprocess.STDOUT)
     extract_spatial = subprocess.run(
-        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir], stderr=subprocess.STDOUT)
+        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir, "--strip-components=1"], stderr=subprocess.STDOUT)
 
     # Read gene expression and create anndata object
-    adata = sc.read_10x_mtx(path=f"{tempdir}/{dataset_name}")
+    adata = sc.read_10x_mtx(path=tempdir)
 
     # Read spatial locations
-    df = pd.read_csv(f"{tempdir}/{dataset_name}/spatial.csv", skiprows=1)
+    df = pd.read_csv(f"{tempdir}/spatial.csv", skiprows=1)
     df = df.set_index('TYPE')
     df.columns = ['spatial1', 'spatial2', 'cell_type']
 

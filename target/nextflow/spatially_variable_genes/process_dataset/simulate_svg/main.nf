@@ -3079,7 +3079,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg",
     "viash_version" : "0.8.0",
-    "git_commit" : "e8b73ba11c301d819300e0295eae12c1c300c637",
+    "git_commit" : "61c3403d9a4d21bdfab4cd8e348d3aa46c6f378e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3138,7 +3138,7 @@ rm(.viash_orig_warn)
 
 cat("Read AnnData\\\\n")
 adata <- anndata::read_h5ad(par\\$input)
-
+                    
 cat("Transform into SCE\\\\n")
 df_loc <- as.data.frame(adata\\$obsm[['spatial']])
 colnames(df_loc) <- c("spatial1", "spatial2")
@@ -3260,16 +3260,26 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
     filtered_gene = NULL
   )
   
-  new_var <- data.frame(
-    feature_id = paste0(var_subset\\$feature_id, "_", alpha),
-    feature_name = paste0(var_subset\\$feature_name, " ", alpha),
-    orig_feature_id = var_subset\\$feature_id,
-    orig_feature_name = var_subset\\$feature_name,
-    true_spatial_var_score = alpha
-  )
-
-  rownames(counts) <- new_var\\$feature_id
-  rownames(new_var) <- new_var\\$feature_id
+  if ("feature_id" %in% names(var_subset)) {
+    new_var <- data.frame(
+      feature_id = paste0(var_subset\\$feature_id, "_", alpha),
+      feature_name = paste0(var_subset\\$feature_name, "_", alpha),
+      orig_feature_id = var_subset\\$feature_id,
+      orig_feature_name = var_subset\\$feature_name,
+      true_spatial_var_score = alpha
+    )
+    rownames(counts) <- new_var\\$feature_id
+    rownames(new_var) <- new_var\\$feature_id
+  } else {
+    new_var <- data.frame(
+      feature_id = paste0(var_subset\\$feature_name, "_", alpha),
+      feature_name = paste0(var_subset\\$feature_name, "_", alpha),
+      orig_feature_name = var_subset\\$feature_name,
+      true_spatial_var_score = alpha
+    )
+    rownames(counts) <- new_var\\$feature_name
+    rownames(new_var) <- new_var\\$feature_name 
+  }
   
   list(
     counts = Matrix::t(counts),

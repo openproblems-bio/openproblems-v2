@@ -2761,6 +2761,12 @@ meta = [
                 "name" : "feature_id",
                 "description" : "Unique identifier for the feature, in this case a ENSEMBL gene id suffixed with alpha value.",
                 "required" : false
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "A human-readable name for the feature, in this case a gene symbol suffixed with alpha value.",
+                "required" : false
               }
             ],
             "obsm" : [
@@ -2812,6 +2818,12 @@ meta = [
                 "name" : "feature_id",
                 "description" : "Feature ID",
                 "required" : true
+              },
+              {
+                "type" : "string",
+                "name" : "feature_name",
+                "description" : "Feature name",
+                "required" : false
               },
               {
                 "type" : "double",
@@ -2989,7 +3001,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spatialde2",
     "viash_version" : "0.8.0",
-    "git_commit" : "e8b73ba11c301d819300e0295eae12c1c300c637",
+    "git_commit" : "61c3403d9a4d21bdfab4cd8e348d3aa46c6f378e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

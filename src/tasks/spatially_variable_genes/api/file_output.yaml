@@ -10,6 +10,10 @@ info:
         name: feature_id
         description: Feature ID
         required: true
+      - type: string
+        name: feature_name
+        description: Feature name
+        required: false
       - type: double
         name: pred_spatial_var_score
         description: Predicted spatial variability score
