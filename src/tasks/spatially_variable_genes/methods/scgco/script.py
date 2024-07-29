@@ -45,7 +45,7 @@ df = identify_spatial_genes(locs, data_norm, cellGraph, gmmDict)
 # save results
 df = df.loc[adata.var_names][['fdr']]
 df = df.reset_index()
-df.columns = ['feature_id', 'pred_spatial_var_score']
+df.columns = ['feature_name', 'pred_spatial_var_score']
 
 # Transform the values via -log10 to make sure a bigger score represents a 
 # higher spatial variation

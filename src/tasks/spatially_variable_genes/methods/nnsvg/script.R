@@ -55,9 +55,9 @@ cat('Run nnSVG')
 spe <- nnSVG(spe, n_threads=n_cpus)
 
 df <- as.data.frame(rowData(spe)) %>%
-    subset(select = c('feature_id', 'LR_stat'))
+    subset(select = c('feature_name', 'LR_stat'))
 
-colnames(df) <- c('feature_id', 'pred_spatial_var_score')
+colnames(df) <- c('feature_name', 'pred_spatial_var_score')
 rownames(df) <- NULL
 
 # save output

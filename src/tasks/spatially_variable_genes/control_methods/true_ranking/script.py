@@ -14,7 +14,7 @@ meta = {
 print('Generate predictions', flush=True)
 input_solution = ad.read_h5ad(par['input_solution'])
 
-df = input_solution.var[["feature_id", "true_spatial_var_score"]]
+df = input_solution.var[["feature_name", "true_spatial_var_score"]]
 df.rename(columns={'true_spatial_var_score': 'pred_spatial_var_score'}, inplace=True)
 
 output = ad.AnnData(var=df,

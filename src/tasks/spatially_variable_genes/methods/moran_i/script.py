@@ -32,7 +32,7 @@ sq.gr.spatial_autocorr(adata,
 df = adata.uns["moranI"]
 df = df.loc[adata.var_names][['I']]
 df = df.reset_index()
-df.columns = ['feature_id', 'pred_spatial_var_score']
+df.columns = ['feature_name', 'pred_spatial_var_score']
 
 output = ad.AnnData(var=df,
                     uns={'dataset_id': adata.uns['dataset_id'],
