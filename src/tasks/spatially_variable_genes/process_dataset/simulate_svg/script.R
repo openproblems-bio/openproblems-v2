@@ -152,6 +152,7 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
     rownames(new_var) <- new_var$feature_id
   } else {
     new_var <- data.frame(
+      feature_id = paste0(var_subset$feature_name, "_", alpha),
       feature_name = paste0(var_subset$feature_name, "_", alpha),
       orig_feature_name = var_subset$feature_name,
       true_spatial_var_score = alpha

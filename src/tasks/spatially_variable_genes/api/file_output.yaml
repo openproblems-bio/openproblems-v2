@@ -9,11 +9,11 @@ info:
       - type: string
         name: feature_id
         description: Feature ID
-        required: false
+        required: true
       - type: string
         name: feature_name
         description: Feature name
-        required: true
+        required: false
       - type: double
         name: pred_spatial_var_score
         description: Predicted spatial variability score

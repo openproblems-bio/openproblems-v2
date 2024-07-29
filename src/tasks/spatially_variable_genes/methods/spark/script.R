@@ -54,8 +54,8 @@ df <- as.data.frame(spark@res_mtest)
 
 df$feature_id <- rownames(df)
 
-df <- subset(df, select = c("feature_name", "adjusted_pvalue"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df <- subset(df, select = c("feature_id", "adjusted_pvalue"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 
 # because SPARK only generates p-values, we here transform the values
 # via -log10 to make sure a bigger score represents a higher spatial variation

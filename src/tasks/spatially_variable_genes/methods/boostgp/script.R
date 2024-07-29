@@ -33,8 +33,8 @@ cat("Run BOOST-GP\n")
 df <- as.data.frame(boost.gp(Y = counts, loc = loc, iter = par$n_iter, burn = 5))
 
 df$feature_id <- rownames(df)
-df <- subset(df, select = c("feature_name", "PPI"))
-colnames(df) <- c("feature_name", "pred_spatial_var_score")
+df <- subset(df, select = c("feature_id", "PPI"))
+colnames(df) <- c("feature_id", "pred_spatial_var_score")
 
 # save output
 cat("Write output AnnData to file\n")

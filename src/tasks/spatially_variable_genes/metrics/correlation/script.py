@@ -17,7 +17,7 @@ input_method = ad.read_h5ad(par['input_method'])
 input_solution = ad.read_h5ad(par['input_solution'])
 
 print('Compute metrics', flush=True)
-df = pd.merge(input_method.var, input_solution.var, how='left', on='feature_name')
+df = pd.merge(input_method.var, input_solution.var, how='left', on='feature_id')
 groupby = df.groupby('orig_feature_name', observed=True)
 corr = groupby.apply(lambda x: x['pred_spatial_var_score'].corr(x['true_spatial_var_score'], method='kendall'))
 
