@@ -84,9 +84,5 @@ functionality:
 
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.4
-    setup:
-      - type: python
-        packages:
-          - squidpy
+    image: ghcr.io/openproblems-bio/base_images/python:1.1.0
   - type: nextflow

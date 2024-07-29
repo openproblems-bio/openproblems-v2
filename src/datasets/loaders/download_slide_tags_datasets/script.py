@@ -28,13 +28,13 @@ with tempfile.TemporaryDirectory() as tempdir:
     epx_data = subprocess.run(
         ["wget", "-O", f"{tempdir}/{input_data}", par['input_data']], stderr=subprocess.STDOUT)
     extract_spatial = subprocess.run(
-        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir], stderr=subprocess.STDOUT)
+        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir, "--strip-components=1"], stderr=subprocess.STDOUT)
 
     # Read gene expression and create anndata object
-    adata = sc.read_10x_mtx(path=f"{tempdir}/{dataset_name}")
+    adata = sc.read_10x_mtx(path=tempdir)
 
     # Read spatial locations
-    df = pd.read_csv(f"{tempdir}/{dataset_name}/spatial.csv", skiprows=1)
+    df = pd.read_csv(f"{tempdir}/spatial.csv", skiprows=1)
     df = df.set_index('TYPE')
     df.columns = ['spatial1', 'spatial2', 'cell_type']
 
