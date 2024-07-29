@@ -4,19 +4,19 @@ import scanpy as sc
 
 # VIASH START
 par = {
-    "input_data": "https://zenodo.org/records/12785822/files/STARmap_Wang2018three_data_2D_zstep10_0_data.h5ad?download=1",
-    "dataset_id": "spatial_star_map/mouse_brain_2d_zstep10_0",
-    "dataset_name": "mouse_brain_2d_zstep10_0",
-    "dataset_url": "https://www.science.org/doi/10.1126/science.aat5691",
-    "dataset_summary": "Three-dimensional intact-tissue sequencing of single-cell transcriptional states",
+    "input_data": "ps://zenodo.org/records/12785822/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad?download=1",
+    "dataset_id": "spatial_slideseq_v2/mouse_olfactory_bulb_puck",
+    "dataset_name": "Mouse Olfactory Bulk Puck",
+    "dataset_url": "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary",
+    "dataset_summary": "Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2",
     "dataset_organism": "Mus musculus",
     "dataset": "dataset.h5ad",
-    "spot_filter_min_genes": 1,
-    "gene_filter_min_spots": 1,
-    "remove_mitochondrial": False
+    "spot_filter_min_genes": 10,
+    "gene_filter_min_spots": 500,
+    "remove_mitochondrial": True
 }
 meta = {
-    "functionality_name": "download_stereo_seq_datasets"
+    "functionality_name": "download_spatial_from_zenodo"
 }
 # VIASH END
 
@@ -29,7 +29,7 @@ with tempfile.TemporaryDirectory() as tempdir:
 # Make variable names unique
 adata.var_names_make_unique()
 
-sc.pp.calculate_qc_metrics(adata, inplace=True)
+sc.pp.calculate_qc_metrics(adata, inplace=True, percent_top=None)
 
 if par["remove_mitochondrial"]:
     print("Removing mitochondrial genes")

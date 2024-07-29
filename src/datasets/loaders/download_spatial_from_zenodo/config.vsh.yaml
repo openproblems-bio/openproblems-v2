@@ -1,9 +1,8 @@
 functionality:
-  name: download_star_map_datasets
+  name: download_spatial_from_zenodo
   namespace: datasets/loaders
   description: |
-    Download an Anndata file containing gene expression and spatial locations.
-  
+    Download an Anndata file containing DBiT seq, MERFISH, seqFISH, Slide-seq v2, STARmap, and Stereo-seq data from Zenodo.
   argument_groups: 
     - name: Inputs
       arguments:
@@ -84,5 +83,5 @@ functionality:
 
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.4
+    image: ghcr.io/openproblems-bio/base_images/python:1.1.0
   - type: nextflow
