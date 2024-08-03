@@ -425,9 +425,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn" "scipy" "numpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/control_methods spectral_features"
-LABEL org.opencontainers.image.created="2024-08-01T07:54:11Z"
+LABEL org.opencontainers.image.created="2024-08-03T10:20:42Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="403406973e765fa990a2cf5b5b2c40485ac2f508"
+LABEL org.opencontainers.image.revision="d2576d06293027be052c42bdeeef11e51e09943a"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

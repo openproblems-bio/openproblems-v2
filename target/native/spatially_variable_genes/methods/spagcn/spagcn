@@ -539,7 +539,7 @@ for target in range(n_clusters):
 
     if len(de_genes_all) == 0:
         df = adata.var
-        df['pvals_adj'] = np.random.random(adata.n_var)
+        df['pvals_adj'] = np.random.random(adata.n_vars)
     else:
         df_res = pd.concat(de_genes_all)
         df_res = df_res.groupby(["genes"]).min()

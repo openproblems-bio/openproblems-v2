@@ -416,9 +416,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition process_dataset"
-LABEL org.opencontainers.image.created="2024-08-01T07:54:07Z"
+LABEL org.opencontainers.image.created="2024-08-03T10:20:43Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="403406973e765fa990a2cf5b5b2c40485ac2f508"
+LABEL org.opencontainers.image.revision="d2576d06293027be052c42bdeeef11e51e09943a"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

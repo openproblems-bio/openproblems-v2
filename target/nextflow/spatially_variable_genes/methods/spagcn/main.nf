@@ -2996,7 +2996,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagcn",
     "viash_version" : "0.8.0",
-    "git_commit" : "403406973e765fa990a2cf5b5b2c40485ac2f508",
+    "git_commit" : "d2576d06293027be052c42bdeeef11e51e09943a",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3138,7 +3138,7 @@ for target in range(n_clusters):
 
     if len(de_genes_all) == 0:
         df = adata.var
-        df['pvals_adj'] = np.random.random(adata.n_var)
+        df['pvals_adj'] = np.random.random(adata.n_vars)
     else:
         df_res = pd.concat(de_genes_all)
         df_res = df_res.groupby(["genes"]).min()
