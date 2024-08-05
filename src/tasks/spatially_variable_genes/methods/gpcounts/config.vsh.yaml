@@ -36,19 +36,11 @@ platforms:
       - type: apt
         packages: 
           - git
-          # - procps
-          # - libhdf5-dev
       - type: python
         packages:
-          # - anndata
-          # - scanpy
-          # - numpy==1.22.4 
-          # - matplotlib==3.7.1 
-          - tensorflow-probability #==0.19.0 
-          - tensorflow[and-cuda] #==2.12.0 
+          - tensorflow-probability
+          - tensorflow[and-cuda]
           - gpflow
-          # - check_shapes==1.0.0
-          # - pyyaml
           - scipy==1.9.1
       - type: docker
         run : |
@@ -61,4 +53,4 @@ platforms:
   - type: native
   - type: nextflow
     directives:
-      label: [veryhightime, midmem, midcpu, gpu]
+      label: [hightime, midmem, midcpu, gpu]
