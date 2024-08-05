@@ -18,7 +18,7 @@ input_data = ad.read_h5ad(par['input_data'])
 df = input_data.var[["feature_id"]]
 
 np.random.seed(0)
-df['random'] = np.random.rand(len(df['feature_id']))
+df['pred_spatial_var_score'] = np.random.rand(len(df['feature_id']))
 
 output = ad.AnnData(var=df,
                     uns={'dataset_id': input_data.uns['dataset_id'],
