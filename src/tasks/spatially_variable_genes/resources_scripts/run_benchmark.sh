@@ -4,7 +4,7 @@ RUN_ID="run_$(date +%Y-%m-%d_%H-%M-%S)"
 publish_dir="s3://openproblems-data/resources/spatially_variable_genes/results/${RUN_ID}"
 
 cat > /tmp/params.yaml << HERE
-input_states: s3://openproblems-data/resources/spatially_variable_genes/datasets/spatial_10x_xenium/**/state.yaml
+input_states: s3://openproblems-data/resources/spatially_variable_genes/datasets/**/state.yaml
 rename_keys: 'input_dataset:output_dataset,input_solution:output_solution'
 output_state: "state.yaml"
 publish_dir: "$publish_dir"
