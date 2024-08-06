@@ -49,6 +49,7 @@ functionality:
   dependencies:
     - name: common/check_dataset_schema
     - name: common/extract_metadata
+    - name: spatially_variable_genes/control_methods/random_ranking
     - name: spatially_variable_genes/control_methods/true_ranking
     - name: spatially_variable_genes/methods/boostgp
     - name: spatially_variable_genes/methods/gpcounts

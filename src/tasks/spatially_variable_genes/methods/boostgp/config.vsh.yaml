@@ -24,7 +24,7 @@ functionality:
       description: Number of iterations.
       default: 10
       info:
-        test_default: 8
+        test_default: 7
 
   resources:
     - type: r_script
@@ -45,4 +45,4 @@ platforms:
   - type: native
   - type: nextflow
     directives:
-      label: [hightime, midmem, midcpu]
+      label: [veryhightime, midmem, midcpu]

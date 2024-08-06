@@ -416,9 +416,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component spatial_decomposition/control_methods true_proportions"
-LABEL org.opencontainers.image.created="2024-08-03T10:20:45Z"
+LABEL org.opencontainers.image.created="2024-08-06T08:00:21Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d2576d06293027be052c42bdeeef11e51e09943a"
+LABEL org.opencontainers.image.revision="423f6ef850ff0975866ad1957bc3d5065ae2c7ec"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

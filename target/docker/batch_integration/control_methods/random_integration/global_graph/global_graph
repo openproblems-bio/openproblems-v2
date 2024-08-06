@@ -404,9 +404,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods/random_integration global_graph"
-LABEL org.opencontainers.image.created="2024-08-03T10:20:43Z"
+LABEL org.opencontainers.image.created="2024-08-06T08:00:23Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="d2576d06293027be052c42bdeeef11e51e09943a"
+LABEL org.opencontainers.image.revision="423f6ef850ff0975866ad1957bc3d5065ae2c7ec"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

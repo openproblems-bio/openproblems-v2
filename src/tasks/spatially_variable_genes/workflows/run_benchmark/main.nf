@@ -13,6 +13,7 @@ workflow run_wf {
 
   // construct list of methods
   methods = [
+    random_ranking,
     true_ranking, 
     boostgp, 
     gpcounts,
