@@ -2944,6 +2944,7 @@ meta = [
           "type" : "python",
           "user" : false,
           "packages" : [
+            "numpy<2.0",
             "/opt/SpaGCN/SpaGCN_package"
           ],
           "upgrade" : true
@@ -2997,7 +2998,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagcn",
     "viash_version" : "0.8.0",
-    "git_commit" : "423f6ef850ff0975866ad1957bc3d5065ae2c7ec",
+    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3137,15 +3138,14 @@ for target in range(n_clusters):
     except (RuntimeError, TypeError, NameError):
         pass
 
-    if len(de_genes_all) == 0:
-        df = adata.var
-        df['pvals_adj'] = np.random.random(adata.n_vars)
-    else:
-        df_res = pd.concat(de_genes_all)
-        df_res = df_res.groupby(["genes"]).min()
-        df_res = df_res.loc[adata.var_names]
-
-        df = pd.concat([df_res, adata.var], axis=1)
+if len(de_genes_all) == 0:
+    df = adata.var
+    df['pvals_adj'] = np.random.random(adata.n_vars)
+else:
+    df_res = pd.concat(de_genes_all)
+    df_res = df_res.groupby(["genes"]).min()
+    df_res = df_res.loc[adata.var_names]
+    df = pd.concat([df_res, adata.var], axis=1)
 
 # save results
 df = df.loc[adata.var_names][['pvals_adj']]

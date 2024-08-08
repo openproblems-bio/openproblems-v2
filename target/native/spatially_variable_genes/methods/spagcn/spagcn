@@ -537,15 +537,14 @@ for target in range(n_clusters):
     except (RuntimeError, TypeError, NameError):
         pass
 
-    if len(de_genes_all) == 0:
-        df = adata.var
-        df['pvals_adj'] = np.random.random(adata.n_vars)
-    else:
-        df_res = pd.concat(de_genes_all)
-        df_res = df_res.groupby(["genes"]).min()
-        df_res = df_res.loc[adata.var_names]
-
-        df = pd.concat([df_res, adata.var], axis=1)
+if len(de_genes_all) == 0:
+    df = adata.var
+    df['pvals_adj'] = np.random.random(adata.n_vars)
+else:
+    df_res = pd.concat(de_genes_all)
+    df_res = df_res.groupby(["genes"]).min()
+    df_res = df_res.loc[adata.var_names]
+    df = pd.concat([df_res, adata.var], axis=1)
 
 # save results
 df = df.loc[adata.var_names][['pvals_adj']]

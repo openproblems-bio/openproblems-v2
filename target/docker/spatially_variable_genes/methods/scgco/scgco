@@ -416,9 +416,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "h5py==3.8.0" "pandas==1.5.3" "parmap==1.6.0" "scanpy==1.9.3" "tqdm==4.65.0" "anndata==0.8.0" "matplotlib==3.7.1" "scikit-learn==1.2.2" "hdbscan" "seaborn==0.12.2" "pysal==2.0.0" "pygco==0.0.16" "shapely==2.0.1" "networkx==2.5" "scikit-image" "pyyaml" "requests"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods scgco"
-LABEL org.opencontainers.image.created="2024-08-06T08:00:13Z"
+LABEL org.opencontainers.image.created="2024-08-08T09:07:54Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="423f6ef850ff0975866ad1957bc3d5065ae2c7ec"
+LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -871,7 +871,7 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 import anndata as ad
 import numpy as np
-
+import scipy
 import sys
 sys.path.append("/opt/scGCO")
 
@@ -906,8 +906,12 @@ dep = {
 print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
+counts = adata.layers["counts"]
+if scipy.sparse.issparse(counts): 
+    counts = counts.todense()
+
 data = pd.DataFrame(
-    adata.layers['counts'].todense(),
+    counts,
     columns=adata.var_names,
     index=adata.obs_names
 )

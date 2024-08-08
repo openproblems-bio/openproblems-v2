@@ -411,12 +411,12 @@ RUN apt-get update && \
 RUN git clone https://github.com/jianhuupenn/SpaGCN.git /opt/SpaGCN
 
 RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "/opt/SpaGCN/SpaGCN_package"
+  pip install --upgrade --no-cache-dir "numpy<2.0" "/opt/SpaGCN/SpaGCN_package"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods spagcn"
-LABEL org.opencontainers.image.created="2024-08-06T08:00:13Z"
+LABEL org.opencontainers.image.created="2024-08-08T09:07:55Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="423f6ef850ff0975866ad1957bc3d5065ae2c7ec"
+LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -988,15 +988,14 @@ for target in range(n_clusters):
     except (RuntimeError, TypeError, NameError):
         pass
 
-    if len(de_genes_all) == 0:
-        df = adata.var
-        df['pvals_adj'] = np.random.random(adata.n_vars)
-    else:
-        df_res = pd.concat(de_genes_all)
-        df_res = df_res.groupby(["genes"]).min()
-        df_res = df_res.loc[adata.var_names]
-
-        df = pd.concat([df_res, adata.var], axis=1)
+if len(de_genes_all) == 0:
+    df = adata.var
+    df['pvals_adj'] = np.random.random(adata.n_vars)
+else:
+    df_res = pd.concat(de_genes_all)
+    df_res = df_res.groupby(["genes"]).min()
+    df_res = df_res.loc[adata.var_names]
+    df = pd.concat([df_res, adata.var], axis=1)
 
 # save results
 df = df.loc[adata.var_names][['pvals_adj']]

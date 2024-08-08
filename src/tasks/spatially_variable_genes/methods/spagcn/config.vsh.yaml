@@ -39,6 +39,7 @@ platforms:
           git clone https://github.com/jianhuupenn/SpaGCN.git /opt/SpaGCN
       - type: python
         packages: 
+        - numpy<2.0
         - /opt/SpaGCN/SpaGCN_package
   - type: native
   - type: nextflow

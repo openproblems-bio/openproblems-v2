@@ -3021,7 +3021,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/scgco",
     "viash_version" : "0.8.0",
-    "git_commit" : "423f6ef850ff0975866ad1957bc3d5065ae2c7ec",
+    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3042,7 +3042,7 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 import anndata as ad
 import numpy as np
-
+import scipy
 import sys
 sys.path.append("/opt/scGCO")
 
@@ -3077,8 +3077,12 @@ dep = {
 print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
+counts = adata.layers["counts"]
+if scipy.sparse.issparse(counts): 
+    counts = counts.todense()
+
 data = pd.DataFrame(
-    adata.layers['counts'].todense(),
+    counts,
     columns=adata.var_names,
     index=adata.obs_names
 )

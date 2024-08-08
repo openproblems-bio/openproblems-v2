@@ -419,9 +419,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "pandas" "squidpy==1.4.1" "matplotlib==3.8.3"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods sepal"
-LABEL org.opencontainers.image.created="2024-08-06T08:00:14Z"
+LABEL org.opencontainers.image.created="2024-08-08T09:07:56Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="423f6ef850ff0975866ad1957bc3d5065ae2c7ec"
+LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

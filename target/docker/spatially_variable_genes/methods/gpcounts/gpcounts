@@ -422,9 +422,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "/opt/RobustGP" "/opt/GPcounts"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods gpcounts"
-LABEL org.opencontainers.image.created="2024-08-06T08:00:17Z"
+LABEL org.opencontainers.image.created="2024-08-08T09:07:56Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="423f6ef850ff0975866ad1957bc3d5065ae2c7ec"
+LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -892,6 +892,7 @@ import statsmodels.api as sm
 import statsmodels.formula.api as smf
 import pandas as pd
 import anndata as ad
+import scipy
 from GPcounts.RNA_seq_GP import rna_seq_gp
 import warnings
 warnings.filterwarnings('ignore')
@@ -928,23 +929,36 @@ print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
 print('Run GPcounts')
-adata.X = adata.layers['counts'].copy()
 
 # Subset if required
 if par['n_features']:
     adata = adata[:, :par['n_features']]
 
-spatialx = [str(i) for i in adata.obsm['spatial'][:, 0]]
-spatialy = [str(i) for i in adata.obsm['spatial'][:, 1]]
+counts = adata.layers["counts"]
+if scipy.sparse.issparse(counts): 
+    counts = counts.todense()
 
-index_names = [i+'x'+j for i, j in zip(spatialx, spatialy)]
-Y = pd.DataFrame(data=adata.X.A, index=index_names, columns=adata.var.index)
+# spatialx = [str(i) for i in adata.obsm['spatial'][:, 0]]
+# spatialy = [str(i) for i in adata.obsm['spatial'][:, 1]]
 
-spatial_locations = pd.DataFrame(index=Y.index)
-spatial_locations['x'] = Y.index.str.split('x').str.get(0).map(float)
-spatial_locations['y'] = Y.index.str.split('x').str.get(1).map(float)
+# index_names = [i+'x'+j for i, j in zip(spatialx, spatialy)]
+# Y = pd.DataFrame(data=counts, index=index_names, columns=adata.var.index)
 
+# spatial_locations = pd.DataFrame(index=Y.index)
+# spatial_locations['x'] = Y.index.str.split('x').str.get(0).map(float)
+# spatial_locations['y'] = Y.index.str.split('x').str.get(1).map(float)
+
+# spatial_locations['total_counts'] = Y.sum(1)
+
+Y = pd.DataFrame(data=counts, 
+                index=adata.obs_names, 
+                columns=adata.var_names)
+
+spatial_locations = pd.DataFrame(data=adata.obsm['spatial'], 
+                                index=adata.obs_names, 
+                                columns=['x', 'y'])
 spatial_locations['total_counts'] = Y.sum(1)
+
 Y = Y.loc[spatial_locations.index]
 X = spatial_locations[['x', 'y']]
 
