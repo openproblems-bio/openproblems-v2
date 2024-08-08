@@ -15,7 +15,7 @@ workflow run_wf {
   methods = [
     random_ranking,
     true_ranking, 
-    boostgp, 
+    // boostgp, 
     gpcounts,
     moran_i,
     nnsvg,
@@ -73,7 +73,7 @@ workflow run_wf {
       // use 'fromState' to fetch the arguments the component requires from the overall state
       fromState: { id, state, comp ->
         def new_args = [
-          input_data: state.input_dataset, 
+          input_data: state.input_dataset
         ]
         if (comp.config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution

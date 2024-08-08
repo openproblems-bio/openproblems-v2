@@ -32,17 +32,27 @@ counts = adata.layers["counts"]
 if scipy.sparse.issparse(counts): 
     counts = counts.todense()
 
-spatialx = [str(i) for i in adata.obsm['spatial'][:, 0]]
-spatialy = [str(i) for i in adata.obsm['spatial'][:, 1]]
+# spatialx = [str(i) for i in adata.obsm['spatial'][:, 0]]
+# spatialy = [str(i) for i in adata.obsm['spatial'][:, 1]]
 
-index_names = [i+'x'+j for i, j in zip(spatialx, spatialy)]
-Y = pd.DataFrame(data=counts, index=index_names, columns=adata.var.index)
+# index_names = [i+'x'+j for i, j in zip(spatialx, spatialy)]
+# Y = pd.DataFrame(data=counts, index=index_names, columns=adata.var.index)
 
-spatial_locations = pd.DataFrame(index=Y.index)
-spatial_locations['x'] = Y.index.str.split('x').str.get(0).map(float)
-spatial_locations['y'] = Y.index.str.split('x').str.get(1).map(float)
+# spatial_locations = pd.DataFrame(index=Y.index)
+# spatial_locations['x'] = Y.index.str.split('x').str.get(0).map(float)
+# spatial_locations['y'] = Y.index.str.split('x').str.get(1).map(float)
 
+# spatial_locations['total_counts'] = Y.sum(1)
+
+Y = pd.DataFrame(data=counts, 
+                index=adata.obs_names, 
+                columns=adata.var_names)
+
+spatial_locations = pd.DataFrame(data=adata.obsm['spatial'], 
+                                index=adata.obs_names, 
+                                columns=['x', 'y'])
 spatial_locations['total_counts'] = Y.sum(1)
+
 Y = Y.loc[spatial_locations.index]
 X = spatial_locations[['x', 'y']]
 
