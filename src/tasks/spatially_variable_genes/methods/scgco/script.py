@@ -4,7 +4,7 @@ warnings.filterwarnings('ignore')
 import pandas as pd
 import anndata as ad
 import numpy as np
-
+import scipy
 import sys
 sys.path.append("/opt/scGCO")
 
@@ -23,8 +23,12 @@ meta = {
 print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
+counts = adata.layers["counts"]
+if scipy.sparse.issparse(counts): 
+    counts = counts.todense()
+
 data = pd.DataFrame(
-    adata.layers['counts'].todense(),
+    counts,
     columns=adata.var_names,
     index=adata.obs_names
 )

@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import scanpy as sc
 from somde import SomNode
+import scipy
 
 # VIASH START
 par = {
@@ -18,10 +19,14 @@ print('Load data', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
 print('Run SOMDE', flush=True)
+counts = adata.layers["counts"]
+if scipy.sparse.issparse(counts): 
+    counts = counts.todense()
+    
 data = pd.DataFrame(
-        adata.layers["counts"].todense(), 
-        columns=adata.var_names, 
-        index=adata.obs_names
+    counts, 
+    columns=adata.var_names, 
+    index=adata.obs_names
 )
 
 X = pd.DataFrame(adata.obsm["spatial"], 
