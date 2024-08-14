@@ -1,5 +1,6 @@
 # Match Modalities
 
+
 Match cells across datasets of the same set of samples on different
 technologies / modalities.
 
@@ -161,10 +162,6 @@ are randomly permuted.
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/dataset_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -198,10 +195,6 @@ are randomly permuted.
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/dataset_mod2.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -233,10 +226,6 @@ The ground truth information for the first modality
 
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/solution_mod1.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -277,10 +266,6 @@ The ground truth information for the second modality
 
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/solution_mod2.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -385,10 +370,6 @@ The integrated embedding for the first modality
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/integrated_mod1.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -419,10 +400,6 @@ The integrated embedding for the second modality
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/integrated_mod2.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -452,10 +429,6 @@ Metric score file
 
 Example file:
 `resources_test/match_modalities/scicar_cell_lines/score.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -523,3 +496,4 @@ Slot description:
 | `uns["normalization_id"]`    | `string`  | Which normalization was used.                                                  |
 
 </div>
+

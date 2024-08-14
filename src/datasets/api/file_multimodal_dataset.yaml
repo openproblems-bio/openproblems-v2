@@ -177,7 +177,7 @@ info:
         name: feature_name
         description: A human-readable name for the feature, usually a gene symbol.
         # TODO: make this required once the dataloader supports it
-        required: false
+        required: true
 
       - type: integer
         name: soma_joinid
@@ -189,7 +189,7 @@ info:
         description: Whether or not the feature is considered to be a 'highly variable gene'
         required: true
 
-      - type: integer
+      - type: double
         name: hvg_score
         description: A ranking of the features by hvg.
         required: true

@@ -47,6 +47,12 @@ functionality:
           required: true
           direction: output
           default: task_info.yaml
+    - name: Methods
+      arguments:
+        - name: "--method_ids"
+          type: string
+          multiple: true
+          description: A list of method ids to run. If not specified, all methods will be run.
   resources:
     - type: nextflow_script
       path: main.nf
@@ -62,7 +68,7 @@ functionality:
     - name: label_projection/methods/knn
     - name: label_projection/methods/logistic_regression
     - name: label_projection/methods/mlp
-    # - name: label_projection/methods/scanvi
+    - name: label_projection/methods/scanvi
     - name: label_projection/methods/scanvi_scarches
     - name: label_projection/methods/xgboost
     - name: label_projection/metrics/accuracy

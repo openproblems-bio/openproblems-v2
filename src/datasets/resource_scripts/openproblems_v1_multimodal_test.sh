@@ -21,15 +21,15 @@ param_list:
   - id: openproblems_v1_multimodal/citeseq_cbmc
     dataset_name: "CITE-Seq CBMC"
     dataset_summary: "CITE-seq profiles of 8k Cord Blood Mononuclear Cells"
-    dataset_description: "8k cord blood mononuclear cells profiled by CITEsequsing a panel of 13 antibodies."
+    dataset_description: "8k cord blood mononuclear cells profiled by CITEseq using a panel of 13 antibodies."
     dataset_reference: stoeckius2017simultaneous
     dataset_url: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE100866
     dataset_organism: homo_sapiens
     layer_counts: counts
 
 normalization_methods: [log_cp10k, sqrt_cp10k, l1_sqrt]
-output_dataset_mod1: '$id/dataset_mod1.h5ad'
-output_dataset_mod2: '$id/dataset_mod2.h5ad'
+output_mod1: '$id/dataset_mod1.h5ad'
+output_mod2: '$id/dataset_mod2.h5ad'
 output_meta_mod1: '$id/dataset_metadata_mod1.yaml'
 output_meta_mod2: '$id/dataset_metadata_mod2.yaml'
 output_state: '$id/state.yaml'

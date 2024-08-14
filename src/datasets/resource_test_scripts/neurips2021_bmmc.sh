@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 params_file="/tmp/datasets_openproblems_neurips2021_params.yaml"
 
 cat > "$params_file" << 'HERE'
@@ -28,12 +30,13 @@ dataset_url: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE194122"
 dataset_reference: luecken2021neurips
 normalization_methods: [log_cp10k]
 do_subsample: true
+even: true
 n_obs: 600
 n_vars: 1500
-output_rna: '$id/dataset_rna.h5ad'
-output_other_mod: '$id/dataset_other_mod.h5ad'
-output_meta_rna: '$id/dataset_metadata_rna.yaml'
-output_meta_other_mod: '$id/dataset_metadata_other_mod.yaml'
+output_mod1: '$id/dataset_mod1.h5ad'
+output_mod2: '$id/dataset_mod2.h5ad'
+output_meta_mod1: '$id/dataset_metadata_mod1.yaml'
+output_meta_mod2: '$id/dataset_metadata_mod2.yaml'
 output_state: '$id/state.yaml'
 # publish_dir: s3://openproblems-data/resources_test/common
 HERE
@@ -52,13 +55,14 @@ nextflow run . \
   -profile docker \
   -resume \
   --publish_dir resources_test/common \
-  -params-file "$params_file"
+  -params-file "$params_file" \
+  -c src/wf_utils/labels.config
 
 # tw launch https://github.com/openproblems-bio/openproblems-v2.git \
 #   --revision main_build \
 #   --main-script target/nextflow/datasets/workflows/process_openproblems_neurips2021_bmmc/main.nf \
 #   --workspace 53907369739130 \
-#   --compute-env 1pK56PjjzeraOOC2LDZvN2 \
+#   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
 #   --params-file "$params_file" \
 #   --config /tmp/nextflow.config \
 #   --labels predict_modality

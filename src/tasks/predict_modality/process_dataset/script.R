@@ -4,8 +4,8 @@ library(Matrix, warn.conflicts = FALSE)
 
 ## VIASH START
 par <- list(
-  input_rna = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_rna.h5ad",
-  input_other_mod = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_other_mod.h5ad",
+  input_mod1 = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod1.h5ad",
+  input_mod2 = "resources_test/common/openproblems_neurips2021/bmmc_cite/dataset_mod2.h5ad",
   output_train_mod1 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod1.h5ad",
   output_train_mod2 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/train_mod2.h5ad",
   output_test_mod1 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod1.h5ad",
@@ -14,8 +14,8 @@ par <- list(
   seed = 1L
 )
 # par <- list(
-#   input_rna = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/output_rna.h5ad",
-#   input_other_mod = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/output_atac.h5ad",
+#   input_mod1 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/output_mod1.h5ad",
+#   input_mod2 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/output_atac.h5ad",
 #   output_train_mod1 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/train_mod1.h5ad",
 #   output_train_mod2 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/train_mod2.h5ad",
 #   output_test_mod1 = "resources_test/predict_modality/openproblems_neurips2021/bmmc_multiome/test_mod1.h5ad",
@@ -29,33 +29,53 @@ cat("Using seed ", par$seed, "\n", sep = "")
 set.seed(par$seed)
 
 cat("Reading input data\n")
-ad1 <- anndata::read_h5ad(if (!par$swap) par$input_rna else par$input_other_mod)
-ad2 <- anndata::read_h5ad(if (!par$swap) par$input_other_mod else par$input_rna)
+ad1 <- anndata::read_h5ad(if (!par$swap) par$input_mod1 else par$input_mod2)
+ad2 <- anndata::read_h5ad(if (!par$swap) par$input_mod2 else par$input_mod1)
 
-# figure out modality types
-ad1_mod <- unique(ad1$var[["feature_types"]])
-ad2_mod <- unique(ad2$var[["feature_types"]])
-
-# determine new dataset id
-new_dataset_id <- paste0(ad1$uns[["dataset_id"]], "_", tolower(ad1_mod), "2", tolower(ad2_mod))
+# use heuristic to determine modality
+# TODO: should be removed once modality is stored in the uns
+determine_modality <- function(ad, mod1 = TRUE) {
+  if ("modality" %in% names(ad$uns)) {
+    ad$uns[["modality"]]
+  } else if ("feature_types" %in% colnames(ad$var)) {
+    unique(ad$var[["feature_types"]])
+  } else if (mod1) {
+    "GEX"
+  } else if (grepl("cite", ad$uns[["dataset_id"]])) {
+    "ADT"
+  } else if (grepl("multiome", ad$uns[["dataset_id"]])) {
+    "ATAC"
+  } else {
+    stop("Could not determine modality")
+  }
+}
+ad1_mod <- determine_modality(ad1, !par$swap)
+ad2_mod <- determine_modality(ad2, par$swap)
 
 # determine new uns
-uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism")
-ad1_uns <- ad2_uns <- ad1$uns[uns_vars]
+uns_vars <- c("dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism", "normalization_id")
+ad1_uns <- ad1$uns[uns_vars]
+ad2_uns <- ad2$uns[uns_vars]
 ad1_uns$modality <- ad1_mod
 ad2_uns$modality <- ad2_mod
+
+# Create new dataset id and name depending on the modality
+if (!is.null(par$dataset_id)) {
+  ad1_uns[["common_dataset_id"]] <- ad2_uns[["common_dataset_id"]] <- ad1_uns$dataset_id
+  ad1_uns$dataset_id <- ad2_uns$dataset_id <- par$dataset_id
+}
+
+new_dataset_name <- paste0(ad1_uns$dataset_name, " (", ad1_mod, "2", ad2_mod, ")")
+ad1_uns$dataset_name <- ad2_uns$dataset_name <- new_dataset_name
 
 # determine new obsm
 ad1_obsm <- ad2_obsm <- list()
 
-# determine new varm
-ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("gene_ids")), drop = FALSE]
-ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_ids")), drop = FALSE]
+# determine new var
+ad1_var <- ad1$var[, intersect(colnames(ad1$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
+ad2_var <- ad2$var[, intersect(colnames(ad2$var), c("gene_ids", "hvg", "hvg_score")), drop = FALSE]
 
-if (ad1_mod == "ATAC") {
-  # binarize features
-  ad1$layers[["normalized"]]@x <- (ad1$layers[["normalized"]]@x > 0) + 0
-
+if (ad1_mod == "ATAC" && "gene_activity" %in% names(ad1$obsm)) {
   # copy gene activity in new object
   ad1_uns$gene_activity_var_names <- ad1$uns$gene_activity_var_names
   ad1_obsm$gene_activity <- as(ad1$obsm$gene_activity, "CsparseMatrix")
@@ -70,12 +90,11 @@ if (ad2_mod == "ATAC") {
     ad2_var <- ad2_var[sel_ix, , drop = FALSE]
   }
 
-  # binarize features
-  ad2$layers[["normalized"]]@x <- (ad2$layers[["normalized"]]@x > 0) + 0
-
-  # copy gene activity in new object
-  ad2_uns$gene_activity_var_names <- ad2$uns$gene_activity_var_names
-  ad2_obsm$gene_activity <- as(ad2$obsm$gene_activity, "CsparseMatrix")
+  if ("gene_activity" %in% names(ad2$obsm)) {
+    # copy gene activity in new object
+    ad2_uns$gene_activity_var_names <- ad2$uns$gene_activity_var_names
+    ad2_obsm$gene_activity <- as(ad2$obsm$gene_activity, "CsparseMatrix")
+  }
 }
 
 cat("Creating train/test split\n")

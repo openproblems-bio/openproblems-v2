@@ -1,5 +1,5 @@
 type: file
-example: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/test_mod2.h5ad"
+example: "resources_test/predict_modality/openproblems_neurips2021/bmmc_cite/swap/test_mod2.h5ad"
 info:
   label: "Test mod2"
   summary: "The mod2 expression values of the test cells."
@@ -27,11 +27,25 @@ info:
         name: gene_ids
         description: The gene identifiers (if available)
         required: false
+
+      - type: boolean
+        name: hvg
+        description: Whether or not the feature is considered to be a 'highly variable gene'
+        required: true
+        
+      - type: double
+        name: hvg_score
+        description: A score for the feature indicating how highly variable it is.
+        required: true
     uns:
       - type: string
         name: dataset_id
         description: "A unique identifier for the dataset"
         required: true
+      - type: string
+        name: common_dataset_id
+        description: "A common identifier for the dataset"
+        required: false
       - name: dataset_name
         type: string
         description: Nicely formatted name.

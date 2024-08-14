@@ -1,5 +1,6 @@
 # Label projection
 
+
 Automated cell type annotation from rich, labeled reference data
 
 Path:
@@ -78,10 +79,6 @@ A subset of the common dataset.
 
 Example file: `resources_test/common/pancreas/dataset.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -104,7 +101,7 @@ Slot description:
 | `obs["cell_type"]`           | `string`  | Cell type information.                                                         |
 | `obs["batch"]`               | `string`  | Batch information.                                                             |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’.       |
-| `var["hvg_score"]`           | `integer` | A ranking of the features by hvg.                                              |
+| `var["hvg_score"]`           | `double`  | A ranking of the features by hvg.                                              |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                                   |
 | `layers["counts"]`           | `integer` | Raw counts.                                                                    |
 | `layers["normalized"]`       | `double`  | Normalized expression values.                                                  |
@@ -145,10 +142,6 @@ The training data
 
 Example file: `resources_test/label_projection/pancreas/train.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -171,7 +164,7 @@ Slot description:
 | `obs["label"]`            | `string`  | Ground truth cell type labels.                                           |
 | `obs["batch"]`            | `string`  | Batch information.                                                       |
 | `var["hvg"]`              | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
-| `var["hvg_score"]`        | `integer` | A ranking of the features by hvg.                                        |
+| `var["hvg_score"]`        | `double`  | A ranking of the features by hvg.                                        |
 | `obsm["X_pca"]`           | `double`  | The resulting PCA embedding.                                             |
 | `layers["counts"]`        | `integer` | Raw counts.                                                              |
 | `layers["normalized"]`    | `double`  | Normalized counts.                                                       |
@@ -185,10 +178,6 @@ Slot description:
 The test data (without labels)
 
 Example file: `resources_test/label_projection/pancreas/test.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -211,7 +200,7 @@ Slot description:
 |:--------------------------|:----------|:-------------------------------------------------------------------------|
 | `obs["batch"]`            | `string`  | Batch information.                                                       |
 | `var["hvg"]`              | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’. |
-| `var["hvg_score"]`        | `integer` | A ranking of the features by hvg.                                        |
+| `var["hvg_score"]`        | `double`  | A ranking of the features by hvg.                                        |
 | `obsm["X_pca"]`           | `double`  | The resulting PCA embedding.                                             |
 | `layers["counts"]`        | `integer` | Raw counts.                                                              |
 | `layers["normalized"]`    | `double`  | Normalized counts.                                                       |
@@ -225,10 +214,6 @@ Slot description:
 The solution for the test data
 
 Example file: `resources_test/label_projection/pancreas/solution.h5ad`
-
-Description:
-
-NA
 
 Format:
 
@@ -252,7 +237,7 @@ Slot description:
 | `obs["label"]`               | `string`  | Ground truth cell type labels.                                                 |
 | `obs["batch"]`               | `string`  | Batch information.                                                             |
 | `var["hvg"]`                 | `boolean` | Whether or not the feature is considered to be a ‘highly variable gene’.       |
-| `var["hvg_score"]`           | `integer` | A ranking of the features by hvg.                                              |
+| `var["hvg_score"]`           | `double`  | A ranking of the features by hvg.                                              |
 | `obsm["X_pca"]`              | `double`  | The resulting PCA embedding.                                                   |
 | `layers["counts"]`           | `integer` | Raw counts.                                                                    |
 | `layers["normalized"]`       | `double`  | Normalized counts.                                                             |
@@ -331,10 +316,6 @@ The prediction file
 
 Example file: `resources_test/label_projection/pancreas/prediction.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -364,10 +345,6 @@ Metric score file
 
 Example file: `resources_test/label_projection/pancreas/score.h5ad`
 
-Description:
-
-NA
-
 Format:
 
 <div class="small">
@@ -390,3 +367,4 @@ Slot description:
 | `uns["metric_values"]`    | `double` | The metric values obtained for the given prediction. Must be of same length as ‘metric_ids’. |
 
 </div>
+

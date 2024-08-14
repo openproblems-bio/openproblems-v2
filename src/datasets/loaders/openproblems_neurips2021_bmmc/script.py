@@ -1,12 +1,14 @@
 import anndata as ad
 import pandas as pd
 import numpy as np
+from scipy import sparse
 
 ## VIASH START
 par = {
   "input": "GSE194122_openproblems_neurips2021_cite_BMMC_processed.h5ad",
   "mod1": "GEX",
   "mod2": "ATAC",
+  "dataset_id": "openproblems/neurips2021_bmmc",
   "dataset_name": "BMMC (CITE-seq)",
   "dataset_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE194122",
   "dataset_reference": "Neurips",
@@ -22,22 +24,32 @@ meta = {
 }
 ## VIASH END
 
-def remove_other_mod_col(df, mod):
+def remove_mod_col(df, mod):
   df.drop(list(df.filter(like=mod)), axis=1, inplace=True)
 
 def remove_mod_prefix(df, mod):
   suffix = f"{mod}_"
   df.columns = df.columns.str.removeprefix(suffix)
 
+def convert_matrix(adata):
+  for key in adata:
+      if isinstance(adata[key], sparse.csr_matrix):
+        adata[key] = sparse.csc_matrix(adata[key])
+      
 
 print("load dataset file", flush=True)
 adata = ad.read_h5ad(par["input"])
+
+# Convert to sparse csc_matrix
+convert_matrix(adata.layers)
+convert_matrix(adata.obsm)
 
 # Add is_train to obs if it is missing
 if "is_train" not in adata.obs.columns:
   batch_info = adata.obs["batch"]
   batch_categories = batch_info.dtype.categories
-  train = ["s1d1", "s2d1", "s2d4", "s3d6", "s3d1"]
+  # From https://github.com/openproblems-bio/neurips2021_multimodal_viash/blob/75281c039ab98b459edbf52058a18597e710ed4d/src/common/datasets/process_inhouse_datasets/script.R#L14-L17
+  train = ["s1d1", "s1d2", "s2d1", "s2d4", "s3d1", "s3d6", "s3d7"]
   adata.obs["is_train"] = [ "train" if x in train else "test" for x in batch_info ]
 
 # Construct Modality datasets
@@ -50,7 +62,7 @@ adata_mod2 = adata[:, mask_mod2]
 
 # Remove other modality data from obs and var
 mod1_var = pd.DataFrame(adata_mod1.var)
-remove_other_mod_col(mod1_var, par["mod2"])
+remove_mod_col(mod1_var, par["mod2"])
 remove_mod_prefix(mod1_var, par["mod1"])
 mod1_var.index.name = "feature_name"
 mod1_var.reset_index("feature_name", inplace=True)
@@ -59,7 +71,7 @@ mod1_var.drop("gene_id", axis=1, inplace=True)
 mod1_var.set_index("feature_id", drop=False, inplace=True)
 
 mod1_obs = pd.DataFrame(adata_mod1.obs)
-remove_other_mod_col(mod1_obs, par["mod2"])
+remove_mod_col(mod1_obs, par["mod2"])
 remove_mod_prefix(mod1_obs, par["mod1"])
 
 adata_mod1.var = mod1_var
@@ -70,7 +82,7 @@ del adata_mod1.obsm
 del adata_mod1.X
 
 mod2_var = pd.DataFrame(adata_mod2.var)
-remove_other_mod_col(mod2_var, par["mod1"])
+remove_mod_col(mod2_var, par["mod1"])
 remove_mod_prefix(mod2_var, par["mod2"])
 mod2_var.index.name = "feature_name"
 mod2_var.reset_index("feature_name", inplace=True)
@@ -79,7 +91,7 @@ mod2_var.drop("gene_id", axis=1, inplace=True)
 mod2_var.set_index("feature_id", drop=False, inplace=True)
 
 mod2_obs = pd.DataFrame(adata_mod2.obs)
-remove_other_mod_col(mod2_obs, par["mod1"])
+remove_mod_col(mod2_obs, par["mod1"])
 remove_mod_prefix(mod2_obs, par["mod2"])
 
 adata_mod2.var = mod2_var
@@ -108,3 +120,7 @@ for key in metadata_fields:
 print("Writing adata to file", flush=True)
 adata_mod1.write_h5ad(par["output_mod1"], compression="gzip")
 adata_mod2.write_h5ad(par["output_mod2"], compression="gzip")
+
+
+
+

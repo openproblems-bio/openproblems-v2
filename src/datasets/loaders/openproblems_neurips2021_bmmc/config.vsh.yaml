@@ -22,6 +22,10 @@ functionality:
           example: ADT
     - name: Metadata
       arguments:
+        - name: "--dataset_id"
+          type: string
+          description: "A unique identifier for the dataset"
+          required: true
         - name: "--dataset_name"
           type: string
           description: Nicely formatted name.
@@ -64,7 +68,7 @@ functionality:
     #   path: /resources_test/common/openproblems_neurips2021/neurips2021_bmmc_cite.h5ad
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.2
+    image: ghcr.io/openproblems-bio/base_python:1.0.4
   - type: nextflow
     directives:
-      label: [ highmem, midcpu , midtime]
+      label: [highmem, midcpu , midtime]
