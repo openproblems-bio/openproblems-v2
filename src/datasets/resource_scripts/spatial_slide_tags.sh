@@ -12,6 +12,7 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_features: 50
 
   - id: spatial_slide_tags/human_skin_melanoma
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_skin_melanoma.tar.gz?download=1"
@@ -23,6 +24,7 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_features: 50
 
   - id: spatial_slide_tags/human_tonsil
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_tonsil.tar.gz?download=1"
@@ -34,6 +36,7 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_features: 50
 
   - id: spatial_slide_tags/mouse_embryo
     input_data: "https://zenodo.org/records/12785822/files/slidetag_mouse_embryo.tar.gz?download=1"
@@ -45,6 +48,7 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_features: 50
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

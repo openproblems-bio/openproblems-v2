@@ -16,17 +16,26 @@ authors:
     roles: [ author, maintainer ]
     info: 
       github: lzj1769
-    #   orcid: ?
+      orcid: 0000-0002-1523-1333
   - name: Zain M. Patel
     roles: [ author ]
     info: 
       github: doczmp
     #   orcid: ?
-  # - name: Dongyuan Song ?
-  # - name: Guanao Yan ?
-  # - name: Jingyi Jessica Li ?
-  # - name: Luca Pinello ?
-
+  - name: Dongyuan Song
+    roles: [ author]
+    info:
+      github: SONGDONGYUAN1994
+  - name: Guanao Yan
+    roles: [ author ]
+  - name: Jingyi Jessica Li
+    roles: [ author ]
+    info:
+      github: JSB-UCLA
+  - name: Luca Pinello
+    roles: [ author ]
+    info:
+      github: pinellolab
   - name: Robrecht Cannoodt
     roles: [contributor]
     info:
