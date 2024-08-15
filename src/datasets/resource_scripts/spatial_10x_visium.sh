@@ -5,7 +5,7 @@ param_list:
   - id: spatial_10x_visium/mouse_brain_coronal_section1
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.0/CytAssist_FFPE_Mouse_Brain_Rep1/CytAssist_FFPE_Mouse_Brain_Rep1_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.0/CytAssist_FFPE_Mouse_Brain_Rep1/CytAssist_FFPE_Mouse_Brain_Rep1_spatial.tar.gz"
-    dataset_name: Mouse Brain Coronal Section 1 (FFPE)
+    dataset_name: 10X Visium - Mouse Brain Coronal
     dataset_url: "https://www.10xgenomics.com/datasets/mouse-brain-coronal-section-1-ffpe-2-standard"
     dataset_summary: Gene expression library of Mouse Brain (CytAssist FFPE) using the Mouse Whole Transcriptome Probe Set
     dataset_description: "FFPE Mouse Brain tissue blocks sectioned as described in Visium CytAssist Spatial Gene Expression for FFPE - Tissue Preparation Guide Demonstrated Protocol. The H&E stained glass slide with tissue section was processed via Visium CytAssist instrument to transfer analytes to a Visium CytAssist Spatial Gene Expression slide. The probe extension and library construction steps follow the standard Visium for FFPE workflow outside of the instrument. The H&E image was acquired using Olympus VS200 Slide Scanning Microscope. Sequencing depth was 53,497 reads per spot. Sequencing configuration: 28bp read 1 (16bp Visium spatial barcode, 12bp UMI), 90bp read 2 (transcript), 10bp i7 sample barcode and 10bp i5 sample barcode. Key metrics include: 2,310 spots detected under tissue; 6,736 median genes per spot; 24,862 median UMI counts per spot."
@@ -15,7 +15,7 @@ param_list:
   - id: spatial_10x_visium/human_colorectal_cancer
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.1/CytAssist_11mm_FFPE_Human_Colorectal_Cancer/CytAssist_11mm_FFPE_Human_Colorectal_Cancer_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.1/CytAssist_11mm_FFPE_Human_Colorectal_Cancer/CytAssist_11mm_FFPE_Human_Colorectal_Cancer_spatial.tar.gz"
-    dataset_name: Human Colorectal Cancer (FFPE)
+    dataset_name: 10X Visium - Human Colorectal Cancer
     dataset_url: "https://www.10xgenomics.com/datasets/human-colorectal-cancer-11-mm-capture-area-ffpe-2-standard"
     dataset_summary: Gene expression library of Human Colorectal Cancer (CytAssist FFPE) using the Human Whole Transcriptome Probe Set
     dataset_description: "The tissue was sectioned as described in the Visium CytAssist Spatial Gene Expression for FFPE Tissue Preparation Guide (CG000518). Tissue section of 5 µm was placed on a standard glass slide, then stained following the Deparaffinization, H&E Staining, Imaging & Decrosslinking Demonstrated Protocol (CG000520). The glass slide with tissue section was processed via Visium CytAssist instrument to transfer analytes to a Visium CytAssist Spatial Gene Expression Slide v2, with 11 mm capture areas following the Visium CytAssist Spatial Gene Expression Reagent Kits User Guide (CG000495)."
@@ -25,7 +25,7 @@ param_list:
   - id: spatial_10x_visium/human_heart
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Heart/V1_Human_Heart_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Heart/V1_Human_Heart_spatial.tar.gz"
-    dataset_name: Human Heart
+    dataset_name: 10X Visium - Human Heart
     dataset_url: "https://www.10xgenomics.com/datasets/human-heart-1-standard-1-0-0"
     dataset_summary: V1_Human_Heart
     dataset_description: "10x Genomics obtained fresh frozen human heart tissue from BioIVT Asterand. The tissue was embedded and cryosectioned as described in Visium Spatial Protocols - Tissue Preparation Guide Demonstrated Protocol (CG000240). Tissue sections of 10 µm thickness were placed on Visium Gene Expression Slides."
@@ -35,7 +35,7 @@ param_list:
   - id: spatial_10x_visium/mouse_embryo
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.1.0/CytAssist_11mm_FFPE_Mouse_Embryo/CytAssist_11mm_FFPE_Mouse_Embryo_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/2.1.0/CytAssist_11mm_FFPE_Mouse_Embryo/CytAssist_11mm_FFPE_Mouse_Embryo_spatial.tar.gz"
-    dataset_name: Mouse Embryo (FFPE)
+    dataset_name: 10X Visium - Mouse Embryo
     dataset_url: "https://www.10xgenomics.com/datasets/visium-cytassist-mouse-embryo-11-mm-capture-area-ffpe-2-standard"
     dataset_summary: Gene expression library of Mouse Embryo (CytAssist FFPE) using the Mouse Whole Transcriptome Probe Set
     dataset_description: "The tissue was sectioned as described in Visium CytAssist Spatial Gene Expression for FFPE Tissue Preparation Guide Demonstrated Protocol CG000518. Tissue sections of 5 µm was placed on a standard glass slide, and H&E-stained following deparaffinization. Sections were coverslipped with 85% glycerol, imaged, decoverslipped, followed by dehydration & decrosslinking (Demonstrated Protocol CG000520). The glass slide with the tissue section was processed with the Visium CytAssist instrument to transfer analytes to a Visium CytAssist Spatial Gene Expression slide (11 mm Capture Area). The probe extension and library construction steps follow the standard Visium for FFPE workflow outside of the instrument."
@@ -45,7 +45,7 @@ param_list:
   - id: spatial_10x_visium/mouse_olfactory_bulb 
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_Mouse_Olfactory_Bulb/Visium_Mouse_Olfactory_Bulb_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_Mouse_Olfactory_Bulb/Visium_Mouse_Olfactory_Bulb_spatial.tar.gz"
-    dataset_name: Adult Mouse Olfactory Bulb (Fresh Frozen)
+    dataset_name: 10X Visium - Mouse Olfactory Bulb
     dataset_url: "https://www.10xgenomics.com/datasets/adult-mouse-olfactory-bulb-1-standard-1"
     dataset_summary: 10X Genomics obtained fresh frozen mouse olfactory bulb tissue from BioIVT.
     dataset_description: "The tissue was embedded and cryosectioned as described in Visium Spatial Protocols Tissue Preparation Guide (Demonstrated Protocol CG000240). Tissue sections of 10µm were placed on Visium Gene Expression slides, then fixed and stained following Methanol Fixation, H&E Staining & Imaging for Visium Spatial Protocols (CG000160)."
@@ -55,7 +55,7 @@ param_list:
   - id: spatial_10x_visium/human_breast_cancer_1
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.2.0/Parent_Visium_Human_BreastCancer/Parent_Visium_Human_BreastCancer_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/1.2.0/Parent_Visium_Human_BreastCancer/Parent_Visium_Human_BreastCancer_spatial.tar.gz"
-    dataset_name: Adult Human Breast Cancer
+    dataset_name: 10X Visium - Human Breast Cancer
     dataset_url: "https://www.10xgenomics.com/datasets/human-breast-cancer-whole-transcriptome-analysis-1-standard-1-2-0"
     dataset_summary: Whole transcriptome analysis, Adult Human Breast Cancer (Visium)
     dataset_description: "10X Genomics obtained fresh frozen human Invasive Lobular Carcinoma breast tissue from BioIVT Asterand. The tissue was embedded and cryosectioned as described in Visium Spatial Protocols Tissue Preparation Guide Demonstrated Protocol (CG000240). Tissue sections of 10µm were placed on Visium Gene Expression slides and fixed and stained following Methanol Fixation, H&E Staining & Imaging for Visium Spatial Protocols (CG000160)."
@@ -65,7 +65,7 @@ param_list:
   - id: spatial_10x_visium/human_lymph_node 
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Lymph_Node/V1_Human_Lymph_Node_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Lymph_Node/V1_Human_Lymph_Node_spatial.tar.gz"
-    dataset_name: Human Lymph Node (Fresh Frozen)
+    dataset_name: 10X Visium - Human Lymph Node
     dataset_url: "https://www.10xgenomics.com/datasets/human-lymph-node-1-standard-1-0-0"
     dataset_summary: Whole transcriptome analysis, Human Lymph Node
     dataset_description: "10x Genomics obtained fresh frozen human lymph node from BioIVT Asterand. The tissue was embedded and cryosectioned as described in Visium Spatial Protocols - Tissue Preparation Guide Demonstrated Protocol (CG000240). Tissue sections of 10 µm thickness were placed on Visium Gene Expression Slides."
@@ -75,7 +75,7 @@ param_list:
   - id: spatial_10x_visium/human_normal_prostate 
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Normal_Prostate/Visium_FFPE_Human_Normal_Prostate_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Normal_Prostate/Visium_FFPE_Human_Normal_Prostate_spatial.tar.gz"
-    dataset_name: Human Normal Prostate (FFPE)
+    dataset_name: 10X Visium - Human Normal Prostate
     dataset_url: "https://www.10xgenomics.com/datasets/normal-human-prostate-ffpe-1-standard-1-3-0"
     dataset_summary: Gene expression library of Human Normal Prostate (Visium FFPE) using the Human Whole Transcriptome Probe Set
     dataset_description: "10x Genomics obtained FFPE human prostate tissue from Indivumed Human Tissue Specimens. The tissue was sectioned as described in Visium Spatial Gene Expression for FFPE – Tissue Preparation Guide Demonstrated Protocol (CG000408). Tissue sections of 5 µm were placed on Visium Gene Expression slides, then stained following Deparaffinization, H&E Staining, Imaging & Decrosslinking Demonstrated Protocol (CG000409)."
@@ -85,7 +85,7 @@ param_list:
   - id: spatial_10x_visium/human_prostate_cancer
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Prostate_IF/Visium_FFPE_Human_Prostate_IF_filtered_feature_bc_matrix.h5"
     input_spatial: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Prostate_IF/Visium_FFPE_Human_Prostate_IF_spatial.tar.gz"
-    dataset_name: Human Prostate Cancer (FFPE)
+    dataset_name: 10X Visium - Human Prostate Cancer
     dataset_url: "https://www.10xgenomics.com/datasets/human-prostate-cancer-adjacent-normal-section-with-if-staining-ffpe-1-standard"
     dataset_summary: Gene expression library of Human Prostate Cancer (Visium FFPE) with an IF image using the Human Whole Transcriptome Probe Set
     dataset_description: "10x Genomics obtained FFPE human prostate tissue from Indivumed Human Tissue Specimens. Original diagnosis with adenocarcinoma. The tissue was sectioned as described in Visium Spatial Gene Expression for FFPE Tissue Preparation Guide Demonstrated Protocol (CG000408). Tissue sections of 10 µm were placed on Visium Gene Expression slides, then stained following Deparaffinization, Decrosslinking, Immunofluorescence Staining & Imaging Demonstrated Protocol (CG000410)."

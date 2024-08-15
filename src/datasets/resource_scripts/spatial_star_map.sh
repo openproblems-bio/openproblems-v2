@@ -4,7 +4,7 @@ cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: spatial_star_map/mouse_brain_2d_zstep10_0
     input_data: "https://zenodo.org/records/12785822/files/STARmap_Wang2018three_data_2D_zstep10_0_data.h5ad?download=1"
-    dataset_name: Mouse brain 2D zstep10_0
+    dataset_name: STARmap - Mouse Brain 1
     dataset_url: "https://www.science.org/doi/10.1126/science.aat5691"
     dataset_summary: Three-dimensional intact-tissue sequencing of single-cell transcriptional states.
     dataset_description: "3D architecture of cell types in visual cortex volumes."
@@ -15,7 +15,7 @@ param_list:
 
   - id: spatial_star_map/mouse_brain_2d_zstep15_0
     input_data: "https://zenodo.org/records/12785822/files/STARmap_Wang2018three_data_2D_zstep15_0_data.h5ad?download=1"
-    dataset_name: Mouse Brain 2D zstep15_0
+    dataset_name: STARmap - Mouse Brain 2
     dataset_url: "https://www.science.org/doi/10.1126/science.aat5691"
     dataset_summary: Three-dimensional intact-tissue sequencing of single-cell transcriptional states.
     dataset_description: "3D architecture of cell types in visual cortex volumes."
