@@ -3016,7 +3016,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3038,7 +3038,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/common/extract_metadata/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/extract_metadata"
@@ -3060,7 +3060,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/control_methods/random_ranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/control_methods/random_ranking"
@@ -3082,7 +3082,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/control_methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/control_methods/true_ranking/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/control_methods/true_ranking"
@@ -3104,7 +3104,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/boostgp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/boostgp"
@@ -3126,7 +3126,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/gpcounts/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/gpcounts"
@@ -3148,7 +3148,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/moran_i/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/moran_i"
@@ -3170,7 +3170,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/nnsvg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/nnsvg"
@@ -3192,7 +3192,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/scgco/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/scgco"
@@ -3214,7 +3214,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/sepal/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/sepal"
@@ -3236,7 +3236,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/somde/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/somde"
@@ -3258,7 +3258,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spagcn/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagcn"
@@ -3280,7 +3280,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spagft/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spagft"
@@ -3302,7 +3302,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spanve/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spanve"
@@ -3324,7 +3324,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spark/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spark"
@@ -3346,7 +3346,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spark_x/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spark_x"
@@ -3368,7 +3368,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spatialde/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spatialde"
@@ -3390,7 +3390,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/methods",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/methods/spatialde2/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/spatialde2"
@@ -3412,7 +3412,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/metrics",
           "output" : "",
           "platform" : "",
-          "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+          "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
           "executable" : "/nextflow/spatially_variable_genes/metrics/correlation/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/metrics/correlation"
@@ -3459,7 +3459,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/workflows/run_benchmark",
     "viash_version" : "0.8.0",
-    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+    "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

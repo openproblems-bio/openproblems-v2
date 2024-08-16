@@ -3074,7 +3074,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg",
     "viash_version" : "0.8.0",
-    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
+    "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3149,6 +3149,10 @@ ref_sce
 # check the number of genes in reference object
 n_genes <- dim(ref_sce)[1]
 
+mu_formula <- paste0(
+  "s(spatial1, spatial2, bs = 'gp', k = ", par\\$gp_k, ")"
+)
+
 if (n_genes > par\\$select_top_variable_genes) {
   cat("Select ", par\\$select_top_variable_genes, " genes among ", n_genes, " reference genes ", "\\\\n", sep = "")
 
@@ -3164,9 +3168,6 @@ if (n_genes > par\\$select_top_variable_genes) {
   )
 
   cat("Fit regression models for each feature\\\\n")
-  mu_formula <- paste0(
-    "s(spatial1, spatial2, bs = 'gp', k = ", par\\$gp_k, ")"
-  )
   ref_marginal <- scDesign3::fit_marginal(
     data = ref_data,
     predictor = "gene",
