@@ -12,6 +12,8 @@ param_list:
     dataset_reference: wang2022high
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_stereo_seq/drosophila_embryo_e6_3
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_6.3.h5ad?download=1"
@@ -23,6 +25,8 @@ param_list:
     dataset_reference: wang2022high
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_stereo_seq/drosophila_embryo_e7
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_7.h5ad?download=1"
@@ -34,6 +38,8 @@ param_list:
     dataset_reference: wang2022high
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_stereo_seq/drosophila_embryo_e9_1
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_9.1.h5ad?download=1"
@@ -45,6 +51,8 @@ param_list:
     dataset_reference: wang2022high
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_stereo_seq/drosophila_embryo_e10
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_10.5.h5ad?download=1"
@@ -56,6 +64,8 @@ param_list:
     dataset_reference: wang2022high
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

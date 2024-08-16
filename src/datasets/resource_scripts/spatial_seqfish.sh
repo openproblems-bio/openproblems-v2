@@ -12,6 +12,8 @@ param_list:
     dataset_reference: lohoff2021integration
     spot_filter_min_genes: 10
     gene_filter_min_spots: 10
+    num_reference_genes: 25
+    select_top_variable_genes: 25
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

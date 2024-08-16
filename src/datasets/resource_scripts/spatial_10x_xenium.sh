@@ -11,6 +11,10 @@ param_list:
     dataset_description: "This dataset is provided as part of the Technical Note: Post-Xenium In Situ Applications: Immunofluorescence, H&E, and Visium CytAssist Spatial Gene Expression (CG000709). Post-Xenium samples were compared to controls (samples not processed through the Xenium workflow) using 5 µm (FFPE) serial sections."
     dataset_reference: 10x2023colon
     dataset_organism: Homo sapiens
+    spot_filter_min_genes: 100
+    gene_filter_min_spots: 50
+    num_reference_genes: 100
+    select_top_variable_genes: 50
 
   - id: spatial_10x_xenium/mouse_brain
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.1.0/CytAssist_FreshFrozen_Mouse_Brain_Post_Xenium_Rep1/CytAssist_FreshFrozen_Mouse_Brain_Post_Xenium_Rep1_filtered_feature_bc_matrix.h5"
@@ -21,6 +25,10 @@ param_list:
     dataset_description: "This dataset is provided as part of the Technical Note: Post-Xenium In Situ Applications: Immunofluorescence, H&E, and Visium CytAssist Spatial Gene Expression (CG000709). Post-Xenium samples were compared to controls (samples not processed through the Xenium workflow) using 10 µm fresh-frozen (FF) serial sections."
     dataset_reference: 10x2023mousebrain
     dataset_organism: Mus musculus
+    spot_filter_min_genes: 100
+    gene_filter_min_spots: 50
+    num_reference_genes: 100
+    select_top_variable_genes: 50
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

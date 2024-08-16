@@ -10,8 +10,10 @@ param_list:
     dataset_description: "Gene expression library of mouse olfactory bulk puck profiled using Slide-seq V2."
     dataset_reference: stickels2020highly
     dataset_organism: Mus musculus
-    spot_filter_min_genes: 100
+    spot_filter_min_genes: 10
     gene_filter_min_spots: 500
+    num_reference_genes: 10
+    select_top_variable_genes: 10
 
   - id: spatial_slideseq_v2/mouse_cortex
     input_data: "https://zenodo.org/records/12785822/files/Slide-seqV2_stickels2020highly_palla2021squidpy_Slide-seqV2_Mouse_Cortex_data_whole.h5ad?download=1"
@@ -23,6 +25,8 @@ param_list:
     dataset_organism: Mus musculus
     spot_filter_min_genes: 10
     gene_filter_min_spots: 500
+    num_reference_genes: 10
+    select_top_variable_genes: 10
 
   - id: spatial_slideseq_v2/mouse_cerebellum
     input_data: "https://zenodo.org/records/12785822/files/Slide-seqV2_stickels2020highly_stickels2021highly_Slide-seqV2_Mouse_Cerebellum_SCP948_data_whole.h5ad?download=1"
@@ -34,6 +38,8 @@ param_list:
     dataset_organism: Mus musculus
     spot_filter_min_genes: 100
     gene_filter_min_spots: 500
+    num_reference_genes: 10
+    select_top_variable_genes: 10
 
   - id: spatial_slideseq_v2/mouse_hippocampus_puck
     input_data: "https://zenodo.org/records/12785822/files/Slide-seqV2_stickels2020highly_stickels2021highly_Slide-seqV2_Mouse_Hippocampus_Puck_200115_08_data_whole.h5ad?download=1"
@@ -45,6 +51,8 @@ param_list:
     dataset_organism: Mus musculus
     spot_filter_min_genes: 200
     gene_filter_min_spots: 500
+    num_reference_genes: 10
+    select_top_variable_genes: 10
 
   - id: spatial_slideseq_v2/mouse_somatosensory_cortex_puck
     input_data: "https://zenodo.org/records/12785822/files/Slide-seqV2_stickels2020highly_stickels2021highly_Slide-seqV2_Mouse_SomatosensoryCortex_Puck_200306_03_data_whole.h5ad?download=1"
@@ -56,6 +64,8 @@ param_list:
     dataset_organism: Mus musculus
     spot_filter_min_genes: 200
     gene_filter_min_spots: 500
+    num_reference_genes: 10
+    select_top_variable_genes: 10
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
