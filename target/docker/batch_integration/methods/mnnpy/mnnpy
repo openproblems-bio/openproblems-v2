@@ -417,9 +417,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/chriscainx/mnnpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods mnnpy"
-LABEL org.opencontainers.image.created="2024-08-16T14:29:16Z"
+LABEL org.opencontainers.image.created="2024-08-16T17:21:32Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7"
+LABEL org.opencontainers.image.revision="a47b644ff7ad847c91273bbd1d59fd6b9719f1e7"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

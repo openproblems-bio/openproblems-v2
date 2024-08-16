@@ -3072,7 +3072,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/metrics/r2",
     "viash_version" : "0.8.0",
-    "git_commit" : "2f1ef7b96ad382ffa28ef8c44d1772926ebf9af7",
+    "git_commit" : "a47b644ff7ad847c91273bbd1d59fd6b9719f1e7",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
