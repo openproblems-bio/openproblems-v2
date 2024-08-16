@@ -67,8 +67,8 @@ output <- anndata::AnnData(
     shape = adata$shape,
     var = df,
     uns = list(
-        "dataset_id" = adata$uns["dataset_id"],
-        "method_id" = meta["functionality_name"]
+        "dataset_id" = adata$uns[["dataset_id"]],
+        "method_id" = meta[["functionality_name"]]
     )
 )
 

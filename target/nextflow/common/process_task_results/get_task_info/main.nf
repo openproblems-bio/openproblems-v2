@@ -2881,7 +2881,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/process_task_results/get_task_info",
     "viash_version" : "0.8.0",
-    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
+    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2946,7 +2946,8 @@ out <- list(
   task_name = info\\$label,
   task_summary = info\\$summary,
   task_description = paste0(info\\$motivation, "\\\\n\\\\n", info\\$description),
-  repo = "openproblems-bio/openproblems-v2"
+  repo = "openproblems-bio/openproblems-v2",
+  authors = info\\$authors
 )
 
 # show warning when certain data is missing and return null?

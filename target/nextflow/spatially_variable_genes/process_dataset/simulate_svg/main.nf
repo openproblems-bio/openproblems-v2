@@ -2897,12 +2897,6 @@ meta = [
                 "required" : true
               },
               {
-                "type" : "string",
-                "name" : "orig_dataset_id",
-                "description" : "Original unique identifier for the dataset",
-                "required" : true
-              },
-              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -3080,7 +3074,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg",
     "viash_version" : "0.8.0",
-    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
+    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3139,7 +3133,7 @@ rm(.viash_orig_warn)
 
 cat("Read AnnData\\\\n")
 adata <- anndata::read_h5ad(par\\$input)
-                    
+
 cat("Transform into SCE\\\\n")
 df_loc <- as.data.frame(adata\\$obsm[['spatial']])
 colnames(df_loc) <- c("spatial1", "spatial2")
@@ -3152,41 +3146,50 @@ ref_sce <- SingleCellExperiment::SingleCellExperiment(
 
 ref_sce
 
-cat("Transform into scDesign3 data format\\\\n")
-ref_data <- scDesign3::construct_data(
-  sce = ref_sce,
-  assay_use = "counts",
-  celltype = NULL,
-  pseudotime = NULL,
-  spatial = c("spatial1", "spatial2"),
-  other_covariates = NULL,
-  corr_by = "1"
-)
+# check the number of genes in reference object
+n_genes <- dim(ref_sce)[1]
 
-cat("Fit regression models for each feature\\\\n")
-mu_formula <- paste0(
-  "s(spatial1, spatial2, bs = 'gp', k = ", par\\$gp_k, ")"
-)
-ref_marginal <- scDesign3::fit_marginal(
-  data = ref_data,
-  predictor = "gene",
-  mu_formula = mu_formula,
-  sigma_formula = "1",
-  family_use = "nb",
-  parallelization = "pbmcmapply",
-  n_cores = 2L,
-  usebam = FALSE,
-  trace = TRUE
-)
+if (n_genes > par\\$select_top_variable_genes) {
+  cat("Select ", par\\$select_top_variable_genes, " genes among ", n_genes, " reference genes ", "\\\\n", sep = "")
 
-cat("Subset to the top variable genes\\\\n")
-dev_explain <- sapply(ref_marginal, function(x) {
-  if (length(x\\$fit) == 1 && is.na(x\\$fit)) {
-    return(NA_real_)
-  }
-  summary(x\\$fit)\\$dev.expl
-})
-top_sel <- names(sort(dev_explain, decreasing = TRUE))[seq_len(par\\$select_top_variable_genes)]
+  cat("Transform into scDesign3 data format\\\\n")
+  ref_data <- scDesign3::construct_data(
+    sce = ref_sce,
+    assay_use = "counts",
+    celltype = NULL,
+    pseudotime = NULL,
+    spatial = c("spatial1", "spatial2"),
+    other_covariates = NULL,
+    corr_by = "1"
+  )
+
+  cat("Fit regression models for each feature\\\\n")
+  mu_formula <- paste0(
+    "s(spatial1, spatial2, bs = 'gp', k = ", par\\$gp_k, ")"
+  )
+  ref_marginal <- scDesign3::fit_marginal(
+    data = ref_data,
+    predictor = "gene",
+    mu_formula = mu_formula,
+    sigma_formula = "1",
+    family_use = "nb",
+    parallelization = "pbmcmapply",
+    n_cores = 2L,
+    usebam = FALSE,
+    trace = TRUE
+  )
+
+  cat("Subset to the top variable genes\\\\n")
+  dev_explain <- sapply(ref_marginal, function(x) {
+    if (length(x\\$fit) == 1 && is.na(x\\$fit)) {
+      return(NA_real_)
+    }
+    summary(x\\$fit)\\$dev.expl
+  })
+  top_sel <- names(sort(dev_explain, decreasing = TRUE))[seq_len(par\\$select_top_variable_genes)]
+} else {
+  top_sel <- adata\\$var_names
+}
 
 ref_sce <- ref_sce[top_sel, ]
 var_subset <- adata\\$var[top_sel, , drop = FALSE]
@@ -3260,7 +3263,7 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
     important_feature = rep(TRUE, nrow(ref_sce)),
     filtered_gene = NULL
   )
-  
+
   if ("feature_id" %in% names(var_subset)) {
     new_var <- data.frame(
       feature_id = paste0(var_subset\\$feature_id, "_", alpha),
@@ -3279,9 +3282,9 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
       true_spatial_var_score = alpha
     )
     rownames(counts) <- new_var\\$feature_name
-    rownames(new_var) <- new_var\\$feature_name 
+    rownames(new_var) <- new_var\\$feature_name
   }
-  
+
   list(
     counts = Matrix::t(counts),
     var = new_var
@@ -3292,8 +3295,6 @@ cat("Collecting final output\\\\n", sep = "")
 final_counts <- do.call(cbind, lapply(outputs, function(x) x\\$counts))
 final_var <- do.call(rbind, lapply(outputs, function(x) x\\$var))
 final_uns <- adata\\$uns[c("dataset_id", "dataset_name", "dataset_description", "dataset_summary", "dataset_url", "dataset_organism", "dataset_reference")]
-final_uns\\$orig_dataset_id <- adata\\$uns\\$dataset_id
-final_uns\\$dataset_id <- paste0(adata\\$uns\\$dataset_id, "_simulate_svg")
 
 output <- anndata::AnnData(
   layers = list(counts = final_counts),

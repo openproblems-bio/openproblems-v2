@@ -2974,8 +2974,8 @@ meta = [
           "name" : "correlation",
           "label" : "correlation",
           "summary" : "Correlation represents the agreement of true and predicted spatial variability.",
-          "description" : "Kendall rank correlation coefficient measure the ordinal association between two measured quantities. The best score, and upper bound, is 1.0. The lower bound for is -1.\n",
-          "reference" : "miles2005rsquared",
+          "description" : "Kendall rank correlation coefficient measures the ordinal association between two measured quantities. The best score and upper bound is 1 (observations have an identical rank), while the lower bound is -1 (observations have a completely different rank).\n",
+          "reference" : "kendall1938new",
           "documentation_url" : "https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient",
           "repository_url" : "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html",
           "min" : -1,
@@ -3063,7 +3063,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/metrics/correlation",
     "viash_version" : "0.8.0",
-    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
+    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -64,6 +64,9 @@ print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
+if('gene_ids' in adata.var):
+    adata.var.set_index(adata.var['gene_ids'], inplace=True)
+    adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
 
 # Move counts to .layers
 print("Add metadata to uns", flush=True)

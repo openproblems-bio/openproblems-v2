@@ -4,7 +4,7 @@ cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: spatial_merfish/human_cortex_1
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.250.expand.rep1_data.h5ad?download=1"
-    dataset_name: Human cortex 1
+    dataset_name: MERFISH - Human Cortex 1
     dataset_url: "https://www.science.org/doi/10.1126/science.abm1741"
     dataset_summary: Spatially resolved profiling of human cerebral cortex using multiplexed error-robust fluorescence in situ hybridization (MERFISH).
     dataset_description: "Spatially resolved profiling of human cerebral cortex (middle temopral gyrus) replicate 1 using multiplexed error-robust fluorescence in situ hybridization (MERFISH) (250 gene panel)."
@@ -12,10 +12,12 @@ param_list:
     dataset_reference: fang2022conservation
     spot_filter_min_genes: 10
     gene_filter_min_spots: 100
+    num_reference_genes: 25
+    select_top_variable_genes: 25
 
   - id: spatial_merfish/human_cortex_2
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.4000.expand.rep1_data.h5ad?download=1"
-    dataset_name: Human cortex 2
+    dataset_name: MERFISH - Human Cortex 2
     dataset_url: "https://www.science.org/doi/10.1126/science.abm1741"
     dataset_summary: Spatially resolved profiling of human cerebral cortex using multiplexed error-robust fluorescence in situ hybridization (MERFISH).
     dataset_description: "Spatially resolved profiling of human cerebral cortex (middle temopral gyrus) replicate 1 using multiplexed error-robust fluorescence in situ hybridization (MERFISH) (4000 gene panel)."
@@ -23,10 +25,12 @@ param_list:
     dataset_reference: fang2022conservation
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_merfish/human_cortex_3
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.4000.expand.rep2_data.h5ad?download=1"
-    dataset_name: Human cortex 3
+    dataset_name: MERFISH - Human Cortex 3
     dataset_url: "https://www.science.org/doi/10.1126/science.abm1741"
     dataset_summary: Spatially resolved profiling of human cerebral cortex using multiplexed error-robust fluorescence in situ hybridization (MERFISH).
     dataset_description: "Spatially resolved profiling of human cerebral cortex (middle temopral gyrus) replicate 2 using multiplexed error-robust fluorescence in situ hybridization (MERFISH) (4000 gene panel)."
@@ -34,10 +38,12 @@ param_list:
     dataset_reference: fang2022conservation
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_merfish/human_cortex_4
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.4000.expand.rep3_data.h5ad?download=1"
-    dataset_name: Human cortex 4
+    dataset_name: MERFISH - Human Cortex 4
     dataset_url: "https://www.science.org/doi/10.1126/science.abm1741"
     dataset_summary: Spatially resolved profiling of human cerebral cortex using multiplexed error-robust fluorescence in situ hybridization (MERFISH).
     dataset_description: "Spatially resolved profiling of human cerebral cortex (middle temopral gyrus) replicate 3 using multiplexed error-robust fluorescence in situ hybridization (MERFISH) (4000 gene panel)."
@@ -45,10 +51,12 @@ param_list:
     dataset_reference: fang2022conservation
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_merfish/mouse_cortex
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_mouse1.AUD_TEA_VIS.242.unexpand_data.h5ad?download=1"
-    dataset_name: Mouse cortex
+    dataset_name: MERFISH - Mouse Cortex
     dataset_url: "https://www.science.org/doi/10.1126/science.abm1741"
     dataset_summary: Spatially resolved profiling of mouse cerebral cortex using multiplexed error-robust fluorescence in situ hybridization (MERFISH).
     dataset_description: "Spatially resolved profiling of mouse cerebral cortex (visual cortex (VIS), auditory cortex (AUD) and temporal association area (TEa) unexpanded sections) using multiplexed error-robust fluorescence in situ hybridization (MERFISH)."
@@ -56,6 +64,8 @@ param_list:
     dataset_reference: fang2022conservation
     spot_filter_min_genes: 10
     gene_filter_min_spots: 50
+    num_reference_genes: 25
+    select_top_variable_genes: 25
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

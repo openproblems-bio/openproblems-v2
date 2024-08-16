@@ -463,9 +463,9 @@ ENTRYPOINT []
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders download_spatial_from_zenodo"
-LABEL org.opencontainers.image.created="2024-08-08T09:07:43Z"
+LABEL org.opencontainers.image.created="2024-08-16T14:06:23Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
+LABEL org.opencontainers.image.revision="baaa7ee88cc0a71f346225e627b63240776c2d76"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -1166,6 +1166,9 @@ print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
+if('gene_ids' in adata.var):
+    adata.var.set_index(adata.var['gene_ids'], inplace=True)
+    adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
 
 # Move counts to .layers
 print("Add metadata to uns", flush=True)

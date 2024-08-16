@@ -4,7 +4,7 @@ cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: spatial_slide_tags/human_cortex
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_cortex.tar.gz?download=1"
-    dataset_name: Slidetag human cortex
+    dataset_name: Slide-tags - Human Cortex
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
     dataset_summary: Slide-tags enables single-nucleus barcoding for multimodal spatial genomics.
     dataset_description: "A 100 mm2 region of the human prefrontal cortex from a neurotypical donor aged 78 years was profiled by Slide-tags."
@@ -12,10 +12,12 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_slide_tags/human_skin_melanoma
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_skin_melanoma.tar.gz?download=1"
-    dataset_name: Slidetag human skin melanoma
+    dataset_name: Slide-tags - Human Skin Melanoma
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
     dataset_summary: Slide-tags enables single-nucleus barcoding for multimodal spatial genomics.
     dataset_description: "A metastatic melanoma sample was profiled by Slide-tags."
@@ -23,10 +25,12 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_slide_tags/human_tonsil
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_tonsil.tar.gz?download=1"
-    dataset_name: Slidetag human tonsil
+    dataset_name: Slide-tags - Human Tonsil
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
     dataset_summary: Slide-tags enables single-nucleus barcoding for multimodal spatial genomics.
     dataset_description: "A human tonsil was profiled by Slide-tags."
@@ -34,10 +38,12 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
   - id: spatial_slide_tags/mouse_embryo
     input_data: "https://zenodo.org/records/12785822/files/slidetag_mouse_embryo.tar.gz?download=1"
-    dataset_name: Slidetag mouse embryo
+    dataset_name: Slide-tags - Mouse Embryo
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
     dataset_summary: Slide-tags enables single-nucleus barcoding for multimodal spatial genomics.
     dataset_description: "Mouse embryo tonsil was profiled by Slide-tags."
@@ -45,6 +51,8 @@ param_list:
     dataset_reference: russell2023slide
     spot_filter_min_genes: 200
     gene_filter_min_spots: 50
+    num_reference_genes: 50
+    select_top_variable_genes: 50
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

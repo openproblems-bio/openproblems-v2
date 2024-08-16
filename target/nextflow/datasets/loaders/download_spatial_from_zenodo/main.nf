@@ -2978,7 +2978,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/download_spatial_from_zenodo",
     "viash_version" : "0.8.0",
-    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
+    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3079,6 +3079,9 @@ print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
+if('gene_ids' in adata.var):
+    adata.var.set_index(adata.var['gene_ids'], inplace=True)
+    adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
 
 # Move counts to .layers
 print("Add metadata to uns", flush=True)

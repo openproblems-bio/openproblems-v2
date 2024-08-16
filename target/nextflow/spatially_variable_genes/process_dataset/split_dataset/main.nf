@@ -2797,12 +2797,6 @@ meta = [
                 "required" : true
               },
               {
-                "type" : "string",
-                "name" : "orig_dataset_id",
-                "description" : "Original unique identifier for the dataset",
-                "required" : true
-              },
-              {
                 "name" : "dataset_name",
                 "type" : "string",
                 "description" : "Nicely formatted name.",
@@ -3114,7 +3108,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/split_dataset",
     "viash_version" : "0.8.0",
-    "git_commit" : "53b4c57a659171248367b41047338edcf002caad",
+    "git_commit" : "baaa7ee88cc0a71f346225e627b63240776c2d76",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

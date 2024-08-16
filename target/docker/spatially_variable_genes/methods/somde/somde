@@ -408,9 +408,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "somde" "scanpy==1.9.8" "pandas==2.2.1" "numpy==1.26.4" "scipy==1.11.4"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods somde"
-LABEL org.opencontainers.image.created="2024-08-08T09:07:56Z"
+LABEL org.opencontainers.image.created="2024-08-16T14:06:29Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
+LABEL org.opencontainers.image.revision="baaa7ee88cc0a71f346225e627b63240776c2d76"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

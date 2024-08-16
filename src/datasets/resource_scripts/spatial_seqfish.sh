@@ -4,7 +4,7 @@ cat > "/tmp/params.yaml" << 'HERE'
 param_list:
   - id: spatial_seqfish/mouse_organogenesis
     input_data: "https://zenodo.org/records/12785822/files/seqfish.h5ad?download=1"
-    dataset_name: Mouse organogenesis
+    dataset_name: Seqfish - Mouse Organogenesis
     dataset_url: "https://www.nature.com/articles/s41587-021-01006-2"
     dataset_summary: Single-cell spatial expression of mouse organogenesis.
     dataset_description: "Sagittal sections from mouse embryo at the 8-12 ss was profiled by seqFISH."
@@ -12,6 +12,8 @@ param_list:
     dataset_reference: lohoff2021integration
     spot_filter_min_genes: 10
     gene_filter_min_spots: 10
+    num_reference_genes: 25
+    select_top_variable_genes: 25
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

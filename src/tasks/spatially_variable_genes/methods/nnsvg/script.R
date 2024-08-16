@@ -65,7 +65,7 @@ cat("Write output AnnData to file\n")
 output = anndata::AnnData(
     shape = adata$shape, 
     var=df,
-    uns=list('dataset_id' = adata$uns['dataset_id'],
-             'method_id' =  meta['functionality_name']))
+    uns=list('dataset_id' = adata$uns[['dataset_id']],
+             'method_id' =  meta[['functionality_name']]))
 
 anndata::write_h5ad(anndata = output, filename = par$output)

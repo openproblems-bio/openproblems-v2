@@ -412,9 +412,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("anndata", "dplyr"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods nnsvg"
-LABEL org.opencontainers.image.created="2024-08-08T09:07:54Z"
+LABEL org.opencontainers.image.created="2024-08-16T14:06:28Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="53b4c57a659171248367b41047338edcf002caad"
+LABEL org.opencontainers.image.revision="baaa7ee88cc0a71f346225e627b63240776c2d76"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -950,8 +950,8 @@ cat("Write output AnnData to file\\n")
 output = anndata::AnnData(
     shape = adata\$shape, 
     var=df,
-    uns=list('dataset_id' = adata\$uns['dataset_id'],
-             'method_id' =  meta['functionality_name']))
+    uns=list('dataset_id' = adata\$uns[['dataset_id']],
+             'method_id' =  meta[['functionality_name']]))
 
 anndata::write_h5ad(anndata = output, filename = par\$output)
 VIASHMAIN
