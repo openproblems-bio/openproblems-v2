@@ -35,7 +35,7 @@ ref_sce
 n_genes <- dim(ref_sce)[1]
 
 if(n_genes > par$select_top_variable_genes){
-  cat("Select top", par$select_top_variable_genes, "genes from", n_genes, "reference genes", "\n", sep = "")
+  cat("Select ", par$select_top_variable_genes, " genes among ", n_genes, " reference genes ", "\n", sep = "")
 
   cat("Transform into scDesign3 data format\n")
   ref_data <- scDesign3::construct_data(
