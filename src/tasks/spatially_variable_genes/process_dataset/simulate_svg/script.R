@@ -18,7 +18,7 @@ meta <- list(
 
 cat("Read AnnData\n")
 adata <- anndata::read_h5ad(par$input)
-                    
+
 cat("Transform into SCE\n")
 df_loc <- as.data.frame(adata$obsm[['spatial']])
 colnames(df_loc) <- c("spatial1", "spatial2")
@@ -34,7 +34,7 @@ ref_sce
 # check the number of genes in reference object
 n_genes <- dim(ref_sce)[1]
 
-if(n_genes > par$select_top_variable_genes){
+if (n_genes > par$select_top_variable_genes) {
   cat("Select ", par$select_top_variable_genes, " genes among ", n_genes, " reference genes ", "\n", sep = "")
 
   cat("Transform into scDesign3 data format\n")
@@ -72,7 +72,7 @@ if(n_genes > par$select_top_variable_genes){
     summary(x$fit)$dev.expl
   })
   top_sel <- names(sort(dev_explain, decreasing = TRUE))[seq_len(par$select_top_variable_genes)]
-}else{
+} else {
   top_sel <- adata$var_names
 }
 
@@ -148,7 +148,7 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
     important_feature = rep(TRUE, nrow(ref_sce)),
     filtered_gene = NULL
   )
-  
+
   if ("feature_id" %in% names(var_subset)) {
     new_var <- data.frame(
       feature_id = paste0(var_subset$feature_id, "_", alpha),
@@ -167,9 +167,9 @@ outputs <- lapply(seq(0, 1.0, 0.05), function(alpha){
       true_spatial_var_score = alpha
     )
     rownames(counts) <- new_var$feature_name
-    rownames(new_var) <- new_var$feature_name 
+    rownames(new_var) <- new_var$feature_name
   }
-  
+
   list(
     counts = Matrix::t(counts),
     var = new_var
@@ -180,8 +180,6 @@ cat("Collecting final output\n", sep = "")
 final_counts <- do.call(cbind, lapply(outputs, function(x) x$counts))
 final_var <- do.call(rbind, lapply(outputs, function(x) x$var))
 final_uns <- adata$uns[c("dataset_id", "dataset_name", "dataset_description", "dataset_summary", "dataset_url", "dataset_organism", "dataset_reference")]
-final_uns$orig_dataset_id <- adata$uns$dataset_id
-final_uns$dataset_id <- paste0(adata$uns$dataset_id, "_simulate_svg")
 
 output <- anndata::AnnData(
   layers = list(counts = final_counts),
