@@ -31,41 +31,50 @@ ref_sce <- SingleCellExperiment::SingleCellExperiment(
 
 ref_sce
 
-cat("Transform into scDesign3 data format\n")
-ref_data <- scDesign3::construct_data(
-  sce = ref_sce,
-  assay_use = "counts",
-  celltype = NULL,
-  pseudotime = NULL,
-  spatial = c("spatial1", "spatial2"),
-  other_covariates = NULL,
-  corr_by = "1"
-)
+# check the number of genes in reference object
+n_genes <- dim(ref_sce)[1]
 
-cat("Fit regression models for each feature\n")
-mu_formula <- paste0(
-  "s(spatial1, spatial2, bs = 'gp', k = ", par$gp_k, ")"
-)
-ref_marginal <- scDesign3::fit_marginal(
-  data = ref_data,
-  predictor = "gene",
-  mu_formula = mu_formula,
-  sigma_formula = "1",
-  family_use = "nb",
-  parallelization = "pbmcmapply",
-  n_cores = 2L,
-  usebam = FALSE,
-  trace = TRUE
-)
+if(n_genes > par$select_top_variable_genes){
+  cat("Select top", par$select_top_variable_genes, "genes from", n_genes, "reference genes", "\n", sep = "")
 
-cat("Subset to the top variable genes\n")
-dev_explain <- sapply(ref_marginal, function(x) {
-  if (length(x$fit) == 1 && is.na(x$fit)) {
-    return(NA_real_)
-  }
-  summary(x$fit)$dev.expl
-})
-top_sel <- names(sort(dev_explain, decreasing = TRUE))[seq_len(par$select_top_variable_genes)]
+  cat("Transform into scDesign3 data format\n")
+  ref_data <- scDesign3::construct_data(
+    sce = ref_sce,
+    assay_use = "counts",
+    celltype = NULL,
+    pseudotime = NULL,
+    spatial = c("spatial1", "spatial2"),
+    other_covariates = NULL,
+    corr_by = "1"
+  )
+
+  cat("Fit regression models for each feature\n")
+  mu_formula <- paste0(
+    "s(spatial1, spatial2, bs = 'gp', k = ", par$gp_k, ")"
+  )
+  ref_marginal <- scDesign3::fit_marginal(
+    data = ref_data,
+    predictor = "gene",
+    mu_formula = mu_formula,
+    sigma_formula = "1",
+    family_use = "nb",
+    parallelization = "pbmcmapply",
+    n_cores = 2L,
+    usebam = FALSE,
+    trace = TRUE
+  )
+
+  cat("Subset to the top variable genes\n")
+  dev_explain <- sapply(ref_marginal, function(x) {
+    if (length(x$fit) == 1 && is.na(x$fit)) {
+      return(NA_real_)
+    }
+    summary(x$fit)$dev.expl
+  })
+  top_sel <- names(sort(dev_explain, decreasing = TRUE))[seq_len(par$select_top_variable_genes)]
+}else{
+  top_sel <- adata$var_names
+}
 
 ref_sce <- ref_sce[top_sel, ]
 var_subset <- adata$var[top_sel, , drop = FALSE]
