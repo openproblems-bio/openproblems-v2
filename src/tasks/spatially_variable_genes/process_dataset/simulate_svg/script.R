@@ -34,6 +34,10 @@ ref_sce
 # check the number of genes in reference object
 n_genes <- dim(ref_sce)[1]
 
+mu_formula <- paste0(
+  "s(spatial1, spatial2, bs = 'gp', k = ", par$gp_k, ")"
+)
+
 if (n_genes > par$select_top_variable_genes) {
   cat("Select ", par$select_top_variable_genes, " genes among ", n_genes, " reference genes ", "\n", sep = "")
 
@@ -49,9 +53,6 @@ if (n_genes > par$select_top_variable_genes) {
   )
 
   cat("Fit regression models for each feature\n")
-  mu_formula <- paste0(
-    "s(spatial1, spatial2, bs = 'gp', k = ", par$gp_k, ")"
-  )
   ref_marginal <- scDesign3::fit_marginal(
     data = ref_data,
     predictor = "gene",
