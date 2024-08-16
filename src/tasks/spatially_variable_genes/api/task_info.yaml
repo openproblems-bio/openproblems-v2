@@ -21,7 +21,6 @@ authors:
     roles: [ author ]
     info: 
       github: doczmp
-    #   orcid: ?
   - name: Dongyuan Song
     roles: [ author]
     info:
