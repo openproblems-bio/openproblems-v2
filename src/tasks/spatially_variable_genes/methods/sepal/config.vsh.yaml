@@ -15,12 +15,12 @@ functionality:
 
   # Component-specific parameters (optional)
   arguments:
-    - name: "--max_neighs"
+    - name: "--max_neighs_sepal"
       type: integer
       default: 6
       description: Maximum number of neighbors of a node in the spatial graph.
 
-    - name: "--coord_type"
+    - name: "--coord_type_sepal"
       type: string
       default: "grid"
       description: Type of coordinate system. Valid options are "grid" for grid coordinates or "generic" for generic coordinates.

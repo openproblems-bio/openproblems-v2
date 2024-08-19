@@ -6,7 +6,8 @@ par = {
     "input": "resources_test/common/mouse_brain_coronal_section1/dataset.h5ad",
     "input_layer": "normalized",
     "output": "reference_dataset.h5ad",
-    "num_features": 50
+    "num_features": 50,
+    "coord_type_proc": "grid"
 }
 ### VIASH END
 
@@ -14,7 +15,9 @@ print(">> Load data", flush=True)
 adata = ad.read_h5ad(par['input'])
 
 print(">> Run Moran's I spatial autocorrelation", flush=True)
-sq.gr.spatial_neighbors(adata, coord_type="grid", delaunay=False)
+sq.gr.spatial_neighbors(adata, 
+                        coord_type=par['coord_type_proc'], 
+                        delaunay=False)
 sq.gr.spatial_autocorr(adata, 
                        layer="normalized",
                        mode="moran", 

@@ -2948,6 +2948,19 @@ meta = [
         "dest" : "par"
       },
       {
+        "type" : "string",
+        "name" : "--coord_type_proc",
+        "description" : "How to create spatial graph to select reference genes",
+        "default" : [
+          "grid"
+        ],
+        "required" : false,
+        "direction" : "input",
+        "multiple" : false,
+        "multiple_sep" : ":",
+        "dest" : "par"
+      },
+      {
         "type" : "integer",
         "name" : "--num_features",
         "description" : "The number of variable genes to select",
@@ -3060,7 +3073,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/select_reference",
     "viash_version" : "0.8.0",
-    "git_commit" : "a47b644ff7ad847c91273bbd1d59fd6b9719f1e7",
+    "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3084,6 +3097,7 @@ par = {
   'input': $( if [ ! -z ${VIASH_PAR_INPUT+x} ]; then echo "r'${VIASH_PAR_INPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'input_layer': $( if [ ! -z ${VIASH_PAR_INPUT_LAYER+x} ]; then echo "r'${VIASH_PAR_INPUT_LAYER//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
+  'coord_type_proc': $( if [ ! -z ${VIASH_PAR_COORD_TYPE_PROC+x} ]; then echo "r'${VIASH_PAR_COORD_TYPE_PROC//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'num_features': $( if [ ! -z ${VIASH_PAR_NUM_FEATURES+x} ]; then echo "int(r'${VIASH_PAR_NUM_FEATURES//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi )
 }
 meta = {
@@ -3110,7 +3124,9 @@ print(">> Load data", flush=True)
 adata = ad.read_h5ad(par['input'])
 
 print(">> Run Moran's I spatial autocorrelation", flush=True)
-sq.gr.spatial_neighbors(adata, coord_type="grid", delaunay=False)
+sq.gr.spatial_neighbors(adata, 
+                        coord_type=par['coord_type_proc'], 
+                        delaunay=False)
 sq.gr.spatial_autocorr(adata, 
                        layer="normalized",
                        mode="moran", 

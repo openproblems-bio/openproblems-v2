@@ -14,6 +14,12 @@ param_list:
     gene_filter_min_spots: 10
     num_reference_genes: 25
     select_top_variable_genes: 25
+    remove_mitochondrial: true
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
+    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

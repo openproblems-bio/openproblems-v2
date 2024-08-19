@@ -2861,7 +2861,7 @@ meta = [
       },
       {
         "type" : "integer",
-        "name" : "--max_neighs",
+        "name" : "--max_neighs_sepal",
         "description" : "Maximum number of neighbors of a node in the spatial graph.",
         "default" : [
           6
@@ -2874,7 +2874,7 @@ meta = [
       },
       {
         "type" : "string",
-        "name" : "--coord_type",
+        "name" : "--coord_type_sepal",
         "description" : "Type of coordinate system. Valid options are \\"grid\\" for grid coordinates or \\"generic\\" for generic coordinates.",
         "default" : [
           "grid"
@@ -3009,7 +3009,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/sepal",
     "viash_version" : "0.8.0",
-    "git_commit" : "a47b644ff7ad847c91273bbd1d59fd6b9719f1e7",
+    "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3032,8 +3032,8 @@ import squidpy as sq
 par = {
   'input_data': $( if [ ! -z ${VIASH_PAR_INPUT_DATA+x} ]; then echo "r'${VIASH_PAR_INPUT_DATA//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
-  'max_neighs': $( if [ ! -z ${VIASH_PAR_MAX_NEIGHS+x} ]; then echo "int(r'${VIASH_PAR_MAX_NEIGHS//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
-  'coord_type': $( if [ ! -z ${VIASH_PAR_COORD_TYPE+x} ]; then echo "r'${VIASH_PAR_COORD_TYPE//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
+  'max_neighs_sepal': $( if [ ! -z ${VIASH_PAR_MAX_NEIGHS_SEPAL+x} ]; then echo "int(r'${VIASH_PAR_MAX_NEIGHS_SEPAL//\\'/\\'\\"\\'\\"r\\'}')"; else echo None; fi ),
+  'coord_type_sepal': $( if [ ! -z ${VIASH_PAR_COORD_TYPE_SEPAL+x} ]; then echo "r'${VIASH_PAR_COORD_TYPE_SEPAL//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\\'/\\'\\"\\'\\"r\\'}'"; else echo None; fi ),
@@ -3059,12 +3059,12 @@ print('Generate predictions', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
 sq.gr.spatial_neighbors(adata,
-                        coord_type=par['coord_type'],
+                        coord_type=par['coord_type_sepal'],
                         delaunay=False)
 
 sq.gr.sepal(adata, 
             layer='normalized',
-            max_neighs=par['max_neighs'], 
+            max_neighs=par['max_neighs_sepal'], 
             genes=adata.var_names,
             n_jobs=1)
 

@@ -14,6 +14,12 @@ param_list:
     gene_filter_min_spots: 1
     num_reference_genes: 25
     select_top_variable_genes: 25
+    remove_mitochondrial: true
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
+    n_cp: -1
 
   - id: spatial_star_map/mouse_brain_2d_zstep15_0
     input_data: "https://zenodo.org/records/12785822/files/STARmap_Wang2018three_data_2D_zstep15_0_data.h5ad?download=1"
@@ -27,6 +33,12 @@ param_list:
     gene_filter_min_spots: 1
     num_reference_genes: 25
     select_top_variable_genes: 25
+    remove_mitochondrial: true
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
+    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

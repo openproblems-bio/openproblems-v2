@@ -3273,7 +3273,7 @@ meta = [
       {
         "type" : "integer",
         "name" : "--n_cp",
-        "description" : "Number of counts per cell",
+        "description" : "Number of counts per cell. When set to -1, will use None.",
         "default" : [
           10000
         ],
@@ -3374,7 +3374,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp",
     "viash_version" : "0.8.0",
-    "git_commit" : "a47b644ff7ad847c91273bbd1d59fd6b9719f1e7",
+    "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3425,12 +3425,20 @@ print(">> Load data", flush=True)
 adata = sc.read_h5ad(par['input'])
 
 print(">> Normalize data", flush=True)
-norm = sc.pp.normalize_total(
-    adata, 
-    target_sum=par["n_cp"], 
-    layer="counts", 
-    inplace=False
-)
+if par["n_cp"] == -1:
+    norm = sc.pp.normalize_total(
+        adata, 
+        target_sum=None, 
+        layer="counts", 
+        inplace=False
+    )
+else:
+    norm = sc.pp.normalize_total(
+        adata, 
+        target_sum=par["n_cp"], 
+        layer="counts", 
+        inplace=False
+    )
 lognorm = sc.pp.log1p(norm["X"])
 
 print(">> Store output in adata", flush=True)

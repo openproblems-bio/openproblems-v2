@@ -13,6 +13,13 @@ functionality:
     documentation_url: https://squidpy.readthedocs.io/en/stable/api/squidpy.gr.spatial_autocorr.html
     repository_url: https://github.com/scverse/squidpy
 
+  # Component-specific parameters (optional)
+  arguments:
+    - name: "--coord_type_moran_i"
+      type: string
+      default: "generic"
+      description: Type of coordinate system. Valid options are "grid" for grid coordinates or "generic" for generic coordinates.
+
   resources:
     - type: python_script
       path: script.py

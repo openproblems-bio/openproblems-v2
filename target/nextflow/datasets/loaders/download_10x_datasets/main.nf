@@ -2998,7 +2998,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/loaders/download_10x_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "a47b644ff7ad847c91273bbd1d59fd6b9719f1e7",
+    "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3073,11 +3073,6 @@ adata.var_names_make_unique()
 
 sc.pp.calculate_qc_metrics(adata, inplace=True)
 
-if par["remove_mitochondrial"]:
-  print("Removing mitochondrial genes")
-  non_mito_genes_list = [name for name in adata.var_names if not (name.startswith('MT-') or name.startswith('mt-'))]
-  adata = adata[:, non_mito_genes_list]
-
 print("Filtering spots or genes")
 t0 = adata.shape
 # remove cells with few counts
@@ -3095,6 +3090,11 @@ if par["gene_filter_min_spots"]:
 t1 = adata.shape
 print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
+if par["remove_mitochondrial"]:
+  print("Removing mitochondrial genes")
+  non_mito_genes_list = [name for name in adata.var_names if not (name.startswith('MT-') or name.startswith('mt-'))]
+  adata = adata[:, non_mito_genes_list]
+  
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
 adata.var.set_index(adata.var['gene_ids'], inplace=True)

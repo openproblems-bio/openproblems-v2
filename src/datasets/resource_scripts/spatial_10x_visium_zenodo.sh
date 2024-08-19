@@ -14,6 +14,12 @@ param_list:
     gene_filter_min_spots: 50
     num_reference_genes: 200
     select_top_variable_genes: 50
+    remove_mitochondrial: true
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
+    n_cp: -1
 
   - id: spatial_10x_visium/human_heart_myocardial_infarction_2
     input_data: "https://zenodo.org/records/13328275/files/10X009.h5ad?download=1"
@@ -27,6 +33,12 @@ param_list:
     gene_filter_min_spots: 50
     num_reference_genes: 200
     select_top_variable_genes: 50
+    remove_mitochondrial: true
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
+    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

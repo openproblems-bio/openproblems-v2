@@ -7,7 +7,9 @@ import squidpy as sq
 # VIASH START
 par = {
     'input_data': 'resources_test/spatially_variable_genes/mouse_brain_coronal_section1/dataset.h5ad',
-    'output': 'output.h5ad'
+    'output': 'output.h5ad',
+    'coord_type_moran_i': 'generic'
+    
 }
 meta = {
     'functionality_name': 'moranI'
@@ -19,7 +21,7 @@ adata = ad.read_h5ad(par['input_data'])
 
 print('Run moranI', flush=True)
 sq.gr.spatial_neighbors(adata,
-                        coord_type="generic",
+                        coord_type=par['coord_type_moran_i'],
                         delaunay=True)
 
 sq.gr.spatial_autocorr(adata,

@@ -38,11 +38,6 @@ adata.var_names_make_unique()
 
 sc.pp.calculate_qc_metrics(adata, inplace=True)
 
-if par["remove_mitochondrial"]:
-  print("Removing mitochondrial genes")
-  non_mito_genes_list = [name for name in adata.var_names if not (name.startswith('MT-') or name.startswith('mt-'))]
-  adata = adata[:, non_mito_genes_list]
-
 print("Filtering spots or genes")
 t0 = adata.shape
 # remove cells with few counts
@@ -60,6 +55,11 @@ if par["gene_filter_min_spots"]:
 t1 = adata.shape
 print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
+if par["remove_mitochondrial"]:
+  print("Removing mitochondrial genes")
+  non_mito_genes_list = [name for name in adata.var_names if not (name.startswith('MT-') or name.startswith('mt-'))]
+  adata = adata[:, non_mito_genes_list]
+  
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
 adata.var.set_index(adata.var['gene_ids'], inplace=True)

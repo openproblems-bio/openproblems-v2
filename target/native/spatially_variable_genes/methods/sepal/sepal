@@ -183,12 +183,12 @@ function ViashHelp {
   echo "        example:"
   echo "resources_test/spatially_variable_genes/mouse_brain_coronal_section1/output.h5ad"
   echo ""
-  echo "    --max_neighs"
+  echo "    --max_neighs_sepal"
   echo "        type: integer"
   echo "        default: 6"
   echo "        Maximum number of neighbors of a node in the spatial graph."
   echo ""
-  echo "    --coord_type"
+  echo "    --coord_type_sepal"
   echo "        type: string"
   echo "        default: grid"
   echo "        Type of coordinate system. Valid options are \"grid\" for grid coordinates"
@@ -243,26 +243,26 @@ while [[ $# -gt 0 ]]; do
             VIASH_PAR_OUTPUT=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --max_neighs)
-            [ -n "$VIASH_PAR_MAX_NEIGHS" ] && ViashError Bad arguments for option \'--max_neighs\': \'$VIASH_PAR_MAX_NEIGHS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_MAX_NEIGHS="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --max_neighs. Use "--help" to get more information on the parameters. && exit 1
+        --max_neighs_sepal)
+            [ -n "$VIASH_PAR_MAX_NEIGHS_SEPAL" ] && ViashError Bad arguments for option \'--max_neighs_sepal\': \'$VIASH_PAR_MAX_NEIGHS_SEPAL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_MAX_NEIGHS_SEPAL="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --max_neighs_sepal. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --max_neighs=*)
-            [ -n "$VIASH_PAR_MAX_NEIGHS" ] && ViashError Bad arguments for option \'--max_neighs=*\': \'$VIASH_PAR_MAX_NEIGHS\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_MAX_NEIGHS=$(ViashRemoveFlags "$1")
+        --max_neighs_sepal=*)
+            [ -n "$VIASH_PAR_MAX_NEIGHS_SEPAL" ] && ViashError Bad arguments for option \'--max_neighs_sepal=*\': \'$VIASH_PAR_MAX_NEIGHS_SEPAL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_MAX_NEIGHS_SEPAL=$(ViashRemoveFlags "$1")
             shift 1
             ;;
-        --coord_type)
-            [ -n "$VIASH_PAR_COORD_TYPE" ] && ViashError Bad arguments for option \'--coord_type\': \'$VIASH_PAR_COORD_TYPE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_COORD_TYPE="$2"
-            [ $# -lt 2 ] && ViashError Not enough arguments passed to --coord_type. Use "--help" to get more information on the parameters. && exit 1
+        --coord_type_sepal)
+            [ -n "$VIASH_PAR_COORD_TYPE_SEPAL" ] && ViashError Bad arguments for option \'--coord_type_sepal\': \'$VIASH_PAR_COORD_TYPE_SEPAL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_COORD_TYPE_SEPAL="$2"
+            [ $# -lt 2 ] && ViashError Not enough arguments passed to --coord_type_sepal. Use "--help" to get more information on the parameters. && exit 1
             shift 2
             ;;
-        --coord_type=*)
-            [ -n "$VIASH_PAR_COORD_TYPE" ] && ViashError Bad arguments for option \'--coord_type=*\': \'$VIASH_PAR_COORD_TYPE\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
-            VIASH_PAR_COORD_TYPE=$(ViashRemoveFlags "$1")
+        --coord_type_sepal=*)
+            [ -n "$VIASH_PAR_COORD_TYPE_SEPAL" ] && ViashError Bad arguments for option \'--coord_type_sepal=*\': \'$VIASH_PAR_COORD_TYPE_SEPAL\' \& \'$2\' - you should provide exactly one argument for this option. && exit 1
+            VIASH_PAR_COORD_TYPE_SEPAL=$(ViashRemoveFlags "$1")
             shift 1
             ;;
         ---cpus)
@@ -373,11 +373,11 @@ if [ -z ${VIASH_META_TEMP_DIR+x} ]; then
 fi
 
 # filling in defaults
-if [ -z ${VIASH_PAR_MAX_NEIGHS+x} ]; then
-  VIASH_PAR_MAX_NEIGHS="6"
+if [ -z ${VIASH_PAR_MAX_NEIGHS_SEPAL+x} ]; then
+  VIASH_PAR_MAX_NEIGHS_SEPAL="6"
 fi
-if [ -z ${VIASH_PAR_COORD_TYPE+x} ]; then
-  VIASH_PAR_COORD_TYPE="grid"
+if [ -z ${VIASH_PAR_COORD_TYPE_SEPAL+x} ]; then
+  VIASH_PAR_COORD_TYPE_SEPAL="grid"
 fi
 
 # check whether required files exist
@@ -387,9 +387,9 @@ if [ ! -z "$VIASH_PAR_INPUT_DATA" ] && [ ! -e "$VIASH_PAR_INPUT_DATA" ]; then
 fi
 
 # check whether parameters values are of the right type
-if [[ -n "$VIASH_PAR_MAX_NEIGHS" ]]; then
-  if ! [[ "$VIASH_PAR_MAX_NEIGHS" =~ ^[-+]?[0-9]+$ ]]; then
-    ViashError '--max_neighs' has to be an integer. Use "--help" to get more information on the parameters.
+if [[ -n "$VIASH_PAR_MAX_NEIGHS_SEPAL" ]]; then
+  if ! [[ "$VIASH_PAR_MAX_NEIGHS_SEPAL" =~ ^[-+]?[0-9]+$ ]]; then
+    ViashError '--max_neighs_sepal' has to be an integer. Use "--help" to get more information on the parameters.
     exit 1
   fi
 fi
@@ -467,8 +467,8 @@ import squidpy as sq
 par = {
   'input_data': $( if [ ! -z ${VIASH_PAR_INPUT_DATA+x} ]; then echo "r'${VIASH_PAR_INPUT_DATA//\'/\'\"\'\"r\'}'"; else echo None; fi ),
   'output': $( if [ ! -z ${VIASH_PAR_OUTPUT+x} ]; then echo "r'${VIASH_PAR_OUTPUT//\'/\'\"\'\"r\'}'"; else echo None; fi ),
-  'max_neighs': $( if [ ! -z ${VIASH_PAR_MAX_NEIGHS+x} ]; then echo "int(r'${VIASH_PAR_MAX_NEIGHS//\'/\'\"\'\"r\'}')"; else echo None; fi ),
-  'coord_type': $( if [ ! -z ${VIASH_PAR_COORD_TYPE+x} ]; then echo "r'${VIASH_PAR_COORD_TYPE//\'/\'\"\'\"r\'}'"; else echo None; fi )
+  'max_neighs_sepal': $( if [ ! -z ${VIASH_PAR_MAX_NEIGHS_SEPAL+x} ]; then echo "int(r'${VIASH_PAR_MAX_NEIGHS_SEPAL//\'/\'\"\'\"r\'}')"; else echo None; fi ),
+  'coord_type_sepal': $( if [ ! -z ${VIASH_PAR_COORD_TYPE_SEPAL+x} ]; then echo "r'${VIASH_PAR_COORD_TYPE_SEPAL//\'/\'\"\'\"r\'}'"; else echo None; fi )
 }
 meta = {
   'functionality_name': $( if [ ! -z ${VIASH_META_FUNCTIONALITY_NAME+x} ]; then echo "r'${VIASH_META_FUNCTIONALITY_NAME//\'/\'\"\'\"r\'}'"; else echo None; fi ),
@@ -494,12 +494,12 @@ print('Generate predictions', flush=True)
 adata = ad.read_h5ad(par['input_data'])
 
 sq.gr.spatial_neighbors(adata,
-                        coord_type=par['coord_type'],
+                        coord_type=par['coord_type_sepal'],
                         delaunay=False)
 
 sq.gr.sepal(adata, 
             layer='normalized',
-            max_neighs=par['max_neighs'], 
+            max_neighs=par['max_neighs_sepal'], 
             genes=adata.var_names,
             n_jobs=1)
 
