@@ -15,6 +15,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: generic
 
   - id: spatial_dbit_seq/mouse_e10_eye
     input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E10_eye_and_nearby_data.h5ad?download=1"
@@ -29,6 +30,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: generic
 
   - id: spatial_dbit_seq/mouse_e10_whole_body
     input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E10_whole_gene_best_data.h5ad?download=1"
@@ -43,6 +45,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: generic
 
   - id: spatial_dbit_seq/mouse_e11_lower_body
     input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_E11_lower_body_data.h5ad?download=1"
@@ -57,6 +60,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: generic
 
   - id: spatial_dbit_seq/mouse_e11_1
     input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_GSM4364244_E11-FL-1L_gene_data.h5ad?download=1"
@@ -71,6 +75,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: generic
 
   - id: spatial_dbit_seq/mouse_e11_2
     input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_GSM4364245_E11-FL-2L_gene_data.h5ad?download=1"
@@ -85,6 +90,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: generic
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

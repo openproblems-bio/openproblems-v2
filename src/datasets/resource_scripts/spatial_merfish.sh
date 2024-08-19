@@ -15,6 +15,7 @@ param_list:
     num_reference_genes: 25
     select_top_variable_genes: 25
     remove_mitochondrial: false
+    coord_type: generic
 
   - id: spatial_merfish/human_cortex_2
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.4000.expand.rep1_data.h5ad?download=1"
@@ -29,6 +30,7 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: false
+    coord_type: generic
 
   - id: spatial_merfish/human_cortex_3
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.4000.expand.rep2_data.h5ad?download=1"
@@ -43,6 +45,7 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: false
+    coord_type: generic
 
   - id: spatial_merfish/human_cortex_4
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_H18.06.006.MTG.4000.expand.rep3_data.h5ad?download=1"
@@ -57,6 +60,7 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: false
+    coord_type: generic
 
   - id: spatial_merfish/mouse_cortex
     input_data: "https://zenodo.org/records/12785822/files/MERFISH_Fang2022Conservation_mouse1.AUD_TEA_VIS.242.unexpand_data.h5ad?download=1"
@@ -71,6 +75,7 @@ param_list:
     num_reference_genes: 25
     select_top_variable_genes: 25
     remove_mitochondrial: true
+    coord_type: generic
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

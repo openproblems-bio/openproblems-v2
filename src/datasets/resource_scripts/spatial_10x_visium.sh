@@ -15,6 +15,7 @@ param_list:
     gene_filter_min_spots: 50
     num_reference_genes: 200
     select_top_variable_genes: 50
+    coord_type: grid
 
   - id: spatial_10x_visium/human_colorectal_cancer
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.1/CytAssist_11mm_FFPE_Human_Colorectal_Cancer/CytAssist_11mm_FFPE_Human_Colorectal_Cancer_filtered_feature_bc_matrix.h5"
@@ -30,6 +31,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
   - id: spatial_10x_visium/human_heart
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Heart/V1_Human_Heart_filtered_feature_bc_matrix.h5"
@@ -45,6 +47,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
   - id: spatial_10x_visium/mouse_embryo
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.1.0/CytAssist_11mm_FFPE_Mouse_Embryo/CytAssist_11mm_FFPE_Mouse_Embryo_filtered_feature_bc_matrix.h5"
@@ -60,6 +63,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: false
+    coord_type: grid
 
   - id: spatial_10x_visium/mouse_olfactory_bulb 
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_Mouse_Olfactory_Bulb/Visium_Mouse_Olfactory_Bulb_filtered_feature_bc_matrix.h5"
@@ -75,6 +79,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: false
+    coord_type: grid
 
   - id: spatial_10x_visium/human_breast_cancer_1
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.2.0/Parent_Visium_Human_BreastCancer/Parent_Visium_Human_BreastCancer_filtered_feature_bc_matrix.h5"
@@ -90,6 +95,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
   - id: spatial_10x_visium/human_lymph_node 
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.0.0/V1_Human_Lymph_Node/V1_Human_Lymph_Node_filtered_feature_bc_matrix.h5"
@@ -105,6 +111,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
   - id: spatial_10x_visium/human_normal_prostate 
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Normal_Prostate/Visium_FFPE_Human_Normal_Prostate_filtered_feature_bc_matrix.h5"
@@ -120,6 +127,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
   - id: spatial_10x_visium/human_prostate_cancer
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Prostate_IF/Visium_FFPE_Human_Prostate_IF_filtered_feature_bc_matrix.h5"
@@ -135,6 +143,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
@@ -164,6 +173,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/mouse_kidney_v1
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.1.0/V1_Mouse_Kidney/V1_Mouse_Kidney_filtered_feature_bc_matrix.h5"
@@ -179,6 +189,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: false
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_lung_cancer
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.1/CytAssist_11mm_FFPE_Human_Lung_Cancer/CytAssist_11mm_FFPE_Human_Lung_Cancer_filtered_feature_bc_matrix.h5"
@@ -194,6 +205,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_brain_cancer
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.1/CytAssist_11mm_FFPE_Human_Glioblastoma/CytAssist_11mm_FFPE_Human_Glioblastoma_filtered_feature_bc_matrix.h5"
@@ -209,6 +221,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_kidney
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.1/CytAssist_11mm_FFPE_Human_Kidney/CytAssist_11mm_FFPE_Human_Kidney_filtered_feature_bc_matrix.h5"
@@ -224,6 +237,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_intestinal_cancer
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Intestinal_Cancer/Visium_FFPE_Human_Intestinal_Cancer_filtered_feature_bc_matrix.h5"
@@ -239,6 +253,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_skin_melanoma
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.0.0/CytAssist_FFPE_Human_Skin_Melanoma/CytAssist_FFPE_Human_Skin_Melanoma_filtered_feature_bc_matrix.h5"
@@ -254,6 +269,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_cervical_cancer
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Cervical_Cancer/Visium_FFPE_Human_Cervical_Cancer_filtered_feature_bc_matrix.h5"
@@ -269,6 +285,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 #   - id: spatial_10x_visium/human_breast_cancer_2
 #     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.3.0/Visium_FFPE_Human_Breast_Cancer/Visium_FFPE_Human_Breast_Cancer_filtered_feature_bc_matrix.h5"
@@ -284,6 +301,7 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
+#     coord_type: grid
 
 # normalization_methods: [log_cp10k]
 # output_dataset: '$id/dataset.h5ad'

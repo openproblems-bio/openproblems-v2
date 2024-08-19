@@ -15,6 +15,7 @@ param_list:
     num_reference_genes: 25
     select_top_variable_genes: 25
     remove_mitochondrial: true
+    coord_type: generic
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

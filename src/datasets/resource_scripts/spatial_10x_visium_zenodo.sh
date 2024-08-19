@@ -15,6 +15,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
   - id: spatial_10x_visium/human_heart_myocardial_infarction_2
     input_data: "https://zenodo.org/records/13328275/files/10X009.h5ad?download=1"
@@ -29,6 +30,7 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
+    coord_type: grid
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

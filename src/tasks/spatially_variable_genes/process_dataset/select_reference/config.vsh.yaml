@@ -22,6 +22,10 @@ functionality:
       direction: output
       required: true
       __merge__: ../../api/file_common_dataset.yaml
+    - name: "--coord_type"
+      type: string
+      default: "grid"
+      description: "How to create spatial graph"
     - name: "--num_features"
       type: integer
       default: 200
