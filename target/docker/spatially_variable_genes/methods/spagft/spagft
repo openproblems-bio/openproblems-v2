@@ -414,9 +414,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "h5py" "numba==0.55.1" "louvain==0.7.1" "chardet==5.1.0" "charset-normalizer==3.1.0" "anndata" "/opt/SpaGFT" "mizani==0.9.3" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods spagft"
-LABEL org.opencontainers.image.created="2024-08-19T18:51:37Z"
+LABEL org.opencontainers.image.created="2024-08-19T19:51:08Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="8983f0636afb3c950d6020cb721641940ed022d1"
+LABEL org.opencontainers.image.revision="545112bd89d0883aa50745e8bf8e2eda3f4082e3"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER

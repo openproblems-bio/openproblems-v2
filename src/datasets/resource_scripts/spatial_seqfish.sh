@@ -18,7 +18,7 @@ param_list:
     coord_type_proc: generic
     coord_type_moran_i: generic
     coord_type_sepal: grid
-    max_neighs_speal: 4
+    max_neighs_speal: 6
     n_cp: -1
 
 normalization_methods: [log_cp10k]

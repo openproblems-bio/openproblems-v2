@@ -3167,6 +3167,37 @@ meta = [
             "multiple" : false,
             "multiple_sep" : ":",
             "dest" : "par"
+          },
+          {
+            "type" : "string",
+            "name" : "--coord_type_proc",
+            "description" : "How to create spatial graph to select reference genes",
+            "default" : [
+              "grid"
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
+          }
+        ]
+      },
+      {
+        "name" : "Normalization options",
+        "arguments" : [
+          {
+            "type" : "integer",
+            "name" : "--n_cp",
+            "description" : "Number of counts per cell. When set to -1, will use None.",
+            "default" : [
+              -1
+            ],
+            "required" : false,
+            "direction" : "input",
+            "multiple" : false,
+            "multiple_sep" : ":",
+            "dest" : "par"
           }
         ]
       }
@@ -3204,7 +3235,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+          "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3226,7 +3257,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/process_dataset",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+          "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
           "executable" : "/nextflow/spatially_variable_genes/process_dataset/select_reference/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/select_reference"
@@ -3248,7 +3279,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/process_dataset",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+          "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
           "executable" : "/nextflow/spatially_variable_genes/process_dataset/simulate_svg/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/simulate_svg"
@@ -3270,7 +3301,7 @@ meta = [
           "functionalityNamespace" : "datasets/normalization",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+          "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
           "executable" : "/nextflow/datasets/normalization/log_cp/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/datasets/normalization/log_cp"
@@ -3292,7 +3323,7 @@ meta = [
           "functionalityNamespace" : "spatially_variable_genes/process_dataset",
           "output" : "",
           "platform" : "",
-          "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+          "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
           "executable" : "/nextflow/spatially_variable_genes/process_dataset/split_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/process_dataset/split_dataset"
@@ -3339,7 +3370,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+    "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3398,7 +3429,8 @@ workflow run_wf {
     | select_reference.run(
       fromState: [
         input: "dataset",
-        num_features: "num_reference_genes"
+        num_features: "num_reference_genes",
+        coord_type_proc: "coord_type_proc"
       ],
       toState: [dataset: "output"]
     )
@@ -3421,7 +3453,7 @@ workflow run_wf {
       toState: [
         dataset_simulated_normalized: "output"
       ],
-      args: [n_cp: 10000]
+      args: [n_cp: -1]
     )
 
     | split_dataset.run(

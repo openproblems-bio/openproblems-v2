@@ -3289,7 +3289,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/methods/lmds_irlba_rf",
     "viash_version" : "0.8.0",
-    "git_commit" : "8983f0636afb3c950d6020cb721641940ed022d1",
+    "git_commit" : "545112bd89d0883aa50745e8bf8e2eda3f4082e3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

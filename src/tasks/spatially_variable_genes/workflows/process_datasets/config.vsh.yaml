@@ -40,6 +40,16 @@ functionality:
           type: integer
           description: Number of top SVGs to select as reference.
           default: 200
+        - name: "--coord_type_proc"
+          type: string
+          default: "grid"
+          description: "How to create spatial graph to select reference genes"
+    - name: Normalization options
+      arguments: 
+        - name: "--n_cp"
+          type: integer
+          default: -1
+          description: "Number of counts per cell. When set to -1, will use None."
 
   resources:
     - type: nextflow_script
