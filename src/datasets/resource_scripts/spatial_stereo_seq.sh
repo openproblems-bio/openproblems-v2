@@ -15,7 +15,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e6_3
@@ -31,7 +34,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e7
@@ -47,7 +53,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e9_1
@@ -63,7 +72,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e10
@@ -79,7 +91,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
 normalization_methods: [log_cp10k]

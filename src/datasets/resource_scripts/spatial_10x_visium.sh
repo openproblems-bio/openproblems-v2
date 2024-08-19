@@ -15,7 +15,10 @@ param_list:
     gene_filter_min_spots: 50
     num_reference_genes: 200
     select_top_variable_genes: 50
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/human_colorectal_cancer
@@ -32,7 +35,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/human_heart
@@ -49,7 +55,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/mouse_embryo
@@ -66,7 +75,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: false
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/mouse_olfactory_bulb 
@@ -83,7 +95,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: false
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/human_breast_cancer_1
@@ -100,7 +115,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/human_lymph_node 
@@ -117,7 +135,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/human_normal_prostate 
@@ -134,7 +155,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
   - id: spatial_10x_visium/human_prostate_cancer
@@ -151,7 +175,10 @@ param_list:
     num_reference_genes: 200
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 6
     n_cp: -1
 
 normalization_methods: [log_cp10k]
@@ -182,7 +209,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/mouse_kidney_v1
@@ -199,7 +229,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: false
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_lung_cancer
@@ -216,7 +249,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_brain_cancer
@@ -233,7 +269,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_kidney
@@ -250,7 +289,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_intestinal_cancer
@@ -267,7 +309,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_skin_melanoma
@@ -284,7 +329,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_cervical_cancer
@@ -301,7 +349,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 #   - id: spatial_10x_visium/human_breast_cancer_2
@@ -318,7 +369,10 @@ HERE
 #     num_reference_genes: 200
 #     select_top_variable_genes: 50
 #     remove_mitochondrial: true
-#     coord_type: grid
+#     coord_type_proc: grid
+#     coord_type_moran_i: generic
+#     coord_type_sepal: grid
+#     max_neighs_speal: 6
 #     n_cp: -1
 
 # normalization_methods: [log_cp10k]

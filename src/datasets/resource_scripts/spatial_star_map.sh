@@ -15,7 +15,10 @@ param_list:
     num_reference_genes: 25
     select_top_variable_genes: 25
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_star_map/mouse_brain_2d_zstep15_0
@@ -31,7 +34,10 @@ param_list:
     num_reference_genes: 25
     select_top_variable_genes: 25
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
 normalization_methods: [log_cp10k]

@@ -15,7 +15,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slide_tags/human_skin_melanoma
@@ -31,7 +34,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slide_tags/human_tonsil
@@ -47,7 +53,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slide_tags/mouse_embryo
@@ -63,7 +72,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: false
-    coord_type: grid
+    coord_type_proc: grid
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
 normalization_methods: [log_cp10k]

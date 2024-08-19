@@ -63,7 +63,10 @@ param_list:
     num_reference_genes: 50
     select_top_variable_genes: 50
     remove_mitochondrial: false
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_merfish/mouse_cortex
@@ -79,7 +82,10 @@ param_list:
     num_reference_genes: 25
     select_top_variable_genes: 25
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
 normalization_methods: [log_cp10k]

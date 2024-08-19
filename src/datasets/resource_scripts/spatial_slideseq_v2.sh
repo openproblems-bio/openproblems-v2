@@ -15,7 +15,10 @@ param_list:
     num_reference_genes: 10
     select_top_variable_genes: 10
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slideseq_v2/mouse_cortex
@@ -31,7 +34,10 @@ param_list:
     num_reference_genes: 10
     select_top_variable_genes: 10
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slideseq_v2/mouse_cerebellum
@@ -47,7 +53,10 @@ param_list:
     num_reference_genes: 10
     select_top_variable_genes: 10
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slideseq_v2/mouse_hippocampus_puck
@@ -63,7 +72,10 @@ param_list:
     num_reference_genes: 10
     select_top_variable_genes: 10
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
   - id: spatial_slideseq_v2/mouse_somatosensory_cortex_puck
@@ -79,7 +91,10 @@ param_list:
     num_reference_genes: 10
     select_top_variable_genes: 10
     remove_mitochondrial: true
-    coord_type: generic
+    coord_type_proc: generic
+    coord_type_moran_i: generic
+    coord_type_sepal: grid
+    max_neighs_speal: 4
     n_cp: -1
 
 

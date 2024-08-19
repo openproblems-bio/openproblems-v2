@@ -22,10 +22,10 @@ functionality:
       direction: output
       required: true
       __merge__: ../../api/file_common_dataset.yaml
-    - name: "--coord_type"
+    - name: "--coord_type_proc"
       type: string
       default: "grid"
-      description: "How to create spatial graph"
+      description: "How to create spatial graph to select reference genes"
     - name: "--num_features"
       type: integer
       default: 200
