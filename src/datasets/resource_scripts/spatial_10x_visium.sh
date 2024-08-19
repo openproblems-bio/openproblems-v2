@@ -71,6 +71,7 @@ param_list:
     gene_filter_min_spots: 30
     num_reference_genes: 200
     select_top_variable_genes: 50
+    remove_mitochondrial: false
 
   - id: spatial_10x_visium/human_breast_cancer_1
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/1.2.0/Parent_Visium_Human_BreastCancer/Parent_Visium_Human_BreastCancer_filtered_feature_bc_matrix.h5"
