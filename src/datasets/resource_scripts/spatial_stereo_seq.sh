@@ -16,6 +16,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e6_3
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_6.3.h5ad?download=1"
@@ -31,6 +32,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e7
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_7.h5ad?download=1"
@@ -46,6 +48,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e9_1
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_9.1.h5ad?download=1"
@@ -61,6 +64,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
   - id: spatial_stereo_seq/drosophila_embryo_e10
     input_data: "https://zenodo.org/records/12785822/files/Stereo-seq_wang2022high_E14-16h_a_count_normal_stereoseq_data_whole_time_point_10.5.h5ad?download=1"
@@ -76,6 +80,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'

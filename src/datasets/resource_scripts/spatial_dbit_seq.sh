@@ -76,6 +76,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
   - id: spatial_dbit_seq/mouse_e11_2
     input_data: "https://zenodo.org/records/12785822/files/DBiT-seq_liu2020high_GSM4364245_E11-FL-2L_gene_data.h5ad?download=1"
@@ -91,6 +92,7 @@ param_list:
     select_top_variable_genes: 50
     remove_mitochondrial: true
     coord_type: generic
+    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
