@@ -41,7 +41,8 @@ workflow run_wf {
     | select_reference.run(
       fromState: [
         input: "dataset",
-        num_features: "num_reference_genes"
+        num_features: "num_reference_genes",
+        coord_type_proc: "coord_type_proc"
       ],
       toState: [dataset: "output"]
     )
@@ -64,7 +65,7 @@ workflow run_wf {
       toState: [
         dataset_simulated_normalized: "output"
       ],
-      args: [n_cp: 10000]
+      args: [n_cp: -1]
     )
 
     | split_dataset.run(
