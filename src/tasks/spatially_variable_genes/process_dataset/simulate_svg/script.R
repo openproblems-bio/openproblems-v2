@@ -4,6 +4,9 @@ requireNamespace("Matrix", quietly = TRUE)
 requireNamespace("SingleCellExperiment", quietly = TRUE)
 library(rlang)
 
+# set random seed
+set.seed(2024)
+
 ## VIASH START
 par <- list(
   input = "resources_test/common/mouse_brain_coronal_section1/dataset.h5ad",
