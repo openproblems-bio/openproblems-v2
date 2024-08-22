@@ -43,7 +43,8 @@ functionality:
         - name: "--coord_type_proc"
           type: string
           default: "grid"
-          description: "How to create spatial graph to select reference genes"
+          description: "How to create spatial graph to select reference genes."
+          choices: [grid, generic]
     - name: Normalization options
       arguments: 
         - name: "--n_cp"

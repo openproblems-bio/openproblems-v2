@@ -12,14 +12,7 @@ param_list:
     dataset_reference: wang2018three
     spot_filter_min_genes: 1
     gene_filter_min_spots: 1
-    num_reference_genes: 25
-    select_top_variable_genes: 25
     remove_mitochondrial: true
-    coord_type_proc: generic
-    coord_type_moran_i: generic
-    coord_type_sepal: grid
-    max_neighs_speal: 6
-    n_cp: -1
 
   - id: spatial_star_map/mouse_brain_2d_zstep15_0
     input_data: "https://zenodo.org/records/12785822/files/STARmap_Wang2018three_data_2D_zstep15_0_data.h5ad?download=1"
@@ -31,14 +24,7 @@ param_list:
     dataset_reference: wang2018three
     spot_filter_min_genes: 1
     gene_filter_min_spots: 1
-    num_reference_genes: 25
-    select_top_variable_genes: 25
     remove_mitochondrial: true
-    coord_type_proc: generic
-    coord_type_moran_i: generic
-    coord_type_sepal: grid
-    max_neighs_speal: 6
-    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
@@ -46,8 +32,7 @@ output_meta: '$id/dataset_metadata.yaml'
 output_state: '$id/state.yaml'
 output_raw: force_null
 output_normalized: force_null
-publish_dir: s3://openproblems-data/resources/datasets
-remove_mitochondrial: true
+publish_dir: resources/datasets
 HERE
 
 cat > /tmp/nextflow.config << HERE
@@ -63,11 +48,17 @@ process {
 }
 HERE
 
-tw launch https://github.com/openproblems-bio/openproblems-v2.git \
-  --revision main_build \
-  --pull-latest \
-  --main-script target/nextflow/datasets/workflows/process_spatial_from_zenodo/main.nf \
-  --workspace 53907369739130 \
-  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
-  --params-file "/tmp/params.yaml" \
-  --config /tmp/nextflow.config 
+# tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+#   --revision main_build \
+#   --pull-latest \
+#   --main-script target/nextflow/datasets/workflows/process_spatial_from_zenodo/main.nf \
+#   --workspace 53907369739130 \
+#   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
+#   --params-file "/tmp/params.yaml" \
+#   --config /tmp/nextflow.config 
+
+nextflow run . \
+  -main-script target/nextflow/datasets/workflows/process_spatial_from_zenodo/main.nf \
+  -c src/wf_utils/labels_ci.config \
+  -profile docker \
+  -params-file "/tmp/params.yaml"
