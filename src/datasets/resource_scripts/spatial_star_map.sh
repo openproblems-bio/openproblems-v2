@@ -48,17 +48,11 @@ process {
 }
 HERE
 
-# tw launch https://github.com/openproblems-bio/openproblems-v2.git \
-#   --revision main_build \
-#   --pull-latest \
-#   --main-script target/nextflow/datasets/workflows/process_spatial_from_zenodo/main.nf \
-#   --workspace 53907369739130 \
-#   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
-#   --params-file "/tmp/params.yaml" \
-#   --config /tmp/nextflow.config 
-
-nextflow run . \
-  -main-script target/nextflow/datasets/workflows/process_spatial_from_zenodo/main.nf \
-  -c src/wf_utils/labels_ci.config \
-  -profile docker \
-  -params-file "/tmp/params.yaml"
+tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+  --revision main_build \
+  --pull-latest \
+  --main-script target/nextflow/datasets/workflows/process_spatial_from_zenodo/main.nf \
+  --workspace 53907369739130 \
+  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
+  --params-file "/tmp/params.yaml" \
+  --config /tmp/nextflow.config 
