@@ -2862,11 +2862,15 @@ meta = [
       {
         "type" : "integer",
         "name" : "--max_neighs_sepal",
-        "description" : "Maximum number of neighbors of a node in the spatial graph.",
+        "description" : "Maximum number of neighbors of a node in the spatial graph. Valid options are 4 (square-grid) and 6 (hexagonal-grid).",
         "default" : [
           6
         ],
         "required" : false,
+        "choices" : [
+          4,
+          6
+        ],
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -2880,6 +2884,10 @@ meta = [
           "grid"
         ],
         "required" : false,
+        "choices" : [
+          "grid",
+          "generic"
+        ],
         "direction" : "input",
         "multiple" : false,
         "multiple_sep" : ":",
@@ -3009,7 +3017,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatially_variable_genes/methods/sepal",
     "viash_version" : "0.8.0",
-    "git_commit" : "914fdb7535df33b1d3151647c585a57fee4a4b70",
+    "git_commit" : "e5ed85ada718df217d3bc994126978713a326254",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

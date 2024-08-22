@@ -191,7 +191,8 @@ function ViashHelp {
   echo "    --coord_type_proc"
   echo "        type: string"
   echo "        default: grid"
-  echo "        How to create spatial graph to select reference genes"
+  echo "        choices: [ grid, generic ]"
+  echo "        How to create spatial graph to select reference genes."
   echo ""
   echo "    --num_features"
   echo "        type: integer"
@@ -423,9 +424,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "squidpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/process_dataset select_reference"
-LABEL org.opencontainers.image.created="2024-08-20T13:16:36Z"
+LABEL org.opencontainers.image.created="2024-08-22T05:47:53Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="914fdb7535df33b1d3151647c585a57fee4a4b70"
+LABEL org.opencontainers.image.revision="e5ed85ada718df217d3bc994126978713a326254"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
@@ -847,6 +848,19 @@ if [[ -n "$VIASH_META_MEMORY_PB" ]]; then
     ViashError 'memory_pb' has to be a long. Use "--help" to get more information on the parameters.
     exit 1
   fi
+fi
+
+# check whether value is belongs to a set of choices
+if [ ! -z "$VIASH_PAR_COORD_TYPE_PROC" ]; then
+  VIASH_PAR_COORD_TYPE_PROC_CHOICES=("grid:generic")
+  IFS=':'
+  set -f
+  if ! [[ ":${VIASH_PAR_COORD_TYPE_PROC_CHOICES[*]}:" =~ ":$VIASH_PAR_COORD_TYPE_PROC:" ]]; then
+    ViashError '--coord_type_proc' specified value of \'$VIASH_PAR_COORD_TYPE_PROC\' is not in the list of allowed values. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+  set +f
+  unset IFS
 fi
 
 # create parent directories of output files, if so desired

@@ -19,6 +19,7 @@ functionality:
       type: string
       default: "generic"
       description: Type of coordinate system. Valid options are "grid" for grid coordinates or "generic" for generic coordinates.
+      choices: [grid, generic]
 
   resources:
     - type: python_script

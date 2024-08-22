@@ -2840,7 +2840,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/decompress_gzip",
     "viash_version" : "0.8.0",
-    "git_commit" : "914fdb7535df33b1d3151647c585a57fee4a4b70",
+    "git_commit" : "e5ed85ada718df217d3bc994126978713a326254",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))

@@ -13,14 +13,7 @@ param_list:
     dataset_organism: Homo sapiens
     spot_filter_min_genes: 100
     gene_filter_min_spots: 50
-    num_reference_genes: 100
-    select_top_variable_genes: 50
     remove_mitochondrial: true
-    coord_type_proc: grid
-    coord_type_moran_i: generic
-    coord_type_sepal: grid
-    max_neighs_speal: 6
-    n_cp: -1
 
   - id: spatial_10x_xenium/mouse_brain
     input_expression: "https://cf.10xgenomics.com/samples/spatial-exp/2.1.0/CytAssist_FreshFrozen_Mouse_Brain_Post_Xenium_Rep1/CytAssist_FreshFrozen_Mouse_Brain_Post_Xenium_Rep1_filtered_feature_bc_matrix.h5"
@@ -33,14 +26,7 @@ param_list:
     dataset_organism: Mus musculus
     spot_filter_min_genes: 100
     gene_filter_min_spots: 50
-    num_reference_genes: 100
-    select_top_variable_genes: 50
     remove_mitochondrial: false
-    coord_type_proc: grid
-    coord_type_moran_i: generic
-    coord_type_sepal: grid
-    max_neighs_speal: 6
-    n_cp: -1
 
 normalization_methods: [log_cp10k]
 output_dataset: '$id/dataset.h5ad'
@@ -48,10 +34,7 @@ output_meta: '$id/dataset_metadata.yaml'
 output_state: '$id/state.yaml'
 output_raw: force_null
 output_normalized: force_null
-publish_dir: s3://openproblems-data/resources/datasets
-spot_filter_min_genes: 100
-gene_filter_min_spots: 50
-remove_mitochondrial: true
+publish_dir: resources/datasets
 HERE
 
 cat > /tmp/nextflow.config << HERE
@@ -67,11 +50,17 @@ process {
 }
 HERE
 
-tw launch https://github.com/openproblems-bio/openproblems-v2.git \
-  --revision main_build \
-  --pull-latest \
-  --main-script target/nextflow/datasets/workflows/process_10x_datasets/main.nf \
-  --workspace 53907369739130 \
-  --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
-  --params-file "/tmp/params.yaml" \
-  --config /tmp/nextflow.config 
+# tw launch https://github.com/openproblems-bio/openproblems-v2.git \
+#   --revision main_build \
+#   --pull-latest \
+#   --main-script target/nextflow/datasets/workflows/process_10x_datasets/main.nf \
+#   --workspace 53907369739130 \
+#   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
+#   --params-file "/tmp/params.yaml" \
+#   --config /tmp/nextflow.config 
+
+nextflow run . \
+  -main-script target/nextflow/datasets/workflows/process_10x_datasets/main.nf \
+  -c src/wf_utils/labels_ci.config \
+  -profile docker \
+  -params-file "/tmp/params.yaml"

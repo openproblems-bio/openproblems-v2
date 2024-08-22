@@ -186,6 +186,7 @@ function ViashHelp {
   echo "    --coord_type_moran_i"
   echo "        type: string"
   echo "        default: generic"
+  echo "        choices: [ grid, generic ]"
   echo "        Type of coordinate system. Valid options are \"grid\" for grid coordinates"
   echo "        or \"generic\" for generic coordinates."
 }
@@ -409,6 +410,19 @@ if [[ -n "$VIASH_META_MEMORY_PB" ]]; then
     ViashError 'memory_pb' has to be a long. Use "--help" to get more information on the parameters.
     exit 1
   fi
+fi
+
+# check whether value is belongs to a set of choices
+if [ ! -z "$VIASH_PAR_COORD_TYPE_MORAN_I" ]; then
+  VIASH_PAR_COORD_TYPE_MORAN_I_CHOICES=("grid:generic")
+  IFS=':'
+  set -f
+  if ! [[ ":${VIASH_PAR_COORD_TYPE_MORAN_I_CHOICES[*]}:" =~ ":$VIASH_PAR_COORD_TYPE_MORAN_I:" ]]; then
+    ViashError '--coord_type_moran_i' specified value of \'$VIASH_PAR_COORD_TYPE_MORAN_I\' is not in the list of allowed values. Use "--help" to get more information on the parameters.
+    exit 1
+  fi
+  set +f
+  unset IFS
 fi
 
 # create parent directories of output files, if so desired

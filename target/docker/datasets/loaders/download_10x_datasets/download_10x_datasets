@@ -469,9 +469,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "squidpy"
 
 LABEL org.opencontainers.image.description="Companion container for running component datasets/loaders download_10x_datasets"
-LABEL org.opencontainers.image.created="2024-08-20T13:16:34Z"
+LABEL org.opencontainers.image.created="2024-08-22T05:47:43Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="914fdb7535df33b1d3151647c585a57fee4a4b70"
+LABEL org.opencontainers.image.revision="e5ed85ada718df217d3bc994126978713a326254"
 LABEL org.opencontainers.image.version="integration_build"
 
 VIASHDOCKER
