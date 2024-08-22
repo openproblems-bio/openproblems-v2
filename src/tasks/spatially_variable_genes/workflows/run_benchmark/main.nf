@@ -78,11 +78,11 @@ workflow run_wf {
         if (comp.config.functionality.info.type == "control_method") {
           new_args.input_solution = state.input_solution
         }
-        if (comp.config.functionality.info.type == "sepal") {
+        if (comp.config.functionality.name == "sepal") {
           new_args.coord_type_sepal = state.coord_type_sepal
           new_args.max_neighs_sepal = state.max_neighs_sepal
         }
-        if (comp.config.functionality.info.type == "moran_i") {
+        if (comp.config.functionality.name == "moran_i") {
           new_args.coord_type_moran_i = state.coord_type_moran_i
         }
         new_args

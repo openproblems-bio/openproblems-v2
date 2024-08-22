@@ -3128,7 +3128,7 @@ meta = [
           "functionalityNamespace" : "common",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e5ed85ada718df217d3bc994126978713a326254",
+          "git_commit" : "0b474ff9f32069b0a6d5b4945656f53f78c1918f",
           "executable" : "/nextflow/common/check_dataset_schema/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/common/check_dataset_schema"
@@ -3150,7 +3150,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e5ed85ada718df217d3bc994126978713a326254",
+          "git_commit" : "0b474ff9f32069b0a6d5b4945656f53f78c1918f",
           "executable" : "/nextflow/spatial_decomposition/dataset_simulator/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/dataset_simulator"
@@ -3172,7 +3172,7 @@ meta = [
           "functionalityNamespace" : "spatial_decomposition",
           "output" : "",
           "platform" : "",
-          "git_commit" : "e5ed85ada718df217d3bc994126978713a326254",
+          "git_commit" : "0b474ff9f32069b0a6d5b4945656f53f78c1918f",
           "executable" : "/nextflow/spatial_decomposition/process_dataset/main.nf"
         },
         "writtenPath" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/process_dataset"
@@ -3219,7 +3219,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/spatial_decomposition/workflows/process_datasets",
     "viash_version" : "0.8.0",
-    "git_commit" : "e5ed85ada718df217d3bc994126978713a326254",
+    "git_commit" : "0b474ff9f32069b0a6d5b4945656f53f78c1918f",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
