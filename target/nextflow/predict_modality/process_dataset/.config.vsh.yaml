@@ -47,6 +47,15 @@ functionality:
           description: "A score for the feature indicating how highly variable it\
             \ is."
           required: true
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
+          required: true
         uns:
         - type: "string"
           name: "dataset_id"
@@ -142,6 +151,15 @@ functionality:
           name: "hvg_score"
           description: "A score for the feature indicating how highly variable it\
             \ is."
+          required: true
+        - type: "boolean"
+          name: "hvg"
+          description: "Whether or not the feature is considered to be a 'highly variable\
+            \ gene'"
+          required: true
+        - type: "double"
+          name: "hvg_score"
+          description: "A ranking of the features by hvg."
           required: true
         uns:
         - type: "string"
@@ -624,5 +642,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/predict_modality/process_dataset/process_dataset"
   viash_version: "0.8.0"
-  git_commit: "d0bc03fb05d43fb26f51c6fe6aa2e2a2f7ff5ade"
+  git_commit: "7cea6a5c7ded1d32cd13dce63322b1ca0f23deb8"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
