@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "git+https://github.com/scottgigante-immunai/knn-smoothing@python_package"
 
 LABEL org.opencontainers.image.description="Companion container for running component denoising/methods knn_smoothing"
-LABEL org.opencontainers.image.created="2024-08-26T21:34:08Z"
+LABEL org.opencontainers.image.created="2024-08-26T21:47:32Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="7cea6a5c7ded1d32cd13dce63322b1ca0f23deb8"
+LABEL org.opencontainers.image.revision="41fc02751dc001bc76c8c3e073f93df9fcb4234d"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
