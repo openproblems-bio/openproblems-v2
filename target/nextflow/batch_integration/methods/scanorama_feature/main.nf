@@ -2922,9 +2922,15 @@ meta = [
     "resources" : [
       {
         "type" : "python_script",
-        "path" : "script.py",
+        "path" : "../scanorama_embed/script.py",
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/scanorama_feature/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/helper_functions/read_anndata_partial.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "test_resources" : [
@@ -2984,7 +2990,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
+      "image" : "ghcr.io/openproblems-bio/base_images/python:1.1.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3045,7 +3051,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/scanorama_feature",
     "viash_version" : "0.8.0",
-    "git_commit" : "41fc02751dc001bc76c8c3e073f93df9fcb4234d",
+    "git_commit" : "aab07afa0046ed6b1648ffcd6994ffddb481299e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3060,6 +3066,7 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
+import sys
 import anndata as ad
 import scanorama
 
@@ -3090,6 +3097,10 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 # based on scib
 # -> https://github.com/theislab/scib/blob/59ae6eee5e611d9d3db067685ec96c28804e9127/scib/utils.py#L51C1-L72C62
 def merge_adata(*adata_list, **kwargs):
@@ -3117,7 +3128,13 @@ def merge_adata(*adata_list, **kwargs):
 
 
 print('Read input', flush=True)
-adata = ad.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    X='layers/normalized',
+    obs='obs',
+    var='var',
+    uns='uns'
+)
 
 if par['n_hvg']:
     print(f"Select top {par['n_hvg']} high variable genes", flush=True)
@@ -3125,7 +3142,6 @@ if par['n_hvg']:
     adata = adata[:, idx].copy()
 
 print('Run scanorama', flush=True)
-adata.X = adata.layers['normalized']
 split = []
 batch_categories = adata.obs['batch'].cat.categories
 for i in batch_categories:
@@ -3144,11 +3160,14 @@ output = ad.AnnData(
     },
     layers={
         'corrected_counts': corrected.X,
+    },
+    obsm={
+        'X_emb': corrected.obsm["X_scanorama"],
     }
 )
 
 print("Write output to file", flush=True)
-output.write_h5ad(par['output'], compression='gzip')
+output.write(par['output'], compression='gzip')
 VIASHMAIN
 python -B "$tempscript"
 '''

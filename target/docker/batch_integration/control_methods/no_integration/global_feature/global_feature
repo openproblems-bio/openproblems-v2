@@ -398,16 +398,16 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.4
+FROM ghcr.io/openproblems-bio/base_images/python:1.1.0
 
 ENTRYPOINT []
 
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/control_methods/no_integration global_feature"
-LABEL org.opencontainers.image.created="2024-08-26T21:47:43Z"
+LABEL org.opencontainers.image.created="2024-08-27T06:39:47Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="41fc02751dc001bc76c8c3e073f93df9fcb4234d"
+LABEL org.opencontainers.image.revision="aab07afa0046ed6b1648ffcd6994ffddb481299e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -854,6 +854,7 @@ function interrupt {
 trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
+import sys
 import scanpy as sc
 
 ## VIASH START
@@ -882,12 +883,22 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('Read input', flush=True)
-adata = sc.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    X='layers/normalized',
+    obs='obs',
+    var='var',
+    uns='uns'
+)
 
 # no processing, subset matrix to highly variable genes
 adata_hvg = adata[:, adata.var["hvg"]].copy()
-adata.layers['corrected_counts'] = adata_hvg.layers["normalized"].copy()
+adata.layers['corrected_counts'] = adata_hvg.X.copy()
 
 print("Store outputs", flush=True)
 adata.uns['method_id'] = meta['functionality_name']

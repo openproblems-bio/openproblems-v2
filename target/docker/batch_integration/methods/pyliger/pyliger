@@ -398,7 +398,7 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.4
+FROM ghcr.io/openproblems-bio/base_images/python:1.1.0
 
 ENTRYPOINT []
 
@@ -407,9 +407,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "umap-learn[plot]" "pyliger" "dask-expr"
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods pyliger"
-LABEL org.opencontainers.image.created="2024-08-26T21:47:43Z"
+LABEL org.opencontainers.image.created="2024-08-27T06:39:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="41fc02751dc001bc76c8c3e073f93df9fcb4234d"
+LABEL org.opencontainers.image.revision="aab07afa0046ed6b1648ffcd6994ffddb481299e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -856,6 +856,7 @@ function interrupt {
 trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
+import sys
 import anndata as ad
 import numpy as np
 import pyliger
@@ -886,21 +887,24 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('>> Read input', flush=True)
-adata = ad.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    X='layers/counts',
+    obs='obs',
+    var='var',
+    uns='uns'
+)
+adata.layers['norm_data'] = read_anndata(par['input'], X='layers/normalized').X
 
 print('>> Prepare data', flush=True)
 adata_per_batch = []
 for batch in adata.obs['batch'].unique():
   adb = adata[adata.obs['batch'] == batch].copy()
-
-  # move counts
-  adb.X = adb.layers['counts']
-  del adb.layers['counts']
-
-  # move normalized data
-  adb.layers["norm_data"] = adb.layers["normalized"]
-  del adb.layers["normalized"]
   
   # save row sum and sum of squares for further use
   norm_sum = np.ravel(np.sum(adb.layers["norm_data"], axis=0))

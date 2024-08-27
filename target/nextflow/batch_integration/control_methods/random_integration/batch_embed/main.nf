@@ -2914,6 +2914,12 @@ meta = [
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/control_methods/random_integration/batch_embed/"
       },
       {
+        "type" : "python_script",
+        "path" : "src/common/helper_functions/read_anndata_partial.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
+      },
+      {
         "type" : "file",
         "path" : "../../utils.py",
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/control_methods/random_integration/batch_embed/"
@@ -2963,7 +2969,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
+      "image" : "ghcr.io/openproblems-bio/base_images/python:1.1.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3014,7 +3020,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/control_methods/random_integration/batch_embed",
     "viash_version" : "0.8.0",
-    "git_commit" : "41fc02751dc001bc76c8c3e073f93df9fcb4234d",
+    "git_commit" : "aab07afa0046ed6b1648ffcd6994ffddb481299e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3061,9 +3067,15 @@ dep = {
 # add helper scripts to path
 sys.path.append(meta["resources_dir"])
 from utils import _randomize_features
+from read_anndata_partial import read_anndata
 
 print('Read input', flush=True)
-adata = sc.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    obs='obs',
+    obsm='obsm',
+    uns='uns'
+)
 
 print("process dataset", flush=True)
 adata.obsm["X_emb"] = _randomize_features(

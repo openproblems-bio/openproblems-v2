@@ -428,7 +428,7 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_pytorch_nvidia:1.0.4
+FROM ghcr.io/openproblems-bio/base_images/python:1.1.0
 
 ENTRYPOINT []
 
@@ -439,9 +439,9 @@ RUN pip install --upgrade pip && \
 RUN pip install -U "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/methods scanvi"
-LABEL org.opencontainers.image.created="2024-08-26T21:47:44Z"
+LABEL org.opencontainers.image.created="2024-08-27T06:39:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="41fc02751dc001bc76c8c3e073f93df9fcb4234d"
+LABEL org.opencontainers.image.revision="aab07afa0046ed6b1648ffcd6994ffddb481299e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -1004,6 +1004,7 @@ function interrupt {
 trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
+import sys
 import anndata as ad
 from scvi.model import SCVI, SCANVI
 
@@ -1039,8 +1040,18 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('Read input', flush=True)
-adata = ad.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    X='layers/counts',
+    obs='obs',
+    var='var',
+    uns='uns'
+)
 
 if par["n_hvg"]:
     print(f"Select top {par['n_hvg']} high variable genes", flush=True)
@@ -1048,7 +1059,7 @@ if par["n_hvg"]:
     adata = adata[:, idx].copy()
 
 print("Processing data", flush=True)
-SCVI.setup_anndata(adata, layer="counts", batch_key="batch")
+SCVI.setup_anndata(adata, batch_key="batch")
 
 print("Run scVI", flush=True)
 model_kwargs = {

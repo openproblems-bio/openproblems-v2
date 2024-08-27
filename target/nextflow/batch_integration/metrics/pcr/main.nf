@@ -2996,6 +2996,12 @@ meta = [
         "path" : "script.py",
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/metrics/pcr/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/helper_functions/read_anndata_partial.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "test_resources" : [
@@ -3059,7 +3065,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
+      "image" : "ghcr.io/openproblems-bio/base_images/python:1.1.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3120,7 +3126,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/metrics/pcr",
     "viash_version" : "0.8.0",
-    "git_commit" : "41fc02751dc001bc76c8c3e073f93df9fcb4234d",
+    "git_commit" : "aab07afa0046ed6b1648ffcd6994ffddb481299e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3135,6 +3141,7 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
+import sys
 import anndata as ad
 from scib.metrics import pcr_comparison
 
@@ -3165,15 +3172,31 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('Read input', flush=True)
-input_solution = ad.read_h5ad(par['input_solution'])
-input_integrated = ad.read_h5ad(par['input_integrated'])
-input_solution.X = input_solution.layers['normalized']
+adata_solution = read_anndata(
+    par['input_solution'],
+    X='layers/normalized',
+    obs='obs',
+    var='var',
+    # obsm='obsm',
+    # varm='varm',
+    uns='uns'
+)
+adata_integrated = read_anndata(
+    par['input_integrated'],
+    obs='obs',
+    obsm='obsm',
+    uns='uns'
+)
 
 print('compute score', flush=True)
 score = pcr_comparison(
-    input_solution,
-    input_integrated,
+    adata_solution,
+    adata_integrated,
     embed='X_emb',
     covariate='batch',
     verbose=False
@@ -3182,9 +3205,9 @@ score = pcr_comparison(
 print('Create output AnnData object', flush=True)
 output = ad.AnnData(
     uns={
-        'dataset_id': input_solution.uns['dataset_id'],
-        'normalization_id': input_solution.uns['normalization_id'],
-        'method_id': input_integrated.uns['method_id'],
+        'dataset_id': adata_solution.uns['dataset_id'],
+        'normalization_id': adata_solution.uns['normalization_id'],
+        'method_id': adata_integrated.uns['method_id'],
         'metric_ids': [ meta['functionality_name'] ],
         'metric_values': [ score ]
     }

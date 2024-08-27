@@ -2925,6 +2925,12 @@ meta = [
         "path" : "script.py",
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/mnnpy/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/helper_functions/read_anndata_partial.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "test_resources" : [
@@ -3059,7 +3065,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/mnnpy",
     "viash_version" : "0.8.0",
-    "git_commit" : "41fc02751dc001bc76c8c3e073f93df9fcb4234d",
+    "git_commit" : "aab07afa0046ed6b1648ffcd6994ffddb481299e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3074,6 +3080,7 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
+import sys
 import anndata as ad
 import mnnpy
 
@@ -3104,8 +3111,18 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('Read input', flush=True)
-adata = ad.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    X='layers/normalized',
+    obs='obs',
+    var='var',
+    uns='uns'
+)
 
 if par['n_hvg']:
     print(f"Select top {par['n_hvg']} high variable genes", flush=True)
@@ -3113,7 +3130,6 @@ if par['n_hvg']:
     adata = adata[:, idx].copy()
 
 print('Run mnn', flush=True)
-adata.X = adata.layers['normalized']
 split = []
 batch_categories = adata.obs['batch'].cat.categories
 for i in batch_categories:

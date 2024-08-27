@@ -83,6 +83,9 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
+  - type: "python_script"
+    path: "src/common/helper_functions/read_anndata_partial.py"
+    is_executable: true
   test_resources:
   - type: "python_script"
     path: "src/common/comp_tests/run_and_check_adata.py"
@@ -107,7 +110,7 @@ functionality:
 platforms:
 - type: "docker"
   id: "docker"
-  image: "ghcr.io/openproblems-bio/base_python:1.0.4"
+  image: "ghcr.io/openproblems-bio/base_images/python:1.1.0"
   target_organization: "openproblems-bio"
   target_registry: "ghcr.io"
   namespace_separator: "/"
@@ -115,12 +118,6 @@ platforms:
   chown: true
   setup_strategy: "ifneedbepullelsecachedbuild"
   target_image_source: "https://github.com/openproblems-bio/openproblems-v2"
-  setup:
-  - type: "python"
-    user: false
-    pypi:
-    - "scanpy"
-    upgrade: true
   entrypoint: []
   cmd: null
 - type: "nextflow"
@@ -157,5 +154,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/transformers/feature_to_embed"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/transformers/feature_to_embed/feature_to_embed"
   viash_version: "0.8.0"
-  git_commit: "41fc02751dc001bc76c8c3e073f93df9fcb4234d"
+  git_commit: "aab07afa0046ed6b1648ffcd6994ffddb481299e"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"

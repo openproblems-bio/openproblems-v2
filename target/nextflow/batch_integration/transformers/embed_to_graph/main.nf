@@ -2863,6 +2863,12 @@ meta = [
         "path" : "script.py",
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/transformers/embed_to_graph/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/helper_functions/read_anndata_partial.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "test_resources" : [
@@ -2898,24 +2904,14 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
+      "image" : "ghcr.io/openproblems-bio/base_images/python:1.1.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
       "resolve_volume" : "Automatic",
       "chown" : true,
       "setup_strategy" : "ifneedbepullelsecachedbuild",
-      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2",
-      "setup" : [
-        {
-          "type" : "python",
-          "user" : false,
-          "pypi" : [
-            "scanpy"
-          ],
-          "upgrade" : true
-        }
-      ]
+      "target_image_source" : "https://github.com/openproblems-bio/openproblems-v2"
     },
     {
       "type" : "nextflow",
@@ -2959,7 +2955,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/transformers/embed_to_graph",
     "viash_version" : "0.8.0",
-    "git_commit" : "41fc02751dc001bc76c8c3e073f93df9fcb4234d",
+    "git_commit" : "aab07afa0046ed6b1648ffcd6994ffddb481299e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -2974,7 +2970,7 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
-import yaml
+import sys
 import scanpy as sc
 
 ## VIASH START
@@ -3003,10 +2999,20 @@ dep = {
 
 ## VIASH END
 
-print('Read input', flush=True)
-adata = sc.read_h5ad(par['input'])
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
 
-print('Run kNN', flush=True)
+
+print('Read input', flush=True)
+adata = read_anndata(
+    par['input'],
+    obs='obs',
+    obsm='obsm',
+    uns='uns'
+)
+
+
+print('Run kNN...', flush=True)
 sc.pp.neighbors(adata, use_rep='X_emb')
 
 print("Store outputs", flush=True)

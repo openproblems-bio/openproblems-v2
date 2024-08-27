@@ -398,18 +398,16 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.4
+FROM ghcr.io/openproblems-bio/base_images/python:1.1.0
 
 ENTRYPOINT []
 
  
-RUN pip install --upgrade pip && \
-  pip install --upgrade --no-cache-dir "scanpy"
-
+RUN :
 LABEL org.opencontainers.image.description="Companion container for running component batch_integration/transformers embed_to_graph"
-LABEL org.opencontainers.image.created="2024-08-26T21:47:44Z"
+LABEL org.opencontainers.image.created="2024-08-27T06:39:48Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="41fc02751dc001bc76c8c3e073f93df9fcb4234d"
+LABEL org.opencontainers.image.revision="aab07afa0046ed6b1648ffcd6994ffddb481299e"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
@@ -856,7 +854,7 @@ function interrupt {
 trap clean_up EXIT
 trap interrupt INT SIGINT
 cat > "\$tempscript" << 'VIASHMAIN'
-import yaml
+import sys
 import scanpy as sc
 
 ## VIASH START
@@ -885,10 +883,20 @@ dep = {
 
 ## VIASH END
 
-print('Read input', flush=True)
-adata = sc.read_h5ad(par['input'])
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
 
-print('Run kNN', flush=True)
+
+print('Read input', flush=True)
+adata = read_anndata(
+    par['input'],
+    obs='obs',
+    obsm='obsm',
+    uns='uns'
+)
+
+
+print('Run kNN...', flush=True)
 sc.pp.neighbors(adata, use_rep='X_emb')
 
 print("Store outputs", flush=True)

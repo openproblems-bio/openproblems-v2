@@ -2912,6 +2912,12 @@ meta = [
         "path" : "script.py",
         "is_executable" : true,
         "parent" : "file:/home/runner/work/openproblems-v2/openproblems-v2/src/tasks/batch_integration/methods/pyliger/"
+      },
+      {
+        "type" : "python_script",
+        "path" : "src/common/helper_functions/read_anndata_partial.py",
+        "is_executable" : true,
+        "parent" : "file:///home/runner/work/openproblems-v2/openproblems-v2/"
       }
     ],
     "test_resources" : [
@@ -2967,7 +2973,7 @@ meta = [
     {
       "type" : "docker",
       "id" : "docker",
-      "image" : "ghcr.io/openproblems-bio/base_python:1.0.4",
+      "image" : "ghcr.io/openproblems-bio/base_images/python:1.1.0",
       "target_organization" : "openproblems-bio",
       "target_registry" : "ghcr.io",
       "namespace_separator" : "/",
@@ -3030,7 +3036,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/pyliger",
     "viash_version" : "0.8.0",
-    "git_commit" : "41fc02751dc001bc76c8c3e073f93df9fcb4234d",
+    "git_commit" : "aab07afa0046ed6b1648ffcd6994ffddb481299e",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
@@ -3045,6 +3051,7 @@ def innerWorkflowFactory(args) {
   def rawScript = '''set -e
 tempscript=".viash_script.sh"
 cat > "$tempscript" << VIASHMAIN
+import sys
 import anndata as ad
 import numpy as np
 import pyliger
@@ -3075,21 +3082,24 @@ dep = {
 
 ## VIASH END
 
+sys.path.append(meta["resources_dir"])
+from read_anndata_partial import read_anndata
+
+
 print('>> Read input', flush=True)
-adata = ad.read_h5ad(par['input'])
+adata = read_anndata(
+    par['input'],
+    X='layers/counts',
+    obs='obs',
+    var='var',
+    uns='uns'
+)
+adata.layers['norm_data'] = read_anndata(par['input'], X='layers/normalized').X
 
 print('>> Prepare data', flush=True)
 adata_per_batch = []
 for batch in adata.obs['batch'].unique():
   adb = adata[adata.obs['batch'] == batch].copy()
-
-  # move counts
-  adb.X = adb.layers['counts']
-  del adb.layers['counts']
-
-  # move normalized data
-  adb.layers["norm_data"] = adb.layers["normalized"]
-  del adb.layers["normalized"]
   
   # save row sum and sum of squares for further use
   norm_sum = np.ravel(np.sum(adb.layers["norm_data"], axis=0))
