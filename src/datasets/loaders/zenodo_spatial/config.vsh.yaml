@@ -1,5 +1,5 @@
 functionality:
-  name: download_spatial_from_zenodo
+  name: zenodo_spatial
   namespace: datasets/loaders
   description: |
     Download an Anndata file containing DBiT seq, MERFISH, seqFISH, Slide-seq v2, STARmap, and Stereo-seq data from Zenodo.

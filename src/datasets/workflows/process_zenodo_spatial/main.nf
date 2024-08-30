@@ -49,7 +49,7 @@ workflow run_wf {
     }
 
     // fetch data from legacy openproblems
-    | download_spatial_from_zenodo.run(
+    | zenodo_spatial.run(
       fromState: [
         "input_data": "input_data",
         "dataset_id": "id",

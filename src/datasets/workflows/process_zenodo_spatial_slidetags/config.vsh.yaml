@@ -1,8 +1,8 @@
 functionality:
-  name: process_spatial_from_zenodo
+  name: process_zenodo_spatial_slidetags
   namespace: datasets/workflows
   description: | 
-    Download and process DBiT seq, MERFISH, seqFISH, Slide-seq v2, STARmap, and Stereo-seq data from Zenodo.
+    Download and process slide tags datasets originating from Zenodo.
   argument_groups: 
     - name: Input
       arguments:
@@ -127,7 +127,7 @@ functionality:
       entrypoint: run_wf
     - path: /src/wf_utils/helper.nf
   dependencies: 
-    - name: datasets/loaders/download_spatial_from_zenodo
+    - name: datasets/loaders/zenodo_spatial_slidetags
     - name: datasets/normalization/log_cp
     - name: datasets/normalization/log_scran_pooling
     - name: datasets/normalization/sqrt_cp

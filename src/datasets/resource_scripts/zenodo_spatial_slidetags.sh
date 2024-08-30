@@ -2,7 +2,7 @@
 
 cat > "/tmp/params.yaml" << 'HERE'
 param_list:
-  - id: spatial_slide_tags/human_cortex
+  - id: zenodo_spatial_slidetags/human_cortex_slidetags
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_cortex.tar.gz?download=1"
     dataset_name: Slide-tags - Human Cortex
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
@@ -14,7 +14,7 @@ param_list:
     gene_filter_min_spots: 50
     remove_mitochondrial: true
 
-  - id: spatial_slide_tags/human_skin_melanoma
+  - id: zenodo_spatial_slidetags/human_skin_melanoma_slidetags
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_skin_melanoma.tar.gz?download=1"
     dataset_name: Slide-tags - Human Skin Melanoma
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
@@ -26,7 +26,7 @@ param_list:
     gene_filter_min_spots: 50
     remove_mitochondrial: true
 
-  - id: spatial_slide_tags/human_tonsil
+  - id: zenodo_spatial_slidetags/human_tonsil_slidetags
     input_data: "https://zenodo.org/records/12785822/files/slidetag_human_tonsil.tar.gz?download=1"
     dataset_name: Slide-tags - Human Tonsil
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
@@ -38,7 +38,7 @@ param_list:
     gene_filter_min_spots: 50
     remove_mitochondrial: true
 
-  - id: spatial_slide_tags/mouse_embryo
+  - id: zenodo_spatial_slidetags/mouse_embryo_slidetags
     input_data: "https://zenodo.org/records/12785822/files/slidetag_mouse_embryo.tar.gz?download=1"
     dataset_name: Slide-tags - Mouse Embryo
     dataset_url: "https://www.nature.com/articles/s41586-023-06837-4"
@@ -75,7 +75,7 @@ HERE
 tw launch https://github.com/openproblems-bio/openproblems-v2.git \
   --revision main_build \
   --pull-latest \
-  --main-script target/nextflow/datasets/workflows/process_slide_tags_datasets/main.nf \
+  --main-script target/nextflow/datasets/workflows/process_zenodo_spatial_slidetags/main.nf \
   --workspace 53907369739130 \
   --compute-env 6TeIFgV5OY4pJCk8I0bfOh \
   --params-file "/tmp/params.yaml" \

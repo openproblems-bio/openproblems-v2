@@ -1,56 +1,35 @@
 import subprocess
-import pandas as pd
 import tempfile
 import scanpy as sc
 
 # VIASH START
 par = {
-    "input_data": "https://zenodo.org/records/12785822/files/slidetag_human_cortex.tar.gz?download=1",
-    "dataset_id": "spatial_slide_tags/human_cortex",
-    "dataset_name": "slidetag_human_cortex",
-    "dataset_url": "https://www.nature.com/articles/s41586-023-06837-4",
-    "dataset_summary": "Slide-tags enables single-nucleus barcoding for multimodal spatial genomics",
-    "dataset_organism": "Homo sapiens",
+    "input_data": "ps://zenodo.org/records/12785822/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad?download=1",
+    "dataset_id": "zenodo_spatial/mouse_olfactory_bulb_puck_slideseqv2",
+    "dataset_name": "Mouse Olfactory Bulk Puck",
+    "dataset_url": "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary",
+    "dataset_summary": "Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2",
+    "dataset_organism": "Mus musculus",
     "dataset": "dataset.h5ad",
-    "spot_filter_min_genes": 200,
-    "gene_filter_min_spots": 50,
+    "spot_filter_min_genes": 10,
+    "gene_filter_min_spots": 500,
     "remove_mitochondrial": True
 }
 meta = {
-    "functionality_name": "download_slide_tags_datasets"
+    "functionality_name": "zenodo_spatial"
 }
 # VIASH END
 
 print(f"Downloading data", flush=True)
 with tempfile.TemporaryDirectory() as tempdir:
-    input_data = "input_data.tar.gz"
-    dataset_name = par['dataset_name']
-    epx_data = subprocess.run(
-        ["wget", "-O", f"{tempdir}/{input_data}", par['input_data']], stderr=subprocess.STDOUT)
-    extract_spatial = subprocess.run(
-        ["tar", "-xzf", f"{tempdir}/{input_data}", "-C", tempdir, "--strip-components=1"], stderr=subprocess.STDOUT)
-
-    # Read gene expression and create anndata object
-    adata = sc.read_10x_mtx(path=tempdir)
-
-    # Read spatial locations
-    df = pd.read_csv(f"{tempdir}/spatial.csv", skiprows=1)
-    df = df.set_index('TYPE')
-    df.columns = ['spatial1', 'spatial2', 'cell_type']
-
-    # add spatial locations to anndata object
-    sel_cells = list(set(df.index) & set(adata.obs_names))
-
-    df = df.loc[sel_cells, ]
-    adata = adata[sel_cells, ]
-
-    adata.obs = df
-    adata.obsm['spatial'] = df[['spatial2', 'spatial1']].values
+    input_data = "input_data.h5ad"
+    epx_data = subprocess.run(["wget", "-O", f"{tempdir}/{input_data}", par['input_data']], stderr=subprocess.STDOUT)
+    adata = sc.read_h5ad(filename=f"{tempdir}/{input_data}")
 
 # Make variable names unique
 adata.var_names_make_unique()
 
-sc.pp.calculate_qc_metrics(adata, inplace=True)
+sc.pp.calculate_qc_metrics(adata, inplace=True, percent_top=None)
 
 print("Filtering spots or genes")
 t0 = adata.shape
@@ -58,18 +37,22 @@ t0 = adata.shape
 if par["spot_filter_min_counts"]:
     sc.pp.filter_cells(
         adata, min_counts=par["spot_filter_min_counts"], inplace=True)
+
 # remove cells with few genes
 if par["spot_filter_min_genes"]:
     sc.pp.filter_cells(
         adata, min_genes=par["spot_filter_min_genes"], inplace=True)
+
 # remove genes that have few counts
 if par["gene_filter_min_counts"]:
     sc.pp.filter_genes(
         adata, min_counts=par["gene_filter_min_counts"], inplace=True)
+
 # remove genes that are found in few cells
 if par["gene_filter_min_spots"]:
     sc.pp.filter_genes(
         adata, min_cells=par["gene_filter_min_spots"], inplace=True)
+
 t1 = adata.shape
 print(f"Removed {t0[0] - t1[0]} cells and {(t0[1] - t1[1])} genes.")
 
@@ -79,11 +62,11 @@ if par["remove_mitochondrial"]:
         name.startswith('MT-') or name.startswith('mt-'))]
     adata = adata[:, non_mito_genes_list]
 
-
 # Rename .var columns
 adata.var['feature_name'] = adata.var_names
-adata.var.set_index(adata.var['gene_ids'], inplace=True)
-adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
+if('gene_ids' in adata.var):
+    adata.var.set_index(adata.var['gene_ids'], inplace=True)
+    adata.var.rename(columns={"gene_ids": "feature_id"}, inplace=True)
 
 # Move counts to .layers
 print("Add metadata to uns", flush=True)
@@ -92,8 +75,7 @@ adata.X = None
 
 # Add metadata
 print("Add metadata to uns", flush=True)
-metadata_fields = ["dataset_id", "dataset_name", "dataset_url",
-                   "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
+metadata_fields = ["dataset_id", "dataset_name", "dataset_url", "dataset_reference", "dataset_summary", "dataset_description", "dataset_organism"]
 for key in metadata_fields:
     if key in par:
         print(f"Setting .uns['{key}']", flush=True)

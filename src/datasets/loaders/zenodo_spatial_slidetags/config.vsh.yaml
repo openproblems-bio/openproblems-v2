@@ -1,19 +1,15 @@
 functionality:
-  name: download_10x_datasets
+  name: zenodo_spatial_slidetags
   namespace: datasets/loaders
   description: |
-    Download a SpaceRanger h5 gene expression file and spatial imaging data from the 10x genomics website (or someplace else).
+    Download a compressed file containing gene expression matrix and spatial locations from zenodo.
   
   argument_groups: 
     - name: Inputs
       arguments:
-        - name: "--input_expression"
+        - name: "--input_data"
           type: string
-          description: URL to the feature / barcode matrix HDF5.
-          required: true
-        - name: "--input_spatial"
-          type: string
-          description: URL to the Spatial imaging data.
+          description: URL to the file.
           required: true
     - name: Outputs
       arguments:
@@ -88,9 +84,5 @@ functionality:
 
 platforms:
   - type: docker
-    image: ghcr.io/openproblems-bio/base_python:1.0.4
-    setup:
-      - type: python
-        packages:
-          - squidpy
+    image: ghcr.io/openproblems-bio/base_images/python:1.1.0
   - type: nextflow

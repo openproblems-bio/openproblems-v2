@@ -2,13 +2,13 @@ import os
 import subprocess
 import anndata as ad
 
-input_data ="https://zenodo.org/records/12784832/files/Slide-seqV2_stickels2020highly_stickels2021highly_SlideSeqV2_Mouse_Olfactory_bulb_Puck_200127_15_data_whole.h5ad?download=1"
-dataset_id = "spatial_slideseq_v2/mouse_olfactory_bulb_puck"
-dataset_name = "mouse_olfactory_bulb_puck"
-dataset_url = "https://singlecell.broadinstitute.org/single_cell/study/SCP815/sensitive-spatial-genome-wide-expression-profiling-at-cellular-resolution#study-summary"
-dataset_summary = "Highly sensitive spatial transcriptomics at near-cellular resolution with Slide-seqV2"
-dataset_description = "Gene expression library of mouse olfactory bulk puck profiled using Slide-seq V2"
-dataset_organism = "Mus musculus"
+input_data ="https://zenodo.org/records/12785822/files/slidetag_human_cortex.tar.gz?download=1"
+dataset_id = "zenodo_spatial_slidetags/human_cortex"
+dataset_name = "slidetag_human_cortex"
+dataset_url = "https://www.nature.com/articles/s41586-023-06837-4"
+dataset_summary = "Slide-tags enables single-nucleus barcoding for multimodal spatial genomics"
+dataset_description = "A 100 mm2 region of the human prefrontal cortex from a neurotypical donor aged 78 years was profiled by Slide-tags"
+dataset_organism = "Homo sapiens"
 dataset = "dataset.h5ad"
 
 print(">> Running script", flush=True)
