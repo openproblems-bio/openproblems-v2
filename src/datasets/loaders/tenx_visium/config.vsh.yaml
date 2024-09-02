@@ -1,5 +1,5 @@
 functionality:
-  name: 10x_datasets
+  name: tenx_visium
   namespace: datasets/loaders
   description: |
     Download a SpaceRanger h5 gene expression file and spatial imaging data from the 10x genomics website (or someplace else).
@@ -9,11 +9,11 @@ functionality:
       arguments:
         - name: "--input_expression"
           type: string
-          description: URL to the feature / barcode matrix HDF5.
+          description: URL to the feature / barcode matrix HDF5 of the 10x dataset.
           required: true
         - name: "--input_spatial"
           type: string
-          description: URL to the Spatial imaging data.
+          description: URL to the Spatial imaging data of the 10x dataset.
           required: true
     - name: Outputs
       arguments:

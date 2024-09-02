@@ -49,7 +49,7 @@ workflow run_wf {
     }
 
     // fetch data from legacy openproblems
-    | 10x_datasets.run(
+    | tenx_visium.run(
       fromState: [
         "input_expression": "input_expression",
         "input_spatial": "input_spatial",

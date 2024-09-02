@@ -30,7 +30,7 @@ remove_mitochondrial: true
 HERE
 
 nextflow run . \
-  -main-script target/nextflow/datasets/workflows/process_10x_datasets/main.nf \
+  -main-script target/nextflow/datasets/workflows/process_tenx_visium/main.nf \
   -c src/wf_utils/labels_ci.config \
   -profile docker \
   -params-file "/tmp/params.yaml"
