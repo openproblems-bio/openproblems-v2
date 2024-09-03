@@ -21,7 +21,7 @@ platforms:
       - type: python
         packages:
           - scprep
-          - numpy
+          - numpy<2
   - type: nextflow
     directives: 
       label: [midtime, midmem, midcpu]
