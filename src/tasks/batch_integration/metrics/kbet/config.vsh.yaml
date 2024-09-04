@@ -51,6 +51,7 @@ platforms:
           - scib==1.1.5
           - rpy2>=3
           - anndata2ri
+          - scipy<=1.13
   - type: nextflow
     directives: 
       label: [midtime, midmem, lowcpu]
