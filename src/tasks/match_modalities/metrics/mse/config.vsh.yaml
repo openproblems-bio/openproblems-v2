@@ -24,7 +24,7 @@ platforms:
     setup:
       - type: python
         packages:
-          - numpy
+          - numpy<2
           - scipy
           - scprep
   - type: nextflow
