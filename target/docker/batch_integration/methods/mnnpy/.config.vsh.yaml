@@ -134,9 +134,6 @@ functionality:
   - type: "python_script"
     path: "script.py"
     is_executable: true
-  - type: "python_script"
-    path: "src/common/helper_functions/read_anndata_partial.py"
-    is_executable: true
   test_resources:
   - type: "python_script"
     path: "src/common/comp_tests/check_method_config.py"
@@ -244,5 +241,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/mnnpy"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/mnnpy/mnnpy"
   viash_version: "0.8.0"
-  git_commit: "9493835133c6b033f2bf44fb174f2472883667af"
+  git_commit: "1c9483c4bbdaf9819c57e7104978cc71f4eeddf7"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
