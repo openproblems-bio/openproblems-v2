@@ -412,16 +412,16 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_python:1.0.4
+FROM openproblems/base_python:1.0.0
 
 ENTRYPOINT []
 
  
 RUN :
 LABEL org.opencontainers.image.description="Companion container for running component migration list_git_shas"
-LABEL org.opencontainers.image.created="2024-08-27T06:39:43Z"
+LABEL org.opencontainers.image.created="2024-09-04T09:54:14Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="aab07afa0046ed6b1648ffcd6994ffddb481299e"
+LABEL org.opencontainers.image.revision="9493835133c6b033f2bf44fb174f2472883667af"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER

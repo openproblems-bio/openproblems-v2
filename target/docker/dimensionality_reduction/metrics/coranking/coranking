@@ -401,7 +401,7 @@ function ViashDockerCheckCommands {
 #   ViashDockerFile
 function ViashDockerfile {
   cat << 'VIASHDOCKER'
-FROM ghcr.io/openproblems-bio/base_r:1.0.4
+FROM openproblems/base_r:1.0.0
 
 ENTRYPOINT []
 
@@ -410,9 +410,9 @@ RUN Rscript -e 'if (!requireNamespace("remotes", quietly = TRUE)) install.packag
   Rscript -e 'remotes::install_cran(c("coRanking"), repos = "https://cran.rstudio.com")'
 
 LABEL org.opencontainers.image.description="Companion container for running component dimensionality_reduction/metrics coranking"
-LABEL org.opencontainers.image.created="2024-08-27T06:39:46Z"
+LABEL org.opencontainers.image.created="2024-09-04T09:54:16Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="aab07afa0046ed6b1648ffcd6994ffddb481299e"
+LABEL org.opencontainers.image.revision="9493835133c6b033f2bf44fb174f2472883667af"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
