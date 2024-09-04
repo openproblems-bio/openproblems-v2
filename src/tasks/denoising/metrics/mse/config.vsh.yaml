@@ -25,7 +25,6 @@ platforms:
         packages:
           - scikit-learn
           - scprep
-          - numpy<2
   - type: nextflow
     directives: 
       label: [midtime, highmem, midcpu]
