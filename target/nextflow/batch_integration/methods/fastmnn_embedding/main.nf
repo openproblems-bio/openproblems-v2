@@ -3011,7 +3011,8 @@ meta = [
           "highcpu" : "cpus = 30",
           "lowtime" : "time = 1.h",
           "midtime" : "time = 4.h",
-          "hightime" : "time = 8.h"
+          "hightime" : "time = 8.h",
+          "veryhightime" : "time = 24.h"
         },
         "script" : [
           "process.errorStrategy = 'ignore'"
@@ -3026,7 +3027,7 @@ meta = [
     "platform" : "nextflow",
     "output" : "/home/runner/work/openproblems-v2/openproblems-v2/target/nextflow/batch_integration/methods/fastmnn_embedding",
     "viash_version" : "0.8.0",
-    "git_commit" : "b4c415c144da66f5301f13bef13b5a9dc4b0d517",
+    "git_commit" : "f02ba12fe4c58636f9eb458aab7cbc116b21ffa3",
     "git_remote" : "https://github.com/openproblems-bio/openproblems-v2"
   }
 }'''))
