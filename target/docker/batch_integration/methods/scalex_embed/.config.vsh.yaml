@@ -231,5 +231,5 @@ info:
   output: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/scalex_embed"
   executable: "/home/runner/work/openproblems-v2/openproblems-v2/target/docker/batch_integration/methods/scalex_embed/scalex_embed"
   viash_version: "0.8.0"
-  git_commit: "1c9483c4bbdaf9819c57e7104978cc71f4eeddf7"
+  git_commit: "b4c415c144da66f5301f13bef13b5a9dc4b0d517"
   git_remote: "https://github.com/openproblems-bio/openproblems-v2"
