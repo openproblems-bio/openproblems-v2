@@ -414,9 +414,9 @@ RUN pip install --upgrade pip && \
   pip install --upgrade --no-cache-dir "scanpy" "anndata" "patsy" "/opt/SpatialDE2" "pyyaml"
 
 LABEL org.opencontainers.image.description="Companion container for running component spatially_variable_genes/methods spatialde2"
-LABEL org.opencontainers.image.created="2024-09-04T18:19:58Z"
+LABEL org.opencontainers.image.created="2024-09-04T20:37:40Z"
 LABEL org.opencontainers.image.source="https://github.com/openproblems-bio/openproblems-v2"
-LABEL org.opencontainers.image.revision="f02ba12fe4c58636f9eb458aab7cbc116b21ffa3"
+LABEL org.opencontainers.image.revision="4b24f7be3c0337f4470b42ea208fe2575370dbfe"
 LABEL org.opencontainers.image.version="main_build"
 
 VIASHDOCKER
