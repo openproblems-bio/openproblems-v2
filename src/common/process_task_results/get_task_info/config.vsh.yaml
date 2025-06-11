@@ -11,7 +11,7 @@ functionality:
       dest: test_file.yaml
 platforms:
   - type: docker
-    image: openproblems/base_r:1.0.0
+    image: openproblems/base_r:1
     setup:
       - type: r
         cran: [ purrr, yaml, rlang, processx ]

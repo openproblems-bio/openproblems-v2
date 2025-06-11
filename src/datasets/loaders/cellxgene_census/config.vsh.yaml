@@ -151,7 +151,7 @@ functionality:
       path: test.py
 platforms:
   - type: docker
-    #image: openproblems/base_python:1.0.0
+    #image: openproblems/base_python:1
     image: python:3.11
     setup:
       - type: python
