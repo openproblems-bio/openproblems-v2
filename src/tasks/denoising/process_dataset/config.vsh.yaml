@@ -26,7 +26,7 @@ functionality:
     - path: helper.py
 platforms:
   - type: docker
-    image: openproblems/base_python:1.0.0
+    image: openproblems/base_python:1
     setup:
       - type: python
         packages:

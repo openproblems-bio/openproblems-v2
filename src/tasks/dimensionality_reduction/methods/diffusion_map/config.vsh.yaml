@@ -22,7 +22,7 @@ functionality:
       default: 3
 platforms:
   - type: docker
-    image: openproblems/base_r:1.0.0
+    image: openproblems/base_r:1
     setup:
       - type: r
         bioc: destiny
